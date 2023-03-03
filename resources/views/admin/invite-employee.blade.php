@@ -28,9 +28,9 @@
                 @csrf
                 <button type="submit">invite</button> --}}
                 {{-- <button type="submit">invite</button> --}}
-                {{-- <button type="button" name="bulk_mail" id="bulk_mail"
-                class="disabled-btn">Invite</button> --}}
-              <a href="" name="bulk_mail" id="bulk_mail"  class="disabled-btn" >Invite</a>
+            {{-- <button type="button" name="bulk_mail" id="bulk_mail"
+                ><a href="">Invite</a></button> --}}
+              <a href="" name="bulk_mail" id="bulk_mail" class="disabled-btn" >Invite</a>
             {{-- </form> --}}
               <a href="add-invite-employee"><img src="assets/admin/images/button-plus.png">Add New</a>              
             </div>
@@ -314,14 +314,7 @@
     </div> 
   @endforeach
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script>
-      window.jQuery || document.write('<script src="../../{{ asset('assets') }}/admin/js/vendor/jquery.min.js"><\/script>')
-    </script>
-    <script src="assets/admin/js/bootstrap.min.js"></script> 
-    {{-- <script src="assets/admin/js/pagination-script.js"></script> --}}
+   
 
     <script>
       $(".selectBox").on("click", function(e) {
@@ -432,32 +425,29 @@
          window.location.href = _url;
       }
     </script>
+
     <script>
-       $(document).on('click', '#bulk_mail', function() {
-       
-       
+   
+            $(document).on('click', '#bulk_mail', function() {
                 var id = [];
-                if (confirm("Are you sure you want to Send Invitation Mail")) {
+                if (confirm("Are you sure you want to Update this data?")) {
                     $('.users_checkbox:checked').each(function() {
-                        id.push($(this).val());   
+                        id.push($(this).val());
                     });
                     if (id.length > 0) {
-                      // alert('hii');
                         $.ajax({
-                            url: "{{ route('invite-email') }}",  
+                            url: "{{ route('invite-email') }}",
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            },   
-                            // alert('yes');
+                            },
                             method: "get",
                             data: {
-                                id:id
+                                id: id
                             },
-                           
                             success: function(data) {
                                 console.log(data);
                                 // alert(data);
-                                window.location.assign('invite-email');
+                                window.location.assign('invite-employee');
                             },
                             error: function(data) {
                                 var errors = data.responseJSON;
@@ -469,6 +459,7 @@
                     }
                 }
             });
+
         $("#selectAll").click(function() {
             $('input:checkbox').not(this).prop('checked', this.checked);
         });
