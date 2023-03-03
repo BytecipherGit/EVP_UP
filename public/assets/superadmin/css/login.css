@@ -1,0 +1,232 @@
+@charset "utf-8";
+/* CSS Document */
+body{
+	padding:0;
+	margin:0 auto;
+  font-family: 'Open Sans', sans-serif;  
+}
+
+h1{
+  font-family: 'Jost', sans-serif;
+}
+a{
+  color:#004FC4;
+  text-decoration: none !important;
+}
+.cover-main{
+  width: 100%;
+  position: relative;
+  background: #fff;
+}
+
+.cover-box-txt p {
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 20px;
+    color: #6D7D93;
+}
+.cover-box-txt h6{
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 20px;
+    text-align: center;
+    color: #8D98AF;
+    margin:40px 0 0;
+    border-top: 0.5px solid rgba(141, 152, 175, 0.4);
+    padding: 25px 0 0;
+}
+.cover-main .cover-box-txt {
+    max-width: 600px;
+    width: 100%;
+    padding: 0 15px;
+    text-align: center;
+}
+.cover-main .form-section {
+    min-height: 100vh;
+    position: relative;
+    text-align: center;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 0!important;
+    background: #fff;
+}
+.cover-main .form-section h1{
+    margin:15px 0 36px;
+    font-weight: bold;
+    font-size: 25px;
+    line-height: 40px;
+    color: #081131;
+}
+.cover-main .form-section .login-logo {
+    margin-bottom: 15px;
+    height: 60px;
+}
+.cover-main .form-section .effect-box {
+  position: relative;
+}
+.cover-main .form-section .form-group span {
+    position: absolute;
+    display: block;
+    color: #d4d4d4;
+    left: 16px;
+    top: 15px;
+    font-size: 20px;
+    opacity: 1;
+}
+.cover-main .form-section .form-group {
+    margin-bottom: 25px;
+}
+.cover-main .form-section .form-control {
+  height: auto;
+  font-weight: normal;
+  outline: none;
+  font-size: 16px;
+  line-height: 32px;
+  color: #081131;
+  background: #FFFFFF;
+  border: 1px solid #d3d6d9;
+  box-sizing: border-box;
+  border-radius: 8px;
+  padding: 14px 16px 14px 40px;
+  display: block;
+  transition: 0.2s ease-out;
+}
+.cover-main .form-section .form-group .form-control:focus {
+  outline: 0;
+  border-color: #5533FF;
+  box-shadow: 0 0 0 0 rgba(0,123,255,.25);
+}
+.cover-main .form-section input::placeholder{
+  color: #B0B7C3 !important;
+}
+.cover-main .form-section .form-group .forg-box {
+  display: flex;
+  align-items: center;
+}
+.cover-main .form-section .form-group input[type="checkbox"] {
+  box-sizing: border-box;
+  padding: 0;
+  width: 20px;
+  height: 20px;
+  position: relative;
+  -webkit-appearance: none;
+  background: transparent;
+  outline: none;
+  margin-right: 10px;
+  cursor: pointer;
+  float: left;
+  border: 1px solid #c5c3c3;
+  border-radius: 2px;
+}
+.cover-main .form-section .form-group .forg-box a {
+  font-weight: bold;
+  line-height: 20px;
+  margin: 0 0 0 auto;
+  font-size: 16px;
+  color: #5533FF;
+}
+.cover-main .form-section .form-group .forg-box input[type="checkbox"]:checked {
+    outline: none;
+    background: url(../images/checkbox-icon.png);
+    background-size: cover;
+}
+.cover-main .form-section .form-group .forg-box label {
+  text-align: left;
+  width: max-content;
+  margin:0;
+  cursor: pointer;
+  font-size: 16px;
+  color: #616161;
+}
+.cover-main .form-section .form-group span {
+  position: absolute;
+  display: block;
+  color: #d4d4d4;
+  left: 16px;
+  top: 15px;
+  font-size: 20px;
+  opacity: 1;
+}
+.cover-main .form-section button:hover{
+    box-shadow: 0px 4px 31px rgba(85, 51, 255, 0.45);
+}
+.cover-main .form-section button{
+  background: #5533FF;
+  color: #fff;
+  border-radius: 8px;
+  border: none;
+  text-align: center;  
+  border:1px solid #5533FF;  
+  width: 100%;
+  padding:16px 15px;
+  margin: 20px 0 0;
+  font-weight: bold;
+ font-size: 16px;
+ line-height: 24px;
+}
+.cover-main .form-section button a{
+  color: #fff;
+}
+
+.cover-box-img{    
+    width: 100%;
+}
+.cover-box-img img{  
+  position: fixed;
+  height: 100%;
+  width: 50%;
+}
+/*----==== Modal Popup ----*/
+.custom-modal .modal-dialog {
+  max-width: 580px;
+}
+.custom-modal .modal-content {
+    background-color: #fff;
+    border-radius: 20px;
+    border: 1px solid transparent;
+}
+.custom-modal .modal-body{
+  padding: 100px 80px;
+  text-align: center;
+}
+.custom-modal .modal-body img {
+    width: 200px;
+}
+.custom-modal .modal-body h2 {
+    font-size: 20px;
+    line-height: 28px;
+    margin: 40px 0 0;
+    font-weight: 600;
+}
+.custom-modal .modal-body p {
+    font-size: 16px;
+    line-height: 28px;
+    margin: 10px auto 45px;
+    width: 85%;
+}
+.custom-modal .modal-body a {
+    background: #5533FF;
+    color: #fff;
+    border-radius: 8px;
+    border: none;
+    text-align: center;
+    border: 1px solid #5533FF;
+    width: 100%;
+    padding: 15px 15px;
+    margin: 30px 0 0;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 24px;
+    display: block;
+}
+/*----===== Modal Popup====---*/
+@media (max-width: 991px){
+.cover-box-img {display: none;}
+}
+
+

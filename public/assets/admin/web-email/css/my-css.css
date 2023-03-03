@@ -1,0 +1,180 @@
+@charset "utf-8";
+/* CSS Document */
+body{
+	padding:0;
+	margin:0 auto;
+  font-family: 'Open Sans', sans-serif;  
+  background: #f7f7f7;
+}
+
+h1{
+  font-family: 'Jost', sans-serif;
+}
+a{
+  color:#004FC4;
+  text-decoration: none !important;
+}
+img{
+  outline: none;
+}
+/*---===== Header Part ====----*/
+header {
+  background: #FFFFFF;
+  box-shadow: 0px 1px 14px rgba(0, 0, 0, 0.08);
+  padding:15px 0;
+}
+header  .navbar {
+    padding: 0 1rem;
+}
+
+header .navbar-brand img {
+  vertical-align: middle;
+  border-style: none;
+  width: 119px;
+}
+/*---===== Header Part ====----*/
+
+
+.scheduPage{
+  width: 100%;
+}
+.scheduPage .scheduBox{
+  width: 100%;
+  background: #FFFFFF;
+  box-shadow: 0px 1px 14px rgba(0, 0, 0, 0.08);
+  padding:15px 0;
+  margin: 30px 0;
+  border-radius: 10px;
+}
+.scheduPage .scheduBox h1{
+  font-size: 18px;
+  line-height:26px;
+  font-weight: 600;
+  padding:0 20px 0;
+  margin:0;
+}
+.scheduPage .scheduBox .ul-part {
+  width: 100%;
+  padding: 20px 20px;
+  align-items: center;
+}
+.scheduPage .scheduBox .hrBorder{
+  border-bottom:2px solid #edecec;
+}
+.scheduBox  .ul-part .iconImg {
+  width:24px;
+  margin-right: 20px;
+}
+.scheduPage .scheduBox .ul-part h2 {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+  margin: 0 0 3px;
+}
+.scheduPage .scheduBox .ul-part p {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 400;
+  margin: 0;
+}
+.error-declinenotifi{  
+  background:#fffbe0 !important;
+  margin-top:20px !important;
+}
+.noti-declinenotifi{
+  background:#eef1fe;
+  margin:0 20px 20px;
+  padding: 20px;
+  border-radius: 10px;
+}
+.noti-declinenotifi p {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    font-size: 14px;
+    font-weight: 500;
+}
+.noti-declinenotifi p img{
+  margin-right: 15px;
+  width: 20px
+}
+.scheduPage .scheduBox .ul-part .form-textarea{
+  width: 100%;
+  border:1px solid #bfbfbf;
+  border-radius: 10px;
+  padding:12px;
+  padding: 12px;
+  margin-top: 10px;
+  outline: none;
+}
+.scheduPage .scheduBox .schud-pare {
+  padding: 20px 20px 0;
+  line-height: 22px;
+  font-size: 14px;
+  font-weight: 500;
+  margin: 0;
+}
+.buttun-classA{
+  background:#5533ff;
+  padding:12px 25px;
+  border-radius:10px;
+  border: none;
+  margin:20px 20px 15px;
+  font-size: 17px;
+  line-height:24px
+}
+.buttun-classA a{
+  color: #fff;
+}
+.buttun-classA:hover {
+    box-shadow: 0px 4px 31px rgba(85, 51, 255, 0.45);
+}
+.scheduPage .scheduBox .ul-part .rightBorder {
+    border-left: 5px solid #d3d0d0;
+    padding-left: 10px;
+}
+
+.request-declinenotifi{
+  background:#e5f7e7;
+  margin-top: 50px;
+  padding: 20px;
+  border-radius: 10px;
+}
+.request-declinenotifi p {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    font-size: 14px;
+    font-weight: 700;
+}
+.request-declinenotifi p img{
+  margin-right: 15px;
+  width: 20px;
+}
+.scheduPage .scheduBox .ul-part .font-weightCl{
+  font-weight: 700;
+}
+.scheduPage .scheduBox .font-bgCl {
+  background: #e7fff6;
+  padding: 3px 6px;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin: 0 0 12px;
+  display: block;
+  width: max-content;
+  font-size: 12px;
+}
+.form-textBold{
+  font-weight: 700;
+  padding-right: 5px;
+}
+.scheduPage .scheduBox .font-bgClcncl {
+  background: #fdefe9;
+  padding: 3px 6px;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin: 0 20px 12px;
+  display: block;
+  width: max-content;
+  font-size: 12px;
+}
