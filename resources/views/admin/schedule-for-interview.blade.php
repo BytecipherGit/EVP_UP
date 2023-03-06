@@ -154,7 +154,7 @@
                             </td>
                             <td><span class="tb-accept"></span> {{ $employee->offer_status }}</td>
                             <td>
-                                <select class="form-control" name="hiring_stage" id="hiring_stage">
+                                <select style="width: 150px;" class="form-control" name="hiring_stage" id="hiring_stage">
                                     @foreach ($hiringStages as $hiringStage)
                                         <option value="{{ $hiringStage->id }}"
                                             @if ($hiringStage->id === $employee->interview_status) selected="selected" @endif
@@ -433,11 +433,10 @@
                 }
             });
         });
-
-        $('#hiring_stage').change(function() {
+        $(document).on('change', '#hiring_stage', function() {
+            // Handle the change event
             var stageId = $(this).val();
             var interviewId = $('option:selected', this).data('id');
-            // console.log(stageId);
             if (stageId != '' && interviewId != '') {
                 var url = '{{ url('schedule-interview/changeHiringStage') }}';
                 var my_data = {
@@ -462,7 +461,6 @@
                     }
                 });
             }
-            // Do something with the selected option
         });
     });
 </script>
