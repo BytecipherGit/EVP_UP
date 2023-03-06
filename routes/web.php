@@ -45,9 +45,7 @@ Route::get('/search', function () {
     return view('admin/current-employee');
   });
 
-  // Route::get('/invite-view-employee', function () {
-  //   return view('admin/invite-view-employee');
-  // });
+
   Route::get('/schedule-interview', function () {
     return view('admin/schedule-for-interview');
   });
@@ -72,14 +70,6 @@ Route::get('/search', function () {
     return view('company/change-password');
   })->name('document');
 
-  // Route::get('/edit-employee', function () {
-  //   return view('admin/edit-employee');
-  // });
-
-  // Route::get('/invite-email', function () {
-  //   return view('org-invite/invite-email');
-  // });
-
   Route::get('/invite-confirm', function () {
     return view('org-invite/invite-confirm');
   });
@@ -87,10 +77,7 @@ Route::get('/search', function () {
   Route::get('/basic-info', function () {
     return view('org-invite/basic-info');
   });
-  Route::get('/email-config', function () {
-    return view('org-invite/index');
-  });
-
+ 
   Route::get('/organization', function () {
     return view('superadmin/organization');
 });
@@ -108,6 +95,9 @@ Route::get('superadmin/logout', [App\Http\Controllers\SuperAdminController::clas
 Route::post('/document', [App\Http\Controllers\DocumentsController::class,'getDocument'])->name('document');
 Route::get('/document', [App\Http\Controllers\DocumentsController::class,'index'])->name('document');
 
+Route::get('/email-config/{id?}', [App\Http\Controllers\InviteempController::class,'getConfig'])->name('email-config');
+Route::get('/basic-info/{id?}', [App\Http\Controllers\InviteempController::class,'getBasicDetails'])->name('basic-info');
+Route::post('/basic-info/{id?}', [App\Http\Controllers\InviteempController::class,'getBasicDetails']);
 
 // Route::post('/invite-email', [App\Http\Controllers\InviteempController::class,'getemail']);
 Auth::routes();

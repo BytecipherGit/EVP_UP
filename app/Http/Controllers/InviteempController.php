@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Empinvite;
 use App\Models\Employee;
+use App\Models\Employeeidentity;
+use App\Models\Empqualification;
+use App\Models\Empworkhistory;
+use App\Models\Empskills;
+use App\Models\Empofficial;
 use Illuminate\Http\Request;
 use Redirect;
 use Response;
@@ -191,23 +196,43 @@ class InviteempController extends Controller
         }
 
         public function sendemail(request $request){
-      
-          $emp = Employee::where('id',204)->first();
-          // dd($emp->first_name);
+          $id=$request->input('id');
+          // dd($id); die();
+          $emp = Employee::where('id',$id)->first();
+        
           $data = array(
+            'id'=>$emp->id,
             'first_name'=>$emp->first_name,
-            'email'=>$emp->email);
+            'last_name'=>$emp->last_name,
+            'email'=>$emp->email
+          );
         // dd($data);
+         $id=$emp->id;
          $email=$emp->email;
          $name=$emp->first_name;
-          Mail::send('org-invite/invite-email', $data, function($message) use ($email, $name){
-             $message->to($email, $name)->subject
-                ('Laravel Testing Mail with Attachment');
-             $message->from('jharshita259@gmail.com','Virat Gandhi');
+          Mail::send('org-invite/invite-email', $data, function($message) use ($email,$name){
+             $message->to($email,$name)->subject
+                ('ByteCipher Pvt Ltd Interview Invitation Email');
+             $message->from('jharshita259@gmail.com','ByteCipher Pvt Ltd');
           });
           return redirect()->back()->with('message','Email Sent with attachment. Check your inbox.') ;
        
         }
+
+        public function getConfig(request $request){
+          $empid=Employee::where('id',$request->id)->first();
+          return view('org-invite/index',compact('empid'));
+        }
+
+        public function getBasicDetails(request $request,$id){
+          $basic=Employee:: where('id',$request->id)->first();
+          $identity=Employeeidentity:: where('emp_id',$request->id)->first();
+          $qualification=Empqualification:: where('emp_id',$request->id)->first();
+          $workhistory=Empworkhistory:: where('emp_id',$request->id)->first();
+          $skills=Empskills:: where('emp_id',$request->id)->first();
+          $official= Empofficial::where('emp_id',$request->id)->first();
+          return view('org-invite/basic-info',compact('basic','identity','qualification','workhistory','skills','official'));
+        }
       
-     
+       
 }
