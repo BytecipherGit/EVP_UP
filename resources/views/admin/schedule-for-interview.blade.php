@@ -118,7 +118,7 @@
                             <td>{{ $employee->first_name . ' ' . $employee->last_name }}</td>
                             <td>{{ $employee->designation }}</td>
                             <td>
-                                {{ ($employee->rating) ? $employee->rating : '-' }}
+                                {{ $employee->rating ? $employee->rating : '-' }}
                                 {{-- <fieldset class="rating ">
                             <input type="radio" id="textiles-star51" name="textiles-rating1" value="5">
                             <label class="full" for="textiles-star51"></label>
@@ -154,29 +154,13 @@
                             </td>
                             <td><span class="tb-accept"></span> {{ $employee->offer_status }}</td>
                             <td>
-                                {{ $employee->interview_status }}
-                                {{-- <div class="selectBox">
-                            <div class="selectBox__value">Select Stage</div>
-                            <div class="dropdown-menu" id="style-5">
-                                <a class="dropdown-item"><span class="spn-cricle ioi_bg"></span>Invited For
-                                    Interview</a>
-                                <a class="dropdown-item"><span class="spn-cricle ioi_bg"></span>Interviewed</a>
-                                <a class="dropdown-item"><span class="spn-cricle ioi_bg"></span>Invitation To
-                                    Complete Machine Task</a>
-                                <a class="dropdown-item"><span class="spn-cricle ioi_bg"></span>Machine Task
-                                    Completed </a>
-                                <a class="dropdown-item"><span class="spn-cricle ifd_bg"></span>Feedback & Hr
-                                    Policies Shared</a>
-                                <a class="dropdown-item"><span class="spn-cricle ifd_bg"></span>Offer Sent </a>
-                                <a class="dropdown-item"><span class="spn-cricle ifi_bg"></span>Offer Decline </a>
-                                <a class="dropdown-item"><span class="spn-cricle ifi_bg"></span>Candidate Withdrew
-                                </a>
-                                <a class="dropdown-item"><span class="spn-cricle ifi_bg"></span>Candidate
-                                    Unresponsive </a>
-                                <a class="dropdown-item"><span class="spn-cricle ifi_bg"></span>Rejected </a>
-                                <a class="dropdown-item"><span class="spn-cricle hrd_bg"></span>Hired </a>
-                            </div>
-                        </div> --}}
+                                <select class="form-control" name="hiring_stage" id="hiring_stage">
+                                    @foreach ($hiringStages as $hiringStage)
+                                        <option value="{{ $hiringStage->id }}"
+                                            @if ($hiringStage->id === $employee->interview_status) selected="selected" @endif
+                                            data-id="{{ $employee->id }}">{{ $hiringStage->title }}</option>
+                                    @endforeach
+                                </select>
                             </td>
                             <td>
                                 <span class="notifi-td" data-toggle="modal" data-target="#remaiderbtninfo"><img
@@ -433,10 +417,13 @@
                             $('#phone-error').html('');
                             $('#message-error').html('');
                             $('#attachment-error').html('');
-
-                            $('#schedule_interview_form')[0].reset();
-                            $('#interviewModel').modal('hide');
-                            location.reload();
+                            // $('#schedule_interview_form')[0].reset();
+                            // $('#interviewModel').modal('hide');
+                            $('#success').css('display', 'block');
+                            setInterval(function() {
+                                location.reload();
+                            }, 3000);
+                            
                         }
                     }
 
@@ -445,6 +432,37 @@
                     console.log(xhr.responseText);
                 }
             });
+        });
+
+        $('#hiring_stage').change(function() {
+            var stageId = $(this).val();
+            var interviewId = $('option:selected', this).data('id');
+            // console.log(stageId);
+            if (stageId != '' && interviewId != '') {
+                var url = '{{ url('schedule-interview/changeHiringStage') }}';
+                var my_data = {
+                    stageId: stageId,
+                    interviewId: interviewId
+                };
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: my_data,
+                    success: function(data) {
+                        if (data.success) {
+                            alert('Hiring status successfully updated')
+                            location.reload();
+                        }
+                    },
+                    error: function(xhr, textStatus, errorThrown) {
+                        console.log(xhr.responseText);
+                    }
+                });
+            }
+            // Do something with the selected option
         });
     });
 </script>

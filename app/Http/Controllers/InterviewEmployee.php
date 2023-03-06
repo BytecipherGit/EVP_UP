@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\HiringStage;
 use App\Models\InterviewEmployee as ModelsInterviewEmployee;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -14,8 +15,9 @@ class InterviewEmployee extends Controller
     public function index()
     {
         $interviewEmployees = ModelsInterviewEmployee::all();
-        // dd($interviewEmployees->toArray());
-        return view('admin.schedule-for-interview', compact('interviewEmployees'));
+        $hiringStages = HiringStage::all();
+        // dd($hiringStages->toArray());
+        return view('admin.schedule-for-interview', compact('interviewEmployees','hiringStages'));
     }
 
     public function getScheduleInterviewForm($id = '')
@@ -94,6 +96,21 @@ class InterviewEmployee extends Controller
             }
         } else {
             return Response::json(['errors' => $validator->errors()]);
+        }
+    }
+
+    public function update_hiring_stage(request $request)
+    {
+        if(!empty($request->interviewId) && !empty($request->stageId)){
+            $interview = ModelsInterviewEmployee::find($request->interviewId);
+            $interview->interview_status = $request->stageId;
+            if($interview->save()){
+                return Response::json(['success' => '1']);
+            } else {
+                return Response::json(['success' => '0']);
+            }
+        } else {
+            return Response::json(['success' => '0']);
         }
     }
 }

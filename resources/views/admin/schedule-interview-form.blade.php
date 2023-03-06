@@ -4,7 +4,8 @@
         font-weight: 400;
     }
 </style>
-
+<strong style="font-size: 16px; display:none;" class="text-success" id="success">Schedule interview successfully done.<br><br></strong>
+<h2 class="modal-title" id=""></h2>
 <input type="hidden" id="is_add" value="{{ $interview ? '' : 1 }}" />
 <input type="hidden" id="interview_id" name="interview_id" value="{{ $interview ? $interview->id : '' }}" />
 <div class="form-group">
