@@ -13,7 +13,9 @@ class InterviewEmployee extends Controller
 {
     public function index()
     {
-        return view('admin.schedule-for-interview');
+        $interviewEmployees = ModelsInterviewEmployee::all();
+        // dd($interviewEmployees->toArray());
+        return view('admin.schedule-for-interview', compact('interviewEmployees'));
     }
 
     public function getScheduleInterviewForm($id = '')
@@ -62,7 +64,7 @@ class InterviewEmployee extends Controller
                 $file->storeAs('public/interview_documents', $fileName);
                 $uploadAttachementPath = asset('storage/interview_documents/' . $fileName);
             }
-            $empCode = substr(uniqid(Str::random(10), true), 0, 8);
+            $empCode = substr(time(), -6) . sprintf('%04d', rand(0, 9999));
             $checkRecordExist = ModelsInterviewEmployee::where('empCode', $empCode)->first();
             if (empty($checkRecordExist) && !empty($empCode)) {
                 $insert = [

@@ -22,7 +22,8 @@ return new class extends Migration
             $table->string('designation')->nullable();
             $table->string('rating')->nullable();
             $table->enum('offer_status',['Pending','Accepted','Joined','Cancelled','Declined'])->comment('Pending / Accepted / Joined / Cancelled / Declined')->default('Pending');
-            $table->tinyInteger('interview_status')->default('1');
+            $table->unsignedBigInteger('interview_status')->comment('Hiring_stage Table PK');
+            $table->foreign('interview_status')->references('id')->on('hiring_stages')->onDelete('cascade');
             $table->date('interview_date')->default(Carbon::now()->format('Y-m-d'));
             $table->time('interview_start_time',$precision = 0);
             $table->time('interview_end_time',$precision = 0);
