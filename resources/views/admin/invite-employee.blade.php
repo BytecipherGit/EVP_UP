@@ -24,14 +24,9 @@
           </div>
           <div class="col-md-4">
             <div class="main-right-button-box">
-              {{-- <form action="invite-email" method="post" >
-                @csrf
-                <button type="submit">invite</button> --}}
-                {{-- <button type="submit">invite</button> --}}
-            {{-- <button type="button" name="bulk_mail" id="bulk_mail"
-                ><a href="">Invite</a></button> --}}
-              <a href="" name="bulk_mail" id="bulk_mail" class="disabled-btn" >Invite</a>
-            {{-- </form> --}}
+                <button type="button" name="bulk_mail" id="bulk_mail"
+                class="btn btn-info btn-md addinci_btn disabled-btn">Invite</button>
+              {{-- <a href="" name="bulk_mail" id="bulk_mail" class="disabled-btn" >Invite</a> --}}
               <a href="add-invite-employee"><img src="assets/admin/images/button-plus.png">Add New</a>              
             </div>
           </div>
@@ -55,7 +50,7 @@
             <table id="example" class="table-bordered nowrap table table-striped" style="width:100%">
             <thead>
               <tr>
-                <th><input type="checkbox" id="selectAll" name="users_checkbox"></th>
+                <th><input type="checkbox" id="selectAll" name="users_id"></th>
                 <th>Employee Code</th>
                 <th>Employee Name</th>
                 <th>Employee Email</th>
@@ -66,7 +61,7 @@
             <tbody>    
               @foreach($empinvite as $invite)         
               <tr>
-                <td><input type="checkbox" name="users_checkbox[]" class="users_checkbox" value="{{$invite->id}}" /></td>
+                <td><input type="checkbox" name="users_id[]" class="users_checkbox" value="{{$invite->id}}" /></td>
                 <td>#00{{$invite->id}}</td>
                 <td>{{$invite->first_name}} {{$invite->last_name}}</td>
                 <td>{{$invite->email}}</td> 
@@ -435,6 +430,7 @@
                         id.push($(this).val());
                     });
                     if (id.length > 0) {
+                      // alert(id.length);
                         $.ajax({
                             url: "{{ route('invite-email') }}",
                             headers: {
@@ -443,11 +439,11 @@
                             method: "get",
                             data: {
                                 id: id
-                            },
+                            }, 
                             success: function(data) {
                                 console.log(data);
                                 // alert(data);
-                                window.location.assign('invite-employee');
+                                window.location.assign('invite-email');
                             },
                             error: function(data) {
                                 var errors = data.responseJSON;

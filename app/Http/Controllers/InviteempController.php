@@ -184,39 +184,49 @@ class InviteempController extends Controller
           return Response::download($file, 'invite-sample.csv', $headers);
         }
 
-      public function getemailsend(Request $request){
-       
-            $user_id_array = $request->input('id');
-            $user = DB::table('emp_basicinfo')->whereIn('id', $user_id_array)->get();
-              $users = Mail::to($request->email)
-            ->send(new Emailinvite());
-            if ($user) {
-                return response('Update Successfully');
-            }
-        }
-
         public function sendemail(request $request){
-          $id=$request->input('id');
-          // dd($id); die();
-          $emp = Employee::where('id',$id)->first();
+
+          $temp = array();
+          $users_id=$request->input('id');
+          if (is_array($users_id))
+          {
+          foreach($users_id as $key => $ids){
+            $temp[] = $ids;
+          }
+          }
+          // print_r($temp); die();
+          $emp = DB::table('emp_basicinfo')->whereIn('id', $temp)->get();
+
         
-          $data = array(
-            'id'=>$emp->id,
-            'first_name'=>$emp->first_name,
-            'last_name'=>$emp->last_name,
-            'email'=>$emp->email
-          );
-        // dd($data);
-         $id=$emp->id;
-         $email=$emp->email;
-         $name=$emp->first_name;
-          Mail::send('org-invite/invite-email', $data, function($message) use ($email,$name){
-             $message->to($email,$name)->subject
-                ('ByteCipher Pvt Ltd Interview Invitation Email');
-             $message->from('jharshita259@gmail.com','ByteCipher Pvt Ltd');
-          });
-          return redirect()->back()->with('message','Email Sent with attachment. Check your inbox.') ;
+            $info = array();
+            foreach ($emp as $row) {
+                $info[] = array(
+                   'first_name' => $row->first_name,
+                    'id' => $row->id, 
+                    'email' => $row->email,
+                    'last_name' => $row->last_name,
+                );
+            }
+
+            if(!empty($info)){
+              foreach($info as $row){
+                if(!empty($row['email']) && !empty($row['first_name']) && !empty($row['last_name']))
+                $email = $row['email'];
+                $name = $row['first_name'].' '.$row['last_name'];
+                $dat=['first' => $name];
+                $id=['ids' => $row['id']];
+                Mail::send('org-invite/invite-email', ['data' => $dat,'data2'=> $id], function($message) use($email, $name){
+                  $message->to($email, $name)->subject
+                     ('ByteCipher Pvt Ltd Interview Invitation Email');
+                  $message->from('jharshita259@gmail.com','ByteCipher Pvt Ltd');
+                   });
+              }
+             
+            }
+            
        
+              return redirect()->back()->with('message','Email Send with attachment. Check your inbox.') ;
+          
         }
 
         public function getConfig(request $request){
