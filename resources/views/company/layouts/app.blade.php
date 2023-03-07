@@ -262,6 +262,7 @@
       window.jQuery || document.write('<script src="../..{{ asset('assets') }}/admin/js/vendor/jquery.min.js"></script>')
     </script> --}}
     <script src="{{ asset('assets') }}/admin/js/bootstrap.min.js"></script>
+    <script src="{{ asset('assets') }}/admin/js/sweetalert.min.js"></script>
     @yield('pagescript')  
 
 </body>

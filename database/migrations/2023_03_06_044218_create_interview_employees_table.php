@@ -33,6 +33,7 @@ return new class extends Migration
             $table->string('message')->nullable();
             $table->string('attachment')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

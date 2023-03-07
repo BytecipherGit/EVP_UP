@@ -113,4 +113,18 @@ class InterviewEmployee extends Controller
             return Response::json(['success' => '0']);
         }
     }
+
+    public function deleteInterview(request $request)
+    {
+        if(!empty($request->interviewId)){
+            $interview = ModelsInterviewEmployee::find($request->interviewId);
+            if($interview->delete()){
+                return Response::json(['success' => '1']);
+            } else {
+                return Response::json(['success' => '0']);
+            }
+        } else {
+            return Response::json(['success' => '0']);
+        }
+    }
 }

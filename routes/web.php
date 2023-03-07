@@ -55,6 +55,7 @@ Route::get('/search', function () {
   Route::any('/schedule-interview/form/{id?}', [InterviewEmployee::class, 'getScheduleInterviewForm']);
   Route::post('schedule-interview/submit', [InterviewEmployee::class, 'schedule_interview']);
   Route::post('schedule-interview/changeHiringStage', [InterviewEmployee::class, 'update_hiring_stage']);
+  Route::post('schedule-interview/deleteInterview', [InterviewEmployee::class, 'deleteInterview']);
   // Route::post('schedule-interview/update', [InterviewEmployee::class, 'schedule_interview_update']);
   // Route::post('admin/add_company', [\App\Http\Controllers\CommonController::class, 'add_company']);
   // Route::post('admin/update_company', [\App\Http\Controllers\CommonController::class, 'update_company']);

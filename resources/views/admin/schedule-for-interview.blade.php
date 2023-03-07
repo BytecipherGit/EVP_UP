@@ -29,9 +29,8 @@
             </div>
             <div class="col-md-4">
                 <div class="main-right-button-box">
-                    {{-- <a href="#" data-toggle="modal" data-target="#interviewModel" class="mr-2">Interview</a> --}}
                     <a style="text-decoration:none" href="#" id="scheduleInterview" class="mr-2">Interview</a>
-                    <a href="#" data-toggle="modal" data-target="#rejectbtninfo">Reject</a>
+                    {{-- <a href="#" data-toggle="modal" data-target="#rejectbtninfo">Reject</a> --}}
                 </div>
             </div>
         </div>
@@ -114,7 +113,7 @@
                 <tbody>
                     @foreach ($interviewEmployees as $employee)
                         <tr>
-                            <td>#{{ $employee->empCode }}</td>
+                            <td># {{ $employee->empCode }}</td>
                             <td>{{ $employee->first_name . ' ' . $employee->last_name }}</td>
                             <td>{{ $employee->designation }}</td>
                             <td>
@@ -166,8 +165,9 @@
                             <td>
                                 <span class="notifi-td" data-toggle="modal" data-target="#remaiderbtninfo"><img
                                         src="assets/admin/images/bell-icon.png" width="30px;" height="30px"></span>
-                                <a href="#" class="edit-btn" data-toggle="modal"
-                                    data-target="#deletebtninfo">Delete</a>
+                                {{-- <a href="#" class="edit-btn" data-toggle="modal"
+                                    data-target="#deletebtninfo">Delete</a> --}}
+                                    <a href="#" class="edit-btn" id="delete_interview" data-id="{{ $employee->id }}">Delete</a>
                             </td>
                         </tr>
                     @endforeach
@@ -281,8 +281,7 @@
         new $.fn.dataTable.FixedHeader(table);
     });
 </script>
-{{-- <script src="{{ asset('assets') }}/datatable/js/jquery-3.5.1.js"></script> --}}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+
 <script src="{{ asset('assets') }}/datatable/js/jquery.dataTables.min.js"></script>
 <script src="{{ asset('assets') }}/datatable/js/dataTables.bootstrap.min.js"></script>
 
@@ -437,8 +436,8 @@
         });
         $(document).on('change', '#hiring_stage', function() {
             swal({
-                    title: "Are you sure you want to change the status of this interview",
-                    text: "Once you update status then you will updated status on interview employee listing!",
+                    title: "Are you sure?",
+                    text: "You want to change the status of this interview!",
                     icon: "warning",
                     buttons: true,
                     dangerMode: true,
@@ -464,7 +463,50 @@
                                 data: my_data,
                                 success: function(data) {
                                     if (data.success) {
-                                        swal("Poof! Your patrol has been archived!", {
+                                        swal("Interview status has been updated.", {
+                                            icon: "success",
+                                        });
+                                        location.reload();
+                                    }
+                                },
+                                error: function(xhr, textStatus, errorThrown) {
+                                    console.log(xhr.responseText);
+                                }
+                            });
+                        }
+                    } else {
+                        swal("Your data is safe!");
+                        location.reload();
+                    }
+                });
+        });
+
+        $(document).on('click', '#delete_interview', function() {
+            swal({
+                    title: "Are you sure?",
+                    text: "You want to delete this interview!",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                .then((result) => {
+                    if (result) {
+                        // Handle the change event
+                        var interviewId = $(this).data('id');
+                        if (interviewId != '') {
+                            var url = '{{ url('schedule-interview/deleteInterview') }}';
+                            var my_data = { interviewId: interviewId };
+                            $.ajax({
+                                url: url,
+                                type: 'POST',
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                        'content')
+                                },
+                                data: my_data,
+                                success: function(data) {
+                                    if (data.success) {
+                                        swal("Interview successfully deleted.", {
                                             icon: "success",
                                         });
                                         location.reload();
@@ -482,6 +524,8 @@
                 });
         });
     });
+
+
 </script>
 
 @stop
