@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\InterviewEmployee;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\Admin;
@@ -46,9 +47,18 @@ Route::get('/search', function () {
   });
 
 
-  Route::get('/schedule-interview', function () {
-    return view('admin/schedule-for-interview');
-  });
+  // Route::get('/schedule-interview', function () {
+  //   return view('admin/schedule-for-interview');
+  // });
+
+  Route::get('/schedule-interview', [InterviewEmployee::class, 'index'])->name('schedule.interview');
+  Route::any('/schedule-interview/form/{id?}', [InterviewEmployee::class, 'getScheduleInterviewForm']);
+  Route::post('schedule-interview/submit', [InterviewEmployee::class, 'schedule_interview']);
+  Route::post('schedule-interview/changeHiringStage', [InterviewEmployee::class, 'update_hiring_stage']);
+  Route::post('schedule-interview/deleteInterview', [InterviewEmployee::class, 'deleteInterview']);
+  // Route::post('schedule-interview/update', [InterviewEmployee::class, 'schedule_interview_update']);
+  // Route::post('admin/add_company', [\App\Http\Controllers\CommonController::class, 'add_company']);
+  // Route::post('admin/update_company', [\App\Http\Controllers\CommonController::class, 'update_company']);
 
   Route::get('/settings', function () {
     return view('admin/settings');

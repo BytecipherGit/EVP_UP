@@ -4,6 +4,7 @@
 <head>
   <title>ByteCipher - Dashboard</title>
   <meta charset="utf-8">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="viewport" content="width=device-width, user-scalable=no">
   <link rel="icon" href="{{ asset('assets') }}/admin/images/logo-icon.png">
@@ -257,10 +258,12 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script>
+    {{-- <script>
       window.jQuery || document.write('<script src="../..{{ asset('assets') }}/admin/js/vendor/jquery.min.js"></script>')
-    </script>
-    <script src="{{ asset('assets') }}/admin/js/bootstrap.min.js"></script>  
+    </script> --}}
+    <script src="{{ asset('assets') }}/admin/js/bootstrap.min.js"></script>
+    <script src="{{ asset('assets') }}/admin/js/sweetalert.min.js"></script>
+    @yield('pagescript')  
 
 </body>
 
