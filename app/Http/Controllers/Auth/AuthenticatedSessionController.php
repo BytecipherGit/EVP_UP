@@ -33,7 +33,7 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
 
         $document=Documents::where('user_id',Auth::id())->first();
-        // print_r($document->status);die();
+        // print_r($document);die();
     if(Auth::user()->role == 'admin'){
         if($document){
         switch($document->status){

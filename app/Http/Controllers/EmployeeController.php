@@ -20,13 +20,16 @@ class EmployeeController extends Controller
     public function index(request $request){
   
         $basic=Employee:: where('id',$request->id)->first();
-        $identity=Employeeidentity:: where('emp_id',$request->id)->first();
-        $qualification=Empqualification:: where('emp_id',$request->id)->first();
-        $workhistory=Empworkhistory:: where('emp_id',$request->id)->first();
+        $identity=Employeeidentity:: where('emp_id',$request->id)->get();
+        $ident=Employeeidentity:: where('emp_id',$request->id)->first();
+        $qualification=Empqualification:: where('emp_id',$request->id)->get();
+        $quali=Empqualification:: where('emp_id',$request->id)->first();
+        $workhistory=Empworkhistory:: where('emp_id',$request->id)->get();
+        $workh=Empworkhistory:: where('emp_id',$request->id)->first();
         $skills=Empskills:: where('emp_id',$request->id)->first();
         $official= Empofficial::where('emp_id',$request->id)->first();
-     
-        return view('admin/add-employee',compact('basic','identity','qualification','workhistory','skills','official'));
+    
+        return view('admin/add-employee',compact('basic','identity','qualification','ident','workhistory','quali','workh','skills','official'));
     }
     public function identity(){
     
@@ -73,9 +76,12 @@ class EmployeeController extends Controller
     public function basicInfo(request $request){
      
         // $request->validate([
-        //     'name' => ['required', 'string', 'max:255'],
+        //     'first_name' => ['required', 'string', 'max:255'],
         //     'email' => ['required', 'string', 'email', 'max:255'],
+        //     'last_name' => ['required', 'string', 'max:255'],
+        //     'profile' => ['required', 'string', 'max:255'],
         // ]);
+
         if(isset($_POST['basic'])){
         $employe = new Employee();
         $employe->first_name=$request->input('first_name');
@@ -96,41 +102,69 @@ class EmployeeController extends Controller
         $employe->emg_address=$request->input('emg_address');
 
 
-        if($request->has('profile')) {
+         if($request->has('profile')) {
           $image = $request->file('profile');
           $employe->profile = $image->getClientOriginalName();
           $image->move(public_path('/Image'), $image->getClientOriginalName());
-      }
+         }
      
-        $employe->save();
+         $employe->save();
     
-        $basicinfo = Employeeidentity::where('emp_id',$request->id)->first();
-        //  print_r($basicinfo);die();
+          $basicinfo = Employeeidentity::where('emp_id',$request->id)->first();
           if (empty($basicinfo)) {
       
             $basic=Employee::where('email',$request->email)->first();
             $id=$basic->id;
-            $table =  $basic->getTable();
-            // return view('admin/add-employee/'.$id ,compact('basic'));
-            return redirect('add-employee/'.$id);
-            // return redirect()->route('add-employee/'.$id, [$basic]);
-            // Redirect::to('settings/photos?image_='. $image_);
-            // Redirect::to('add-employee?id='. $id);
-           }
-           else{
-            return redirect()->back();
-           }
-        }
-          // $basicinfo=Employee::where('email',$request->email)->first();
-        //  print_r($basicinfo);die();
-          // $identity=Employee::where('email',$request->email)->first();
-          //   $id=$basic->id;
-          // $table =  $basic->getTable();
-        //   // print_r($table);die();
-        // return redirect('add-employee/'.$id.'/'.$table);
-        // return redirect('emp_identity');
-        // return redirect()->back();
+            $table = $basic->getTable();
+            return redirect('add-employee/'.$id)->with('tabs-3_active', true);
 
+           }
+
+           else{
+            return redirect()->back()->with('tabs-3_active', true);
+      
+           }
+         }
+          
+           //For Update Basic Information
+          if(isset($_POST['basic-edit'])){
+
+            if($request->file('profile')){
+            $file= $request->file('profile');
+            $filename=$file->getClientOriginalName();
+            $file->move(public_path().'/Image/',$filename); 
+            $basic_info['profile']= $filename;
+          }
+         else{
+          $image=DB::table('emp_basicinfo')->where('id',$request->id)->first();
+          $filename=$image->profile;
+          // print_r($image->profile);die();
+         }
+          $basic_info=DB::table('emp_basicinfo')->where('id',$request->id)
+          ->update([
+                'first_name'=>$request->input('first_name'),
+                'last_name'=>$request->input('last_name'),
+                'middle_name'=>$request->input('middle_name'),
+                'email'=>$request->input('email'),
+                'profile'=>$filename,
+                'phone'=>$request->input('phone'),
+                'dob'=>$request->input('dob'),
+                'blood_group'=>$request->input('blood_group'),
+                'gender'=>$request->input('gender'),
+                'marital_status'=>$request->input('marital_status'),
+                'current_address'=>$request->input('current_address'),
+                'permanent_address'=>$request->input('permanent_address'),
+                'emg_name'=>$request->input('emg_name'),
+                'emg_relationship'=>$request->input('emg_relationship'),
+                'emg_phone'=>$request->input('emg_phone'),
+                'emg_address'=>$request->input('emg_address'),
+               ]);
+
+               return redirect()->back()->with('tabs-3_active', true)->with('message','Infomation Updated Successfully.');
+            
+          }
+
+   
       
          
        
@@ -149,7 +183,7 @@ class EmployeeController extends Controller
                 $image = $request->file('document');
                 $emp_ident->document = $image->getClientOriginalName();
                 $image->move(public_path('/Image'), $image->getClientOriginalName());
-            }
+                }
       
               $emp_ident->save();
               $identityinfo = Empqualification::where('emp_id',$request->id)->first();
@@ -157,24 +191,16 @@ class EmployeeController extends Controller
           
                 $basic=Employeeidentity::where('emp_id',$request->id)->first();
                 $id=$basic->emp_id;
-              
-                // return view('admin/add-employee/'.$id ,compact('basic'));
-                return redirect('add-employee/'.$id);
+            
+                return redirect('add-employee/'.$id)->with('tabs-2_active', true);
           
-                // return redirect()->route('add-employee/'.$id, [$basic]);
-                // Redirect::to('settings/photos?image_='. $image_);
-                // Redirect::to('add-employee?id='. $id);
-               }
+                 }
                else{
-                return redirect()->back();
+                return redirect()->back()->with('tabs-2_active', true);
                }
-              
-              //  $basic=Employeeidentity::where('id_number',$request->id_number)->first();
-              //     $id=$basic->id;
-              //   $table =  $basic->getTable();
-                // print_r($table);die();
-              return redirect('emp_qualification');
-              // return view('admin/edit-employee',compact('basic'));
+           
+                return redirect()->back();
+             
             }
 
           
@@ -194,7 +220,7 @@ class EmployeeController extends Controller
                   $image = $request->file('document');
                   $emp_qualf->document = $image->getClientOriginalName();
                   $image->move(public_path('/Image'), $image->getClientOriginalName());
-              }
+                 }
         
                 $emp_qualf->save();
              
@@ -203,20 +229,13 @@ class EmployeeController extends Controller
             
                   $qual=Empqualification::where('emp_id',$request->id)->first();
                   $id=$qual->emp_id;
-                  // $table=$basic->getTable();
-                  // return view('admin/add-employee/'.$id ,compact('basic'));
-                  return redirect('add-employee/'.$id);
-            
-                  // return redirect()->route('add-employee/'.$id, [$basic]);
-                  // Redirect::to('settings/photos?image_='. $image_);
-                  // Redirect::to('add-employee?id='. $id);
+                  return redirect('add-employee/'.$id)->with('tabs-3_active', true);
                  }
                  else{
-                  return redirect()->back();
+                  return redirect()->back()->with('tabs-3_active', true);
                  }
-             
-                return redirect('emp_workhistory');
-                // return view('admin/edit-employee',compact('basic'));
+
+                  return redirect()->back();
               }
 
 
@@ -238,17 +257,17 @@ class EmployeeController extends Controller
                   $image = $request->file('offer_letter');
                   $emp_work->offer_letter = $image->getClientOriginalName();
                   $image->move(public_path('/Image'), $image->getClientOriginalName());
-              }
-              if($request->has('exp_letter')) {
+                }
+                if($request->has('exp_letter')) {
                   $image = $request->file('exp_letter');
                   $emp_work->exp_letter = $image->getClientOriginalName();
                   $image->move(public_path('/Image'), $image->getClientOriginalName());
-              }
-              if($request->has('salary_slip')) {
+                }
+                if($request->has('salary_slip')) {
                 $image = $request->file('salary_slip');
                 $emp_work->salary_slip = $image->getClientOriginalName();
                 $image->move(public_path('/Image'), $image->getClientOriginalName());
-            }
+                }
         
         
                 $emp_work->save();
@@ -259,14 +278,15 @@ class EmployeeController extends Controller
                   $id=$work->emp_id;
                   // $table=$basic->getTable();
                   // return view('admin/add-employee/'.$id ,compact('basic'));
-                  return redirect('add-employee/'.$id);
+                  return redirect('add-employee/'.$id)->with('tabs-4_active', true);
             
                  }
                  else{
-                  return redirect()->back();
+                  // return redirect()->back();
+                  return redirect()->back()->with('tabs-4_active', true);
                  }
-
-                return redirect('emp_skills');
+                 return redirect()->back();
+                 
               }
 
               if(isset($_POST['workskill'])){
@@ -286,17 +306,14 @@ class EmployeeController extends Controller
                   $id=$skill->emp_id;
                   // $table=$basic->getTable();
                   // return view('admin/add-employee/'.$id ,compact('basic'));
-                  return redirect('add-employee/'.$id);
+                  return redirect('add-employee/'.$id)->with('tabs-5_active', true);
             
-                  // return redirect()->route('add-employee/'.$id, [$basic]);
-                  // Redirect::to('settings/photos?image_='. $image_);
-                  // Redirect::to('add-employee?id='. $id);
-                 }
+                   }
                  else{
-                  return redirect()->back();
+                  return redirect()->back()->with('tabs-5_active', true);
                  }
 
-                return redirect('emp_official');
+                 return redirect()->back();
               }
 
               if(isset($_POST['official'])){
@@ -795,10 +812,7 @@ class EmployeeController extends Controller
             "Expires"             => "0"
         );
 
-        // $columns = array('First Name','Last Name','Middle Name','Email','Phone','Date of Birth','Blood Group','Gender','Marital Status','Current Address','Permanent Address','Emg Name',
-        // 'Emg Relationship','Emg Phone','Emg Address','Id Type','Id Number','Date of Joining','Promotion Period','Employee Type','Work Location','Employee Status','Salary','Lakhs Per Year','Appraisal From','Appraisal To','Last Appraisal Designation','Current Appraisal Designation',
-        // 'Appraisal Date','Promotion From','Promotion To','Last Promotion Designation','Current Promotion Designation','Promotion Date','Manager Name','Manager Type','Manager Department',
-        // 'Manager Designation','Institute Name','Degree','Subject','Duration From','Duration To','Skill','Skill Type','Language Known','Language Type','Company Name','Designation','Work Duration From','Work Duration To');
+
         $columns = array('First Name','Last Name','Middle Name','Email','Phone','Date of Birth','Blood Group','Gender','Marital Status','Current Address','Permanent Address','Emg Name','Emg Relationship','Emg Phone','Emg Address','Id Type','Id Number','Date of Joining','Promotion Period','Employee Type','Work Location','Employee Status','Salary','Lakhs Per Year','Appraisal From','Appraisal To','Last Appraisal Designation','Current Appraisal Designation','Appraisal Date','Promotion From','Promotion To','Last Promotion Designation','Current Promotion Designation','Promotion Date','Manager Name','Manager Type','Manager Department','Manager Designation','Skill','Skill Type','Language Known','Language Type','Company Name','Designation','Work Duration From','Work Duration To','Institute Name','Degree','Subject','Duration From','Duration To');
         $callback = function() use($employee, $columns) {
             $file = fopen('php://output', 'w');

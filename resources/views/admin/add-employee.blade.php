@@ -18,31 +18,32 @@
 
         <ul class="nav nav-tabs table-responsive-width" role="tablist">
           <li class="nav-item">
-            <a @if($basic) class="nav-link" @else class="nav-link active" @endif data-toggle="tab" href="#tabs-1" role="tab">Basic Info</a>
+            <a @if ($basic) class="nav-link" @else class="nav-link active" @endif data-toggle="tab" href="#tabs-1" role="tab">Basic Info</a>
           </li>
        
           <li class="nav-item">
-            <a @if($basic && !$identity && !$qualification && !$workhistory && !$skills && !$official) class="nav-link active" @else class="nav-link" @endif data-toggle="tab" href="#tabs-3" role="tab">Qualification</a>
-          </li>          
+            <a  class="nav-link {{ session('tabs-3_active') ? 'active': '' }}" data-toggle="tab" href="#tabs-3" role="tab">Qualification</a>
+          </li>     
+      
           <li class="nav-item">
-            <a @if($basic && !$identity && $qualification && !$workhistory && !$skills && !$official) class="nav-link active" @else class="nav-link" @endif data-toggle="tab" href="#tabs-4" role="tab">Work History</a>
+            <a class="nav-link {{ session('tabs-4_active') ? 'active': '' }}" data-toggle="tab" href="#tabs-4" role="tab">Work History</a>
           </li>
           <li class="nav-item">
-            <a @if($workhistory && !$skills && !$official && !$identity) class="nav-link active" @else class="nav-link" @endif data-toggle="tab" href="#tabs-5" role="tab">Skills</a>
+            <a  class="nav-link {{ session('tabs-5_active') ? 'active': '' }}" data-toggle="tab" href="#tabs-5" role="tab">Skills</a>
           </li>                 
           <li class="nav-item">
-            <a @if($basic && !$identity && $qualification && $workhistory && $skills && !$official) class="nav-link active" @else class="nav-link" @endif data-toggle="tab" href="#emp_identity-2" role="tab">Identity</a>
+            <a class="nav-link {{ session('tabs-2_active') ? 'active': '' }}"  data-toggle="tab" href="#tabs-2" role="tab">Identity</a>
           </li>                                                                         
           <li class="nav-item"> 
-            <a @if(!$official && $identity && $qualification && $workhistory && $basic) class="nav-link active" @else class="nav-link" @endif data-toggle="tab" href="#tabs-6" role="tab">Official Use</a>
+            <a class="nav-link {{ session('tabs-6_active') ? 'active': '' }}"  data-toggle="tab" href="#tabs-6" role="tab">Official Use</a>
           </li>  
 
         </ul> 
     
         <div class="tab-content">
           @if(!$basic)
-          <div @if($basic) class="tab-pane" @else  class="tab-pane active" @endif id="tabs-1" role="tabpanel">
-
+          <div id="tabs-1"  @if ($basic) class="tab-pane" @else class="tab-pane active" @endif >
+            {{-- <div id="tab1" class="tab {{ !session('tab2_active') ? 'active', null }} ">  --}}
             <div class="eml-persnal ">
               <div class="add-emply-details">
                 @if (session()->has('message'))
@@ -56,7 +57,7 @@
                     <div class="col-lg-3">
                       <div class="profile-add-img">
                         <div class="circle">
-                           <img class="profile-pic" id="profile-pic" name="profile" src="{{ asset('assets') }}/admin/images/user-img.png" required>
+                           <img class="profile-pic" id="profile-pic" name="profile" src="{{ asset('assets') }}/admin/images/user-img.png">
                          </div>
                          <div class="p-image ml-auto">
                            <span class="upload-button" for="file-upload" id="upload-button"><img src="{{ asset('assets') }}/admin/images/edit-icon.png"></span>
@@ -208,6 +209,7 @@
           </div>
           @else
           <div class="tab-pane" id="tabs-1" role="tabpanel">
+            {{-- <div id="tabs-1"  class="tab-pane {{ !session('tabs-6_active') ? 'active': '' }} "> --}}
             <div class="eml-persnal ">
               <div class="add-emply-details">
                 @if (session()->has('message'))
@@ -224,7 +226,7 @@
                     <div class="col-lg-3">
                       <div class="profile-add-img">
                         <div class="circle">
-                          <img class="profile-pic" id="profile-pic" name="profile" @if ($basic->profile!== Null) value="/image/{{ old('profile', $basic->profile) }}" src="/image/{{ $basic->profile }}" @else src="assets/admin/images/logo.png" @endif required>
+                          <img class="profile-pic" id="profile-pic" name="profile" @if ($basic->profile!== Null) value="/image/{{ old('profile', $basic->profile) }}" src="/image/{{ $basic->profile }}" @else src="{{ asset('assets') }}/admin/images/user-img.png" @endif required>
                          </div>
                          <div class="p-image ml-auto">
                            <span class="upload-button" id="upload-button"><img src="{{ asset('assets') }}/admin/images/edit-icon.png"></span>
@@ -232,18 +234,7 @@
                          </div>
                       </div>
                     </div>
-                    {{-- <div class="company-pro">
-                      <div class="circle">
-                       <img class="profile-pic" id="profile-pic" name="profile" @if ($basic->profile!== Null) value="/image/{{ old('profile', $basic->profile) }}" src="/image/{{ $basic->profile }}" @else src="assets/admin/images/logo.png" @endif required>
-                     </div>
-                     <p>You can drag or drop <span>your file logo here.</span> </p>
-                     <div class="p-image ml-auto">
-                       <span class="upload-button" id="upload-button">Choose File</span>
-                        <input class="file-upload"  name="profile" id="file-upload" type="file" accept="image/*"/>
-                     </div>
-                    </div> --}}
-
-
+                
                     <div class="col-lg-9">                    
                       <div class="row">
                         <div class="col-xl-4 col-lg-6 col-md-12">
@@ -258,7 +249,7 @@
                         <div class="col-xl-4 col-lg-6 col-md-12">
                           <div class="form-group">
                             <label for="middle_name">*Middle Name</label>
-                            <input type="text" name="middle_name"  @if ($basic) value="{{ old('middle_name', $basic->middle_name) }}" @endif  class="form-control" placeholder="Enter Your Middle Name" required >
+                            <input type="text" name="middle_name"  @if ($basic) value="{{ old('middle_name', $basic->middle_name) }}" @endif  class="form-control" placeholder="Enter Your Middle Name">
                           </div>
                         </div>  
                         <div class="col-xl-4 col-lg-6 col-md-12">
@@ -376,7 +367,7 @@
                   </div>                   
                       <div class="add-btn-part">
                         {{-- <button type="button" class="btn-secondary-cust">Back</button> --}}
-                        {{-- <button type="submit" name="basic-edit" class="btn-primary-cust">Next</button> --}}
+                        <button type="submit" name="basic-edit" class="btn-primary-cust">Next</button>
                       </div>
                                                    
                     </form>         
@@ -385,7 +376,7 @@
           </div>
           @endif
        
-          <div  @if($basic && $skills && !$identity) class="tab-pane active" @else class="tab-pane" @endif id="emp_identity-2" role="tabpanel">
+          <div   class="tab-pane {{ session('tabs-2_active') ? 'active': '' }}" id="tabs-2" role="tabpanel">
             <div class="eml-persnal ">
               <div class="add-emply-details">                
                 <div class="row">
@@ -397,7 +388,8 @@
                           <h2>Uploaded Documents <span class="ml-auto on-head-right" data-toggle="modal" data-target="#identityAdd"><img src="{{ asset('assets') }}/admin/images/button-plus-clr.png"> <small>Add</small></span></h2>
                         </div>
                         {{-- <p class="no-data-clg">No Data Available</p>   --}}
-             @if($identity)
+                     @if($ident)
+             
                         <div class="col-xl-12">
                           <div class="eml-per-main">
                             <div class="table-responsive">
@@ -409,10 +401,12 @@
                                     <th>Verification</th>
                                     {{-- <th>Actions</th> --}}
                                   </tr>
-                                  </thead>
+                                </thead>
+                                @foreach($identity as $ident)
+                                  <tbody>
                                     <tr>
-                                      <td>{{ $identity->id_type}}</td>
-                                      <td>{{ $identity->id_number}}</td>
+                                      <td>{{ $ident['id_type']}}</td>
+                                      <td>{{ $ident['id_number']}}</td>
                                       <td><span class="verified-clr"><i class="fa fa-check"></i> Verified</span></td>
                                       {{-- <td>
                                         <span class="d-flex tbl-iconBx">
@@ -422,16 +416,16 @@
                                         </span>
                                       </td> --}}
                                     </tr>
-                                    
-                                  <tbody>
                                 </tbody>
+                                @endforeach
                               </table>
+                           
                             </div>
                           </div>
                         </div>
-             @else
+                        @else
                         <p class="no-data-clg">No Data Available</p> 
-             @endif
+                        @endif
                         <div class="col-md-12">
                           <div class="form-group">
                             <div class="add-btn-part">
@@ -447,7 +441,8 @@
               </div>
             </div>
           </div>
-          <div @if($basic && !$qualification && !$workhistory) class="tab-pane active" @else class="tab-pane" @endif  id="tabs-3" role="tabpanel">
+          <div id="tabs-3" class="tab-pane {{ session('tabs-3_active') ? 'active': '' }} ">
+            {{-- <div id="tab1" class="tab {{ !session('tab2_active') ? 'active', null }} ">  --}}
             <div class="eml-persnal ">
               <div class="add-emply-details">                
                 <div class="row">
@@ -458,7 +453,8 @@
                           <h2>Qualification <span class="ml-auto on-head-right" data-toggle="modal" data-target="#qualificationAdd"><img src="{{ asset('assets') }}/admin/images/button-plus-clr.png"> <small>Add</small></span></h2>
                         </div>
                         {{-- <p class="no-data-clg">No Data Available</p>   --}}
-              @if($qualification)
+                        @if($quali)
+                      
                         <div class="col-xl-12">
                           <div class="eml-per-main">
                             <div class="table-responsive">
@@ -474,14 +470,15 @@
                                     {{-- <th>Action</th> --}}
                                   </tr>
                                 </thead>
+                                @foreach($qualification as $quaf)
                                 <tbody>
                                   <tr>                                    
-                                    <td>{{ $qualification->degree}}</td> 
-                                    <td>{{ $qualification->inst_name}}</td> 
-                                    <td>{{ $qualification->subject}}</td>
-                                    <td>{{ $qualification->duration_from}}</td>  
-                                    <td>{{ $qualification->duration_to}}</td>  
-                                    <td><span class="verified-clr"><i class="fa fa-check"></i> {{ $qualification->verification_type}}</span></td>
+                                    <td>{{ $quaf['degree']}}</td> 
+                                    <td>{{ $quaf['inst_name']}}</td> 
+                                    <td>{{ $quaf['subject']}}</td>
+                                    <td>{{ $quaf['duration_from']}}</td>  
+                                    <td>{{ $quaf['duration_to']}}</td>  
+                                    <td><span class="verified-clr"><i class="fa fa-check"></i> {{ $quaf['verification_type']}}</span></td>
                                     {{-- <td>
                                       <a href="#" target="_black" class="docu-down" data-toggle="modal" data-target="#qualificationdocument"><img src="assets/admin/images/document.png"></a>
                                       <a href="assets/admin/images/job-offer-letter.png" target="_black" class="docu-download"><img src="assets/admin/images/download-icon.png"></a>
@@ -490,12 +487,12 @@
                                   </tr>
                                   
                                 </tbody>
-                                <tbody>
-                                </tbody>
+                                @endforeach
                               </table>
                             </div>
                           </div>
                         </div>
+                      
               @else
               <p class="no-data-clg">No Data Available</p>
                  @endif
@@ -514,7 +511,8 @@
               </div>
             </div>
           </div>
-          <div @if($qualification && !$workhistory) class="tab-pane active" @else class="tab-pane" @endif id="tabs-4" role="tabpanel">
+          {{-- <div @if($quali && !$workhistory) class="tab-pane active" @else class="tab-pane" @endif id="tabs-4" role="tabpanel"> --}}
+            <div id="tabs-4" class="tab-pane  {{ session('tabs-4_active') ? 'active': '' }}">
             <div class="eml-persnal ">
               <div class="add-emply-details">                
                 <div class="row">
@@ -526,11 +524,13 @@
                           <h2>Work History <span class="ml-auto on-head-right" data-toggle="modal" data-target="#workHistorybtn"><img src="{{ asset('assets') }}/admin/images/button-plus-clr.png"> <small>Add</small></span></h2>
                         </div>
                         {{-- <p class="no-data-clg">No Data Available</p>   --}}
-               @if($workhistory)
+                    @if($workh)
+                        @foreach($workhistory as $work)
                         <div class="col-xl-12">
                           <div class="eml-per-main">
                             <div class="table-responsive">
                               <table class="table">
+                             
                                 <thead>
                                   <tr>
                                     <th>Company Name</th>
@@ -544,27 +544,30 @@
                                     {{-- <th>Action</th> --}}
                                   </tr>
                                 </thead>
+                           
+                                <tbody>
                                   <tr>
-                                    <td>{{ $workhistory->com_name}}</td>
-                                    <td>{{ $workhistory->work_duration_from}}</td>  
-                                    <td>{{ $workhistory->work_duration_to}}</td> 
-                                    <td>{{ $workhistory->designation}}</td>  
+                                    <td>{{ $work['com_name']}}</td>
+                                    <td>{{ $work['work_duration_from']}}</td>  
+                                    <td>{{ $work['work_duration_to']}}</td> 
+                                    <td>{{ $work['designation']}}</td>  
                                     {{-- <td><a href="#" target="_black" class="docu-down" data-toggle="modal" data-target="#qualificationdocument"><img src="assets/admin/images/document.png"></a></td> --}}
                                     {{-- <td><a href="#" target="_black" class="docu-down" data-toggle="modal" data-target="#qualificationdocument"><img src="assets/admin/images/document.png"></a></td> --}}
                                     {{-- <td><a href="assets/admin/images/sample-pdf.pdf" target="_black" class="docu-download"><img src="assets/admin/images/pdf-icon.png"></a></td> --}}
-                                    <td><span class="verified-clr"><i class="fa fa-check"></i> {{ $workhistory->verification_type}}</span></td>
+                                    <td><span class="verified-clr"><i class="fa fa-check"></i> {{ $work['verification_type']}}</span></td>
                                     {{-- <td><button type="button" class="border-none" data-toggle="modal" data-target="#workHistoryedit"><img src="assets/admin/images/edit-icon.png"></button></td> --}}
                                   </tr>
-                                 
-                                <tbody>
                                 </tbody>
+                              
                               </table>
                             </div>
                           </div>
                         </div>
-               @else
-                <p class="no-data-clg">No Data Available</p>
-                @endif
+                        @endforeach
+            @else
+            <p class="no-data-clg">No Data Available</p> 
+            @endif
+            
                         <div class="col-md-12">
                           <div class="form-group">
                             <div class="add-btn-part">
@@ -581,7 +584,7 @@
             </div>
           </div>
           @if(!$skills)
-          <div @if($workhistory && !$skills) class="tab-pane active" @else class="tab-pane" @endif id="tabs-5" role="tabpanel">
+          <div class="tab-pane" id="tabs-5" role="tabpanel">
           
             <div class="eml-persnal ">
               <div class="add-emply-details">                
@@ -604,9 +607,6 @@
                             <span><input type="radio" id="customRadioInline3" name="skill_type" class="" value="Expert"><label class="" for="customRadioInline3">Expert</label></span>
 
                             </h6>  
-
-                          
-
 
                           </div>
 
@@ -656,7 +656,7 @@
           </div>
        
        @else
-        <div class="tab-pane" id="tabs-5" role="tabpanel">
+        <div class="tab-pane {{ session('tabs-5_active') ? 'active': '' }}" id="tabs-5" role="tabpanel">
           <div class="eml-persnal ">
             <div class="add-emply-details">                
               <div class="row">
@@ -738,7 +738,7 @@
         </div>
 
         @endif
-          <div @if($skills && $identity && !$official) class="tab-pane active" @else class="tab-pane" @endif id="tabs-6" role="tabpanel">
+          <div class="tab-pane {{ session('tabs-6_active') ? 'active': '' }}" id="tabs-6" role="tabpanel">
             <div class="eml-persnal ">
               <div class="add-emply-details">                
                 <div class="row">

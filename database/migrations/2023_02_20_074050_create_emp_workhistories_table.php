@@ -37,6 +37,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('emp_workhistories', function (Blueprint $table) {
+            $table->dropForeign('emp_workhistories_emp_id_foreign');
             $table->dropColumn('emp_id');
         });
         Schema::dropIfExists('emp_workhistories');
