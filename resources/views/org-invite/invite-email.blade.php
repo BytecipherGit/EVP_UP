@@ -13,7 +13,7 @@
 <body style="margin: 0 auto; padding:0; font-family: 'Poppins', sans-serif;" >
 
 
-    <section style="max-width: 680px; margin:20px auto; background:#f2f2f3; display:block; border-radius: 10px;"> 
+     <section style="max-width: 680px; margin:20px auto; background:#f2f2f3; display:block; border-radius: 10px;"> 
         <center>
             <header style="width: 100%; padding:30px 0 20px">
                 <img src="{{ asset('assets') }}/email/images/logo.png" style="width: 150px; background-size: cover; height: auto">
@@ -23,7 +23,7 @@
                     Hi there!,
                 </h2>
                 <p style="font-size: 18px; line-height: 32px; color: #373E57; padding: 0 20px 0px; margin:0; font-family: 'DM Sans', sans-serif; text-align: left;">                 
-                You have been invited by {{$first_name}} {{$last_name}} to join the organization: ByteCipher.  You can have access to this organization, once you accept the invite.</p> 
+                    @foreach($data as $bill) You have been invited by {{ $bill }} to join the organization: ByteCipher.  You can have access to this organization, once you accept the invite.@endforeach</p> 
 
                 <p style="font-size: 18px; line-height: 32px; color: #373E57; padding:15px 20px 0px; margin:0; font-family: 'DM Sans', sans-serif; text-align: left;">
                    We hope you enjoy ByteCipher 
@@ -41,7 +41,7 @@
                 <p style="text-align: center; margin-bottom: 30px; padding: 0 20px 0px; font-family: 'DM Sans', sans-serif;">
                     <span style="margin-bottom: 10px; display: block;">OR</span>
                     <br>
-                    <span>Follow the link: <a href="{{route('email-config')}}/{{$id}}" style="text-decoration: underline; cursor: pointer; color: #18a749; ">{{route('email-config')}}/{{$id}}</a></span>
+                    <span>Follow the link:   @foreach($data2 as $id) <a href="{{route('email-config')}}/{{ $id }}" style="text-decoration: underline; cursor: pointer; color: #18a749; ">{{route('email-config')}}/{{ $id }}</a> @endforeach</span>
                 </p>
 
                 <p style="margin-top:15px;margin-bottom:15px;font-size:16px;line-height: 24px; color: #373E57;  text-align: left; padding: 0 20px 0px; font-family: 'DM Sans', sans-serif;">
@@ -65,7 +65,7 @@
         </center> 
     </section>
 
-     
+
 </body>
 
 </html>
