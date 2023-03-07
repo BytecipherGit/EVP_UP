@@ -2,32 +2,31 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\SendInterviewScheduleMail;
+use App\Mail\SendInterviewSchedulePhoneMail;
+use App\Models\EmployeeInterview;
+use App\Models\EmployeeInterviewStatus;
 use App\Models\HiringStage;
-use App\Models\InterviewEmployees as ModelsInterviewEmployee;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail as FacadesMail;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
-// use Mail;
-use App\Mail\SendInterviewScheduleMail;
-use App\Models\EmployeeInterviewStatus;
-use Illuminate\Support\Facades\Mail as FacadesMail;
 
 class InterviewEmployee extends Controller
 {
     public function index()
     {
-        $interviewEmployees = ModelsInterviewEmployee::all();
+        $interviewEmployees = EmployeeInterview::all();
         $hiringStages = HiringStage::all();
         $employeeInterviewStatuses = EmployeeInterviewStatus::all();
         // dd($hiringStages->toArray());
-        return view('admin.schedule-for-interview', compact('interviewEmployees','hiringStages','employeeInterviewStatuses'));
+        return view('admin.schedule-for-interview', compact('interviewEmployees', 'hiringStages', 'employeeInterviewStatuses'));
     }
 
     public function getScheduleInterviewForm($id = '')
     {
-        $interview = (!empty($id)) ? ModelsInterviewEmployee::find($id) : false;
+        $interview = (!empty($id)) ? EmployeeInterview::find($id) : false;
         return view('admin.schedule-interview-form', compact('interview'));
     }
 
@@ -74,7 +73,7 @@ class InterviewEmployee extends Controller
                 $uploadAttachementPath = asset('storage/interview_documents/' . $fileName);
             }
             $empCode = substr(time(), -6) . sprintf('%04d', rand(0, 9999));
-            $checkRecordExist = ModelsInterviewEmployee::where('empCode', $empCode)->first();
+            $checkRecordExist = EmployeeInterview::where('empCode', $empCode)->first();
             if (empty($checkRecordExist) && !empty($empCode)) {
                 $insert = [
                     'empCode' => $empCode,
@@ -96,19 +95,34 @@ class InterviewEmployee extends Controller
                     'attachment' => $uploadAttachementPath,
 
                 ];
-                $interviewData = ModelsInterviewEmployee::create($insert);
+                $interviewData = EmployeeInterview::create($insert);
                 if (!empty($interviewData)) {
-                    $mailData = [
-                        'empCode' => encrypt($interviewData->empCode),
-                        'name' => !empty($request->first_name) ? $request->first_name.' '.$request->last_name : '',
-                        'designation' => !empty($request->designation) ? $request->designation : '',
-                        'meeting_url' => !empty($request->video_link) ? $request->video_link : '',
-                        'meeting_date' => !empty($request->interview_date) ? $request->interview_date : '',
-                        'meeting_start_time' => !empty($request->interview_start_time) ? $request->interview_start_time : '',
-                        'meeting_end_time' => !empty($request->interview_end_time) ? $request->interview_end_time : '',
-                    ];
-                     
-                    FacadesMail::to($request->email)->send(new SendInterviewScheduleMail($mailData));
+
+                    if ($request->interview_type == 'Video') {
+                        $mailData = [
+                            'empCode' => encrypt($interviewData->empCode),
+                            'name' => !empty($request->first_name) ? $request->first_name . ' ' . $request->last_name : '',
+                            'designation' => !empty($request->designation) ? $request->designation : '',
+                            'meeting_url' => !empty($request->video_link) ? $request->video_link : '',
+                            'meeting_date' => !empty($request->interview_date) ? $request->interview_date : '',
+                            'meeting_start_time' => !empty($request->interview_start_time) ? $request->interview_start_time : '',
+                            'meeting_end_time' => !empty($request->interview_end_time) ? $request->interview_end_time : '',
+                        ];
+
+                        FacadesMail::to($request->email)->send(new SendInterviewScheduleMail($mailData));
+                    } else {
+                        $mailData = [
+                            'empCode' => encrypt($interviewData->empCode),
+                            'name' => !empty($request->first_name) ? $request->first_name . ' ' . $request->last_name : '',
+                            'designation' => !empty($request->designation) ? $request->designation : '',
+                            'phone' => !empty($request->phone) ? $request->phone : '',
+                            'meeting_date' => !empty($request->interview_date) ? $request->interview_date : '',
+                            'meeting_start_time' => !empty($request->interview_start_time) ? $request->interview_start_time : '',
+                            'meeting_end_time' => !empty($request->interview_end_time) ? $request->interview_end_time : '',
+                        ];
+
+                        FacadesMail::to($request->email)->send(new SendInterviewSchedulePhoneMail($mailData));
+                    }
 
                     return Response::json(['success' => '1']);
                 } else {
@@ -122,10 +136,10 @@ class InterviewEmployee extends Controller
 
     public function update_hiring_stage(request $request)
     {
-        if(!empty($request->interviewId) && !empty($request->stageId)){
-            $interview = ModelsInterviewEmployee::find($request->interviewId);
+        if (!empty($request->interviewId) && !empty($request->stageId)) {
+            $interview = EmployeeInterview::find($request->interviewId);
             $interview->interview_status = $request->stageId;
-            if($interview->save()){
+            if ($interview->save()) {
                 return Response::json(['success' => '1']);
             } else {
                 return Response::json(['success' => '0']);
@@ -137,9 +151,9 @@ class InterviewEmployee extends Controller
 
     public function deleteInterview(request $request)
     {
-        if(!empty($request->interviewId)){
-            $interview = ModelsInterviewEmployee::find($request->interviewId);
-            if($interview->delete()){
+        if (!empty($request->interviewId)) {
+            $interview = EmployeeInterview::find($request->interviewId);
+            if ($interview->delete()) {
                 return Response::json(['success' => '1']);
             } else {
                 return Response::json(['success' => '0']);
@@ -151,40 +165,40 @@ class InterviewEmployee extends Controller
 
     public function interviewConfirmed(request $request)
     {
-        if(!empty($request->empCode)){
-            $isUpdate = ModelsInterviewEmployee::where('empCode', decrypt($request->empCode))->update(['employee_interview_status' => 2]);
-            if($isUpdate){
+        if (!empty($request->empCode)) {
+            $isUpdate = EmployeeInterview::where('empCode', decrypt($request->empCode))->update(['employee_interview_status' => 2]);
+            if ($isUpdate) {
                 $message = 'Thank you for your response';
                 return view('admin.response', compact('message'));
             } else {
                 return Response::json(['success' => '0']);
             }
-        } 
+        }
     }
 
     public function interviewNewTime(request $request)
     {
-        if(!empty($request->empCode)){
-            $isUpdate = ModelsInterviewEmployee::where('empCode', decrypt($request->empCode))->update(['employee_interview_status' => 3]);
-            if($isUpdate){
+        if (!empty($request->empCode)) {
+            $isUpdate = EmployeeInterview::where('empCode', decrypt($request->empCode))->update(['employee_interview_status' => 3]);
+            if ($isUpdate) {
                 $message = 'Thank you for your response';
                 return view('admin.response', compact('message'));
             } else {
                 return Response::json(['success' => '0']);
             }
-        } 
+        }
     }
 
     public function interviewDeclined(request $request)
     {
-        if(!empty($request->empCode)){
-            $isUpdate = ModelsInterviewEmployee::where('empCode', decrypt($request->empCode))->update(['employee_interview_status' => 4]);
-            if($isUpdate){
+        if (!empty($request->empCode)) {
+            $isUpdate = EmployeeInterview::where('empCode', decrypt($request->empCode))->update(['employee_interview_status' => 4]);
+            if ($isUpdate) {
                 $message = 'Thank you for your response';
                 return view('admin.response', compact('message'));
             } else {
                 return Response::json(['success' => '0']);
             }
-        } 
+        }
     }
 }
