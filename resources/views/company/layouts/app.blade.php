@@ -257,9 +257,9 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script>
+    {{-- <script>
       window.jQuery || document.write('<script src="../..{{ asset('assets') }}/admin/js/vendor/jquery.min.js"></script>')
-    </script>
+    </script> --}}
     <script src="{{ asset('assets') }}/admin/js/bootstrap.min.js"></script>  
 
 </body>

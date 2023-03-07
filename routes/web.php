@@ -45,6 +45,9 @@ Route::get('/search', function () {
     return view('admin/current-employee');
   });
 
+  Route::get('/confirmation', function () {
+    return view('admin/confirm-msg');
+  });
 
   Route::get('/schedule-interview', function () {
     return view('admin/schedule-for-interview');
@@ -97,9 +100,8 @@ Route::get('/document', [App\Http\Controllers\DocumentsController::class,'index'
 
 Route::get('/email-config/{id?}', [App\Http\Controllers\InviteempController::class,'getConfig'])->name('email-config');
 Route::get('/basic-info/{id?}', [App\Http\Controllers\InviteempController::class,'getBasicDetails'])->name('basic-info');
-Route::post('/basic-info/{id?}', [App\Http\Controllers\InviteempController::class,'getBasicDetails']);
+Route::post('/basic-info/{id?}', [App\Http\Controllers\InviteempController::class,'getInviteDetails']);
 
-// Route::post('/invite-email', [App\Http\Controllers\InviteempController::class,'getemail']);
 Auth::routes();
 Route::middleware([Admin::class])->group(function () {
 Route::get('/admin', [App\Http\Controllers\AdminController::class,'index'])->name('admin');

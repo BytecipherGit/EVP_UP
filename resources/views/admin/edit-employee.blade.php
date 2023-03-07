@@ -735,12 +735,12 @@
                   </div>
                   <div class="col-md-8">
                     <h6>
-                      <span><input type="radio" id="customRadioInline4" name="skill_type" value="Beginner" class="" checked>
+                      <span><input type="radio" id="customRadioInline4" name="skill_type" value="Beginner"  <?php if ($skills->skill_type == 'Beginner') { ?> checked <?php } ?> class="" >
                       <label class="" for="customRadioInline4">Beginner</label></span>
                       
-                      <span><input type="radio" id="customRadioInline5" name="skill_type" value="Intermediate"  class="">
+                      <span><input type="radio" id="customRadioInline5" name="skill_type" value="Intermediate"  <?php if ($skills->skill_type == 'Intermediate') { ?> checked <?php } ?>  class="">
                       <label class="" for="customRadioInline5">Intermediate</label></span>
-                      <span><input type="radio" id="customRadioInline6" name="skill_type" value="Expert"  class="" >
+                      <span><input type="radio" id="customRadioInline6" name="skill_type" value="Expert"   <?php if ($skills->skill_type == 'Expert') { ?> checked <?php } ?> class="" >
                       <label class="" for="customRadioInline6">Expert</label></span>
                     </h6>  
                   </div>
@@ -782,12 +782,12 @@
                       </div>
                       <div class="col-md-8">
                         <h6>
-                          <span><input type="radio" id="customRadioInline4" name="lang_type" value="Beginner"  class="">
+                          <span><input type="radio" id="customRadioInline4" name="lang_type" value="Beginner" <?php if ($skills->lang_type == 'Beginner') { ?> checked <?php } ?> class="">
                           <label class="" for="customRadioInline4">Beginner</label></span>
                           
-                          <span><input type="radio" id="customRadioInline5" name="lang_type" class="" value="Intermediate"  checked="">
+                          <span><input type="radio" id="customRadioInline5" name="lang_type" class="" value="Intermediate" <?php if ($skills->lang_type == 'Intermediate') { ?> checked <?php } ?>>
                           <label class="" for="customRadioInline5">Intermediate</label></span>
-                          <span><input type="radio" id="customRadioInline6" name="lang_type" value="Expert" class="" >
+                          <span><input type="radio" id="customRadioInline6" name="lang_type" value="Expert"  <?php if ($skills->lang_type == 'Expert') { ?> checked <?php } ?> class="" >
                           <label class="" for="customRadioInline6">Expert</label></span>
                         </h6>  
                       </div>
@@ -1074,6 +1074,7 @@
             <img src="{{ asset('assets') }}/admin/images/close-btn-icon.png">
           </button>
         </div>
+        @if($qualification)
         <div class="modal-body">
           <div class="comman-body">
              <form method="post" enctype="multipart/form-data">
@@ -1146,8 +1147,9 @@
               </div>
           </div>
         </div>
-      
-      
+       @else
+       <p>No data Available</p>
+       @endif
       </div>
     </div>
   </div>
@@ -1237,6 +1239,7 @@
             <img src="{{ asset('assets') }}/admin/images/close-btn-icon.png">
           </button>
         </div>
+        @if($workhistory)
         <div class="modal-body">
           <div class="comman-body">
              <form method="post" enctype="multipart/form-data">
@@ -1344,6 +1347,9 @@
               </div>
           </div>
         </div>
+        @else
+        <p>No Data Available</p>
+        @endif
       </div>
     </div>
   </div>

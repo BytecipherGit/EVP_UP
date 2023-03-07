@@ -29,7 +29,7 @@
            @endif
            
            <x-auth-session-status class="mb-4 alert alert-success" :status="session('status')" />
-           <form method="POST" action="{{ route('login') }}">
+           <form method="POST" action="{{ route('login') }}" >
               @csrf
             
               <div class="d-flex close-butn">

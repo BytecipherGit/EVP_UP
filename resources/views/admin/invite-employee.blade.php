@@ -425,7 +425,7 @@
    
             $(document).on('click', '#bulk_mail', function() {
                 var id = [];
-                if (confirm("Are you sure you want to Update this data?")) {
+                if (confirm("Are you sure you want to Send Invitation Mail?")) {
                     $('.users_checkbox:checked').each(function() {
                         id.push($(this).val());
                     });

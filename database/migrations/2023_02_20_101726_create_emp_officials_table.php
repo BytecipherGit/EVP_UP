@@ -50,6 +50,10 @@ return new class extends Migration
      */
     public function down()
     {
+        Schema::table('emp_officials', function (Blueprint $table) {
+            $table->dropForeign('emp_officials_emp_id_foreign');
+            $table->dropColumn('emp_id');
+        });
         Schema::dropIfExists('emp_officials');
     }
 };
