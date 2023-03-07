@@ -106,7 +106,8 @@
                         <th>Designation</th>
                         <th>Candidate Rating</th>
                         <th>Offer Status</th>
-                        <th>Hiring Stage</th>
+                        <th>Hiring Status</th>
+                        <th>Employee Status</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -161,6 +162,13 @@
                                             data-id="{{ $employee->id }}">{{ $hiringStage->title }}</option>
                                     @endforeach
                                 </select>
+                            </td>
+                            <td>
+                                @foreach ($employeeInterviewStatuses as $employeeInterviewStatus)
+                                    @if ($employeeInterviewStatus->id === $employee->employee_interview_status) 
+                                        <strong style="color: #007bff">{{ $employeeInterviewStatus->title }}</strong>
+                                    @endif 
+                                @endforeach
                             </td>
                             <td>
                                 <span class="notifi-td" data-toggle="modal" data-target="#remaiderbtninfo"><img
@@ -377,6 +385,9 @@
                         if (data.errors.last_name) {
                             $('#last_name-error').html(data.errors.last_name[0]);
                         }
+                        if (data.errors.email) {
+                            $('#email-error').html(data.errors.email[0]);
+                        }
                         if (data.errors.designation) {
                             $('#designation-error').html(data.errors.designation[0]);
                         }
@@ -409,9 +420,9 @@
                         if (data.success) {
                             $('#first_name-error').html('');
                             $('#last_name-error').html('');
+                            $('#email-error').html('');
                             $('#designation-error').html('');
                             $('#interview_date-error').html('');
-
                             $('#interview_start_time-error').html('');
                             $('#interview_end_time-error').html('');
                             $('#video_link-error').html('');

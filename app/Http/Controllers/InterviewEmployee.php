@@ -3,12 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\HiringStage;
-use App\Models\InterviewEmployee as ModelsInterviewEmployee;
+use App\Models\InterviewEmployees as ModelsInterviewEmployee;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+// use Mail;
+use App\Mail\SendInterviewScheduleMail;
+use App\Models\EmployeeInterviewStatus;
+use Illuminate\Support\Facades\Mail as FacadesMail;
 
 class InterviewEmployee extends Controller
 {
@@ -16,8 +20,9 @@ class InterviewEmployee extends Controller
     {
         $interviewEmployees = ModelsInterviewEmployee::all();
         $hiringStages = HiringStage::all();
+        $employeeInterviewStatuses = EmployeeInterviewStatus::all();
         // dd($hiringStages->toArray());
-        return view('admin.schedule-for-interview', compact('interviewEmployees','hiringStages'));
+        return view('admin.schedule-for-interview', compact('interviewEmployees','hiringStages','employeeInterviewStatuses'));
     }
 
     public function getScheduleInterviewForm($id = '')
@@ -33,6 +38,7 @@ class InterviewEmployee extends Controller
                 $validator = Validator::make($request->all(), [
                     'first_name' => 'required|string|max:255',
                     'last_name' => 'required|string|max:255',
+                    'email' => 'required|email',
                     'designation' => 'required|string|max:255',
                     'interview_date' => 'required|string|max:255',
                     'interview_start_time' => 'required|string|max:255',
@@ -46,6 +52,7 @@ class InterviewEmployee extends Controller
                 $validator = Validator::make($request->all(), [
                     'first_name' => 'required|string|max:255',
                     'last_name' => 'required|string|max:255',
+                    'email' => 'required|email',
                     'designation' => 'required|string|max:255',
                     'interview_date' => 'required|string|max:255',
                     'interview_start_time' => 'required|string|max:255',
@@ -73,10 +80,12 @@ class InterviewEmployee extends Controller
                     'empCode' => $empCode,
                     'first_name' => !empty($request->first_name) ? $request->first_name : null,
                     'last_name' => !empty($request->last_name) ? $request->last_name : null,
+                    'email' => !empty($request->email) ? $request->email : null,
                     'designation' => !empty($request->designation) ? $request->designation : null,
                     'rating' => !empty($request->rating) ? $request->rating : null,
                     'offer_status' => !empty($request->offer_status) ? $request->offer_status : 'Pending',
                     'interview_status' => !empty($request->interview_status) ? $request->interview_status : 1,
+                    'employee_interview_status' => !empty($request->employee_interview_status) ? $request->employee_interview_status : 1,
                     'interview_date' => !empty($request->interview_date) ? $request->interview_date : Carbon::now()->format('Y-m-d'),
                     'interview_start_time' => !empty($request->interview_start_time) ? $request->interview_start_time : null,
                     'interview_end_time' => !empty($request->interview_end_time) ? $request->interview_end_time : null,
@@ -89,6 +98,18 @@ class InterviewEmployee extends Controller
                 ];
                 $interviewData = ModelsInterviewEmployee::create($insert);
                 if (!empty($interviewData)) {
+                    $mailData = [
+                        'empCode' => encrypt($interviewData->empCode),
+                        'name' => !empty($request->first_name) ? $request->first_name.' '.$request->last_name : '',
+                        'designation' => !empty($request->designation) ? $request->designation : '',
+                        'meeting_url' => !empty($request->video_link) ? $request->video_link : '',
+                        'meeting_date' => !empty($request->interview_date) ? $request->interview_date : '',
+                        'meeting_start_time' => !empty($request->interview_start_time) ? $request->interview_start_time : '',
+                        'meeting_end_time' => !empty($request->interview_end_time) ? $request->interview_end_time : '',
+                    ];
+                     
+                    FacadesMail::to($request->email)->send(new SendInterviewScheduleMail($mailData));
+
                     return Response::json(['success' => '1']);
                 } else {
                     return Response::json(['success' => '0']);
@@ -126,5 +147,44 @@ class InterviewEmployee extends Controller
         } else {
             return Response::json(['success' => '0']);
         }
+    }
+
+    public function interviewConfirmed(request $request)
+    {
+        if(!empty($request->empCode)){
+            $isUpdate = ModelsInterviewEmployee::where('empCode', decrypt($request->empCode))->update(['employee_interview_status' => 2]);
+            if($isUpdate){
+                $message = 'Thank you for your response';
+                return view('admin.response', compact('message'));
+            } else {
+                return Response::json(['success' => '0']);
+            }
+        } 
+    }
+
+    public function interviewNewTime(request $request)
+    {
+        if(!empty($request->empCode)){
+            $isUpdate = ModelsInterviewEmployee::where('empCode', decrypt($request->empCode))->update(['employee_interview_status' => 3]);
+            if($isUpdate){
+                $message = 'Thank you for your response';
+                return view('admin.response', compact('message'));
+            } else {
+                return Response::json(['success' => '0']);
+            }
+        } 
+    }
+
+    public function interviewDeclined(request $request)
+    {
+        if(!empty($request->empCode)){
+            $isUpdate = ModelsInterviewEmployee::where('empCode', decrypt($request->empCode))->update(['employee_interview_status' => 4]);
+            if($isUpdate){
+                $message = 'Thank you for your response';
+                return view('admin.response', compact('message'));
+            } else {
+                return Response::json(['success' => '0']);
+            }
+        } 
     }
 }
