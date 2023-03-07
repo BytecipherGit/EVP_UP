@@ -106,7 +106,8 @@
                         <th>Designation</th>
                         <th>Candidate Rating</th>
                         <th>Offer Status</th>
-                        <th>Hiring Stage</th>
+                        <th>Hiring Status</th>
+                        <th>Employee Status</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -161,6 +162,13 @@
                                             data-id="{{ $employee->id }}">{{ $hiringStage->title }}</option>
                                     @endforeach
                                 </select>
+                            </td>
+                            <td>
+                                @foreach ($employeeInterviewStatuses as $employeeInterviewStatus)
+                                    @if ($employeeInterviewStatus->id === $employee->employee_interview_status) 
+                                        <strong style="color: #007bff">{{ $employeeInterviewStatus->title }}</strong>
+                                    @endif 
+                                @endforeach
                             </td>
                             <td>
                                 <span class="notifi-td" data-toggle="modal" data-target="#remaiderbtninfo"><img
