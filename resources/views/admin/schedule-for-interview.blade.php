@@ -154,7 +154,8 @@
                             </td>
                             <td><span class="tb-accept"></span> {{ $employee->offer_status }}</td>
                             <td>
-                                <select style="width: 150px;" class="form-control" name="hiring_stage" id="hiring_stage">
+                                <select style="width: 150px;" class="form-control" name="hiring_stage"
+                                    id="hiring_stage">
                                     @foreach ($hiringStages as $hiringStage)
                                         <option value="{{ $hiringStage->id }}"
                                             @if ($hiringStage->id === $employee->interview_status) selected="selected" @endif
@@ -281,6 +282,7 @@
     });
 </script>
 {{-- <script src="{{ asset('assets') }}/datatable/js/jquery-3.5.1.js"></script> --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
 <script src="{{ asset('assets') }}/datatable/js/jquery.dataTables.min.js"></script>
 <script src="{{ asset('assets') }}/datatable/js/dataTables.bootstrap.min.js"></script>
 
@@ -423,7 +425,7 @@
                             setInterval(function() {
                                 location.reload();
                             }, 3000);
-                            
+
                         }
                     }
 
@@ -434,33 +436,50 @@
             });
         });
         $(document).on('change', '#hiring_stage', function() {
-            // Handle the change event
-            var stageId = $(this).val();
-            var interviewId = $('option:selected', this).data('id');
-            if (stageId != '' && interviewId != '') {
-                var url = '{{ url('schedule-interview/changeHiringStage') }}';
-                var my_data = {
-                    stageId: stageId,
-                    interviewId: interviewId
-                };
-                $.ajax({
-                    url: url,
-                    type: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    data: my_data,
-                    success: function(data) {
-                        if (data.success) {
-                            alert('Hiring status successfully updated')
-                            location.reload();
+            swal({
+                    title: "Are you sure you want to change the status of this interview",
+                    text: "Once you update status then you will updated status on interview employee listing!",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                .then((result) => {
+                    if (result) {
+                        // Handle the change event
+                        var stageId = $(this).val();
+                        var interviewId = $('option:selected', this).data('id');
+                        if (stageId != '' && interviewId != '') {
+                            var url = '{{ url('schedule-interview/changeHiringStage') }}';
+                            var my_data = {
+                                stageId: stageId,
+                                interviewId: interviewId
+                            };
+                            $.ajax({
+                                url: url,
+                                type: 'POST',
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                        'content')
+                                },
+                                data: my_data,
+                                success: function(data) {
+                                    if (data.success) {
+                                        swal("Poof! Your patrol has been archived!", {
+                                            icon: "success",
+                                        });
+                                        location.reload();
+                                    }
+                                },
+                                error: function(xhr, textStatus, errorThrown) {
+                                    console.log(xhr.responseText);
+                                }
+                            });
                         }
-                    },
-                    error: function(xhr, textStatus, errorThrown) {
-                        console.log(xhr.responseText);
+                    } else {
+                        swal("Your data is safe!");
+                        location.reload();
                     }
                 });
-            }
         });
     });
 </script>
