@@ -377,6 +377,9 @@
                         if (data.errors.last_name) {
                             $('#last_name-error').html(data.errors.last_name[0]);
                         }
+                        if (data.errors.email) {
+                            $('#email-error').html(data.errors.email[0]);
+                        }
                         if (data.errors.designation) {
                             $('#designation-error').html(data.errors.designation[0]);
                         }
@@ -409,9 +412,9 @@
                         if (data.success) {
                             $('#first_name-error').html('');
                             $('#last_name-error').html('');
+                            $('#email-error').html('');
                             $('#designation-error').html('');
                             $('#interview_date-error').html('');
-
                             $('#interview_start_time-error').html('');
                             $('#interview_end_time-error').html('');
                             $('#video_link-error').html('');

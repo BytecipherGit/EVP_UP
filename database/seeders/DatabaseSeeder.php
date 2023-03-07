@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             CountrySeeder::class,
             StateSeeder::class,
             HiringStage::class,
+            EmployeeStatus::class,
         ]);
     }
 }

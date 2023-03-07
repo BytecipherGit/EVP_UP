@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\HiringStage;
-use App\Models\InterviewEmployee as ModelsInterviewEmployee;
+use App\Models\InterviewEmployees as ModelsInterviewEmployee;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
@@ -33,6 +33,7 @@ class InterviewEmployee extends Controller
                 $validator = Validator::make($request->all(), [
                     'first_name' => 'required|string|max:255',
                     'last_name' => 'required|string|max:255',
+                    'email' => 'required|email',
                     'designation' => 'required|string|max:255',
                     'interview_date' => 'required|string|max:255',
                     'interview_start_time' => 'required|string|max:255',
@@ -46,6 +47,7 @@ class InterviewEmployee extends Controller
                 $validator = Validator::make($request->all(), [
                     'first_name' => 'required|string|max:255',
                     'last_name' => 'required|string|max:255',
+                    'email' => 'required|email',
                     'designation' => 'required|string|max:255',
                     'interview_date' => 'required|string|max:255',
                     'interview_start_time' => 'required|string|max:255',
@@ -73,10 +75,12 @@ class InterviewEmployee extends Controller
                     'empCode' => $empCode,
                     'first_name' => !empty($request->first_name) ? $request->first_name : null,
                     'last_name' => !empty($request->last_name) ? $request->last_name : null,
+                    'email' => !empty($request->email) ? $request->email : null,
                     'designation' => !empty($request->designation) ? $request->designation : null,
                     'rating' => !empty($request->rating) ? $request->rating : null,
                     'offer_status' => !empty($request->offer_status) ? $request->offer_status : 'Pending',
                     'interview_status' => !empty($request->interview_status) ? $request->interview_status : 1,
+                    'employee_interview_status' => !empty($request->employee_interview_status) ? $request->employee_interview_status : 1,
                     'interview_date' => !empty($request->interview_date) ? $request->interview_date : Carbon::now()->format('Y-m-d'),
                     'interview_start_time' => !empty($request->interview_start_time) ? $request->interview_start_time : null,
                     'interview_end_time' => !empty($request->interview_end_time) ? $request->interview_end_time : null,

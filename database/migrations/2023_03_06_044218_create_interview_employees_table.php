@@ -19,11 +19,14 @@ return new class extends Migration
             $table->string('empCode')->nullable()->unique();
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
+            $table->string('email')->nullable();
             $table->string('designation')->nullable();
             $table->string('rating')->nullable();
             $table->enum('offer_status',['Pending','Accepted','Joined','Cancelled','Declined'])->comment('Pending / Accepted / Joined / Cancelled / Declined')->default('Pending');
             $table->unsignedBigInteger('interview_status')->comment('Hiring_stage Table PK');
             $table->foreign('interview_status')->references('id')->on('hiring_stages')->onDelete('cascade');
+            $table->unsignedBigInteger('employee_interview_status')->comment('employee_interview_status table pk');
+            $table->foreign('employee_interview_status')->references('id')->on('employee_interview_statuses')->onDelete('cascade');
             $table->date('interview_date')->default(Carbon::now()->format('Y-m-d'));
             $table->time('interview_start_time',$precision = 0);
             $table->time('interview_end_time',$precision = 0);
@@ -32,6 +35,8 @@ return new class extends Migration
             $table->string('video_link')->nullable();
             $table->string('message')->nullable();
             $table->string('attachment')->nullable();
+            $table->longText('employee_comment')->nullable();
+            $table->date('employee_comment_date')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

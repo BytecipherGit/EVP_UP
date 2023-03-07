@@ -19,6 +19,11 @@
     <strong class="error" id="last_name-error"></strong>
 </div>
 <div class="form-group">
+    <label>Email</label>
+    <input type="email" name="email" class="form-control" placeholder="Email">
+    <strong class="error" id="email-error"></strong>
+</div>
+<div class="form-group">
     <label>Designation</label>
     <input type="type" name="designation" class="form-control" placeholder="Designation">
     <strong class="error" id="designation-error"></strong>
