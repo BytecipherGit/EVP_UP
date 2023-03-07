@@ -3,23 +3,7 @@
 @section('content')
 @section('title','EVP - New Admin')
 
-<style>
-  .disabled{
-   pointer-events: none;
- }
- .verified{
-   color: #5BD94E;
- }
- .not-verified{
-   color: #ac2029;
- }
- </style>
 
- 
-<link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/bootstrap.min.css">
-<link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/datatables.bootstrap.min.css">
-<link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/fixedheader.bootstrap.min.css">
-<link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/responsive.bootstrap.min.css">
 
 <div class="main-container">
   @if (session()->has('message'))

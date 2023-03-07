@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             CitySeeder::class,
             CountrySeeder::class,
             StateSeeder::class,
+            HiringStage::class,
         ]);
     }
 }
