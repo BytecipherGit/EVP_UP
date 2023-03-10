@@ -266,6 +266,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
+                    <div id="loadingImg"></div>
                     <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
                     <button type="submit" id="scheduleInterviewSubmit" class="btn-primary-cust">Schedule</button>
                 </div>
@@ -366,7 +367,7 @@
                 var url = '{{ url('schedule-interview/update') }}';
                 successMsg = "Successfully Updated";
             }
-
+            $('#loadingImg').show();
             var formData = new FormData(this);
             $.ajax({
                 url: url,
@@ -414,10 +415,11 @@
                         if (data.errors.attachment) {
                             $('#attachment-error').html(data.errors.attachment[0]);
                         }
-                        // $('#loadingImg').hide();
+                        $('#loadingImg').hide();
                     } else {
 
                         if (data.success) {
+                            $('#loadingImg').hide();
                             $('#first_name-error').html('');
                             $('#last_name-error').html('');
                             $('#email-error').html('');

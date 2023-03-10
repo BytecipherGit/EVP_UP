@@ -93,7 +93,7 @@
             <footer style="padding:20px;">
                 <p
                     style="font-weight:300;font-size: 16px; line-height: 32px; color: #373E57; font-family: 'DM Sans', sans-serif; margin: 0;">
-                    Copyright 2022 <span style="color: #5533FF;">{{  }}</span>. All Right Reserved.</p>
+                    Copyright 2022 <span style="color: #5533FF;">{{ $mailData['organisationName'] }}</span>. All Right Reserved.</p>
                 <ul style="margin:15px 0 0; padding:0">
                     <li style="list-style-type: none; display: inline-block;"><a href="#"><img
                                 src="{{ asset('assets') }}/admin/candidate/images/instagram-icon.png"></a></li>
