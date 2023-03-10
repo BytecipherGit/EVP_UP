@@ -178,8 +178,7 @@ class InterviewEmployee extends Controller
         if (!empty($request->empCode)) {
             $isUpdate = EmployeeInterview::where('empCode', decrypt($request->empCode))->update(['employee_interview_status' => 2]);
             if ($isUpdate) {
-                $message = 'Thank you for your response';
-                return view('admin.response', compact('message'));
+                return redirect('/success');
             } else {
                 return Response::json(['success' => '0']);
             }
@@ -191,8 +190,7 @@ class InterviewEmployee extends Controller
         if (!empty($request->empCode)) {
             $isUpdate = EmployeeInterview::where('empCode', decrypt($request->empCode))->update(['employee_interview_status' => 3]);
             if ($isUpdate) {
-                $message = 'Thank you for your response';
-                return view('admin.response', compact('message'));
+                return redirect('/success');
             } else {
                 return Response::json(['success' => '0']);
             }
@@ -204,8 +202,7 @@ class InterviewEmployee extends Controller
         if (!empty($request->empCode)) {
             $isUpdate = EmployeeInterview::where('empCode', decrypt($request->empCode))->update(['employee_interview_status' => 4]);
             if ($isUpdate) {
-                $message = 'Thank you for your response';
-                return view('admin.response', compact('message'));
+                return redirect('/success');
             } else {
                 return Response::json(['success' => '0']);
             }

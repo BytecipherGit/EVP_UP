@@ -29,6 +29,10 @@ Route::get('/', function () {
     return view('web/index');
 });
 
+Route::get('/success', function () {
+    return view('web/success');
+});
+
 Route::get('/edit-employee', function () {
     return view('');
 });
