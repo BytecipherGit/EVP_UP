@@ -36,161 +36,118 @@
         </div>
     </div>
     <!--- Main Heading ----->
-
+    
     <div class="employee-view-page">
         <div class="table-responsive-bg">
-            <div class="table-effect-box">
-                {{-- <div class="table-search-box">
-                    <input type="search" name="" placeholder="Search Candidate"
-                        class="form-control input-search-box">
-                </div> --}}
-                {{-- <span class="ml-auto d-flex">
-                    <div class="select-bx">
-                        <h2>
-                            <div class="selectBox selectBox-boder">
-                                <div class="selectBox__value">Stage...</div>
-                                <div class="dropdown-menu" id="style-5">
-                                    <a class="dropdown-item"><span class="spn-cricle ioi_bg"></span>Invited For
-                                        Interview</a>
-                                    <a class="dropdown-item"><span class="spn-cricle ioi_bg"></span>Interviewed</a>
-                                    <a class="dropdown-item"><span class="spn-cricle ioi_bg"></span>Invitation To
-                                        Complete Machine Task</a>
-                                    <a class="dropdown-item"><span class="spn-cricle ioi_bg"></span>Machine Task
-                                        Completed </a>
-                                    <a class="dropdown-item"><span class="spn-cricle ifd_bg"></span>Feedback & Hr
-                                        Policies Shared</a>
-                                    <a class="dropdown-item"><span class="spn-cricle ifd_bg"></span>Offer Sent </a>
-                                    <a class="dropdown-item"><span class="spn-cricle ifi_bg"></span>Offer Decline </a>
-                                    <a class="dropdown-item"><span class="spn-cricle ifi_bg"></span>Candidate Withdrew
-                                    </a>
-                                    <a class="dropdown-item"><span class="spn-cricle ifi_bg"></span>Candidate
-                                        Unresponsive </a>
-                                    <a class="dropdown-item"><span class="spn-cricle ifi_bg"></span>Rejected </a>
-                                    <a class="dropdown-item"><span class="spn-cricle hrd_bg"></span>Hired </a>
-                                </div>
-                            </div>
-                        </h2>
-                    </div>
-                    <div class="select-bx selectBox-statu-boder">
-                        <h2>
-                            <div class="selectBox">
-                                <div class="selectBox__value">Status</div>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item">Accepted</a>
-                                    <a class="dropdown-item ">Declied</a>
-                                    <a class="dropdown-item ">Joined</a>
-                                </div>
-                            </div>
-                        </h2>
-                    </div>
-                    <div class="select-bx">
-                        <h2><span>Show</span>
-                            <div class="selectBox">
-                                <div class="selectBox__value">10</div>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item active">10</a>
-                                    <a class="dropdown-item ">25</a>
-                                    <a class="dropdown-item ">50</a>
-                                    <a class="dropdown-item ">100</a>
-                                </div>
-                            </div>
-                        </h2>
-                    </div>
-                </span> --}}
-            </div>
-            <table id="example" class="table-bordered table">
-                <thead>
-                    <tr>
-                        <th>EVP Id</th>
-                        <th>Name</th>
-                        <th>Designation</th>
-                        <th>Candidate Rating</th>
-                        <th>Offer Status</th>
-                        <th>Hiring Status</th>
-                        <th>Employee Status</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($interviewEmployees as $employee)
-                        <tr>
-                            <td># {{ $employee->empCode }}</td>
-                            <td>{{ $employee->first_name . ' ' . $employee->last_name }}</td>
-                            <td>{{ $employee->designation }}</td>
-                            <td>
-                                {{ $employee->rating ? $employee->rating : '-' }}
-                                {{-- <fieldset class="rating ">
-                            <input type="radio" id="textiles-star51" name="textiles-rating1" value="5">
-                            <label class="full" for="textiles-star51"></label>
-                            <input type="radio" id="textiles-star4half1" name="textiles-rating1"
-                                value="4 and a half">
-                            <label class="half" for="textiles-star4half1"></label>
-
-                            <input type="radio" id="textiles-star41" name="textiles-rating1" value="4"
-                                checked="">
-                            <label class="full" for="textiles-star41"></label>
-                            <input type="radio" id="textiles-star3half1" name="textiles-rating1"
-                                value="3 and a half">
-                            <label class="half" for="textiles-star3half1"></label>
-
-                            <input type="radio" id="textiles-star31" name="textiles-rating1" value="3">
-                            <label class="full" for="textiles-star31"></label>
-                            <input type="radio" id="textiles-star2half1" name="textiles-rating1"
-                                value="2 and a half">
-                            <label class="half" for="textiles-star2half1"></label>
-
-                            <input type="radio" id="textiles-star21" name="textiles-rating1" value="2">
-                            <label class="full" for="textiles-star21"></label>
-                            <input type="radio" id="textiles-star1half1" name="textiles-rating"
-                                value="1 and a half">
-                            <label class="half" for="textiles-star1half1"></label>
-
-                            <input type="radio" id="textiles-star11" name="textiles-rating1" value="1">
-                            <label class="full" for="textiles-star11"></label>
-                            <input type="radio" id="textiles-starhalf1" name="textiles-rating1"
-                                value="half">
-                            <label class="half" for="textiles-starhalf1"></label>
-                        </fieldset> --}}
-                            </td>
-                            <td><span class="tb-accept"></span> {{ $employee->offer_status }}</td>
-                            <td>
-                                <select style="width: 150px;" class="form-control" name="hiring_stage"
-                                    id="hiring_stage">
-                                    @foreach ($hiringStages as $hiringStage)
-                                        <option value="{{ $hiringStage->id }}"
-                                            @if ($hiringStage->id === $employee->interview_status) selected="selected" @endif
-                                            data-id="{{ $employee->id }}">{{ $hiringStage->title }}</option>
-                                    @endforeach
-                                </select>
-                            </td>
-                            <td>
-                                @foreach ($employeeInterviewStatuses as $employeeInterviewStatus)
-                                    @if ($employeeInterviewStatus->id === $employee->employee_interview_status) 
-                                        <strong style="color: #007bff">{{ $employeeInterviewStatus->title }}</strong>
-                                    @endif 
-                                @endforeach
-                            </td>
-                            <td>
-                                <span class="notifi-td" data-toggle="modal" data-target="#remaiderbtninfo"><img
-                                        src="assets/admin/images/bell-icon.png" width="30px;" height="30px"></span>
-                                {{-- <a href="#" class="edit-btn" data-toggle="modal"
-                                    data-target="#deletebtninfo">Delete</a> --}}
-                                    <a href="#" class="edit-btn" id="delete_interview" data-id="{{ $employee->id }}">Delete</a>
-                            </td>
-                        </tr>
-                    @endforeach
-
-
-                </tbody>
-            </table>
-            {{-- <div class="pagination-main d-flex">
-                <h2>Showing 1 to 7 of 20 entries</h2>
-                <div class="pagination ml-auto">
-                    <ul>
-                        <!--pages or li are comes from javascript -->
-                    </ul>
+            <div class="row">
+                <div class="col-xs-6">
+                    <label>Filter By Employee Status</label>
+                    <select class="form-control">
+                        <option class="dropdown-item">Accepted</option>
+                        <option class="dropdown-item ">Declied</option>
+                        <option class="dropdown-item ">Joined</option>
+                    </select>
                 </div>
-            </div> --}}
+                <div class="col-xs-6">
+                    <label>Filter By Employee Status</label>
+                    <select class="form-control">
+                        <option class="dropdown-item">Accepted</option>
+                        <option class="dropdown-item ">Declied</option>
+                        <option class="dropdown-item ">Joined</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 20px;">
+                <div class="col-xs-12">
+                <table id="example" class="table-bordered table">
+                    <thead>
+                        <tr>
+                            <th>EVP Id</th>
+                            <th>Name</th>
+                            <th>Designation</th>
+                            {{-- <th>Candidate Rating</th> --}}
+                            <th>Offer Status</th>
+                            <th>Hiring Status</th>
+                            <th>Employee Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($interviewEmployees as $employee)
+                            <tr>
+                                <td># {{ $employee->empCode }}</td>
+                                <td>{{ $employee->first_name . ' ' . $employee->last_name }}</td>
+                                <td>{{ $employee->designation }}</td>
+                                {{-- <td>
+                                    {{ $employee->rating ? $employee->rating : '-' }}
+                                    <fieldset class="rating ">
+                                <input type="radio" id="textiles-star51" name="textiles-rating1" value="5">
+                                <label class="full" for="textiles-star51"></label>
+                                <input type="radio" id="textiles-star4half1" name="textiles-rating1"
+                                    value="4 and a half">
+                                <label class="half" for="textiles-star4half1"></label>
+    
+                                <input type="radio" id="textiles-star41" name="textiles-rating1" value="4"
+                                    checked="">
+                                <label class="full" for="textiles-star41"></label>
+                                <input type="radio" id="textiles-star3half1" name="textiles-rating1"
+                                    value="3 and a half">
+                                <label class="half" for="textiles-star3half1"></label>
+    
+                                <input type="radio" id="textiles-star31" name="textiles-rating1" value="3">
+                                <label class="full" for="textiles-star31"></label>
+                                <input type="radio" id="textiles-star2half1" name="textiles-rating1"
+                                    value="2 and a half">
+                                <label class="half" for="textiles-star2half1"></label>
+    
+                                <input type="radio" id="textiles-star21" name="textiles-rating1" value="2">
+                                <label class="full" for="textiles-star21"></label>
+                                <input type="radio" id="textiles-star1half1" name="textiles-rating"
+                                    value="1 and a half">
+                                <label class="half" for="textiles-star1half1"></label>
+    
+                                <input type="radio" id="textiles-star11" name="textiles-rating1" value="1">
+                                <label class="full" for="textiles-star11"></label>
+                                <input type="radio" id="textiles-starhalf1" name="textiles-rating1"
+                                    value="half">
+                                <label class="half" for="textiles-starhalf1"></label>
+                            </fieldset> 
+                                </td> --}}
+                                <td><span class="tb-accept"></span> {{ $employee->offer_status }}</td>
+                                <td>
+                                    <select style="width: 150px;" class="form-control" name="hiring_stage"
+                                        id="hiring_stage">
+                                        @foreach ($hiringStages as $hiringStage)
+                                            <option value="{{ $hiringStage->id }}"
+                                                @if ($hiringStage->id === $employee->interview_status) selected="selected" @endif
+                                                data-id="{{ $employee->id }}">{{ $hiringStage->title }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td>
+                                    @foreach ($employeeInterviewStatuses as $employeeInterviewStatus)
+                                        @if ($employeeInterviewStatus->id === $employee->employee_interview_status)
+                                            <strong style="color: #007bff">{{ $employeeInterviewStatus->title }}</strong>
+                                        @endif
+                                    @endforeach
+                                </td>
+                                <td>
+                                    <span class="notifi-td" data-toggle="modal" data-target="#remaiderbtninfo"><img
+                                            src="assets/admin/images/bell-icon.png" width="30px;" height="30px"></span>
+                                    {{-- <a href="#" class="edit-btn" data-toggle="modal"
+                                        data-target="#deletebtninfo">Delete</a> --}}
+                                    <a href="#" class="edit-btn" id="delete_interview"
+                                        data-id="{{ $employee->id }}">Delete</a>
+                                </td>
+                            </tr>
+                        @endforeach
+    
+    
+                    </tbody>
+                </table>
+            </div>
+            </div>    
+            
         </div>
     </div>
     <!--- Employeer View Page ----->
@@ -508,7 +465,9 @@
                         var interviewId = $(this).data('id');
                         if (interviewId != '') {
                             var url = '{{ url('schedule-interview/deleteInterview') }}';
-                            var my_data = { interviewId: interviewId };
+                            var my_data = {
+                                interviewId: interviewId
+                            };
                             $.ajax({
                                 url: url,
                                 type: 'POST',
@@ -537,8 +496,6 @@
                 });
         });
     });
-
-
 </script>
 
 @stop
