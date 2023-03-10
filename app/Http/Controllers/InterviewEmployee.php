@@ -19,9 +19,17 @@ use Helper;
 
 class InterviewEmployee extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $interviewEmployees = EmployeeInterview::all();
+        if($request->hiringStatusId && $request->employeeStatusId){
+            $interviewEmployees = EmployeeInterview::where('interview_status', $request->hiringStatusId)->where('employee_interview_status', $request->employeeStatusId)->get();
+        } else if ($request->hiringStatusId){
+            $interviewEmployees = EmployeeInterview::where('interview_status', $request->hiringStatusId)->get();
+        } else if ($request->employeeStatusId){
+            $interviewEmployees = EmployeeInterview::where('employee_interview_status', $request->employeeStatusId)->get();
+        } else {
+            $interviewEmployees = EmployeeInterview::all();
+        }
         $hiringStages = HiringStage::all();
         $employeeInterviewStatuses = EmployeeInterviewStatus::all();
         // dd($hiringStages->toArray());
