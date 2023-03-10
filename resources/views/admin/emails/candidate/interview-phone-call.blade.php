@@ -31,7 +31,7 @@
                 <p
                     style="font-size: 18px; line-height: 28px; color: #373E57; padding: 0 20px 0px; margin:0; font-family: 'DM Sans', sans-serif; text-align: left;">
                     You are invited to a phone interview for the Urgent Requirement for {{ $mailData['designation'] }} position at
-                    ByteCipher Pvt Ltd.</p>
+                    {{ $mailData['organisationName'] }}.</p>
 
                 <div style="border-top: 1px solid #c3baba; margin:15px 20px;"></div>
 
@@ -50,7 +50,7 @@
                         style="width:75%; border: 1px solid #c3baba; border-radius: 6px; float: left; padding: 10px 15px; margin: 20px 0; background: #f3f1f1;">
                         <h1
                             style="font-size:20px; line-height: 24px; font-weight: 800; border-bottom: 1px solid #c3baba;padding-bottom: 15px; margin-bottom: 15px;">
-                            Phone interview with ByteCipher Pvt Ltd.</h1>
+                            Phone interview with {{ $mailData['organisationName'] }}.</h1>
                         <h6
                             style="text-align: left; font-size: 16px; font-weight: 200; display: flex; align-items: center; word-break: break-all;">
                             <img src="{{ asset('assets') }}/admin/candidate/images/phone-call.png"
@@ -87,13 +87,13 @@
                 <p
                     style="width:100%; margin-top:15px;margin-bottom:15px; margin-top: 30px; font-size:16px;line-height: 24px; color: #373E57;  text-align: left; padding: 0 20px 0px; font-family: 'DM Sans', sans-serif;">
                     Kind regards,</br>
-                    ByteCipher Pvt Ltd</p>
+                    {{ $mailData['organisationName'] }}.</p>
             </div>
 
             <footer style="padding:20px;">
                 <p
                     style="font-weight:300;font-size: 16px; line-height: 32px; color: #373E57; font-family: 'DM Sans', sans-serif; margin: 0;">
-                    Copyright 2022 <span style="color: #5533FF;">ByteCipher</span>. All Right Reserved.</p>
+                    Copyright 2022 <span style="color: #5533FF;">{{ $mailData['organisationName'] }}</span>. All Right Reserved.</p>
                 <ul style="margin:15px 0 0; padding:0">
                     <li style="list-style-type: none; display: inline-block;"><a href="#"><img
                                 src="{{ asset('assets') }}/admin/candidate/images/instagram-icon.png"></a></li>
