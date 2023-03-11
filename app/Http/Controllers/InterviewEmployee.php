@@ -21,19 +21,23 @@ class InterviewEmployee extends Controller
 {
     public function index(Request $request)
     {
-        if($request->hiringStatusId && $request->employeeStatusId){
-            $interviewEmployees = EmployeeInterview::where('interview_status', $request->hiringStatusId)->where('employee_interview_status', $request->employeeStatusId)->get();
-        } else if ($request->hiringStatusId){
-            $interviewEmployees = EmployeeInterview::where('interview_status', $request->hiringStatusId)->get();
-        } else if ($request->employeeStatusId){
-            $interviewEmployees = EmployeeInterview::where('employee_interview_status', $request->employeeStatusId)->get();
-        } else {
-            $interviewEmployees = EmployeeInterview::all();
+        if(Auth::check()){
+
+            if($request->hiringStatusId && $request->employeeStatusId){
+                $interviewEmployees = EmployeeInterview::where('interview_status', $request->hiringStatusId)->where('employee_interview_status', $request->employeeStatusId)->where('company_id', Auth::id())->get();
+            } else if ($request->hiringStatusId){
+                $interviewEmployees = EmployeeInterview::where('interview_status', $request->hiringStatusId)->where('company_id', Auth::id())->get();
+            } else if ($request->employeeStatusId){
+                $interviewEmployees = EmployeeInterview::where('employee_interview_status', $request->employeeStatusId)->where('company_id', Auth::id())->get();
+            } else {
+                $interviewEmployees = EmployeeInterview::where('company_id', Auth::id())->get();
+            }
+            $hiringStages = HiringStage::all();
+            $employeeInterviewStatuses = EmployeeInterviewStatus::all();
+            return view('admin.schedule-for-interview', compact('interviewEmployees', 'hiringStages', 'employeeInterviewStatuses'));
         }
-        $hiringStages = HiringStage::all();
-        $employeeInterviewStatuses = EmployeeInterviewStatus::all();
-        // dd($hiringStages->toArray());
-        return view('admin.schedule-for-interview', compact('interviewEmployees', 'hiringStages', 'employeeInterviewStatuses'));
+
+        
     }
 
     public function getScheduleInterviewForm($id = '')
@@ -44,6 +48,7 @@ class InterviewEmployee extends Controller
 
     public function schedule_interview(request $request)
     {
+
         if(Auth::check()){
             $userDetails = HelpersHelper::getUserDetails(Auth::id());  
             if (!empty($request->interview_type)) {
@@ -90,6 +95,7 @@ class InterviewEmployee extends Controller
                 $checkRecordExist = EmployeeInterview::where('empCode', $empCode)->first();
                 if (empty($checkRecordExist) && !empty($empCode)) {
                     $insert = [
+                        'company_id' => Auth::id(), 
                         'empCode' => $empCode,
                         'first_name' => !empty($request->first_name) ? $request->first_name : null,
                         'last_name' => !empty($request->last_name) ? $request->last_name : null,
