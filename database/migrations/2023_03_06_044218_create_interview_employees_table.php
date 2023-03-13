@@ -29,8 +29,8 @@ return new class extends Migration
             $table->unsignedBigInteger('employee_interview_status')->comment('employee_interview_status table pk');
             $table->foreign('employee_interview_status')->references('id')->on('employee_interview_statuses')->onDelete('cascade');
             $table->date('interview_date')->default(Carbon::now()->format('Y-m-d'));
-            $table->time('interview_start_time',$precision = 0);
-            $table->time('interview_end_time',$precision = 0);
+            $table->string('interview_start_time')->nullable();
+            $table->string('interview_end_time')->nullable();
             $table->enum('interview_type',['Telephonic','Video'])->comment('Telephonic / Video')->default('Telephonic');
             $table->string('phone')->nullable();
             $table->string('video_link')->nullable();

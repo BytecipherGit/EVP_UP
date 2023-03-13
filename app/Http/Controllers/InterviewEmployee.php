@@ -9,6 +9,7 @@ use App\Models\EmployeeInterview;
 use App\Models\EmployeeInterviewStatus;
 use App\Models\HiringStage;
 use Carbon\Carbon;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail as FacadesMail;
 use Illuminate\Support\Facades\Response;
@@ -82,7 +83,19 @@ class InterviewEmployee extends Controller
                     ]);
                 }
             }
-            // dd($request->all());
+            $startFormattedTime = '';
+            if($request->interview_start_time){
+                $startTime = DateTime::createFromFormat('H:i', $request->interview_start_time); // parse input time as DateTime object
+                $startFormattedTime = $startTime->format('h:i A'); // format DateTime object into 12-hour format
+            }
+
+            $endFormattedTime = '';
+            if($request->interview_end_time){
+                $endTime = DateTime::createFromFormat('H:i', $request->interview_end_time); // parse input time as DateTime object
+                $endFormattedTime = $endTime->format('h:i A'); // format DateTime object into 12-hour format
+            }
+            
+
             $uploadAttachementPath = '';
             if ($validator->passes()) {
                 if ($request->hasFile('attachment')) {
@@ -106,8 +119,8 @@ class InterviewEmployee extends Controller
                         'interview_status' => !empty($request->interview_status) ? $request->interview_status : 1,
                         'employee_interview_status' => !empty($request->employee_interview_status) ? $request->employee_interview_status : 1,
                         'interview_date' => !empty($request->interview_date) ? $request->interview_date : Carbon::now()->format('Y-m-d'),
-                        'interview_start_time' => !empty($request->interview_start_time) ? $request->interview_start_time : null,
-                        'interview_end_time' => !empty($request->interview_end_time) ? $request->interview_end_time : null,
+                        'interview_start_time' => !empty($startFormattedTime) ? $startFormattedTime : null,
+                        'interview_end_time' => !empty($endFormattedTime) ? $endFormattedTime : null,
                         'interview_type' => !empty($request->interview_type) ? $request->interview_type : null,
                         'phone' => !empty($request->phone) ? $request->phone : null,
                         'video_link' => !empty($request->video_link) ? $request->video_link : null,

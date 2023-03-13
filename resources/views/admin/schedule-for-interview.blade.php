@@ -115,9 +115,9 @@
                                         @endforeach
                                     </td>
                                     <td>
-                                        <span class="notifi-td" data-toggle="modal" data-target="#remaiderbtninfo"><img
+                                        {{-- <span class="notifi-td" data-toggle="modal" data-target="#remaiderbtninfo"><img
                                                 src="assets/admin/images/bell-icon.png" width="30px;"
-                                                height="30px"></span>
+                                                height="30px"></span> --}}
                                         <a href="#" class="edit-btn" id="delete_interview"
                                             data-id="{{ $employee->id }}">Delete</a>
                                     </td>
@@ -192,7 +192,7 @@
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <form id="schedule_interview_form" method="post" autocomplete="off" enctype="multipart/form-data">
-            <div class="modal-content" style="width:559px !important">
+            <div class="modal-content">
                 <div class="modal-header">
                     <h2 class="modal-title" id="Heading">Schedule Interview</h2>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -206,6 +206,7 @@
                 </div>
                 <div class="modal-footer">
                     <div id="loadingImg"></div>
+                    <div style="font-size: 16px; display:none;" class="text-success" id="success">Schedule interview successfully done.</div>
                     <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
                     <button type="submit" id="scheduleInterviewSubmit" class="btn-primary-cust">Schedule</button>
                 </div>
