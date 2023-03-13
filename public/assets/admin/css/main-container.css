@@ -696,7 +696,8 @@ a{
     box-shadow: 0px 0px 14px rgba(23, 54, 97, 0.04);
     border-radius: 20px;
     margin: 34px 0;
-    padding: 29px 34px;
+    /* padding: 29px 34px; */
+    padding: 29px 12px;
 }
 .table-effect-box{
   width: 100%;

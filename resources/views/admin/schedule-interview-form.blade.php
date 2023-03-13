@@ -94,15 +94,6 @@
         <div class="form-group">
             <label>Attech File</label>
             <div class="upload-img-file">
-                {{-- <div class="circle">
-                        <img class="profile-pic" id="profile-pic10"
-                            src="assets/admin/images/file-icon-img.png">
-                    </div>
-                    <div class="p-image ml-auto">
-                        <span class="upload-button" id="upload-button10">Attech</span>
-                        <input class="file-upload" id="file-upload10" type="file" name="attachment"
-                            accept="image/*">
-                    </div> --}}
                 <input type="file" id="attachment" name="attachment" class="form-control">
                 <strong class="error" id="attachment-error"></strong>
             </div>
