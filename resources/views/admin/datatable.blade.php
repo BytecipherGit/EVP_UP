@@ -4,6 +4,10 @@
 @section('title','EVP - New Admin')
 
 
+<link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/bootstrap.min.css">
+<link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/datatables.bootstrap.min.css">
+<link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/fixedheader.bootstrap.min.css">
+<link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/responsive.bootstrap.min.css">
 
 <div class="main-container">
   @if (session()->has('message'))
@@ -76,7 +80,7 @@
         <td class="d-flex"><a href="edit-employee/{{ $emp->emp_id }}" class="view-btn">Edit</a><a href="employee-exit/{{ $emp->emp_id }}" title="Exit Employee" class="edit-btn">Exit</a></td>
         @else
         <td style="color:#ac2029">Exit Employee</td>
-        <td class="d-flex disabled"><a href="edit-employee/{{ $emp->emp_id }}" class="view-btn">Edit</a><a href="employee-exit/{{ $emp->emp_id }}" title="Employee Already Exit" class="edit-btn disabled">Exit</a></td>
+        <td class="d-flex disabled" style="pointer-events: none"><a href="edit-employee/{{ $emp->emp_id }}" class="view-btn">Edit</a><a href="employee-exit/{{ $emp->emp_id }}" title="Employee Already Exit" class="edit-btn">Exit</a></td>
         @endif
       </tr> 
       @endforeach           

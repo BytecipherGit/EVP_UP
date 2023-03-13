@@ -3,13 +3,7 @@
 @section('title', 'Registration')
 
 <style>
-    .velidation {
-        color: red;
-        font-size: 12px;
-        display: block;
-        margin: 5px 0;
-        display: flex;
-    }
+  
 </style>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -42,7 +36,7 @@
                         <div class="form-group">
                             <label>Organization Name* </label>
                             <input type="text" id="org_name" name="org_name" class="form-control" value="{{ old('org_name') }}"
-                                placeholder="Enter Organization Name" required autofocus autocomplete="org_name" >
+                                placeholder="Enter Organization Name" autofocus autocomplete="org_name" >
                             @error('org_name')
                                 <p class="velidation">{{ $message }}</p>
                             @enderror
@@ -51,7 +45,7 @@
                         <div class="form-group">
                             <label>Admin Name* </label>
                             <input type="text" id="name" name="name" class="form-control" value="{{ old('name') }}"
-                                placeholder="Enter Your name" required autofocus autocomplete="name" >
+                                placeholder="Enter Your name" autofocus autocomplete="name" >
                             @error('name')
                                 <p class="velidation">{{ $message }}</p>
                             @enderror
@@ -59,7 +53,7 @@
                         <div class="form-group">
                             <label>Organization Website* </label>
                             <input type="text" id="org_web" name="org_web" class="form-control" value="{{ old('org_web') }}"
-                                placeholder="Enter Company Website" required autofocus autocomplete="org_web">
+                                placeholder="Enter Company Website" autofocus autocomplete="org_web">
                             @error('org_web')
                                 <p class="velidation">{{ $message }}</p>
                             @enderror
@@ -67,7 +61,7 @@
                         <div class="form-group">
                             <label>Organization Admin Email* </label>
                             <input type="text" id="email" name="email" class="form-control" value="{{ old('email') }}"
-                                placeholder="Enter Your Email" required autofocus autocomplete="email">
+                                placeholder="Enter Your Email" autofocus autocomplete="email">
                             @error('email')
                                 <p class="velidation">{{ $message }}</p>
                             @enderror
@@ -78,7 +72,7 @@
                                 <div class="form-group">
                                     <label>Password* </label>
                                     <input type="password" id="password" name="password" class="form-control"
-                                     placeholder="Enter Your Password"  required autocomplete="new-password" />
+                                     placeholder="Enter Your Password" autocomplete="new-password" />
                                     @error('password')
                                         <p class="velidation">{{ $message }}</p>
                                     @enderror
@@ -90,7 +84,7 @@
                                     <label>Confirm Password </label>
                                     <input type="password" name="password_confirmation" class="form-control"
                                         value="{{ old('password_confirmation') }}"
-                                        placeholder="Enter Your Confirm Password"  required autocomplete="new-password" >
+                                        placeholder="Enter Your Confirm Password" autocomplete="new-password" >
                                     @error('password')
                                         <p class="velidation">{{ $message }}</p>
                                     @enderror
@@ -103,7 +97,7 @@
                                 <div class="form-group">
                                     <label>Admin Designation* </label>
                                     <input type="text" id="designation" name="designation" class="form-control"
-                                        value="{{ old('designation') }}" placeholder="Designation" required autofocus autocomplete="designation">
+                                        value="{{ old('designation') }}" placeholder="Designation" autofocus autocomplete="designation">
                                     @error('designation')
                                         <p class="velidation">{{ $message }}</p>
                                     @enderror
@@ -113,7 +107,7 @@
                                 <div class="form-group">
                                     <label>Admin Department* </label>
                                     <input type="text" id="department" name="department" class="form-control"
-                                        value="{{ old('department') }}" placeholder="Department" required autofocus autocomplete="department">
+                                        value="{{ old('department') }}" placeholder="Department" autofocus autocomplete="department">
                                     @error('department')
                                         <p class="velidation">{{ $message }}</p>
                                     @enderror
@@ -124,7 +118,7 @@
                         <div class="form-group">
                             <label>Registered Address* </label>
                             <textarea class="form-control" id="address" name="address" value="{{ old('address') }}" placeholder="Enter Your Address"
-                                rows="2" required autofocus autocomplete="address" ></textarea>
+                                rows="2" autofocus autocomplete="address" ></textarea>
                             @error('address')
                                 <p class="velidation">{{ $message }}</p>
                             @enderror
@@ -193,7 +187,7 @@
                                 <div class="form-group">
                                     <label>Pin Code* </label>
                                     <input type="text" id="pin" name="pin" class="form-control"
-                                        value="{{ old('pin') }}" placeholder="Enter Your pin" required autofocus autocomplete="pin">
+                                        value="{{ old('pin') }}" placeholder="Enter Your pin" autofocus autocomplete="pin">
                                     @error('pin')
                                         <p class="velidation">{{ $message }}</p>
                                     @enderror
@@ -273,51 +267,6 @@
 </script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-{{-- <script>
-        $(document).ready(function () {
-            $('#country-dd').on('change', function () {
-                var idCountry = this.value;
-                $("#state-dd").html('');
-                $.ajax({
-                    url: "{{url('api/fetch-states')}}",
-                    type: "POST",
-                    data: {
-                        country_id: idCountry,
-                        _token: '{{csrf_token()}}'
-                    },
-                    dataType: 'json',
-                    success: function (result) {
-                        $('#state-dd').html('<option value="">Select State</option>');
-                        $.each(result.states, function (key, value) {
-                            $("#state-dd").append('<option value="' + value
-                                .id + '">' + value.name + '</option>');
-                        });
-                        $('#city-dd').html('<option value="">Select City</option>');
-                    }
-                });
-            });
-            $('#state-dd').on('change', function () {
-                var idState = this.value;
-                $("#city-dd").html('');
-                $.ajax({
-                    url: "{{url('api/fetch-cities')}}",
-                    type: "POST",
-                    data: {
-                        state_id: idState,
-                        _token: '{{csrf_token()}}'
-                    },
-                    dataType: 'json',
-                    success: function (res) {
-                        $('#city-dd').html('<option value="">Select City</option>');
-                        $.each(res.cities, function (key, value) {
-                            $("#city-dd").append('<option value="' + value
-                                .id + '">' + value.name + '</option>');
-                        });
-                    }
-                });
-            });
-        });
-    </script> --}}
     <script>
         $(document).ready(function() {
             $('#country-dropdown').on('change', function() {

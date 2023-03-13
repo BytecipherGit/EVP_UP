@@ -22,6 +22,13 @@ class DocumentsController extends Controller
 
     public function getDocument(request $request){
 
+        $request->validate([
+            'reg_id' => ['required', 'string', 'max:255'],
+            'doc_type' =>['required']
+            // 'document' => ['mimes:jpeg,jpg,png','required','max:10000']
+        
+        ]);
+        
         if(Auth::check()){
             $user_id=Auth::id();   
         }

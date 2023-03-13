@@ -124,6 +124,14 @@ ul {
     margin-bottom: 1rem
 }
 
+.velidation {
+    color: red;
+    font-size: 12px;
+    display: block;
+    margin: 5px 0;
+    display: flex;
+}
+
 ol ol,
 ol ul,
 ul ol,
