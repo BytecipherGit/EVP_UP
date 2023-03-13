@@ -41,42 +41,45 @@
                         <div class="col-xl-4 col-lg-6 col-md-12">
                           <div class="form-group">
                             <label for="first_name">*First Name</label>
-                            <input type="text" name="first_name" class="form-control" placeholder="Enter Your First Name" required>
+                            <input type="text" name="first_name" class="form-control"  value="{{old('first_name')}}" placeholder="Enter Your First Name">
                             @error('first_name')
-                            <span class="text-danger pass">{{ $message }}</span>
+                            <span class="velidation">{{ $message }}</span>
                             @enderror 
                           </div>
                         </div>  
                         <div class="col-xl-4 col-lg-6 col-md-12">
                           <div class="form-group">
                             <label for="middle_name">Middle Name</label>
-                            <input type="text" name="middle_name" class="form-control" placeholder="Enter Your Middle Name" >
+                            <input type="text" name="middle_name" class="form-control" value="{{old('middle_name')}}" placeholder="Enter Your Middle Name" >
+                            @error('middle_name')
+                            <span class="velidation">{{ $message }}</span>
+                            @enderror 
                           </div>
                         </div>  
                         <div class="col-xl-4 col-lg-6 col-md-12">
                           <div class="form-group">
                             <label for="last_name">*Last Name</label>
-                            <input type="text" name="last_name" class="form-control" placeholder="Enter Your Last Name" required>
+                            <input type="text" name="last_name" class="form-control" value="{{old('last_name')}}" placeholder="Enter Your Last Name">
                             @error('last_name')
-                            <span class="text-danger pass">{{ $message }}</span>
+                            <span class="velidation">{{ $message }}</span>
                             @enderror 
                           </div>                          
                         </div>
                         <div class="col-lg-6 col-md-12">
                           <div class="form-group">
                             <label for="email">*Official Email Id</label>
-                            <input type="text" name="email" class="form-control" placeholder="Enter Your Email" required>
+                            <input type="text" name="email" class="form-control" value="{{old('email')}}" placeholder="Enter Your Email">
                             @error('email')
-                            <span class="text-danger pass">{{ $message }}</span>
+                            <span class="velidation">{{ $message }}</span>
                             @enderror 
                           </div>
                         </div>
                         <div class="col-lg-6 col-md-12">
                           <div class="form-group">
                             <label for="phone">Phone Number</label>
-                            <input type="text" name="phone" class="form-control" placeholder="Enter Your Number" required>
+                            <input type="text" name="phone" class="form-control" value="{{old('phone')}}" placeholder="Enter Your Number">
                             @error('phone')
-                            <span class="text-danger pass">{{ $message }}</span>
+                            <span class="velidation">{{ $message }}</span>
                             @enderror 
                           </div>
                         </div>

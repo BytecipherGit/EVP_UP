@@ -25,7 +25,7 @@ class DocumentsController extends Controller
         $request->validate([
             'reg_id' => ['required', 'string', 'max:255'],
             'doc_type' =>['required']
-            // 'document' => ['mimes:jpeg,jpg,png','required','max:10000']
+            // 'document' => ['mimes:jpeg,jpg,png|required|max:10000'
         
         ]);
         
