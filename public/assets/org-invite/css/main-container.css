@@ -220,7 +220,7 @@ form input[value] {
   background-color: #fefefe;
   margin: auto;
   border: 1px solid #888;
-  width: 680px;
+  width: 680px !important;
   border-radius: 20px;
 }
 .custu-modal-popup .modal-content h2 {
