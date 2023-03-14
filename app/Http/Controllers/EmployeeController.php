@@ -81,7 +81,6 @@ class EmployeeController extends Controller
         'first_name' => ['required', 'string', 'max:255'],
         'last_name' => ['required', 'string', 'max:255'],
         'email' => ['required', 'unique:emp_basicinfo,email', 'email'],
-        // 'middle_name' => ['required', 'string', 'max:255'],
         'blood_group' => ['required'],
         'gender' => ['required'],
         'dob' => ['required'],
@@ -141,24 +140,6 @@ class EmployeeController extends Controller
           
            //For Update Basic Information
           if(isset($_POST['basic-edit'])){
-            $request->validate([
-              'first_name' => ['required', 'string', 'max:255'],
-              'last_name' => ['required', 'string', 'max:255'],
-              'email' => ['required', 'unique:emp_basicinfo,email', 'email'],
-              // 'middle_name' => ['required', 'string', 'max:255'],
-              'blood_group' => ['required'],
-              'gender' => ['required'],
-              'dob' => ['required'],
-              'phone' => ['required','max:12'],
-              'emg_phone' => ['required','max:12'],
-              'permanent_address' => ['required','string', 'max:255'],
-              'current_address' => ['required','string', 'max:255'],
-              'marital_status' => ['required'],
-              'emg_name' => ['required','string', 'max:255'],
-              'emg_relationship' => ['required','string', 'max:255'],
-              'emg_address' => ['required','string', 'max:255'],
-      
-              ]);
 
             if($request->file('profile')){
             $file= $request->file('profile');
@@ -201,7 +182,7 @@ class EmployeeController extends Controller
                 'id_type' => ['required', 'string', 'max:255'],
                 'id_number' => ['required', 'string', 'max:255'],
                 'verification_type' => ['required', 'string', 'max:255'],
-                'document' => ['required','file','mimes:jpeg,png,pdf,docs,doc','max:2048']
+                // 'document' => ['required','file','mimes:jpeg,png,pdf,docs,doc','max:2048']
                 ]);
 
               $basic_id=Employee::where('id',$request->id)->first();
@@ -248,7 +229,7 @@ class EmployeeController extends Controller
                 'duration_from' => ['required'],
                 'duration_to' => ['required'],
                 'verification_type' => ['required','string', 'max:255'],
-                'document' => ['required','file','mimes:jpeg,png,pdf,docs,doc','max:2048']
+                // 'document' => ['required','file','mimes:jpeg,png,pdf,docs,doc','max:2048']
 
                 ]);
                 
@@ -294,9 +275,9 @@ class EmployeeController extends Controller
                 'work_duration_to' => ['required'],
                 'work_duration_from' => ['required'],
                 'verification_type' => ['required','string', 'max:255'],
-                'offer_letter' => ['required','file','mimes:jpeg,png,pdf,docs,doc','max:2048'],
-                'exp_letter' => ['required','file','mimes:jpeg,png,pdf,docs,doc','max:2048'],
-                'salary_slip' => ['required','file','mimes:jpeg,png,pdf,docs,doc','max:2048']
+                // 'offer_letter' => ['required','file','mimes:jpeg,png,pdf,docs,doc','max:2048'],
+                // 'exp_letter' => ['required','file','mimes:jpeg,png,pdf,docs,doc','max:2048'],
+                // 'salary_slip' => ['required','file','mimes:jpeg,png,pdf,docs,doc','max:2048']
 
                 ]);
 

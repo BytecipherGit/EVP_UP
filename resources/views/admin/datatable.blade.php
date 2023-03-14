@@ -51,7 +51,7 @@
           <table id="example" class="table-bordered nowrap table table-striped" style="width:100%">
          <thead>
         <tr>
-            <th><input type="checkbox" id="customcheck1" name="customcheck1"></th>
+            {{-- <th><input type="checkbox" id="selectAll" name="customcheck1"></th> --}}
             <th>Employee Code</th>
             <th>Employee Name</th>
             <th>Employee Designation</th>
@@ -68,14 +68,14 @@
     <tbody>           
         @foreach($allemp as $emp)  
       <tr>
-        <td><input type="checkbox" id="customcheck1" name="customcheck1"></td>
+        {{-- <td><input type="checkbox" id="customcheck1" name="customcheck1"></td> --}}
         <td>#00{{ $emp->emp_id }}</td>
         <td>{{ $emp->first_name }} {{ $emp->last_name }}</td>
         <td>{{$emp->mang_desig }}</td>
         <td>{{$emp->mang_dept }}</td>
         <td>{{$emp->mang_name }}</td>
     
-        @if($emp->status == 1)
+        @if($emp->status == 1 || $emp->status == 2)
         <td style="color:#5BD94E">Available Employee</td>
         <td class="d-flex"><a href="edit-employee/{{ $emp->emp_id }}" class="view-btn">Edit</a><a href="employee-exit/{{ $emp->emp_id }}" title="Exit Employee" class="edit-btn">Exit</a></td>
         @else

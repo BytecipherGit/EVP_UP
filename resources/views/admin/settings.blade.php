@@ -155,7 +155,7 @@
 
                       <div class="company-pro">
                         <div class="circle">
-                         <img class="profile-pic" id="profile-pic" name="logo" @if ($profile->logo!== Null) value="/image/{{ old('logo', $profile->logo) }}" src="/image/{{ $profile->logo }}" @else src="assets/admin/images/logo.png" @endif required>
+                         <img class="profile-pic" id="profile-pic" name="logo" @if ($profile->logo!== Null) value="/image/{{ old('logo', $profile->logo) }}" src="/image/{{ $profile->logo }}" @else src="assets/admin/images/logo.png" @endif >
                        </div>
                        <p>You can drag or drop <span>your file logo here.</span> </p>
                        <div class="p-image ml-auto">

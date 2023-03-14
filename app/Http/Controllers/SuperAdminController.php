@@ -18,6 +18,10 @@ class SuperAdminController extends Controller
         return view('superadmin/index');
     }
 
+    public function superAdminLogin(){
+        return view('auth/superadminlogin');
+    }
+
     public function logout(Request $request) {	  	  	
         Auth::logout();
         Session::flush();	  

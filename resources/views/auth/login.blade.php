@@ -10,7 +10,14 @@
         margin: 5px 0;
         display: flex;
     }
-</style>
+  
+  .pass{
+    position: static !important;
+    font-size: 14px !important;
+    text-align: left;
+  }
+ </style>
+
 
 <div class="d-flex main-form-part">
     <div class="container-fluid">
@@ -40,13 +47,18 @@
               
               <div class="form-group">
                 <label>Email Address</label>     
-                <input type="email" name="email" value="{{ old('email') }}" class="form-control" placeholder="Email Address" required>
-                <x-input-error :messages="$errors->get('email')" class="error" />
+                <input type="email" name="email" value="{{ old('email') }}" class="form-control" placeholder="Email Address">
+                {{-- <x-input-error :messages="$errors->get('email')" class="error" style=""/> --}}
+                  @error('email')
+                  <span class="text-danger pass">{{ $message }}</span>
+                  @enderror 
               </div> 
               <div class="form-group">
                 <label>Password</label>     
-                <input type="password" name="password" value="{{ old('password') }}" class="form-control" placeholder="Password" required>
-                <x-input-error :messages="$errors->get('password')" class="error" />
+                <input type="password" name="password" value="{{ old('password') }}" class="form-control" placeholder="Password">
+                @error('password')
+                <span class="text-danger pass">{{ $message }}</span>
+                @enderror 
               </div>  
               <div class="form-group">
                 <div class="forg-box">

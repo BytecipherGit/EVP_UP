@@ -34,7 +34,7 @@
                         <h6>Create an Account</h6>
 
                         <div class="form-group">
-                            <label>Organization Name* </label>
+                            <label>Organization Name <strong style="color:red">*</strong></label>
                             <input type="text" id="org_name" name="org_name" class="form-control" value="{{ old('org_name') }}"
                                 placeholder="Enter Organization Name" autofocus autocomplete="org_name" >
                             @error('org_name')
@@ -43,7 +43,7 @@
 
                         </div>
                         <div class="form-group">
-                            <label>Admin Name* </label>
+                            <label>Admin Name <strong style="color:red">*</strong> </label>
                             <input type="text" id="name" name="name" class="form-control" value="{{ old('name') }}"
                                 placeholder="Enter Your name" autofocus autocomplete="name" >
                             @error('name')
@@ -51,7 +51,7 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label>Organization Website* </label>
+                            <label>Organization Website <strong style="color:red">*</strong> </label>
                             <input type="text" id="org_web" name="org_web" class="form-control" value="{{ old('org_web') }}"
                                 placeholder="Enter Company Website" autofocus autocomplete="org_web">
                             @error('org_web')
@@ -59,7 +59,7 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label>Organization Admin Email* </label>
+                            <label>Organization Admin Email <strong style="color:red">*</strong> </label>
                             <input type="text" id="email" name="email" class="form-control" value="{{ old('email') }}"
                                 placeholder="Enter Your Email" autofocus autocomplete="email">
                             @error('email')
@@ -70,7 +70,7 @@
                         <div class="row">
                             <div class="col-xl-6">
                                 <div class="form-group">
-                                    <label>Password* </label>
+                                    <label>Password <strong style="color:red">*</strong></label>
                                     <input type="password" id="password" name="password" class="form-control"
                                      placeholder="Enter Your Password" autocomplete="new-password" />
                                     @error('password')
@@ -81,7 +81,7 @@
                             </div>
                             <div class="col-xl-6">
                                 <div class="form-group">
-                                    <label>Confirm Password </label>
+                                    <label>Confirm Password <strong style="color:red">*</strong> </label>
                                     <input type="password" name="password_confirmation" class="form-control"
                                         value="{{ old('password_confirmation') }}"
                                         placeholder="Enter Your Confirm Password" autocomplete="new-password" >
@@ -95,7 +95,7 @@
                         <div class="row">
                             <div class="col-xl-6">
                                 <div class="form-group">
-                                    <label>Admin Designation* </label>
+                                    <label>Admin Designation <strong style="color:red">*</strong> </label>
                                     <input type="text" id="designation" name="designation" class="form-control"
                                         value="{{ old('designation') }}" placeholder="Designation" autofocus autocomplete="designation">
                                     @error('designation')
@@ -116,7 +116,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Registered Address* </label>
+                            <label>Registered Address <strong style="color:red">*</strong> </label>
                             <textarea class="form-control" id="address" name="address" value="{{ old('address') }}" placeholder="Enter Your Address"
                                 rows="2" autofocus autocomplete="address" ></textarea>
                             @error('address')
@@ -127,7 +127,7 @@
                         <div class="row">
                             <div class="col-xl-6">
                                 <div class="form-group">
-                                    <label for="country">Country*</label>
+                                    <label for="country">Country <strong style="color:red">*</strong></label>
                                     <div class="">
 
                                         <select id="country-dropdown" name="country" value="{{ old('country') }}"
@@ -148,7 +148,7 @@
 
                             <div class="col-xl-6">
                                 <div class="form-group">
-                                    <label for="state">State</label>
+                                    <label for="state">State <strong style="color:red">*</strong></label>
                                     <div class="">
 
                                         <div class="form-group mb-3">
@@ -168,7 +168,7 @@
                         <div class="row">
                             <div class="col-xl-6">
                                 <div class="form-group">
-                                    <label for="city">City</label>
+                                    <label for="city">City <strong style="color:red">*</strong></label>
                                     <div class="">
 
                                         <div class="form-group">
@@ -185,7 +185,7 @@
                             </div>
                             <div class="col-xl-6">
                                 <div class="form-group">
-                                    <label>Pin Code* </label>
+                                    <label>Pin Code <strong style="color:red">*</strong> </label>
                                     <input type="text" id="pin" name="pin" class="form-control"
                                         value="{{ old('pin') }}" placeholder="Enter Your pin" autofocus autocomplete="pin">
                                     @error('pin')
@@ -197,8 +197,8 @@
 
                         {{-- data-toggle="modal" --}}
                         <div class="form-group">
-                            <button type="submit" name="button"
-                                data-target="#seccess-veri">Sign Up</button>
+                            <button type="submit"  data-target="#seccess-veri">Sign Up</button>
+                            {{-- <button type="button" data-toggle="modal" data-target="#seccess-veri">Sign Up</button> --}}
                         </div>
                         <div class="form-group">
                             <p>Already have an account, <a href="{{ route('login') }}">Login</a></p>
