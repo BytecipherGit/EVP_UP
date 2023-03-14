@@ -107,7 +107,7 @@ Route::post('/basic-info/{id?}', [App\Http\Controllers\InviteempController::clas
 
 Auth::routes();
 Route::middleware([Admin::class])->group(function () {
-    Route::get('/admin', [App\Http\Controllers\AdminController::class, 'index'])->name('admin');
+    Route::get('/admin', [App\Http\Controllers\AdminController::class, 'index'])->name('admin')->middleware('documents');
     Route::get('admin/logout', [App\Http\Controllers\AdminController::class, 'logout'])->name('admin.logout');
     Route::post('/change_password', [App\Http\Controllers\AdminController::class, 'changePassword'])->name('password.change');
     Route::get('/add-employee/{id?}', [App\Http\Controllers\EmployeeController::class, 'index']);

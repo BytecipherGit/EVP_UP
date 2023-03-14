@@ -34,8 +34,10 @@
             <div class="form-group">
               <label>Company Registration No.</label>    
                
-              <input type="text" name="reg_id" id="reg_id" class="form-control" value="" placeholder="EVP_ Enter Registration Id">
-            
+              <input type="text" name="reg_id" id="reg_id" class="form-control" value="{{ old('reg_id') }}" placeholder="EVP_ Enter Registration Id">
+              @error('reg_id')
+               <p class="velidation">{{ $message }}</p>
+              @enderror
             </div> 
 
             <div class="document">
@@ -48,7 +50,10 @@
                        <img class="profile-pic" id="profile-pic" src="assets/company/images/file-icon-img.png">
                      </div> --}}
                      <div class="p-image ml-auto">
-                        <input type="file" name="document[]" id="file-upload" class="myfrm form-control" required>
+                        <input type="file" name="document[]" id="file-upload" class="form-control" required>
+                        @error('document')
+                        <p class="velidation">{{ $message }}</p>
+                        @enderror
                      </div>
                     </div>
                   </div>
@@ -61,6 +66,9 @@
                       <option value="GST">GST No</option>
                       <option value="Pan Card">Pan Card</option>
                      </select>
+                     @error('doc_type')
+                     <p class="velidation">{{ $message }}</p>
+                     @enderror
                   </div> 
                 </div>
                 <label>&nbsp;</label>  
@@ -72,7 +80,8 @@
 
             
             <div class="form-group">
-              <button type="submit" data-toggle="modal" data-target="#seccess-veriId" aria-hidden="true">Submit</button>
+              <button type="submit" >Submit</button>
+              {{-- <button type="submit" data-toggle="modal" data-target="#seccess-veriId" aria-hidden="true">Submit</button> --}}
             </div>
           </form>
        
@@ -135,9 +144,7 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script>
-      window.jQuery || document.write('<script src="../../assets/company/js/vendor/jquery.min.js"><\/script>')
-    </script>
+    
     <script src="/assets/company/js/bootstrap.min.js"></script>
     <script src="/assets/company/js/file-upload.js"></script>
     <script>

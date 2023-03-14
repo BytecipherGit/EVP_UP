@@ -17,6 +17,7 @@
       <div class="employee-tab-bar"> 
 
         <ul class="nav nav-tabs table-responsive-width" role="tablist">
+       
           <li class="nav-item">
             <a @if ($basic) class="nav-link" @else class="nav-link active" @endif data-toggle="tab" href="#tabs-1" role="tab">Basic Info</a>
           </li>
@@ -61,7 +62,7 @@
                          </div>
                          <div class="p-image ml-auto">
                            <span class="upload-button" for="file-upload" id="upload-button"><img src="{{ asset('assets') }}/admin/images/edit-icon.png"></span>
-                            <input class="file-upload" name="profile" id="file-upload" type="file" accept="image/*" required/>
+                            <input class="file-upload" name="profile" id="file-upload" type="file" accept="image/*"/>
                          </div>
                          {{-- <input type="file" name="image" value="{{ old('image') }}" class="custom-file-input" id="validatedCustomFile" required>
                            <label class="custom-file-label" for="validatedCustomFile">Choose file...</label> --}}
@@ -73,34 +74,44 @@
                         <div class="col-xl-4 col-lg-6 col-md-12">
                           <div class="form-group">
                             <label for="first_name">*First Name</label>
-                            <input type="text" name="first_name" class="form-control" placeholder="Enter Your First Name" required>
+                            <input type="text" name="first_name" class="form-control" value="{{ old('first_name') }}" placeholder="Enter Your First Name">
                             @error('first_name')
-                            <span class="text-danger pass">{{ $message }}</span>
+                            <span class="velidation">{{ $message }}</span>
                             @enderror 
                           </div>
                         </div>  
                         <div class="col-xl-4 col-lg-6 col-md-12">
                           <div class="form-group">
                             <label for="middle_name">Middle Name</label>
-                            <input type="text" name="middle_name" class="form-control" placeholder="Enter Your Middle Name" >
+                            <input type="text" name="middle_name" class="form-control" value="{{ old('middle_name') }}" placeholder="Enter Your Middle Name" >
+                          
                           </div>
                         </div>  
                         <div class="col-xl-4 col-lg-6 col-md-12">
                           <div class="form-group">
                             <label for="last_name">*Last Name</label>
-                            <input type="text" name="last_name" class="form-control" placeholder="Enter Your Last Name" required>
+                            <input type="text" name="last_name" class="form-control" value="{{ old('last_name') }}" placeholder="Enter Your Last Name">
+                            @error('last_name')
+                            <span class="velidation">{{ $message }}</span>
+                            @enderror 
                           </div>                          
                         </div>
                         <div class="col-lg-6 col-md-12">
                           <div class="form-group">
                             <label for="email">*Official Email Id</label>
-                            <input type="text" name="email" class="form-control" placeholder="Enter Your Email" required>
+                            <input type="text" name="email" class="form-control" value="{{ old('email') }}" placeholder="Enter Your Email">
+                            @error('email')
+                            <span class="velidation">{{ $message }}</span>
+                            @enderror 
                           </div>
                         </div>
                         <div class="col-lg-6 col-md-12">
                           <div class="form-group">
                             <label for="phone">Phone Number</label>
-                            <input type="text" name="phone" class="form-control" placeholder="Enter Your Number" required>
+                            <input type="text" name="phone" class="form-control" value="{{ old('phone') }}" placeholder="Enter Your Number">
+                            @error('phone')
+                            <span class="velidation">{{ $message }}</span>
+                            @enderror 
                           </div>
                         </div>
                       </div> 
@@ -111,15 +122,18 @@
                     <div class="col-xl-3 col-lg-6 col-md-12">
                       <div class="form-group">
                         <label for="dob">Date Of Birth</label>
-                        <input type="date" name="dob" class="form-control" placeholder="DOB" required>
+                        <input type="date" name="dob" class="form-control" value="{{ old('dob') }}" placeholder="DOB">
+                        @error('dob')
+                        <span class="velidation">{{ $message }}</span>
+                        @enderror 
                       </div>
                     </div> 
                     <div class="col-xl-3 col-lg-6 col-md-12">
                       <div class="form-group">
                         <label>Select Blood Group</label>
                     
-                          <select class="form-control" name="blood_group" id="blood_group" required>
-                              <option value="">Select Group</option>
+                          <select class="form-control" name="blood_group" id="blood_group">
+                              <option value="{{ old('blood_group') }}">Select Group {{old('blood_group') }}</option>
                               <option value="A+">A+</option>
                               <option value="A-">A-</option>
                               <option value="B+">B+</option>
@@ -129,7 +143,9 @@
                               <option value="AB+">AB+</option>
                               <option value="AB-">AB-</option>
                           </select>
-                   
+                          @error('blood_group')
+                          <span class="velidation">{{ $message }}</span>
+                          @enderror 
                       </div>                          
                     </div> 
                     <div class="col-xl-3 col-lg-6 col-md-12">
@@ -138,12 +154,14 @@
                       
                           {{-- <div class="selectBox__value">Select Gender</div> --}}
                         
-                            <select class="form-control" name="gender" id="gender" required>
-                              <option value="">Select Gender</option>
+                            <select class="form-control" name="gender" id="gender">
+                              <option value="{{ old('gender') }}">Select Gender {{ old('gender') }}</option>
                               <option value="Male">Male</option>
                               <option value="Female">Female</option>
                             </select>
-                        
+                            @error('gender')
+                            <span class="velidation">{{ $message }}</span>
+                            @enderror 
                    
                       </div>
                     </div>  
@@ -152,49 +170,69 @@
                       <div class="form-group">
                         <label>Marital Status</label>
                     
-                          <select class="form-control" name="marital_status" id="marital_status" required>
-                            <option value="">Select Status</option>
+                          <select class="form-control" name="marital_status" id="marital_status">
+                            <option value="{{ old('marital_status') }}">Select Status {{ old('marital_status') }}</option>
                             <option value="Married">Married</option>
                             <option value="Single">Single</option>
                           </select>
-                 
+                          @error('marital_status')
+                          <span class="velidation">{{ $message }}</span>
+                          @enderror 
                       </div>
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-12">
                       <div class="form-group">
                         <label for="current_address">Current Address</label>
-                        <textarea rows="3" name="current_address" placeholder="Address" class="form-control" required></textarea>
+                        <textarea rows="3" name="current_address" placeholder="Address" class="form-control">{{ old('current_address') }}</textarea>
+                        @error('current_address')
+                        <span class="velidation">{{ $message }}</span>
+                        @enderror 
                       </div>
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-12">
                       <div class="form-group">
                         <label for="permanent_address">Permanent Address</label>
-                        <textarea rows="3" name="permanent_address" placeholder="Address" class="form-control" required></textarea>
+                        <textarea rows="3" name="permanent_address" placeholder="Address" class="form-control">{{ old('permanent_address') }}</textarea>
+                        @error('current_address')
+                        <span class="velidation">{{ $message }}</span>
+                        @enderror 
                       </div>
                     </div>
                     <div class="col-xl-12 mt-3"><h2>Emergency Contact</h2></div>                        
                     <div class="col-xl-4 col-lg-6 col-md-12">
                       <div class="form-group">
                         <label for="emg_name">Name</label>
-                        <input type="text" name="emg_name" class="form-control" placeholder="Enter Name" required>
+                        <input type="text" name="emg_name" class="form-control" value="{{ old('emg_name') }}" placeholder="Enter Name">
+                        @error('emg_name')
+                        <span class="velidation">{{ $message }}</span>
+                        @enderror 
                       </div>
                     </div>
                     <div class="col-xl-4 col-lg-6 col-md-12">
                       <div class="form-group">
                         <label for="emg_relationship">Relationship</label>
-                        <input type="text" name="emg_relationship" class="form-control" placeholder="Enter Relation" required>
+                        <input type="text" name="emg_relationship" class="form-control" value="{{ old('emg_relationship') }}" placeholder="Enter Relation">
+                        @error('emg_relationship')
+                        <span class="velidation">{{ $message }}</span>
+                        @enderror 
                       </div>
                     </div>
                     <div class="col-xl-4 col-lg-6 col-md-12">
                       <div class="form-group">
                         <label for="emg_phone">Phone Number</label>
-                        <input type="text" name="emg_phone" class="form-control" placeholder="Number" required>
+                        <input type="text" name="emg_phone" class="form-control" value="{{ old('emg_phone') }}" placeholder="Number">
+                        @error('emg_phone')
+                        <span class="velidation">{{ $message }}</span>
+                        @enderror 
                       </div>
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-12">
                       <div class="form-group">
                         <label for="emg_address">Address</label>
-                        <textarea rows="3" name="emg_address" class="form-control" placeholder="Enter Address" required></textarea>
+                        <textarea rows="3" name="emg_address" class="form-control" value="{{ old('emg_address') }}" placeholder="Enter Address" ></textarea>
+                        @error('emg_address')
+                        <span class="velidation">{{ $message }}</span>
+                        @enderror 
                       </div>
                     </div>
                   </div>                   
@@ -242,7 +280,7 @@
                             <label for="first_name">*First Name</label>
                             <input type="text" name="first_name" @if ($basic) value="{{ old('first_name', $basic->first_name) }}" @endif class="form-control" placeholder="Enter Your First Name" required>
                             @error('first_name')
-                            <span class="text-danger pass">{{ $message }}</span>
+                            <span class="velidation">{{ $message }}</span>
                             @enderror 
                           </div>
                         </div>  
@@ -598,7 +636,10 @@
                         <label>Add Your Skill</label>
                         <div class="row customer_records">
                           <div class="col-xl-5 col-lg-10 col-md-10">
-                            <input type="text" class="form-control input-search-box typeahead" name="skill" placeholder="Add Skill" required>
+                            <input type="text" class="form-control input-search-box typeahead" name="skill" placeholder="Add Skill" >
+                            @error('skill')
+                            <span class="velidation">{{ $message }}</span>
+                            @enderror 
                           </div>
                           <div class="col-xl-5 col-lg-10 col-md-10">
                             <h6>
@@ -621,7 +662,11 @@
                         <label>Add Language</label>
                         <div class="row customer_records1">
                           <div class="col-xl-5 col-lg-10 col-md-10">
-                            <input type="text" name="lang" class="form-control input-search-box typeahead1" data-provide="typeahead" placeholder="Language" required>
+                            <input type="text" name="lang" class="form-control input-search-box typeahead1" data-provide="typeahead" placeholder="Language">
+
+                            @error('lang')
+                            <span class="velidation">{{ $message }}</span>
+                            @enderror 
                           </div>
                           <div class="col-xl-5 col-lg-10 col-md-10">
                             <h6>
@@ -756,49 +801,64 @@
                         <div class="col-xl-3 col-lg-6 col-md-12">
                           <div class="form-group">
                             <label>Date of Joining</label>
-                            <input type="date" name="doj" class="form-control" placeholder="Date" required>
+                            <input type="date" name="doj" class="form-control" placeholder="Date">
+                            @error('doj')
+                            <span class="velidation">{{ $message }}</span>
+                            @enderror 
                           </div>
                         </div>
                         <div class="col-xl-3 col-lg-6 col-md-12">
                           <div class="form-group">
                             <label>Probation Period</label>
-                            <input type="text" name="pro_period" class="form-control" placeholder="In Day" required>
+                            <input type="text" name="prob_period" class="form-control" placeholder="In Day">
+                            @error('prob_period')
+                            <span class="velidation">{{ $message }}</span>
+                            @enderror 
                           </div>
                         </div> 
                         <div class="col-xl-3 col-lg-6 col-md-12">
                           <div class="form-group">
                             <label>Employee Type</label>
                       
-                            <select class="form-control" name="emp_type" id="emp_type" required>
+                            <select class="form-control" name="emp_type" id="emp_type" >
                               <option value="">Select Employee Type</option>
                               <option value="Part Time">Part Time</option>
                               <option value="Full Time">Full Time</option>
                               <option value="Trainee">Trainee</option>
                               <option value="Freelancer">Freelancer</option>
                             </select>
+                            @error('emp_type')
+                            <span class="velidation">{{ $message }}</span>
+                            @enderror 
                           </div>                          
                         </div> 
                         <div class="col-xl-3 col-lg-6 col-md-12">
                           <div class="form-group">
                             <label>Work Location</label>
-                            <select class="form-control" name="work_location" id="work_location" required>
+                            <select class="form-control" name="work_location" id="work_location" >
                               <option value="">Select Work Location</option>
                               <option value="Bhopal, MP">Bhopal, MP</option>
                               <option value="Indore, MP">Indore, MP</option>
                               <option value="Pune, MH">Pune, MH</option>
                          
                             </select>
+                            @error('work_location')
+                            <span class="velidation">{{ $message }}</span>
+                            @enderror 
                           </div>
                         </div>
                         <div class="col-xl-3 col-lg-6 col-md-12">
                           <div class="form-group">
                             <label>Employee Status</label>
-                            <select class="form-control" name="emp_status" id="emp_status" required>
+                            <select class="form-control" name="emp_status" id="emp_status">
                               <option value="">Select Status</option>
                               <option value="Active">Active</option>
                               <option value="Inactive">Inactive</option>
                             
                             </select>
+                            @error('emp_status')
+                            <span class="velidation">{{ $message }}</span>
+                            @enderror 
                           </div>
                         </div>  
 
@@ -806,13 +866,19 @@
                         <div class="col-xl-3 col-lg-6 col-md-12">
                           <div class="form-group">
                             <label>Salary</label>
-                            <input type="text" name="salary" class="form-control" placeholder="In Hand" required>
+                            <input type="text" name="salary" class="form-control" placeholder="In Hand">
+                            @error('salary')
+                            <span class="velidation">{{ $message }}</span>
+                            @enderror 
                           </div>
                         </div>
                         <div class="col-xl-3 col-lg-6 col-md-12">
                           <div class="form-group">
                             <label>LPA</label>
-                            <input type="text" name="lpa" class="form-control" placeholder="Enter LPA" required>
+                            <input type="text" name="lpa" class="form-control" placeholder="Enter LPA">
+                            @error('lpa')
+                            <span class="velidation">{{ $message }}</span>
+                            @enderror 
                           </div>
                         </div>
 
@@ -824,31 +890,46 @@
                             <div class="col-xl-2 col-lg-4 col-md-6">
                               <div class="form-group">
                                 <label>From</label>
-                                <input type="text" name="app_from" class="form-control" placeholder="10,000" required>
+                                <input type="text" name="app_from" class="form-control" placeholder="10,000" >
+                                @error('app_from')
+                                <span class="velidation">{{ $message }}</span>
+                                @enderror 
                               </div>
                             </div>
                             <div class="col-xl-2 col-lg-4 col-md-6">
                               <div class="form-group">
                                 <label>To</label>
-                                <input type="text" name="app_to" class="form-control" placeholder="To" required>
+                                <input type="text" name="app_to" class="form-control" placeholder="To">
+                                @error('app_to')
+                                <span class="velidation">{{ $message }}</span>
+                                @enderror 
                               </div>
                             </div>
                             <div class="col-xl-3 col-lg-4 col-md-12">
                               <div class="form-group">
                                 <label>Last Desig.</label>
-                                <input type="text" name="last_app_desig" class="form-control" placeholder="Last Desig." required>
+                                <input type="text" name="last_app_desig" class="form-control" placeholder="Last Desig.">
+                                @error('last_app_desig')
+                                <span class="velidation">{{ $message }}</span>
+                                @enderror 
                               </div>
                             </div>
                             <div class="col-xl-3 col-lg-4 col-md-12">
                               <div class="form-group">
                                 <label>Current Desig.</label>
-                                <input type="text" name="current_app_desig" class="form-control" placeholder="Current Desig." required>
+                                <input type="text" name="current_app_desig" class="form-control" placeholder="Current Desig.">
+                                @error('current_app_desig')
+                                <span class="velidation">{{ $message }}</span>
+                                @enderror 
                               </div>
                             </div>
                             <div class="col-xl-2 col-lg-4 col-md-12">
                               <div class="form-group">
                                 <label>Date</label>
-                                <input type="date" name="date" class="form-control" placeholder="Date">
+                                <input type="date" name="app_date" class="form-control" placeholder="Date">
+                                @error('app_date')
+                                <span class="velidation">{{ $message }}</span>
+                                @enderror 
                               </div>
                             </div>
                           </div>
@@ -863,30 +944,45 @@
                               <div class="form-group">
                                 <label>From</label>
                                 <input type="text" name="pro_from" class="form-control" placeholder="10,000">
+                                @error('pro_from')
+                                <span class="velidation">{{ $message }}</span>
+                                @enderror 
                               </div>
                             </div>
                             <div class="col-xl-2 col-lg-4 col-md-12">
                               <div class="form-group">
                                 <label>To</label>
                                 <input type="text" name="pro_to" class="form-control" placeholder="To">
+                                @error('pro_to')
+                                <span class="velidation">{{ $message }}</span>
+                                @enderror 
                               </div>
                             </div>
                             <div class="col-xl-3 col-lg-4 col-md-12">
                               <div class="form-group">
                                 <label>Last Desig.</label>
                                 <input type="text" name="last_pro_desig" class="form-control" placeholder="Last Desig.">
+                                @error('last_pro_desig')
+                                <span class="velidation">{{ $message }}</span>
+                                @enderror 
                               </div>
                             </div>
                             <div class="col-xl-3 col-lg-4 col-md-12">
                               <div class="form-group">
                                 <label>Current Desig.</label>
                                 <input type="text" name="current_pro_desig" class="form-control" placeholder="Current Desig.">
+                                @error('current_pro_desig')
+                                <span class="velidation">{{ $message }}</span>
+                                @enderror 
                               </div>
                             </div>
                             <div class="col-xl-2 col-lg-4 col-md-12">
                               <div class="form-group">
                                 <label>Date</label>
                                 <input type="date" name="pro_date" class="form-control" placeholder="Date">
+                                @error('pro_date')
+                                <span class="velidation">{{ $message }}</span>
+                                @enderror 
                               </div>
                             </div>
                           </div>
@@ -903,6 +999,9 @@
                                 <div class="form-group">
                                   <label>Name</label>
                                   <input type="text" name="mang_name" class="form-control" placeholder="Name">
+                                  @error('mang_name')
+                                  <span class="velidation">{{ $message }}</span>
+                                  @enderror 
                                 </div>
                               </div>
                               <div class="col-xl-2 col-lg-5 col-md-10">
@@ -914,18 +1013,27 @@
                                     <option value="Secondary">Secondary</option>
                                   
                                   </select>
+                                  @error('mang_type')
+                                  <span class="velidation">{{ $message }}</span>
+                                  @enderror 
                                 </div>
                               </div>                                
                               <div class="col-xl-3 col-lg-5 col-md-10">
                                 <div class="form-group">
                                   <label>Department</label>
                                   <input type="text" name="mang_dept" class="form-control" placeholder="Department">
+                                  @error('mang_dept')
+                                  <span class="velidation">{{ $message }}</span>
+                                  @enderror 
                                 </div>
                               </div>
                               <div class="col-xl-3 col-lg-5 col-md-10">
                                 <div class="form-group">
                                   <label>Designation</label>
                                   <input type="text" name="mang_desig" class="form-control" placeholder="Designation">
+                                  @error('mang_desig')
+                                  <span class="velidation">{{ $message }}</span>
+                                  @enderror 
                                 </div>
                               </div>                              
                               {{-- <a class="add-plus extra-fields-customeroff"><span><img src="{{ asset('assets') }}/admin/images/button-plus.png"></span></a> --}}
@@ -981,10 +1089,16 @@
                       <option value="Aadhar Card">Aadhar Card</option>
                       <option value="Voter Id">Voter Id</option>
                     </select>
+                    @error('id_type')
+                     <span class="velidation">{{ $message }}</span>
+                    @enderror 
                   </div>
                   <div class="col-md-6">
                     <label>Id Number</label>
                     <input type="text" name="id_number" class="form-control" placeholder="Number">
+                    @error('id_number')
+                    <span class="velidation">{{ $message }}</span>
+                    @enderror 
                   </div>
                 </div>                
               </div>              
@@ -997,13 +1111,12 @@
                         <img class="profile-pic" id="profile-pic" src="{{ asset('assets') }}/admin/images/file-icon-img.png">
                       </div> --}}
                       {{-- <div class="p-image ml-auto"> --}}
-                        <input type="file" name="document" id="file-upload" class="myfrm form-control" required>
+                        <input type="file" name="document" id="file-upload" class="myfrm form-control">
                      {{-- </div> --}}
-
-                  
-
-                     
-                    </div>  
+                    </div>
+                    @error('document')
+                    <span class="velidation">{{ $message }}</span>
+                    @enderror   
                   </div>
                 </div>
               </div>
@@ -1017,7 +1130,9 @@
                       <option value="Verified">Verified</option>
                       <option value="Not Verified">Not Verified</option>
                     </select>
-               
+                    @error('verification_type')
+                    <span class="velidation">{{ $message }}</span>
+                    @enderror 
                   </div>
                 </div>
               </div>
@@ -1129,7 +1244,10 @@
                 <div class="row">
                   <div class="col-md-12">
                     <label>School/College/Institute</label>
-                    <input type="text" name="inst_name" class="form-control" placeholder="Enter Name">
+                    <input type="text" name="inst_name" value="{{ old('inst_name') }}" class="form-control" placeholder="Enter Name">
+                    @error('inst_name')
+                    <span class="velidation">{{ $message }}</span>
+                    @enderror 
                   </div>
                 </div>                
               </div>
@@ -1137,11 +1255,17 @@
                 <div class="row">
                   <div class="col-md-6">
                     <label>Degree</label>
-                    <input type="text" name="degree" class="form-control" placeholder="Ex. Bachelor's">
+                    <input type="text" name="degree" class="form-control" value="{{ old('degree') }}" placeholder="Ex. Bachelor's">
+                    @error('degree')
+                    <span class="velidation">{{ $message }}</span>
+                    @enderror 
                   </div>
                   <div class="col-md-6">
                     <label>Subject</label>
-                    <input type="text" name="subject" class="form-control" placeholder="Ex. CS">
+                    <input type="text" name="subject" class="form-control" value="{{ old('subject') }}" placeholder="Ex. CS">
+                    @error('subject')
+                    <span class="velidation">{{ $message }}</span>
+                    @enderror 
                   </div>
                 </div>                
               </div>
@@ -1149,11 +1273,17 @@
                 <div class="row">
                   <div class="col-md-6">
                     <label>From</label>
-                    <input type="date" name="duration_from" class="form-control" placeholder="From">
+                    <input type="date" name="duration_from" class="form-control" value="{{ old('duration_from') }}" placeholder="From">
+                    @error('duration_from')
+                    <span class="velidation">{{ $message }}</span>
+                    @enderror 
                   </div>
                   <div class="col-md-6">
                     <label>To</label>
-                    <input type="date" name="duration_to" class="form-control" placeholder="To">
+                    <input type="date" name="duration_to" class="form-control" value="{{ old('duration_to') }}" placeholder="To">
+                    @error('duration_to')
+                    <span class="velidation">{{ $message }}</span>
+                    @enderror 
                   </div>
                 </div>
               </div>
@@ -1171,7 +1301,11 @@
                         {{-- <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>  --}}
                         <input class="file-upload" name="document" id="file-upload3" type="file">
                       </div>
+                      
                     </div>  
+                    @error('document')
+                      <span class="velidation">{{ $message }}</span>
+                      @enderror 
                   </div>
                 </div>
               </div>
@@ -1181,10 +1315,13 @@
                     <label>Verification</label>
                   
                     <select class="form-control" name="verification_type" id="verification_type">
-                      <option value="">Verification Type</option>
+                      <option value="{{ old('verification_type') }}">Verification Type {{ old('verification_type') }}</option>
                       <option value="Verified">Verified</option>
                       <option value="Not Verified">Not Verified</option>
                     </select>
+                    @error('verification_type')
+                    <span class="velidation">{{ $message }}</span>
+                    @enderror 
                   </div>
                 </div>
               </div>
@@ -1383,7 +1520,10 @@
                 <div class="row">
                   <div class="col-md-12">
                     <label>Company Name</label>
-                    <input type="text" name="com_name" class="form-control" placeholder="ByteCipher" required>
+                    <input type="text" name="com_name" class="form-control" placeholder="ByteCipher">
+                    @error('com_name')
+                            <span class="velidation">{{ $message }}</span>
+                            @enderror 
                   </div>
                 </div>                
               </div>
@@ -1392,10 +1532,16 @@
                   <div class="col-md-6">
                     <label>From</label>
                     <input type="date" name="work_duration_from" class="form-control" placeholder="From">
+                    @error('work_duration_from')
+                     <span class="velidation">{{ $message }}</span>
+                    @enderror 
                   </div>
                   <div class="col-md-6">
                     <label>To</label>
                     <input type="date" name="work_duration_to" class="form-control" placeholder="To">
+                    @error('work_duration_to')
+                     <span class="velidation">{{ $message }}</span>
+                     @enderror 
                   </div>
                 </div>
               </div>
@@ -1403,7 +1549,10 @@
                 <div class="row">
                   <div class="col-md-12">
                     <label>Designation</label>
-                    <input type="text" name="designation" class="form-control" placeholder="React Native Developer" required>
+                    <input type="text" name="designation" class="form-control" placeholder="React Native Developer">
+                    @error('designation')
+                      <span class="velidation">{{ $message }}</span>
+                    @enderror 
                   </div>                  
                 </div>
               </div>  
@@ -1422,6 +1571,9 @@
                         <input class="file-upload" name="offer_letter" id="file-upload5" type="file" accept="image/*">
                       </div>
                     </div>  
+                    @error('offer_letter')
+                    <span class="velidation">{{ $message }}</span>
+                    @enderror 
                   </div>
                 </div>
               </div>
@@ -1453,6 +1605,9 @@
                         <input class="file-upload" name="exp_letter" id="file-upload6" type="file" accept="image/*">
                       </div>
                     </div>  
+                    @error('exp_letter')
+                    <span class="velidation">{{ $message }}</span>
+                    @enderror 
                   </div>
                 </div>
               </div>
@@ -1470,7 +1625,10 @@
                         <span class="upload-button" id="upload-button7">Choose File</span>
                         <input class="file-upload" name="salary_slip" id="file-upload7" type="file" accept="image/*">
                       </div>
-                    </div>  
+                    </div>
+                    @error('salary_slip')
+                    <span class="velidation">{{ $message }}</span>
+                    @enderror   
                   </div>
                 </div>
               </div>
@@ -1484,6 +1642,9 @@
                       <option value="Verified">Verified</option>
                       <option value="Not Verified">Not Verified</option>
                     </select>
+                    @error('verification_type')
+                            <span class="velidation">{{ $message }}</span>
+                            @enderror 
                   </div>
                 </div>
               </div>
@@ -1754,21 +1915,7 @@
 
     <script>
       
-        var $input = $(".typeahead1");
-        $input.typeahead({
-            source: [
-                "Bhojpuri",
-                "Bengali",
-                "English",
-                "French",
-                "Gujarati",
-                "Hindi",
-                "Russian",
-                "Spanish",
-                "Tamil",
-            ],
-            autoSelect: true,
-        });
+  
   
         $input.change(function () {
             var current = $input.typeahead("getActive");

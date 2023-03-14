@@ -301,7 +301,7 @@
           <div class="modal-body">
             <img src="{{ asset('assets') }}/admin/images/deactivate-popup-icon.png" class="img-size-wth">
             <h1 class="h1-delete">Are you sure?</h1>
-            <p>Are you Really want to Delete this account.</p>
+            <p>You want to Delete this account.</p>
             <a href="delete-invite/{{$invite->id}}">Delete</a>
           </div>
         </div>

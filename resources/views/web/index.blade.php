@@ -54,9 +54,7 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script>
-      window.jQuery || document.write('<script src="../..{{ asset('assets') }}/company/js/vendor/jquery.min.js"><\/script>')
-    </script>
+    
     <script src="{{ asset('assets') }}/company/js/bootstrap.min.js"></script>
 
 </body>

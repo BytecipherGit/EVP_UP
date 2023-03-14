@@ -74,15 +74,28 @@ class EmployeeController extends Controller
     }
 
     public function basicInfo(request $request){
-     
-        // $request->validate([
-        //     'first_name' => ['required', 'string', 'max:255'],
-        //     'email' => ['required', 'string', 'email', 'max:255'],
-        //     'last_name' => ['required', 'string', 'max:255'],
-        //     'profile' => ['required', 'string', 'max:255'],
-        // ]);
-
+    
         if(isset($_POST['basic'])){
+
+       $request->validate([
+        'first_name' => ['required', 'string', 'max:255'],
+        'last_name' => ['required', 'string', 'max:255'],
+        'email' => ['required', 'unique:emp_basicinfo,email', 'email'],
+        // 'middle_name' => ['required', 'string', 'max:255'],
+        'blood_group' => ['required'],
+        'gender' => ['required'],
+        'dob' => ['required'],
+        'phone' => ['required','max:12'],
+        'emg_phone' => ['required','max:12'],
+        'permanent_address' => ['required','string', 'max:255'],
+        'current_address' => ['required','string', 'max:255'],
+        'marital_status' => ['required'],
+        'emg_name' => ['required','string', 'max:255'],
+        'emg_relationship' => ['required','string', 'max:255'],
+        'emg_address' => ['required','string', 'max:255'],
+
+        ]);
+
         $employe = new Employee();
         $employe->first_name=$request->input('first_name');
         $employe->profile=$request->input('profile');
@@ -128,6 +141,24 @@ class EmployeeController extends Controller
           
            //For Update Basic Information
           if(isset($_POST['basic-edit'])){
+            $request->validate([
+              'first_name' => ['required', 'string', 'max:255'],
+              'last_name' => ['required', 'string', 'max:255'],
+              'email' => ['required', 'unique:emp_basicinfo,email', 'email'],
+              // 'middle_name' => ['required', 'string', 'max:255'],
+              'blood_group' => ['required'],
+              'gender' => ['required'],
+              'dob' => ['required'],
+              'phone' => ['required','max:12'],
+              'emg_phone' => ['required','max:12'],
+              'permanent_address' => ['required','string', 'max:255'],
+              'current_address' => ['required','string', 'max:255'],
+              'marital_status' => ['required'],
+              'emg_name' => ['required','string', 'max:255'],
+              'emg_relationship' => ['required','string', 'max:255'],
+              'emg_address' => ['required','string', 'max:255'],
+      
+              ]);
 
             if($request->file('profile')){
             $file= $request->file('profile');
@@ -164,11 +195,15 @@ class EmployeeController extends Controller
             
           }
 
-   
-      
-         
-       
             if(isset($_POST['identity'])){
+
+              $request->validate([
+                'id_type' => ['required', 'string', 'max:255'],
+                'id_number' => ['required', 'string', 'max:255'],
+                'verification_type' => ['required', 'string', 'max:255'],
+                'document' => ['required','file','mimes:jpeg,png,pdf,docs,doc','max:2048']
+                ]);
+
               $basic_id=Employee::where('id',$request->id)->first();
               // print_r($basic_id);die();
               $emp_ident = new Employeeidentity();
@@ -205,6 +240,18 @@ class EmployeeController extends Controller
 
           
               if(isset($_POST['qulification'])){
+
+              $request->validate([
+                'inst_name' => ['required', 'string', 'max:255'],
+                'degree' => ['required', 'string', 'max:255'],
+                'subject' => ['required', 'string', 'max:255'],
+                'duration_from' => ['required'],
+                'duration_to' => ['required'],
+                'verification_type' => ['required','string', 'max:255'],
+                'document' => ['required','file','mimes:jpeg,png,pdf,docs,doc','max:2048']
+
+                ]);
+                
                 $identity_id=Employee::where('id',$request->id)->first();
                 $emp_qualf = new Empqualification();
                 $emp_qualf->emp_id=$identity_id->id;
@@ -240,6 +287,19 @@ class EmployeeController extends Controller
 
 
               if(isset($_POST['workhistory'])){
+
+              $request->validate([
+                'com_name' => ['required', 'string', 'max:255'],
+                'designation' => ['required', 'string', 'max:255'],
+                'work_duration_to' => ['required'],
+                'work_duration_from' => ['required'],
+                'verification_type' => ['required','string', 'max:255'],
+                'offer_letter' => ['required','file','mimes:jpeg,png,pdf,docs,doc','max:2048'],
+                'exp_letter' => ['required','file','mimes:jpeg,png,pdf,docs,doc','max:2048'],
+                'salary_slip' => ['required','file','mimes:jpeg,png,pdf,docs,doc','max:2048']
+
+                ]);
+
                 $identity_id=Employee::where('id',$request->id)->first();
                 $emp_work = new Empworkhistory();
                 $emp_work->emp_id=$identity_id->id;
@@ -290,6 +350,11 @@ class EmployeeController extends Controller
               }
 
               if(isset($_POST['workskill'])){
+
+              $request->validate([
+                'skill' => ['required', 'string', 'max:255'],
+                'lang' => ['required', 'string', 'max:255'],
+                ]);
                 $identity_id=Employee::where('id',$request->id)->first();
                 $emp_skill = new Empskills();
                 $emp_skill->emp_id=$identity_id->id;
@@ -317,6 +382,32 @@ class EmployeeController extends Controller
               }
 
               if(isset($_POST['official'])){
+
+                $request->validate([
+                  'doj' => ['required', 'string', 'max:255'],
+                  'prob_period' => ['required', 'string', 'max:255'],
+                  'emp_type' => ['required', 'string', 'max:255'],
+                  'work_location' => ['required', 'string', 'max:255'],
+                  'emp_status' => ['required', 'string', 'max:255'],
+                  'salary' => ['required', 'string', 'max:255'],
+                  'lpa' => ['required', 'string', 'max:255'],
+                  'app_from' => ['required', 'string', 'max:255'],
+                  'app_to' => ['required', 'string', 'max:255'],
+                  'pro_to' => ['required', 'string', 'max:255'],
+                  'last_app_desig' => ['required', 'string', 'max:255'],
+                  'current_app_desig' => ['required', 'string', 'max:255'],
+                  'app_date' => ['required','date'],
+                  'pro_from' => ['required', 'string', 'max:255'],
+                  'last_pro_desig' => ['required', 'string', 'max:255'],
+                  'current_pro_desig' => ['required', 'string', 'max:255'],
+                  'pro_date' => ['required','date'],
+                  'mang_name' => ['required', 'string', 'max:255'],
+                  'mang_type' => ['required', 'string', 'max:255'],
+                  'mang_dept' => ['required', 'string', 'max:255'],
+                  'mang_desig' => ['required', 'string', 'max:255']
+                 
+                  ]);
+
                 $identity_id=Employee::where('id',$request->id)->first();
                 $emp_off = new Empofficial();
                 $emp_off->emp_id=$identity_id->id;
