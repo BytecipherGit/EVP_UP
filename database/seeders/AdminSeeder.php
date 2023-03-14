@@ -18,9 +18,9 @@ class AdminSeeder extends Seeder
     public function run()
     {
         User::create([
-            'role' => 'admin',
+            'role' => 'superadmin',
             'name' => 'admin',
-            'email' => 'admin3@gmail.com',
+            'email' => 'superadmin@gmail.com',
             'password' => Hash::make('123456'),
             'org_name' =>'ByteCipher',
             'org_web'=>'bytecipher.net',
@@ -34,9 +34,9 @@ class AdminSeeder extends Seeder
         ]);
 
         User::create([
-            'role' => 'superadmin',
+            'role' => 'admin',
             'name' => 'admin',
-            'email' => 'superadmin@gmail.com',
+            'email' => 'admin3@gmail.com',
             'password' => Hash::make('123456'),
             'org_name' =>'ByteCipher',
             'org_web'=>'bytecipher.net',

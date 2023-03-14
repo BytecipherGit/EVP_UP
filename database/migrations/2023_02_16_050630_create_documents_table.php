@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('documents', function (Blueprint $table) {
             $table->id();
             $table->string('user_id');
-            $table->string('reg_id')->unique()->notnull();
+            $table->string('reg_id')->nullable();
             $table->string('document');
             $table->string('doc_type');
             $table->string('status')->default('pending');

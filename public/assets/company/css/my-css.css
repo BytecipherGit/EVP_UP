@@ -406,7 +406,7 @@ header .navbar-brand img {
     border-radius: 8px;
     position: relative;
     padding: 0  8px;
-    display: flex;
+    /* display: flex; */
     align-items: center;
 }
 .org-basic-info .upload-img-file .file-upload {
