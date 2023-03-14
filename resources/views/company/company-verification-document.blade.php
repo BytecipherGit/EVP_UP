@@ -50,7 +50,7 @@
                        <img class="profile-pic" id="profile-pic" src="assets/company/images/file-icon-img.png">
                      </div> --}}
                      <div class="p-image ml-auto">
-                        <input type="file" name="document[]" id="file-upload" class="form-control" required>
+                        <input type="file" name="document" id="file-upload" class="form-control" required>
                         @error('document')
                         <p class="velidation">{{ $message }}</p>
                         @enderror
@@ -61,7 +61,7 @@
                 <div class="col-md-4">
                   <div class="form-groupbox">
                       <label>&nbsp;</label>   
-                     <select class="form-control" name="doc_type[]" id="doc_type" style="height: 60px;" required>
+                     <select class="form-control" name="doc_type" id="doc_type" style="height: 60px;" required>
                       <option value="">Document Type</option>
                       <option value="GST">GST No</option>
                       <option value="Pan Card">Pan Card</option>
@@ -72,7 +72,45 @@
                   </div> 
                 </div>
                 <label>&nbsp;</label>  
-                <div class="add-plus mt-custom-plus extra-fields-customer"><span><img src="/assets/company/images/button-plus.png"></span></div>
+                {{-- <div class="add-plus mt-custom-plus extra-fields-customer"><span><img src="/assets/company/images/button-plus.png"></span></div> --}}
+                    
+              </div>
+               <div class="customer_records_dynamic"></div>
+            </div> 
+
+            <div class="document">
+              <div class="row new-changeLS customer_records">
+                <div class="col-md-6">
+                  <div class="form-groupbox">
+                    <label>Upload Document </label>     
+                    <div class="upload-img-file">
+                      {{-- <div class="circle">
+                       <img class="profile-pic" id="profile-pic" src="assets/company/images/file-icon-img.png">
+                     </div> --}}
+                     <div class="p-image ml-auto">
+                        <input type="file" name="document" id="file-upload" class="form-control" required>
+                        @error('document')
+                        <p class="velidation">{{ $message }}</p>
+                        @enderror
+                     </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-groupbox">
+                      <label>&nbsp;</label>   
+                     <select class="form-control" name="doc_type" id="doc_type" style="height: 60px;" required>
+                      <option value="">Document Type</option>
+                      <option value="GST">GST No</option>
+                      <option value="Pan Card">Pan Card</option>
+                     </select>
+                     @error('doc_type')
+                     <p class="velidation">{{ $message }}</p>
+                     @enderror
+                  </div> 
+                </div>
+                <label>&nbsp;</label>  
+                {{-- <div class="add-plus mt-custom-plus extra-fields-customer"><span><img src="/assets/company/images/button-plus.png"></span></div> --}}
                     
               </div>
                <div class="customer_records_dynamic"></div>

@@ -40,7 +40,7 @@
                       <div class="row">
                         <div class="col-xl-4 col-lg-6 col-md-12">
                           <div class="form-group">
-                            <label for="first_name">*First Name</label>
+                            <label for="first_name">First Name<span style="color:red">*</span></label>
                             <input type="text" name="first_name" class="form-control"  value="{{old('first_name')}}" placeholder="Enter Your First Name">
                             @error('first_name')
                             <span class="velidation">{{ $message }}</span>
@@ -49,7 +49,7 @@
                         </div>  
                         <div class="col-xl-4 col-lg-6 col-md-12">
                           <div class="form-group">
-                            <label for="middle_name">Middle Name</label>
+                            <label for="middle_name">Middle Name<span style="color:red">*</span></label>
                             <input type="text" name="middle_name" class="form-control" value="{{old('middle_name')}}" placeholder="Enter Your Middle Name" >
                             @error('middle_name')
                             <span class="velidation">{{ $message }}</span>
@@ -58,7 +58,7 @@
                         </div>  
                         <div class="col-xl-4 col-lg-6 col-md-12">
                           <div class="form-group">
-                            <label for="last_name">*Last Name</label>
+                            <label for="last_name">Last Name<span style="color:red">*</span></label>
                             <input type="text" name="last_name" class="form-control" value="{{old('last_name')}}" placeholder="Enter Your Last Name">
                             @error('last_name')
                             <span class="velidation">{{ $message }}</span>
@@ -67,7 +67,7 @@
                         </div>
                         <div class="col-lg-6 col-md-12">
                           <div class="form-group">
-                            <label for="email">*Official Email Id</label>
+                            <label for="email">Official Email Id<span style="color:red">*</span></label>
                             <input type="text" name="email" class="form-control" value="{{old('email')}}" placeholder="Enter Your Email">
                             @error('email')
                             <span class="velidation">{{ $message }}</span>
@@ -76,7 +76,7 @@
                         </div>
                         <div class="col-lg-6 col-md-12">
                           <div class="form-group">
-                            <label for="phone">Phone Number</label>
+                            <label for="phone">Phone Number<span style="color:red">*</span></label>
                             <input type="text" name="phone" class="form-control" value="{{old('phone')}}" placeholder="Enter Your Number">
                             @error('phone')
                             <span class="velidation">{{ $message }}</span>

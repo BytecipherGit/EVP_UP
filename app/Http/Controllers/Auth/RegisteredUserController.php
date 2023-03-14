@@ -85,7 +85,7 @@ class RegisteredUserController extends Controller
 
         // return redirect(RouteServiceProvider::ADMIN);
      
-        return redirect('register')->with('message','Successfully Registered');
+        return redirect('login')->with('message','Registration Sucessfully');
      
     }
 }

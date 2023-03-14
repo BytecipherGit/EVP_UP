@@ -21,9 +21,9 @@ Route::get('/welcome', function () {
     return view('welcome');
 });
 
-Route::get('/superlogin', function () {
-    return view('auth/superadminlogin');
-});
+// Route::get('/superlogin', function () {
+//     return view('auth/superadminlogin');
+// });
 
 Route::get('/', function () {
     return view('web/index');
@@ -93,11 +93,15 @@ Route::get('/organization', function () {
 //   ->send(new Emailinvite());
 // return redirect()->back()->with('message','Invitation Email Successfully Send');
 // });
+Route::get('/superlogin', [App\Http\Controllers\SuperAdminController::class, 'superAdminLogin'])->name('superlogin');
 Route::get('/invite-email/{id?}', [App\Http\Controllers\InviteempController::class, 'sendemail'])->name('invite-email');
+
 Route::middleware([Superadmin::class])->group(function () {
     Route::get('/superadmin', [App\Http\Controllers\SuperAdminController::class, 'index'])->name('superadmin');
     Route::get('superadmin/logout', [App\Http\Controllers\SuperAdminController::class, 'logout'])->name('superadmin.logout');
+   
 });
+
 Route::post('/document', [App\Http\Controllers\DocumentsController::class, 'getDocument'])->name('document');
 Route::get('/document', [App\Http\Controllers\DocumentsController::class, 'index'])->name('document');
 
@@ -108,39 +112,39 @@ Route::post('/basic-info/{id?}', [App\Http\Controllers\InviteempController::clas
 Auth::routes();
 Route::middleware([Admin::class])->group(function () {
     Route::get('/admin', [App\Http\Controllers\AdminController::class, 'index'])->name('admin')->middleware('documents');
-    Route::get('admin/logout', [App\Http\Controllers\AdminController::class, 'logout'])->name('admin.logout');
-    Route::post('/change_password', [App\Http\Controllers\AdminController::class, 'changePassword'])->name('password.change');
-    Route::get('/add-employee/{id?}', [App\Http\Controllers\EmployeeController::class, 'index']);
-    Route::post('/add-employee/{id?}', [App\Http\Controllers\EmployeeController::class, 'basicInfo']);
-    Route::get('/edit-employee/{id?}', [App\Http\Controllers\EmployeeController::class, 'basicIndex'])->name('edit-employee');
-    Route::post('/edit-employee/{id?}', [App\Http\Controllers\EmployeeController::class, 'editEmployee']);
-    Route::get('/settings', [App\Http\Controllers\companySettingsController::class, 'profiledata'])->name('settings');
-    Route::post('/settings', [App\Http\Controllers\companySettingsController::class, 'getprofile']);
-    Route::get('/employee-exit/{id?}', [App\Http\Controllers\EmployeeController::class, 'exitEmp']);
-    Route::post('/employee-exit/{id?}', [App\Http\Controllers\EmployeeController::class, 'getExitEmp']);
-    Route::get('/post-employee-details/{id}', [App\Http\Controllers\EmployeeController::class, 'postEmpDetails']);
-    Route::get('/post-employee', [App\Http\Controllers\EmployeeController::class, 'pastEmp']);
-    Route::get('/current-employee', [App\Http\Controllers\EmployeeController::class, 'currentEmp']);
-    Route::get('/employee', [App\Http\Controllers\EmployeeController::class, 'getAllEmp']);
-    Route::post('/employee', [App\Http\Controllers\EmployeeController::class, 'getCsvEmp']);
-    Route::get('/downloadcsv', [App\Http\Controllers\EmployeeController::class, 'downloadCsv']);
-    Route::get('/download_invitecsv', [App\Http\Controllers\InviteempController::class, 'downloadInviteCsv']);
-    Route::get('/add-invite-employee', [App\Http\Controllers\InviteempController::class, 'inviteEmp']);
-    Route::post('/add-invite-employee', [App\Http\Controllers\InviteempController::class, 'getInviteEmp']);
-    Route::get('/invite-employee', [App\Http\Controllers\InviteempController::class, 'index']);
-    Route::post('/invite-employee', [App\Http\Controllers\InviteempController::class, 'getCsvInvite']);
-    Route::get('/edit-invite-employee/{id?}', [App\Http\Controllers\InviteempController::class, 'editInviteEmp']);
-    Route::post('/edit-invite-employee/{id?}', [App\Http\Controllers\InviteempController::class, 'geteditInvite']);
-    Route::get('/delete-invite/{id?}', [App\Http\Controllers\InviteempController::class, 'deleteInvite']);
+    Route::get('admin/logout', [App\Http\Controllers\AdminController::class, 'logout'])->name('admin.logout')->middleware('documents');
+    Route::post('/change_password', [App\Http\Controllers\AdminController::class, 'changePassword'])->name('password.change')->middleware('documents');
+    Route::get('/add-employee/{id?}', [App\Http\Controllers\EmployeeController::class, 'index'])->middleware('documents');
+    Route::post('/add-employee/{id?}', [App\Http\Controllers\EmployeeController::class, 'basicInfo'])->middleware('documents');
+    Route::get('/edit-employee/{id?}', [App\Http\Controllers\EmployeeController::class, 'basicIndex'])->name('edit-employee')->middleware('documents');
+    Route::post('/edit-employee/{id?}', [App\Http\Controllers\EmployeeController::class, 'editEmployee'])->middleware('documents');
+    Route::get('/settings', [App\Http\Controllers\companySettingsController::class, 'profiledata'])->name('settings')->middleware('documents');
+    Route::post('/settings', [App\Http\Controllers\companySettingsController::class, 'getprofile'])->middleware('documents');
+    Route::get('/employee-exit/{id?}', [App\Http\Controllers\EmployeeController::class, 'exitEmp'])->middleware('documents');
+    Route::post('/employee-exit/{id?}', [App\Http\Controllers\EmployeeController::class, 'getExitEmp'])->middleware('documents');
+    Route::get('/post-employee-details/{id}', [App\Http\Controllers\EmployeeController::class, 'postEmpDetails'])->middleware('documents');
+    Route::get('/post-employee', [App\Http\Controllers\EmployeeController::class, 'pastEmp'])->middleware('documents');
+    Route::get('/current-employee', [App\Http\Controllers\EmployeeController::class, 'currentEmp'])->middleware('documents');
+    Route::get('/employee', [App\Http\Controllers\EmployeeController::class, 'getAllEmp'])->middleware('documents');
+    Route::post('/employee', [App\Http\Controllers\EmployeeController::class, 'getCsvEmp'])->middleware('documents');
+    Route::get('/downloadcsv', [App\Http\Controllers\EmployeeController::class, 'downloadCsv'])->middleware('documents');
+    Route::get('/download_invitecsv', [App\Http\Controllers\InviteempController::class, 'downloadInviteCsv'])->middleware('documents');
+    Route::get('/add-invite-employee', [App\Http\Controllers\InviteempController::class, 'inviteEmp'])->middleware('documents');
+    Route::post('/add-invite-employee', [App\Http\Controllers\InviteempController::class, 'getInviteEmp'])->middleware('documents');
+    Route::get('/invite-employee', [App\Http\Controllers\InviteempController::class, 'index'])->middleware('documents');
+    Route::post('/invite-employee', [App\Http\Controllers\InviteempController::class, 'getCsvInvite'])->middleware('documents');
+    Route::get('/edit-invite-employee/{id?}', [App\Http\Controllers\InviteempController::class, 'editInviteEmp'])->middleware('documents');
+    Route::post('/edit-invite-employee/{id?}', [App\Http\Controllers\InviteempController::class, 'geteditInvite'])->middleware('documents');
+    Route::get('/delete-invite/{id?}', [App\Http\Controllers\InviteempController::class, 'deleteInvite'])->middleware('documents');
 
-    Route::get('/schedule-interview', [InterviewEmployee::class, 'index'])->name('schedule.interview');
-    Route::any('/schedule-interview/form/{id?}', [InterviewEmployee::class, 'getScheduleInterviewForm']);
-    Route::post('schedule-interview/submit', [InterviewEmployee::class, 'schedule_interview']);
-    Route::post('schedule-interview/changeHiringStage', [InterviewEmployee::class, 'update_hiring_stage']);
-    Route::post('schedule-interview/deleteInterview', [InterviewEmployee::class, 'deleteInterview']);
-    Route::get('interview/confirmed/{id?}', [InterviewEmployee::class, 'interviewConfirmed'])->name('interview.confirmed');
-    Route::get('interview/newtime/{id?}', [InterviewEmployee::class, 'interviewNewTime'])->name('interview.newtime');
-    Route::get('interview/declined/{id?}', [InterviewEmployee::class, 'interviewDeclined'])->name('interview.declined');
+    Route::get('/schedule-interview', [InterviewEmployee::class, 'index'])->name('schedule.interview')->middleware('documents');
+    Route::any('/schedule-interview/form/{id?}', [InterviewEmployee::class, 'getScheduleInterviewForm'])->middleware('documents');
+    Route::post('schedule-interview/submit', [InterviewEmployee::class, 'schedule_interview'])->middleware('documents');
+    Route::post('schedule-interview/changeHiringStage', [InterviewEmployee::class, 'update_hiring_stage'])->middleware('documents');
+    Route::post('schedule-interview/deleteInterview', [InterviewEmployee::class, 'deleteInterview'])->middleware('documents');
+    Route::get('interview/confirmed/{id?}', [InterviewEmployee::class, 'interviewConfirmed'])->name('interview.confirmed')->middleware('documents');
+    Route::get('interview/newtime/{id?}', [InterviewEmployee::class, 'interviewNewTime'])->name('interview.newtime')->middleware('documents');
+    Route::get('interview/declined/{id?}', [InterviewEmployee::class, 'interviewDeclined'])->name('interview.declined')->middleware('documents');
     // Route::post('schedule-interview/update', [InterviewEmployee::class, 'schedule_interview_update']);
     // Route::post('admin/add_company', [\App\Http\Controllers\CommonController::class, 'add_company']);
     // Route::post('admin/update_company', [\App\Http\Controllers\CommonController::class, 'update_company']);
