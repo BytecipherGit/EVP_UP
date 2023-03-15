@@ -98,8 +98,8 @@ Route::middleware([Superadmin::class])->group(function () {
     Route::get('/superadmin', [App\Http\Controllers\SuperAdminController::class, 'index'])->name('superadmin');
     Route::get('superadmin/logout', [App\Http\Controllers\SuperAdminController::class, 'logout'])->name('superadmin.logout');
 });
-Route::post('/document', [App\Http\Controllers\DocumentsController::class, 'getDocument'])->name('document');
-Route::get('/document', [App\Http\Controllers\DocumentsController::class, 'index'])->name('document');
+Route::get('/upload_document', [App\Http\Controllers\DocumentsController::class, 'index'])->name('upload.document');
+Route::post('/store_document', [App\Http\Controllers\DocumentsController::class, 'store'])->name('store.document');
 
 Route::get('/email-config/{id?}', [App\Http\Controllers\InviteempController::class, 'getConfig'])->name('email-config');
 Route::get('/basic-info/{id?}', [App\Http\Controllers\InviteempController::class, 'getBasicDetails'])->name('basic-info');
