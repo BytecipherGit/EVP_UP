@@ -99,7 +99,7 @@
                       <div class="row">
                         <div class="col-xl-6">
                           <label>Registered Company Name</label>
-                          <input id="com_name" type="text" class="form-control" placeholder="Company Name" name="com_name" @if ($profile) value="{{ old('com_name',$profile->com_name)}}" @endif required autocomplete="com_name" autofocus>
+                          <input id="com_name" type="text" class="form-control" placeholder="Company Name" name="org_name" @if ($profile) value="{{ old('org_name',$profile->org_name)}}" @endif required autocomplete="org_name" autofocus>
                           {{-- <input type="text" name="com_name" placeholder="Company Name" value="{{ old('com_name') }}" class="form-control"> --}}
                         </div>
                         <div class="col-xl-6 input-mt-from">
@@ -114,7 +114,7 @@
                           <label>Website</label>
                           <div class="input_field">
                             <span>http://</span>
-                            <input type="text" name="website" placeholder="Website"  @if ($profile) value="{{old('website',$profile->website)}}" @endif class="form-control" required>
+                            <input type="text" name="org_web" placeholder="Website"  @if ($profile) value="{{old('org_web',$profile->org_web)}}" @endif class="form-control" required>
                           </div>
                         </div> 
                         <div class="col-xl-6 input-mt-from">
@@ -131,7 +131,11 @@
                             {{-- <div class="selectBox__value">IT Company</div> --}}
                             <select name="industry" @if ($profile) value="{{ old('industry', $profile->industry) }}" @endif class="form-control">
                             {{-- <div class="selectBox active"> --}}
-                              <option @if ($profile) value="{{ old('industry', $profile->industry) }}" @endif>@if ($profile) {{ old('industry', $profile->industry) }} @endif</option>
+                              @if($profile)
+                              <option value="{{ old('industry', $profile->industry) }}">{{ old('industry', $profile->industry) }}</option>
+                              @else
+                              <option value="">Select Industry</option>
+                              @endif
                               <option value="IT Company">IT Company</option>
                               <option value="Non it Company">Non IT Company</option>
                              
@@ -142,7 +146,7 @@
 
                         <div class="col-xl-6 input-mt-from">
                           <label>Phone Number</label>
-                          <input type="text" name="phone"  placeholder="Phone Number" @if ($profile) value="{{old('phone',$profile->phone)}}" @endif class="form-control" required>
+                          <input type="text" name="phone_number"  placeholder="Phone Number" @if ($profile) value="{{old('phone_number',$profile->phone_number)}}" @endif class="form-control" required>
                         </div>  
                       </div>
                     </div>                    
@@ -155,16 +159,16 @@
 
                       <div class="company-pro">
                         <div class="circle">
-                         <img class="profile-pic" id="profile-pic" name="logo" @if ($profile->logo!== Null) value="/image/{{ old('logo', $profile->logo) }}" src="/image/{{ $profile->logo }}" @else src="assets/admin/images/logo.png" @endif >
+                         <img class="profile-pic" id="profile-pic" name="company_logo" @if ($profile->company_logo!== Null) value="/image/{{ old('company_logo', $profile->company_logo) }}" src="/image/{{ $profile->company_logo }}" @else src="assets/admin/images/logo.png" @endif >
                        </div>
                        <p>You can drag or drop <span>your file logo here.</span> </p>
                        <div class="p-image ml-auto">
                          <span class="upload-button" id="upload-button">Choose File</span>
-                          <input class="file-upload"  name="logo" id="file-upload" type="file" accept="image/*"/>
+                          <input class="file-upload"  name="company_logo" id="file-upload" type="file" accept="image/*"/>
                        </div>
                       </div>
 
-                      <h6>Only .jpg, .gif, or .png files allowed, no size limit</h6>
+                      {{-- <h6>Only .jpg, .gif, or .png files allowed, no size limit</h6> --}}
                     </div>
                     <div class="form-group">                      
                       <label>Company Description</label>
@@ -193,7 +197,7 @@
                       <div class="row">
                         <div class="col-xl-12">
                           <label>Registered Office</label>
-                          <textarea class="form-control" name="reg_office" rows="2">@if ($address) {{old('reg_office',$address->reg_office)}} @endif</textarea>
+                          <textarea class="form-control" name="address" @if ($profile->address) value="{{old('address',$profile->address)}}" @endif rows="2" placeholder="Add Registered Office Address">@if ($profile->address) {{old('address',$profile->address)}}@endif</textarea>
                         </div>  
                       </div>
                     </div>
@@ -201,14 +205,14 @@
                       <div class="row">
                         <div class="col-xl-12">
                           <label>Corporate Office</label>
-                          <textarea class="form-control" name="cor_office" rows="2">@if ($address) {{old('cor_office',$address->cor_office)}} @endif</textarea>
+                          <textarea class="form-control" name="cor_office_address" @if ($profile->cor_office_address) value="{{old('cor_office_address',$profile->cor_office_address)}}" @endif rows="2" placeholder="Add Corporate Office Address">@if ($profile->cor_office_address) {{old('cor_office_address',$profile->cor_office_address)}} @endif</textarea>
                         </div>  
                       </div>
                     </div>
                 </div>
                 <div class="tab-button-bx">
                    {{-- <button class="btn-secondary-cust">Cancel</button>  --}}
-                   <button type="submit" name="address" class="btn-primary-cust">Change Save</button>
+                   <button type="submit" name="add_address" class="btn-primary-cust">Change Save</button>
                 </div> 
               </div>   
             </form>

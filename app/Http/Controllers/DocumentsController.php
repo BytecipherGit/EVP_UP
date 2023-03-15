@@ -18,6 +18,7 @@ class DocumentsController extends Controller
      */
     public function index()
     {
+        
         if (Auth::check()) {
             $checkDocuments = Documents::where('user_id', Auth::id())->get();
             if(count($checkDocuments) > 0){
@@ -32,8 +33,10 @@ class DocumentsController extends Controller
                 if(!$flagStatus){
                     return redirect('company/company-verification-document')->with('message', 'Your document is under varification! You will be able to sign in shortly');
                 } else {
-                    return view('company/company-verification-document', compact('document'));
+                    return view('company/company-verification-document');
                 }
+            } else {
+                return view('company/company-verification-document');
             }
         } else {
                 Auth::logout();

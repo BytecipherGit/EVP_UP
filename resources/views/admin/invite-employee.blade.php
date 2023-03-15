@@ -447,7 +447,7 @@
                             },
                             error: function(data) {
                                 var errors = data.responseJSON;
-                                console.log(errors);
+                                // console.log(errors);
                             }
                         });
                     } else {

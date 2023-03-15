@@ -39,7 +39,7 @@
                       <div class="row">
                         <div class="col-xl-12 col-lg-6 col-md-12">
                           <div class="form-group">
-                            <label>Date of Exit</label>
+                            <label>Date of Exit<span style="color:red">*</span></label>
                             <input type="date" name="do_exit" class="form-control" placeholder="Date" required>
                           </div>
                         </div>  
@@ -51,8 +51,8 @@
                         </div>
                         <div class="col-lg-6 col-md-12">
                           <div class="form-group">
-                            <label>Reason for leaving</label>
-                            <textarea rows="3" name="reason" class="form-control" placeholder="Reason"></textarea>
+                            <label>Reason for leaving<span style="color:red">*</span></label>
+                            <textarea rows="3" name="reason" class="form-control" required placeholder="Reason"></textarea>
                           </div>
                         </div>
                         <div class="col-lg-12 col-md-12">

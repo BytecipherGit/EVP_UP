@@ -51,7 +51,7 @@
                                 <div class="dropdown-noti" id="style-5">
                                     <h4>Today</h4>
 
-                                    <a class="dropdown-item" href="notification">
+                                    <a class="dropdown-item" href="/notification">
                                         <div class="noti-box-80">
                                             <h3>juhi Thakur </h3>
                                             <p>has assigned leave policy Casual Leave to you</span></p>
@@ -60,7 +60,7 @@
                                             <p>16:35</p>
                                         </div>
                                     </a>
-                                    <a class="dropdown-item" href="notification">
+                                    <a class="dropdown-item" href="/notification">
                                         <div class="noti-box-80">
                                             <h3>Pritesh Gore </h3>
                                             <p>has assigned leave policy Casual Leave to you</span></p>
@@ -69,7 +69,7 @@
                                             <p>15:05</p>
                                         </div>
                                     </a>
-                                    <a class="dropdown-item" href="notification">
+                                    <a class="dropdown-item" href="/notification">
                                         <div class="noti-box-80">
                                             <h3>Prakash Varma </h3>
                                             <p>has assigned leave policy Casual Leave to you</span></p>
@@ -80,7 +80,7 @@
                                     </a>
 
                                     <h4>Yesterday</h4>
-                                    <a class="dropdown-item" href="notification">
+                                    <a class="dropdown-item" href="/notification">
                                         <div class="noti-box-80">
                                             <h3>Priya Varma </h3>
                                             <p>has assigned leave policy Casual Leave to you</span></p>
@@ -90,7 +90,7 @@
                                         </div>
                                     </a>
 
-                                    <a class="dropdown-item" href="notification">
+                                    <a class="dropdown-item" href="/notification">
                                         <div class="noti-box-80">
                                             <h3>Nidhi Varma </h3>
                                             <p>has assigned leave policy Casual Leave to you</span></p>
@@ -101,7 +101,7 @@
                                     </a>
 
                                     <h4>10-10-2021</h4>
-                                    <a class="dropdown-item" href="notification">
+                                    <a class="dropdown-item" href="/notification">
                                         <div class="noti-box-80">
                                             <h3>juhi Thakur </h3>
                                             <p>has assigned leave policy Casual Leave to you</span></p>
@@ -112,7 +112,7 @@
                                     </a>
 
                                     <h4>09-10-2021</h4>
-                                    <a class="dropdown-item" href="notification">
+                                    <a class="dropdown-item" href="/notification">
                                         <div class="noti-box-80">
                                             <h3>Pritesh Gore </h3>
                                             <p>has assigned leave policy Casual Leave to you</span></p>
@@ -122,7 +122,7 @@
                                         </div>
                                     </a>
                                 </div>
-                                <div class="all-noti-btn"><a href="notification">See All Notifications</a></div>
+                                <div class="all-noti-btn"><a href="/notification">See All Notifications</a></div>
                             </div>
                         </li>
 
@@ -131,21 +131,23 @@
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <img src="{{ asset('assets') }}/admin/images/marvin-kinney-profile.png">
                                 <span>
-                                    John Smith
+                                   {{ Auth::user()->name }}
                                 </span>
                                 <img src="{{ asset('assets') }}/admin/images/droup-down-gray.png" class="right-doun">
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item" href="settings">
+                                <a class="dropdown-item" href="/settings">
                                     Profile
                                 </a>
-                                <a class="dropdown-item" href="change_password">
+                                <a class="dropdown-item" href="/change_password">
                                     Change Password
                                 </a>
                                 <hr>
                                 {{-- <a class="dropdown-item dropdown-item-no" href="{{ route('logout') }}">     --}}
 
-
+                                    <form id='logout-form' action="{{ route('logout') }}" method="POST" class="d-none">
+                                        @csrf
+                                    </form>
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                     onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -154,9 +156,7 @@
                                     Sign out
                                     <img src="{{ asset('assets') }}/admin/images/logout-icon.png" class="ml-auto">
                                 </a>
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                    @csrf
-                                </form>
+                               
 
                             </div>
                         </li>

@@ -1,6 +1,6 @@
 @extends('company/layouts.app')
 @section('content')
-@section('title','EVP - Onboarding-Employee')
+@section('title','EVP - Edit-Employee')
 
     <!--- Main Container Start ----->
     <div class="main-container">
@@ -66,7 +66,7 @@
                       <div class="row">
                         <div class="col-xl-4 col-lg-6 col-md-12">
                           <div class="form-group">
-                            <label for="first_name">*First Name</label>
+                            <label for="first_name">First Name<span style="color:red">*</span></label>
                             <input type="text" name="first_name" @if ($basic) value="{{ old('first_name', $basic->first_name) }}" @endif class="form-control" placeholder="Enter Your First Name" required>
                             @error('first_name')
                             <span class="text-danger pass">{{ $message }}</span>
@@ -81,19 +81,19 @@
                         </div>  
                         <div class="col-xl-4 col-lg-6 col-md-12">
                           <div class="form-group">
-                            <label for="last_name">*Last Name</label>
+                            <label for="last_name">Last Name<span style="color:red">*</span></label>
                             <input type="text" name="last_name" @if ($basic) value="{{ old('last_name', $basic->last_name) }}" @endif  class="form-control" placeholder="Enter Your Last Name" required>
                           </div>                          
                         </div>
                         <div class="col-lg-6 col-md-12">
                           <div class="form-group">
-                            <label for="email">*Official Email Id</label>
+                            <label for="email">Official Email Id<span style="color:red">*</span></label>
                             <input type="text" name="email" @if ($basic) value="{{ old('email', $basic->email) }}" @endif class="form-control" placeholder="Enter Your Email" required>
                           </div>
                         </div>
                         <div class="col-lg-6 col-md-12">
                           <div class="form-group">
-                            <label for="phone">Phone Number</label>
+                            <label for="phone">Phone Number<span style="color:red">*</span></label>
                             <input type="text" name="phone" @if ($basic) value="{{ old('phone', $basic->phone) }}" @endif class="form-control" placeholder="Enter Your Number" required>
                           </div>
                         </div>
@@ -104,13 +104,13 @@
                     <div class="col-xl-12 mt-3"><h2>Personal</h2></div>
                     <div class="col-xl-3 col-lg-6 col-md-12">
                       <div class="form-group">
-                        <label for="dob">Date Of Birth</label>
-                        <input type="date" name="dob" class="form-control"  @if ($basic) value="{{ old('dob', $basic->dob) }}" @endif placeholder="DOB" required>
+                        <label for="dob">Date Of Birth<span style="color:red">*</span></label>
+                        <input type="date" name="dob" class="form-control"  @if ($basic) value="{{ old('dob', $basic->dob) }}" @endif placeholder="DOB">
                       </div>
                     </div> 
                     <div class="col-xl-3 col-lg-6 col-md-12">
                       <div class="form-group">
-                        <label>Select Blood Group</label>
+                        <label>Select Blood Group<span style="color:red">*</span></label>
                     
                           <select class="form-control" name="blood_group" id="blood_group" @if ($basic) value="{{ old('blood_group', $basic->blood_group) }}" @endif required>
                               <option @if ($basic) value="{{ old('blood_group', $basic->blood_group) }}" @endif>@if ($basic) {{ old('dob', $basic->blood_group) }} @endif</option>
@@ -128,7 +128,7 @@
                     </div> 
                     <div class="col-xl-3 col-lg-6 col-md-12">
                       <div class="form-group">
-                        <label>Select Gender</label>
+                        <label>Select Gender<span style="color:red">*</span></label>
                       
                           {{-- <div class="selectBox__value">Select Gender</div> --}}
                         
@@ -144,7 +144,7 @@
                     
                     <div class="col-xl-3 col-lg-6 col-md-12">
                       <div class="form-group">
-                        <label>Marital Status</label>
+                        <label>Marital Status<span style="color:red">*</span></label>
                     
                           <select class="form-control" name="marital_status" @if ($basic) value="{{ old('marital_status', $basic->marital_status) }}" @endif id="marital_status" required>
                             <option @if ($basic) value="{{ old('marital_status', $basic->marital_status) }}" @endif>@if ($basic) {{ old('marital_status', $basic->marital_status) }} @endif</option>
@@ -156,7 +156,7 @@
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-12">
                       <div class="form-group">
-                        <label for="current_address">Current Address</label>
+                        <label for="current_address">Current Address<span style="color:red">*</span></label>
                         <textarea rows="3" name="current_address" placeholder="Address" class="form-control" @if ($basic) value="{{ old('current_address', $basic->current_address) }}" @endif required>@if ($basic) {{old('current_address',$basic->current_address)}} @endif</textarea>
                       </div>
                     </div>
@@ -166,28 +166,28 @@
                         <textarea rows="3" name="permanent_address" placeholder="Address" class="form-control" @if ($basic) value="{{ old('permanent_address', $basic->permanent_address) }}" @endif required>@if ($basic) {{old('permanent_address',$basic->permanent_address)}} @endif</textarea>
                       </div>
                     </div>
-                    <div class="col-xl-12 mt-3"><h2>Emergency Contact</h2></div>                        
+                    <div class="col-xl-12 mt-3"><h2>Emergency Contact<span style="color:red">*</span></h2></div>                        
                     <div class="col-xl-4 col-lg-6 col-md-12">
                       <div class="form-group">
-                        <label for="emg_name">Name</label>
+                        <label for="emg_name">Name<span style="color:red">*</span></label>
                         <input type="text" name="emg_name" @if ($basic) value="{{ old('emg_name', $basic->emg_name) }}" @endif class="form-control" placeholder="Enter Name" required>
                       </div>
                     </div>
                     <div class="col-xl-4 col-lg-6 col-md-12">
                       <div class="form-group">
-                        <label for="emg_relationship">Relationship</label>
+                        <label for="emg_relationship">Relationship<span style="color:red">*</span></label>
                         <input type="text" name="emg_relationship" @if ($basic) value="{{ old('emg_relationship', $basic->emg_relationship) }}" @endif class="form-control" placeholder="Enter Relation" required>
                       </div>
                     </div>
                     <div class="col-xl-4 col-lg-6 col-md-12">
                       <div class="form-group">
-                        <label for="emg_phone">Phone Number</label>
+                        <label for="emg_phone">Phone Number<span style="color:red">*</span></label>
                         <input type="text" name="emg_phone" @if ($basic) value="{{ old('emg_phone', $basic->emg_phone) }}" @endif class="form-control" placeholder="Number" required>
                       </div>
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-12">
                       <div class="form-group">
-                        <label for="emg_address">Address</label>
+                        <label for="emg_address">Address<span style="color:red">*</span></label>
                         <textarea rows="3" name="emg_address" class="form-control" @if ($basic) value="{{ old('emg_address', $basic->emg_address) }}" @endif required>@if ($basic) {{old('emg_address',$basic->emg_address)}} @endif</textarea>
                       </div>
                     </div>
@@ -501,25 +501,25 @@
                         <div class="col-xl-12"><h2>Official Info</h2></div>
                         <div class="col-xl-3 col-lg-6 col-md-12">
                           <div class="form-group">
-                            <label>Employee ID</label>
+                            <label>Employee ID<span style="color:red">*</span></label>
                             <input type="text" @if ($official) value="#00{{ old('emp_id', $official->emp_id) }}" @endif  name="emp_id" class="form-control" placeholder="Id Number" readonly>
                           </div>
                         </div>
                         <div class="col-xl-3 col-lg-6 col-md-12">
                           <div class="form-group">
-                            <label>Date of Joining</label>
+                            <label>Date of Joining<span style="color:red">*</span></label>
                             <input type="date" @if ($official) value="{{ old('doj', $official->doj) }}" @endif name="doj" class="form-control" placeholder="Date">
                           </div>
                         </div>
                         <div class="col-xl-3 col-lg-6 col-md-12">
                           <div class="form-group">
-                            <label>Probation Period</label>
+                            <label>Probation Period<span style="color:red">*</span></label>
                             <input type="text" @if ($official) value="{{ old('prob_period', $official->prob_period) }}" @endif name="prob_period" class="form-control" placeholder="In Day">
                           </div>
                         </div> 
                         <div class="col-xl-3 col-lg-6 col-md-12">
                           <div class="form-group">
-                            <label>Employee Type</label>
+                            <label>Employee Type<span style="color:red">*</span></label>
                             <select class="form-control" name="emp_type" id="emp_type" required>
                               <option name="emp_type" @if ($official) value="{{ old('emp_type', $official->emp_type) }}" @endif>@if ($official) {{ old('emp_type', $official->emp_type) }} @endif</option>
                               <option value="Part Time">Part Time</option>
@@ -531,7 +531,7 @@
                         </div> 
                         <div class="col-xl-3 col-lg-6 col-md-12">
                           <div class="form-group">
-                            <label>Work Location</label>
+                            <label>Work Location<span style="color:red">*</span></label>
                             <select class="form-control" name="work_location" id="work_location" required>
                               <option name="work_location" @if ($official) value="{{ old('work_location', $official->work_location) }}" @endif>@if ($official) {{ old('work_location', $official->work_location) }} @endif</option>
                               <option value="Bhopal, MP">Bhopal, MP</option>
@@ -543,7 +543,7 @@
                         </div>
                         <div class="col-xl-3 col-lg-6 col-md-12">
                           <div class="form-group">
-                            <label>Employee Status</label>
+                            <label>Employee Status<span style="color:red">*</span></label>
                             <select name="emp_status" class="form-control" id="emp_status">
                               <option name="emp_status" @if ($official) value="{{ old('emp_status', $official->emp_status) }}" @endif>@if ($official) {{ old('emp_status', $official->emp_status) }} @endif</option>
                               <option value="Active">Active</option>
@@ -555,13 +555,13 @@
                         <div class="col-xl-12 mt-3"><h2>Salary Info</h2></div>
                         <div class="col-xl-3 col-lg-6 col-md-12">
                           <div class="form-group">
-                            <label>Salary</label>
+                            <label>Salary<span style="color:red">*</span></label>
                             <input type="text" @if ($official) value="{{ old('salart_info', $official->salart_info) }}" @endif name="salart_info" class="form-control" placeholder="In Hand">
                           </div>
                         </div>
                         <div class="col-xl-3 col-lg-6 col-md-12">
                           <div class="form-group">
-                            <label>LPA</label>
+                            <label>LPA<span style="color:red">*</span></label>
                             <input type="text" @if ($official) value="{{ old('lpa', $official->lpa) }}" @endif name="lpa" class="form-control" placeholder="Enter LPA">
                           </div>
                         </div>
@@ -573,31 +573,31 @@
                             </span></h6></div>
                             <div class="col-xl-2 col-lg-4 col-md-6">
                               <div class="form-group">
-                                <label>From</label>
+                                <label>From<span style="color:red">*</span></label>
                                 <input type="text" @if ($official) value="{{ old('app_from', $official->app_from) }}" @endif name="app_from" class="form-control" placeholder="10,000">
                               </div>
                             </div>
                             <div class="col-xl-2 col-lg-4 col-md-6">
                               <div class="form-group">
-                                <label>To</label>
+                                <label>To<span style="color:red">*</span></label>
                                 <input type="text" @if ($official) value="{{ old('app_to', $official->app_to) }}" @endif name="app_to" class="form-control" placeholder="To">
                               </div>
                             </div>
                             <div class="col-xl-3 col-lg-4 col-md-12">
                               <div class="form-group">
-                                <label>Last Desig.</label>
+                                <label>Last Desig.<span style="color:red">*</span></label>
                                 <input type="text" @if ($official) value="{{ old('last_app_desig', $official->last_app_desig) }}" @endif  name="last_app_desig" class="form-control" placeholder="Last Desig.">
                               </div>
                             </div>
                             <div class="col-xl-3 col-lg-4 col-md-12">
                               <div class="form-group">
-                                <label>Current Desig.</label>
+                                <label>Current Desig.<span style="color:red">*</span></label>
                                 <input type="text" @if ($official) value="{{ old('current_app_desig', $official->current_app_desig) }}" @endif name="current_app_desig" class="form-control" placeholder="Current Desig.">
                               </div>
                             </div>
                             <div class="col-xl-2 col-lg-4 col-md-12">
                               <div class="form-group">
-                                <label>Date</label>
+                                <label>Date<span style="color:red">*</span></label>
                                 <input type="date" @if ($official) value="{{ old('app_date', $official->app_date) }}" @endif name="app_date" class="form-control" placeholder="Date">
                               </div>
                             </div>
@@ -610,31 +610,31 @@
                             </span></h6></div>
                             <div class="col-xl-2 col-lg-4 col-md-12">
                               <div class="form-group">
-                                <label>From</label>
+                                <label>From<span style="color:red">*</span></label>
                                 <input type="text" @if ($official) value="{{ old('pro_from', $official->pro_from) }}" @endif name="pro_from" class="form-control" placeholder="10,000">
                               </div>
                             </div>
                             <div class="col-xl-2 col-lg-4 col-md-12">
                               <div class="form-group">
-                                <label>To</label>
+                                <label>To<span style="color:red">*</span></label>
                                 <input type="text" @if ($official) value="{{ old('pro_to', $official->pro_to) }}" @endif name="pro_to" class="form-control" placeholder="To">
                               </div>
                             </div>
                             <div class="col-xl-3 col-lg-4 col-md-12">
                               <div class="form-group">
-                                <label>Last Desig.</label>
+                                <label>Last Desig.<span style="color:red">*</span></label>
                                 <input type="text" @if ($official) value="{{ old('last_pro_desig', $official->last_pro_desig) }}" @endif name="last_pro_desig" class="form-control" placeholder="Last Desig.">
                               </div>
                             </div>
                             <div class="col-xl-3 col-lg-4 col-md-12">
                               <div class="form-group">
-                                <label>Current Desig.</label>
+                                <label>Current Desig.<span style="color:red">*</span></label>
                                 <input type="text" @if ($official) value="{{ old('current_pro_desig', $official->current_pro_desig) }}" @endif name="current_pro_desig" class="form-control" placeholder="Current Desig.">
                               </div>
                             </div>
                             <div class="col-xl-2 col-lg-4 col-md-12">
                               <div class="form-group">
-                                <label>Date</label>
+                                <label>Date<span style="color:red">*</span></label>
                                 <input type="date" @if ($official) value="{{ old('pro_date', $official->pro_date) }}" @endif name="pro_date" class="form-control" placeholder="Date">
                               </div>
                             </div>
@@ -650,13 +650,13 @@
                             <div class="row customer_recordsoff">
                               <div class="col-xl-3 col-lg-5 col-md-10">
                                 <div class="form-group">
-                                  <label>Name</label>
+                                  <label>Name<span style="color:red">*</span></label>
                                   <input type="text" @if ($official) value="{{ old('mang_name', $official->mang_name) }}" @endif name="mang_name" class="form-control" placeholder="Name">
                                 </div>
                               </div>
                               <div class="col-xl-2 col-lg-5 col-md-10">
                                 <div class="form-group">
-                                  <label>Type</label>
+                                  <label>Type<span style="color:red">*</span></label>
                                   {{-- <div class="selectBox active form-control">
                                     <div class="selectBox__value">Type</div>
                                     <div class="dropdown-menu">
@@ -674,13 +674,13 @@
                               </div>                                
                               <div class="col-xl-3 col-lg-5 col-md-10">
                                 <div class="form-group">
-                                  <label>Department</label>
+                                  <label>Department<span style="color:red">*</span></label>
                                   <input type="text" @if ($official) value="{{ old('mang_dept', $official->mang_dept) }}" @endif name="mang_dept" class="form-control" placeholder="Department">
                                 </div>
                               </div>
                               <div class="col-xl-3 col-lg-5 col-md-10">
                                 <div class="form-group">
-                                  <label>Designation</label>
+                                  <label>Designation<span style="color:red">*</span></label>
                                   <input type="text" @if ($official) value="{{ old('mang_desig', $official->mang_desig) }}" @endif name="mang_desig" class="form-control" placeholder="Designation">
                                 </div>
                               </div>                              
@@ -728,7 +728,7 @@
              <form method="post" enctype="multipart/form-data">
               @csrf
               <div class="form-group inputtag-custom">
-                <label>Add Skill</label>
+                <label>Add Skill<span style="color:red">*</span></label>
                 <div class="row customer_records1">
                   <div class="col-md-8">
                     <input type="text" class="form-control input-search-box typeahead" @if ($skills) value="{{ old('skill', $skills->skill) }}" @endif name="skill" data-provide="typeahead" placeholder="Language">
@@ -775,7 +775,7 @@
                  <form method="post" enctype="multipart/form-data">
                   @csrf
                   <div class="form-group inputtag-custom">
-                    <label>Add Skill</label>
+                    <label>Add Skill<span style="color:red">*</span></label>
                     <div class="row customer_records1">
                       <div class="col-md-8">
                         <input type="text" class="form-control input-search-box typeahead" @if ($skills) value="{{ old('lang', $skills->lang) }}" @endif name="lang" data-provide="typeahead" placeholder="Language">
@@ -826,7 +826,7 @@
               <div class="form-group">
                 <div class="row">
                   <div class="col-md-6">
-                    <label>Id Type</label>
+                    <label>Id Type<span style="color:red">*</span></label>
                     <div class="selectBox active form-control">
                       <div class="selectBox__value">Id Type</div>
                       <div class="dropdown-menu" id="style-5">
@@ -838,7 +838,7 @@
                     </div>
                   </div>
                   <div class="col-md-6">
-                    <label>Id Number</label>
+                    <label>Id Number<span style="color:red">*</span></label>
                     <input type="text" name="" class="form-control" placeholder="Number">
                   </div>
                 </div>                
@@ -863,7 +863,7 @@
               <div class="form-group">
                 <div class="row">
                   <div class="col-md-12">
-                    <label>Verification</label>
+                    <label>Verification<span style="color:red">*</span></label>
                     <div class="selectBox active form-control">
                       <div class="selectBox__value">Verification Type</div>
                       <div class="dropdown-menu">
@@ -904,7 +904,7 @@
               <div class="form-group">
                 <div class="row">
                   <div class="col-md-6">
-                    <label>Id Type</label>
+                    <label>Id Type<span style="color:red">*</span></label>
                     <select   class="form-control" name="id_type" id="id_type">
                       <option @if ($identity) value="{{ old('id_type', $identity->id_type) }}" @endif>@if ($identity) {{ old('id_type', $identity->id_type) }} @endif</option>
                       <option value="Pan Card">Pan Card</option>
@@ -913,7 +913,7 @@
                     </select>
                   </div>
                   <div class="col-md-6">
-                    <label>Id Number</label>
+                    <label>Id Number<span style="color:red">*</span></label>
                     <input type="text" name="id_number" @if ($identity) value="{{ old('id_number', $identity->id_number) }}" @endif class="form-control" >
                   </div>
                 </div>                
@@ -955,7 +955,7 @@
               <div class="form-group">
                 <div class="row">
                   <div class="col-md-12">
-                    <label>Verification</label>
+                    <label>Verification<span style="color:red">*</span></label>
                     <select class="form-control" name="verification_type" id="verification_type">
                       <option @if ($identity) value="{{ old('verification_type', $identity->verification_type) }}" @endif>@if ($identity) {{ old('verification_type', $identity->verification_type) }} @endif</option>
                       <option value="Verified">Verified</option>
@@ -996,7 +996,7 @@
               <div class="form-group">
                 <div class="row">
                   <div class="col-md-12">
-                    <label>School/College/Institute</label>
+                    <label>School/College/Institute<span style="color:red">*</span></label>
                     <input type="text" name="inst_name" class="form-control" placeholder="Enter Name">
                   </div>
                 </div>                
@@ -1004,11 +1004,11 @@
               <div class="form-group">
                 <div class="row">
                   <div class="col-md-6">
-                    <label>Degree</label>
+                    <label>Degree<span style="color:red">*</span></label>
                     <input type="text" name="degree" @if ($qualification) value="{{ old('degree', $qualification->degree) }}" @endif class="form-control" placeholder="Ex. Bachelor's">
                   </div>
                   <div class="col-md-6">
-                    <label>Subject</label>
+                    <label>Subject<span style="color:red">*</span></label>
                     <input type="text" name="subject" @if ($qualification) value="{{ old('subject', $qualification->subject) }}" @endif class="form-control" placeholder="Ex. CS">
                   </div>
                 </div>                
@@ -1016,11 +1016,11 @@
               <div class="form-group">
                 <div class="row">
                   <div class="col-md-6">
-                    <label>From</label>
+                    <label>From<span style="color:red">*</span></label>
                     <input type="date" name="duration_from" class="form-control" @if ($qualification) value="{{ old('duration_from', $qualification->duration_from) }}" @endif placeholder="From">
                   </div>
                   <div class="col-md-6">
-                    <label>To</label>
+                    <label>To<span style="color:red">*</span></label>
                     <input type="date" name="duration_to" class="form-control" @if ($qualification) value="{{ old('duration_to', $qualification->duration_to) }}" @endif placeholder="To">
                   </div>
                 </div>
@@ -1045,7 +1045,7 @@
               <div class="form-group">
                 <div class="row">
                   <div class="col-md-12">
-                    <label>Verification</label>
+                    <label>Verification<span style="color:red">*</span></label>
                     <select class="form-control" name="verification_type" id="verification_type">
                       <option @if ($qualification) value="{{ old('verification_type', $qualification->verification_type) }}" @endif>@if ($qualification) {{ old('verification_type', $qualification->verification_type) }} @endif</option>
                       <option value="Verified">Verified</option>
@@ -1082,7 +1082,7 @@
               <div class="form-group">
                 <div class="row">
                   <div class="col-md-12">
-                    <label>School/College/Institute</label>
+                    <label>School/College/Institute<span style="color:red">*</span></label>
                     <input type="text" name="inst_name" @if ($qualification) value="{{ old('inst_name', $qualification->inst_name) }}" @endif class="form-control" placeholder="Enter Name">
                   </div>
                 </div>                
@@ -1090,11 +1090,11 @@
               <div class="form-group">
                 <div class="row">
                   <div class="col-md-6">
-                    <label>Degree</label>
+                    <label>Degree<span style="color:red">*</span></label>
                     <input type="text" name="degree" @if ($qualification) value="{{ old('degree', $qualification->degree) }}" @endif class="form-control" placeholder="Ex. Bachelor's">
                   </div>
                   <div class="col-md-6">
-                    <label>Field Of study</label>
+                    <label>Field Of study<span style="color:red">*</span></label>
                     <input type="text" name="subject" @if ($qualification) value="{{ old('subject', $qualification->subject) }}" @endif class="form-control" placeholder="Ex. CS">
                   </div>
                 </div>                
@@ -1102,11 +1102,11 @@
               <div class="form-group">
                 <div class="row">
                   <div class="col-md-6">
-                    <label>From</label>
+                    <label>From<span style="color:red">*</span></label>
                     <input type="date" name="duration_from" class="form-control" @if ($qualification) value="{{ old('duration_from', $qualification->duration_from) }}" @endif placeholder="From">
                   </div>
                   <div class="col-md-6">
-                    <label>To</label>
+                    <label>To<span style="color:red">*</span></label>
                     <input type="date" name="duration_to" class="form-control" @if ($qualification) value="{{ old('duration_to', $qualification->duration_to) }}" @endif placeholder="From">
                   </div>
                 </div>
@@ -1131,7 +1131,7 @@
               <div class="form-group">
                 <div class="row">
                   <div class="col-md-12">
-                    <label>Verification</label>
+                    <label>Verification<span style="color:red">*</span></label>
                     <select class="form-control" name="verification_type" id="verification_type">
                       <option @if ($qualification) value="{{ old('verification_type', $qualification->verification_type) }}" @endif>@if ($qualification) {{ old('verification_type', $qualification->verification_type) }} @endif</option>
                       <option value="Verified">Verified</option>
@@ -1247,7 +1247,7 @@
               <div class="form-group">
                 <div class="row">
                   <div class="col-md-12">
-                    <label>Company Name</label>
+                    <label>Company Name<span style="color:red">*</span></label>
                     <input type="text"  name="com_name" @if ($workhistory) value="{{ old('com_name', $workhistory->com_name) }}" @endif  class="form-control" value="ByteCipher">
                   </div>
                 </div>                
@@ -1255,11 +1255,11 @@
               <div class="form-group">
                 <div class="row">
                   <div class="col-md-6">
-                    <label>Form</label>
+                    <label>Form<span style="color:red">*</span></label>
                     <input type="date" name="work_duration_from" @if ($workhistory) value="{{ old('work_duration_from', $workhistory->work_duration_from) }}" @endif class="form-control" value="2018">
                   </div>
                   <div class="col-md-6">
-                    <label>To</label>
+                    <label>To<span style="color:red">*</span></label>
                     <input type="date" name="work_duration_to" @if ($workhistory) value="{{ old('work_duration_to', $workhistory->work_duration_to) }}" @endif  class="form-control" value="2020">
                   </div>
                 </div>
@@ -1267,7 +1267,7 @@
               <div class="form-group">
                 <div class="row">
                   <div class="col-md-12">
-                    <label>Designation</label>
+                    <label>Designation<span style="color:red">*</span></label>
                     <input type="text" name="designation" @if ($workhistory) value="{{ old('designation', $workhistory->designation) }}" @endif  class="form-control" value="React Native Developer">
                   </div>
                 </div>
@@ -1331,7 +1331,7 @@
               <div class="form-group">
                 <div class="row">
                   <div class="col-md-12">
-                    <label>Verification</label>
+                    <label>Verification<span style="color:red">*</span></label>
                     <select class="form-control" name="verification_type" id="verification_type">
                       <option @if ($workhistory) value="{{ old('verification_type', $workhistory->verification_type) }}" @endif>@if ($workhistory) {{ old('verification_type', $workhistory->verification_type) }} @endif</option>
                       <option value="Verified">Verified</option>
@@ -1376,7 +1376,7 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script>
-      window.jQuery || document.write('<script src="../..{{ asset('assets') }}/admin/js/vendor/jquery.min.js"><\/script>')
+      window.jQuery || document.write('<script src="../../{{ asset('assets') }}/admin/js/vendor/jquery.min.js"><\/script>')
     </script>
     <script src="{{ asset('assets') }}/admin/js/bootstrap.min.js"></script> 
     <script src="{{ asset('assets') }}/admin/js/file-upload.js"></script>
@@ -1414,39 +1414,6 @@
                 "ios",
                 "React Js",
                 "React Native",
-            ],
-            autoSelect: true,
-        });
-  
-        $input.change(function () {
-            var current = $input.typeahead("getActive");
-            matches = [];
-  
-            if (current) {
-  
-                // Some item from your input matches
-                // with entered data
-                if (current.name == $input.val()) {
-                    matches.push(current.name);
-                }
-            }
-        });
-    </script>
-
-    <script>
-      
-        var $input = $(".typeahead1");
-        $input.typeahead({
-            source: [
-                "Bhojpuri",
-                "Bengali",
-                "English",
-                "French",
-                "Gujarati",
-                "Hindi",
-                "Russian",
-                "Spanish",
-                "Tamil",
             ],
             autoSelect: true,
         });
@@ -1537,5 +1504,43 @@
       });
     </script>
 
+    <script>
+      
+        $input.change(function () {
+            var current = $input.typeahead("getActive");
+            matches = [];
+  
+            if (current) {
+  
+                // Some item from your input matches
+                // with entered data
+                if (current.name == $input.val()) {
+                    matches.push(current.name);
+                }
+            }
+        });
+    </script>
 
+    <script>
+      $('.extra-fields-customer').click(function() {
+        $('.customer_records').clone().appendTo('.customer_records_dynamic');
+        $('.customer_records_dynamic .customer_records').addClass('single remove');
+        $('.single .extra-fields-customer').remove();
+        $('.single').append('<a href="#" class="remove-field btn-remove-customer add-plus minus-icon"><span><img src="{{ asset('assets') }}/admin/images/minus-icon.png"></span></a>');
+        $('.customer_records_dynamic > .single').attr("class", "row");
+
+        $('.customer_records_dynamic input').each(function() {
+          var count = 0;
+          var fieldname = $(this).attr("name");
+          $(this).attr('name', fieldname + count);
+          count++;
+        });
+
+      });
+
+      $(document).on('click', '.remove-field', function(e) {
+        $(this).parent('.row').remove();
+        e.preventDefault();
+      });
+    </script>
 @endsection

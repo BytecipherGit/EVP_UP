@@ -213,7 +213,7 @@ class InviteempController extends Controller
                     'last_name' => $row->last_name,
                 );
             }
-
+     
             if(!empty($info)){
               foreach($info as $row){
                 if(!empty($row['email']) && !empty($row['first_name']) && !empty($row['last_name']))

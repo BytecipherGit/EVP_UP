@@ -336,6 +336,7 @@ class EmployeeController extends Controller
                 'skill' => ['required', 'string', 'max:255'],
                 'lang' => ['required', 'string', 'max:255'],
                 ]);
+
                 $identity_id=Employee::where('id',$request->id)->first();
                 $emp_skill = new Empskills();
                 $emp_skill->emp_id=$identity_id->id;
@@ -343,7 +344,7 @@ class EmployeeController extends Controller
                 $emp_skill->skill_type=$request->input('skill_type');
                 $emp_skill->lang=$request->input('lang');
                 $emp_skill->lang_type=$request->input('lang_type');
-              
+                
                 $emp_skill->save();
                 $official = Empofficial::where('emp_id',$request->id)->first();
                 if (empty($official)) {
@@ -827,7 +828,7 @@ class EmployeeController extends Controller
           'status'  => '0'
         ]);
 
-        return redirect()->back()->with('msg','Employee Exit Successfully');
+        return redirect('employee')->with('msg','Employee Exit Successfully');
      }
 
      public function pastEmp(){

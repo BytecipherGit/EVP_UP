@@ -42,7 +42,7 @@
       <ul class="nav nav-tabs table-responsive-width" role="tablist">
      
         <li class="nav-item">
-          <a @if($basic->gender) class="nav-link" @else class="nav-link active" @endif data-toggle="tab" href="#tabs-1" role="tab">Basic Info</a>
+          <a @if($basic->dob || !$qualification) class="nav-link" @else class="nav-link active" @endif data-toggle="tab" href="#tabs-1" role="tab">Basic Info</a>
         </li>
      
         <li class="nav-item">
@@ -279,7 +279,7 @@
           </div>
         </div>
         @else
-        <div @if($basic->gender) class="tab-pane" @else class="nav-pane active" @endif id="tabs-1" role="tabpanel">
+        <div @if($basic->dob || !$qualification) class="tab-pane" @else class="nav-pane active" @endif id="tabs-1" role="tabpanel">
           {{-- <div id="tabs-1"  class="tab-pane {{ !session('tabs-6_active') ? 'active': '' }} "> --}}
           <div class="eml-persnal ">
             <div class="add-emply-details">
@@ -480,7 +480,7 @@
                                 <tr>
                                   <th>Type</th>
                                   <th>Id</th>
-                                  <th>Verification</th>
+                                  {{-- <th>Verification</th> --}}
                                   {{-- <th>Actions</th> --}}
                                 </tr>
                               </thead>
@@ -489,7 +489,7 @@
                                   <tr>
                                     <td>{{ $ident['id_type']}}</td>
                                     <td>{{ $ident['id_number']}}</td>
-                                    <td><span class="verified-clr"><i class="fa fa-check"></i> Verified</span></td>
+                                    {{-- <td><span class="verified-clr"><i class="fa fa-check"></i> Verified</span></td> --}}
                                     {{-- <td>
                                       <span class="d-flex tbl-iconBx">
                                         <a href="#" target="_black" class="docu-down" data-toggle="modal" data-target="#exampleModaldocument"><img src="assets/admin/images/document.png"></a>
@@ -548,7 +548,7 @@
                                   <th>Subject</th>
                                   <th>From</th>
                                   <th>To</th>
-                                  <th>Verification</th>
+                                  {{-- <th>Verification</th> --}}
                                   {{-- <th>Action</th> --}}
                                 </tr>
                               </thead>
@@ -560,7 +560,7 @@
                                   <td>{{ $quaf['subject']}}</td>
                                   <td>{{ $quaf['duration_from']}}</td>  
                                   <td>{{ $quaf['duration_to']}}</td>  
-                                  <td><span class="verified-clr"><i class="fa fa-check"></i> {{ $quaf['verification_type']}}</span></td>
+                                  {{-- <td><span class="verified-clr"><i class="fa fa-check"></i> {{ $quaf['verification_type']}}</span></td> --}}
                                   {{-- <td>
                                     <a href="#" target="_black" class="docu-down" data-toggle="modal" data-target="#qualificationdocument"><img src="assets/admin/images/document.png"></a>
                                     <a href="assets/admin/images/job-offer-letter.png" target="_black" class="docu-download"><img src="assets/admin/images/download-icon.png"></a>
@@ -622,7 +622,7 @@
                                   {{-- <th>Offer Letter</th> --}}
                                   {{-- <th>Experience</th> --}}
                                   {{-- <th>Salary Slips</th> --}}
-                                  <th>Verification</th>
+                                  {{-- <th>Verification</th> --}}
                                   {{-- <th>Action</th> --}}
                                 </tr>
                               </thead>
@@ -636,7 +636,7 @@
                                   {{-- <td><a href="#" target="_black" class="docu-down" data-toggle="modal" data-target="#qualificationdocument"><img src="assets/admin/images/document.png"></a></td> --}}
                                   {{-- <td><a href="#" target="_black" class="docu-down" data-toggle="modal" data-target="#qualificationdocument"><img src="assets/admin/images/document.png"></a></td> --}}
                                   {{-- <td><a href="assets/admin/images/sample-pdf.pdf" target="_black" class="docu-download"><img src="assets/admin/images/pdf-icon.png"></a></td> --}}
-                                  <td><span class="verified-clr"><i class="fa fa-check"></i> {{ $work['verification_type']}}</span></td>
+                                  {{-- <td><span class="verified-clr"><i class="fa fa-check"></i> {{ $work['verification_type']}}</span></td> --}}
                                   {{-- <td><button type="button" class="border-none" data-toggle="modal" data-target="#workHistoryedit"><img src="assets/admin/images/edit-icon.png"></button></td> --}}
                                 </tr>
                               </tbody>
@@ -1174,13 +1174,13 @@
        
 
             <div class="form-group">
-              <label>Attech File</label>
+              <label>Attech File<span style="color:red">*</span></label>
               <div class="upload-img-file">
                   <input type="file" id="document" name="document" class="form-control">
                   <strong class="error" id="document-error"></strong>
               </div>
           </div>
-            <div class="form-group">
+            {{-- <div class="form-group">
               <div class="row">
                 <div class="col-md-12">
                   <label>Verification<span style="color:red">*</span></label>
@@ -1193,7 +1193,7 @@
                 </div>
                 <strong class="error" id="verification_type-error"></strong>
               </div>
-            </div>
+            </div> --}}
        
         </div>
       </div>
@@ -1242,7 +1242,7 @@
             <div class="form-group">
               <div class="row">
                 <div class="col-md-12">
-                  <label>Upload Document</label>
+                  <label>Upload Document<span style="color:red">*</span></label>
                   <div class="upload-img-file">
                     <div class="circle">
                       <img class="profile-pic" id="profile-pic2" src="{{ asset('assets') }}/admin/images/pan-card.png">
@@ -1257,7 +1257,7 @@
               </div>
             </div>
 
-            <div class="form-group">
+            {{-- <div class="form-group">
               <div class="row">
                 <div class="col-md-12">
                   <label>Verification</label>
@@ -1271,7 +1271,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> --}}
           </form>
         </div>
       </div>
@@ -1350,14 +1350,14 @@
               </div>
             </div>
             <div class="form-group">
-              <label>Attech File</label>
+              <label>Attech File<span style="color:red">*</span></label>
               <div class="upload-img-file">
                   <input type="file" id="document" name="document" class="form-control">
                   <strong class="error" id="document-error"></strong>
               </div>
           </div>
 
-            <div class="form-group">
+            {{-- <div class="form-group">
               <div class="row">
                 <div class="col-md-12">
                   <label>Verification<span style="color:red">*</span></label>
@@ -1370,10 +1370,10 @@
                   {{-- @error('verification_type')
                   <span class="velidation">{{ $message }}</span>
                   @enderror  --}}
-                </div> 
+                {{-- </div> 
               </div>
               
-            </div>
+            </div> --}}
         
         </div>
       </div>
@@ -1434,7 +1434,7 @@
             <div class="form-group">
               <div class="row">
                 <div class="col-md-12">
-                  <label>Upload Document</label>
+                  <label>Upload Document<span style="color:red">*</span></label>
                   <div class="upload-img-file">
                     <div class="circle">
                       <img class="profile-pic" id="profile-pic4" src="{{ asset('assets') }}/admin/images/file-icon-img.png">
@@ -1448,7 +1448,7 @@
                 </div>
               </div>
             </div>
-            <div class="form-group">
+            {{-- <div class="form-group">
               <div class="row">
                 <div class="col-md-12">
                   <label>Verification</label>
@@ -1462,7 +1462,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> --}}
           </form>
         </div>
       </div>
@@ -1613,7 +1613,7 @@
 
     
             <div class="form-group">
-              <label>Offer Letter</label>
+              <label>Offer Letter<span style="color:red">*</span></label>
               <div class="upload-img-file">
                   <input type="file" id="offer_letter" name="offer_letter" class="form-control"/>
                   <strong class="error" id="offer_letter-error"></strong>
@@ -1621,7 +1621,7 @@
           </div>
 
             <div class="form-group">
-              <label>Experience Letter</label>
+              <label>Experience Letter<span style="color:red">*</span></label>
               <div class="upload-img-file">
                   <input type="file" id="exp_letter" name="exp_letter" class="form-control"/>
                   <strong class="error" id="exp_letter-error"></strong>
@@ -1629,7 +1629,7 @@
           </div>
            
             <div class="form-group">
-              <label>Salary Slips</label>
+              <label>Salary Slips<span style="color:red">*</span></label>
               <div class="upload-img-file">
                   <input type="file" id="salary_slip" name="salary_slip" class="form-control"/>
                   <strong class="error" id="salary_slip-error"></strong>

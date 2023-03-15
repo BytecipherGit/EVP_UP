@@ -17,10 +17,10 @@ return new class extends Migration
             $table->id();
             $table->string('emp_id');
             $table->string('do_exit');
-            $table->string('decipline');
-            $table->string('reason');
-            $table->string('rating');
-            $table->string('document');
+            $table->string('decipline')->nullable();
+            $table->string('reason')->nullable();
+            $table->string('rating')->nullable();
+            $table->string('document')->nullable();
             $table->timestamps();
         });
     }
