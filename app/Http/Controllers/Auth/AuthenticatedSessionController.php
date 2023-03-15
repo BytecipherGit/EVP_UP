@@ -4,11 +4,11 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\Documents;
 use App\Providers\RouteServiceProvider;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use App\Models\Documents;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Session;
@@ -31,33 +31,33 @@ class AuthenticatedSessionController extends Controller
     {
         $request->authenticate();
         $request->session()->regenerate();
-
-        $document=Documents::where('user_id',Auth::id())->first();
-        // print_r($document);die();
-    if(Auth::user()->role == 'admin'){
-        if($document){
-        switch($document->status){
-          
-            case 'pending':  
-                Auth::logout();
-                Session::flush();  
-                return redirect()->intended(RouteServiceProvider::PENDING);   
-                break;
-            case 'verified':
-                return redirect()->intended(RouteServiceProvider::ADMIN);
-                break;
-                default:
-                return redirect()->intended(RouteServiceProvider::DOCUMENT);
+        if (Auth::check()) {
+            if (Auth::user()->role == 'admin') {
+                $checkDocuments = Documents::where('user_id', Auth::id())->get();
+                if (count($checkDocuments) > 0) {
+                    $flagStatus = true;
+                    foreach ($checkDocuments as $row) {
+                        if ($row->status == 'pending') {
+                            $flagStatus = false;
+                        } else {
+                            $flagStatus = true;
+                        }
+                    }
+                    if (!$flagStatus) {
+                        Auth::logout();
+                        Session::flush();
+                        return redirect()->intended(RouteServiceProvider::PENDING);
+                    } else {
+                        return redirect()->intended(RouteServiceProvider::ADMIN);
+                    }
+                } else {
+                    return redirect()->intended(RouteServiceProvider::DOCUMENT);
                 }
             }
-       else{
-           return redirect()->intended(RouteServiceProvider::DOCUMENT);
-         }
+            if (Auth::user()->role == 'superadmin') {
+                return redirect()->intended(RouteServiceProvider::SUPERADMIN);
+            }
         }
-        if(Auth::user()->role == 'superadmin'){
-            return redirect()->intended(RouteServiceProvider::SUPERADMIN);
-        }
-        
     }
 
     /**
