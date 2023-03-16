@@ -76,10 +76,10 @@
         <td>{{$emp->mang_name }}</td>
     
         @if($emp->status == 1 || $emp->status == 2)
-        <td style="color:#5BD94E">Available Employee</td>
+        <td style="color:#5BD94E"><b>Active</b></td>
         <td class="d-flex"><a href="edit-employee/{{ $emp->emp_id }}" class="view-btn">Edit</a><a href="employee-exit/{{ $emp->emp_id }}" title="Exit Employee" class="edit-btn">Exit</a></td>
         @else
-        <td style="color:#ac2029">Exit Employee</td>
+        <td style="color:#ac2029"><b>Exit</b></td>
         <td class="d-flex disabled" style="pointer-events: none"><a href="edit-employee/{{ $emp->emp_id }}" class="view-btn">Edit</a><a href="employee-exit/{{ $emp->emp_id }}" title="Employee Already Exit" class="edit-btn">Exit</a></td>
         @endif
       </tr> 

@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Mail as FacadesMail;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
 use Session;
+use DB;
 use Illuminate\Support\Facades\Auth;
 use Helper;
 
@@ -200,24 +201,75 @@ class InterviewEmployee extends Controller
         }
     }
 
+    public function suggestNewTime(request $request){
+        $employeetime=DB::table('interview_employees')->where('empCode',decrypt($request->empCode))
+        ->update([
+              'employee_comment'=>$request->input('employee_comment'),
+        ]);
+        return redirect('/success');
+     }
+
+
+     public function declineInterview(request $request){
+        $decline=DB::table('interview_employees')->where('empCode',decrypt($request->empCode))
+        ->update([
+              'employee_comment'=>$request->input('employee_comment'),
+        ]);
+        return redirect('/success');
+     }
+
+     public function videoInterview(request $request){
+        // dd($request->empCode);
+        $employee=DB::table('interview_employees')->where('empCode',decrypt($request->empCode))
+        ->update([
+              'employee_comment'=>$request->input('employee_comment'),
+        ]);
+        return redirect('/success');     
+    }
+
     public function interviewConfirmed(request $request)
     {
+        // if (!empty($request->empCode)) {
+        //     $isUpdate = EmployeeInterview::where('empCode', decrypt($request->empCode))->update(['employee_interview_status' => 2]);
+        //     if ($isUpdate) {
+        //         // return redirect('/success');
+        //     } else {
+        //         return Response::json(['success' => '0']);
+        //     }
+        // }
+
         if (!empty($request->empCode)) {
-            $isUpdate = EmployeeInterview::where('empCode', decrypt($request->empCode))->update(['employee_interview_status' => 2]);
-            if ($isUpdate) {
-                return redirect('/success');
-            } else {
-                return Response::json(['success' => '0']);
+                $employeeStatus = EmployeeInterview::where('empCode',decrypt($request->empCode))->first();
+
+                if ($employeeStatus) {
+                    if($employeeStatus->interview_type == 'Telephonic'){
+                        return view('admin/web-email/schedule-phone-interview',compact('employeeStatus'));
+                    }
+                    else{
+                    return view('admin/web-email/schedule-video-interview',compact('employeeStatus'));
+                    }
+                } else {
+                    return Response::json(['success' => '0']);
+                }
             }
-        }
     }
 
     public function interviewNewTime(request $request)
     {
-        if (!empty($request->empCode)) {
-            $isUpdate = EmployeeInterview::where('empCode', decrypt($request->empCode))->update(['employee_interview_status' => 3]);
-            if ($isUpdate) {
-                return redirect('/success');
+        // if (!empty($request->empCode)) {
+        //     $isUpdate = EmployeeInterview::where('empCode', decrypt($request->empCode))->update(['employee_interview_status' => 3]);
+        //     if ($isUpdate) {
+        //         // return redirect('/success');
+        //         return view('admin/web-email/suggest-new-time',compact(''));
+        //     } else {
+        //         return Response::json(['success' => '0']);
+        //     }
+        // }
+
+         if (!empty($request->empCode)) {
+            $employeetime = EmployeeInterview::where('empCode',decrypt($request->empCode))->first();
+            if ($employeetime) {
+                return view('admin/web-email/suggest-new-time',compact('employeetime'));
             } else {
                 return Response::json(['success' => '0']);
             }
@@ -226,13 +278,24 @@ class InterviewEmployee extends Controller
 
     public function interviewDeclined(request $request)
     {
+        // if (!empty($request->empCode)) {
+        //     $isUpdate = EmployeeInterview::where('empCode', decrypt($request->empCode))->update(['employee_interview_status' => 4]);
+        //     if ($isUpdate) {
+        //         // return redirect('/success');
+        //     } else {
+        //         return Response::json(['success' => '0']);
+        //     }
+        // }
+
         if (!empty($request->empCode)) {
-            $isUpdate = EmployeeInterview::where('empCode', decrypt($request->empCode))->update(['employee_interview_status' => 4]);
-            if ($isUpdate) {
-                return redirect('/success');
+            $employedecline = EmployeeInterview::where('empCode',decrypt($request->empCode))->first();
+            if ($employedecline) {
+                return view('admin/web-email/decline-interview',compact('employedecline'));
             } else {
                 return Response::json(['success' => '0']);
             }
         }
+
+
     }
 }

@@ -10,11 +10,17 @@
             <img src="assets/company/images/login-bg.jpg">
           </div>
         </div>
+     
         <div class="col-lg-6 form-section">
           {{-- <span class="">Your Documents is Under Verification.</span><br/>
             <span>We Will Verified Soon.</span>
           --}}
         <div class="modal-dialog" role="document">
+          @if(session()->has('message'))
+          <div class="alert alert-success">
+        {{ session()->get('message') }}
+        </div>
+        @endif
         <div class="modal-content">
             <div class="modal-body">
                 <img src="assets/company/images/email-verify.png">

@@ -131,7 +131,7 @@
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <img src="{{ asset('assets') }}/admin/images/marvin-kinney-profile.png">
                                 <span>
-                                   {{ Auth::user()->name }}
+                                    {{ Auth::user()->name }}
                                 </span>
                                 <img src="{{ asset('assets') }}/admin/images/droup-down-gray.png" class="right-doun">
                             </a>
@@ -145,18 +145,16 @@
                                 <hr>
                                 {{-- <a class="dropdown-item dropdown-item-no" href="{{ route('logout') }}">     --}}
 
-                                    <form id='logout-form' action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
+
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                     onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                    {{-- {{ __('Logout') }} --}}
-
-                                    Sign out
+                                                     Sign out
                                     <img src="{{ asset('assets') }}/admin/images/logout-icon.png" class="ml-auto">
                                 </a>
-                               
+                                <form id='logout-form' action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
 
                             </div>
                         </li>
@@ -279,7 +277,7 @@
     <script src="{{ asset('assets') }}/datatable/js/dataTables.fixedHeader.min.js"></script>
     <script src="{{ asset('assets') }}/datatable/js/dataTables.responsive.min.js"></script>
     <script src="{{ asset('assets') }}/datatable/js/responsive.bootstrap.min.js"></script>
-    
+
     @yield('pagescript')
 
 </body>

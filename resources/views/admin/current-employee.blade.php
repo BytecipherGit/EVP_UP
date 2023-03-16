@@ -41,7 +41,7 @@
           <table id="example" class="table-bordered nowrap table table-striped" style="width:100%">
             <thead>
               <tr>
-                <th><input type="checkbox" id="customcheck" name="customcheck"></th>
+                {{-- <th><input type="checkbox" id="customcheck" name="customcheck"></th> --}}
                 <th>Employee Code</th>
                 <th>Employee Name</th>
                 <th>Employee Designation</th>
@@ -54,7 +54,7 @@
             <tbody>      
               @foreach($current as $curremp)         
               <tr>
-                <td><input type="checkbox" id="customcheck1" name="customcheck1"></td>
+                {{-- <td><input type="checkbox" id="customcheck1" name="customcheck1"></td> --}}
                 <td>#000{{ $curremp->emp_id}}</td>
                 <td>{{ $curremp->first_name }} {{ $curremp->last_name}}</td>
                 <td>{{ $curremp->current_app_desig}}</td>

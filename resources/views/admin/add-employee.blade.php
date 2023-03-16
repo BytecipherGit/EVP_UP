@@ -678,7 +678,7 @@
 
                           </div>
 
-                            {{-- <a class="add-plus extra-fields-customer"><span><img src="{{ asset('assets') }}/admin/images/button-plus.png"></span></a> --}}
+                            <a class="add-plus extra-fields-customer"><span><img src="{{ asset('assets') }}/admin/images/button-plus.png"></span></a>
                         </div>
                         <div class="customer_records_dynamic"></div>
                       </div>
@@ -707,7 +707,7 @@
                                 <label class="" for="customRadioInline6">Expert</label></span>
                             </h6>  
                           </div>
-                          {{-- <a class="add-plus extra-fields-customer1" ><span><img src="{{ asset('assets') }}/admin/images/button-plus.png"></span></a> --}}
+                          <a class="add-plus extra-fields-customer1" ><span><img src="{{ asset('assets') }}/admin/images/button-plus.png"></span></a>
                         </div>
                         <div class="customer_records_dynamic1"></div>
                       </div>
@@ -1689,11 +1689,9 @@
             }
         });
     </script>
-    <script>
+      <script>
       
-  
-  
-        $input.change(function () {
+          $input.change(function () {
             var current = $input.typeahead("getActive");
             matches = [];
   
@@ -1708,21 +1706,29 @@
         });
     </script>
 
-    <script>
-    
-      $('.extra-fields-customer').click(function() {
-       
-        $('.customer_records').clone().appendTo('.customer_records_dynamic');
-        $('.customer_records_dynamic').addClass('single remove');
-        $('.single .extra-fields-customer').remove();
-        $('.single').append('<div class="col-xl-5 col-lg-10 col-md-10"><input type="text" name="moreFields['+i+'][skill]" placeholder="Add Skill" class="form-control input-search-box typeahead" /></div><div class="col-xl-5 col-lg-10 col-md-10"> <h6><span><input type="radio" class="" name="moreFields['+i+'][skill_type]" value="'+i+'"><label class="" for="customRadioInline1">Beginner</label></span><span><input type="radio" class="" name="moreFields['+i+'][skill_type]" value="'+i+'"><label class="" for="customRadioInline2">Intermediate</label></span><span><input type="radio" class="" name="moreFields['+i+'][skill_type]" value="'+i+'"><label class="" for="customRadioInline2">Expert</label></span><td style="padding-left:50px;"><a href="#" class="remove-tr btn-remove-customer add-plus minus-icon"><span><img src="{{ asset('assets') }}/admin/images/minus-icon.png"></span></a></h6></div>'); 
-        $('.customer_records_dynamic > .single').attr("class", "row1");
-        });
-        $(document).on('click', '.remove-tr', function(){  
-          $(this).parents('.row1').remove();
-          });  
-                                
-    </script>
+          <script>
+            $('.extra-fields-customer').click(function() {
+              $('.customer_records').clone().appendTo('.customer_records_dynamic');
+              $('.customer_records_dynamic .customer_records').addClass('single remove');
+              $('.single .extra-fields-customer').remove();
+              $('.single').append('<a href="#" class="remove-field btn-remove-customer add-plus minus-icon"><span><img src="{{ asset('assets') }}/admin/images/minus-icon.png"></span></a>');
+              $('.customer_records_dynamic > .single').attr("class", "row");
+
+              $('.customer_records_dynamic input').each(function() {
+                var count = 0;
+                var fieldname = $(this).attr("name");
+                $(this).attr('name', fieldname + count);
+                count++;
+              });
+
+            });
+
+            $(document).on('click', '.remove-field', function(e) {
+              $(this).parent('.row').remove();
+              e.preventDefault(); 
+            });
+          </script>
+
      <script>
        $(document).ready(function() {
 

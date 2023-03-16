@@ -828,7 +828,7 @@ class EmployeeController extends Controller
           'status'  => '0'
         ]);
 
-        return redirect('employee')->with('msg','Employee Exit Successfully');
+        return redirect('employee')->with('message','Employee Exit Successfully');
      }
 
      public function pastEmp(){

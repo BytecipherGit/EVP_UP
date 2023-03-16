@@ -37,8 +37,10 @@
       <h1>Decline interview</h1>
       <div class="ul-part d-flex">
         <img src="{{ asset('assets') }}/admin/web-email/images/office-icon.png" class="iconImg">
+        <form action="" method="post">
+          @csrf
         <div class="">
-          <h2>Urgent Requirement for iOS Developer</h2>
+          <h2>Urgent Requirement for {{ $employedecline->designation }} </h2>
           <p>ByteCipher Pvt Ltd</p>
         </div>
       </div>
@@ -46,8 +48,8 @@
       <div class="ul-part d-flex">
         <img src="{{ asset('assets') }}/admin/web-email/images/calendar-icon.png" class="iconImg">
         <div class="">
-          <h2>Friday, 4 March 2022</h2>
-          <p>04:30-05:30 IST</p>
+          <h2>{{ $employedecline->interview_date }}</h2>
+          <p>{{ $employedecline->interview_start_time }} {{ $employedecline->interview_end_time }}</p>
         </div>
       </div>
 
@@ -59,13 +61,13 @@
       <div class="ul-part">
         <div class="">
           <h2>Add a note for the employer (optinal)</h2>
-          <textarea rows="3" class="form-textarea"></textarea>
+          <textarea rows="3" name="employee_comment" class="form-textarea"></textarea>
         </div>
       </div>
       
-      <button class="buttun-classA"><a href="">Decline Interview</a></button>
+      <button class="buttun-classA" type="submit">Decline Interview</button>
       
-        
+    </form>
     </div>  
   </div>
 </div>

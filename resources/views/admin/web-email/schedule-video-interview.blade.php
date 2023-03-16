@@ -37,8 +37,12 @@
       <h1>Schedule Video interview</h1>
       <div class="ul-part d-flex">
         <img src="{{ asset('assets') }}/admin/web-email/images/office-icon.png" class="iconImg">
+       
+        <form action="" method="post">
+          @csrf 
+
         <div class="">
-          <h2>Urgent Requirement for iOS Developer</h2>
+          <h2>Urgent Requirement for {{$employeeStatus->designation}}</h2>
           <p>ByteCipher Pvt Ltd</p>
         </div>
       </div>
@@ -46,15 +50,15 @@
       <div class="ul-part d-flex">
         <img src="{{ asset('assets') }}/admin/web-email//images/video-call.png" class="iconImg">
         <div class="">
-          <h2>https://meet.google.com/xsx4dsc5/SVrzpNYTlfI/Untitled?node-id=0%3A1</h2>
+          <h2>{{$employeeStatus->video_link}}</h2>
         </div>
       </div>
       <div class="hrBorder"></div>
       <div class="ul-part d-flex">
         <img src="{{ asset('assets') }}/admin/web-email//images/calendar-icon.png" class="iconImg">
         <div class="">
-          <h2>Friday, 4 March 2022</h2>
-          <p>04:30-05:30 IST</p>
+          <h2>{{$employeeStatus->interview_date}}</h2>
+          <p>{{$employeeStatus->interview_start_time}} {{$employeeStatus->interview_end_time}} IST</p>
         </div> 
                        
       </div>
@@ -71,11 +75,11 @@
       </div>
 
       <div class="hrBorder"></div>
-
+    
       <div class="ul-part">
         <div class="">
           <h2>Add a note for the employer (optinal)</h2>
-          <textarea rows="3" class="form-textarea"></textarea>
+          <textarea rows="3" name="employee_comment" class="form-textarea"></textarea>
         </div>
       </div>
 
@@ -83,9 +87,9 @@
 
       <p class="schud-pare">Tip: if you are unable to attend a scheduled interview, cancel or request to reschedule for another time. Employers appreciate being kept up to date.</p>
       
-      <button class="buttun-classA"><a href="interview-scheduled">Schedule Interview</a></button>
+      <button type="submit" class="buttun-classA">Schedule Interview</button>
       
-        
+    </form>
     </div>  
   </div>
 </div>

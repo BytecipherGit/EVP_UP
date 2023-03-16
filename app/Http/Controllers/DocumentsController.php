@@ -17,8 +17,7 @@ class DocumentsController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
-    {
-        
+    {   
         if (Auth::check()) {
             $checkDocuments = Documents::where('user_id', Auth::id())->get();
             if(count($checkDocuments) > 0){
@@ -31,7 +30,7 @@ class DocumentsController extends Controller
                     }
                 }
                 if(!$flagStatus){
-                    return redirect('company/company-verification-document')->with('message', 'Your document is under varification! You will be able to sign in shortly');
+                    return view('company/company-verification-document')->with('message', 'Thank you for uploading verification documents. Once verfified then you will be able to use this portal.');
                 } else {
                     return view('company/company-verification-document');
                 }
@@ -90,37 +89,13 @@ class DocumentsController extends Controller
                     ];
                     Documents::create($insertpancardRecords);
                 }
-                return redirect()->back()->with('message', 'Your document is under varification! You will be able to sign in shortly');
+                return redirect('status')->with('message', 'Thank you for uploading verification documents. Once verfified then you will be able to use this portal.');
+                // return redirect()->back()->with('message', 'Thank you for uploading verification documents. Once verfified then you will be able to use this portal.');
             } else {
                 return redirect('admin');
             }
         } catch (Exception $e) {
             return $e->getMessage();
         }
-        /*$data = new Documents();
-        $data->reg_id= $request->input('reg_id');
-        $data->user_id=$user_id;
-        $data->doc_type=json_encode($request->doc_type);
-        $data->document=json_encode($request->document);
-        $document =[];
-        if($request->hasfile('document')){
-        foreach($request->file('document') as $file){
-        $filename = $file->getClientOriginalName();
-        $file->move(public_path().'/Image/',$filename);
-        $document[] = $filename;
-        }
-        $data->document=json_encode($document);
-        }
-        $data->save();*/
-
-        // $document = Documents::where('user_id', Auth::id())->first();
-
-        // if ($document->status == 'pending') {
-        //     Auth::logout();
-        //     Session::flush();
-        //     return redirect('status');
-        // } else {
-        //     return redirect('admin');
-        // }
     }
 }

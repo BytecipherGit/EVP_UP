@@ -16,6 +16,12 @@
     font-size: 14px !important;
     text-align: left;
   }
+
+  .error {
+      color: red !important;
+      font-weight: 400;
+  }
+
  </style>
 
 
@@ -36,7 +42,7 @@
            @endif
            
            <x-auth-session-status class="mb-4 alert alert-success" :status="session('status')" />
-           <form method="POST" action="{{ route('login') }}" >
+           <form method="POST" id="add_admin"  action="{{ route('login') }}" >
               @csrf
             
               <div class="d-flex close-butn">
@@ -49,16 +55,18 @@
                 <label>Email Address</label>     
                 <input type="email" name="email" value="{{ old('email') }}" class="form-control" placeholder="Email Address">
                 {{-- <x-input-error :messages="$errors->get('email')" class="error" style=""/> --}}
-                  @error('email')
+                  {{-- @error('email')
                   <span class="text-danger pass">{{ $message }}</span>
-                  @enderror 
+                  @enderror  --}}
+                  <strong class="error" id="email-error"></strong>
               </div> 
               <div class="form-group">
                 <label>Password</label>     
                 <input type="password" name="password" value="{{ old('password') }}" class="form-control" placeholder="Password">
-                @error('password')
+                {{-- @error('password')
                 <span class="text-danger pass">{{ $message }}</span>
-                @enderror 
+                @enderror  --}}
+                <strong class="error" id="password-error"></strong>
               </div>  
               <div class="form-group">
                 <div class="forg-box">
@@ -90,6 +98,24 @@
       window.jQuery || document.write('<script src="../../assets/company/js/jquery.min.js"><\/script>')
     </script>
     <script src="assets/company/js/bootstrap.min.js"></script>
- 
+    <script src="{{ asset('assets') }}/admin/js/jquery.validate.min.js"></script>
+    <script>
+    $(document).ready(function() {
+
+      $("#add_admin").validate({
+       rules: {
+         email: "required",
+         password: "required",
+       },
+
+       messages: {
+         email: "Email id is required",
+         password: "Password is required",
+       
+        }
+     });
+  });
+  </script>
+
 @endsection
 

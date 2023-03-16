@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="{{ asset('assets') }}/company/css/bootstrap.min.css">
   <link rel="stylesheet" href="{{ asset('assets') }}/company/css/font-awesome.min.css">
   <link rel="stylesheet" href="{{ asset('assets') }}/company/css/my-css.css">  
+  <script src="{{ asset('assets') }}/admin/js/jquery.validate.min.js"></script>
 
   <link href="https://fonts.googleapis.com/css2?family=Jost:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">

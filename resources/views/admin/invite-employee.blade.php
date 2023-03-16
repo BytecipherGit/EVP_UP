@@ -50,7 +50,7 @@
             <table id="example" class="table-bordered nowrap table table-striped" style="width:100%">
             <thead>
               <tr>
-                <th><input type="checkbox" id="selectAll" name="users_id"></th>
+                <th><input type="checkbox" id="selectAll" class=""></th>
                 <th>Employee Code</th>
                 <th>Employee Name</th>
                 <th>Employee Email</th>
@@ -428,7 +428,7 @@
                 if (confirm("Are you sure you want to Send Invitation Mail?")) {
                     $('.users_checkbox:checked').each(function() {
                         id.push($(this).val());
-                    });
+                      });
                     if (id.length > 0) {
                       // alert(id.length);
                         $.ajax({

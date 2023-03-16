@@ -42,7 +42,7 @@
       <ul class="nav nav-tabs table-responsive-width" role="tablist">
      
         <li class="nav-item">
-          <a @if($basic->dob || !$qualification) class="nav-link" @else class="nav-link active" @endif data-toggle="tab" href="#tabs-1" role="tab">Basic Info</a>
+          <a @if($basic->dob) class="nav-link" @else class="nav-link active" @endif data-toggle="tab" href="#tabs-1" role="tab">Basic Info</a>
         </li>
      
         <li class="nav-item">
@@ -279,7 +279,7 @@
           </div>
         </div>
         @else
-        <div @if($basic->dob || !$qualification) class="tab-pane" @else class="nav-pane active" @endif id="tabs-1" role="tabpanel">
+        <div @if($basic->dob) class="tab-pane" @else class="nav-pane active" @endif id="tabs-1" role="tabpanel">
           {{-- <div id="tabs-1"  class="tab-pane {{ !session('tabs-6_active') ? 'active': '' }} "> --}}
           <div class="eml-persnal ">
             <div class="add-emply-details">
@@ -1180,7 +1180,7 @@
                   <strong class="error" id="document-error"></strong>
               </div>
           </div>
-            {{-- <div class="form-group">
+            <div class="form-group">
               <div class="row">
                 <div class="col-md-12">
                   <label>Verification<span style="color:red">*</span></label>
@@ -1193,7 +1193,7 @@
                 </div>
                 <strong class="error" id="verification_type-error"></strong>
               </div>
-            </div> --}}
+            </div>
        
         </div>
       </div>
@@ -1357,7 +1357,7 @@
               </div>
           </div>
 
-            {{-- <div class="form-group">
+            <div class="form-group">
               <div class="row">
                 <div class="col-md-12">
                   <label>Verification<span style="color:red">*</span></label>
@@ -1370,10 +1370,10 @@
                   {{-- @error('verification_type')
                   <span class="velidation">{{ $message }}</span>
                   @enderror  --}}
-                {{-- </div> 
+                </div> 
               </div>
               
-            </div> --}}
+            </div>
         
         </div>
       </div>

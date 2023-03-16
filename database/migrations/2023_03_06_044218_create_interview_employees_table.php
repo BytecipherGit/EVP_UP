@@ -37,6 +37,7 @@ return new class extends Migration
             $table->string('message')->nullable();
             $table->string('attachment')->nullable();
             $table->longText('employee_comment')->nullable();
+            $table->longText('employee_note')->nullable();
             $table->date('employee_comment_date')->nullable();
             $table->timestamps();
             $table->softDeletes();

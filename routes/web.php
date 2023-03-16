@@ -21,10 +21,6 @@ Route::get('/welcome', function () {
     return view('welcome');
 });
 
-// Route::get('/superlogin', function () {
-//     return view('auth/superadminlogin');
-// });
-
 Route::get('/', function () {
     return view('web/index');
 });
@@ -33,9 +29,6 @@ Route::get('/success', function () {
     return view('web/success');
 });
 
-Route::get('/edit-employee', function () {
-    return view('');
-});
 Route::get('/table', function () {
     return view('admin/datatable');
 });
@@ -52,10 +45,6 @@ Route::get('/confirmation', function () {
     return view('admin/confirm-msg');
 });
 
-// Route::get('/schedule-interview', function () {
-//   return view('admin/schedule-for-interview');
-// });
-
 Route::get('/settings', function () {
     return view('admin/settings');
 });
@@ -68,9 +57,9 @@ Route::get('/employee-details', function () {
     return view('admin/employee-details');
 });
 
-// Route::get('/employee-exit', function () {
-//   return view('admin/employee-exit');
-// });
+Route::get('/notification', function () {
+  return view('admin/notification');
+});
 
 Route::get('/change_password', function () {
     return view('company/change-password');
@@ -115,7 +104,7 @@ Route::middleware([Admin::class])->group(function () {
     Route::post('/change_password', [App\Http\Controllers\AdminController::class, 'changePassword'])->name('password.change')->middleware('documents');
     Route::get('/add-employee/{id?}', [App\Http\Controllers\EmployeeController::class, 'index'])->middleware('documents');
     Route::post('/add-employee/{id?}', [App\Http\Controllers\EmployeeController::class, 'basicInfo'])->middleware('documents');
-    Route::get('/edit-employee/{id?}', [App\Http\Controllers\EmployeeController::class, 'basicIndex'])->name('edit-employee')->middleware('documents');
+    Route::get('/edit-employee/{id?}', [App\Http\Controllers\EmployeeController::class, 'basicIndex'])->name('edit.employee')->middleware('documents');
     Route::post('/edit-employee/{id?}', [App\Http\Controllers\EmployeeController::class, 'editEmployee'])->middleware('documents');
     Route::get('/settings', [App\Http\Controllers\companySettingsController::class, 'profiledata'])->name('settings')->middleware('documents');
     Route::post('/settings', [App\Http\Controllers\companySettingsController::class, 'getprofile'])->middleware('documents');
@@ -141,7 +130,11 @@ Route::middleware([Admin::class])->group(function () {
     Route::post('schedule-interview/submit', [InterviewEmployee::class, 'schedule_interview'])->middleware('documents');
     Route::post('schedule-interview/changeHiringStage', [InterviewEmployee::class, 'update_hiring_stage'])->middleware('documents');
     Route::post('schedule-interview/deleteInterview', [InterviewEmployee::class, 'deleteInterview'])->middleware('documents');
+    Route::get('schedule_phone_interview', [InterviewEmployee::class, 'schedulePhoneInterview'])->middleware('documents');
+    Route::post('interview/declined/{id?}', [InterviewEmployee::class, 'declineInterview'])->middleware('documents');
+    Route::post('interview/newtime/{id?}', [InterviewEmployee::class, 'suggestNewTime'])->middleware('documents');
     Route::get('interview/confirmed/{id?}', [InterviewEmployee::class, 'interviewConfirmed'])->name('interview.confirmed')->middleware('documents');
+    Route::post('interview/confirmed/{id?}', [InterviewEmployee::class, 'videoInterview'])->middleware('documents');
     Route::get('interview/newtime/{id?}', [InterviewEmployee::class, 'interviewNewTime'])->name('interview.newtime')->middleware('documents');
     Route::get('interview/declined/{id?}', [InterviewEmployee::class, 'interviewDeclined'])->name('interview.declined')->middleware('documents');
     // Route::post('schedule-interview/update', [InterviewEmployee::class, 'schedule_interview_update']);
