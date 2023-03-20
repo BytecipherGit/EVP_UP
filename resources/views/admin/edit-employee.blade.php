@@ -299,14 +299,14 @@
                                 <form method="post" enctype="multipart/form-data">
                                     @csrf
                                     <div class="row">
-                                        {{-- <div class="col-xl-12">
-                          <h2>Uploaded Documents <span class="ml-auto on-head-right" data-toggle="modal" data-target="#identityAdd"><img src="{{ asset('assets') }}/admin/images/button-plus-clr.png"> <small>Add</small></span></h2>
-                        </div> --}}
-
+                                        <div class="col-xl-12">
+                                  <h2>Identity Details</h2>
+                              </div>
 
                                         <div class="col-xl-12">
                                             <div class="eml-per-main">
                                                 <div class="table-responsive">
+                                                
                                                     @if ($identity)
                                                         <table class="table">
                                                             <thead>
@@ -317,33 +317,35 @@
                                                                     <th>Actions</th>
                                                                 </tr>
                                                             </thead>
+                                                            @foreach($ident_item as $item)
                                                             <tr>
-                                                                <td>{{ $identity->id_type }}</td>
-                                                                <td>{{ $identity->id_number }}</td>
+                                                                <td>{{ $item['id_type'] }}</td>
+                                                                <td>{{ $item['id_number'] }}</td>
                                                                 <td><span class="verified-clr"><i
-                                                                            class="fa fa-check"></i>{{ $identity->verification_type }}</span>
+                                                                            class="fa fa-check"></i>{{ $item['verification_type'] }}</span>
                                                                 </td>
                                                                 <td>
                                                                     <span class="d-flex tbl-iconBx">
                                                                         <a href="#" target="_black"
                                                                             class="docu-down" data-toggle="modal"
-                                                                            data-target="#exampleModaldocument"><img
+                                                                            data-target="#exampleModaldocument{{$item['id']}}"><img
                                                                                 src="{{ asset('assets') }}/admin/images/document.png"></a>
-                                                                        <a href="/image/{{ $identity->document }}"
+                                                                        <a href="/image/{{ $item['document'] }}"
                                                                             target="_black" class="docu-download"><img
                                                                                 src="{{ asset('assets') }}/admin/images/download-icon.png"></a>
                                                                         <button type="button" class="border-none"
                                                                             data-toggle="modal"
-                                                                            data-target="#identityEdit"><img
+                                                                            data-target="#identityEdit{{$item['id']}}"><img
                                                                                 src="{{ asset('assets') }}/admin/images/edit-icon.png"></button>
                                                                     </span>
                                                                 </td>
                                                             </tr>
-
+                                                            @endforeach
                                                             <tbody>
                                                             </tbody>
                                                         </table>
                                                     @endif
+                                                 
                                                 </div>
                                             </div>
                                         </div>
@@ -363,12 +365,13 @@
                     </div>
                 </div>
             </div>
-
+           
             <div class="tab-pane" id="tabs-3" role="tabpanel">
                 <div class="eml-persnal ">
                     <div class="add-emply-details">
                         <div class="row">
                             <div class="col-lg-12">
+                          
                                 <form method="post" enctype="multipart/form-data">
                                     <div class="row">
                                         <div class="col-xl-12">
@@ -381,9 +384,8 @@
                                         <div class="col-xl-12">
                                             <div class="eml-per-main">
                                                 <div class="table-responsive">
-                                                    @if (!$qualification)
-                                                        <p class="no-data-clg">No Data Available</p>
-                                                    @else
+                                                 
+                                                    @if ($qualification)
                                                         <table class="table">
                                                             <thead>
                                                                 <tr>
@@ -396,19 +398,20 @@
                                                                     <th>Action</th>
                                                                 </tr>
                                                             </thead>
+                                                            @foreach($qual_item as $item)
                                                             <tbody>
                                                                 <tr>
-                                                                    <td>{{ $qualification->degree }}</td>
-                                                                    <td>{{ $qualification->inst_name }}</td>
-                                                                    <td>{{ $qualification->subject }}</td>
-                                                                    <td>{{ $qualification->duration_from }}</td>
-                                                                    <td>{{ $qualification->duration_to }}</td>
+                                                                    <td>{{ $item['degree'] }}</td>
+                                                                    <td>{{ $item['inst_name'] }}</td>
+                                                                    <td>{{ $item['subject'] }}</td>
+                                                                    <td>{{ $item['duration_from'] }}</td>
+                                                                    <td>{{ $item['duration_to'] }}</td>
                                                                     <td><span class="verified-clr"><i
                                                                                 class="fa fa-check"></i>
-                                                                            {{ $qualification->verification_type }}</span>
+                                                                            {{ $item['verification_type'] }}</span>
                                                                     </td>
                                                                     <td>
-                                                                        @if($qualification->document != Null )
+                                                                      
                                                                         <a href="#" target="_black"
                                                                             class="docu-down" data-toggle="modal"
                                                                             data-target="#qualificationdocument"><img
@@ -416,19 +419,21 @@
                                                                         <a href="/image/{{ $qualification->document }}"
                                                                             target="_black" class="docu-download"><img
                                                                                 src="{{ asset('assets') }}/admin/images/download-icon.png"></a>
-                                                                        @endif
-
                                                                         <button type="button" class="border-none"
                                                                             data-toggle="modal"
-                                                                            data-target="#qualificationEdit"><img
+                                                                            data-target="#qualificationEdit{{$item['id']}}"><img
                                                                                 src="{{ asset('assets') }}/admin/images/edit-icon.png"></button>
                                                                     </td>
                                                                 </tr>
 
                                                             </tbody>
+                                                            @endforeach
                                                             <tbody>
                                                             </tbody>
                                                         </table>
+                                                        @else
+                                                        <p class="no-data-clg">No Data Available</p>
+                                                       
                                                     @endif
                                                 </div>
                                             </div>
@@ -444,6 +449,7 @@
                                         </div>
                                     </div>
                                 </form>
+                          
                             </div>
                         </div>
                     </div>
@@ -471,6 +477,7 @@
                                                     <div class="table-responsive">
                                                         <table class="table">
                                                             <thead>
+                                                              
                                                                 <tr>
                                                                     <th>Company Name</th>
                                                                     <th>From</th>
@@ -483,19 +490,20 @@
                                                                     <th>Action</th>
                                                                 </tr>
                                                             </thead>
+                                                            @foreach($work_item as $item)
                                                             <tr>
-                                                                <td>{{ $workhistory->com_name }}</td>
-                                                                <td>{{ $workhistory->work_duration_from }}</td>
-                                                                <td>{{ $workhistory->work_duration_to }}</td>
-                                                                <td>{{ $workhistory->designation }}</td>
+                                                                <td>{{ $item['com_name'] }}</td>
+                                                                <td>{{ $item['work_duration_from'] }}</td>
+                                                                <td>{{ $item['work_duration_to'] }}</td>
+                                                                <td>{{ $item['designation'] }}</td>
                                                                 <td><a href="#" target="_black"
                                                                         class="docu-down" data-toggle="modal"
-                                                                        data-target="#workofferdocument"><img
+                                                                        data-target="#workofferdocument{{$item['id']}}"><img
                                                                             src="{{ asset('assets') }}/admin/images/document.png"></a>
                                                                 </td>
                                                                 <td><a href="#" target="_black"
                                                                         class="docu-down" data-toggle="modal"
-                                                                        data-target="#workexpdocument"><img
+                                                                        data-target="#workexpdocument{{$item['id']}}"><img
                                                                             src="{{ asset('assets') }}/admin/images/document.png"></a>
                                                                 </td>
                                                                 <td><a href=""
@@ -504,14 +512,15 @@
                                                                 </td>
                                                                 <td><span class="verified-clr"><i
                                                                             class="fa fa-check"></i>
-                                                                        {{ $workhistory->verification_type }}</span>
+                                                                        {{ $item['verification_type'] }}</span>
                                                                 </td>
                                                                 <td><button type="button" class="border-none"
                                                                         data-toggle="modal"
-                                                                        data-target="#workHistoryedit"><img
+                                                                        data-target="#workHistoryedit{{$item['id']}}"><img
                                                                             src="{{ asset('assets') }}/admin/images/edit-icon.png"></button>
                                                                 </td>
                                                             </tr>
+                                                            @endforeach
                                                             <tbody>
                                                             </tbody>
                                                         </table>
@@ -548,7 +557,7 @@
                                             <div class="col-xl-6">
                                                 <div class="col-xl-12">
                                                     <h2>Skills <span class="ml-auto on-head-right" data-toggle="modal"
-                                                            data-target="#skillsAdd">
+                                                            data-target="#skillsAdd{{ $skills->id }}">
                                                             {{-- <img src="{{ asset('assets') }}/admin/images/button-plus-clr.png"> <small>Add</small> --}}
                                                         </span></h2>
                                                 </div>
@@ -562,16 +571,19 @@
                                                                     <th>Action</th>
                                                                 </tr>
                                                             </thead>
+                                                            @foreach ($skill_item as $item)
+                                                                
                                                             <tr>
-                                                                <td>{{ $skills->skill }}</td>
-                                                                <td>{{ $skills->skill_type }}</td>
+                                                                <td>{{ $item['skill'] }}</td>
+                                                                <td>{{ $item['skill_type'] }}</td>
+                                                              
                                                                 <td><button type="button" class="border-none"
                                                                         data-toggle="modal"
-                                                                        data-target="#skillsAdd"><img
+                                                                        data-target="#skillsAdd{{ $item['id'] }}"><img
                                                                             src="{{ asset('assets') }}/admin/images/edit-icon.png"></button>
                                                                 </td>
                                                             </tr>
-
+                                                            @endforeach
                                                             <tbody>
                                                             </tbody>
                                                         </table>
@@ -595,23 +607,26 @@
                                                                     <th>Action</th>
                                                                 </tr>
                                                             </thead>
+                                                            @foreach ($lang_item as $item)
+                                                                
+                                                           
                                                             <tr>
-                                                                <td>{{ $skills->lang }}</td>
-                                                                <td>{{ $skills->lang_type }}</td>
+                                                                <td>{{ $item['lang'] }}</td>
+                                                                <td>{{ $item['lang_type'] }}</td>
                                                                 <td><button type="button" class="border-none"
                                                                         data-toggle="modal"
-                                                                        data-target="#langskillsAdd"><img
+                                                                        data-target="#langskillsAdd{{$item['id']}}"><img
                                                                             src="{{ asset('assets') }}/admin/images/edit-icon.png"></button>
                                                                 </td>
                                                             </tr>
-
+                                                            @endforeach
                                                             <tbody>
                                                             </tbody>
                                                         </table>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-12">
+                                            {{-- <div class="col-md-12">
                                                 <div class="form-group">
                                                     <div class="add-btn-part">
                                                         <button type="button" class="btn-secondary-cust"
@@ -620,7 +635,7 @@
                                                             data-dismiss="modal">Save Changes</button>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                         </div>
                                     </form>
                                 @else
@@ -956,7 +971,8 @@
 
 
 <!-- The Modal Skills Add -->
-<div class="modal fade custu-modal-popup" id="skillsAdd" role="dialog" aria-labelledby="exampleModalLabel"
+@foreach($skill_item as $item)
+<div class="modal fade custu-modal-popup" id="skillsAdd{{$item['id']}}" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -970,30 +986,36 @@
                 <div class="comman-body">
                     <form method="post" id="edit_skill" enctype="multipart/form-data">
                         @csrf
+                       
+                        <input type="hidden" name="id" value="{{$item['id']}}">
                         <div class="form-group inputtag-custom">
                             <label>Edit Skill<span style="color:red">*</span></label>
                             <div class="row customer_records1">
                                 <div class="col-md-8">
+                                   
                                     <input type="text" class="form-control input-search-box typeahead"
-                                        @if ($skills) value="{{ old('skill', $skills->skill) }}" @endif
+                                    @if ($item) value="{{ old('skill', $item['skill']) }}" @endif 
                                         name="skill" data-provide="typeahead" placeholder="Language">
                                         <strong class="error" id="skill-error"></strong>
+                                        
                                 </div>
                                 <div class="col-md-8">
                                     <h6>
+                                     
                                         <span><input type="radio" id="customRadioInline4" name="skill_type"
-                                                value="Beginner" <?php if ($skills->skill_type == 'Beginner') { ?> checked <?php } ?>
+                                                value="Beginner"  <?php  if ($item['skill_type'] == 'Beginner') { ?> checked <?php } ?> 
                                                 class="">
                                             <label class="" for="customRadioInline4">Beginner</label></span>
 
                                         <span><input type="radio" id="customRadioInline5" name="skill_type"
-                                                value="Intermediate" <?php if ($skills->skill_type == 'Intermediate') { ?> checked <?php } ?>
+                                                value="Intermediate" <?php if ($item['skill_type'] == 'Intermediate') { ?> checked <?php } ?> 
                                                 class="">
                                             <label class="" for="customRadioInline5">Intermediate</label></span>
                                         <span><input type="radio" id="customRadioInline6" name="skill_type"
-                                                value="Expert" <?php if ($skills->skill_type == 'Expert') { ?> checked <?php } ?>
+                                                value="Expert" <?php if ($item['skill_type'] == 'Expert') { ?> checked <?php } ?> 
                                                 class="">
                                             <label class="" for="customRadioInline6">Expert</label></span>
+                                        
                                     </h6>
                                 </div>
                                 {{-- <a class="add-plus extra-fields-customer" ><span><img src="{{ asset('assets') }}/admin/images/button-plus.png"></span></a> --}}
@@ -1006,15 +1028,19 @@
                                     Changes</button>
                             </div>
                         </div>
+                        
                 </div>
-
+            </form>
             </div>
+           
         </div>
     </div>
-</div>
-</form>
+ </div>
+ @endforeach
+
 <!-- The Modal language Skills Add -->
-<div class="modal fade custu-modal-popup" id="langskillsAdd" role="dialog" aria-labelledby="exampleModalLabel"
+@foreach($lang_item as $item)
+<div class="modal fade custu-modal-popup" id="langskillsAdd{{$item['id']}}" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -1028,28 +1054,29 @@
                 <div class="comman-body">
                     <form method="post" id="edit_lang" enctype="multipart/form-data">
                         @csrf
+                        <input type="hidden" name="id" value="{{$item['id']}}">
                         <div class="form-group inputtag-custom">
                             <label>Edit Language<span style="color:red">*</span></label>
                             <div class="row customer_records1">
                                 <div class="col-md-8">
                                     <input type="text" class="form-control input-search-box typeahead"
-                                        @if ($skills) value="{{ old('lang', $skills->lang) }}" @endif
+                                        @if ($item) value="{{ old('lang', $item['lang']) }}" @endif
                                         name="lang" data-provide="typeahead" placeholder="Language">
                                         <strong class="error" id="lang-error"></strong>
                                 </div>
                                 <div class="col-md-8">
                                     <h6>
                                         <span><input type="radio" id="customRadioInline4" name="lang_type"
-                                                value="Beginner" <?php if ($skills->lang_type == 'Beginner') { ?> checked <?php } ?>
+                                                value="Beginner" <?php if ($item['lang_type'] == 'Beginner') { ?> checked <?php } ?>
                                                 class="">
                                             <label class="" for="customRadioInline4">Beginner</label></span>
 
                                         <span><input type="radio" id="customRadioInline5" name="lang_type"
-                                                class="" value="Intermediate" <?php if ($skills->lang_type == 'Intermediate') { ?> checked
+                                                class="" value="Intermediate" <?php if ($item['lang_type'] == 'Intermediate') { ?> checked
                                                 <?php } ?>>
                                             <label class="" for="customRadioInline5">Intermediate</label></span>
                                         <span><input type="radio" id="customRadioInline6" name="lang_type"
-                                                value="Expert" <?php if ($skills->lang_type == 'Expert') { ?> checked <?php } ?>
+                                                value="Expert" <?php if ($item['lang_type'] == 'Expert') { ?> checked <?php } ?>
                                                 class="">
                                             <label class="" for="customRadioInline6">Expert</label></span>
                                     </h6>
@@ -1066,13 +1093,14 @@
                                     Changes</button>
                             </div>
                         </div>
+                        
                 </div>
-
+            </form>
             </div>
         </div>
     </div>
 </div>
-</form>
+@endforeach
 <!-- The Modal Identity Add -->
 <div class="modal fade custu-modal-popup" id="identityAdd" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
@@ -1158,7 +1186,8 @@
 </div>
 
 <!-- The Modal Identity Edit -->
-<div class="modal fade custu-modal-popup" id="identityEdit" role="dialog" aria-labelledby="exampleModalLabel"
+@foreach($ident_item as $item)
+<div class="modal fade custu-modal-popup" id="identityEdit{{$item['id']}}" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -1170,30 +1199,33 @@
             </div>
             <div class="modal-body">
                 <div class="comman-body">
-                    @if ($identity)
-                        <form method="post" enctype="multipart/form-data">
+                   
+                        <form method="post" id="edit_identity" enctype="multipart/form-data">
                             @csrf
+                            <input type="hidden" name="id" value={{$item['id']}}>
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label>Id Type<span style="color:red">*</span></label>
                                         <select class="form-control" name="id_type" id="id_type">
                                             <option
-                                                @if ($identity) value="{{ old('id_type', $identity->id_type) }}" @endif>
-                                                @if ($identity)
-                                                    {{ old('id_type', $identity->id_type) }}
+                                                @if ($item) value="{{ old('id_type', $item['id_type']) }}" @endif>
+                                                @if ($item)
+                                                    {{ old('id_type', $item['id_type']) }}
                                                 @endif
                                             </option>
                                             <option value="Pan Card">Pan Card</option>
                                             <option value="Aadhar Card">Aadhar Card</option>
                                             <option value="Voter Id">Voter Id</option>
                                         </select>
+                                        <strong class="error" id="id_type-error"></strong>
                                     </div>
                                     <div class="col-md-6">
                                         <label>Id Number<span style="color:red">*</span></label>
                                         <input type="text" name="id_number"
-                                            @if ($identity) value="{{ old('id_number', $identity->id_number) }}" @endif
+                                            @if ($item) value="{{ old('id_number', $item['id_number']) }}" @endif
                                             class="form-control">
+                                            <strong class="error" id="id_number-error"></strong>
                                     </div>
                                 </div>
                             </div>
@@ -1204,49 +1236,39 @@
                                         <div class="upload-img-file">
                                             <div class="circle">
                                                 <img class="profile-pic" id="profile-pic2" name="document"
-                                                    @if ($identity->document !== null) value="/image/{{ old('document', $identity->document) }}" src="/image/{{ $identity->document }}" @else src="{{ asset('assets') }}/admin/images/pan-card.png" @endif>
+                                                    @if ($item['document'] !== null) value="/image/{{ old('document', $item['document']) }}" src="/image/{{ $item['document'] }}" @else src="{{ asset('assets') }}/admin/images/pan-card.png" @endif>
                                             </div>
-                                            <p>You can drag or drop <span>png. jpeg</span> </p>
-                                            <div class="p-image ml-auto">
+                                            {{-- <p>You can drag or drop <span>png. jpeg</span> </p> --}}
+                                            {{-- <div class="p-image ml-auto">
                                                 <span class="upload-button" id="upload-button2">Choose File</span>
                                                 <input class="file-upload" name="document" id="file-upload2"
                                                     type="file" accept="image/*">
+                                                    <strong class="error" id="document-error"></strong>
+                                            </div> --}}
+                                                 <div class="upload-img-file">
+                                                <input type="file" id="document" name="document" class="form-control"/>
+                                                <strong class="error" id="document-error"></strong>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-                            {{-- <div class="col-lg-3">
-                <div class="profile-add-img">
-                  <div class="circle">
-                    <img class="profile-pic" id="profile-pic" name="profile" @if ($basic->profile !== null) value="/image/{{ old('profile', $basic->profile) }}" src="/image/{{ $basic->profile }}" @else src="{{ asset('assets') }}/admin/images/logo.png" @endif required>
-                   </div>
-                   <div class="p-image ml-auto">
-                     <span class="upload-button" id="upload-button"><img src="{{ asset('assets') }}/admin/images/edit-icon.png"></span>
-                      <input class="file-upload" name="profile" id="file-upload" type="file" accept="image/*"/>
-                   </div>
-                </div>
-              </div> --}}
-
-
-
-
-
+                            
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-md-12">
                                         <label>Verification<span style="color:red">*</span></label>
                                         <select class="form-control" name="verification_type" id="verification_type">
                                             <option
-                                                @if ($identity) value="{{ old('verification_type', $identity->verification_type) }}" @endif>
-                                                @if ($identity)
-                                                    {{ old('verification_type', $identity->verification_type) }}
+                                                @if ($item) value="{{ old('verification_type', $item['verification_type']) }}" @endif>
+                                                @if ($item)
+                                                    {{ old('verification_type', $item['verification_type']) }}
                                                 @endif
                                             </option>
                                             <option value="Verified">Verified</option>
                                             <option value="Not Verified">Not Verified</option>
                                         </select>
+                                        <strong class="error" id="verification_type-error"></strong>
                                     </div>
                                 </div>
                             </div>
@@ -1258,14 +1280,17 @@
                             </div>
                       </div>
                   </div>
+                 </form>
+               
         </div>
     </div>
 </div>
-</form>
+@endforeach
 
-@endif
+
 <!-- The Modal Qualification Add -->
-<div class="modal fade custu-modal-popup" id="qualificationAdd" role="dialog" aria-labelledby="exampleModalLabel"
+
+<div class="modal fade custu-modal-popup" id="qualificationAdd{{$item['id']}}" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -1293,13 +1318,13 @@
                                 <div class="col-md-6">
                                     <label>Degree<span style="color:red">*</span></label>
                                     <input type="text" name="degree"
-                                        @if ($qualification) value="{{ old('degree', $qualification->degree) }}" @endif
+                                        @if ($item) value="{{ old('degree', $item->degree) }}" @endif
                                         class="form-control" placeholder="Ex. Bachelor's">
                                 </div>
                                 <div class="col-md-6">
                                     <label>Subject<span style="color:red">*</span></label>
                                     <input type="text" name="subject"
-                                        @if ($qualification) value="{{ old('subject', $qualification->subject) }}" @endif
+                                        @if ($item) value="{{ old('subject', $item->subject) }}" @endif
                                         class="form-control" placeholder="Ex. CS">
                                 </div>
                             </div>
@@ -1309,13 +1334,13 @@
                                 <div class="col-md-6">
                                     <label>From<span style="color:red">*</span></label>
                                     <input type="date" name="duration_from" class="form-control"
-                                        @if ($qualification) value="{{ old('duration_from', $qualification->duration_from) }}" @endif
+                                        @if ($item) value="{{ old('duration_from', $item->duration_from) }}" @endif
                                         placeholder="From">
                                 </div>
                                 <div class="col-md-6">
                                     <label>To<span style="color:red">*</span></label>
                                     <input type="date" name="duration_to" class="form-control"
-                                        @if ($qualification) value="{{ old('duration_to', $qualification->duration_to) }}" @endif
+                                        @if ($item) value="{{ old('duration_to', $item->duration_to) }}" @endif
                                         placeholder="To">
                                 </div>
                             </div>
@@ -1345,9 +1370,9 @@
                                     <label>Verification<span style="color:red">*</span></label>
                                     <select class="form-control" name="verification_type" id="verification_type">
                                         <option
-                                            @if ($qualification) value="{{ old('verification_type', $qualification->verification_type) }}" @endif>
-                                            @if ($qualification)
-                                                {{ old('verification_type', $qualification->verification_type) }}
+                                            @if ($item) value="{{ old('verification_type', $item->verification_type) }}" @endif>
+                                            @if ($item)
+                                                {{ old('verification_type', $item->verification_type) }}
                                             @endif
                                         </option>
                                         <option value="Verified">Verified</option>
@@ -1357,17 +1382,21 @@
                             </div>
                         </div>
                 </div>
+                
             </div>
             <div class="modal-footer">
                 {{-- <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button> --}}
                 <button type="submit" class="btn-primary-cust">Save</button>
             </div>
         </div>
+    </form>
     </div>
 </div>
-</form>
+
+
 <!-- The Modal Qualification Edit -->
-<div class="modal fade custu-modal-popup" id="qualificationEdit" role="dialog" aria-labelledby="exampleModalLabel"
+@foreach($qual_item as $item)
+<div class="modal fade custu-modal-popup" id="qualificationEdit{{$item['id']}}" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -1377,17 +1406,18 @@
                     <img src="{{ asset('assets') }}/admin/images/close-btn-icon.png">
                 </button>
             </div>
-            @if ($qualification)
+        
                 <div class="modal-body">
                     <div class="comman-body">
                         <form method="post" id="edit_qualification"enctype="multipart/form-data">
                             @csrf
+                            <input type="hidden" name="id" value="{{$item['id']}}">
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-md-12">
                                         <label>School/College/Institute<span style="color:red">*</span></label>
                                         <input type="text" name="inst_name"
-                                            @if ($qualification) value="{{ old('inst_name', $qualification->inst_name) }}" @endif
+                                            @if ($item) value="{{ old('inst_name', $item['inst_name']) }}" @endif
                                             class="form-control" placeholder="Enter Name">
                                             <strong class="error" id="inst_name-error"></strong>
                                     </div>
@@ -1398,14 +1428,14 @@
                                     <div class="col-md-6">
                                         <label>Degree<span style="color:red">*</span></label>
                                         <input type="text" name="degree"
-                                            @if ($qualification) value="{{ old('degree', $qualification->degree) }}" @endif
+                                            @if ($item) value="{{ old('degree', $item['degree']) }}" @endif
                                             class="form-control" placeholder="Ex. Bachelor's">
                                             <strong class="error" id="degree-error"></strong>
                                     </div>
                                     <div class="col-md-6">
                                         <label>Field Of study<span style="color:red">*</span></label>
                                         <input type="text" name="subject"
-                                            @if ($qualification) value="{{ old('subject', $qualification->subject) }}" @endif
+                                            @if ($item) value="{{ old('subject', $item['subject']) }}" @endif
                                             class="form-control" placeholder="Ex. CS">
                                             <strong class="error" id="subject-error"></strong>
                                     </div>
@@ -1416,14 +1446,14 @@
                                     <div class="col-md-6">
                                         <label>From<span style="color:red">*</span></label>
                                         <input type="date" name="duration_from" class="form-control"
-                                            @if ($qualification) value="{{ old('duration_from', $qualification->duration_from) }}" @endif
+                                            @if ($item) value="{{ old('duration_from', $item['duration_from']) }}" @endif
                                             placeholder="From">
                                             <strong class="error" id="duration_from-error"></strong>
                                     </div>
                                     <div class="col-md-6">
                                         <label>To<span style="color:red">*</span></label>
                                         <input type="date" name="duration_to" class="form-control"
-                                            @if ($qualification) value="{{ old('duration_to', $qualification->duration_to) }}" @endif
+                                            @if ($item) value="{{ old('duration_to', $item['duration_to']) }}" @endif
                                             placeholder="From">
                                             <strong class="error" id="duration_to-error"></strong>
                                     </div>
@@ -1436,14 +1466,12 @@
                                         <div class="upload-img-file">
                                             <div class="circle">
                                                 <img class="profile-pic" id="profile-pic4" name="document"
-                                                    @if ($qualification->document !== null) value="/image/{{ old('document', $qualification->document) }}" src="/image/{{ $qualification->document }}" @else src="{{ asset('assets') }}/admin/images/file-icon-img.png" @endif />
+                                                    @if ($item['document'] !== null) value="/image/{{ old('document', $item['document']) }}" src="/image/{{ $item['document'] }}" @else src="{{ asset('assets') }}/admin/images/file-icon-img.png" @endif />
                                             </div>
-                                            <p>You can drag or drop <span>png. jpeg</span> </p>
-                                            <div class="p-image ml-auto">
-                                                <span class="upload-button" id="upload-button4">Choose File</span>
-                                                <input class="file-upload" name="document" id="file-upload4"
-                                                    type="file" accept="image/*">
-                                                    <strong class="error" id="document-error"></strong>
+                                            {{-- <p>You can drag or drop <span>png. jpeg</span> </p> --}}
+                                            <div class="upload-img-file">
+                                                <input type="file" id="document" name="document" class="form-control"/>
+                                                <strong class="error" id="document-error"></strong>
                                             </div>
                                         </div>
                                     </div>
@@ -1454,10 +1482,9 @@
                                     <div class="col-md-12">
                                         <label>Verification<span style="color:red">*</span></label>
                                         <select class="form-control" name="verification_type" id="verification_type">
-                                            <option
-                                                @if ($qualification) value="{{ old('verification_type', $qualification->verification_type) }}" @endif>
-                                                @if ($qualification)
-                                                    {{ old('verification_type', $qualification->verification_type) }}
+                                            <option @if ($item) value="{{ old('verification_type', $item['verification_type']) }}" @endif>
+                                                @if ($item)
+                                                    {{ old('verification_type', $item['verification_type']) }}
                                                 @endif
                                             </option>
                                             <option value="Verified">Verified</option>
@@ -1475,13 +1502,13 @@
                             </div>
                     </div>
                 </div>
-            @else
-                <p>No data Available</p>
-            @endif
+            </form>
+          
         </div>
     </div>
 </div>
-</form>
+
+@endforeach
 <!-- The Modal Docum INFO-->
 <div class="modal fade custu-modal-popup" id="qualificationdocument" role="dialog"
     aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -1507,7 +1534,8 @@
     </div>
 </div>
 
-<div class="modal fade custu-modal-popup" id="workofferdocument" role="dialog"
+@foreach($work_item as $item)
+<div class="modal fade custu-modal-popup" id="workofferdocument{{$item['id']}}" role="dialog"
     aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -1519,9 +1547,9 @@
             </div>
             <div class="modal-body">
                 <div class="document-body">
-                    <img src="/image/{{ $workhistory->offer_letter }}">
+                    <img src="/image/{{ $item['offer_letter'] }}">
                 </div>
-                <a href="/download_offerletter_doc/{{ $workhistory->emp_id }}" target="_black">Download</a>
+                <a href="/download_offerletter_doc/{{ $item['id'] }}" target="_black">Download</a>
             </div>
             <div class="modal-footer">
                 <!-- <button type="button" class="btn-secondary" data-dismiss="modal">Cancel</button>
@@ -1530,8 +1558,10 @@
         </div>
     </div>
 </div>
+@endforeach
 
-<div class="modal fade custu-modal-popup" id="workexpdocument" role="dialog"
+@foreach($work_item as $item)
+<div class="modal fade custu-modal-popup" id="workexpdocument{{$item['id']}}" role="dialog"
     aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -1543,9 +1573,9 @@
             </div>
             <div class="modal-body">
                 <div class="document-body">
-                    <img src="/image/{{ $workhistory->exp_letter }}">
+                    <img src="/image/{{ $item['exp_letter'] }}">
                 </div>
-                <a href="/download_expletter_doc/{{ $workhistory->emp_id }}" target="_black">Download</a>
+                <a href="/download_expletter_doc/{{ $item['id'] }}" target="_black">Download</a>
             </div>
             <div class="modal-footer">
                 <!-- <button type="button" class="btn-secondary" data-dismiss="modal">Cancel</button>
@@ -1554,7 +1584,7 @@
         </div>
     </div>
 </div>
-
+@endforeach
 <!-- The Modal No INFO -->
 <div class="modal fade custu-no-select" id="qualificationinfo" role="dialog"
     aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -1571,7 +1601,8 @@
 </div>
 
 <!-- The Modal Docum INFO-->
-<div class="modal fade custu-modal-popup" id="exampleModaldocument" role="dialog"
+@foreach($ident_item as $item)
+<div class="modal fade custu-modal-popup" id="exampleModaldocument{{$item['id']}}" role="dialog"
     aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -1583,9 +1614,9 @@
             </div>
             <div class="modal-body">
                 <div class="document-body">
-                    <img src="/image/{{ $identity->document }}">
+                    <img src="/image/{{ $item['document'] }}">
                 </div>
-                <a href="/download_identity_doc/{{ $identity->emp_id }}" target="_black">Download</a>
+                <a href="/download_identity_doc/{{ $item['id'] }}" target="_black">Download</a>
             </div>
             <div class="modal-footer">
                 <!-- <button type="button" class="btn-secondary" data-dismiss="modal">Cancel</button>
@@ -1594,7 +1625,7 @@
         </div>
     </div>
 </div>
-
+@endforeach
 <!-- The Modal No INFO -->
 <div class="modal fade custu-no-select" id="btninfo" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
@@ -1610,7 +1641,8 @@
     </div>
 </div>
 <!-- The Modal Work Work HistoryBasic Edit -->
-<div class="modal fade custu-modal-popup" id="workHistoryedit" role="dialog"
+@foreach($work_item as $item)
+<div class="modal fade custu-modal-popup" id="workHistoryedit{{$item['id']}}" role="dialog"
     aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -1623,15 +1655,17 @@
             @if ($workhistory)
                 <div class="modal-body">
                     <div class="comman-body">
-                        <form method="post" id="add_workhistory" enctype="multipart/form-data">
+                        <form method="post" id="edit_workhistory" enctype="multipart/form-data">
                             @csrf
+                            <input type="hidden" name="id" value="{{$item['id']}}">
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-md-12">
                                         <label>Company Name<span style="color:red">*</span></label>
                                         <input type="text" name="com_name"
-                                            @if ($workhistory) value="{{ old('com_name', $workhistory->com_name) }}" @endif
+                                            @if ($item) value="{{ old('com_name', $item['com_name']) }}" @endif
                                             class="form-control" value="ByteCipher">
+                                            <strong class="error" id="com_name-error"></strong>
                                     </div>
                                 </div>
                             </div>
@@ -1640,14 +1674,16 @@
                                     <div class="col-md-6">
                                         <label>Form<span style="color:red">*</span></label>
                                         <input type="date" name="work_duration_from"
-                                            @if ($workhistory) value="{{ old('work_duration_from', $workhistory->work_duration_from) }}" @endif
+                                            @if ($item) value="{{ old('work_duration_from', $item['work_duration_from']) }}" @endif
                                             class="form-control" value="2018">
+                                            <strong class="error" id="work_duration_from-error"></strong>
                                     </div>
                                     <div class="col-md-6">
                                         <label>To<span style="color:red">*</span></label>
                                         <input type="date" name="work_duration_to"
-                                            @if ($workhistory) value="{{ old('work_duration_to', $workhistory->work_duration_to) }}" @endif
+                                            @if ($item) value="{{ old('work_duration_to', $item['work_duration_to']) }}" @endif
                                             class="form-control" value="2020">
+                                            <strong class="error" id="work_duration_to-error"></strong>
                                     </div>
                                 </div>
                             </div>
@@ -1656,8 +1692,9 @@
                                     <div class="col-md-12">
                                         <label>Designation<span style="color:red">*</span></label>
                                         <input type="text" name="designation"
-                                            @if ($workhistory) value="{{ old('designation', $workhistory->designation) }}" @endif
+                                            @if ($item) value="{{ old('designation', $item['designation']) }}" @endif
                                             class="form-control" value="React Native Developer">
+                                            <strong class="error" id="designation-error"></strong>
                                     </div>
                                 </div>
                             </div>
@@ -1668,13 +1705,12 @@
                                         <div class="upload-img-file">
                                             <div class="circle">
                                                 <img class="profile-pic" id="profile-pic8"
-                                                    @if ($workhistory->offer_letter !== null) value="/image/{{ old('document', $workhistory->offer_letter) }}" src="/image/{{ $workhistory->offer_letter }}" @else src="{{ asset('assets') }}/admin/images/job-offer-letter.png" @endif>
+                                                    @if ($item['offer_letter'] !== null) value="/image/{{ old('document', $item['offer_letter']) }}" src="/image/{{ $item['offer_letter'] }}" @else src="{{ asset('assets') }}/admin/images/job-offer-letter.png" @endif>
                                             </div>
-                                            <p>You can drag or drop <span>png. jpeg</span> </p>
-                                            <div class="p-image ml-auto">
-                                                <span class="upload-button" id="upload-button8">Choose File</span>
-                                                <input class="file-upload" name="offer_letter" id="file-upload8"
-                                                    type="file" accept="image/*">
+                                            {{-- <p>You can drag or drop <span>png. jpeg</span> </p> --}}
+                                            <div class="upload-img-file">
+                                                <input type="file" id="offer_letter" name="offer_letter" class="form-control"/>
+                                                <strong class="error" id="offer_letter-error"></strong>
                                             </div>
                                         </div>
                                     </div>
@@ -1691,13 +1727,12 @@
                                         <div class="upload-img-file">
                                             <div class="circle">
                                                 <img class="profile-pic" id="profile-pic9"
-                                                    @if ($workhistory->exp_letter !== null) value="/image/{{ old('exp_letter', $workhistory->exp_letter) }}" src="/image/{{ $workhistory->exp_letter }}" @else src="{{ asset('assets') }}/admin/images/job-offer-letter.png" @endif>
+                                                    @if ($item['exp_letter'] !== null) value="/image/{{ old('exp_letter', $item['exp_letter']) }}" src="/image/{{ $item['exp_letter'] }}" @else src="{{ asset('assets') }}/admin/images/job-offer-letter.png" @endif>
                                             </div>
-                                            <p>You can drag or drop <span>png. jpeg</span> </p>
-                                            <div class="p-image ml-auto">
-                                                <span class="upload-button" id="upload-button9">Choose File</span>
-                                                <input class="file-upload" name="exp_letter" id="file-upload9"
-                                                    type="file" accept="image/*">
+                                            {{-- <p>You can drag or drop <span>png. jpeg</span> </p> --}}
+                                            <div class="upload-img-file">
+                                                <input type="file" id="exp_letter" name="exp_letter" class="form-control"/>
+                                                <strong class="error" id="exp_letter-error"></strong>
                                             </div>
                                         </div>
                                     </div>
@@ -1711,13 +1746,12 @@
                                         <div class="upload-img-file">
                                             <div class="circle">
                                                 <img class="profile-pic" id="profile-pic10"
-                                                    @if ($workhistory->salary_slip !== null) value="/image/{{ old('salary_slip', $workhistory->salary_slip) }}" src="/image/{{ $workhistory->salary_slip }}" @else src="{{ asset('assets') }}/admin/images/pdf-icon.png" @endif>
+                                                    @if ($item['salary_slip'] !== null) value="/image/{{ old('salary_slip', $item['salary_slip']) }}" src="/image/{{ $item['salary_slip'] }}" @else src="{{ asset('assets') }}/admin/images/pdf-icon.png" @endif>
                                             </div>
-                                            <p>You can drag or drop <span>pdf</span> </p>
-                                            <div class="p-image ml-auto">
-                                                <span class="upload-button" id="upload-button10">Choose File</span>
-                                                <input class="file-upload" name="salary_slip" id="file-upload10"
-                                                    type="file" accept="image/*">
+                                            {{-- <p>You can drag or drop <span>pdf</span> </p> --}}
+                                            <div class="upload-img-file">
+                                                <input type="file" id="salary_slip" name="salary_slip" class="form-control"/>
+                                                <strong class="error" id="salary_slip-error"></strong>
                                             </div>
                                         </div>
                                     </div>
@@ -1730,14 +1764,15 @@
                                         <select class="form-control" name="verification_type"
                                             id="verification_type">
                                             <option
-                                                @if ($workhistory) value="{{ old('verification_type', $workhistory->verification_type) }}" @endif>
-                                                @if ($workhistory)
-                                                    {{ old('verification_type', $workhistory->verification_type) }}
+                                                @if ($item) value="{{ old('verification_type', $item['verification_type']) }}" @endif>
+                                                @if ($item)
+                                                    {{ old('verification_type', $item['verification_type']) }}
                                                 @endif
                                             </option>
                                             <option value="Verified">Verified</option>
                                             <option value="Not Verified">Not Verified</option>
                                         </select>
+                                        <strong class="error" id="verification_type-error"></strong>
                                     </div>
                                 </div>
                             </div>
@@ -1748,15 +1783,17 @@
                                     Changes</button>
                             </div>
                     </div>
+                </form>
                 </div>
+           
             @else
                 <p>No Data Available</p>
             @endif
         </div>
     </div>
 </div>
-</form>
 
+@endforeach
 
 
 <!-- The Modal No INFO -->

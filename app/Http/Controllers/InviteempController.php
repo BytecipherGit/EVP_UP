@@ -8,6 +8,7 @@ use App\Models\Employeeidentity;
 use App\Models\Empqualification;
 use App\Models\Empworkhistory;
 use App\Models\Empskills;
+use App\Models\Emplang;
 use App\Models\Empofficial;
 use Auth;
 use Illuminate\Http\Request;
@@ -194,7 +195,7 @@ class InviteempController extends Controller
         }
 
         public function downloadQualDoc(request $request){
-              $data=Empqualification::where('emp_id', $request->id)->first();
+              $data=Empqualification::where('id', $request->id)->first();
               $file= public_path().'/image/'.$data->document;
               $headers = array(
                         'Content-Type: application/jpg',
@@ -204,7 +205,7 @@ class InviteempController extends Controller
            }
 
         public function downloadOfferDoc(request $request){
-          $work=Empworkhistory::where('emp_id', $request->id)->first();
+          $work=Empworkhistory::where('id', $request->id)->first();
           $file= public_path().'/image/'.$work->offer_letter;
           $headers = array(
                     'Content-Type: application/jpg',
@@ -214,7 +215,7 @@ class InviteempController extends Controller
           }
 
           public function downloadIdDoc(request $request){
-            $identity=Employeeidentity::where('emp_id', $request->id)->first();
+            $identity=Employeeidentity::where('id', $request->id)->first();
             $file= public_path().'/image/'.$identity->document;
             $headers = array(
                       'Content-Type: application/jpg',
@@ -224,7 +225,7 @@ class InviteempController extends Controller
             }
 
           public function downloadExpDoc(request $request){
-            $data=Empworkhistory::where('emp_id', $request->id)->first();
+            $data=Empworkhistory::where('id', $request->id)->first();
             $file= public_path().'/image/'.$data->exp_letter;
             $headers = array(
                       'Content-Type: application/jpg',
@@ -250,7 +251,7 @@ class InviteempController extends Controller
             $info = array();
             foreach ($emp as $row) {
                 $info[] = array(
-                   'first_name' => $row->first_name,
+                    'first_name' => $row->first_name,
                     'id' => $row->id, 
                     'email' => $row->email,
                     'last_name' => $row->last_name,
@@ -273,7 +274,7 @@ class InviteempController extends Controller
              
             }
             
-       
+
               return redirect()->back()->with('message','Email Send with attachment. Check your inbox.') ;
           
         }
@@ -293,9 +294,11 @@ class InviteempController extends Controller
           $workhistory=Empworkhistory:: where('emp_id',$request->id)->get();
           $workh=Empworkhistory:: where('emp_id',$request->id)->first();
           $skills=Empskills:: where('emp_id',$request->id)->first();
+          $skill_item=Empskills:: where('emp_id',$request->id)->get();
+          $lang_item=Emplang:: where('emp_id',$request->id)->get();
           $official= Empofficial::where('emp_id',$request->id)->first();
       
-          return view('org-invite/basic-info',compact('basic','identity','qualification','ident','workhistory','quali','workh','skills','official'));
+          return view('org-invite/basic-info',compact('basic','identity','qualification','ident','workhistory','quali','workh','skills','official','skill_item','lang_item'));
         }
 
         public function getInviteDetails(request $request){

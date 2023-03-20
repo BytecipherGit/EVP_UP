@@ -9,6 +9,7 @@ use App\Models\Empskills;
 use App\Models\Empofficial;
 use App\Models\Exitemp;
 use App\Models\User;
+use App\Models\Emplang;
 use Response;
 use Auth;
 use Illuminate\Http\Request;
@@ -28,9 +29,11 @@ class EmployeeController extends Controller
         $workhistory=Empworkhistory:: where('emp_id',$request->id)->get();
         $workh=Empworkhistory:: where('emp_id',$request->id)->first();
         $skills=Empskills:: where('emp_id',$request->id)->first();
+        $skill_item=Empskills:: where('emp_id',$request->id)->get();
+        $lang_item=Emplang:: where('emp_id',$request->id)->get();
         $official= Empofficial::where('emp_id',$request->id)->first();
     
-        return view('admin/add-employee',compact('basic','identity','qualification','ident','workhistory','quali','workh','skills','official'));
+        return view('admin/add-employee',compact('basic','identity','qualification','ident','workhistory','quali','workh','skills','official','lang_item','skill_item'));
     }
     public function identity(){
     
@@ -334,21 +337,31 @@ class EmployeeController extends Controller
               }
 
               if(isset($_POST['workskill'])){
+                // dd($request->all());
 
-              $request->validate([
-                'skill' => ['required', 'string', 'max:255'],
-                'lang' => ['required', 'string', 'max:255'],
-                ]);
-
+        
                 $identity_id=Employee::where('id',$request->id)->first();
-                $emp_skill = new Empskills();
-                $emp_skill->emp_id=$identity_id->id;
-                $emp_skill->skill=$request->input('skill');
-                $emp_skill->skill_type=$request->input('skill_type');
-                $emp_skill->lang=$request->input('lang');
-                $emp_skill->lang_type=$request->input('lang_type');
+                for ($i=0; $i < count($request->skill); $i++) 
+                {   
+                  $insertDataSkill = array(  
+                    'emp_id' => $identity_id->id,
+                    'skill' => $request->skill[$i],
+                    'skill_type' => $request->skill_type[$i],
+                    ); 
+                    DB::table('emp_skills')->insert($insertDataSkill);  
+                  }
+              for ($j=0; $j < count($request->lang); $j++) 
+              {   
+                $insertDatalang = array(  
+                  'emp_id' => $identity_id->id,
+                  'lang' =>  $request->lang[$j],
+                  'lang_type' => $request->lang_type[$j],
+                  ); 
+                  
                 
-                $emp_skill->save();
+                  DB::table('emp_language')->insert($insertDatalang);  
+            }
+          
                 $official = Empofficial::where('emp_id',$request->id)->first();
                 if (empty($official)) {
             
@@ -473,12 +486,12 @@ class EmployeeController extends Controller
             $identity_info['document']= $filename;
         }
         else{
-          $image2=DB::table('emp_identity')->where('emp_id',$request->id)->first();
+          $image2=DB::table('emp_identity')->where('id',$request->id)->first();
           $filename=$image2->document;
         
         }
   
-          $identity_info=DB::table('emp_identity')->where('emp_id',$id)
+          $identity_info=DB::table('emp_identity')->where('id',$request->id)
           ->update([
                   'id_type'=>$request->input('id_type'),
                   'id_number'=>$request->input('id_number'),
@@ -497,11 +510,12 @@ class EmployeeController extends Controller
             $qua_inf['document']= $filename;
         }
         else{
-          $image=DB::table('emp_qualifications')->where('emp_id',$request->id)->first();
-          $filename=$image->document;
-       
+          $image=DB::table('emp_qualifications')->where('id',$request->id)->get();
+          foreach($image as $img){
+          $filename=$img->document;
+          }
         }
-          $qua_inf=DB::table('emp_qualifications')->where('emp_id',$id)
+          $qua_inf=DB::table('emp_qualifications')->where('id',$request->id)
           ->update([
                   'inst_name'=>$request->input('inst_name'),
                   'degree'=>$request->input('degree'),
@@ -523,7 +537,7 @@ class EmployeeController extends Controller
             $work_inf['offer_letter']= $filename1;
           }
           else{
-            $image=DB::table('emp_workhistories')->where('emp_id',$request->id)->first();
+            $image=DB::table('emp_workhistories')->where('id',$request->id)->first();
             $filename1=$image->offer_letter;
        
           }
@@ -535,7 +549,7 @@ class EmployeeController extends Controller
             $work_inf['exp_letter']= $filename2;
               }
               else{
-                $image=DB::table('emp_workhistories')->where('emp_id',$request->id)->first();
+                $image=DB::table('emp_workhistories')->where('id',$request->id)->first();
                 $filename2=$image->exp_letter;
               }
 
@@ -546,11 +560,11 @@ class EmployeeController extends Controller
               $work_inf['salary_slip']= $filename3;
           }
           else{
-            $image=DB::table('emp_workhistories')->where('emp_id',$request->id)->first();
+            $image=DB::table('emp_workhistories')->where('id',$request->id)->first();
             $filename3=$image->salary_slip;
           
           }
-          $work_inf=DB::table('emp_workhistories')->where('emp_id',$id)
+          $work_inf=DB::table('emp_workhistories')->where('id',$request->id)
               ->update([
                   'com_name'=>$request->input('com_name'),
                   'designation'=>$request->input('designation'),
@@ -597,18 +611,23 @@ class EmployeeController extends Controller
         }
 
         if(isset($_POST['skill-edit'])){
-          $identity_inf=DB::table('emp_skills')->where('emp_id',$id)
+          
+       
+          // dd($skill->id);
+          $identity_inf=DB::table('emp_skills')->where('id', $request->id)
           ->update([
+            
                   'skill'=>$request->input('skill'),
                   'skill_type'=>$request->input('skill_type'),
           
             ]);
-
+          
+        
           return redirect()->back()->with('message','Infomation Updated Successfully.');
-        }
+          }
 
         if(isset($_POST['skilllang-edit'])){
-          $identity_inf=DB::table('emp_skills')->where('emp_id',$id)
+          $identity_inf=DB::table('emp_language')->where('id', $request->id)
           ->update([
                   'lang'=>$request->input('lang'),
                   'lang_type'=>$request->input('lang_type'),
@@ -624,11 +643,16 @@ class EmployeeController extends Controller
         $basic=Employee::where('id',$id)->first();
         $identity=Employeeidentity::where('emp_id',$request->id)->first();
         $qualification=Empqualification::where('emp_id',$request->id)->first();
+        $qual_item=Empqualification::where('emp_id',$request->id)->get();
         $workhistory=Empworkhistory::where('emp_id',$request->id)->first();
         $skills=Empskills::where('emp_id',$request->id)->first();
+        $skill_item=Empskills:: where('emp_id',$request->id)->get();
+        $lang_item=Emplang:: where('emp_id',$request->id)->get();
+        $ident_item=Employeeidentity::where('emp_id',$request->id)->get();
+        $work_item=Empworkhistory::where('emp_id',$request->id)->get();
         $official= Empofficial::where('emp_id',$request->id)->first();
 
-        return view('admin/edit-employee',compact('basic','identity','qualification','workhistory','skills','official'));
+        return view('admin/edit-employee',compact('basic','identity','qualification','workhistory','skills','official','skill_item','lang_item','qual_item','ident_item','work_item'));
       }
 
       public function basicIndex2(request $request, $id){
@@ -751,10 +775,15 @@ class EmployeeController extends Controller
              $skills->emp_id=$id;
              $skills->skill=$data['skill'];
              $skills->skill_type=$data['skill_type'];
+             $skills->save();
+
+             $skills= new Emplang;
+             $skills->emp_id=$id;
              $skills->lang=$data['lang'];
              $skills->lang_type=$data['lang_type'];
-
              $skills->save();
+
+
 
                 $emp_work = new Empworkhistory;
                 $emp_work->emp_id=$id;
@@ -850,9 +879,11 @@ class EmployeeController extends Controller
           $qualification=Empqualification:: where('emp_id',$request->id)->first();
           $workhistory=Empworkhistory:: where('emp_id',$request->id)->first();
           $skills=Empskills:: where('emp_id',$request->id)->first();
+          $skill_item=Empskills:: where('emp_id',$request->id)->get();
+          $lang_item=Emplang:: where('emp_id',$request->id)->get();
           $official= Empofficial::where('emp_id',$request->id)->first();
           $exitemp= Exitemp::where('emp_id',$request->id)->first();
-          return view('admin/post-employee-details',compact('basic','identity','qualification','workhistory','skills','official','exitemp'));
+          return view('admin/post-employee-details',compact('basic','identity','qualification','workhistory','skills','official','exitemp','skill_item','lang_item'));
       }
 
       public function currentEmp(){
