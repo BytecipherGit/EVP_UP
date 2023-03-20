@@ -29,6 +29,10 @@ Route::get('/success', function () {
     return view('web/success');
 });
 
+Route::get('/response_submited', function () {
+    return view('web/response_already_submitted');
+});
+
 Route::get('/table', function () {
     return view('admin/datatable');
 });
@@ -135,7 +139,7 @@ Route::middleware([Admin::class])->group(function () {
     Route::post('interview/declined/{id?}', [InterviewEmployee::class, 'declineInterview'])->middleware('documents');
     Route::post('interview/newtime/{id?}', [InterviewEmployee::class, 'suggestNewTime'])->middleware('documents');
     Route::get('interview/confirmed/{id?}', [InterviewEmployee::class, 'interviewConfirmed'])->name('interview.confirmed')->middleware('documents');
-    Route::post('interview/confirmed/{id?}', [InterviewEmployee::class, 'videoInterview'])->middleware('documents');
+    Route::post('interview/confirmed', [InterviewEmployee::class, 'videoInterview'])->name('interview.confirmed.mail')->middleware('documents');
     Route::get('interview/newtime/{id?}', [InterviewEmployee::class, 'interviewNewTime'])->name('interview.newtime')->middleware('documents');
     Route::get('interview/declined/{id?}', [InterviewEmployee::class, 'interviewDeclined'])->name('interview.declined')->middleware('documents');
     // Route::post('schedule-interview/update', [InterviewEmployee::class, 'schedule_interview_update']);
