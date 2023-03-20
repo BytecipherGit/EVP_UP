@@ -214,7 +214,7 @@ class InterviewEmployee extends Controller
         return redirect('/success');
     }
 
-    public function videoInterview(request $request)
+    public function interviewRepliedFromMail(request $request)
     {
         if(!empty($request->empCode)){
             //Check if alrady response is submitted
@@ -223,7 +223,8 @@ class InterviewEmployee extends Controller
                 $employee = DB::table('interview_employees')->where('empCode', $request->empCode)
                 ->update([
                     'employee_comment' => $request->input('employee_comment'),
-                    'employee_interview_status' => 2,
+                    'employee_comment_date' => Carbon::now(),
+                    'employee_interview_status' => $request->interview_status,
                     'isEmployeeResponseSubmitted' => true
                 ]);
                 if ($employee) {
@@ -270,10 +271,14 @@ class InterviewEmployee extends Controller
         // }
 
         if (!empty($request->empCode)) {
-            $employeetime = DB::table('interview_employees')->join('users', 'interview_employees.company_id', '=', 'users.id')->select('interview_employees.*', 'users.*')->where('interview_employees.empCode', decrypt($request->empCode))
+            $employeetime = DB::table('interview_employees')
+            ->join('users', 'interview_employees.company_id', '=', 'users.id')
+            ->select('interview_employees.*', 'users.*','interview_employees.designation')
+            ->where('interview_employees.empCode', decrypt($request->empCode))
                 ->first();
+            $empCode = decrypt($request->empCode);
             if ($employeetime) {
-                return view('admin/web-email/suggest-new-time', compact('employeetime'));
+                return view('admin/web-email/suggest-new-time', compact('employeetime','empCode'));
             } else {
                 return Response::json(['success' => '0']);
             }
@@ -293,10 +298,14 @@ class InterviewEmployee extends Controller
 
         if (!empty($request->empCode)) {
             // $employedecline = EmployeeInterview::where('empCode',decrypt($request->empCode))->first();
-            $employedecline = DB::table('interview_employees')->join('users', 'interview_employees.company_id', '=', 'users.id')->select('interview_employees.*', 'users.*')->where('interview_employees.empCode', decrypt($request->empCode))
+            $employedecline = DB::table('interview_employees')
+            ->join('users', 'interview_employees.company_id', '=', 'users.id')
+            ->select('interview_employees.*', 'users.*','interview_employees.designation')
+            ->where('interview_employees.empCode', decrypt($request->empCode))
                 ->first();
+            $empCode = decrypt($request->empCode);
             if ($employedecline) {
-                return view('admin/web-email/decline-interview', compact('employedecline'));
+                return view('admin/web-email/decline-interview', compact('employedecline','empCode'));
             } else {
                 return Response::json(['success' => '0']);
             }

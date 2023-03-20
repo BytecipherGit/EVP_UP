@@ -139,9 +139,9 @@ Route::middleware([Admin::class])->group(function () {
     Route::post('interview/declined/{id?}', [InterviewEmployee::class, 'declineInterview'])->middleware('documents');
     Route::post('interview/newtime/{id?}', [InterviewEmployee::class, 'suggestNewTime'])->middleware('documents');
     Route::get('interview/confirmed/{id?}', [InterviewEmployee::class, 'interviewConfirmed'])->name('interview.confirmed')->middleware('documents');
-    Route::post('interview/confirmed', [InterviewEmployee::class, 'videoInterview'])->name('interview.confirmed.mail')->middleware('documents');
     Route::get('interview/newtime/{id?}', [InterviewEmployee::class, 'interviewNewTime'])->name('interview.newtime')->middleware('documents');
     Route::get('interview/declined/{id?}', [InterviewEmployee::class, 'interviewDeclined'])->name('interview.declined')->middleware('documents');
+    Route::post('interview/replied', [InterviewEmployee::class, 'interviewRepliedFromMail'])->name('interview.replied.mail')->middleware('documents');
     // Route::post('schedule-interview/update', [InterviewEmployee::class, 'schedule_interview_update']);
     // Route::post('admin/add_company', [\App\Http\Controllers\CommonController::class, 'add_company']);
     // Route::post('admin/update_company', [\App\Http\Controllers\CommonController::class, 'update_company']);

@@ -37,7 +37,7 @@
       <h1>Decline interview</h1>
       <div class="ul-part d-flex">
         <img src="{{ asset('assets') }}/admin/web-email/images/office-icon.png" class="iconImg">
-        <form action="" method="post">
+        <form action="{{ route('interview.replied.mail') }}" method="post">
           @csrf
         <div class="">
           <h2>Urgent Requirement for {{ $employedecline->designation }} </h2>
@@ -60,6 +60,8 @@
 
       <div class="ul-part">
         <div class="">
+          <input type="hidden" name="interview_status" id="interview_status" value="4">
+          <input type="hidden" name="empCode" id="empCode" value="{{ $empCode }}">
           <h2>Add a note for the employer (optinal)</h2>
           <textarea rows="3" name="employee_comment" class="form-textarea"></textarea>
         </div>
