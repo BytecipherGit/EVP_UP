@@ -83,8 +83,8 @@ Route::get('/organization', function () {
 // return redirect()->back()->with('message','Invitation Email Successfully Send');
 // });
 Route::get('/superlogin', [App\Http\Controllers\SuperAdminController::class, 'superAdminLogin'])->name('superlogin');
-Route::get('/invite-email/{id?}', [App\Http\Controllers\InviteempController::class, 'sendemail'])->name('invite-email');
-
+Route::post('/invite-email/{id?}', [App\Http\Controllers\InviteempController::class, 'sendemail'])->name('invite-email');
+Route::post('send_invidation_to_employee',[App\Http\Controllers\InviteempController::class, 'sendInvidationToEmployee'])->name('send_invidation_to_employee');
 Route::middleware([Superadmin::class])->group(function () {
     Route::get('/superadmin', [App\Http\Controllers\SuperAdminController::class, 'index'])->name('superadmin');
     Route::get('superadmin/logout', [App\Http\Controllers\SuperAdminController::class, 'logout'])->name('superadmin.logout');
