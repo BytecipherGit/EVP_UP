@@ -37,7 +37,7 @@
       <h1>Suggest a different interview time</h1>
       <div class="ul-part d-flex">
         <img src="{{ asset('assets') }}/admin/web-email/images/office-icon.png" class="iconImg">
-        <form action="" method="post">
+        <form action="{{ route('interview.replied.mail') }}" method="post">
           @csrf 
         <div class="">
           <h2>Urgent Requirement for {{ $employeetime->designation }}</h2>
@@ -61,6 +61,8 @@
       </div>
       <div class="ul-part">
         <div class="">
+          <input type="hidden" name="interview_status" id="interview_status" value="3">
+          <input type="hidden" name="empCode" id="empCode" value="{{ $empCode }}">
           <h2>Share your availability</h2>
           <p>Include multiple times to increase your likelihood of scheduling</p>
           <textarea rows="3" name="employee_comment" class="form-textarea"></textarea>

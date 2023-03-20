@@ -82,10 +82,10 @@
                                 <th>EVP Id</th>
                                 <th>Name</th>
                                 <th>Designation</th>
-                                {{-- <th>Candidate Rating</th> --}}
                                 <th>Offer Status</th>
                                 <th>Hiring Status</th>
                                 <th>Employee Status</th>
+                                <th>Employee Comment</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -114,6 +114,7 @@
                                             @endif
                                         @endforeach
                                     </td>
+                                    <td>{{ ($employee->employee_comment) ? $employee->employee_comment : '' }}</td>
                                     <td>
                                         {{-- <span class="notifi-td" data-toggle="modal" data-target="#remaiderbtninfo"><img
                                                 src="assets/admin/images/bell-icon.png" width="30px;"
