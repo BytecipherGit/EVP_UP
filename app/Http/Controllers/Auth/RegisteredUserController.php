@@ -15,6 +15,8 @@ use App\Models\Country;
 use App\Models\State;
 use App\Models\City;
 use Illuminate\View\View;
+use App\Mail\CompanyRegisterationMail;
+use Illuminate\Support\Facades\Mail as FacadesMail;
 
 class RegisteredUserController extends Controller
 {
@@ -79,7 +81,16 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
+        
+
         event(new Registered($user));
+
+        if($user){
+            $mailData = [
+                'name' => !empty($request->name) ? $request->name : '',
+            ];
+            FacadesMail::to($request->email)->send(new CompanyRegisterationMail($mailData));
+        }
 
         // Auth::login($user);
 
