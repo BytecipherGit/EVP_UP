@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\Helper as HelpersHelper;
 use App\Mail\SendInterviewScheduleMail;
 use App\Mail\SendInterviewSchedulePhoneMail;
+use App\Mail\InterviewReminderMail;
 use App\Models\EmployeeInterview;
 use App\Models\EmployeeInterviewStatus;
 use App\Models\HiringStage;
@@ -187,6 +188,25 @@ class InterviewEmployee extends Controller
         if (!empty($request->interviewId)) {
             $interview = EmployeeInterview::find($request->interviewId);
             if ($interview->delete()) {
+                return Response::json(['success' => '1']);
+            } else {
+                return Response::json(['success' => '0']);
+            }
+        } else {
+            return Response::json(['success' => '0']);
+        }
+    }
+
+    public function sendReminderForInterview(request $request)
+    {
+        if (!empty($request->interviewId)) {
+            $interview = EmployeeInterview::find($request->interviewId);
+            if (!empty($interview->email)) {
+                $mailData = [
+                    'name' => !empty($interview->first_name) ? $interview->first_name.' '.$interview->last_name : '',
+                ];
+                FacadesMail::to($interview->email)->send(new InterviewReminderMail($mailData));
+
                 return Response::json(['success' => '1']);
             } else {
                 return Response::json(['success' => '0']);
