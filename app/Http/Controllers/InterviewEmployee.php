@@ -239,7 +239,8 @@ class InterviewEmployee extends Controller
         // }
 
         if (!empty($request->empCode)) {
-                $employeeStatus = EmployeeInterview::where('empCode',decrypt($request->empCode))->first();
+                $employeeStatus = DB::table('interview_employees')->join('users', 'interview_employees.company_id', '=', 'users.id')->select('interview_employees.*','users.*')->where('interview_employees.empCode',decrypt($request->empCode))
+                ->first();
 
                 if ($employeeStatus) {
                     if($employeeStatus->interview_type == 'Telephonic'){
@@ -267,7 +268,8 @@ class InterviewEmployee extends Controller
         // }
 
          if (!empty($request->empCode)) {
-            $employeetime = EmployeeInterview::where('empCode',decrypt($request->empCode))->first();
+            $employeetime = DB::table('interview_employees')->join('users', 'interview_employees.company_id', '=', 'users.id')->select('interview_employees.*','users.*')->where('interview_employees.empCode',decrypt($request->empCode))
+            ->first();
             if ($employeetime) {
                 return view('admin/web-email/suggest-new-time',compact('employeetime'));
             } else {
@@ -288,7 +290,9 @@ class InterviewEmployee extends Controller
         // }
 
         if (!empty($request->empCode)) {
-            $employedecline = EmployeeInterview::where('empCode',decrypt($request->empCode))->first();
+            // $employedecline = EmployeeInterview::where('empCode',decrypt($request->empCode))->first();
+            $employedecline=DB::table('interview_employees')->join('users', 'interview_employees.company_id', '=', 'users.id')->select('interview_employees.*','users.*')->where('interview_employees.empCode',decrypt($request->empCode))
+            ->first();
             if ($employedecline) {
                 return view('admin/web-email/decline-interview',compact('employedecline'));
             } else {

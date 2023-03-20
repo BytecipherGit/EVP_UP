@@ -14,7 +14,7 @@
         <div class="row">
           <div class="col-md-12">
             <h1>Onboarding</h1>
-            <p>Here’s your report overview by today</p>
+            <p></p>
           </div>
         </div>
       </div><!--- Main Heading ----->
@@ -210,7 +210,7 @@
                         <strong class="error" id="permanent_address-error"></strong>
                       </div>
                     </div>
-                    <div class="col-xl-12 mt-3"><h2>Emergency Contact<span style="color:red">*</span></h2></div>                        
+                    <div class="col-xl-12 mt-3"><h2>Emergency Contact</h2></div>                        
                     <div class="col-xl-4 col-lg-6 col-md-12">
                       <div class="form-group">
                         <label for="emg_name">Name<span style="color:red">*</span></label>
@@ -1747,9 +1747,9 @@
               inst_name: "Institute name is required",
               degree: "Degree is required",
               subject: "Subject is required",
-              duration_from: "Duration Date is required",
+              duration_from: "Duration date is required",
               duration_to: "Duration to is required",
-              verification_type: "Verification Type is required",
+              verification_type: "Verification type is required",
               document: "Document is required",
             }
          });
@@ -1774,19 +1774,19 @@
  
             messages: {
               first_name: "First name is required",
-              last_name: "Last Name is required",
+              last_name: "Last name is required",
               email: "Email is required",
-              blood_group: "Blood Group is required",
+              blood_group: "Blood group is required",
               gender: "Gender to is required",
-              dob: "Date of Birth is required",
-              phone: "Phone Number is required",
-              emg_phone: "Emergency Phone Number is required",
-              permanent_address: "Permanent Address is required",
-              current_address: "Current Address is required",
-              marital_status: "Marital Status is required",
-              emg_name: "Emergency Name is required",
-              emg_relationship: "Emergency Relationship is required",
-              emg_address: "Emergency Address is required",
+              dob: "Date of birth is required",
+              phone: "Phone number is required",
+              emg_phone: "Emergency phone number is required",
+              permanent_address: "Permanent address is required",
+              current_address: "Current address is required",
+              marital_status: "Marital status is required",
+              emg_name: "Emergency name is required",
+              emg_relationship: "Emergency relationship is required",
+              emg_address: "Emergency address is required",
             }
          });
 
@@ -1816,27 +1816,27 @@
             },
 
             messages: {
-              doj: "Date of Joining is required",
-              prob_period: "Probation Period is required",
-              emp_type: "Employee Type is required",
-              work_location: "Work Location is required",
-              emp_status: "Employee Status to is required",
+              doj: "Date of joining is required",
+              prob_period: "Probation period is required",
+              emp_type: "Employee type is required",
+              work_location: "Work location is required",
+              emp_status: "Employee status to is required",
               salary: "Salary is required",
               lpa: "LPA is required",
-              app_from: "Appraisal From is required",
-              app_to: "Appraisal To is required",
-              pro_to: "Promotion To is required",
-              pro_from:"Promotion From is required",
-              last_app_desig: "Last Appraisal is required",
-              last_pro_desig: "Last Promotion Designation is required",
-              current_pro_desig: "Current Promotion Designation is required",
-              pro_date: "Promotion Date is required",
-              mang_name: "Manager Name is required",
-              mang_type: "Manager Type is required",
-              mang_dept: "Manager Department is required",
-              mang_desig: "Manager Designation is required",
-              current_app_desig: "Current Apprasial is required",
-              app_date: "Apprasial Date is required",
+              app_from: "Appraisal from is required",
+              app_to: "Appraisal to is required",
+              pro_to: "Promotion to is required",
+              pro_from:"Promotion from is required",
+              last_app_desig: "Last appraisal designationis required",
+              last_pro_desig: "Last promotion designation is required",
+              current_pro_desig: "Current promotion designation is required",
+              pro_date: "Promotion date is required",
+              mang_name: "Manager name is required",
+              mang_type: "Manager type is required",
+              mang_dept: "Manager department is required",
+              mang_desig: "Manager designation is required",
+              current_app_desig: "Current apprasial designation is required",
+              app_date: "Apprasial date is required",
             }
          });
 
@@ -1855,12 +1855,12 @@
             messages: {
               com_name: "Company name is required",
               designation: "Designation is required",
-              work_duration_to: "Work Duration is required",
-              work_duration_from: "Work Duration From is required",
-              offer_letter: "Offer Letter to is required",
-              verification_type: "Verification Type is required",
-              exp_letter: "Experience Letter is required",
-              salary_slip: "Salary Slip is required",
+              work_duration_to: "Work duration is required",
+              work_duration_from: "Work duration From is required",
+              offer_letter: "Offer letter to is required",
+              verification_type: "Verification type is required",
+              exp_letter: "Experience letter is required",
+              salary_slip: "Salary slip is required",
             }
          });
 
@@ -1873,10 +1873,10 @@
             },
           
             messages: {
-              id_type: "ID Type is required",
-              id_number: "ID Number is required",
-              document: "Work Documentation is required",
-              verification_type: "Verification Type is required",
+              id_type: "ID type is required",
+              id_number: "ID number is required",
+              document: "Work documentation is required",
+              verification_type: "Verification type is required",
               
             }
          });
@@ -1890,7 +1890,7 @@
            
             messages: {
               skill: "Skill is required",
-              lang: "Known Language is required",
+              lang: "Known language is required",
              
             }
          });

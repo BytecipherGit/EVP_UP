@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
        
             $table->string('first_name');
+            $table->integer('company_id');
             $table->string('profile')->nullable();
             $table->string('last_name')->nullable();
             $table->string('middle_name')->nullable();

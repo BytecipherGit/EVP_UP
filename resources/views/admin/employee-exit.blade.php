@@ -7,9 +7,15 @@
 
       <div class="main-heading">        
         <div class="row">
-          <div class="col-md-12">
-            <h1>Exit Emplpyee</h1>
-            <p>Here’s your report overview by today</p>
+          <div class="col-md-8">
+            <h1>Exit Employee</h1>
+            <p></p>
+          </div>
+          <div class="col-md-4">
+            <div class="main-right-button-box">
+              {{-- <a href="add-employee"><img src="assets/admin/images/button-plus.png">Add New</a>  --}}
+                  <a href="/employee"><img src="{{ asset('assets') }}/admin/images/back-icon.png"> Back</a>
+            </div>
           </div>
         </div>
       </div><!--- Main Heading ----->
@@ -27,7 +33,7 @@
                       {{-- <img src="{{ asset('assets') }}/admin/images/vijay-patil.png"> --}}
                       <img  @if ($exitemp->profile!== Null) value="/image/{{ old('profile', $exitemp->profile) }}" src="/image/{{ $exitemp->profile }}" @else src="{{ asset('assets') }}/admin/images/user-img.png" @endif >                  
                       <h1>{{$exitemp->first_name}} {{ $exitemp->last_name}}</h1>
-                      <p>Code - #BCS108</p>
+                      <p>Code - #00{{ $exitemp->id}}</p>
                       <p>Date of joining - {{ $exitemp->doj}}</p>
                     </div>
                   </div>

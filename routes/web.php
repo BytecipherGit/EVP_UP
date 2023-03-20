@@ -61,10 +61,6 @@ Route::get('/notification', function () {
   return view('admin/notification');
 });
 
-Route::get('/change_password', function () {
-    return view('company/change-password');
-})->name('document');
-
 Route::get('/invite-confirm', function () {
     return view('org-invite/invite-confirm');
 });
@@ -124,6 +120,11 @@ Route::middleware([Admin::class])->group(function () {
     Route::get('/edit-invite-employee/{id?}', [App\Http\Controllers\InviteempController::class, 'editInviteEmp'])->middleware('documents');
     Route::post('/edit-invite-employee/{id?}', [App\Http\Controllers\InviteempController::class, 'geteditInvite'])->middleware('documents');
     Route::get('/delete-invite/{id?}', [App\Http\Controllers\InviteempController::class, 'deleteInvite'])->middleware('documents');
+    Route::get('/change_password', [App\Http\Controllers\AdminController::class, 'getPasswordReset'])->middleware('documents');
+    Route::get('/download_qualification_doc/{id?}', [App\Http\Controllers\InviteempController::class, 'downloadQualDoc'])->middleware('documents');
+    Route::get('/download_offerletter_doc/{id?}', [App\Http\Controllers\InviteempController::class, 'downloadOfferDoc'])->middleware('documents');
+    Route::get('/download_expletter_doc/{id?}', [App\Http\Controllers\InviteempController::class, 'downloadExpDoc'])->middleware('documents');
+    Route::get('/download_identity_doc/{id?}', [App\Http\Controllers\InviteempController::class, 'downloadIdDoc'])->middleware('documents');
 
     Route::get('/schedule-interview', [InterviewEmployee::class, 'index'])->name('schedule.interview')->middleware('documents');
     Route::any('/schedule-interview/form/{id?}', [InterviewEmployee::class, 'getScheduleInterviewForm'])->middleware('documents');

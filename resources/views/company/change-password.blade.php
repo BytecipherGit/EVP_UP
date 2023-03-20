@@ -26,9 +26,9 @@
             <p>Passwords must contain:</p>
             <ul>
               <li>At least 8 characters</li>
-              <li>At least 1 upper case letter (A..Z)</li>
-              <li>At least 1 lower case letter (a..Z)</li>
-              <li>At least 1 number (0..9)</li>
+              {{-- <li>At least 1 upper case letter (A..Z)</li> --}}
+              {{-- <li>At least 1 lower case letter (a..Z)</li> --}}
+              {{-- <li>At least 1 number (0..9)</li> --}}
             </ul> 
           </div>
           <div class="col-lg-6 order-lg-2 order-md-1">

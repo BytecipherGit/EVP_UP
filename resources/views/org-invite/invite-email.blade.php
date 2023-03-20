@@ -32,9 +32,9 @@
                  
 
                  <button style="background: #5533FF; border:none; border-radius: 6px; padding:15px 40px; margin:25px 0">
-                    <a href="#" style="color: #fff; text-decoration:none; font-weight: 500; font-size: 20px; line-height: 26px; font-family: 'DM Sans', sans-serif;">
+                    @foreach($data2 as $id) <a href="{{route('email-config')}}/{{ $id }}" style="color: #fff; text-decoration:none; font-weight: 500; font-size: 20px; line-height: 26px; font-family: 'DM Sans', sans-serif;">
                     Accept Invitation
-                    </a>
+                    </a>@endforeach
                 </button>
 
 
@@ -53,7 +53,7 @@
             </div> 
 
             <footer style="padding:20px;">
-                <p style="font-weight:300;font-size: 16px; line-height: 24px; color: #373E57; font-family: 'DM Sans', sans-serif; margin: 0;">Copyright 2022 <span style="color: #5533FF;">ByteCipher</span>. All Right Reserved.</p>
+                <p style="font-weight:300;font-size: 16px; line-height: 24px; color: #373E57; font-family: 'DM Sans', sans-serif; margin: 0;">Copyright 2023 <span style="color: #5533FF;">ByteCipher</span>. All Right Reserved.</p>
                 <ul style="margin:15px 0 0; padding:0">
                     <li style="list-style-type: none; display: inline-block;"><a href="#"><img src="{{ asset('assets') }}/email/images/instagram-icon.png"></a></li>
                     <li style="list-style-type: none; display: inline-block; padding-left: 30px;"><a href="#"><img src="{{ asset('assets') }}/email/images/twitter-icon.png"></a></li>

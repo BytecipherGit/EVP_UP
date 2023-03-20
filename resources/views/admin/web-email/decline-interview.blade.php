@@ -41,7 +41,7 @@
           @csrf
         <div class="">
           <h2>Urgent Requirement for {{ $employedecline->designation }} </h2>
-          <p>ByteCipher Pvt Ltd</p>
+          <p>{{ $employedecline->org_name }}</p>
         </div>
       </div>
       <div class="hrBorder"></div>

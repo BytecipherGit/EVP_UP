@@ -20,13 +20,11 @@
         <div class="row">
           <div class="col-md-8">
             <h1>Invite Employees</h1>
-            <p>Here’s your report overview by today</p>
+            <p></p>
           </div>
           <div class="col-md-4">
             <div class="main-right-button-box">
-                <button type="button" name="bulk_mail" id="bulk_mail"
-                class="btn btn-info btn-md addinci_btn disabled-btn">Invite</button>
-              {{-- <a href="" name="bulk_mail" id="bulk_mail" class="disabled-btn" >Invite</a> --}}
+                <a href="" name="bulk_mail" id="bulk_mail" class="disabled-btn">Invite</a> 
               <a href="add-invite-employee"><img src="assets/admin/images/button-plus.png">Add New</a>              
             </div>
           </div>
@@ -425,7 +423,7 @@
    
             $(document).on('click', '#bulk_mail', function() {
                 var id = [];
-                if (confirm("Are you sure you want to Send Invitation Mail?")) {
+                if (confirm("Are you sure you want to send invitation email?")) {
                     $('.users_checkbox:checked').each(function() {
                         id.push($(this).val());
                       });

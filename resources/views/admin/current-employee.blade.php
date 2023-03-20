@@ -13,7 +13,7 @@
         <div class="row">
           <div class="col-md-8">
             <h1>Current Employees</h1>
-            <p>Here’s your report overview by today</p>
+            <p></p>
           </div>
           <div class="col-md-4">
             <div class="main-right-button-box">

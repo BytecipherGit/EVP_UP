@@ -42,7 +42,7 @@
           @csrf 
         <div class="">
           <h2>Urgent Requirement for {{$employeeStatus->designation}}</h2>
-          <p>ByteCipher Pvt Ltd  </p>
+          <p>{{$employeeStatus->org_name}}</p>
         </div>
       </div>
       <div class="hrBorder"></div>
@@ -68,12 +68,12 @@
       </div>
       <div class="hrBorder"></div>
       
-      <div class="ul-part d-flex">
+      {{-- <div class="ul-part d-flex">
         <div class="rightBorder">
           <h2>Note from the employer:</h2>
           <p>Hello Applicant,.....</p>
         </div>
-      </div>
+      </div> --}}
 
       <div class="hrBorder"></div>
 

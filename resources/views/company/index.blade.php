@@ -9,7 +9,7 @@
           <div class="row">
             <div class="col-lg-12">
               <h1>Overview</h1>
-              <p>Here’s your report overview by today</p>
+              <p></p>
             </div>          
           </div>
         </div><!--- Main Heading ----->

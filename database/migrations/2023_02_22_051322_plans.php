@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('plans', function (Blueprint $table) {
             $table->id();
-            $table->string('plan_name');
-            $table->string('authority');
-            $table->string('plan_type');
+            $table->string('plan_name')->nullable();
+            $table->string('authority')->nullable();
+            $table->string('plan_type')->nullable();
             $table->timestamps();
         });
     }

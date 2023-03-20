@@ -12,7 +12,7 @@
         <div class="row">
           <div class="col-md-8">
             <h1>Past Employees</h1>
-            <p>Here’s your report overview by today</p>
+            <p></p>
           </div>
           <div class="col-md-4">
             <div class="main-right-button-box">
@@ -28,7 +28,7 @@
           <table id="example" class="table-bordered nowrap table table-striped" style="width:100%">
             <thead>
               <tr>
-                <th><input type="checkbox" id="customcheck" name="customcheck"></th>
+                {{-- <th><input type="checkbox" id="customcheck" name="customcheck"></th> --}}
                 <th>Employee Code</th>
                 <th>Employee Name</th>
                 <th>Employee Designation</th>
@@ -42,7 +42,7 @@
             <tbody>            
               @foreach($pastemp as $pastemps) 
               <tr>
-                <td><input type="checkbox" id="customcheck1" name="customcheck1"></td>
+                {{-- <td><input type="checkbox" id="customcheck1" name="customcheck1"></td> --}}
                 <td>#00{{$pastemps->emp_id}}</td>
                 <td>{{$pastemps->first_name}} {{$pastemps->last_name}}</td>
                 <td>{{$pastemps->mang_desig}}</td>
