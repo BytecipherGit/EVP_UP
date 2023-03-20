@@ -37,17 +37,19 @@
       <h1>Suggest a different interview time</h1>
       <div class="ul-part d-flex">
         <img src="{{ asset('assets') }}/admin/web-email/images/office-icon.png" class="iconImg">
+        <form action="" method="post">
+          @csrf 
         <div class="">
-          <h2>Urgent Requirement for iOS Developer</h2>
-          <p>ByteCipher Pvt Ltd</p>
+          <h2>Urgent Requirement for {{ $employeetime->designation }}</h2>
+          <p>{{ $employeetime->org_name }}</p>
         </div>
       </div>
       <div class="hrBorder"></div>
       <div class="ul-part d-flex">
         <img src="{{ asset('assets') }}/admin/web-email/images/calendar-icon.png" class="iconImg">
         <div class="">
-          <h2>Friday, 4 March 2022</h2>
-          <p>04:30-05:30 IST</p>
+          <h2>{{ $employeetime->interview_date}}</h2>
+          <p>{{ $employeetime->interview_start_time}} {{ $employeetime->interview_end_time }}</p>
         </div>
       </div>
       <div class="noti-declinenotifi">
@@ -61,12 +63,12 @@
         <div class="">
           <h2>Share your availability</h2>
           <p>Include multiple times to increase your likelihood of scheduling</p>
-          <textarea rows="3" class="form-textarea"></textarea>
+          <textarea rows="3" name="employee_comment" class="form-textarea"></textarea>
         </div>
       </div>
       
-      <button class="buttun-classA"><a href="interview-request-declined">Submit Request</a></button>
-      
+      <button type="submit" class="buttun-classA">Submit Request</button>
+    </form>
         
     </div>  
   </div>

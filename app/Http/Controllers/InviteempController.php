@@ -9,6 +9,7 @@ use App\Models\Empqualification;
 use App\Models\Empworkhistory;
 use App\Models\Empskills;
 use App\Models\Empofficial;
+use Auth;
 use Illuminate\Http\Request;
 use Redirect;
 use Response;
@@ -19,7 +20,7 @@ class InviteempController extends Controller
 {
 
       public function index(){
-        $empinvite= Employee::where('status','2')->get();
+        $empinvite= Employee::where('status','2')->where('company_id',Auth::id())->get();
         return view('admin/invite-employee',compact('empinvite'));
       }
 
@@ -74,6 +75,7 @@ class InviteempController extends Controller
         $employee= new Employee();
       
         $employee->first_name=$request->input('first_name');
+        $employee->company_id=Auth::id();
         $employee->middle_name=$request->input('middle_name');
         $employee->last_name=$request->input('last_name');
         $employee->email=$request->input('email');
@@ -128,6 +130,7 @@ class InviteempController extends Controller
             $info= new Employee;
             $info->first_name=$data['first_name'];
             $info->last_name=$data['last_name'];
+            $info->company_id=Auth::id();
             $info->middle_name=$data['middle_name'];
             $info->email=$data['email'];
             $info->phone=$data['phone'];
@@ -190,6 +193,46 @@ class InviteempController extends Controller
           return Response::download($file, 'invite-sample.csv', $headers);
         }
 
+        public function downloadQualDoc(request $request){
+              $data=Empqualification::where('emp_id', $request->id)->first();
+              $file= public_path().'/image/'.$data->document;
+              $headers = array(
+                        'Content-Type: application/jpg',
+                      );
+
+              return Response::download($file, 'qualification.jpg', $headers);
+           }
+
+        public function downloadOfferDoc(request $request){
+          $work=Empworkhistory::where('emp_id', $request->id)->first();
+          $file= public_path().'/image/'.$work->offer_letter;
+          $headers = array(
+                    'Content-Type: application/jpg',
+                  );
+
+          return Response::download($file, 'Offer Letter.jpg', $headers);
+          }
+
+          public function downloadIdDoc(request $request){
+            $identity=Employeeidentity::where('emp_id', $request->id)->first();
+            $file= public_path().'/image/'.$identity->document;
+            $headers = array(
+                      'Content-Type: application/jpg',
+                    );
+  
+            return Response::download($file, 'Employee Id.jpg', $headers);
+            }
+
+          public function downloadExpDoc(request $request){
+            $data=Empworkhistory::where('emp_id', $request->id)->first();
+            $file= public_path().'/image/'.$data->exp_letter;
+            $headers = array(
+                      'Content-Type: application/jpg',
+                    );
+  
+            return Response::download($file, 'Exp. Letter.jpg', $headers);
+            }
+
         public function sendemail(request $request){
 
           $temp = array();
@@ -213,7 +256,7 @@ class InviteempController extends Controller
                     'last_name' => $row->last_name,
                 );
             }
-
+     
             if(!empty($info)){
               foreach($info as $row){
                 if(!empty($row['email']) && !empty($row['first_name']) && !empty($row['last_name']))
@@ -256,70 +299,7 @@ class InviteempController extends Controller
         }
 
         public function getInviteDetails(request $request){
-
-          if(isset($_POST['basic'])){
-
-            $request->validate([
-             'first_name' => ['required', 'string', 'max:255'],
-             'last_name' => ['required', 'string', 'max:255'],
-             'email' => ['required', 'unique:emp_basicinfo,email', 'email'],
-             'blood_group' => ['required'],
-             'gender' => ['required'],
-             'dob' => ['required'],
-             'phone' => ['required','max:12'],
-             'emg_phone' => ['required','max:12'],
-             'permanent_address' => ['required','string', 'max:255'],
-             'current_address' => ['required','string', 'max:255'],
-             'marital_status' => ['required'],
-             'emg_name' => ['required','string', 'max:255'],
-             'emg_relationship' => ['required','string', 'max:255'],
-             'emg_address' => ['required','string', 'max:255'],
      
-             ]);
-     
-             $employe = new Employee();
-             $employe->first_name=$request->input('first_name');
-             $employe->profile=$request->input('profile');
-             $employe->last_name=$request->input('last_name');
-             $employe->middle_name=$request->input('middle_name');
-             $employe->email=$request->input('email');
-             $employe->phone=$request->input('phone');
-             $employe->dob=$request->input('dob');
-             $employe->blood_group=$request->input('blood_group');
-             $employe->gender=$request->input('gender');
-             $employe->marital_status=$request->input('marital_status');
-             $employe->current_address=$request->input('current_address');
-             $employe->permanent_address=$request->input('permanent_address');
-             $employe->emg_name=$request->input('emg_name');
-             $employe->emg_relationship=$request->input('emg_relationship');
-             $employe->emg_phone=$request->input('emg_phone');
-             $employe->emg_address=$request->input('emg_address');
-     
-     
-              if($request->has('profile')) {
-               $image = $request->file('profile');
-               $employe->profile = $image->getClientOriginalName();
-               $image->move(public_path('/Image'), $image->getClientOriginalName());
-              }
-          
-              $employe->save();
-         
-               $basicinfo = Employeeidentity::where('emp_id',$request->id)->first();
-               if (empty($basicinfo)) {
-           
-                 $basic=Employee::where('email',$request->email)->first();
-                 $id=$basic->id;
-                 $table = $basic->getTable();
-                 return redirect('basic-info/'.$id)->with('tabs-3_active', true);
-     
-                }
-     
-                else{
-                 return redirect()->back()->with('tabs-3_active', true);
-           
-                }
-              }
-               
                 //For Update Basic Information
                if(isset($_POST['basic-edit'])){
      
@@ -355,7 +335,7 @@ class InviteempController extends Controller
                      'status'=>'1'
                     ]);
      
-                    return redirect()->back()->with('tabs-3_active', true)->with('message','Infomation Updated Successfully.');
+                    return redirect()->back()->with('tabs-1_active', true)->with('message','Infomation Updated Successfully.');
                  
                }
      
@@ -364,7 +344,7 @@ class InviteempController extends Controller
                    $request->validate([
                      'id_type' => ['required', 'string', 'max:255'],
                      'id_number' => ['required', 'string', 'max:255'],
-                     'verification_type' => ['required', 'string', 'max:255'],
+                    //  'verification_type' => ['required', 'string', 'max:255'],
                      // 'document' => ['required','file','mimes:jpeg,png,pdf,docs,doc','max:2048']
                      ]);
      
@@ -375,7 +355,7 @@ class InviteempController extends Controller
                    $emp_ident->id_type=$request->input('id_type');
                    $emp_ident->id_number=$request->input('id_number');
                    $emp_ident->document=$request->input('document');
-                   $emp_ident->verification_type=$request->input('verification_type');
+                   $emp_ident->verification_type='Not Verified';
                  
      
                    if($request->has('document')) {
@@ -411,7 +391,7 @@ class InviteempController extends Controller
                      'subject' => ['required', 'string', 'max:255'],
                      'duration_from' => ['required'],
                      'duration_to' => ['required'],
-                     'verification_type' => ['required','string', 'max:255'],
+                    //  'verification_type' => ['required','string', 'max:255'],
                      // 'document' => ['required','file','mimes:jpeg,png,pdf,docs,doc','max:2048']
      
                      ]);
@@ -425,7 +405,7 @@ class InviteempController extends Controller
                      $emp_qualf->duration_from=$request->input('duration_from');
                      $emp_qualf->duration_to=$request->input('duration_to');
                      $emp_qualf->document=$request->input('document');
-                     $emp_qualf->verification_type=$request->input('verification_type');
+                     $emp_qualf->verification_type='Not Verified';
                    
                      if($request->has('document')) {
                        $image = $request->file('document');
@@ -457,7 +437,7 @@ class InviteempController extends Controller
                      'designation' => ['required', 'string', 'max:255'],
                      'work_duration_to' => ['required'],
                      'work_duration_from' => ['required'],
-                     'verification_type' => ['required','string', 'max:255'],
+                    //  'verification_type' => ['required','string', 'max:255'],
                      // 'offer_letter' => ['required','file','mimes:jpeg,png,pdf,docs,doc','max:2048'],
                      // 'exp_letter' => ['required','file','mimes:jpeg,png,pdf,docs,doc','max:2048'],
                      // 'salary_slip' => ['required','file','mimes:jpeg,png,pdf,docs,doc','max:2048']
@@ -474,7 +454,7 @@ class InviteempController extends Controller
                      $emp_work->work_duration_to=$request->input('work_duration_to');
                      $emp_work->exp_letter=$request->input('exp_letter');
                      $emp_work->salary_slip=$request->input('salary_slip');
-                     $emp_work->verification_type=$request->input('verification_type');
+                     $emp_work->verification_type='Not Verified';
                    
      
                      if($request->has('offer_letter')) {
@@ -544,65 +524,23 @@ class InviteempController extends Controller
      
                       return redirect()->back();
                    }
-     
-                   if(isset($_POST['official'])){
-     
-                     $request->validate([
-                       'doj' => ['required', 'string', 'max:255'],
-                       'prob_period' => ['required', 'string', 'max:255'],
-                       'emp_type' => ['required', 'string', 'max:255'],
-                       'work_location' => ['required', 'string', 'max:255'],
-                       'emp_status' => ['required', 'string', 'max:255'],
-                       'salary' => ['required', 'string', 'max:255'],
-                       'lpa' => ['required', 'string', 'max:255'],
-                       'app_from' => ['required', 'string', 'max:255'],
-                       'app_to' => ['required', 'string', 'max:255'],
-                       'pro_to' => ['required', 'string', 'max:255'],
-                       'last_app_desig' => ['required', 'string', 'max:255'],
-                       'current_app_desig' => ['required', 'string', 'max:255'],
-                       'app_date' => ['required','date'],
-                       'pro_from' => ['required', 'string', 'max:255'],
-                       'last_pro_desig' => ['required', 'string', 'max:255'],
-                       'current_pro_desig' => ['required', 'string', 'max:255'],
-                       'pro_date' => ['required','date'],
-                       'mang_name' => ['required', 'string', 'max:255'],
-                       'mang_type' => ['required', 'string', 'max:255'],
-                       'mang_dept' => ['required', 'string', 'max:255'],
-                       'mang_desig' => ['required', 'string', 'max:255']
-                      
-                       ]);
-     
-                     $identity_id=Employee::where('id',$request->id)->first();
-                     $emp_off = new Empofficial();
-                     $emp_off->emp_id=$identity_id->id;
-                     $emp_off->doj=$request->input('doj');
-                     $emp_off->prob_period=$request->input('prob_period');
-                     $emp_off->emp_type=$request->input('emp_type');
-                     $emp_off->work_location=$request->input('work_location');
-                     $emp_off->emp_status=$request->input('emp_status');
-                     $emp_off->salary=$request->input('salary');
-                     $emp_off->lpa=$request->input('lpa');
-                     $emp_off->app_from=$request->input('app_from');
-                     $emp_off->app_to=$request->input('app_to');
-                     $emp_off->last_app_desig=$request->input('last_app_desig');
-                     $emp_off->current_app_desig=$request->input('current_app_desig');
-                     $emp_off->app_date=$request->input('app_date');
-                     $emp_off->pro_from=$request->input('pro_from');
-                     $emp_off->pro_to=$request->input('pro_to');
-                     $emp_off->last_pro_desig=$request->input('last_pro_desig');
-                     $emp_off->current_pro_desig=$request->input('current_pro_desig');
-                     $emp_off->pro_date=$request->input('pro_date');
-                     $emp_off->mang_name=$request->input('mang_name');
-                     $emp_off->mang_type=$request->input('mang_type');
-                     $emp_off->mang_dept=$request->input('mang_dept');
-                     $emp_off->mang_desig=$request->input('mang_desig');
-                 
-               
-                     $emp_off->save();
-     
+
+                   if(isset($_POST['submit'])){
+                    $identity = Employeeidentity::where('emp_id',$request->id)->first();
+                    $quali = Empqualification::where('emp_id',$request->id)->first();
+                    $skills = Empskills::where('emp_id',$request->id)->first();
+                    $work = Empworkhistory::where('emp_id',$request->id)->first();
+                    if(empty($identity) || empty($quali) || empty($work) || empty($skills)){
+                      return redirect()->back()->with('tabs-2_active', true)->with('msg','Please ');
+                    }
+                    else{
+                      return redirect('confirmation');
+                    }
                   
-                  return redirect('confirmation');
-               }
+                   }
+
+     
+       
 
         }
       

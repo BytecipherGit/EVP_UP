@@ -37,24 +37,29 @@
       <h1>Schedule phone interview</h1>
       <div class="ul-part d-flex">
         <img src="{{ asset('assets') }}/admin/web-email/images/office-icon.png" class="iconImg">
+
+        <form action="" method="post">
+          @csrf 
         <div class="">
-          <h2>Urgent Requirement for iOS Developer</h2>
-          <p>ByteCipher Pvt Ltd</p>
+          <h2>Urgent Requirement for {{$employeeStatus->designation}}</h2>
+          <p>{{$employeeStatus->org_name}}</p>
         </div>
       </div>
       <div class="hrBorder"></div>
       <div class="ul-part d-flex">
         <img src="{{ asset('assets') }}/admin/web-email/images/phone-call.png" class="iconImg">
         <div class="">
-          <h2>9876543210</h2>
+          <h2>{{$employeeStatus->phone}}</h2>
         </div>
       </div>
       <div class="hrBorder"></div>
       <div class="ul-part d-flex">
         <img src="{{ asset('assets') }}/admin/web-email/images/calendar-icon.png" class="iconImg">
         <div class="">
-          <h2>Friday, 4 March 2022</h2>
-          <p>04:30-05:30 IST</p>
+          {{-- <h2>Friday, 4 March 2022</h2> --}}
+          <h2>{{$employeeStatus->interview_date}}</h2>
+          {{-- <p>04:30-05:30 IST</p> --}}
+          <p>{{$employeeStatus->interview_start_time}} {{$employeeStatus->interview_end_time}}</p>
         </div> 
                        
       </div>
@@ -63,19 +68,19 @@
       </div>
       <div class="hrBorder"></div>
       
-      <div class="ul-part d-flex">
+      {{-- <div class="ul-part d-flex">
         <div class="rightBorder">
           <h2>Note from the employer:</h2>
           <p>Hello Applicant,.....</p>
         </div>
-      </div>
+      </div> --}}
 
       <div class="hrBorder"></div>
 
       <div class="ul-part">
         <div class="">
           <h2>Add a note for the employer (optinal)</h2>
-          <textarea rows="3" class="form-textarea"></textarea>
+          <textarea rows="3" name="employee_comment" class="form-textarea"></textarea>
         </div>
       </div>
 
@@ -83,9 +88,9 @@
 
       <p class="schud-pare">Tip: if you are unable to attend a scheduled interview, cancel or request to reschedule for another time. Employers appreciate being kept up to date.</p>
       
-      <button class="buttun-classA"><a href="interview-request-declined">Schedule Interview</a></button>
+      <button class="buttun-classA" type="submit">Schedule Interview</button>
       
-        
+    </form>
     </div>  
   </div>
 </div>

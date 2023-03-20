@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use App\Models\CompanyProfile;
 use App\Models\CompanyAddress;
 use App\Models\Department;
+use App\Models\User;
+use Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Plan;
 use Session;
@@ -16,39 +18,39 @@ class companySettingsController extends Controller
 {
 
     public function profiledata(){
-        $profile = CompanyProfile::latest()->first();
-        $address = CompanyAddress::latest()->first();
+        $profile = User::where('id',Auth::id())->first();
+        // $profile_address = User::where('id',Auth::id())->first();
         $department = Department::all();
         $designat = Designation::all();
         $plans = Plan::latest()->first();
     
-        return view('admin/settings', compact('profile','address','department','designat','plans'));
+        return view('admin/settings', compact('profile','department','designat','plans'));
         // return view('admin/settings');
     }
 
     public function getprofile(request $request){
        if(isset($_POST['profile'])){
-        if($request->file('logo')){
-          $file= $request->file('logo');
+        if($request->file('company_logo')){
+          $file= $request->file('company_logo');
           $filename=$file->getClientOriginalName();
           $file->move(public_path().'/Image/',$filename); 
-          $add['logo']= $filename;
+          $add['company_logo']= $filename;
           }
           else{
-            $image=DB::table('company_profile')->where('com_name',$request->com_name)->first();
-            $filename=$image->logo;
+            $image=DB::table('users')->where('id',Auth::id())->first();
+            $filename=$image->company_logo;
             // print_r($image);die();
            }
-        $profile=DB::table('company_profile')->where('com_name',$request->com_name)
+        $profile=DB::table('users')->where('id',Auth::id())
         ->update([
 
-        'com_name'=> $request->input('com_name'),
+        'org_name'=> $request->input('org_name'),
         'brand_name'=> $request->input('brand_name'),
-        'website'=> $request->input('website'),
+        'org_web'=> $request->input('org_web'),
         'domain_name'=> $request->input('domain_name'),
         'industry'=> $request->input('industry'),
-        'phone'=> $request->input('phone'),
-        'logo'=>$filename,
+        'phone_number'=> $request->input('phone_number'),
+        'company_logo'=>$filename,
         'description'=> $request->input('description'),
 
       ]);
@@ -58,11 +60,11 @@ class companySettingsController extends Controller
       }
 
 
-      if(isset($_POST['address'])){
-        $address=DB::table('company_addresses')->where('reg_office',$request->reg_office)
+      if(isset($_POST['add_address'])){
+        $address=DB::table('users')->where('id',Auth::id())
         ->update([
-        'reg_office'=> $request->input('reg_office'),
-        'cor_office'=> $request->input('cor_office'),
+        'address'=> $request->input('address'),
+        'cor_office_address'=> $request->input('cor_office_address'),
          ]);
        
         return redirect()->back()->with('success',"Address Successfully Added");

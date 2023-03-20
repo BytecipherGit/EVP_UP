@@ -32,7 +32,7 @@
       <div class="row">
         <div class="col-md-12">
           <h1>Onboarding</h1>
-          <p>Here’s your report overview by today</p>
+          <p></p>
         </div>
       </div>
     </div><!--- Main Heading ----->
@@ -40,11 +40,18 @@
     <div class="employee-tab-bar"> 
 
       <ul class="nav nav-tabs table-responsive-width" role="tablist">
-     
+     @if($quali)
         <li class="nav-item">
-          <a @if($basic->gender) class="nav-link" @else class="nav-link active" @endif data-toggle="tab" href="#tabs-1" role="tab">Basic Info</a>
+          {{-- <a @if($quali) class="nav-link" @else class="nav-link active" @endif data-toggle="tab" href="#tabs-1" role="tab">Basic Info</a> --}}
+          <a class="nav-link {{ session('tabs-1_active') ? 'active': '' }}" data-toggle="tab" href="#tabs-1" role="tab">Basic Info</a>
         </li>
-     
+      @else
+        <li class="nav-item">
+          {{-- <a @if($quali) class="nav-link" @else class="nav-link active" @endif data-toggle="tab" href="#tabs-1" role="tab">Basic Info</a> --}}
+          <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab">Basic Info</a>
+        </li>
+        @endif
+
         <li class="nav-item">
           <a  class="nav-link {{ session('tabs-3_active') ? 'active': '' }}" data-toggle="tab" href="#tabs-3" role="tab">Qualification</a>
         </li>     
@@ -58,228 +65,18 @@
         <li class="nav-item">
           <a class="nav-link {{ session('tabs-2_active') ? 'active': '' }}"  data-toggle="tab" href="#tabs-2" role="tab">Identity</a>
         </li>                                                                         
-        <li class="nav-item"> 
+        {{-- <li class="nav-item"> 
           <a class="nav-link {{ session('tabs-6_active') ? 'active': '' }}"  data-toggle="tab" href="#tabs-6" role="tab">Official Use</a>
-        </li>  
+        </li>   --}}
 
       </ul> 
   
       <div class="tab-content">
-        @if(!$basic)
-        <div class="tab-pane" id="tabs-1">
-          <div class="eml-persnal ">
-            <div class="add-emply-details">
-              @if (session()->has('message'))
-              <div class="alert alert-success">
-                  {{ session()->get('message') }}
-              </div>
-                @endif
-              <form action="" method="post" id="add_basicinfo" enctype="multipart/form-data">
-                @csrf 
-                <div class="row">                  
-                  <div class="col-lg-3">
-                    <div class="profile-add-img">
-                      <div class="circle">
-                         <img class="profile-pic" id="profile-pic" name="profile" src="{{ asset('assets') }}/admin/images/user-img.png">
-                       </div>
-                       <div class="p-image ml-auto">
-                         <span class="upload-button" for="file-upload" id="upload-button"><img src="{{ asset('assets') }}/admin/images/edit-icon.png"></span>
-                          <input class="file-upload" name="profile" id="file-upload" type="file" accept="image/*"/>
-                          <strong class="error" id="id_type-error"></strong>
-                       </div>
-                    </div>
-                  </div>
-                  
-                  <div class="col-lg-9">                    
-                    <div class="row">
-                      <div class="col-xl-4 col-lg-6 col-md-12">
-                        <div class="form-group">
-                          <label for="first_name">First Name<span style="color:red">*</span></label>
-                          <input type="text" name="first_name" class="form-control" value="{{ old('first_name') }}" placeholder="Enter Your First Name">
-                          @error('first_name')
-                          <span class="velidation">{{ $message }}</span>
-                          @enderror 
-                          <strong class="error" id="first_name-error"></strong>
-                        </div>
-                      </div>  
-                      <div class="col-xl-4 col-lg-6 col-md-12">
-                        <div class="form-group">
-                          <label for="middle_name">Middle Name</label>
-                          <input type="text" name="middle_name" class="form-control" value="{{ old('middle_name') }}" placeholder="Enter Your Middle Name" >
-                        
-                        </div>
-                      </div>  
-                      <div class="col-xl-4 col-lg-6 col-md-12">
-                        <div class="form-group">
-                          <label for="last_name">Last Name<span style="color:red">*</span></label>
-                          <input type="text" name="last_name" class="form-control" value="{{ old('last_name') }}" placeholder="Enter Your Last Name">
-                          @error('last_name')
-                          <span class="velidation">{{ $message }}</span>
-                          @enderror 
-                          <strong class="error" id="last_name-error"></strong>
-                        </div>                          
-                      </div>
-                      <div class="col-lg-6 col-md-12">
-                        <div class="form-group">
-                          <label for="email">Official Email Id<span style="color:red">*</span></label>
-                          <input type="text" name="email" class="form-control" value="{{ old('email') }}" placeholder="Enter Your Email">
-                          @error('email')
-                          <span class="velidation">{{ $message }}</span>
-                          @enderror 
-                          <strong class="error" id="email-error"></strong>
-                        </div>
-                      </div>
-                      <div class="col-lg-6 col-md-12">
-                        <div class="form-group">
-                          <label for="phone">Phone Number<span style="color:red">*</span></label>
-                          <input type="text" name="phone" class="form-control" value="{{ old('phone') }}" placeholder="Enter Your Number">
-                          @error('phone')
-                          <span class="velidation">{{ $message }}</span>
-                          @enderror 
-                          <strong class="error" id="phone-error"></strong>
-                        </div>
-                      </div>
-                    </div> 
-                  </div>
-                </div>  
-                <div class="row">
-                  <div class="col-xl-12 mt-3"><h2>Personal</h2></div>
-                  <div class="col-xl-3 col-lg-6 col-md-12">
-                    <div class="form-group">
-                      <label for="dob">Date Of Birth<span style="color:red">*</span></label>
-                      <input type="date" name="dob" class="form-control" value="{{ old('dob') }}" placeholder="DOB">
-                      @error('dob')
-                      <span class="velidation">{{ $message }}</span>
-                      @enderror 
-                      <strong class="error" id="dob-error"></strong>
-                    </div>
-                  </div> 
-                  <div class="col-xl-3 col-lg-6 col-md-12">
-                    <div class="form-group">
-                      <label>Select Blood Group<span style="color:red">*</span></label>
-                  
-                        <select class="form-control" name="blood_group" id="blood_group">
-                            <option value="{{ old('blood_group') }}">Select Group {{old('blood_group') }}</option>
-                            <option value="A+">A+</option>
-                            <option value="A-">A-</option>
-                            <option value="B+">B+</option>
-                            <option value="B-">B-</option>
-                            <option value="O+">O+</option>
-                            <option value="O-">O-</option>
-                            <option value="AB+">AB+</option>
-                            <option value="AB-">AB-</option>
-                        </select>
-                        @error('blood_group')
-                        <span class="velidation">{{ $message }}</span>
-                        @enderror 
-                        <strong class="error" id="blood_group-error"></strong>
-                    </div>                          
-                  </div> 
-                  <div class="col-xl-3 col-lg-6 col-md-12">
-                    <div class="form-group">
-                      <label>Select Gender<span style="color:red">*</span></label>
-                    
-                        {{-- <div class="selectBox__value">Select Gender</div> --}}
-                      
-                          <select class="form-control" name="gender" id="gender">
-                            <option value="{{ old('gender') }}">Select Gender {{ old('gender') }}</option>
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
-                          </select>
-                          @error('gender')
-                          <span class="velidation">{{ $message }}</span>
-                          @enderror 
-                          <strong class="error" id="gender-error"></strong>
-                    </div>
-                  </div>  
-                  
-                  <div class="col-xl-3 col-lg-6 col-md-12">
-                    <div class="form-group">
-                      <label>Marital Status<span style="color:red">*</span></label>
-                  
-                        <select class="form-control" name="marital_status" id="marital_status">
-                          <option value="{{ old('marital_status') }}">Select Status {{ old('marital_status') }}</option>
-                          <option value="Married">Married</option>
-                          <option value="Single">Single</option>
-                        </select>
-                        @error('marital_status')
-                        <span class="velidation">{{ $message }}</span>
-                        @enderror 
-                        <strong class="error" id="marital_status-error"></strong>
-                    </div>
-                  </div>
-                  <div class="col-xl-6 col-lg-6 col-md-12">
-                    <div class="form-group">
-                      <label for="current_address">Current Address<span style="color:red">*</span></label>
-                      <textarea rows="3" name="current_address" placeholder="Address" class="form-control">{{ old('current_address') }}</textarea>
-                      @error('current_address')
-                      <span class="velidation">{{ $message }}</span>
-                      @enderror 
-                      <strong class="error" id="current_address-error"></strong>
-                    </div>
-                  </div>
-                  <div class="col-xl-6 col-lg-6 col-md-12">
-                    <div class="form-group">
-                      <label for="permanent_address">Permanent Address<span style="color:red">*</span></label>
-                      <textarea rows="3" name="permanent_address" placeholder="Address" class="form-control">{{ old('permanent_address') }}</textarea>
-                      @error('current_address')
-                      <span class="velidation">{{ $message }}</span>
-                      @enderror 
-                      <strong class="error" id="permanent_address-error"></strong>
-                    </div>
-                  </div>
-                  <div class="col-xl-12 mt-3"><h2>Emergency Contact<span style="color:red">*</span></h2></div>                        
-                  <div class="col-xl-4 col-lg-6 col-md-12">
-                    <div class="form-group">
-                      <label for="emg_name">Name<span style="color:red">*</span></label>
-                      <input type="text" name="emg_name" class="form-control" value="{{ old('emg_name') }}" placeholder="Enter Name">
-                      @error('emg_name')
-                      <span class="velidation">{{ $message }}</span>
-                      @enderror 
-                      <strong class="error" id="emg_name-error"></strong>
-                    </div>
-                  </div>
-                  <div class="col-xl-4 col-lg-6 col-md-12">
-                    <div class="form-group">
-                      <label for="emg_relationship">Relationship<span style="color:red">*</span></label>
-                      <input type="text" name="emg_relationship" class="form-control" value="{{ old('emg_relationship') }}" placeholder="Enter Relation">
-                      @error('emg_relationship')
-                      <span class="velidation">{{ $message }}</span>
-                      @enderror 
-                      <strong class="error" id="emg_relationship-error"></strong>
-                    </div>
-                  </div>
-                  <div class="col-xl-4 col-lg-6 col-md-12">
-                    <div class="form-group">
-                      <label for="emg_phone">Phone Number<span style="color:red">*</span></label>
-                      <input type="text" name="emg_phone" class="form-control" value="{{ old('emg_phone') }}" placeholder="Number">
-                      @error('emg_phone')
-                      <span class="velidation">{{ $message }}</span>
-                      @enderror 
-                      <strong class="error" id="emg_phone-error"></strong>
-                    </div>
-                  </div>
-                  <div class="col-xl-6 col-lg-6 col-md-12">
-                    <div class="form-group">
-                      <label for="emg_address">Address<span style="color:red">*</span></label>
-                      <textarea rows="3" name="emg_address" class="form-control" value="{{ old('emg_address') }}" placeholder="Enter Address" ></textarea>
-                      @error('emg_address')
-                      <span class="velidation">{{ $message }}</span>
-                      @enderror 
-                      <strong class="error" id="emg_address-error"></strong>
-                    </div>
-                  </div>
-                </div>                   
-                    <div class="add-btn-part">
-                      {{-- <button type="button" class="btn-secondary-cust">Back</button> --}}
-                      <button type="submit" name="basic" class="btn-primary-cust">Next</button>
-                    </div>                                 
-                  </form>      
-            </div>
-          </div>
-        </div>
-        @else
-        <div @if($basic->gender) class="tab-pane" @else class="nav-pane active" @endif id="tabs-1" role="tabpanel">
+       @if($quali)
+        <div class="tab-pane {{ session('tabs-1_active') ? 'active': '' }}"  id="tabs-1" role="tabpanel">
+          @else
+          <div class="tab-pane active"  id="tabs-1" role="tabpanel">
+            @endif
           {{-- <div id="tabs-1"  class="tab-pane {{ !session('tabs-6_active') ? 'active': '' }} "> --}}
           <div class="eml-persnal ">
             <div class="add-emply-details">
@@ -297,7 +94,7 @@
                   <div class="col-lg-3">
                     <div class="profile-add-img">
                       <div class="circle">
-                        <img class="profile-pic" id="profile-pic" name="profile" @if ($basic->profile!== Null) value="/image/{{ old('profile', $basic->profile) }}" src="/image/{{ $basic->profile }}" @else src="{{ asset('assets') }}/admin/images/user-img.png" @endif required>
+                        <img class="profile-pic" id="profile-pic" name="profile" @if ($basic->profile!== Null) value="/image/{{ old('profile', $basic->profile) }}" src="/image/{{ $basic->profile }}" @else src="{{ asset('assets') }}/admin/images/user-img.png" @endif >
                        </div>
                        <div class="p-image ml-auto">
                          <span class="upload-button" id="upload-button"><img src="{{ asset('assets') }}/admin/images/edit-icon.png"></span>
@@ -311,7 +108,7 @@
                       <div class="col-xl-4 col-lg-6 col-md-12">
                         <div class="form-group">
                           <label for="first_name">First Name<span style="color:red">*</span></label>
-                          <input type="text" name="first_name" @if ($basic) value="{{ old('first_name', $basic->first_name) }}" @endif class="form-control" placeholder="Enter Your First Name">
+                          <input type="text" name="first_name" @if ($basic) value="{{ old('first_name', $basic->first_name) }}" @endif class="form-control" placeholder="Enter Your First Name" readonly>
                           @error('first_name')
                           <span class="velidation">{{ $message }}</span>
                           @enderror 
@@ -321,27 +118,27 @@
                       <div class="col-xl-4 col-lg-6 col-md-12">
                         <div class="form-group">
                           <label for="middle_name">Middle Name</label>
-                          <input type="text" name="middle_name"  @if ($basic) value="{{ old('middle_name', $basic->middle_name) }}" @endif  class="form-control" placeholder="Enter Your Middle Name">
+                          <input type="text" name="middle_name"  @if ($basic) value="{{ old('middle_name', $basic->middle_name) }}" @endif  class="form-control" placeholder="Enter Your Middle Name" readonly>
                         </div>
                       </div>  
                       <div class="col-xl-4 col-lg-6 col-md-12">
                         <div class="form-group">
                           <label for="last_name">Last Name<span style="color:red">*</span></label>
-                          <input type="text" name="last_name" @if ($basic) value="{{ old('last_name', $basic->last_name) }}" @endif  class="form-control" placeholder="Enter Your Last Name">
+                          <input type="text" name="last_name" @if ($basic) value="{{ old('last_name', $basic->last_name) }}" @endif  class="form-control" placeholder="Enter Your Last Name" readonly>
                           <strong class="error" id="last_name-error"></strong>
                         </div>                          
                       </div>
                       <div class="col-lg-6 col-md-12">
                         <div class="form-group">
                           <label for="email">Official Email Id<span style="color:red">*</span></label>
-                          <input type="text" name="email" @if ($basic) value="{{ old('email', $basic->email) }}" @endif class="form-control" placeholder="Enter Your Email">
+                          <input type="text" name="email" @if ($basic) value="{{ old('email', $basic->email) }}" @endif class="form-control" placeholder="Enter Your Email" readonly>
                           <strong class="error" id="email-error"></strong>
                         </div>
                       </div>
                       <div class="col-lg-6 col-md-12">
                         <div class="form-group">
                           <label for="phone">Phone Number<span style="color:red">*</span></label>
-                          <input type="text" name="phone" @if ($basic) value="{{ old('phone', $basic->phone) }}" @endif class="form-control" placeholder="Enter Your Number">
+                          <input type="text" name="phone" @if ($basic) value="{{ old('phone', $basic->phone) }}" @endif class="form-control" placeholder="Enter Your Number" readonly>
                           <strong class="error" id="phone-error"></strong>
                         </div>
                       </div>
@@ -362,7 +159,11 @@
                       <label>Select Blood Group<span style="color:red">*</span></label>
                   
                         <select class="form-control" name="blood_group" id="blood_group" @if ($basic) value="{{ old('blood_group', $basic->blood_group) }}" @endif >
-                            <option @if ($basic) value="{{ old('blood_group', $basic->blood_group) }}" @endif>@if ($basic) {{ old('dob', $basic->blood_group) }} @endif</option>
+                          @if ($basic->blood_group) 
+                          <option value="{{ old('blood_group', $basic->blood_group) }}" >{{ old('dob', $basic->blood_group) }}</option>
+                          @else
+                          <option value="">Select Blood Group</option>
+                          @endif
                             <option value="A+">A+</option>
                             <option value="A-">A-</option>
                             <option value="B+">B+</option>
@@ -382,7 +183,11 @@
                         {{-- <div class="selectBox__value">Select Gender</div> --}}
                       
                           <select class="form-control" name="gender" @if ($basic) value="{{ old('gender', $basic->gender) }}" @endif  id="gender">
-                            <option @if ($basic) value="{{ old('gender', $basic->gender) }}" @endif>@if ($basic) {{ old('gender', $basic->gender) }} @endif</option>
+                            @if ($basic->gender)
+                            <option  value="{{ old('gender', $basic->gender) }}" >{{ old('gender', $basic->gender) }}</option>
+                            @else
+                            <option value="">Select Gender</option>
+                            @endif
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
                           </select>
@@ -396,7 +201,11 @@
                       <label>Marital Status<span style="color:red">*</span></label>
                   
                         <select class="form-control" name="marital_status" @if ($basic) value="{{ old('marital_status', $basic->marital_status) }}" @endif id="marital_status">
-                          <option @if ($basic) value="{{ old('marital_status', $basic->marital_status) }}" @endif>@if ($basic) {{ old('marital_status', $basic->marital_status) }} @endif</option>
+                          @if ($basic->marital_status)
+                          <option value="{{ old('marital_status', $basic->marital_status) }}" >{{ old('marital_status', $basic->marital_status) }}</option>
+                          @else
+                          <option value="">Select Marital Status</option>
+                          @endif
                           <option value="Married">Married</option>
                           <option value="Single">Single</option>
                         </select>
@@ -406,21 +215,21 @@
                   <div class="col-xl-6 col-lg-6 col-md-12">
                     <div class="form-group">
                       <label for="current_address">Current Address<span style="color:red">*</span></label>
-                      <textarea rows="3" name="current_address" placeholder="Address" class="form-control" @if ($basic) value="{{ old('current_address', $basic->current_address) }}" @endif >@if ($basic) {{old('current_address',$basic->current_address)}} @endif</textarea>
+                      <textarea rows="3" name="current_address" placeholder="Address" class="form-control" @if ($basic->current_address) value="{{ old('current_address', $basic->current_address) }}" @endif >@if ($basic->current_address) {{old('current_address',$basic->current_address)}} @endif</textarea>
                       <strong class="error" id="current_address-error"></strong>
                     </div>
                   </div>
                   <div class="col-xl-6 col-lg-6 col-md-12">
                     <div class="form-group">
                       <label for="permanent_address">Permanent Address<span style="color:red">*</span></label>
-                      <textarea rows="3" name="permanent_address" placeholder="Address" class="form-control" @if ($basic) value="{{ old('permanent_address', $basic->permanent_address) }}" @endif >@if ($basic) {{old('permanent_address',$basic->permanent_address)}} @endif</textarea>
+                      <textarea rows="3" name="permanent_address" placeholder="Enter Permanent Address" class="form-control" @if ($basic) value="{{ old('permanent_address', $basic->permanent_address) }}" @endif >@if ($basic->permanent_address) {{old('permanent_address',$basic->permanent_address)}} @endif</textarea>
                       <strong class="error" id="permanent_address-error"></strong>
                     </div>
                   </div>
-                  <div class="col-xl-12 mt-3"><h2>Emergency Contact<span style="color:red">*</span></h2></div>                        
+                  <div class="col-xl-12 mt-3"><h2>Emergency Contact</h2></div>                        
                   <div class="col-xl-4 col-lg-6 col-md-12">
                     <div class="form-group">
-                      <label for="emg_name">Name</label>
+                      <label for="emg_name">Name<span style="color:red">*</span></label>
                       <input type="text" name="emg_name" @if ($basic) value="{{ old('emg_name', $basic->emg_name) }}" @endif class="form-control" placeholder="Enter Name" >
                       <strong class="error" id="emg_name-error"></strong>
                     </div>
@@ -442,7 +251,7 @@
                   <div class="col-xl-6 col-lg-6 col-md-12">
                     <div class="form-group">
                       <label for="emg_address">Address<span style="color:red">*</span></label>
-                      <textarea rows="3" name="emg_address" class="form-control" @if ($basic) value="{{ old('emg_address', $basic->emg_address) }}" @endif>@if ($basic) {{old('emg_address',$basic->emg_address)}} @endif</textarea>
+                      <textarea rows="3" name="emg_address" class="form-control" @if ($basic) value="{{ old('emg_address', $basic->emg_address) }}" @endif placeholder="Enter Address">@if ($basic->emg_address) {{old('emg_address',$basic->emg_address)}} @endif</textarea>
                       <strong class="error" id="emg_address-error"></strong>
                     </div>
                   </div>
@@ -456,13 +265,18 @@
             </div>
           </div>
         </div>
-        @endif
+     
      
         <div   class="tab-pane {{ session('tabs-2_active') ? 'active': '' }}" id="tabs-2" role="tabpanel">
           <div class="eml-persnal ">
             <div class="add-emply-details">                
               <div class="row">
                 <div class="col-lg-12">
+                  @if (session()->has('msg'))
+                  <div class="alert alert-danger">
+                      {{ session()->get('msg') }}
+                  </div>
+                    @endif
                    <form method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
@@ -480,7 +294,7 @@
                                 <tr>
                                   <th>Type</th>
                                   <th>Id</th>
-                                  <th>Verification</th>
+                                  {{-- <th>Verification</th> --}}
                                   {{-- <th>Actions</th> --}}
                                 </tr>
                               </thead>
@@ -489,7 +303,7 @@
                                   <tr>
                                     <td>{{ $ident['id_type']}}</td>
                                     <td>{{ $ident['id_number']}}</td>
-                                    <td><span class="verified-clr"><i class="fa fa-check"></i> Verified</span></td>
+                                    {{-- <td><span class="verified-clr"><i class="fa fa-check"></i> Verified</span></td> --}}
                                     {{-- <td>
                                       <span class="d-flex tbl-iconBx">
                                         <a href="#" target="_black" class="docu-down" data-toggle="modal" data-target="#exampleModaldocument"><img src="assets/admin/images/document.png"></a>
@@ -511,8 +325,8 @@
                       <div class="col-md-12">
                         <div class="form-group">
                           <div class="add-btn-part">
-                            {{-- <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button> --}}
-                            {{-- <button type="button" class="btn-primary-cust" data-dismiss="modal">Save</button> --}}
+                            {{-- <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>  --}}
+                             <button type="submit" name="submit" class="btn-primary-cust">Save</button>
                           </div>
                         </div>
                       </div>
@@ -548,7 +362,7 @@
                                   <th>Subject</th>
                                   <th>From</th>
                                   <th>To</th>
-                                  <th>Verification</th>
+                                  {{-- <th>Verification</th> --}}
                                   {{-- <th>Action</th> --}}
                                 </tr>
                               </thead>
@@ -560,7 +374,7 @@
                                   <td>{{ $quaf['subject']}}</td>
                                   <td>{{ $quaf['duration_from']}}</td>  
                                   <td>{{ $quaf['duration_to']}}</td>  
-                                  <td><span class="verified-clr"><i class="fa fa-check"></i> {{ $quaf['verification_type']}}</span></td>
+                                  {{-- <td><span class="verified-clr"><i class="fa fa-check"></i> {{ $quaf['verification_type']}}</span></td> --}}
                                   {{-- <td>
                                     <a href="#" target="_black" class="docu-down" data-toggle="modal" data-target="#qualificationdocument"><img src="assets/admin/images/document.png"></a>
                                     <a href="assets/admin/images/job-offer-letter.png" target="_black" class="docu-download"><img src="assets/admin/images/download-icon.png"></a>
@@ -622,7 +436,7 @@
                                   {{-- <th>Offer Letter</th> --}}
                                   {{-- <th>Experience</th> --}}
                                   {{-- <th>Salary Slips</th> --}}
-                                  <th>Verification</th>
+                                  {{-- <th>Verification</th> --}}
                                   {{-- <th>Action</th> --}}
                                 </tr>
                               </thead>
@@ -636,7 +450,7 @@
                                   {{-- <td><a href="#" target="_black" class="docu-down" data-toggle="modal" data-target="#qualificationdocument"><img src="assets/admin/images/document.png"></a></td> --}}
                                   {{-- <td><a href="#" target="_black" class="docu-down" data-toggle="modal" data-target="#qualificationdocument"><img src="assets/admin/images/document.png"></a></td> --}}
                                   {{-- <td><a href="assets/admin/images/sample-pdf.pdf" target="_black" class="docu-download"><img src="assets/admin/images/pdf-icon.png"></a></td> --}}
-                                  <td><span class="verified-clr"><i class="fa fa-check"></i> {{ $work['verification_type']}}</span></td>
+                                  {{-- <td><span class="verified-clr"><i class="fa fa-check"></i> {{ $work['verification_type']}}</span></td> --}}
                                   {{-- <td><button type="button" class="border-none" data-toggle="modal" data-target="#workHistoryedit"><img src="assets/admin/images/edit-icon.png"></button></td> --}}
                                 </tr>
                               </tbody>
@@ -815,8 +629,8 @@
                     <div class="col-md-12">
                       <div class="form-group">
                         <div class="add-btn-part">
-                          {{-- <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button> --}}
-                          {{-- <button type="button" class="btn-primary-cust" data-dismiss="modal">Save</button> --}}
+                          {{-- <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button> 
+                          <button type="submit" name="submit" class="btn-primary-cust">Save</button>  --}}
                         </div>
                       </div>
                     </div>
@@ -1174,13 +988,13 @@
        
 
             <div class="form-group">
-              <label>Attech File</label>
+              <label>Attech File<span style="color:red">*</span></label>
               <div class="upload-img-file">
                   <input type="file" id="document" name="document" class="form-control">
                   <strong class="error" id="document-error"></strong>
               </div>
           </div>
-            <div class="form-group">
+            {{-- <div class="form-group">
               <div class="row">
                 <div class="col-md-12">
                   <label>Verification<span style="color:red">*</span></label>
@@ -1193,7 +1007,7 @@
                 </div>
                 <strong class="error" id="verification_type-error"></strong>
               </div>
-            </div>
+            </div> --}}
        
         </div>
       </div>
@@ -1242,7 +1056,7 @@
             <div class="form-group">
               <div class="row">
                 <div class="col-md-12">
-                  <label>Upload Document</label>
+                  <label>Upload Document<span style="color:red">*</span></label>
                   <div class="upload-img-file">
                     <div class="circle">
                       <img class="profile-pic" id="profile-pic2" src="{{ asset('assets') }}/admin/images/pan-card.png">
@@ -1257,7 +1071,7 @@
               </div>
             </div>
 
-            <div class="form-group">
+            {{-- <div class="form-group">
               <div class="row">
                 <div class="col-md-12">
                   <label>Verification</label>
@@ -1271,7 +1085,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> --}}
           </form>
         </div>
       </div>
@@ -1350,14 +1164,14 @@
               </div>
             </div>
             <div class="form-group">
-              <label>Attech File</label>
+              <label>Attech File<span style="color:red">*</span></label>
               <div class="upload-img-file">
                   <input type="file" id="document" name="document" class="form-control">
                   <strong class="error" id="document-error"></strong>
               </div>
           </div>
 
-            <div class="form-group">
+            {{-- <div class="form-group">
               <div class="row">
                 <div class="col-md-12">
                   <label>Verification<span style="color:red">*</span></label>
@@ -1366,14 +1180,14 @@
                     <option value="Verified">Verified</option>
                     <option value="Not Verified">Not Verified</option>
                   </select>
-                  <strong class="error" id="verification_type-error"></strong>
+                  <strong class="error" id="verification_type-error"></strong> --}}
                   {{-- @error('verification_type')
                   <span class="velidation">{{ $message }}</span>
                   @enderror  --}}
-                </div> 
+                {{-- </div> 
               </div>
               
-            </div>
+            </div> --}}
         
         </div>
       </div>
@@ -1434,7 +1248,7 @@
             <div class="form-group">
               <div class="row">
                 <div class="col-md-12">
-                  <label>Upload Document</label>
+                  <label>Upload Document<span style="color:red">*</span></label>
                   <div class="upload-img-file">
                     <div class="circle">
                       <img class="profile-pic" id="profile-pic4" src="{{ asset('assets') }}/admin/images/file-icon-img.png">
@@ -1448,7 +1262,7 @@
                 </div>
               </div>
             </div>
-            <div class="form-group">
+            {{-- <div class="form-group">
               <div class="row">
                 <div class="col-md-12">
                   <label>Verification</label>
@@ -1462,7 +1276,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> --}}
           </form>
         </div>
       </div>
@@ -1613,7 +1427,7 @@
 
     
             <div class="form-group">
-              <label>Offer Letter</label>
+              <label>Offer Letter<span style="color:red">*</span></label>
               <div class="upload-img-file">
                   <input type="file" id="offer_letter" name="offer_letter" class="form-control"/>
                   <strong class="error" id="offer_letter-error"></strong>
@@ -1621,7 +1435,7 @@
           </div>
 
             <div class="form-group">
-              <label>Experience Letter</label>
+              <label>Experience Letter<span style="color:red">*</span></label>
               <div class="upload-img-file">
                   <input type="file" id="exp_letter" name="exp_letter" class="form-control"/>
                   <strong class="error" id="exp_letter-error"></strong>
@@ -1629,14 +1443,14 @@
           </div>
            
             <div class="form-group">
-              <label>Salary Slips</label>
+              <label>Salary Slips<span style="color:red">*</span></label>
               <div class="upload-img-file">
                   <input type="file" id="salary_slip" name="salary_slip" class="form-control"/>
                   <strong class="error" id="salary_slip-error"></strong>
               </div>
           </div>
 
-            <div class="form-group">
+            {{-- <div class="form-group">
               <div class="row">
                 <div class="col-md-12">
                   <label>Verification<span style="color:red">*</span></label>
@@ -1644,14 +1458,14 @@
                     <option value="">Verification Type</option>
                     <option value="Verified">Verified</option>
                     <option value="Not Verified">Not Verified</option>
-                  </select>
+                  </select> --}}
                   {{-- @error('verification_type')
                     <span class="velidation">{{ $message }}</span>
                   @enderror  --}}
-                  <strong class="error" id="verification_type-error"></strong>
+                  {{-- <strong class="error" id="verification_type-error"></strong>
                 </div>
               </div>
-            </div>
+            </div> --}}
         </div>
       </div>
       <div class="modal-footer">
@@ -1847,7 +1661,7 @@
             subject: "required",
             duration_from: "required",
             duration_to: "required",
-            verification_type: "required",
+            // verification_type: "required",
             document: "required",
           },
 
@@ -1855,9 +1669,9 @@
             inst_name: "Institute name is required",
             degree: "Degree is required",
             subject: "Subject is required",
-            duration_from: "Duration Date is required",
+            duration_from: "Duration date is required",
             duration_to: "Duration to is required",
-            verification_type: "Verification Type is required",
+            // verification_type: "Verification Type is required",
             document: "Document is required",
           }
        });
@@ -1882,69 +1696,19 @@
 
           messages: {
             first_name: "First name is required",
-            last_name: "Last Name is required",
+            last_name: "Last name is required",
             email: "Email is required",
-            blood_group: "Blood Group is required",
+            blood_group: "Blood group is required",
             gender: "Gender to is required",
-            dob: "Date of Birth is required",
-            phone: "Phone Number is required",
-            emg_phone: "Emergency Phone Number is required",
-            permanent_address: "Permanent Address is required",
-            current_address: "Current Address is required",
-            marital_status: "Marital Status is required",
-            emg_name: "Emergency Name is required",
-            emg_relationship: "Emergency Relationship is required",
-            emg_address: "Emergency Address is required",
-          }
-       });
-
-       $("#add_official").validate({
-          rules: {
-            doj: "required",
-            prob_period: "required",
-            emp_type: "required",
-            work_location: "required",
-            emp_status: "required",
-            salary: "required",
-            lpa: "required",
-            app_from: "required",
-            app_to: "required",
-            pro_to: "required",
-            last_app_desig: "required",
-            current_pro_desig: "required",
-            pro_date: "required",
-            pro_from:"required",
-            mang_name: "required",
-            mang_type: "required",
-            mang_dept: "required",
-            mang_desig: "required",
-            current_app_desig: "required",
-            app_date:"required",
-            last_pro_desig: "required",
-          },
-
-          messages: {
-            doj: "Date of Joining is required",
-            prob_period: "Probation Period is required",
-            emp_type: "Employee Type is required",
-            work_location: "Work Location is required",
-            emp_status: "Employee Status to is required",
-            salary: "Salary is required",
-            lpa: "LPA is required",
-            app_from: "Appraisal From is required",
-            app_to: "Appraisal To is required",
-            pro_to: "Promotion To is required",
-            pro_from:"Promotion From is required",
-            last_app_desig: "Last Appraisal is required",
-            last_pro_desig: "Last Promotion Designation is required",
-            current_pro_desig: "Current Promotion Designation is required",
-            pro_date: "Promotion Date is required",
-            mang_name: "Manager Name is required",
-            mang_type: "Manager Type is required",
-            mang_dept: "Manager Department is required",
-            mang_desig: "Manager Designation is required",
-            current_app_desig: "Current Apprasial is required",
-            app_date: "Apprasial Date is required",
+            dob: "Date of birth is required",
+            phone: "Phone number is required",
+            emg_phone: "Emergency phone number is required",
+            permanent_address: "Permanent address is required",
+            current_address: "Current address is required",
+            marital_status: "Marital status is required",
+            emg_name: "Emergency name is required",
+            emg_relationship: "Emergency relationship is required",
+            emg_address: "Emergency address is required",
           }
        });
 
@@ -1955,7 +1719,7 @@
             work_duration_to: "required",
             work_duration_from: "required",
             offer_letter: "required",
-            verification_type: "required",
+            // verification_type: "required",
             exp_letter: "required",
             salary_slip: "required",
           },
@@ -1963,12 +1727,12 @@
           messages: {
             com_name: "Company name is required",
             designation: "Designation is required",
-            work_duration_to: "Work Duration is required",
-            work_duration_from: "Work Duration From is required",
-            offer_letter: "Offer Letter to is required",
-            verification_type: "Verification Type is required",
-            exp_letter: "Experience Letter is required",
-            salary_slip: "Salary Slip is required",
+            work_duration_to: "Work duration is required",
+            work_duration_from: "Work duration From is required",
+            offer_letter: "Offer letter to is required",
+            // verification_type: "Verification Type is required",
+            exp_letter: "Experience letter is required",
+            salary_slip: "Salary slip is required",
           }
        });
 
@@ -1977,14 +1741,14 @@
             id_type: "required",
             id_number: "required",
             document: "required",
-            verification_type: "required",
+            // verification_type: "required",
           },
         
           messages: {
-            id_type: "ID Type is required",
-            id_number: "ID Number is required",
-            document: "Work Documentation is required",
-            verification_type: "Verification Type is required",
+            id_type: "Id type is required",
+            id_number: "Id number is required",
+            document: "Work documentation is required",
+            // verification_type: "Verification Type is required",
             
           }
        });
@@ -1998,7 +1762,7 @@
          
           messages: {
             skill: "Skill is required",
-            lang: "Known Language is required",
+            lang: "Known language is required",
            
           }
        });

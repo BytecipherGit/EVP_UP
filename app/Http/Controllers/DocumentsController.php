@@ -89,7 +89,8 @@ class DocumentsController extends Controller
                     ];
                     Documents::create($insertpancardRecords);
                 }
-                return redirect()->back()->with('message', 'Thank you for uploading verification documents. Once verfified then you will be able to use this portal.');
+                return redirect('status')->with('message', 'Thank you for uploading verification documents. Once verfified then you will be able to use this portal.');
+                // return redirect()->back()->with('message', 'Thank you for uploading verification documents. Once verfified then you will be able to use this portal.');
             } else {
                 return redirect('admin');
             }

@@ -7,9 +7,15 @@
 
       <div class="main-heading">        
         <div class="row">
-          <div class="col-md-12">
-            <h1>Exit Emplpyee</h1>
-            <p>Here’s your report overview by today</p>
+          <div class="col-md-8">
+            <h1>Exit Employee</h1>
+            <p></p>
+          </div>
+          <div class="col-md-4">
+            <div class="main-right-button-box">
+              {{-- <a href="add-employee"><img src="assets/admin/images/button-plus.png">Add New</a>  --}}
+                  <a href="/employee"><img src="{{ asset('assets') }}/admin/images/back-icon.png"> Back</a>
+            </div>
           </div>
         </div>
       </div><!--- Main Heading ----->
@@ -27,7 +33,7 @@
                       {{-- <img src="{{ asset('assets') }}/admin/images/vijay-patil.png"> --}}
                       <img  @if ($exitemp->profile!== Null) value="/image/{{ old('profile', $exitemp->profile) }}" src="/image/{{ $exitemp->profile }}" @else src="{{ asset('assets') }}/admin/images/user-img.png" @endif >                  
                       <h1>{{$exitemp->first_name}} {{ $exitemp->last_name}}</h1>
-                      <p>Code - #BCS108</p>
+                      <p>Code - #00{{ $exitemp->id}}</p>
                       <p>Date of joining - {{ $exitemp->doj}}</p>
                     </div>
                   </div>
@@ -39,7 +45,7 @@
                       <div class="row">
                         <div class="col-xl-12 col-lg-6 col-md-12">
                           <div class="form-group">
-                            <label>Date of Exit</label>
+                            <label>Date of Exit<span style="color:red">*</span></label>
                             <input type="date" name="do_exit" class="form-control" placeholder="Date" required>
                           </div>
                         </div>  
@@ -51,8 +57,8 @@
                         </div>
                         <div class="col-lg-6 col-md-12">
                           <div class="form-group">
-                            <label>Reason for leaving</label>
-                            <textarea rows="3" name="reason" class="form-control" placeholder="Reason"></textarea>
+                            <label>Reason for leaving<span style="color:red">*</span></label>
+                            <textarea rows="3" name="reason" class="form-control" required placeholder="Reason"></textarea>
                           </div>
                         </div>
                         <div class="col-lg-12 col-md-12">

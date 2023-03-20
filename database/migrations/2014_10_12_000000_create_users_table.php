@@ -27,6 +27,13 @@ return new class extends Migration
             $table->string('city');
             $table->integer('pin');  
             $table->string('role');
+            $table->string('brand_name')->nullable();
+            $table->string('domain_name')->nullable();
+            $table->string('industry')->nullable();
+            $table->string('phone_number')->nullable();
+            $table->string('company_logo')->nullable();
+            $table->longText('description')->nullable();
+            $table->string('cor_office_address')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

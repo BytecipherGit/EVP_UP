@@ -19,15 +19,18 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $allemployee = Employee::count();
-        $current = Employee::where('status', 1)->count();
-        $empinvite = Employee::where('status',2)->count();
+        $allemployee = Employee::where('company_id',Auth::id())->count();
+        $current = Employee::where('status', 1)->where('company_id',Auth::id())->count();
+        $empinvite = Employee::where('status',2)->where('company_id',Auth::id())->count();
         return view('company/index',compact('current','empinvite','allemployee'));
     }
 
+    public function getPasswordReset()
+    {
+        return view('company/change-password');
+    }
+
       
-
-
     // public function logout(Request $request) {	  	  	
     //     Auth::logout();
     //     Session::flush();	  
@@ -45,8 +48,6 @@ class AdminController extends Controller
         if(!Hash::check($request->old_password, auth()->user()->password)){
             return back()->with("error", "Old Password Doesn't match!");
         }
-
-
             #Update the new Password
             User::whereId(auth()->user()->id)->update([
                 'password' => Hash::make($request->new_password)

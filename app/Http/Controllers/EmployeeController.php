@@ -10,6 +10,7 @@ use App\Models\Empofficial;
 use App\Models\Exitemp;
 use App\Models\User;
 use Response;
+use Auth;
 use Illuminate\Http\Request;
 use Redirect;
 use Illuminate\Support\Facades\DB;
@@ -98,6 +99,7 @@ class EmployeeController extends Controller
         $employe = new Employee();
         $employe->first_name=$request->input('first_name');
         $employe->profile=$request->input('profile');
+        $employe->company_id=Auth::id();
         $employe->last_name=$request->input('last_name');
         $employe->middle_name=$request->input('middle_name');
         $employe->email=$request->input('email');
@@ -158,6 +160,7 @@ class EmployeeController extends Controller
                 'last_name'=>$request->input('last_name'),
                 'middle_name'=>$request->input('middle_name'),
                 'email'=>$request->input('email'),
+                'company_id'=>Auth::id(),
                 'profile'=>$filename,
                 'phone'=>$request->input('phone'),
                 'dob'=>$request->input('dob'),
@@ -336,6 +339,7 @@ class EmployeeController extends Controller
                 'skill' => ['required', 'string', 'max:255'],
                 'lang' => ['required', 'string', 'max:255'],
                 ]);
+
                 $identity_id=Employee::where('id',$request->id)->first();
                 $emp_skill = new Empskills();
                 $emp_skill->emp_id=$identity_id->id;
@@ -343,7 +347,7 @@ class EmployeeController extends Controller
                 $emp_skill->skill_type=$request->input('skill_type');
                 $emp_skill->lang=$request->input('lang');
                 $emp_skill->lang_type=$request->input('lang_type');
-              
+                
                 $emp_skill->save();
                 $official = Empofficial::where('emp_id',$request->id)->first();
                 if (empty($official)) {
@@ -634,8 +638,9 @@ class EmployeeController extends Controller
       }
 
       public function getAllEmp(){
-           
-         $allemp=DB::table('emp_basicinfo')->join('emp_officials', 'emp_basicinfo.id', '=', 'emp_officials.emp_id')->select('emp_basicinfo.id','emp_basicinfo.*', 'emp_officials.*')->get();
+         
+         $allemp=DB::table('emp_basicinfo')->join('emp_officials', 'emp_basicinfo.id', '=', 'emp_officials.emp_id')->select('emp_basicinfo.id','emp_basicinfo.*', 'emp_officials.*')->
+         where('emp_basicinfo.company_id',Auth::id())->get();
       
          return view('admin/datatable',compact('allemp'));
       }
@@ -703,6 +708,7 @@ class EmployeeController extends Controller
               [
                 'first_name' => $data['first_name'], 
                 'last_name' => $data['last_name'],
+                'company_id' => Auth::id(),
                 'first_name' => $data['first_name'], 
                 'last_name' => $data['last_name'],
                 'middle_name' => $data['middle_name'], 
@@ -827,12 +833,12 @@ class EmployeeController extends Controller
           'status'  => '0'
         ]);
 
-        return redirect()->back()->with('msg','Employee Exit Successfully');
+        return redirect('employee')->with('message','Employee Exit Successfully');
      }
 
      public function pastEmp(){
       $pastemp=DB::table('exit_employee')->join('emp_basicinfo', 'exit_employee.emp_id', '=', 'emp_basicinfo.id')
-      ->join('emp_officials', 'emp_basicinfo.id', '=', 'emp_officials.emp_id')->select('emp_basicinfo.id','emp_basicinfo.*', 'exit_employee.*','emp_officials.*')->get();
+      ->join('emp_officials', 'emp_basicinfo.id', '=', 'emp_officials.emp_id')->select('emp_basicinfo.id','emp_basicinfo.*', 'exit_employee.*','emp_officials.*')->where('emp_basicinfo.company_id',Auth::id())->get();
       return view('admin/post-employee',compact('pastemp'));
       }
 
@@ -850,9 +856,9 @@ class EmployeeController extends Controller
       }
 
       public function currentEmp(){
-        // $current=Employee::where('status',1)->get();
+  
         $current=DB::table('emp_basicinfo')->join('emp_officials', 'emp_basicinfo.id', '=', 'emp_officials.emp_id')->select('emp_basicinfo.id','emp_basicinfo.*', 'emp_officials.*')
-        ->where('emp_basicinfo.status',1)->get();
+        ->where('emp_basicinfo.status',1)->where('emp_basicinfo.company_id',Auth::id())->get();
         // print_r($current);die();
         return view('admin/current-employee',compact('current'));
       }

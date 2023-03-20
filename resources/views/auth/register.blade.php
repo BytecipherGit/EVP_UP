@@ -3,7 +3,10 @@
 @section('title', 'Registration')
 
 <style>
-  
+   .error {
+      color: red !important;
+      font-weight: 400;
+  }
 </style>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -25,7 +28,7 @@
                             {{ session()->get('message') }}
                         </div>
                     @endif
-                    <form method="POST" action="{{ route('register') }}">
+                    <form method="POST" id="registration" action="{{ route('register') }}">
                         @csrf
 
                         <div class="d-flex close-butn">
@@ -37,34 +40,37 @@
                             <label>Organization Name <strong style="color:red">*</strong></label>
                             <input type="text" id="org_name" name="org_name" class="form-control" value="{{ old('org_name') }}"
                                 placeholder="Enter Organization Name" autofocus autocomplete="org_name" >
-                            @error('org_name')
+                            {{-- @error('org_name')
                                 <p class="velidation">{{ $message }}</p>
-                            @enderror
-
+                            @enderror --}}
+                            <strong class="error" id="org_name-error"></strong>
                         </div>
                         <div class="form-group">
                             <label>Admin Name <strong style="color:red">*</strong> </label>
                             <input type="text" id="name" name="name" class="form-control" value="{{ old('name') }}"
                                 placeholder="Enter Your name" autofocus autocomplete="name" >
-                            @error('name')
+                            {{-- @error('name')
                                 <p class="velidation">{{ $message }}</p>
-                            @enderror
+                            @enderror --}}
+                            <strong class="error" id="name-error"></strong>
                         </div>
                         <div class="form-group">
                             <label>Organization Website <strong style="color:red">*</strong> </label>
                             <input type="text" id="org_web" name="org_web" class="form-control" value="{{ old('org_web') }}"
                                 placeholder="Enter Company Website" autofocus autocomplete="org_web">
-                            @error('org_web')
+                            {{-- @error('org_web')
                                 <p class="velidation">{{ $message }}</p>
-                            @enderror
+                            @enderror --}}
+                            <strong class="error" id="org_web-error"></strong>
                         </div>
                         <div class="form-group">
                             <label>Organization Admin Email <strong style="color:red">*</strong> </label>
                             <input type="text" id="email" name="email" class="form-control" value="{{ old('email') }}"
                                 placeholder="Enter Your Email" autofocus autocomplete="email">
-                            @error('email')
+                            {{-- @error('email')
                                 <p class="velidation">{{ $message }}</p>
-                            @enderror
+                            @enderror --}}
+                            <strong class="error" id="email-error"></strong>
                         </div>
 
                         <div class="row">
@@ -73,9 +79,10 @@
                                     <label>Password <strong style="color:red">*</strong></label>
                                     <input type="password" id="password" name="password" class="form-control"
                                      placeholder="Enter Your Password" autocomplete="new-password" />
-                                    @error('password')
+                                    {{-- @error('password')
                                         <p class="velidation">{{ $message }}</p>
-                                    @enderror
+                                    @enderror --}}
+                                    <strong class="error" id="password-error"></strong>
                                 </div>
 
                             </div>
@@ -85,9 +92,10 @@
                                     <input type="password" name="password_confirmation" class="form-control"
                                         value="{{ old('password_confirmation') }}"
                                         placeholder="Enter Your Confirm Password" autocomplete="new-password" >
-                                    @error('password')
+                                    {{-- @error('password')
                                         <p class="velidation">{{ $message }}</p>
-                                    @enderror
+                                    @enderror --}}
+                                    <strong class="error" id="password_confirmation-error"></strong>
                                 </div>
                             </div>
                         </div>
@@ -98,9 +106,10 @@
                                     <label>Admin Designation <strong style="color:red">*</strong> </label>
                                     <input type="text" id="designation" name="designation" class="form-control"
                                         value="{{ old('designation') }}" placeholder="Designation" autofocus autocomplete="designation">
-                                    @error('designation')
+                                    {{-- @error('designation')
                                         <p class="velidation">{{ $message }}</p>
-                                    @enderror
+                                    @enderror --}}
+                                    <strong class="error" id="designation-error"></strong>
                                 </div>
                             </div>
                             <div class="col-xl-6">
@@ -108,9 +117,10 @@
                                     <label>Admin Department* </label>
                                     <input type="text" id="department" name="department" class="form-control"
                                         value="{{ old('department') }}" placeholder="Department" autofocus autocomplete="department">
-                                    @error('department')
+                                    {{-- @error('department')
                                         <p class="velidation">{{ $message }}</p>
-                                    @enderror
+                                    @enderror --}}
+                                    <strong class="error" id="department-error"></strong>
                                 </div>
                             </div>
                         </div>
@@ -119,9 +129,10 @@
                             <label>Registered Address <strong style="color:red">*</strong> </label>
                             <textarea class="form-control" id="address" name="address" value="{{ old('address') }}" placeholder="Enter Your Address"
                                 rows="2" autofocus autocomplete="address" ></textarea>
-                            @error('address')
+                            {{-- @error('address')
                                 <p class="velidation">{{ $message }}</p>
-                            @enderror
+                            @enderror --}}
+                            <strong class="error" id="address-error"></strong>
                         </div>
 
                         <div class="row">
@@ -139,9 +150,10 @@
                                                 </option>
                                             @endforeach
                                         </select>
-                                        @error('country')
+                                        {{-- @error('country')
                                             <p class="velidation">{{ $message }}</p>
-                                        @enderror
+                                        @enderror --}}
+                                        <strong class="error" id="country-error"></strong>
                                     </div>
                                 </div>
                             </div>
@@ -156,9 +168,10 @@
                                                 class="form-control">
                                                 <option value="">Select State</option>
                                             </select>
-                                            @error('state')
+                                            {{-- @error('state')
                                                 <p class="velidation">{{ $message }}</p>
-                                            @enderror
+                                            @enderror --}}
+                                            <strong class="error" id="state-error"></strong>
                                         </div>
                                     </div>
                                 </div>
@@ -176,9 +189,10 @@
                                                 class="form-control">
                                                 <option value="">Select City</option>
                                             </select>
-                                            @error('city')
+                                            {{-- @error('city')
                                                 <p class="velidation">{{ $message }}</p>
-                                            @enderror
+                                            @enderror --}}
+                                            <strong class="error" id="city-error"></strong>
                                         </div>
                                     </div>
                                 </div>
@@ -188,9 +202,10 @@
                                     <label>Pin Code <strong style="color:red">*</strong> </label>
                                     <input type="text" id="pin" name="pin" class="form-control"
                                         value="{{ old('pin') }}" placeholder="Enter Your pin" autofocus autocomplete="pin">
-                                    @error('pin')
+                                    {{-- @error('pin')
                                         <p class="velidation">{{ $message }}</p>
-                                    @enderror
+                                    @enderror --}}
+                                    <strong class="error" id="pin-error"></strong>
                                 </div>
                             </div>
                         </div>
@@ -313,4 +328,43 @@
             });
         });
     </script>
+    <script src="{{ asset('assets') }}/admin/js/jquery.validate.min.js"></script>
+     <script>
+        $(document).ready(function() {
+    
+          $("#registration").validate({
+           rules: {
+            name: "required",
+            email: "required",
+            password: "required",
+            org_name: "required",
+            org_web: "required",
+            designation: "required",
+            department: "required",
+            address: "required",
+            country: "required",
+            city: "required",
+            state: "required",
+            pin: "required",
+           },
+
+           messages: {
+            name: "Name is required",
+            email: "Email is required",
+            password: "Password is required",
+            org_name: "Organization name is required",
+            org_web: "Organization website is required",
+            designation: "Designation is required",
+            department: "Department name is required",
+            address: "Company address is required",
+            country: "Country name is required",
+            city: "City is required",
+            state: "State is required",
+            pin: "Pin is required",
+           
+            }
+        });
+     });
+    
+      </script>
 @endsection

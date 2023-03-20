@@ -33,7 +33,7 @@
                             <label>Company Registration No.</label>
 
                             <input type="text" name="reg_id" id="reg_id" class="form-control"
-                                value="{{ old('reg_id') }}" placeholder="EVP_ Enter Registration Id">
+                                value="{{ old('reg_id') }}" placeholder="Enter Registration Number">
                             @error('reg_id')
                                 <p class="velidation">{{ $message }}</p>
                             @enderror

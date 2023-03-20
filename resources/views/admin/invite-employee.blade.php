@@ -20,13 +20,11 @@
         <div class="row">
           <div class="col-md-8">
             <h1>Invite Employees</h1>
-            <p>Here’s your report overview by today</p>
+            <p></p>
           </div>
           <div class="col-md-4">
             <div class="main-right-button-box">
-                <button type="button" name="bulk_mail" id="bulk_mail"
-                class="btn btn-info btn-md addinci_btn disabled-btn">Invite</button>
-              {{-- <a href="" name="bulk_mail" id="bulk_mail" class="disabled-btn" >Invite</a> --}}
+                <a href="" name="bulk_mail" id="bulk_mail" class="disabled-btn">Invite</a> 
               <a href="add-invite-employee"><img src="assets/admin/images/button-plus.png">Add New</a>              
             </div>
           </div>
@@ -50,7 +48,7 @@
             <table id="example" class="table-bordered nowrap table table-striped" style="width:100%">
             <thead>
               <tr>
-                <th><input type="checkbox" id="selectAll" name="users_id"></th>
+                <th><input type="checkbox" id="selectAll" class=""></th>
                 <th>Employee Code</th>
                 <th>Employee Name</th>
                 <th>Employee Email</th>
@@ -425,10 +423,10 @@
    
             $(document).on('click', '#bulk_mail', function() {
                 var id = [];
-                if (confirm("Are you sure you want to Send Invitation Mail?")) {
+                if (confirm("Are you sure you want to send invitation email?")) {
                     $('.users_checkbox:checked').each(function() {
                         id.push($(this).val());
-                    });
+                      });
                     if (id.length > 0) {
                       // alert(id.length);
                         $.ajax({
@@ -447,7 +445,7 @@
                             },
                             error: function(data) {
                                 var errors = data.responseJSON;
-                                console.log(errors);
+                                // console.log(errors);
                             }
                         });
                     } else {
