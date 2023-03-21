@@ -1154,7 +1154,7 @@
                                                 accept="image/*">
                                         </div>
                                     </div>
-                                    <strong class="error" id="lang-error"></strong>
+                                    {{-- <strong class="error" id="lang-error"></strong> --}}
                                 </div>
                             </div>
                         </div>
@@ -1247,7 +1247,7 @@
                                             </div> --}}
                                                  <div class="upload-img-file">
                                                 <input type="file" id="document" name="document" class="form-control"/>
-                                                <strong class="error" id="document-error"></strong>
+                                                {{-- <strong class="error" id="document-error"></strong> --}}
                                             </div>
                                         </div>
                                     </div>
@@ -1471,7 +1471,7 @@
                                             {{-- <p>You can drag or drop <span>png. jpeg</span> </p> --}}
                                             <div class="upload-img-file">
                                                 <input type="file" id="document" name="document" class="form-control"/>
-                                                <strong class="error" id="document-error"></strong>
+                                                {{-- <strong class="error" id="document-error"></strong> --}}
                                             </div>
                                         </div>
                                     </div>
@@ -1710,7 +1710,7 @@
                                             {{-- <p>You can drag or drop <span>png. jpeg</span> </p> --}}
                                             <div class="upload-img-file">
                                                 <input type="file" id="offer_letter" name="offer_letter" class="form-control"/>
-                                                <strong class="error" id="offer_letter-error"></strong>
+                                                {{-- <strong class="error" id="offer_letter-error"></strong> --}}
                                             </div>
                                         </div>
                                     </div>
@@ -1887,6 +1887,8 @@
         }
     });
 </script>
+
+
 <script>
     $('.extra-fields-customer').click(function() {
         $('.customer_records').clone().appendTo('.customer_records_dynamic');
@@ -1948,7 +1950,7 @@
            duration_from: "required",
            duration_to: "required",
            verification_type: "required",
-           document: "required",
+        //    document: "required",
          },
 
          messages: {
@@ -1958,7 +1960,7 @@
            duration_from: "Duration date is required",
            duration_to: "Duration to is required",
            verification_type: "Verification type is required",
-           document: "Document is required",
+        //    document: "Document is required",
          }
       });
 
@@ -2054,10 +2056,10 @@
            designation: "required",
            work_duration_to: "required",
            work_duration_from: "required",
-           offer_letter: "required",
+        //    offer_letter: "required",
            verification_type: "required",
-           exp_letter: "required",
-           salary_slip: "required",
+        //    exp_letter: "required",
+        //    salary_slip: "required",
 
          },
 
@@ -2066,10 +2068,10 @@
            designation: "Designation is required",
            work_duration_to: "Work duration is required",
            work_duration_from: "Work duration From is required",
-           offer_letter: "Offer letter to is required",
+        //    offer_letter: "Offer letter to is required",
            verification_type: "Verification type is required",
-           exp_letter: "Experience letter is required",
-           salary_slip: "Salary slip is required",
+        //    exp_letter: "Experience letter is required",
+        //    salary_slip: "Salary slip is required",
          }
       });
 
@@ -2077,14 +2079,14 @@
          rules: {
            id_type: "required",
            id_number: "required",
-           document: "required",
+        //    document: "required",
            verification_type: "required",
          },
        
          messages: {
            id_type: "ID type is required",
            id_number: "ID number is required",
-           document: "Work documentation is required",
+        //    document: "Work documentation is required",
            verification_type: "Verification type is required",
            
          }

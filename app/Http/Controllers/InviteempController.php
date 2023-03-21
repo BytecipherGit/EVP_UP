@@ -7,6 +7,7 @@ use App\Models\Employeeidentity;
 use App\Models\Empofficial;
 use App\Models\Empqualification;
 use App\Models\Empskills;
+use App\Models\Emplang;
 use App\Models\Empworkhistory;
 use Auth;
 use Illuminate\Http\Request;
@@ -250,8 +251,12 @@ class InviteempController extends Controller
                 $temp[] = $ids;
             }
         }
+
+        
+
         $emp = DB::table('emp_basicinfo')->whereIn('id', $temp)->get();
         $info = array();
+        
         foreach ($emp as $row) {
             $info[] = array(
                 'first_name' => $row->first_name,
@@ -266,12 +271,12 @@ class InviteempController extends Controller
                 if (!empty($row['email']) && !empty($row['first_name']) && !empty($row['last_name'])) {
                     $email = $row['email'];
                 }
-
+                
                 $name = $row['first_name'] . ' ' . $row['last_name'];
                 $dat = ['first' => $name];
                 $id = ['ids' => $row['id']];
                 Mail::send('org-invite/invite-email', ['data' => $dat, 'data2' => $id], function ($message) use ($email, $name) {
-                    $message->to($email, $name)->subject
+                    $message->to("jharshita259@gmail.com", $name)->subject
                         ('ByteCipher Pvt Ltd Interview Invitation Email');
                     $message->from('jharshita259@gmail.com', 'ByteCipher Pvt Ltd');
                 });
@@ -347,8 +352,10 @@ class InviteempController extends Controller
         $workh = Empworkhistory::where('emp_id', $request->id)->first();
         $skills = Empskills::where('emp_id', $request->id)->first();
         $official = Empofficial::where('emp_id', $request->id)->first();
+        $skill_item=Empskills:: where('emp_id',$request->id)->get();
+        $lang_item=Emplang:: where('emp_id',$request->id)->get();
 
-        return view('org-invite/basic-info', compact('basic', 'identity', 'qualification', 'ident', 'workhistory', 'quali', 'workh', 'skills', 'official'));
+        return view('org-invite/basic-info', compact('basic', 'identity', 'qualification', 'ident', 'workhistory', 'quali', 'workh', 'skills', 'official','skill_item','lang_item'));
     }
 
     public function getInviteDetails(request $request)
@@ -540,19 +547,32 @@ class InviteempController extends Controller
 
         if (isset($_POST['workskill'])) {
 
-            $request->validate([
-                'skill' => ['required', 'string', 'max:255'],
-                'lang' => ['required', 'string', 'max:255'],
-            ]);
+            // $request->validate([
+            //     'skill' => ['required', 'string', 'max:255'],
+            //     'lang' => ['required', 'string', 'max:255'],
+            // ]);
             $identity_id = Employee::where('id', $request->id)->first();
-            $emp_skill = new Empskills();
-            $emp_skill->emp_id = $identity_id->id;
-            $emp_skill->skill = $request->input('skill');
-            $emp_skill->skill_type = $request->input('skill_type');
-            $emp_skill->lang = $request->input('lang');
-            $emp_skill->lang_type = $request->input('lang_type');
-
-            $emp_skill->save();
+            for ($i=0; $i < count($request->skill); $i++) 
+            {   
+              $insertDataSkill = array(  
+                'emp_id' => $identity_id->id,
+                'skill' => $request->skill[$i],
+                'skill_type' => $request->skill_type[$i],
+                ); 
+                DB::table('emp_skills')->insert($insertDataSkill);  
+              }
+              
+          for ($j=0; $j < count($request->lang); $j++) 
+          {   
+            $insertDatalang = array(  
+              'emp_id' => $identity_id->id,
+              'lang' =>  $request->lang[$j],
+              'lang_type' => $request->lang_type[$j],
+              ); 
+              
+            
+              DB::table('emp_language')->insert($insertDatalang);  
+        }
             $official = Empofficial::where('emp_id', $request->id)->first();
             if (empty($official)) {
 
@@ -575,7 +595,7 @@ class InviteempController extends Controller
             $skills = Empskills::where('emp_id', $request->id)->first();
             $work = Empworkhistory::where('emp_id', $request->id)->first();
             if (empty($identity) || empty($quali) || empty($work) || empty($skills)) {
-                return redirect()->back()->with('tabs-2_active', true)->with('msg', 'Please ');
+                return redirect()->back()->with('tabs-2_active', true);
             } else {
                 return redirect('confirmation');
             }

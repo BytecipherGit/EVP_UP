@@ -665,7 +665,7 @@ class EmployeeController extends Controller
          
          $allemp=DB::table('emp_basicinfo')->join('emp_officials', 'emp_basicinfo.id', '=', 'emp_officials.emp_id')->select('emp_basicinfo.id','emp_basicinfo.*', 'emp_officials.*')->
          where('emp_basicinfo.company_id',Auth::id())->get();
-      
+    
          return view('admin/datatable',compact('allemp'));
       }
 
