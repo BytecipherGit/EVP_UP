@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Empskills extends Model
+class Emplang extends Model
 {
     use HasFactory;
-    protected $table='emp_skills';
-    protected $fillable=['emp_id','skill','skill_type'];
+    protected $table='emp_language';
+    protected $fillable=['emp_id','lang','lang_type'];
 }

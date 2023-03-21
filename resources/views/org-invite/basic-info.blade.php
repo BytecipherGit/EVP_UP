@@ -488,62 +488,52 @@
                 <div class="col-lg-12">
                    <form method="post" id="add_skills" enctype="multipart/form-data">
                     @csrf
-                    <div class="form-group inputtag-custom">
-                      <h2>Skills</h2>
-
-                      <label>Add Your Skill<span style="color:red">*</span></label>
-                      <div class="row customer_records">
-                        <div class="col-xl-5 col-lg-10 col-md-10">
-                          <input type="text" class="form-control input-search-box typeahead" name="skill" placeholder="Add Skill" >
-                          @error('skill')
-                          <span class="velidation">{{ $message }}</span>
-                          @enderror 
-                          <strong class="error" id="skill-error"></strong>
-                        </div>
-                        <div class="col-xl-5 col-lg-10 col-md-10">
+                    
+                    <table class="table table-bordered" id="dynamicAddRemove">
+                      <tr>
+                          <th>Add Skills</th>
+                          <th></th>
+                      </tr>
+                      <tr>
+                          <td><input type="text" name="skill[]" placeholder="Enter subject" class="form-control" />
+                          </td>
+                          <td>
                           <h6>
-                          <span><input type="radio" id="customRadioInline1" name="skill_type" class=""  value="Beginner" checked="">  <label class="" for="customRadioInline1">Beginner</label></span>  
-                          <span><input type="radio" id="customRadioInline2" name="skill_type" class="" value="Intermediate"> <label class="" for="customRadioInline2">Intermediate</label></span>
-                          <span><input type="radio" id="customRadioInline3" name="skill_type" class="" value="Expert"><label class="" for="customRadioInline3">Expert</label></span>
+                            <span><input type="radio" id="customRadioInline1" name="skill_type[]" class=""  value="Beginner" checked="">  <label class="" for="customRadioInline1">Beginner</label></span>  
+                            <span><input type="radio" id="customRadioInline2" name="skill_type[]" class="" value="Intermediate"> <label class="" for="customRadioInline2">Intermediate</label></span>
+                            <span><input type="radio" id="customRadioInline3" name="skill_type[]" class="" value="Expert"><label class="" for="customRadioInline3">Expert</label></span>
+                            </h6> 
+                          </td> 
+                          <td><a name="add" id="dynamic-ar" class="add-plus extra-fields-customer"><span><img src="{{ asset('assets') }}/admin/images/button-plus.png"></span></td>
+                      </tr>     
+                  </table>
+               
 
-                          </h6>  
+               
 
-                        </div>
+                  <h2>known Language</h2>
+                  <table class="table table-bordered" id="dynamicAddRemove1">
+                    <tr>
+                        <th>Add Languages</th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <td><input type="text" name="lang[]" placeholder="Enter subject" class="form-control" />
+                        </td>
+                        <td>
+                        <h6>
+                          <span><input type="radio" id="customRadioInline4" name="lang_type[]" class=""  value="Beginner" checked="">  <label class="" for="customRadioInline4">Beginner</label></span>  
+                          <span><input type="radio" id="customRadioInline5" name="lang_type[]" class="" value="Intermediate"> <label class="" for="customRadioInline5">Intermediate</label></span>
+                          <span><input type="radio" id="customRadioInline6" name="lang_type[]" class="" value="Expert"><label class="" for="customRadioInline6">Expert</label></span>
+                          </h6> 
+                        </td> 
+                        <td><a name="add" id="dynamic-ar1" class="add-plus extra-fields-customer"><span><img src="{{ asset('assets') }}/admin/images/button-plus.png"></span></td>
+                    </tr>
 
-                      {{-- <a class="add-plus extra-fields-customer" ><span><img src="{{ asset('assets') }}/admin/images/button-plus.png"></span></a> --}}
-                      </div>
-                      <div class="customer_records_dynamic"></div>
-                    </div>
+                    
+                   </table>
 
-                    <div class="form-group inputtag-custom mt-3 mb-5">
-                      <h2>known Language</h2>
-
-                      <label>Add Language<span style="color:red">*</span></label>
-                      <div class="row customer_records1">
-                        <div class="col-xl-5 col-lg-10 col-md-10">
-                          <input type="text" name="lang" class="form-control input-search-box typeahead1" data-provide="typeahead" placeholder="Language">
-                          @error('lang')
-                          <span class="velidation">{{ $message }}</span>
-                          @enderror 
-                          <strong class="error" id="lang-error"></strong>
-                        </div>
-
-                        <div class="col-xl-5 col-lg-10 col-md-10">
-                          <h6>
-                            <span><input type="radio" id="customRadioInline4" name="lang_type" class="" value="Beginner" checked="">
-                              <label class="" for="customRadioInline4">Beginner</label></span>  
-                            
-                          <span><input type="radio" id="customRadioInline5" name="lang_type" class="" value="Intermediate" >
-                            <label class="" for="customRadioInline5">Intermediate</label></span>
-                            <span><input type="radio" id="customRadioInline6" name="lang_type" value="Expert"  class="" >
-                              <label class="" for="customRadioInline6">Expert</label></span>
-                          </h6>  
-                        </div>
-                        {{-- <a class="add-plus extra-fields-customer1" ><span><img src="{{ asset('assets') }}/admin/images/button-plus.png"></span></a> --}}
-                      </div>
-                      <div class="customer_records_dynamic1"></div>
-                    </div>
-
+                 
                     <div class="col-md-12 ">
                       <div class="form-group">
                         <div class="add-btn-part">
@@ -584,12 +574,13 @@
                                 {{-- <th>Action</th> --}}
                               </tr>
                               </thead>
-                                <tr>
-                                  <td>{{ $skills->skill }}</td>
-                                  <td>{{ $skills->skill_type }}</td>
-                                  {{-- <td><button type="button" class="border-none" data-toggle="modal" data-target="#skillsAdd"><img src="{{ asset('assets') }}/admin/images/edit-icon.png"></button></td> --}}
-                                </tr>
-                               
+                              @foreach ($skill_item as $item)
+                              <tr>
+                                <td>{{ $item['skill'] }}</td>
+                                <td>{{ $item['skill_type'] }}</td>
+                                {{-- <td><button type="button" class="border-none" data-toggle="modal" data-target="#skillsAdd"><img src="{{ asset('assets') }}/admin/images/edit-icon.png"></button></td> --}}
+                              </tr>
+                              @endforeach
                               <tbody>
                             </tbody>
                           </table>
@@ -611,15 +602,16 @@
                                 <th>Competency Levels</th>
                               </tr>
                               </thead>
-                                <tr>
-                                  <td>{{ $skills->lang }}</td>
-                                  <td>{{ $skills->lang_type }}</td>
-                                  {{-- <td><button type="button" class="border-none" data-toggle="modal" data-target="#langskillsAdd">
-                                    <img src="{{ asset('assets') }}/admin/images/edit-icon.png">
-                                    </button
-                                    ></td> --}}
-                                </tr>
-                               
+                              @foreach ($lang_item as $item)
+                              <tr>
+                                <td>{{ $item['lang'] }}</td>
+                                <td>{{ $item['lang_type'] }}</td>
+                                {{-- <td><button type="button" class="border-none" data-toggle="modal" data-target="#langskillsAdd">
+                                  <img src="{{ asset('assets') }}/admin/images/edit-icon.png">
+                                  </button
+                                  ></td> --}}
+                              </tr>
+                             @endforeach
                               <tbody>
                             </tbody>
                           </table>
@@ -1628,6 +1620,33 @@
           }
       });
   </script>
+ <script type="text/javascript">
+  var i = 0;
+  $("#dynamic-ar").click(function () {
+      ++i;
+      $("#dynamicAddRemove").append('<tr><td><input type="text" name="skill[' + i +
+          ']" placeholder="Enter subject" class="form-control" /></td><td><h6><span><input type="radio" id="customRadioInline1" name="skill_type['+ i +']" class=""  value="Beginner" checked="">  <label class="" for="customRadioInline1">Beginner</label></span> <span><input type="radio" id="customRadioInline2" name="skill_type['+ i +']" class="" value="Intermediate"> <label class="" for="customRadioInline2">Intermediate</label></span><span><input type="radio" id="customRadioInline3" name="skill_type['+ i +']" class="" value="Expert"><label class="" for="customRadioInline3">Expert</label></span></h6></td><td><a href=""class="remove-input-field remove-field btn-remove-customer add-plus minus-icon"><span><img src="{{ asset('assets') }}/admin/images/minus-icon.png"></span></td></tr>'
+          );
+  });
+  $(document).on('click', '.remove-input-field', function () {
+      $(this).parents('tr').remove();
+  });
+
+</script> 
+
+<script type="text/javascript">
+var j = 0;
+$("#dynamic-ar1").click(function () {
+  ++j;
+  $("#dynamicAddRemove1").append('<tr><td><input type="text" name="lang['+ j +
+      ']" placeholder="Enter subject" class="form-control" /></td><td><h6><span><input type="radio" id="customRadioInline4" name="lang_type['+ j +']" class=""  value="Beginner" checked="">  <label class="" for="customRadioInline4">Beginner</label></span> <span><input type="radio" id="customRadioInline5" name="lang_type['+ j +']" class="" value="Intermediate"> <label class="" for="customRadioInline5">Intermediate</label></span><span><input type="radio" id="customRadioInline6" name="lang_type['+ j +']" class="" value="Expert"><label class="" for="customRadioInline6">Expert</label></span></h6></td><td><a href=""class="remove-input-field remove-field btn-remove-customer add-plus minus-icon"><span><img src="{{ asset('assets') }}/admin/images/minus-icon.png"></span></td></tr>'
+      );
+});
+$(document).on('click', '.remove-input-field1', function () {
+  $(this).parents('tr').remove();
+});
+
+</script> 
 
   <script>
     $('.extra-fields-customer').click(function() {
