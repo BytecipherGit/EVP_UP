@@ -8,7 +8,7 @@
       <div class="main-heading">        
         <div class="row">
           <div class="col-md-8">
-            <h1>Post Employees Details</h1>
+            <h1>Alumni Employee Details</h1>
             <p></p>
           </div>
           <div class="col-lg-4">
@@ -149,21 +149,26 @@
                             <th>Type</th>
                             <th>Id</th>
                             <th>Verification</th>
-                            {{-- <th>Actions</th> --}}
+                            <th>Actions</th>
                           </tr>
                           </thead>
+                          @foreach($identity as $iden)
                             <tr>
-                              <td>{{$identity->id_type}}</td>
-                              <td>{{$identity->id_number}}</td>
-                              <td><span class="verified-clr"><i class="fa fa-check"></i> {{$identity->verification_type}}</span></td>
+                              <td>{{$iden['id_type']}}</td>
+                              <td>{{$iden['id_number']}}</td>
+                              @if($iden['verification_type'] == 'Verified')
+                              <td><span class="verified-clr"><i class="fa fa-check"></i> {{$iden['verification_type']}}</span></td>
+                              @else
+                              <td><span class="not-verified-clr"><i class="fa fa-times"></i> {{$iden['verification_type']}}</span></td>
+                              @endif
                               <td>
-                                {{-- <span class="d-flex tbl-iconBx">
-                                  <a href="#" target="_black" class="docu-down" data-toggle="modal" data-target="#exampleModaldocument"><img src="{{ asset('assets') }}/admin/images/document.png"></a>
-                                  <a href="{{ asset('assets') }}/admin/images/pan-card.png" target="_black" class="docu-download"><img src="{{ asset('assets') }}/admin/images/download-icon.png"></a>
-                                </span> --}}
+                                <span class="d-flex tbl-iconBx">
+                                  <a href="#" target="_black" class="docu-down" data-toggle="modal" data-target="#exampleModaldocument{{$iden['id']}}"><img src="{{ asset('assets') }}/admin/images/document.png"></a>
+                                  <a href="/image/{{ $iden['document'] }}" target="_black" class="docu-download"><img src="{{ asset('assets') }}/admin/images/download-icon.png"></a>
+                                </span>
                               </td>
                             </tr>
-                           
+                           @endforeach
                           <tbody>
                         </tbody>
                       </table>
@@ -190,24 +195,31 @@
                             <th>From</th>
                             <th>To</th>
                             <th>Verification</th>
-                            {{-- <th>Action</th> --}}
+                            <th>Action</th>
                           </tr>
                         </thead>
+                        @foreach($qualification as $quali)
                         <tbody>
                           <tr>                                    
-                            <td>{{$qualification->degree}}</td> 
-                            <td>{{$qualification->inst_name}}</td> 
-                            <td>{{$qualification->subject}}</td>
-                            <td>{{$qualification->duretion_from}}</td>  
-                            <td>{{$qualification->duretion_to}}</td>  
-                            <td><span class="verified-clr"><i class="fa fa-check"></i> {{$qualification->verification_type}}</span></td>
-                            {{-- <td>
-                              <a href="#" target="_black" class="docu-down" data-toggle="modal" data-target="#qualificationdocument"><img src="{{ asset('assets') }}/admin/images/document.png"></a>
-                              <a href="{{ asset('assets') }}/admin/images/job-offer-letter.png" target="_black" class="docu-download"><img src="{{ asset('assets') }}/admin/images/download-icon.png"></a>
-                            </td> --}}
+                            <td>{{$quali['degree']}}</td> 
+                            <td>{{$quali['inst_name']}}</td> 
+                            <td>{{$quali['subject']}}</td>
+                            <td>{{$quali['duretion_from']}}</td>  
+                            <td>{{$quali['duretion_to']}}</td>  
+
+                            @if($quali['verification_type'] == 'Verified')
+                            <td><span class="verified-clr"><i class="fa fa-check"></i> {{$quali['verification_type']}}</span></td>
+                            @else
+                            <td><span class="not-verified-clr"><i class="fa fa-times"></i> {{$quali['verification_type']}}</span></td>
+                            @endif
+        
+                            <td>
+                              <a href="#" target="_black" class="docu-down" data-toggle="modal" data-target="#qualificationdocument{{$quali['id']}}"><img src="{{ asset('assets') }}/admin/images/document.png"></a>
+                              <a href="/image/{{ $quali['document'] }}" target="_black" class="docu-download"><img src="{{ asset('assets') }}/admin/images/download-icon.png"></a>
+                            </td>
                           </tr>
-                       
                         </tbody>
+                        @endforeach
                         <tbody>
                         </tbody>
                       </table>
@@ -295,23 +307,30 @@
                             <th>From</th>
                             <th>To</th>
                             <th>Designation</th>
-                            {{-- <th>Offer Letter </th>
+                            <th>Offer Letter </th>
                             <th>Experience</th>
-                            <th>Salary Slips</th> --}}
+                            <th>Salary Slips</th>
                             <th>VERIFICATION</th>
                           </tr>
                         </thead>
+                        @foreach($workdetails as $work)
                           <tr>
-                            <td>{{$workhistory->com_name}}</td>
-                            <td>{{$workhistory->duration_from}}</td>  
-                            <td>{{$workhistory->duration_to}}</td>
-                            <td>{{$workhistory->designation}}r</td>  
-                            {{-- <td><a href="#" target="_black" class="docu-down" data-toggle="modal" data-target="#qualificationdocument"><img src="{{ asset('assets') }}/admin/images/document.png"></a></td>
-                            <td><a href="#" target="_black" class="docu-down" data-toggle="modal" data-target="#qualificationdocument"><img src="{{ asset('assets') }}/admin/images/document.png"></a></td>
-                            <td><a href="{{ asset('assets') }}/admin/images/sample-pdf.pdf" target="_black" class="docu-download"><img src="{{ asset('assets') }}/admin/images/pdf-icon.png"></a></td> --}}
-                            <td><span class="verified-clr"><i class="fa fa-check"></i> {{$workhistory->verification_type}}</span></td>
+                            <td>{{$work['com_name']}}</td>
+                            <td>{{$work['duration_from']}}</td>  
+                            <td>{{$work['duration_to']}}</td>
+                            <td>{{$work['designation']}}r</td>  
+                            <td><a href="#" target="_black" class="docu-down" data-toggle="modal" data-target="#workofferdocument{{$work['id']}}"><img src="{{ asset('assets') }}/admin/images/document.png"></a> </td>
+                            <td><a href="#" target="_black" class="docu-down" data-toggle="modal" data-target="#workexpdocument{{$work['id']}}"><img  src="{{ asset('assets') }}/admin/images/document.png"></a>
+                            </td>
+                             <td><a href="#" target="_black" class="docu-download"><img src="{{ asset('assets') }}/admin/images/pdf-icon.png"></a> </td>
+                            @if($work['verification_type'] == 'Verified')
+                            <td><span class="verified-clr"><i class="fa fa-check"></i> {{$work['verification_type']}}</span></td>
+                            @else
+                            <td><span class="not-verified-clr"><i class="fa fa-times"></i> {{$work['verification_type']}}</span></td>
+                            @endif
+                       
                           </tr>
-                         
+                         @endforeach
                         <tbody>
                         </tbody>
                       </table>
@@ -381,9 +400,9 @@
     </div>
     <!--- Main Container Close ----->
 
-  
+  @foreach($identity as $iden)
   <!-- The Modal Docum INFO-->
-  <div class="modal fade custu-modal-popup" id="exampleModaldocument" role="dialog" aria-labelledby="exampleModalLabel"  aria-hidden="true">
+  <div class="modal fade custu-modal-popup" id="exampleModaldocument{{$iden['id']}}" role="dialog" aria-labelledby="exampleModalLabel"  aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -392,12 +411,18 @@
             <img src="{{ asset('assets') }}/admin/images/close-btn-icon.png">
           </button>
         </div>
+        @if($iden['document'] == Null)
+        <div class="modal-body">
+          <p>Document not uploaded..</p>
+        </div>
+        @else
         <div class="modal-body">
           <div class="document-body">
-            <img src="{{ asset('assets') }}/admin/images/pan-card.png">
+              <img src="/image/{{ $iden['document'] }}">
           </div>
-          <a href="{{ asset('assets') }}/admin/images/pan-card.png" target="_black">Download</a>
-        </div>
+          <a href="/download_identity_doc/{{ $iden['id'] }}" target="_black">Download</a>
+       </div>
+       @endif
         <div class="modal-footer">
           <!-- <button type="button" class="btn-secondary" data-dismiss="modal">Cancel</button>
           <button type="button" class="btn-primary">Save Changes</button> -->
@@ -405,7 +430,7 @@
       </div>
     </div>
   </div>
-
+@endforeach
   <!-- The Modal No INFO -->
   <div class="modal fade custu-no-select" id="workhisinfo" role="dialog" aria-labelledby="exampleModalLabel"  aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -420,8 +445,73 @@
     </div>
   </div> 
 
+  @foreach($workdetails as $item)
+  <div class="modal fade custu-modal-popup" id="workofferdocument{{$item['id']}}" role="dialog"
+      aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h2 class="modal-title" id="exampleModalLabel">Document View</h2>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <img src="{{ asset('assets') }}/admin/images/close-btn-icon.png">
+                  </button>
+              </div>
+              @if($item['offer_letter'] == Null)
+              <div class="modal-body">
+              <p>Document not uploaded..</p>
+              </div>
+              @else
+              <div class="modal-body">
+                  <div class="document-body">
+                      <img src="/image/{{ $item['offer_letter'] }}">
+                  </div>
+                  <a href="/download_offerletter_doc/{{ $item['id'] }}" target="_black">Download</a>  
+              </div>
+              @endif
+              <div class="modal-footer">
+                  <!-- <button type="button" class="btn-secondary" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn-primary">Save Changes</button> -->
+              </div>
+          </div>
+      </div>
+  </div>
+  @endforeach
+  
+  @foreach($workdetails as $item)
+  <div class="modal fade custu-modal-popup" id="workexpdocument{{$item['id']}}" role="dialog"
+      aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h2 class="modal-title" id="exampleModalLabel">Document View</h2>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <img src="{{ asset('assets') }}/admin/images/close-btn-icon.png">
+                  </button>
+              </div>
+              @if($item['exp_letter'] == Null)
+              <div class="modal-body">
+                <p>Document not uploaded..</p>
+              </div>
+              @else
+              <div class="modal-body">
+                  <div class="document-body">
+                      <img src="/image/{{ $item['exp_letter'] }}">
+                  </div>
+                  <a href="/download_expletter_doc/{{ $item['id'] }}" target="_black">Download</a>
+              </div>
+              @endif
+              <div class="modal-footer">
+                  <!-- <button type="button" class="btn-secondary" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn-primary">Save Changes</button> -->
+              </div>
+          </div>
+      </div>
+  </div>
+  @endforeach
+
   <!-- The Modal Docum INFO-->
-  <div class="modal fade custu-modal-popup" id="qualificationdocument" role="dialog" aria-labelledby="exampleModalLabel"  aria-hidden="true">
+  @foreach($qualification as $quali)
+  <div class="modal fade custu-modal-popup" id="qualificationdocument{{$quali['id']}}" role="dialog" aria-labelledby="exampleModalLabel"  aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -430,12 +520,18 @@
             <img src="{{ asset('assets') }}/admin/images/close-btn-icon.png">
           </button>
         </div>
+        @if($quali['document'] == Null)
+        <div class="modal-body">
+          <p>Document not uploaded..</p>
+        </div>
+        @else
         <div class="modal-body">
           <div class="document-body">
-            <img src="{{ asset('assets') }}/admin/images/job-offer-letter.png">
+              <img src="/image/{{ $quali['document'] }}">
           </div>
-          <a href="{{ asset('assets') }}/admin/images/pan-card.png" target="_black">Download</a>
-        </div>
+          <a href="/download_qualification_doc/{{ $quali['id'] }}" target="_black">Download</a>
+      </div>
+      @endif
         <div class="modal-footer">
           <!-- <button type="button" class="btn-secondary" data-dismiss="modal">Cancel</button>
           <button type="button" class="btn-primary">Save Changes</button> -->
@@ -443,6 +539,7 @@
       </div>
     </div>
   </div>   
+  @endforeach
 
     <!-- Bootstrap core JavaScript
     ================================================== -->

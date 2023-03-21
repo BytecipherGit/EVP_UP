@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('emp_id')->comment('emp_basicinfo Table PK');
             $table->foreign('emp_id')->references('id')->on('emp_basicinfo')->onDelete('cascade');
             $table->string('id_type')->nullable();
+            $table->integer('company_id');
             $table->bigInteger('id_number')->nullable();
             $table->string('document')->nullable();
             $table->string('verification_type')->nullable();
