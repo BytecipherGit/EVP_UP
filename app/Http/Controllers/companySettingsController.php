@@ -28,7 +28,7 @@ class companySettingsController extends Controller
         // return view('admin/settings');
     }
 
-    public function getprofile(request $request){
+    public function updateCompanyProfile(request $request){
        if(isset($_POST['profile'])){
         if($request->file('company_logo')){
           $file= $request->file('company_logo');

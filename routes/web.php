@@ -106,8 +106,8 @@ Route::middleware([Admin::class])->group(function () {
     Route::post('/add-employee/{id?}', [App\Http\Controllers\EmployeeController::class, 'basicInfo'])->middleware('documents');
     Route::get('/edit-employee/{id?}', [App\Http\Controllers\EmployeeController::class, 'basicIndex'])->name('edit.employee')->middleware('documents');
     Route::post('/edit-employee/{id?}', [App\Http\Controllers\EmployeeController::class, 'editEmployee'])->middleware('documents');
-    Route::get('/settings', [App\Http\Controllers\companySettingsController::class, 'profiledata'])->name('settings')->middleware('documents');
-    Route::post('/settings', [App\Http\Controllers\companySettingsController::class, 'getprofile'])->middleware('documents');
+    Route::get('/company_profile', [App\Http\Controllers\companySettingsController::class, 'profiledata'])->name('settings')->middleware('documents');
+    Route::post('/update_company_profile', [App\Http\Controllers\companySettingsController::class, 'updateCompanyProfile'])->name('update_company_profile')->middleware('documents');
     Route::get('/employee-exit/{id?}', [App\Http\Controllers\EmployeeController::class, 'exitEmp'])->middleware('documents');
     Route::post('/employee-exit/{id?}', [App\Http\Controllers\EmployeeController::class, 'getExitEmp'])->middleware('documents');
     Route::get('/post-employee-details/{id}', [App\Http\Controllers\EmployeeController::class, 'postEmpDetails'])->middleware('documents');
