@@ -29,6 +29,10 @@ Route::get('/success', function () {
     return view('web/success');
 });
 
+Route::get('/response_submited', function () {
+    return view('web/response_already_submitted');
+});
+
 Route::get('/table', function () {
     return view('admin/datatable');
 });
@@ -79,8 +83,8 @@ Route::get('/organization', function () {
 // return redirect()->back()->with('message','Invitation Email Successfully Send');
 // });
 Route::get('/superlogin', [App\Http\Controllers\SuperAdminController::class, 'superAdminLogin'])->name('superlogin');
-Route::get('/invite-email/{id?}', [App\Http\Controllers\InviteempController::class, 'sendemail'])->name('invite-email');
-
+Route::post('/invite-email/{id?}', [App\Http\Controllers\InviteempController::class, 'sendemail'])->name('invite-email');
+Route::post('send_invidation_to_employee',[App\Http\Controllers\InviteempController::class, 'sendInvidationToEmployee'])->name('send_invidation_to_employee');
 Route::middleware([Superadmin::class])->group(function () {
     Route::get('/superadmin', [App\Http\Controllers\SuperAdminController::class, 'index'])->name('superadmin');
     Route::get('superadmin/logout', [App\Http\Controllers\SuperAdminController::class, 'logout'])->name('superadmin.logout');
@@ -131,13 +135,14 @@ Route::middleware([Admin::class])->group(function () {
     Route::post('schedule-interview/submit', [InterviewEmployee::class, 'schedule_interview'])->middleware('documents');
     Route::post('schedule-interview/changeHiringStage', [InterviewEmployee::class, 'update_hiring_stage'])->middleware('documents');
     Route::post('schedule-interview/deleteInterview', [InterviewEmployee::class, 'deleteInterview'])->middleware('documents');
+    Route::post('schedule-interview/sendReminderForInterview', [InterviewEmployee::class, 'sendReminderForInterview'])->middleware('documents');
     Route::get('schedule_phone_interview', [InterviewEmployee::class, 'schedulePhoneInterview'])->middleware('documents');
     Route::post('interview/declined/{id?}', [InterviewEmployee::class, 'declineInterview'])->middleware('documents');
     Route::post('interview/newtime/{id?}', [InterviewEmployee::class, 'suggestNewTime'])->middleware('documents');
     Route::get('interview/confirmed/{id?}', [InterviewEmployee::class, 'interviewConfirmed'])->name('interview.confirmed')->middleware('documents');
-    Route::post('interview/confirmed/{id?}', [InterviewEmployee::class, 'videoInterview'])->middleware('documents');
     Route::get('interview/newtime/{id?}', [InterviewEmployee::class, 'interviewNewTime'])->name('interview.newtime')->middleware('documents');
     Route::get('interview/declined/{id?}', [InterviewEmployee::class, 'interviewDeclined'])->name('interview.declined')->middleware('documents');
+    Route::post('interview/replied', [InterviewEmployee::class, 'interviewRepliedFromMail'])->name('interview.replied.mail')->middleware('documents');
     // Route::post('schedule-interview/update', [InterviewEmployee::class, 'schedule_interview_update']);
     // Route::post('admin/add_company', [\App\Http\Controllers\CommonController::class, 'add_company']);
     // Route::post('admin/update_company', [\App\Http\Controllers\CommonController::class, 'update_company']);

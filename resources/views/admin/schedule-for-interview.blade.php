@@ -82,11 +82,12 @@
                                 <th>EVP Id</th>
                                 <th>Name</th>
                                 <th>Designation</th>
-                                {{-- <th>Candidate Rating</th> --}}
                                 <th>Offer Status</th>
                                 <th>Hiring Status</th>
                                 <th>Employee Status</th>
-                                <th>Action</th>
+                                <th>Employee Comment</th>
+                                <th>Send Remider</th>
+                                <th>Delete</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -113,6 +114,13 @@
                                                     style="color: #007bff">{{ $employeeInterviewStatus->title }}</strong>
                                             @endif
                                         @endforeach
+                                    </td>
+                                    <td>{{ ($employee->employee_comment) ? $employee->employee_comment : '' }}</td>
+                                    <td>
+                                        <span class="notifi-td" id="reminder_interview"
+                                        data-id="{{ $employee->id }}"><img
+                                                src="assets/admin/images/bell-icon.png" width="30px;"
+                                                height="30px"></span>
                                     </td>
                                     <td>
                                         {{-- <span class="notifi-td" data-toggle="modal" data-target="#remaiderbtninfo"><img
@@ -531,6 +539,51 @@
                 var url = '{{ url('schedule-interview?employeeStatusId=') }}' + employeeStatusId;
                 window.location.href = url;
             }
+        });
+
+        $(document).on('click', '#reminder_interview', function() {
+            swal({
+                    title: "Are you sure?",
+                    text: "You want to send remider to employee for this interview!",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                .then((result) => {
+                    if (result) {
+                        // Handle the change event
+                        var interviewId = $(this).data('id');
+                        if (interviewId != '') {
+                            var url = '{{ url('schedule-interview/sendReminderForInterview') }}';
+                            var my_data = {
+                                interviewId: interviewId
+                            };
+                            $.ajax({
+                                url: url,
+                                type: 'POST',
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                        'content')
+                                },
+                                data: my_data,
+                                success: function(data) {
+                                    if (data.success) {
+                                        swal("Interview reminder successfully sent.", {
+                                            icon: "success",
+                                        });
+                                        location.reload();
+                                    }
+                                },
+                                error: function(xhr, textStatus, errorThrown) {
+                                    console.log(xhr.responseText);
+                                }
+                            });
+                        }
+                    } else {
+                        swal("Interview reminder not sent!");
+                        location.reload();
+                    }
+                });
         });
 
     });

@@ -28,6 +28,7 @@ return new class extends Migration
             $table->foreign('interview_status')->references('id')->on('hiring_stages')->onDelete('cascade');
             $table->unsignedBigInteger('employee_interview_status')->comment('employee_interview_status table pk');
             $table->foreign('employee_interview_status')->references('id')->on('employee_interview_statuses')->onDelete('cascade');
+            $table->boolean('isEmployeeResponseSubmitted')->default(false);
             $table->date('interview_date')->default(Carbon::now()->format('Y-m-d'));
             $table->string('interview_start_time')->nullable();
             $table->string('interview_end_time')->nullable();
