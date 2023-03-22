@@ -73,7 +73,7 @@
               <div class="tab-pane fade show active" id="applicants-Tab1" role="tabpanel" aria-labelledby="applicants-Tab1-tab">
                 <div class="tab-content-details">
                   <h2>Company Profile</h2>
-                  <form method="POST" action="" enctype="multipart/form-data">
+                  <form method="POST" action="{{ route('update_company_profile') }}" enctype="multipart/form-data">
                     @csrf
                     @if (session()->has('message'))
                     <div class="alert alert-success">

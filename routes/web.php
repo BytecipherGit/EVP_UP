@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\InterviewEmployee;
+use App\Http\Controllers\InterviewProcess;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\Admin;
 use App\Http\Middleware\Superadmin;
@@ -106,8 +107,8 @@ Route::middleware([Admin::class])->group(function () {
     Route::post('/add-employee/{id?}', [App\Http\Controllers\EmployeeController::class, 'basicInfo'])->middleware('documents');
     Route::get('/edit-employee/{id?}', [App\Http\Controllers\EmployeeController::class, 'basicIndex'])->name('edit.employee')->middleware('documents');
     Route::post('/edit-employee/{id?}', [App\Http\Controllers\EmployeeController::class, 'editEmployee'])->middleware('documents');
-    Route::get('/settings', [App\Http\Controllers\companySettingsController::class, 'profiledata'])->name('settings')->middleware('documents');
-    Route::post('/settings', [App\Http\Controllers\companySettingsController::class, 'getprofile'])->middleware('documents');
+    Route::get('/company_profile', [App\Http\Controllers\companySettingsController::class, 'profiledata'])->name('settings')->middleware('documents');
+    Route::post('/update_company_profile', [App\Http\Controllers\companySettingsController::class, 'updateCompanyProfile'])->name('update_company_profile')->middleware('documents');
     Route::get('/employee-exit/{id?}', [App\Http\Controllers\EmployeeController::class, 'exitEmp'])->middleware('documents');
     Route::post('/employee-exit/{id?}', [App\Http\Controllers\EmployeeController::class, 'getExitEmp'])->middleware('documents');
     Route::get('/post-employee-details/{id}', [App\Http\Controllers\EmployeeController::class, 'postEmpDetails'])->middleware('documents');
@@ -143,9 +144,11 @@ Route::middleware([Admin::class])->group(function () {
     Route::get('interview/newtime/{id?}', [InterviewEmployee::class, 'interviewNewTime'])->name('interview.newtime')->middleware('documents');
     Route::get('interview/declined/{id?}', [InterviewEmployee::class, 'interviewDeclined'])->name('interview.declined')->middleware('documents');
     Route::post('interview/replied', [InterviewEmployee::class, 'interviewRepliedFromMail'])->name('interview.replied.mail')->middleware('documents');
-    // Route::post('schedule-interview/update', [InterviewEmployee::class, 'schedule_interview_update']);
-    // Route::post('admin/add_company', [\App\Http\Controllers\CommonController::class, 'add_company']);
-    // Route::post('admin/update_company', [\App\Http\Controllers\CommonController::class, 'update_company']);
+    Route::get('interview_process', [InterviewProcess::class, 'index'])->name('interview.process.index')->middleware('documents');
+    Route::any('interview_process/form/{id?}', [InterviewProcess::class, 'getInterviewProcessForm'])->middleware('documents');
+    Route::post('interview_process/submit', [InterviewProcess::class, 'createInterviewProcess'])->middleware('documents');
+    Route::post('interview_process/update', [InterviewProcess::class, 'updateInterviewProcess'])->middleware('documents');
+    Route::post('interview_process/destroy', [InterviewProcess::class, 'deleteInterviewProcess'])->middleware('documents');
 
 });
 Route::get('/dashboard', function () {

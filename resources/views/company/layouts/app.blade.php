@@ -175,12 +175,12 @@
             </div>
             <aside>
 
-                <li>
+                {{-- <li>
                     <a href="search">
                         <img src="{{ asset('assets') }}/admin/images/search-icon-gray.png">
                         Search
                     </a>
-                </li>
+                </li> --}}
 
                 <li class="active">
                     <a href="/admin">
@@ -247,12 +247,59 @@
 
                 <hr>
 
-                <li>
-                    <a href="/settings">
-                        <img src="{{ asset('assets') }}/admin/images/setting-icon.png">
-                        Settings
-                    </a>
-                </li>
+                <div id="accordion">
+                    <div class="card">
+                        <div class="card-header" id="heading-2">
+                            <h5 class="mb-0">
+                                <a role="button" data-toggle="collapse" href="#collapse-2" aria-expanded="true"
+                                    aria-controls="collapse-2" class="">
+                                    Settings
+                                </a>
+                            </h5>
+                        </div>
+                        <div id="collapse-2" class="collapse show" data-parent="#accordion"
+                            aria-labelledby="heading-2" style="">
+                            <div class="card-body">
+
+                                <div id="accordion-2">
+                                    <ul>
+                                        <li>
+                                            <a href="/company_profile">
+                                                <img src="{{ asset('assets') }}/admin/images/setting-icon.png">
+                                                Company Profile
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/interview_process">
+                                                <img src="{{ asset('assets') }}/admin/images/setting-icon.png">
+                                                Interview Process
+                                            </a>
+                                        </li>
+                                        {{-- <li>
+                                            <a href="/employee">
+                                                <img src="{{ asset('assets') }}/admin/images/employees-view.png">
+                                                All Employee
+                                            </a>
+                                        </li> --}}
+                                        {{-- <li>
+                      <a href="/current-employee">
+                        <img src="{{ asset('assets') }}/admin/images/current-user.png">
+                         Current Employee
+                      </a>
+                    </li>                     --}}
+                                        {{-- <li>
+                      <a href="/post-employee">
+                        <img src="{{ asset('assets') }}/admin/images/employees-icon.png"> Past Employee
+                      </a>
+                    </li> --}}
+
+                                    </ul>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
             </aside>
         </div>
