@@ -25,7 +25,7 @@ class InterviewProcess extends Controller
      public function index(Request $request)
      {
          if ($request->ajax()) {
-             $data = InterviewProcessModel::select('id','title','descriptions','interviewer_feedback')->get();
+             $data = InterviewProcessModel::select('id','title','descriptions')->get();
              return FacadesDataTables::of($data)->addIndexColumn()
                  ->addColumn('action', function($row){
                      $btn = '<a href="javascript:void(0)" data-id="'.$row->id.'" class="edit-btn updateProcess">Edit</a>';
