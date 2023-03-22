@@ -9,6 +9,7 @@ use App\Mail\InterviewReminderMail;
 use App\Models\EmployeeInterview;
 use App\Models\EmployeeInterviewStatus;
 use App\Models\HiringStage;
+use App\Models\user;
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Http\Request;
@@ -272,6 +273,35 @@ class InterviewEmployee extends Controller
                 } else {
                     return view('admin/web-email/schedule-video-interview', compact('employeeStatus', 'empCode'));
                 }
+            } else {
+                return Response::json(['success' => '0']);
+            }
+        }
+    }
+
+    public function getCheckStatus(request $request)
+    {
+        $userid = User::latest()->first()->id;
+        return view('company/verify-message',compact('userid'));
+    }
+
+    public function getResetStatus(request $request)
+    {
+        $userid = User::latest()->first()->id;
+        return view('company/reset-verify-message',compact('userid'));
+    }
+
+    public function verificationEmail(request $request)
+    {
+        if (!empty($request->id)) {
+            $id = decrypt($request->id);
+            $companyData = User::where('id',$id)->first();
+            if ($companyData) {
+                $changeStatus=DB::table('users')->where('id',$id)
+                ->update([
+                      'status'=>'1',         
+                ]);
+              return view('admin/emails/candidate/verification-success', compact('companyData', 'id'));   
             } else {
                 return Response::json(['success' => '0']);
             }

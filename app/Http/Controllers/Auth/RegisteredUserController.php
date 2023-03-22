@@ -15,7 +15,12 @@ use App\Models\Country;
 use App\Models\State;
 use App\Models\City;
 use Illuminate\View\View;
+use Response;
 use App\Mail\CompanyRegisterationMail;
+use App\Mail\CompanyResetVerifyMail;
+use App\Mail\CompanyVerificationMail;
+
+use App\Mail\CompanyVerificationMessage;
 use Illuminate\Support\Facades\Mail as FacadesMail;
 
 class RegisteredUserController extends Controller
@@ -90,13 +95,47 @@ class RegisteredUserController extends Controller
                 'name' => !empty($request->name) ? $request->name : '',
             ];
             FacadesMail::to($request->email)->send(new CompanyRegisterationMail($mailData));
+       
+            $verifyMailData = [
+                'name' => !empty($request->name) ? $request->name : '',
+                'id' => encrypt($user->id),
+            ];
+            FacadesMail::to($request->email)->send(new CompanyVerificationMail($verifyMailData));
         }
 
         // Auth::login($user);
 
         // return redirect(RouteServiceProvider::ADMIN);
-     
-        return redirect('login')->with('message','Registration Sucessfully');
+       if($user->status == '1'){
+        return redirect('login')->with('message','Thanks for your registration.');
+       }
+       else{
+    
+        return redirect('verify_status')->with('message','Thanks for your registration.');
+       }
      
     }
+
+    public function resetMailSend(request $request){
+
+        if (!empty($request->id)) {
+            $user = User::find($request->id);
+            if (!empty($user->email)) {
+                $verifyMailData = [
+                    'name' => !empty($request->name) ? $request->name : '',
+                    'id' => encrypt($user->id),
+                    'status' => $user->status,
+                ];
+                FacadesMail::to($user->email)->send(new CompanyResetVerifyMail($verifyMailData));
+
+               return redirect()->back()->with('message','Reset verification link has been send.');
+            } else {
+                return Response::json(['success' => '0']);
+            }
+        } else {
+            return Response::json(['success' => '0']);
+        }
+    }
+
+
 }

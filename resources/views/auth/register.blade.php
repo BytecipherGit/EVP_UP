@@ -114,7 +114,7 @@
                             </div>
                             <div class="col-xl-6">
                                 <div class="form-group">
-                                    <label>Admin Department* </label>
+                                    <label>Admin Department<strong style="color:red">*</strong></label>
                                     <input type="text" id="department" name="department" class="form-control"
                                         value="{{ old('department') }}" placeholder="Department" autofocus autocomplete="department">
                                     {{-- @error('department')
