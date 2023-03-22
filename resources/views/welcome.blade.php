@@ -24,7 +24,7 @@
         <div class="modal-content">
             <div class="modal-body">
                 <img src="assets/company/images/email-verify.png">
-                <h2>Your Documents is Under Verification.</h2>
+                <h2>Your Account is Under Verification.</h2>
                 <h3>We Will Verified Soon.</h3>
                 <!-- <p>Please check your rigistered email for email verification</p> -->
                

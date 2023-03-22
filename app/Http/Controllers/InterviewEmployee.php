@@ -57,7 +57,7 @@ class InterviewEmployee extends Controller
                         'first_name' => 'required|string|max:255',
                         'last_name' => 'required|string|max:255',
                         'email' => 'required|email',
-                        'designation' => 'required|string|max:255',
+                        'position' => 'required|string|max:255',
                         'interview_date' => 'required|string|max:255',
                         'interview_start_time' => 'required|string|max:255',
                         'interview_end_time' => 'required|string|max:255',
@@ -71,7 +71,7 @@ class InterviewEmployee extends Controller
                         'first_name' => 'required|string|max:255',
                         'last_name' => 'required|string|max:255',
                         'email' => 'required|email',
-                        'designation' => 'required|string|max:255',
+                        'position' => 'required|string|max:255',
                         'interview_date' => 'required|string|max:255',
                         'interview_start_time' => 'required|string|max:255',
                         'interview_end_time' => 'required|string|max:255',
@@ -111,7 +111,7 @@ class InterviewEmployee extends Controller
                         'first_name' => !empty($request->first_name) ? $request->first_name : null,
                         'last_name' => !empty($request->last_name) ? $request->last_name : null,
                         'email' => !empty($request->email) ? $request->email : null,
-                        'designation' => !empty($request->designation) ? $request->designation : null,
+                        'position' => !empty($request->position) ? $request->position : null,
                         'rating' => !empty($request->rating) ? $request->rating : null,
                         'offer_status' => !empty($request->offer_status) ? $request->offer_status : 'Pending',
                         'interview_status' => !empty($request->interview_status) ? $request->interview_status : 1,
@@ -134,7 +134,7 @@ class InterviewEmployee extends Controller
                                 'organisationName' => !empty($userDetails->org_name) ? $userDetails->org_name : '',
                                 'empCode' => encrypt($interviewData->empCode),
                                 'name' => !empty($request->first_name) ? $request->first_name . ' ' . $request->last_name : '',
-                                'designation' => !empty($request->designation) ? $request->designation : '',
+                                'position' => !empty($request->position) ? $request->position : '',
                                 'meeting_url' => !empty($request->video_link) ? $request->video_link : '',
                                 'meeting_date' => !empty($request->interview_date) ? $request->interview_date : '',
                                 'meeting_start_time' => !empty($startFormattedTime) ? $startFormattedTime : '',
@@ -146,7 +146,7 @@ class InterviewEmployee extends Controller
                                 'organisationName' => !empty($userDetails->org_name) ? $userDetails->org_name : '',
                                 'empCode' => encrypt($interviewData->empCode),
                                 'name' => !empty($request->first_name) ? $request->first_name . ' ' . $request->last_name : '',
-                                'designation' => !empty($request->designation) ? $request->designation : '',
+                                'position' => !empty($request->position) ? $request->position : '',
                                 'phone' => !empty($request->phone) ? $request->phone : '',
                                 'meeting_date' => !empty($request->interview_date) ? $request->interview_date : '',
                                 'meeting_start_time' => !empty($startFormattedTime) ? $startFormattedTime : '',
@@ -262,7 +262,7 @@ class InterviewEmployee extends Controller
             $empCode = decrypt($request->empCode);
             $employeeStatus = DB::table('interview_employees')
                 ->join('users', 'interview_employees.company_id', '=', 'users.id')
-                ->select('interview_employees.*', 'users.*', 'interview_employees.designation')
+                ->select('interview_employees.*', 'users.*', 'interview_employees.position')
                 ->where('interview_employees.empCode', decrypt($request->empCode))
                 ->first();
 
@@ -293,7 +293,7 @@ class InterviewEmployee extends Controller
         if (!empty($request->empCode)) {
             $employeetime = DB::table('interview_employees')
             ->join('users', 'interview_employees.company_id', '=', 'users.id')
-            ->select('interview_employees.*', 'users.*','interview_employees.designation')
+            ->select('interview_employees.*', 'users.*','interview_employees.position')
             ->where('interview_employees.empCode', decrypt($request->empCode))
                 ->first();
             $empCode = decrypt($request->empCode);
@@ -320,7 +320,7 @@ class InterviewEmployee extends Controller
             // $employedecline = EmployeeInterview::where('empCode',decrypt($request->empCode))->first();
             $employedecline = DB::table('interview_employees')
             ->join('users', 'interview_employees.company_id', '=', 'users.id')
-            ->select('interview_employees.*', 'users.*','interview_employees.designation')
+            ->select('interview_employees.*', 'users.*','interview_employees.position')
             ->where('interview_employees.empCode', decrypt($request->empCode))
                 ->first();
             $empCode = decrypt($request->empCode);

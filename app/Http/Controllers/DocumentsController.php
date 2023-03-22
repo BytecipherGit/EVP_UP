@@ -51,43 +51,60 @@ class DocumentsController extends Controller
             //code...
 
             $validator = Validator::make($request->all(), [
-                'reg_id' => 'required|string|max:255',
-                'gst' => 'required|file|mimes:jpeg,png,pdf,docs,doc|max:2048',
-                'pancard' => 'required|file|mimes:jpeg,png,pdf,docs,doc|max:2048',
-            ], [
-                'reg_id.required' => 'Registration number is must.',
-                'reg_id.min' => 'Registration number not more then 255 character.',
-            ]);
+                'id_proof' => 'required|file|mimes:jpeg,pdf,docs,doc|max:2048',
+                'address_proof' => 'required|file|mimes:jpeg,pdf,docs,doc|max:2048',
+                'document_proof' => 'required|file|mimes:jpeg,pdf,docs,doc|max:2048',
+            ]
+            //  [
+            //     'reg_id.required' => 'Registration number is must.',
+            //     'reg_id.min' => 'Registration number not more then 255 character.',
+            // ]
+           );
             if ($validator->fails()) {
                 return back()->withErrors($validator->errors())->withInput();
             }
 
             if (Auth::check()) {
-                if ($request->hasFile('gst')) {
-                    $gstFile = $request->file('gst');
-                    $gstFileName = time() . '_' . $gstFile->getClientOriginalName();
-                    $gstFile->storeAs('public/company_documents/gst', $gstFileName);
-                    $gstUploadFilePath = asset('storage/company_documents/gst/' . $gstFileName);
-                    $insertGSTRecords = [
-                        'reg_id' => !empty($request->reg_id) ? $request->reg_id : null,
+
+                if ($request->hasFile('id_proof')) {
+                    $idFile = $request->file('id_proof');
+                    $idFileName = time() . '_' . $idFile->getClientOriginalName();
+                    $idFile->storeAs('public/company_documents/id_proof', $idFileName);
+                    $idUploadFilePath = asset('storage/company_documents/id_proof/' . $idFileName);
+                    $insertIdRecords = [
+                        // 'reg_id' => !empty($request->reg_id) ? $request->reg_id : null,
                         'user_id' => Auth::id(),
-                        'doc_type' => 'GST',
-                        'document' => !empty($gstUploadFilePath) ? $gstUploadFilePath : null,
+                        'doc_type' => 'Id Proof',
+                        'document' => !empty($idUploadFilePath) ? $idUploadFilePath : null,
                     ];
-                    Documents::create($insertGSTRecords);
+                    Documents::create($insertIdRecords);
                 }
-                if ($request->hasFile('pancard')) {
-                    $pancardFile = $request->file('pancard');
-                    $pancardFileName = time() . '_' . $pancardFile->getClientOriginalName();
-                    $pancardFile->storeAs('public/company_documents/pancard', $pancardFileName);
-                    $pancardUploadFilePath = asset('storage/company_documents/pancard/' . $pancardFileName);
-                    $insertpancardRecords = [
-                        'reg_id' => !empty($request->reg_id) ? $request->reg_id : null,
+
+                if ($request->hasFile('address_proof')) {
+                    $addressFile = $request->file('address_proof');
+                    $addressFileName = time() . '_' . $addressFile->getClientOriginalName();
+                    $addressFile->storeAs('public/company_documents/address_proof', $addressFileName);
+                    $addressUploadFilePath = asset('storage/company_documents/address_proof/' . $addressFileName);
+                    $insertAddressRecords = [
+                        // 'reg_id' => !empty($request->reg_id) ? $request->reg_id : null,
                         'user_id' => Auth::id(),
-                        'doc_type' => 'Pan Card',
-                        'document' => !empty($pancardUploadFilePath) ? $pancardUploadFilePath : null,
+                        'doc_type' => 'Address Proof',
+                        'document' => !empty($addressUploadFilePath) ? $addressUploadFilePath : null,
                     ];
-                    Documents::create($insertpancardRecords);
+                    Documents::create($insertAddressRecords);
+                }
+                if ($request->hasFile('document_proof')) {
+                    $docFile = $request->file('document_proof');
+                    $docFileName = time() . '_' . $docFile->getClientOriginalName();
+                    $docFile->storeAs('public/company_documents/document_proof', $docFileName);
+                    $docUploadFilePath = asset('storage/company_documents/document_proof/' . $docFileName);
+                    $insertDocRecords = [
+                        // 'reg_id' => !empty($request->reg_id) ? $request->reg_id : null,
+                        'user_id' => Auth::id(),
+                        'doc_type' => 'Document Proof',
+                        'document' => !empty($docUploadFilePath) ? $docUploadFilePath : null,
+                    ];
+                    Documents::create($insertDocRecords);
                 }
                 return redirect('status')->with('message', 'Thank you for uploading verification documents. Once verified then you will be able to use this portal.');
                 // return redirect()->back()->with('message', 'Thank you for uploading verification documents. Once verified then you will be able to use this portal.');
