@@ -463,7 +463,7 @@
                                     <th>Type</th>
                                     <th>Id</th>
                                     <th>Verification</th>
-                                    {{-- <th>Actions</th> --}}
+                                    <th>Documents</th>
                                   </tr>
                                 </thead>
                                 @foreach($identity as $ident)
@@ -471,14 +471,22 @@
                                     <tr>
                                       <td>{{ $ident['id_type']}}</td>
                                       <td>{{ $ident['id_number']}}</td>
-                                      <td><span class="verified-clr"><i class="fa fa-check"></i> Verified</span></td>
-                                      {{-- <td>
+                                      @if($ident['verification_type'] == 'Verified')
+                                      <td><span class="verified-clr"><i
+                                        class="fa fa-check"></i>{{ $ident['verification_type'] }}</span>
+                                      </td> 
+                                      @else
+                                      <td><span class="not-verified-clr"><i
+                                        class="fa fa-times"></i>{{ $ident['verification_type'] }}</span>
+                                      </td>
+                                      @endif
+                                      <td>
                                         <span class="d-flex tbl-iconBx">
-                                          <a href="#" target="_black" class="docu-down" data-toggle="modal" data-target="#exampleModaldocument"><img src="assets/admin/images/document.png"></a>
-                                          <a href="assets/admin/images/pan-card.png" target="_black" class="docu-download"><img src="assets/admin/images/download-icon.png"></a>
-                                          <button type="button" class="border-none" data-toggle="modal" data-target="#identityEdit"><img src="assets/admin/images/edit-icon.png"></button>
+                                            <a href="#" target="_black" class="docu-down" data-toggle="modal" data-target="#exampleModaldocument{{$ident['id']}}"><img src="{{ asset('assets') }}/admin/images/document.png"></a>
+                                            <a href="/image/{{ $ident['document'] }}" target="_black" class="docu-download"><img src="{{ asset('assets') }}/admin/images/download-icon.png"></a>
+                                            {{-- <button type="button" class="border-none" data-toggle="modal" data-target="#identityEdit{{$item['id']}}"><img src="{{ asset('assets') }}/admin/images/edit-icon.png"></button> --}}
                                         </span>
-                                      </td> --}}
+                                    </td>
                                     </tr>
                                 </tbody>
                                 @endforeach
@@ -531,25 +539,28 @@
                                     <th>From</th>
                                     <th>To</th>
                                     <th>Verification</th>
-                                    {{-- <th>Action</th> --}}
+                                    <th>Documents</th>
                                   </tr>
                                 </thead>
-                                @foreach($qualification as $quaf)
+                                @foreach($qual_item as $item)
                                 <tbody>
-                                  <tr>                                    
-                                    <td>{{ $quaf['degree']}}</td> 
-                                    <td>{{ $quaf['inst_name']}}</td> 
-                                    <td>{{ $quaf['subject']}}</td>
-                                    <td>{{ $quaf['duration_from']}}</td>  
-                                    <td>{{ $quaf['duration_to']}}</td>  
-                                    <td><span class="verified-clr"><i class="fa fa-check"></i> {{ $quaf['verification_type']}}</span></td>
-                                    {{-- <td>
-                                      <a href="#" target="_black" class="docu-down" data-toggle="modal" data-target="#qualificationdocument"><img src="assets/admin/images/document.png"></a>
-                                      <a href="assets/admin/images/job-offer-letter.png" target="_black" class="docu-download"><img src="assets/admin/images/download-icon.png"></a>
-                                      <button type="button" class="border-none" data-toggle="modal" data-target="#qualificationEdit"><img src="assets/admin/images/edit-icon.png"></button>
-                                    </td> --}}
-                                  </tr>
-                                  
+                                    <tr>
+                                        <td>{{ $item['degree'] }}</td>
+                                        <td>{{ $item['inst_name'] }}</td>
+                                        <td>{{ $item['subject'] }}</td>
+                                        <td>{{ $item['duration_from'] }}</td>
+                                        <td>{{ $item['duration_to'] }}</td>
+                                        @if($item['verification_type'] == 'Verified')
+                                        <td><span class="verified-clr"><i class="fa fa-check"></i>{{ $item['verification_type'] }}</span> </td>
+                                        @else
+                                        <td><span class="not-verified-clr"><i class="fa fa-times"></i> {{ $item['verification_type'] }}</span></td>
+                                        @endif
+                                        <td>
+                                            <a href="#" target="_black" class="docu-down" data-toggle="modal" data-target="#qualificationdocument{{$item['id']}}"><img src="{{ asset('assets') }}/admin/images/document.png"></a>
+                                            <a href="/image/{{ $item['document'] }}" target="_black" class="docu-download"><img src="{{ asset('assets') }}/admin/images/download-icon.png"></a>
+                                            {{-- <button type="button" class="border-none" data-toggle="modal" data-target="#qualificationEdit{{$item['id']}}"><img src="{{ asset('assets') }}/admin/images/edit-icon.png"></button> --}}
+                                        </td>
+                                    </tr>
                                 </tbody>
                                 @endforeach
                               </table>
@@ -601,9 +612,9 @@
                                     <th>From</th>
                                     <th>To</th>
                                     <th>Designation</th>
-                                    {{-- <th>Offer Letter</th> --}}
-                                    {{-- <th>Experience</th> --}}
-                                    {{-- <th>Salary Slips</th> --}}
+                                    <th>Offer Letter</th>
+                                    <th>Experience</th>
+                                    <th>Salary Slips</th>
                                     <th>Verification</th>
                                     {{-- <th>Action</th> --}}
                                   </tr>
@@ -615,10 +626,15 @@
                                     <td>{{ $work['work_duration_from']}}</td>  
                                     <td>{{ $work['work_duration_to']}}</td> 
                                     <td>{{ $work['designation']}}</td>  
-                                    {{-- <td><a href="#" target="_black" class="docu-down" data-toggle="modal" data-target="#qualificationdocument"><img src="assets/admin/images/document.png"></a></td> --}}
-                                    {{-- <td><a href="#" target="_black" class="docu-down" data-toggle="modal" data-target="#qualificationdocument"><img src="assets/admin/images/document.png"></a></td> --}}
-                                    {{-- <td><a href="assets/admin/images/sample-pdf.pdf" target="_black" class="docu-download"><img src="assets/admin/images/pdf-icon.png"></a></td> --}}
+                                    <td><a href="#" target="_black" class="docu-down" data-toggle="modal" data-target="#workofferdocument{{$work['id']}}"><img src="{{ asset('assets') }}/admin/images/document.png"></a> </td>
+                                    <td><a href="#" target="_black" class="docu-down" data-toggle="modal" data-target="#workexpdocument{{$work['id']}}"><img  src="{{ asset('assets') }}/admin/images/document.png"></a>
+                                    </td>
+                                  <td><a href="#" target="_black" class="docu-download"><img src="{{ asset('assets') }}/admin/images/pdf-icon.png"></a> </td>
+                                    @if($work['verification_type'] == 'Verified')
                                     <td><span class="verified-clr"><i class="fa fa-check"></i> {{ $work['verification_type']}}</span></td>
+                                    @else
+                                    <td><span class="not-verified-clr"><i class="fa fa-times"></i>{{ $work['verification_type'] }}</span></td>
+                                    @endif
                                     {{-- <td><button type="button" class="border-none" data-toggle="modal" data-target="#workHistoryedit"><img src="assets/admin/images/edit-icon.png"></button></td> --}}
                                   </tr>
                                 </tbody>
@@ -659,17 +675,18 @@
                 
                       <table class="table table-bordered" id="dynamicAddRemove">
                         <tr>
-                            <th>Add Skills</th>
+                            <th>Add Skills<span style="color:red">*</span></th>
                             <th></th>
                         </tr>
                         <tr>
-                            <td><input type="text" name="skill[]" placeholder="Enter subject" class="form-control" />
+                            <td><input type="text" name="skill[]" placeholder="Enter subject" class="form-control" required/>
+                              <strong class="error" id="skill-error"></strong>
                             </td>
                             <td>
                             <h6>
                               <span><input type="radio" id="customRadioInline1" name="skill_type[]" class=""  value="Beginner" checked="">  <label class="" for="customRadioInline1">Beginner</label></span>  
-                              <span><input type="radio" id="customRadioInline2" name="skill_type[]" class="" value="Intermediate"> <label class="" for="customRadioInline2">Intermediate</label></span>
-                              <span><input type="radio" id="customRadioInline3" name="skill_type[]" class="" value="Expert"><label class="" for="customRadioInline3">Expert</label></span>
+                              <span><input type="radio" id="customRadioInline2" name="skill_type[]" class="" value="Intermediate">  <label class="" for="customRadioInline2">Intermediate</label></span>
+                              <span><input type="radio" id="customRadioInline3" name="skill_type[]" class="" value="Expert">  <label class="" for="customRadioInline3">Expert</label></span>
                               </h6> 
                             </td> 
                             <td><a name="add" id="dynamic-ar" class="add-plus extra-fields-customer"><span><img src="{{ asset('assets') }}/admin/images/button-plus.png"></span></td>
@@ -679,20 +696,21 @@
 
                  
 
-                    <h2>known Language</h2>
+                    <h2>Known Language</h2>
                     <table class="table table-bordered" id="dynamicAddRemove1">
                       <tr>
-                          <th>Add Languages</th>
+                          <th>Add Languages<span style="color:red">*</span></th>
                           <th></th>
                       </tr>
                       <tr>
-                          <td><input type="text" name="lang[]" placeholder="Enter subject" class="form-control" />
+                          <td><input type="text" name="lang[]" placeholder="Enter subject" class="form-control" required/>
+                            <strong class="error" id="lang-error"></strong>
                           </td>
                           <td>
                           <h6>
                             <span><input type="radio" id="customRadioInline4" name="lang_type[]" class=""  value="Beginner" checked="">  <label class="" for="customRadioInline4">Beginner</label></span>  
-                            <span><input type="radio" id="customRadioInline5" name="lang_type[]" class="" value="Intermediate"> <label class="" for="customRadioInline5">Intermediate</label></span>
-                            <span><input type="radio" id="customRadioInline6" name="lang_type[]" class="" value="Expert"><label class="" for="customRadioInline6">Expert</label></span>
+                            <span><input type="radio" id="customRadioInline5" name="lang_type[]" class="" value="Intermediate">  <label class="" for="customRadioInline5">Intermediate</label></span>
+                            <span><input type="radio" id="customRadioInline6" name="lang_type[]" class="" value="Expert">  <label class="" for="customRadioInline6">Expert</label></span>
                             </h6> 
                           </td> 
                           <td><a name="add" id="dynamic-ar1" class="add-plus extra-fields-customer"><span><img src="{{ asset('assets') }}/admin/images/button-plus.png"></span></td>
@@ -728,7 +746,7 @@
                       <div class="col-xl-6">
                         <div class="col-xl-12">
                           <h2>Skills <span class="ml-auto on-head-right" data-toggle="modal" data-target="#skillsAdd">
-                            {{-- <img src="{{ asset('assets') }}/admin/images/button-plus-clr.png"> <small>Add</small> --}}
+                            <img src="{{ asset('assets') }}/admin/images/button-plus-clr.png"> <small>Add</small>
                           </span></h2>
                         </div>
                         <div class="eml-per-main">
@@ -737,6 +755,7 @@
                               <thead>
                                 <tr>
                                   <th>Skill Name</th>
+                              
                                   <th>Competency Levels</th>
                                   {{-- <th>Action</th> --}}
                                 </tr>
@@ -744,6 +763,7 @@
                                 @foreach ($skill_item as $item)
                                   <tr>
                                     <td>{{ $item['skill'] }}</td>
+                                  
                                     <td>{{ $item['skill_type'] }}</td>
                                     {{-- <td><button type="button" class="border-none" data-toggle="modal" data-target="#skillsAdd"><img src="{{ asset('assets') }}/admin/images/edit-icon.png"></button></td> --}}
                                   </tr>
@@ -757,7 +777,7 @@
                       <div class="col-xl-6">
                         <div class="col-xl-12">
                           <h2>known Language <span class="ml-auto on-head-right" data-toggle="modal" data-target="#skillsLanguageAdd">
-                            {{-- <img src="{{ asset('assets') }}/admin/images/button-plus-clr.png"> <small>Add</small> --}}
+                            <img src="{{ asset('assets') }}/admin/images/button-plus-clr.png"> <small>Add</small>
                           </span></h2>
                         </div>
                         <div class="eml-per-main">
@@ -1359,29 +1379,38 @@
   </div>  
 </form>
 
-  <!-- The Modal Docum INFO-->
-  <div class="modal fade custu-modal-popup" id="qualificationdocument" role="dialog" aria-labelledby="exampleModalLabel"  aria-hidden="true">
+ <!-- The Modal Docum INFO-->
+@foreach($qual_item as $item)
+<div class="modal fade custu-modal-popup" id="qualificationdocument{{$item['id']}}" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h2 class="modal-title" id="exampleModalLabel">Document View</h2>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <img src="{{ asset('assets') }}/admin/images/close-btn-icon.png">
-          </button>
-        </div>
-        <div class="modal-body">
-          <div class="document-body">
-            <img src="{{ asset('assets') }}/admin/images/job-offer-letter.png">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="exampleModalLabel">Document View</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <img src="{{ asset('assets') }}/admin/images/close-btn-icon.png">
+                </button>
+            </div>
+            @if($item['document'] == Null)
+            <div class="modal-body">
+              <p>Document not uploaded..</p>
+            </div>
+            @else
+            <div class="modal-body">
+              <div class="document-body">
+                  <img src="/image/{{ $item['document'] }}">
+              </div>
+              <a href="/download_qualification_doc/{{ $item['id'] }}" target="_black">Download</a>
           </div>
-          <a href="{{ asset('assets') }}/admin/images/pan-card.png" target="_black">Download</a>
-        </div>
-        <div class="modal-footer">
-          <!-- <button type="button" class="btn-secondary" data-dismiss="modal">Cancel</button>
+          @endif
+            <div class="modal-footer">
+                <!-- <button type="button" class="btn-secondary" data-dismiss="modal">Cancel</button>
           <button type="button" class="btn-primary">Save Changes</button> -->
+            </div>
         </div>
-      </div>
     </div>
-  </div>   
+</div>
+@endforeach  
   
   <!-- The Modal No INFO -->
   <div class="modal fade custu-no-select" id="qualificationinfo" role="dialog" aria-labelledby="exampleModalLabel"  aria-hidden="true">
@@ -1397,29 +1426,37 @@
     </div>
   </div> 
 
-  <!-- The Modal Docum INFO-->
-  <div class="modal fade custu-modal-popup" id="exampleModaldocument" role="dialog" aria-labelledby="exampleModalLabel"  aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h2 class="modal-title" id="exampleModalLabel">Pan Card</h2>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <img src="{{ asset('assets') }}/admin/images/close-btn-icon.png">
-          </button>
-        </div>
-        <div class="modal-body">
-          <div class="document-body">
-            <img src="{{ asset('assets') }}/admin/images/pan-card.png">
+  @foreach($identity as $item)
+  <div class="modal fade custu-modal-popup" id="exampleModaldocument{{$item['id']}}" role="dialog"
+      aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h2 class="modal-title" id="exampleModalLabel">Pan Card</h2>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <img src="{{ asset('assets') }}/admin/images/close-btn-icon.png">
+                  </button>
+              </div>
+              @if($item['document'] == Null)
+              <div class="modal-body">
+                <p>Document not uploaded..</p>
+              </div>
+              @else
+              <div class="modal-body">
+                <div class="document-body">
+                    <img src="/image/{{ $item['document'] }}">
+                </div>
+                <a href="/download_identity_doc/{{ $item['id'] }}" target="_black">Download</a>
+             </div>
+             @endif
+              <div class="modal-footer">
+                  <!-- <button type="button" class="btn-secondary" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn-primary">Save Changes</button> -->
+              </div>
           </div>
-          <a href="{{ asset('assets') }}/admin/images/pan-card.png" target="_black">Download</a>
-        </div>
-        <div class="modal-footer">
-          <!-- <button type="button" class="btn-secondary" data-dismiss="modal">Cancel</button>
-          <button type="button" class="btn-primary">Save Changes</button> -->
-        </div>
       </div>
-    </div>
-  </div>   
+  </div>
+  @endforeach  
   
   <!-- The Modal No INFO -->
   <div class="modal fade custu-no-select" id="btninfo" role="dialog" aria-labelledby="exampleModalLabel"  aria-hidden="true">
@@ -1619,7 +1656,96 @@
     </div>
   </div> 
 
+  <!-- The Modal Skills Add -->
+  <div class="modal fade custu-modal-popup" id="skillsAdd" role="dialog" aria-labelledby="exampleModalLabel"  aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title" id="exampleModalLabel">Add Skills</h2>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <img src="{{ asset('assets') }}/admin/images/close-btn-icon.png">
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="comman-body">
+            <form method="post" action="">
+              @csrf
+              <div class="form-group inputtag-custom">
+                <label>Add Skill</label>
+                <div class="row customer_records1">
+                  <div class="col-md-8">
+                    <input type="text" name="skill" class="form-control input-search-box typeahead" data-provide="typeahead" placeholder="Language">
+                  </div>
+                  <div class="col-md-8">
+                    <h6>
+                      <span><input type="radio" name="skill_type" id="customRadioInline4" class="" value="Beginner" checked="">
+                      <label class="" for="customRadioInline4">Beginner</label></span>
+                      
+                      <span><input type="radio" name="skill_type" id="customRadioInline5" value="Intermediate" class="" >
+                      <label class="" for="customRadioInline5">Intermediate</label></span>
+                      <span><input type="radio" name="skill_type" id="customRadioInline6" value="Expert" class="" >
+                      <label class="" for="customRadioInline6">Expert</label></span>
+                    </h6>  
+                  </div>
+                </div>
+                <div class="customer_records_dynamic"></div>
+              </div> 
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
+          <button type="submit" name="more-skill" class="btn-primary-cust">Save</button>
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>
 
+
+    <!-- The Modal Language Add -->
+    <div class="modal fade custu-modal-popup" id="skillsLanguageAdd" role="dialog" aria-labelledby="exampleModalLabel"  aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title" id="exampleModalLabel">Add known Language</h2>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <img src="{{ asset('assets') }}/admin/images/close-btn-icon.png">
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="comman-body">
+              <form method="post" action="">
+                @csrf
+                <div class="form-group inputtag-custom">
+                  <label>Add Language</label>
+                  <div class="row customer_records1">
+                    <div class="col-md-8">
+                      <input type="text" name="lang" class="form-control input-search-box typeahead1" data-provide="typeahead" placeholder="Language">
+                    </div>
+                    <div class="col-md-8">
+                      <h6>
+                        <span><input type="radio" id="customRadioInline4" name="lang_type" value="Beginner" class="" checked="">
+                        <label class="" for="customRadioInline4">Beginner</label></span> 
+                        <span><input type="radio" id="customRadioInline5" name="lang_type" value="Intermediate" class="" >
+                        <label class="" for="customRadioInline5">Intermediate</label></span>
+                        <span><input type="radio" id="customRadioInline6" name="lang_type" value="Expert" class="" >
+                        <label class="" for="customRadioInline6">Expert</label></span>
+                      </h6>  
+                    </div>
+                  </div>
+                  <div class="customer_records_dynamic1"></div>
+                </div> 
+             
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
+            <button type="submit" name="more-lang" class="btn-primary-cust">Save</button>
+          </div>
+        </form>
+        </div>
+      </div>
+    </div>
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
@@ -1696,36 +1822,79 @@
             }
         });
     </script>
+   
 
-          {{-- <script>
-            $('.extra-fields-customer').click(function() {
-              $('.customer_records').clone().appendTo('.customer_records_dynamic');
-              $('.customer_records_dynamic .customer_records').addClass('single remove');
-              $('.single .extra-fields-customer').remove();
-              $('.single').append('<a href="#" class="remove-field btn-remove-customer add-plus minus-icon"><span><img src="{{ asset('assets') }}/admin/images/minus-icon.png"></span></a>');
-              $('.customer_records_dynamic > .single').attr("class", "row");
 
-              $('.customer_records_dynamic input').each(function() {
-                var count = 0;
-                var fieldname = $(this).attr("name");
-                $(this).attr('name', fieldname + count);
-                count++;
-              });
+@foreach($workhistory as $item)
+<div class="modal fade custu-modal-popup" id="workofferdocument{{$item['id']}}" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="exampleModalLabel">Document View</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <img src="{{ asset('assets') }}/admin/images/close-btn-icon.png">
+                </button>
+            </div>
+            @if($item['offer_letter'] == Null)
+            <div class="modal-body">
+            <p>Document not uploaded..</p>
+            </div>
+            @else
+            <div class="modal-body">
+                <div class="document-body">
+                    <img src="/image/{{ $item['offer_letter'] }}">
+                </div>
+                <a href="/download_offerletter_doc/{{ $item['id'] }}" target="_black">Download</a>  
+            </div>
+            @endif
+            <div class="modal-footer">
+                <!-- <button type="button" class="btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn-primary">Save Changes</button> -->
+            </div>
+        </div>
+    </div>
+</div>
+@endforeach
 
-            });
-
-            $(document).on('click', '.remove-field', function(e) {
-              $(this).parent('.row').remove();
-              e.preventDefault(); 
-            });
-          </script>  --}}
+@foreach($workhistory as $item)
+<div class="modal fade custu-modal-popup" id="workexpdocument{{$item['id']}}" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="exampleModalLabel">Document View</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <img src="{{ asset('assets') }}/admin/images/close-btn-icon.png">
+                </button>
+            </div>
+            @if($item['exp_letter'] == Null)
+            <div class="modal-body">
+              <p>Document not uploaded..</p>
+            </div>
+            @else
+            <div class="modal-body">
+                <div class="document-body">
+                    <img src="/image/{{ $item['exp_letter'] }}">
+                </div>
+                <a href="/download_expletter_doc/{{ $item['id'] }}" target="_black">Download</a>
+            </div>
+            @endif
+            <div class="modal-footer">
+                <!-- <button type="button" class="btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn-primary">Save Changes</button> -->
+            </div>
+        </div>
+    </div>
+</div>
+@endforeach
 
             <script type="text/javascript">
                   var i = 0;
                   $("#dynamic-ar").click(function () {
                       ++i;
                       $("#dynamicAddRemove").append('<tr><td><input type="text" name="skill[' + i +
-                          ']" placeholder="Enter subject" class="form-control" /></td><td><h6><span><input type="radio" id="customRadioInline1" name="skill_type['+ i +']" class=""  value="Beginner" checked="">  <label class="" for="customRadioInline1">Beginner</label></span> <span><input type="radio" id="customRadioInline2" name="skill_type['+ i +']" class="" value="Intermediate"> <label class="" for="customRadioInline2">Intermediate</label></span><span><input type="radio" id="customRadioInline3" name="skill_type['+ i +']" class="" value="Expert"><label class="" for="customRadioInline3">Expert</label></span></h6></td><td><a href=""class="remove-input-field remove-field btn-remove-customer add-plus minus-icon"><span><img src="{{ asset('assets') }}/admin/images/minus-icon.png"></span></td></tr>'
+                          ']" placeholder="Enter subject" class="form-control" /></td><td><h6><span><input type="radio" id="customRadioInline1" name="skill_type['+ i +']" class=""  value="Beginner" checked="">  <label class="" for="customRadioInline1">Beginner</label></span> <span><input type="radio" id="customRadioInline2" name="skill_type['+ i +']" class="" value="Intermediate">  <label class="" for="customRadioInline2">Intermediate</label></span> <span><input type="radio" id="customRadioInline3" name="skill_type['+ i +']" class="" value="Expert">  <label class="" for="customRadioInline3">Expert</label></span></h6></td><td><a href=""class="remove-input-field remove-field btn-remove-customer add-plus minus-icon"><span><img src="{{ asset('assets') }}/admin/images/minus-icon.png"></span></td></tr>'
                           );
                   });
                   $(document).on('click', '.remove-input-field', function () {
@@ -1739,7 +1908,7 @@
               $("#dynamic-ar1").click(function () {
                   ++j;
                   $("#dynamicAddRemove1").append('<tr><td><input type="text" name="lang['+ j +
-                      ']" placeholder="Enter subject" class="form-control" /></td><td><h6><span><input type="radio" id="customRadioInline4" name="lang_type['+ j +']" class=""  value="Beginner" checked="">  <label class="" for="customRadioInline4">Beginner</label></span> <span><input type="radio" id="customRadioInline5" name="lang_type['+ j +']" class="" value="Intermediate"> <label class="" for="customRadioInline5">Intermediate</label></span><span><input type="radio" id="customRadioInline6" name="lang_type['+ j +']" class="" value="Expert"><label class="" for="customRadioInline6">Expert</label></span></h6></td><td><a href=""class="remove-input-field remove-field btn-remove-customer add-plus minus-icon"><span><img src="{{ asset('assets') }}/admin/images/minus-icon.png"></span></td></tr>'
+                      ']" placeholder="Enter subject" class="form-control" /></td><td><h6><span><input type="radio" id="customRadioInline4" name="lang_type['+ j +']" class=""  value="Beginner" checked="">  <label class="" for="customRadioInline4">Beginner</label></span>  <span><input type="radio" id="customRadioInline5" name="lang_type['+ j +']" class="" value="Intermediate">  <label class="" for="customRadioInline5">Intermediate</label></span> <span><input type="radio" id="customRadioInline6" name="lang_type['+ j +']" class="" value="Expert">  <label class="" for="customRadioInline6">Expert</label></span></h6></td><td><a href=""class="remove-input-field remove-field btn-remove-customer add-plus minus-icon"><span><img src="{{ asset('assets') }}/admin/images/minus-icon.png"></span></td></tr>'
                       );
               });
               $(document).on('click', '.remove-input-field1', function () {
@@ -1904,24 +2073,11 @@
          $("#add_skills").validate({
             rules: {
               skill: "required",
-       
-            },
-           
-            messages: {
-              skill: "Skill is required",
-           
-             
-            }
-         });
-
-         $("#add_langs").validate({
-            rules: {
-            
               lang: "required",
             },
            
             messages: {
-            
+              skill: "Skill is required",
               lang: "Known language is required",
              
             }

@@ -321,9 +321,15 @@
                                                             <tr>
                                                                 <td>{{ $item['id_type'] }}</td>
                                                                 <td>{{ $item['id_number'] }}</td>
+                                                                @if($item['verification_type'] == 'Verified')
                                                                 <td><span class="verified-clr"><i
-                                                                            class="fa fa-check"></i>{{ $item['verification_type'] }}</span>
+                                                                     class="fa fa-check"></i>{{ $item['verification_type'] }}</span>
                                                                 </td>
+                                                                @else
+                                                                 <td><span class="not-verified-clr"><i
+                                                                    class="fa fa-times"></i>{{ $item['verification_type'] }}</span>
+                                                                 </td>
+                                                                 @endif
                                                                 <td>
                                                                     <span class="d-flex tbl-iconBx">
                                                                         <a href="#" target="_black"
@@ -406,15 +412,22 @@
                                                                     <td>{{ $item['subject'] }}</td>
                                                                     <td>{{ $item['duration_from'] }}</td>
                                                                     <td>{{ $item['duration_to'] }}</td>
+                                                                    @if($item['verification_type'] == 'Verified')
                                                                     <td><span class="verified-clr"><i
                                                                                 class="fa fa-check"></i>
                                                                             {{ $item['verification_type'] }}</span>
                                                                     </td>
+                                                                    @else
+                                                                    <td><span class="not-verified-clr"><i
+                                                                            class="fa fa-times"></i>
+                                                                        {{ $item['verification_type'] }}</span>
+                                                                    </td>
+                                                                    @endif
                                                                     <td>
                                                                       
                                                                         <a href="#" target="_black"
                                                                             class="docu-down" data-toggle="modal"
-                                                                            data-target="#qualificationdocument"><img
+                                                                            data-target="#qualificationdocument{{$item['id']}}"><img
                                                                                 src="{{ asset('assets') }}/admin/images/document.png"></a>
                                                                         <a href="/image/{{ $qualification->document }}"
                                                                             target="_black" class="docu-download"><img
@@ -506,14 +519,21 @@
                                                                         data-target="#workexpdocument{{$item['id']}}"><img
                                                                             src="{{ asset('assets') }}/admin/images/document.png"></a>
                                                                 </td>
-                                                                <td><a href=""
+                                                                <td><a href="#"
                                                                         target="_black" class="docu-download"><img
                                                                             src="{{ asset('assets') }}/admin/images/pdf-icon.png"></a>
                                                                 </td>
+                                                                @if($item['verification_type'] == 'Verified')
                                                                 <td><span class="verified-clr"><i
                                                                             class="fa fa-check"></i>
                                                                         {{ $item['verification_type'] }}</span>
                                                                 </td>
+                                                                @else
+                                                                <td><span class="not-verified-clr"><i
+                                                                    class="fa fa-times"></i>
+                                                                {{ $item['verification_type'] }}</span>
+                                                                </td>
+                                                                @endif
                                                                 <td><button type="button" class="border-none"
                                                                         data-toggle="modal"
                                                                         data-target="#workHistoryedit{{$item['id']}}"><img
@@ -1509,8 +1529,10 @@
 </div>
 
 @endforeach
+
 <!-- The Modal Docum INFO-->
-<div class="modal fade custu-modal-popup" id="qualificationdocument" role="dialog"
+@foreach($qual_item as $item)
+<div class="modal fade custu-modal-popup" id="qualificationdocument{{$item['id']}}" role="dialog"
     aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -1520,12 +1542,18 @@
                     <img src="{{ asset('assets') }}/admin/images/close-btn-icon.png">
                 </button>
             </div>
+            @if($item['document'] == Null)
             <div class="modal-body">
-                <div class="document-body">
-                    <img src="/image/{{ $qualification->document }}">
-                </div>
-                <a href="/download_qualification_doc/{{ $qualification->emp_id }}" target="_black">Download</a>
+              <p>Document not uploaded..</p>
             </div>
+            @else
+            <div class="modal-body">
+              <div class="document-body">
+                  <img src="/image/{{ $item['document'] }}">
+              </div>
+              <a href="/download_qualification_doc/{{ $item['id'] }}" target="_black">Download</a>
+          </div>
+          @endif
             <div class="modal-footer">
                 <!-- <button type="button" class="btn-secondary" data-dismiss="modal">Cancel</button>
           <button type="button" class="btn-primary">Save Changes</button> -->
@@ -1533,6 +1561,7 @@
         </div>
     </div>
 </div>
+@endforeach
 
 @foreach($work_item as $item)
 <div class="modal fade custu-modal-popup" id="workofferdocument{{$item['id']}}" role="dialog"
@@ -1545,12 +1574,18 @@
                     <img src="{{ asset('assets') }}/admin/images/close-btn-icon.png">
                 </button>
             </div>
+            @if($item['offer_letter'] == Null)
+            <div class="modal-body">
+            <p>Document not uploaded..</p>
+            </div>
+            @else
             <div class="modal-body">
                 <div class="document-body">
                     <img src="/image/{{ $item['offer_letter'] }}">
                 </div>
-                <a href="/download_offerletter_doc/{{ $item['id'] }}" target="_black">Download</a>
+                <a href="/download_offerletter_doc/{{ $item['id'] }}" target="_black">Download</a>  
             </div>
+            @endif
             <div class="modal-footer">
                 <!-- <button type="button" class="btn-secondary" data-dismiss="modal">Cancel</button>
           <button type="button" class="btn-primary">Save Changes</button> -->
@@ -1571,12 +1606,18 @@
                     <img src="{{ asset('assets') }}/admin/images/close-btn-icon.png">
                 </button>
             </div>
+            @if($item['exp_letter'] == Null)
+            <div class="modal-body">
+              <p>Document not uploaded..</p>
+            </div>
+            @else
             <div class="modal-body">
                 <div class="document-body">
                     <img src="/image/{{ $item['exp_letter'] }}">
                 </div>
                 <a href="/download_expletter_doc/{{ $item['id'] }}" target="_black">Download</a>
             </div>
+            @endif
             <div class="modal-footer">
                 <!-- <button type="button" class="btn-secondary" data-dismiss="modal">Cancel</button>
           <button type="button" class="btn-primary">Save Changes</button> -->
@@ -1612,12 +1653,18 @@
                     <img src="{{ asset('assets') }}/admin/images/close-btn-icon.png">
                 </button>
             </div>
+            @if($item['document'] == Null)
             <div class="modal-body">
-                <div class="document-body">
-                    <img src="/image/{{ $item['document'] }}">
-                </div>
-                <a href="/download_identity_doc/{{ $item['id'] }}" target="_black">Download</a>
+              <p>Document not uploaded..</p>
             </div>
+            @else
+            <div class="modal-body">
+              <div class="document-body">
+                  <img src="/image/{{ $item['document'] }}">
+              </div>
+              <a href="/download_identity_doc/{{ $item['id'] }}" target="_black">Download</a>
+           </div>
+           @endif
             <div class="modal-footer">
                 <!-- <button type="button" class="btn-secondary" data-dismiss="modal">Cancel</button>
           <button type="button" class="btn-primary">Save Changes</button> -->

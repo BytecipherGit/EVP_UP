@@ -125,24 +125,14 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label>Registered Address <strong style="color:red">*</strong> </label>
-                            <textarea class="form-control" id="address" name="address" value="{{ old('address') }}" placeholder="Enter Your Address"
-                                rows="2" autofocus autocomplete="address" ></textarea>
-                            {{-- @error('address')
-                                <p class="velidation">{{ $message }}</p>
-                            @enderror --}}
-                            <strong class="error" id="address-error"></strong>
-                        </div>
-
                         <div class="row">
                             <div class="col-xl-6">
                                 <div class="form-group">
                                     <label for="country">Country <strong style="color:red">*</strong></label>
-                                    <div class="">
+                                    <div>
 
                                         <select id="country-dropdown" name="country" value="{{ old('country') }}"
-                                            class="form-control">
+                                            class="form-control dropdownReg">
                                             <option value="">Select Country</option>
                                             @foreach ($countries as $country)
                                                 <option value="{{ $country->id }}">
@@ -161,11 +151,11 @@
                             <div class="col-xl-6">
                                 <div class="form-group">
                                     <label for="state">State <strong style="color:red">*</strong></label>
-                                    <div class="">
+                                    <div>
 
                                         <div class="form-group mb-3">
                                             <select id="state-dropdown" name="state" value="{{ old('state') }}"
-                                                class="form-control">
+                                                class="form-control dropdownReg">
                                                 <option value="">Select State</option>
                                             </select>
                                             {{-- @error('state')
@@ -182,11 +172,11 @@
                             <div class="col-xl-6">
                                 <div class="form-group">
                                     <label for="city">City <strong style="color:red">*</strong></label>
-                                    <div class="">
+                                    <div>
 
                                         <div class="form-group">
                                             <select id="city-dropdown" name="city" value="{{ old('city') }}"
-                                                class="form-control">
+                                                class="form-control dropdownReg">
                                                 <option value="">Select City</option>
                                             </select>
                                             {{-- @error('city')
@@ -208,6 +198,16 @@
                                     <strong class="error" id="pin-error"></strong>
                                 </div>
                             </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Registered Address <strong style="color:red">*</strong> </label>
+                            <textarea class="form-control" id="address" name="address" value="{{ old('address') }}" placeholder="Enter Your Address"
+                                rows="2" autofocus autocomplete="address" ></textarea>
+                            {{-- @error('address')
+                                <p class="velidation">{{ $message }}</p>
+                            @enderror --}}
+                            <strong class="error" id="address-error"></strong>
                         </div>
 
                         {{-- data-toggle="modal" --}}

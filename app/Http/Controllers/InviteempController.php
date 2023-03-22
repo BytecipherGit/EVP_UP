@@ -199,7 +199,7 @@ class InviteempController extends Controller
 
     public function downloadQualDoc(request $request)
     {
-        $data = Empqualification::where('emp_id', $request->id)->first();
+        $data = Empqualification::where('id', $request->id)->first();
         $file = public_path() . '/image/' . $data->document;
         $headers = array(
             'Content-Type: application/jpg',
@@ -210,7 +210,7 @@ class InviteempController extends Controller
 
     public function downloadOfferDoc(request $request)
     {
-        $work = Empworkhistory::where('emp_id', $request->id)->first();
+        $work = Empworkhistory::where('id', $request->id)->first();
         $file = public_path() . '/image/' . $work->offer_letter;
         $headers = array(
             'Content-Type: application/jpg',
@@ -221,7 +221,7 @@ class InviteempController extends Controller
 
     public function downloadIdDoc(request $request)
     {
-        $identity = Employeeidentity::where('emp_id', $request->id)->first();
+        $identity = Employeeidentity::where('id', $request->id)->first();
         $file = public_path() . '/image/' . $identity->document;
         $headers = array(
             'Content-Type: application/jpg',
@@ -232,7 +232,7 @@ class InviteempController extends Controller
 
     public function downloadExpDoc(request $request)
     {
-        $data = Empworkhistory::where('emp_id', $request->id)->first();
+        $data = Empworkhistory::where('id', $request->id)->first();
         $file = public_path() . '/image/' . $data->exp_letter;
         $headers = array(
             'Content-Type: application/jpg',
@@ -412,6 +412,7 @@ class InviteempController extends Controller
             // print_r($basic_id);die();
             $emp_ident = new Employeeidentity();
             $emp_ident->emp_id = $basic_id->id;
+            $emp_ident->company_id=Auth::id();
             $emp_ident->id_type = $request->input('id_type');
             $emp_ident->id_number = $request->input('id_number');
             $emp_ident->document = $request->input('document');
@@ -456,6 +457,7 @@ class InviteempController extends Controller
             $identity_id = Employee::where('id', $request->id)->first();
             $emp_qualf = new Empqualification();
             $emp_qualf->emp_id = $identity_id->id;
+            $emp_qualf->company_id=Auth::id();
             $emp_qualf->inst_name = $request->input('inst_name');
             $emp_qualf->degree = $request->input('degree');
             $emp_qualf->subject = $request->input('subject');
@@ -502,6 +504,7 @@ class InviteempController extends Controller
             $identity_id = Employee::where('id', $request->id)->first();
             $emp_work = new Empworkhistory();
             $emp_work->emp_id = $identity_id->id;
+            $emp_work->company_id=Auth::id();
             $emp_work->com_name = $request->input('com_name');
             $emp_work->designation = $request->input('designation');
             $emp_work->offer_letter = $request->input('offer_letter');
@@ -557,6 +560,7 @@ class InviteempController extends Controller
               $insertDataSkill = array(  
                 'emp_id' => $identity_id->id,
                 'skill' => $request->skill[$i],
+                'company_id' => Auth::id(),
                 'skill_type' => $request->skill_type[$i],
                 ); 
                 DB::table('emp_skills')->insert($insertDataSkill);  
@@ -566,6 +570,7 @@ class InviteempController extends Controller
           {   
             $insertDatalang = array(  
               'emp_id' => $identity_id->id,
+              'company_id' => Auth::id(),
               'lang' =>  $request->lang[$j],
               'lang_type' => $request->lang_type[$j],
               ); 

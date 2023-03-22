@@ -208,7 +208,7 @@
                                         <li>
                                             <a href="/employee">
                                                 <img src="{{ asset('assets') }}/admin/images/employees-view.png">
-                                                All Employee
+                                                All Employees
                                             </a>
                                         </li>
                                         {{-- <li>
@@ -234,7 +234,7 @@
                 <li>
                     <a href="/invite-employee">
                         <img src="{{ asset('assets') }}/admin/images/invite-icon.png">
-                        Invite Employee
+                        Invite Employees
                     </a>
                 </li>
 

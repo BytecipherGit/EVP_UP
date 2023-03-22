@@ -421,7 +421,7 @@
                       </div>
 
                   @if($workh)
-                      @foreach($workhistory as $work)
+                    
                       <div class="col-xl-12">
                         <div class="eml-per-main">
                           <div class="table-responsive">
@@ -440,7 +440,7 @@
                                   {{-- <th>Action</th> --}}
                                 </tr>
                               </thead>
-                         
+                              @foreach($workhistory as $work)
                               <tbody>
                                 <tr>
                                   <td>{{ $work['com_name']}}</td>
@@ -454,12 +454,12 @@
                                   {{-- <td><button type="button" class="border-none" data-toggle="modal" data-target="#workHistoryedit"><img src="assets/admin/images/edit-icon.png"></button></td> --}}
                                 </tr>
                               </tbody>
-                            
+                              @endforeach
                             </table>
                           </div>
                         </div>
                       </div>
-                      @endforeach
+                    
                     @else
                     <p class="no-data-clg">No Data Available</p> 
                     @endif
@@ -491,17 +491,18 @@
                     
                     <table class="table table-bordered" id="dynamicAddRemove">
                       <tr>
-                          <th>Add Skills</th>
+                          <th>Add Skills<span style="color:red">*</span></th>
                           <th></th>
                       </tr>
                       <tr>
-                          <td><input type="text" name="skill[]" placeholder="Enter subject" class="form-control" />
+                          <td><input type="text" name="skill[]" placeholder="Enter subject" class="form-control" required/>
+                            <strong class="error" id="skill-error"></strong>
                           </td>
                           <td>
                           <h6>
                             <span><input type="radio" id="customRadioInline1" name="skill_type[]" class=""  value="Beginner" checked="">  <label class="" for="customRadioInline1">Beginner</label></span>  
-                            <span><input type="radio" id="customRadioInline2" name="skill_type[]" class="" value="Intermediate"> <label class="" for="customRadioInline2">Intermediate</label></span>
-                            <span><input type="radio" id="customRadioInline3" name="skill_type[]" class="" value="Expert"><label class="" for="customRadioInline3">Expert</label></span>
+                            <span><input type="radio" id="customRadioInline2" name="skill_type[]" class="" value="Intermediate">  <label class="" for="customRadioInline2">Intermediate</label></span>
+                            <span><input type="radio" id="customRadioInline3" name="skill_type[]" class="" value="Expert">  <label class="" for="customRadioInline3">Expert</label></span>
                             </h6> 
                           </td> 
                           <td><a name="add" id="dynamic-ar" class="add-plus extra-fields-customer"><span><img src="{{ asset('assets') }}/admin/images/button-plus.png"></span></td>
@@ -511,20 +512,21 @@
 
                
 
-                  <h2>known Language</h2>
+                  <h2>Known Language</h2>
                   <table class="table table-bordered" id="dynamicAddRemove1">
                     <tr>
-                        <th>Add Languages</th>
+                        <th>Add Languages<span style="color:red">*</span></th>
                         <th></th>
                     </tr>
                     <tr>
-                        <td><input type="text" name="lang[]" placeholder="Enter subject" class="form-control" />
+                        <td><input type="text" name="lang[]" placeholder="Enter subject" class="form-control" required/>
+                          <strong class="error" id="lang-error"></strong>
                         </td>
                         <td>
                         <h6>
                           <span><input type="radio" id="customRadioInline4" name="lang_type[]" class=""  value="Beginner" checked="">  <label class="" for="customRadioInline4">Beginner</label></span>  
-                          <span><input type="radio" id="customRadioInline5" name="lang_type[]" class="" value="Intermediate"> <label class="" for="customRadioInline5">Intermediate</label></span>
-                          <span><input type="radio" id="customRadioInline6" name="lang_type[]" class="" value="Expert"><label class="" for="customRadioInline6">Expert</label></span>
+                          <span><input type="radio" id="customRadioInline5" name="lang_type[]" class="" value="Intermediate">  <label class="" for="customRadioInline5">Intermediate</label></span>
+                          <span><input type="radio" id="customRadioInline6" name="lang_type[]" class="" value="Expert">  <label class="" for="customRadioInline6">Expert</label></span>
                           </h6> 
                         </td> 
                         <td><a name="add" id="dynamic-ar1" class="add-plus extra-fields-customer"><span><img src="{{ asset('assets') }}/admin/images/button-plus.png"></span></td>
@@ -1062,22 +1064,6 @@
                 </div>
               </div>
             </div>
-
-            {{-- <div class="form-group">
-              <div class="row">
-                <div class="col-md-12">
-                  <label>Verification</label>
-                  <div class="selectBox active form-control">
-                    <div class="selectBox__value">Verified</div>
-                    <div class="dropdown-menu">
-                      <a class="dropdown-item ">Verification Type</a>
-                      <a class="dropdown-item active">Verified</a>
-                      <a class="dropdown-item">Not Verified</a>                        
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div> --}}
           </form>
         </div>
       </div>
@@ -1161,26 +1147,7 @@
                   <input type="file" id="document" name="document" class="form-control">
                   <strong class="error" id="document-error"></strong>
               </div>
-          </div>
-
-            {{-- <div class="form-group">
-              <div class="row">
-                <div class="col-md-12">
-                  <label>Verification<span style="color:red">*</span></label>
-                  <select class="form-control" name="verification_type" id="verification_type">
-                    <option value="{{ old('verification_type') }}">Verification Type {{ old('verification_type') }}</option>
-                    <option value="Verified">Verified</option>
-                    <option value="Not Verified">Not Verified</option>
-                  </select>
-                  <strong class="error" id="verification_type-error"></strong> --}}
-                  {{-- @error('verification_type')
-                  <span class="velidation">{{ $message }}</span>
-                  @enderror  --}}
-                {{-- </div> 
-              </div>
-              
-            </div> --}}
-        
+          </div>     
         </div>
       </div>
       <div class="modal-footer">
@@ -1254,21 +1221,6 @@
                 </div>
               </div>
             </div>
-            {{-- <div class="form-group">
-              <div class="row">
-                <div class="col-md-12">
-                  <label>Verification</label>
-                  <div class="selectBox active form-control">
-                    <div class="selectBox__value">Verified</div>
-                    <div class="dropdown-menu">
-                      <a class="dropdown-item ">Verification Type</a>
-                      <a class="dropdown-item active">Verified</a>
-                      <a class="dropdown-item">Not Verified</a>                        
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div> --}}
           </form>
         </div>
       </div>
@@ -1441,23 +1393,6 @@
                   <strong class="error" id="salary_slip-error"></strong>
               </div>
           </div>
-
-            {{-- <div class="form-group">
-              <div class="row">
-                <div class="col-md-12">
-                  <label>Verification<span style="color:red">*</span></label>
-                  <select class="form-control" name="verification_type" id="verification_type">
-                    <option value="">Verification Type</option>
-                    <option value="Verified">Verified</option>
-                    <option value="Not Verified">Not Verified</option>
-                  </select> --}}
-                  {{-- @error('verification_type')
-                    <span class="velidation">{{ $message }}</span>
-                  @enderror  --}}
-                  {{-- <strong class="error" id="verification_type-error"></strong>
-                </div>
-              </div>
-            </div> --}}
         </div>
       </div>
       <div class="modal-footer">
@@ -1625,7 +1560,7 @@
   $("#dynamic-ar").click(function () {
       ++i;
       $("#dynamicAddRemove").append('<tr><td><input type="text" name="skill[' + i +
-          ']" placeholder="Enter subject" class="form-control" /></td><td><h6><span><input type="radio" id="customRadioInline1" name="skill_type['+ i +']" class=""  value="Beginner" checked="">  <label class="" for="customRadioInline1">Beginner</label></span> <span><input type="radio" id="customRadioInline2" name="skill_type['+ i +']" class="" value="Intermediate"> <label class="" for="customRadioInline2">Intermediate</label></span><span><input type="radio" id="customRadioInline3" name="skill_type['+ i +']" class="" value="Expert"><label class="" for="customRadioInline3">Expert</label></span></h6></td><td><a href=""class="remove-input-field remove-field btn-remove-customer add-plus minus-icon"><span><img src="{{ asset('assets') }}/admin/images/minus-icon.png"></span></td></tr>'
+          ']" placeholder="Enter subject" class="form-control" /></td><td><h6><span><input type="radio" id="customRadioInline1" name="skill_type['+ i +']" class=""  value="Beginner" checked="">  <label class="" for="customRadioInline1">Beginner</label></span> <span><input type="radio" id="customRadioInline2" name="skill_type['+ i +']" class="" value="Intermediate">  <label class="" for="customRadioInline2">Intermediate</label></span> <span><input type="radio" id="customRadioInline3" name="skill_type['+ i +']" class="" value="Expert">  <label class="" for="customRadioInline3">Expert</label></span></h6></td><td><a href=""class="remove-input-field remove-field btn-remove-customer add-plus minus-icon"><span><img src="{{ asset('assets') }}/admin/images/minus-icon.png"></span></td></tr>'
           );
   });
   $(document).on('click', '.remove-input-field', function () {
@@ -1639,7 +1574,7 @@ var j = 0;
 $("#dynamic-ar1").click(function () {
   ++j;
   $("#dynamicAddRemove1").append('<tr><td><input type="text" name="lang['+ j +
-      ']" placeholder="Enter subject" class="form-control" /></td><td><h6><span><input type="radio" id="customRadioInline4" name="lang_type['+ j +']" class=""  value="Beginner" checked="">  <label class="" for="customRadioInline4">Beginner</label></span> <span><input type="radio" id="customRadioInline5" name="lang_type['+ j +']" class="" value="Intermediate"> <label class="" for="customRadioInline5">Intermediate</label></span><span><input type="radio" id="customRadioInline6" name="lang_type['+ j +']" class="" value="Expert"><label class="" for="customRadioInline6">Expert</label></span></h6></td><td><a href=""class="remove-input-field remove-field btn-remove-customer add-plus minus-icon"><span><img src="{{ asset('assets') }}/admin/images/minus-icon.png"></span></td></tr>'
+      ']" placeholder="Enter subject" class="form-control" /></td><td><h6><span><input type="radio" id="customRadioInline4" name="lang_type['+ j +']" class=""  value="Beginner" checked="">  <label class="" for="customRadioInline4">Beginner</label></span> <span><input type="radio" id="customRadioInline5" name="lang_type['+ j +']" class="" value="Intermediate">  <label class="" for="customRadioInline5">Intermediate</label></span> <span><input type="radio" id="customRadioInline6" name="lang_type['+ j +']" class="" value="Expert">  <label class="" for="customRadioInline6">Expert</label></span></h6></td><td><a href=""class="remove-input-field remove-field btn-remove-customer add-plus minus-icon"><span><img src="{{ asset('assets') }}/admin/images/minus-icon.png"></span></td></tr>'
       );
 });
 $(document).on('click', '.remove-input-field1', function () {

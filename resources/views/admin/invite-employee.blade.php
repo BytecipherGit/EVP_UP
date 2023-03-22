@@ -464,6 +464,7 @@
     });
 
     $(document).on('click', '#bulk_mail_invite', function() {
+     
         swal({
                 title: "Are you sure?",
                 text: "You want to send invitation to selected employee!",
@@ -471,7 +472,9 @@
                 buttons: true,
                 dangerMode: true,
             })
+   
             .then((result) => {
+               
                 if (result) {
                     var checkboxes = document.querySelectorAll('input[class="users_checkbox"]:checked');
                     var id = [];
@@ -507,6 +510,7 @@
                 } else {
                     swal("Please select atleast one checkbox!");
                     location.reload();
+                    
                 }
             });
     });

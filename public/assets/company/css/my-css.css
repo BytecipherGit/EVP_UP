@@ -132,6 +132,10 @@ header .navbar-brand img {
 .login-box-txt .form-group {
     margin-bottom: 25px;
 }
+.dropdownReg{
+  height: 54px !important;
+}
+
 .login-box-txt .form-control {
   height: auto;
   font-weight: normal;

@@ -29,7 +29,7 @@
                             <a href=""><img src="assets/company/images/back-icon.png"></a>
                         </div>
                         <h6>Company Verification Document</h6>
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                             <label>Company Registration No.</label>
 
                             <input type="text" name="reg_id" id="reg_id" class="form-control"
@@ -37,18 +37,18 @@
                             @error('reg_id')
                                 <p class="velidation">{{ $message }}</p>
                             @enderror
-                        </div>
+                        </div> --}}
 
                         <div class="document">
                             <div class="row new-changeLS customer_records">
                                 <div class="col-md-12">
                                     <div class="form-groupbox">
-                                        <label>Upload GST document </label>
+                                        <label>Company Registration ID Proof <strong style="color:red">*</strong></label>
                                         <div class="upload-img-file">
                                             <div class="p-image ml-auto">
-                                                <input type="file" name="gst" id="gst"
+                                                <input type="file" name="id_proof" id="id_proof"
                                                     class="form-control">
-                                                @error('gst')
+                                                @error('id_proof')
                                                     <p class="velidation">{{ $message }}</p>
                                                 @enderror
                                             </div>
@@ -57,12 +57,26 @@
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-groupbox">
-                                        <label>Upload PAN Card document </label>
+                                        <label>Company Address Proof <strong style="color:red">*</strong></label>
                                         <div class="upload-img-file">
                                             <div class="p-image ml-auto">
-                                                <input type="file" name="pancard" id="pancard"
+                                                <input type="file" name="address_proof" id="address_proof"
                                                     class="form-control">
-                                                @error('pancard')
+                                                @error('address_proof')
+                                                    <p class="velidation">{{ $message }}</p>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-groupbox">
+                                        <label>Company Registration Document Proof <strong style="color:red">*</strong></label>
+                                        <div class="upload-img-file">
+                                            <div class="p-image ml-auto">
+                                                <input type="file" name="document_proof" id="document_proof"
+                                                    class="form-control">
+                                                @error('document_proof')
                                                     <p class="velidation">{{ $message }}</p>
                                                 @enderror
                                             </div>
