@@ -8,7 +8,7 @@
       <div class="main-heading">        
         <div class="row">
           <div class="col-md-8">
-            <h1>Alumni Employee Details</h1>
+            <h1>Old Employee Details</h1>
             <p></p>
           </div>
           <div class="col-lg-4">

@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
             $table->string('email')->nullable();
-            $table->string('designation')->nullable();
+            $table->string('position')->nullable();
             $table->string('rating')->nullable();
             $table->enum('offer_status',['Pending','Accepted','Joined','Cancelled','Declined'])->comment('Pending / Accepted / Joined / Cancelled / Declined')->default('Pending');
             $table->unsignedBigInteger('interview_status')->comment('Hiring_stage Table PK');

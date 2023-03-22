@@ -11,7 +11,7 @@
       <div class="main-heading">        
         <div class="row">
           <div class="col-md-8">
-            <h1>Alumni Employees</h1>
+            <h1>Old Employees</h1>
             <p></p>
           </div>
           <div class="col-md-4">
