@@ -30,7 +30,7 @@ class DocumentsController extends Controller
                     }
                 }
                 if(!$flagStatus){
-                    return view('company/company-verification-document')->with('message', 'Thank you for uploading verification documents. Once verfified then you will be able to use this portal.');
+                    return view('company/company-verification-document')->with('message', 'Thank you for uploading verification documents. Once verified then you will be able to use this portal.');
                 } else {
                     return view('company/company-verification-document');
                 }
@@ -89,8 +89,8 @@ class DocumentsController extends Controller
                     ];
                     Documents::create($insertpancardRecords);
                 }
-                return redirect('status')->with('message', 'Thank you for uploading verification documents. Once verfified then you will be able to use this portal.');
-                // return redirect()->back()->with('message', 'Thank you for uploading verification documents. Once verfified then you will be able to use this portal.');
+                return redirect('status')->with('message', 'Thank you for uploading verification documents. Once verified then you will be able to use this portal.');
+                // return redirect()->back()->with('message', 'Thank you for uploading verification documents. Once verified then you will be able to use this portal.');
             } else {
                 return redirect('admin');
             }

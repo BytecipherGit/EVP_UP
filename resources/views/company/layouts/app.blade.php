@@ -269,6 +269,12 @@
                                                 Company Profile
                                             </a>
                                         </li>
+                                        <li>
+                                            <a href="/interview_process">
+                                                <img src="{{ asset('assets') }}/admin/images/setting-icon.png">
+                                                Interview Process
+                                            </a>
+                                        </li>
                                         {{-- <li>
                                             <a href="/employee">
                                                 <img src="{{ asset('assets') }}/admin/images/employees-view.png">
