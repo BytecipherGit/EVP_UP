@@ -6,6 +6,7 @@ use App\Helpers\Helper as HelpersHelper;
 use App\Mail\SendInterviewScheduleMail;
 use App\Mail\SendInterviewSchedulePhoneMail;
 use App\Mail\InterviewReminderMail;
+use App\Models\Employee;
 use App\Models\EmployeeInterview;
 use App\Models\EmployeeInterviewStatus;
 use App\Models\HiringStage;
@@ -46,8 +47,9 @@ class InterviewEmployee extends Controller
     {
         if (Auth::check()) {
             $interviewProcesses = InterviewProcess::where('company_id',Auth::id())->orderby('id','desc')->get();
+            $cmpEmployees = Employee::where('company_id',Auth::id())->orderby('id','desc')->get();
             $interview = (!empty($id)) ? EmployeeInterview::find($id) : false;
-            return view('admin.schedule-interview-form', compact('interview','interviewProcesses'));
+            return view('admin.schedule-interview-form', compact('interview','interviewProcesses','cmpEmployees'));
         }
 
     }

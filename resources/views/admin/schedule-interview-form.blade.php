@@ -8,11 +8,6 @@
 <input type="hidden" id="is_add" value="{{ $interview ? '' : 1 }}" />
 <input type="hidden" id="interview_id" name="interview_id" value="{{ $interview ? $interview->id : '' }}" />
 <div class="form-group">
-    <label>Select Interview Round<span style="color:red">*</span></label>
-    <input type="type" name="first_name" class="form-control" placeholder="First Name">
-    <strong class="error" id="first_name-error"></strong>
-</div>
-<div class="form-group">
     <label>First Name<span style="color:red">*</span></label>
     <input type="type" name="first_name" class="form-control" placeholder="First Name">
     <strong class="error" id="first_name-error"></strong>
@@ -32,7 +27,17 @@
     <input type="type" name="position" class="form-control" placeholder="Position">
     <strong class="error" id="position-error"></strong>
 </div>
-
+<div class="form-group">
+    <label>Select Interview Round<span style="color:red">*</span></label>
+    @if ($interviewProcesses)
+        <select id="interview_process" name="interview_process" class="form-control">
+            @foreach ($interviewProcesses as $interviewProcess)
+                <option value="{{ $interviewProcess->id }}">{{ $interviewProcess->title }}</option>
+            @endforeach
+        </select>
+    @endif
+    <strong class="error" id="interview_process-error"></strong>
+</div>
 <div class="form-group">
     <div class="row">
         <div class="col-md-5">
@@ -47,12 +52,16 @@
         </div>
         <div class="col-md-1">
             <label>&nbsp;</label>
-            <span class="time-schud">to</span>
+            <span class="time-schud">And</span>
         </div>
         <div class="col-md-3">
-            <label>End Time<span style="color:red">*</span></label>
-            <input type="time" name="interview_end_time" class="form-control">
-            <strong class="error" id="interview_end_time-error"></strong>
+            <label>Duration<span style="color:red">*</span></label>
+            <select class="form-control" id="duration" name="duration">
+                <option value="30M">30M</option>
+                <option value="1H">1H</option>
+                <option value="2H">2H</option>
+            </select>
+            <strong class="error" id="duration-error"></strong>
         </div>
     </div>
 </div>
@@ -86,9 +95,21 @@
         </div>
         <input type="hidden" id="interview_type" name="interview_type" value="Video">
         <div class="form-group">
-            <label>Message<span style="color:red">*</span></label>
-            <textarea name="message" rows="3" class="form-control" placeholder="Message"></textarea>
-            <strong class="error" id="message-error"></strong>
+            <label>Interviewer name<span style="color:red">*</span></label>
+            @if ($cmpEmployees)
+                <select id="interview_process" name="interview_process" class="form-control">
+                    <option value="">Select Employeee</option>
+                    @foreach ($cmpEmployees as $cmpEmployee)
+                        <option value="{{ $cmpEmployee->id }}">{{ $cmpEmployee->first_name.' '.$cmpEmployee->last_name }}</option>
+                    @endforeach
+                </select>
+            @endif
+            <strong class="error" id="interview_process-error"></strong>
+        </div>
+        <div class="form-group">
+            <label>Interview Instruction<span style="color:red">*</span></label>
+            <textarea name="interview_instruction" rows="3" class="form-control" placeholder="Interview Instruction"></textarea>
+            <strong class="error" id="interview_instruction-error"></strong>
         </div>
         {{-- <div class="form-group">
                 <label>Add Additianal Employers</label>
@@ -96,7 +117,9 @@
                     placeholder="Enter one pr more emails separated by a comma">
             </div> --}}
         <div class="form-group">
-            <label>Attech Resume<span style="color:red">*</span><h6>Only .jpeg, .pdf, .docs, or .doc files allowed.</h6></label>
+            <label>Attech Resume<span style="color:red">*</span>
+                <h6>Only .jpeg, .pdf, .docs, or .doc files allowed.</h6>
+            </label>
             <div class="upload-img-file">
                 <input type="file" id="attachment" name="attachment" class="form-control">
                 <strong class="error" id="attachment-error"></strong>

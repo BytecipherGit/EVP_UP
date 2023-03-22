@@ -15,12 +15,12 @@ return new class extends Migration
     {
         Schema::create('emp_basicinfo', function (Blueprint $table) {
             $table->id();
-       
+            $table->unsignedInteger('company_id');
+            $table->foreign('company_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('first_name');
-            $table->integer('company_id');
-            $table->string('profile')->nullable();
-            $table->string('last_name')->nullable();
             $table->string('middle_name')->nullable();
+            $table->string('last_name')->nullable();
+            $table->string('profile')->nullable();
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
             $table->string('dob')->nullable();
