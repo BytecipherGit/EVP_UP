@@ -9,6 +9,7 @@ use App\Mail\InterviewReminderMail;
 use App\Models\EmployeeInterview;
 use App\Models\EmployeeInterviewStatus;
 use App\Models\HiringStage;
+use App\Models\InterviewProcess;
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Http\Request;
@@ -43,8 +44,12 @@ class InterviewEmployee extends Controller
 
     public function getScheduleInterviewForm($id = '')
     {
-        $interview = (!empty($id)) ? EmployeeInterview::find($id) : false;
-        return view('admin.schedule-interview-form', compact('interview'));
+        if (Auth::check()) {
+            $interviewProcesses = InterviewProcess::where('company_id',Auth::id())->orderby('id','desc')->get();
+            $interview = (!empty($id)) ? EmployeeInterview::find($id) : false;
+            return view('admin.schedule-interview-form', compact('interview','interviewProcesses'));
+        }
+
     }
 
     public function schedule_interview(request $request)

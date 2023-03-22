@@ -8,6 +8,11 @@
 <input type="hidden" id="is_add" value="{{ $interview ? '' : 1 }}" />
 <input type="hidden" id="interview_id" name="interview_id" value="{{ $interview ? $interview->id : '' }}" />
 <div class="form-group">
+    <label>Select Interview Round<span style="color:red">*</span></label>
+    <input type="type" name="first_name" class="form-control" placeholder="First Name">
+    <strong class="error" id="first_name-error"></strong>
+</div>
+<div class="form-group">
     <label>First Name<span style="color:red">*</span></label>
     <input type="type" name="first_name" class="form-control" placeholder="First Name">
     <strong class="error" id="first_name-error"></strong>

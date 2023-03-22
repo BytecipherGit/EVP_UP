@@ -17,7 +17,6 @@ return new class extends Migration
             $table->id();
             $table->unsignedInteger('company_id');
             $table->foreign('company_id')->references('id')->on('users')->onDelete('cascade');
-            $table->string('employee_id')->nullable();
             $table->string('title')->nullable();
             $table->string('descriptions')->nullable();
             $table->timestamps();
