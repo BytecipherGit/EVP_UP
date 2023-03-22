@@ -49,7 +49,7 @@
         <img src="{{ asset('assets') }}/admin/web-email/images/calendar-icon.png" class="iconImg">
         <div class="">
           <h2>{{ $employeetime->interview_date}}</h2>
-          <p>{{ $employeetime->interview_start_time}} {{ $employeetime->interview_end_time }}</p>
+          <p>{{$employeetime->interview_start_time}} IST & duration of interview is {{$employeetime->duration}} </p>
         </div>
       </div>
       <div class="noti-declinenotifi">

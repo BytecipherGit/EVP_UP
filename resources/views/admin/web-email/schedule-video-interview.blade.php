@@ -58,7 +58,7 @@
         <img src="{{ asset('assets') }}/admin/web-email//images/calendar-icon.png" class="iconImg">
         <div class="">
           <h2>{{$employeeStatus->interview_date}}</h2>
-          <p>{{$employeeStatus->interview_start_time}} {{$employeeStatus->interview_end_time}} IST</p>
+          <p>{{$employeeStatus->interview_start_time}} IST & duration of interview is {{$employeeStatus->duration}} </p>
         </div> 
                        
       </div>

@@ -115,7 +115,7 @@
                                             @endif
                                         @endforeach
                                     </td>
-                                    <td>{{ ($employee->employee_comment) ? $employee->employee_comment : '' }}</td>
+                                    <td>{{ ($employee->interviewee_comment) ? $employee->interviewee_comment : '' }}</td>
                                     <td>
                                         <span class="notifi-td" id="reminder_interview"
                                         data-id="{{ $employee->id }}"><img
@@ -265,10 +265,12 @@
                 last_name: "required",
                 email: "required",
                 position: "required",
+                interview_process:"required",
+                interviewer_id:"required",
                 interview_date: "required",
                 interview_start_time: "required",
-                interview_end_time: "required",
-                message: "required",
+                duration: "required",
+                interview_instruction: "required",
                 attachment: "required",
             },
             messages: {
@@ -276,10 +278,12 @@
                 last_name: "Last name is required",
                 email: "Email is required",
                 position: "Position number is required",
+                interview_process:"required",
+                interviewer_id:"required",
                 interview_date: "Interview date is required",
                 interview_start_time: "Interview start time is required",
-                interview_end_time: "Interview end time is required",
-                message: "Message is required",
+                duration: "Interview end time is required",
+                interview_instruction: "Message is required",
                 attachment: "Attachment is required",
             }
         });
@@ -362,6 +366,12 @@
                         if (data.errors.position) {
                             $('#position-error').html(data.errors.position[0]);
                         }
+                        if (data.errors.interview_process) {
+                            $('#interview_process-error').html(data.errors.interview_process[0]);
+                        }
+                        if (data.errors.interviewer_id) {
+                            $('#interviewer_id-error').html(data.errors.interviewer_id[0]);
+                        }
                         if (data.errors.interview_date) {
                             $('#interview_date-error').html(data.errors.interview_date[0]);
                         }
@@ -369,9 +379,9 @@
                             $('#interview_start_time-error').html(data.errors
                                 .interview_start_time[0]);
                         }
-                        if (data.errors.interview_end_time) {
-                            $('#interview_end_time-error').html(data.errors
-                                .interview_end_time[0]);
+                        if (data.errors.duration) {
+                            $('#duration-error').html(data.errors
+                                .duration[0]);
                         }
                         if (data.errors.video_link) {
                             $('#video_link-error').html(data.errors.video_link[0]);
@@ -379,8 +389,8 @@
                         if (data.errors.phone) {
                             $('#phone-error').html(data.errors.phone[0]);
                         }
-                        if (data.errors.message) {
-                            $('#message-error').html(data.errors.message[0]);
+                        if (data.errors.interview_instruction) {
+                            $('#interview_instruction-error').html(data.errors.interview_instruction[0]);
                         }
                         if (data.errors.attachment) {
                             $('#attachment-error').html(data.errors.attachment[0]);

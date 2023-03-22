@@ -97,14 +97,14 @@
         <div class="form-group">
             <label>Interviewer name<span style="color:red">*</span></label>
             @if ($cmpEmployees)
-                <select id="interview_process" name="interview_process" class="form-control">
+                <select id="interviewer_id" name="interviewer_id" class="form-control">
                     <option value="">Select Employeee</option>
                     @foreach ($cmpEmployees as $cmpEmployee)
                         <option value="{{ $cmpEmployee->id }}">{{ $cmpEmployee->first_name.' '.$cmpEmployee->last_name }}</option>
                     @endforeach
                 </select>
             @endif
-            <strong class="error" id="interview_process-error"></strong>
+            <strong class="error" id="interviewer_id-error"></strong>
         </div>
         <div class="form-group">
             <label>Interview Instruction<span style="color:red">*</span></label>

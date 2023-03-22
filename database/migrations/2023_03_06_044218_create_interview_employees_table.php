@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->string('position')->nullable();
             $table->string('rating')->nullable();
+            $table->string('resume')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

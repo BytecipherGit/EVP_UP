@@ -23,27 +23,26 @@
 
                 <h2
                     style="font-weight: 600; font-size: 18px; line-height: 32px; color: #373E57; padding: 27px 20px 22px; margin:0; text-align: left;">
-                    Hi {{ $mailData['name'] }},
+                    Hi {{ $mailData['interviewer_name'] }},
                 </h2>
                 <h1
                     style="font-weight: 800; font-size: 26px; line-height: 32px; color: #373E57; padding: 0 20px 22px; margin:0; text-align: left;">
-                    You received a phone interview request</h1>
+                    You received a phone interview request for one of the candidate {{ $mailData['interviewee_name'] }}
+                </h1>
                 <p
                     style="font-size: 18px; line-height: 28px; color: #373E57; padding: 0 20px 0px; margin:0; font-family: 'DM Sans', sans-serif; text-align: left;">
-                    You are invited to a phone interview for the Urgent Requirement for {{ $mailData['position'] }}
-                    position at
-                    {{ $mailData['organisationName'] }}.</p>
+                    We requested to you please take this video interview on urgnet basis for {{ $mailData['position'] }}
+                    position at {{ $mailData['organisationName'] }}.</p>
 
                 <div style="border-top: 1px solid #c3baba; margin:15px 20px;"></div>
 
                 <h2 style="font-size: 20px; text-align:left; padding:0 20px; display: flex; align-items: center;"><img
                         src="{{ asset('assets') }}/admin/images/message-icon.png"
                         style="width: 28px;padding: 5px;height: 28px;border: 1px solid #c3baba;border-radius: 6px; margin-right: 10px;">
-                    Message from employer</h2>
-
+                    Message from interviewer</h2>
                 <p
                     style="font-size: 18px; line-height: 32px; color: #373E57; padding:0 20px 0px; margin:0; font-family: 'DM Sans', sans-serif; text-align: left;">
-                    Hello Applicant...
+                    we requested to you please take interview by click on given below interview link
                 </p>
 
                 <div style="padding: 0 20px; width: 100%; display: flex;">
@@ -64,29 +63,12 @@
                             <br> start time {{ $mailData['meeting_start_time'] }} and duration of interview is
                             {{ $mailData['duration'] }}
                         </h6>
-                        <h2>Interview Instructions</h2>
-                        <p
-                            style="font-size: 18px; line-height: 32px; color: #373E57; padding:0 20px 0px; margin:0; font-family: 'DM Sans', sans-serif; text-align: left;">
-                            {{ $mailData['interview_instruction'] }}
-                        </p>
-                        <br>
-                        <br>
-                        <a href="{{ route('interview.confirmed', ['empCode' => $mailData['empCode']]) }}"
-                            style="margin-bottom:15px; font-size:20px; font-weight: 600; padding: 20px 0; background: #5533ff; float: left; width: 100%; border-radius: 5px; color: #fff; text-decoration: none;"
-                            target="_black">
-                            <sapn style="padding: 0 5px;">Schedule interview</sapn>
-                        </a>
-                        <a href="{{ route('interview.newtime', ['empCode' => $mailData['empCode']]) }}"
-                            style="margin-bottom:15px; font-size:20px; font-weight: 600; padding: 20px 0; background: #5533ff; float: left; width: 100%; border-radius: 5px; color: #fff; text-decoration: none;"
-                            target="_black">
-                            <sapn style="padding: 0 5px;">Suggest a new time</sapn>
-                        </a>
-                        <a href="{{ route('interview.declined', ['empCode' => $mailData['empCode']]) }}"
-                            style="margin-bottom:15px; font-size:20px; font-weight: 600; padding: 20px 0; background: #5533ff; float: left; width: 100%; border-radius: 5px; color: #fff; text-decoration: none;"
-                            target="_black">
-                            <sapn style="padding: 0 5px;">Decline interview</sapn>
-                        </a>
 
+                        <a href="{{ route('interview.feedback', ['empIntRounds' => $mailData['interviewRoundId']]) }}"
+                            style="margin-bottom:15px; font-size:20px; font-weight: 600; padding: 20px 0; background: #5533ff; float: left; width: 100%; border-radius: 5px; color: #fff; text-decoration: none;"
+                            target="_black">
+                            <sapn style="padding: 0 5px;">Interview Feedback </sapn>
+                        </a>
                     </div>
                 </div>
 
