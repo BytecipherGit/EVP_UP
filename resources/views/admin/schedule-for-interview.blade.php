@@ -81,7 +81,7 @@
                             <tr>
                                 <th>EVP Id</th>
                                 <th>Name</th>
-                                <th>Designation</th>
+                                <th>Position</th>
                                 <th>Offer Status</th>
                                 <th>Hiring Status</th>
                                 <th>Employee Status</th>
@@ -95,7 +95,7 @@
                                 <tr>
                                     <td># {{ $employee->empCode }}</td>
                                     <td>{{ $employee->first_name . ' ' . $employee->last_name }}</td>
-                                    <td>{{ $employee->designation }}</td>
+                                    <td>{{ $employee->position }}</td>
                                     <td><span class="tb-accept"></span> {{ $employee->offer_status }}</td>
                                     <td>
                                         <select style="width: 150px;" class="form-control" name="hiring_stage"
@@ -264,7 +264,7 @@
                 first_name: "required",
                 last_name: "required",
                 email: "required",
-                designation: "required",
+                position: "required",
                 interview_date: "required",
                 interview_start_time: "required",
                 interview_end_time: "required",
@@ -275,7 +275,7 @@
                 first_name: "First name is required",
                 last_name: "Last name is required",
                 email: "Email is required",
-                designation: "Designation number is required",
+                position: "Position number is required",
                 interview_date: "Interview date is required",
                 interview_start_time: "Interview start time is required",
                 interview_end_time: "Interview end time is required",
@@ -359,8 +359,8 @@
                         if (data.errors.email) {
                             $('#email-error').html(data.errors.email[0]);
                         }
-                        if (data.errors.designation) {
-                            $('#designation-error').html(data.errors.designation[0]);
+                        if (data.errors.position) {
+                            $('#position-error').html(data.errors.position[0]);
                         }
                         if (data.errors.interview_date) {
                             $('#interview_date-error').html(data.errors.interview_date[0]);
@@ -393,7 +393,7 @@
                             $('#first_name-error').html('');
                             $('#last_name-error').html('');
                             $('#email-error').html('');
-                            $('#designation-error').html('');
+                            $('#position-error').html('');
                             $('#interview_date-error').html('');
                             $('#interview_start_time-error').html('');
                             $('#interview_end_time-error').html('');

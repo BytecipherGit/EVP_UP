@@ -23,9 +23,9 @@
     <strong class="error" id="email-error"></strong>
 </div>
 <div class="form-group">
-    <label>Designation<span style="color:red">*</span></label>
-    <input type="type" name="designation" class="form-control" placeholder="Designation">
-    <strong class="error" id="designation-error"></strong>
+    <label>Position<span style="color:red">*</span></label>
+    <input type="type" name="position" class="form-control" placeholder="Position">
+    <strong class="error" id="position-error"></strong>
 </div>
 
 <div class="form-group">
@@ -91,7 +91,7 @@
                     placeholder="Enter one pr more emails separated by a comma">
             </div> --}}
         <div class="form-group">
-            <label>Attech File<span style="color:red">*</span></label>
+            <label>Attech Resume<span style="color:red">*</span><h6>Only .jpeg, .pdf, .docs, or .doc files allowed.</h6></label>
             <div class="upload-img-file">
                 <input type="file" id="attachment" name="attachment" class="form-control">
                 <strong class="error" id="attachment-error"></strong>
