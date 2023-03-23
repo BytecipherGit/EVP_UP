@@ -81,7 +81,6 @@
                             <tr>
                                 <th>Title</th>
                                 <th>Descriptions</th>
-                                <th>Feedback</th>
                                 <th width="100px">Action</th>
                             </tr>
                         </thead>
@@ -195,10 +194,6 @@
                 {
                     data: 'descriptions',
                     name: 'descriptions'
-                },
-                {
-                    data: 'interviewer_feedback',
-                    name: 'interviewer_feedback'
                 },
                 {
                     data: 'action',

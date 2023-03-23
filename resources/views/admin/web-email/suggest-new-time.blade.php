@@ -49,7 +49,7 @@
         <img src="{{ asset('assets') }}/admin/web-email/images/calendar-icon.png" class="iconImg">
         <div class="">
           <h2>{{ $employeetime->interview_date}}</h2>
-          <p>{{ $employeetime->interview_start_time}} {{ $employeetime->interview_end_time }}</p>
+          <p>{{$employeetime->interview_start_time}} IST & duration of interview is {{$employeetime->duration}} </p>
         </div>
       </div>
       <div class="noti-declinenotifi">
@@ -62,7 +62,7 @@
       <div class="ul-part">
         <div class="">
           <input type="hidden" name="interview_status" id="interview_status" value="3">
-          <input type="hidden" name="empCode" id="empCode" value="{{ $empCode }}">
+          <input type="hidden" name="interviewEmpRoundsId" id="interviewEmpRoundsId" value="{{ $interviewEmpRoundsId }}">
           <h2>Share your availability</h2>
           <p>Include multiple times to increase your likelihood of scheduling</p>
           <textarea rows="3" name="employee_comment" class="form-textarea"></textarea>

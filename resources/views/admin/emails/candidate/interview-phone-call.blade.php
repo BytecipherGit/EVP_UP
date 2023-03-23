@@ -30,7 +30,8 @@
                     You received a phone interview request</h1>
                 <p
                     style="font-size: 18px; line-height: 28px; color: #373E57; padding: 0 20px 0px; margin:0; font-family: 'DM Sans', sans-serif; text-align: left;">
-                    You are invited to a phone interview for the Urgent Requirement for {{ $mailData['designation'] }} position at
+                    You are invited to a phone interview for the Urgent Requirement for {{ $mailData['position'] }}
+                    position at
                     {{ $mailData['organisationName'] }}.</p>
 
                 <div style="border-top: 1px solid #c3baba; margin:15px 20px;"></div>
@@ -54,26 +55,36 @@
                         <h6
                             style="text-align: left; font-size: 16px; font-weight: 200; display: flex; align-items: center; word-break: break-all;">
                             <img src="{{ asset('assets') }}/admin/candidate/images/phone-call.png"
-                                style="width: 24px; margin-right: 10px;"> {{ $mailData['phone'] }}</h6>
+                                style="width: 24px; margin-right: 10px;"> {{ $mailData['phone'] }}
+                        </h6>
                         <h6
                             style="font-size:16px; line-height: 24px; font-weight: 600; text-align: left; display: flex; align-items: center; word-break: break-all;">
                             <img src="{{ asset('assets') }}/admin/candidate/images/calendar-icon.png"
-                                style="width: 24px; margin-right: 10px;"> On dated {{ $mailData['meeting_date'] }} and <br> start time {{ $mailData['meeting_start_time'] }} - end time {{ $mailData['meeting_end_time'] }}</h6>
-
-                        <a href="{{ route('interview.confirmed',['empCode' => $mailData['empCode']])}}"
+                                style="width: 24px; margin-right: 10px;"> On dated {{ $mailData['meeting_date'] }} and
+                            <br> start time {{ $mailData['meeting_start_time'] }} and duration of interview is
+                            {{ $mailData['duration'] }}
+                        </h6>
+                        <h2>Interview Instructions</h2>
+                        <p
+                            style="font-size: 18px; line-height: 32px; color: #373E57; padding:0 20px 0px; margin:0; font-family: 'DM Sans', sans-serif; text-align: left;">
+                            {{ $mailData['interview_instruction'] }}
+                        </p>
+                        <br>
+                        <br>
+                        <a href="{{ route('interview.confirmed', ['interviewEmpRoundsId' => $mailData['interviewEmpRoundsId']]) }}"
                             style="margin-bottom:15px; font-size:20px; font-weight: 600; padding: 20px 0; background: #5533ff; float: left; width: 100%; border-radius: 5px; color: #fff; text-decoration: none;"
                             target="_black">
-                            <sapn style="padding: 0 5px;">Schedule interview</sapn>
+                            <sapn style="padding: 0 5px;">Yes, I am available</sapn>
                         </a>
-                        <a href="{{ route('interview.newtime',['empCode' => $mailData['empCode']])}}"
+                        <a href="{{ route('interview.newtime', ['interviewEmpRoundsId' => $mailData['interviewEmpRoundsId']]) }}"
                             style="margin-bottom:15px; font-size:20px; font-weight: 600; padding: 20px 0; background: #5533ff; float: left; width: 100%; border-radius: 5px; color: #fff; text-decoration: none;"
                             target="_black">
                             <sapn style="padding: 0 5px;">Suggest a new time</sapn>
                         </a>
-                        <a href="{{ route('interview.declined',['empCode' => $mailData['empCode']])}}"
+                        <a href="{{ route('interview.declined', ['interviewEmpRoundsId' => $mailData['interviewEmpRoundsId']]) }}"
                             style="margin-bottom:15px; font-size:20px; font-weight: 600; padding: 20px 0; background: #5533ff; float: left; width: 100%; border-radius: 5px; color: #fff; text-decoration: none;"
                             target="_black">
-                            <sapn style="padding: 0 5px;">Decline interview</sapn>
+                            <sapn style="padding: 0 5px;">No, I am not available</sapn>
                         </a>
 
                     </div>
@@ -93,7 +104,8 @@
             <footer style="padding:20px;">
                 <p
                     style="font-weight:300;font-size: 16px; line-height: 32px; color: #373E57; font-family: 'DM Sans', sans-serif; margin: 0;">
-                    Copyright 2023 <span style="color: #5533FF;">{{ $mailData['organisationName'] }}</span>. All Right Reserved.</p>
+                    Copyright 2023 <span style="color: #5533FF;">{{ $mailData['organisationName'] }}</span>. All Right
+                    Reserved.</p>
                 <ul style="margin:15px 0 0; padding:0">
                     <li style="list-style-type: none; display: inline-block;"><a href="#"><img
                                 src="{{ asset('assets') }}/admin/candidate/images/instagram-icon.png"></a></li>

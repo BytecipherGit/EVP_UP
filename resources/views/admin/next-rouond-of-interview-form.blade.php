@@ -8,26 +8,6 @@
 <input type="hidden" id="is_add" value="{{ $interview ? '' : 1 }}" />
 <input type="hidden" id="interview_id" name="interview_id" value="{{ $interview ? $interview->id : '' }}" />
 <div class="form-group">
-    <label>First Name<span style="color:red">*</span></label>
-    <input type="type" name="first_name" class="form-control" placeholder="First Name">
-    <strong class="error" id="first_name-error"></strong>
-</div>
-<div class="form-group">
-    <label>Last Name<span style="color:red">*</span></label>
-    <input type="type" name="last_name" class="form-control" placeholder="Last Name">
-    <strong class="error" id="last_name-error"></strong>
-</div>
-<div class="form-group">
-    <label>Email<span style="color:red">*</span></label>
-    <input type="email" name="email" class="form-control" placeholder="Email">
-    <strong class="error" id="email-error"></strong>
-</div>
-<div class="form-group">
-    <label>Position<span style="color:red">*</span></label>
-    <input type="type" name="position" class="form-control" placeholder="Position">
-    <strong class="error" id="position-error"></strong>
-</div>
-<div class="form-group">
     <label>Select Interview Round<span style="color:red">*</span></label>
     @if ($interviewProcesses)
         <select id="interview_process" name="interview_process" class="form-control">
@@ -111,21 +91,6 @@
             <textarea name="interview_instruction" rows="3" class="form-control" placeholder="Interview Instruction"></textarea>
             <strong class="error" id="interview_instruction-error"></strong>
         </div>
-        {{-- <div class="form-group">
-                <label>Add Additianal Employers</label>
-                <input type="type" name="" class="form-control"
-                    placeholder="Enter one pr more emails separated by a comma">
-            </div> --}}
-        <div class="form-group">
-            <label>Attech Resume<span style="color:red">*</span>
-                <h6>Only .jpeg, .pdf, .docs, or .doc files allowed.</h6>
-            </label>
-            <div class="upload-img-file">
-                <input type="file" id="attachment" name="attachment" class="form-control">
-                <strong class="error" id="attachment-error"></strong>
-            </div>
-        </div>
-
     </div>
 </div>
 

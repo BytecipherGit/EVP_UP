@@ -42,7 +42,7 @@
         <i class="checkmark">✓</i>
       </div>
         <h1>Success</h1> 
-        <p>Thanks for your response;<br/> We'll be in touch shortly!</p>
+        {{-- <p>Thanks for your response;<br/> We'll be in touch shortly!</p> --}}
       </div>
     </body>
 </html>

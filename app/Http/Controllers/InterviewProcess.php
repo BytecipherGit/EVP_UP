@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\Helper as HelpersHelper;
+use App\Models\InterviewEmployeeRounds;
 use Illuminate\Http\Request;
 use App\Models\InterviewProcess as InterviewProcessModel;
 use Yajra\DataTables\Facades\DataTables as FacadesDataTables;
@@ -25,7 +26,7 @@ class InterviewProcess extends Controller
      public function index(Request $request)
      {
          if ($request->ajax()) {
-             $data = InterviewProcessModel::select('id','title','descriptions','interviewer_feedback')->get();
+             $data = InterviewProcessModel::select('id','title','descriptions')->get();
              return FacadesDataTables::of($data)->addIndexColumn()
                  ->addColumn('action', function($row){
                      $btn = '<a href="javascript:void(0)" data-id="'.$row->id.'" class="edit-btn updateProcess">Edit</a>';
@@ -116,6 +117,43 @@ class InterviewProcess extends Controller
             }
         } else {
             return Response::json(['success' => '0']);
+        }
+    }
+
+    public function interviewFeedback(request $request)
+    {
+        if (!empty($request->interviewEmpRoundsId)) {
+            $interviewEmpRoundsId = decrypt($request->interviewEmpRoundsId);
+            // $interviewEmpRoundsId = $request->interviewEmpRoundsId;
+            $employeetime = DB::table('interview_employee_rounds')
+            ->join('interview_employees', 'interview_employees.id', '=', 'interview_employee_rounds.interview_employees_id')
+            ->join('users', 'interview_employees.company_id', '=', 'users.id')
+            ->select('interview_employee_rounds.*','interview_employees.*', 'users.*', 'interview_employees.position')
+            ->where('interview_employee_rounds.id', $interviewEmpRoundsId)
+            ->first();
+            
+            if ($employeetime) {
+                return view('admin/web-email/interview-feedback', compact('employeetime', 'interviewEmpRoundsId'));
+            } else {
+                return Response::json(['success' => '0']);
+            }
+        }
+    }
+
+    public function interviewFeedbackForEmployee(request $request)
+    {
+        if (!empty($request->interviewEmpRoundsId)) {
+            //Check if alrady response is submitted
+            $checkResponse = InterviewEmployeeRounds::where('id', $request->interviewEmpRoundsId)->first();
+            if (!$checkResponse->interviewer_feedback) {
+                $feedback = InterviewEmployeeRounds::where('id', $request->interviewEmpRoundsId)
+                    ->update(['interviewer_feedback' => $request->input('interviewer_feedback')]);
+                if ($feedback) {
+                    return redirect('/success');
+                }
+            } else {
+                return redirect('/response_submited');
+            }
         }
     }
 }

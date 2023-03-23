@@ -58,7 +58,7 @@
         <img src="{{ asset('assets') }}/admin/web-email//images/calendar-icon.png" class="iconImg">
         <div class="">
           <h2>{{$employeeStatus->interview_date}}</h2>
-          <p>{{$employeeStatus->interview_start_time}} {{$employeeStatus->interview_end_time}} IST</p>
+          <p>{{$employeeStatus->interview_start_time}} IST & duration of interview is {{$employeeStatus->duration}} </p>
         </div> 
                        
       </div>
@@ -79,7 +79,7 @@
       <div class="ul-part">
         <div class="">
           <input type="hidden" name="interview_status" id="interview_status" value="2">
-          <input type="hidden" name="empCode" id="empCode" value="{{ $empCode }}">
+          <input type="hidden" name="interviewEmpRoundsId" id="interviewEmpRoundsId" value="{{ $interviewEmpRoundsId }}">
           <h2>Add a note for the employer (Optional)</h2>
           <textarea rows="3" name="employee_comment" class="form-textarea"></textarea>
         </div>
