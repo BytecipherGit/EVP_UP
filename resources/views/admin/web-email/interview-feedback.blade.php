@@ -42,7 +42,14 @@
                     @csrf
                     <div class="ul-part">
                         <div class="">
-                            <input type="hidden" name="empIntRounds" id="empIntRounds" value="{{ $empIntRounds }}">
+                            <h2>Interview Status</h2>
+                            <select class="form-control" id="interviewer_status" name="interviewer_status">
+                                <option value="Unclear">Not Clear</option>
+                                <option value="Clear">Clear</option>
+                            </select>
+                        </div>
+                        <div class="">
+                            <input type="hidden" name="interviewEmpRoundsId" id="interviewEmpRoundsId" value="{{ $interviewEmpRoundsId }}">
                             <h2>Share your feedback</h2>
                             <textarea rows="3" name="interviewer_feedback" class="form-textarea"></textarea>
                         </div>

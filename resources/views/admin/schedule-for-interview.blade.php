@@ -61,7 +61,7 @@
 
                 </div>
                 <div class="col-xs-4">
-                    <label>Filter By Employee Status</label>
+                    <label>Filter By Employee Interview Response</label>
                     @if ($employeeInterviewStatuses)
                         <select class="form-control" id="eStatus" name="eStatus">
                             @foreach ($employeeInterviewStatuses as $employeeInterviewStatuse)
@@ -82,12 +82,12 @@
                                 <th>EVP Id</th>
                                 <th>Name</th>
                                 <th>Position</th>
-                                <th>Offer Status</th>
+                                <th>Employee Interview Response</th>
                                 <th>Hiring Status</th>
-                                <th>Employee Status</th>
-                                <th>Employee Comment</th>
+                                {{-- <th>Employee Status</th> --}}
+                                {{-- <th>Employee Comment</th> --}}
                                 <th>Send Remider</th>
-                                <th>Delete</th>
+                                <th width="200px">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -96,7 +96,7 @@
                                     <td># {{ $employee->empCode }}</td>
                                     <td>{{ $employee->first_name . ' ' . $employee->last_name }}</td>
                                     <td>{{ $employee->position }}</td>
-                                    <td><span class="tb-accept"></span> {{ $employee->offer_status }}</td>
+                                    <td><span class="tb-accept"></span> {{ $employee->title }}</td>
                                     <td>
                                         <select style="width: 150px;" class="form-control" name="hiring_stage"
                                             id="hiring_stage">
@@ -107,15 +107,15 @@
                                             @endforeach
                                         </select>
                                     </td>
-                                    <td>
+                                    {{-- <td>
                                         @foreach ($employeeInterviewStatuses as $employeeInterviewStatus)
                                             @if ($employeeInterviewStatus->id === $employee->employee_interview_status)
                                                 <strong
                                                     style="color: #007bff">{{ $employeeInterviewStatus->title }}</strong>
                                             @endif
                                         @endforeach
-                                    </td>
-                                    <td>{{ ($employee->interviewee_comment) ? $employee->interviewee_comment : '' }}</td>
+                                    </td> --}}
+                                    {{-- <td>{{ ($employee->interviewee_comment) ? $employee->interviewee_comment : '' }}</td> --}}
                                     <td>
                                         <span class="notifi-td" id="reminder_interview"
                                         data-id="{{ $employee->id }}"><img
@@ -126,6 +126,8 @@
                                         {{-- <span class="notifi-td" data-toggle="modal" data-target="#remaiderbtninfo"><img
                                                 src="assets/admin/images/bell-icon.png" width="30px;"
                                                 height="30px"></span> --}}
+                                                <a href="#" class="edit-btn" id="updateInterview"
+                                                data-id="{{ $employee->id }}">Next Round</a>
                                         <a href="#" class="edit-btn" id="delete_interview"
                                             data-id="{{ $employee->id }}">Delete</a>
                                     </td>
@@ -216,7 +218,35 @@
                     <div id="loadingImg"></div>
                     <div style="font-size: 16px; display:none;" class="text-success" id="success">Schedule interview successfully done.</div>
                     <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
-                    <button type="submit" id="scheduleInterviewSubmit" class="btn-primary-cust">Schedule</button>
+                    <button type="submit" id="scheduleInterviewSubmit" class="btn-primary-cust">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- The Modal Interview  -->
+<div class="modal fade custu-modal-popup" id="updateInterviewModel" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form id="next_round_of_interview_form" method="post" autocomplete="off" enctype="multipart/form-data">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title" id="Heading">Schedule Next Round Of Interview</h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <img src="assets/admin/images/close-btn-icon.png">
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="comman-body">
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div id="loadingImg"></div>
+                    <div style="font-size: 16px; display:none;" class="text-success" id="success">Next interview round successfully done.</div>
+                    <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
+                    <button type="submit" id="nextRoundOfInterviewSubmit" class="btn-primary-cust">Submit</button>
                 </div>
             </div>
         </form>
@@ -258,6 +288,21 @@
 
 <script>
     $(document).ready(function() {
+        $(".with-color-bg").click(function() {
+            if ($(this).hasClass("dective-btn-bg")) {
+                $(this).addClass("active-btn-bg");
+                $(this).removeClass("dective-btn-bg");
+            } else {
+                $(this).addClass("dective-btn-bg");
+                $(this).removeClass("active-btn-bg");
+            }
+        });
+
+        $(".pushme-Acp").click(function() {
+            $(this).text(function(i, v) {
+                return v === 'Accepted' ? 'Declied' : 'Accepted'
+            });
+        });
 
         $("#schedule_interview_form").validate({
             rules: {
@@ -286,22 +331,6 @@
                 interview_instruction: "Message is required",
                 attachment: "Attachment is required",
             }
-        });
-
-        $(".with-color-bg").click(function() {
-            if ($(this).hasClass("dective-btn-bg")) {
-                $(this).addClass("active-btn-bg");
-                $(this).removeClass("dective-btn-bg");
-            } else {
-                $(this).addClass("dective-btn-bg");
-                $(this).removeClass("active-btn-bg");
-            }
-        });
-
-        $(".pushme-Acp").click(function() {
-            $(this).text(function(i, v) {
-                return v === 'Accepted' ? 'Declied' : 'Accepted'
-            });
         });
 
         $("#scheduleInterview").click(function() {
@@ -406,10 +435,10 @@
                             $('#position-error').html('');
                             $('#interview_date-error').html('');
                             $('#interview_start_time-error').html('');
-                            $('#interview_end_time-error').html('');
+                            $('#duration-error').html('');
                             $('#video_link-error').html('');
                             $('#phone-error').html('');
-                            $('#message-error').html('');
+                            $('#interview_instruction-error').html('');
                             $('#attachment-error').html('');
                             // $('#schedule_interview_form')[0].reset();
                             // $('#interviewModel').modal('hide');
@@ -594,6 +623,135 @@
                         location.reload();
                     }
                 });
+        });
+
+        $(document).on('click','#updateInterview', function(){
+            // getScheduleInterviewForm();
+            var interviewId = $(this).data('id');
+            if(interviewId != ''){
+                getNextRoundOfInterviewForm(interviewId);
+            }
+        })
+
+        function getNextRoundOfInterviewForm(id = '') {
+            let getFormUrl = '{{ url('next_round_of_interview/form') }}';
+            if (id !== '') {
+                getFormUrl = getFormUrl + "/" + id;
+            }
+            $.ajax({
+                url: getFormUrl,
+                type: "get",
+                datatype: "html",
+            }).done(function(data) {
+                if (id === '') {
+                    $('#Heading').text("Create next round of interivew");
+                } else {
+                    $('#Heading').text("Update next round of interview");
+                }
+                $('#updateInterviewModel').find('.modal-body').html(data);
+                $('#updateInterviewModel').modal({
+                    backdrop: 'static',
+                    keyboard: false
+                });
+            }).fail(function(jqXHR, ajaxOptions, thrownError) {
+                alert('No response from server');
+            });
+        }
+
+        $("#next_round_of_interview_form").validate({
+            rules: {
+                interview_process:"required",
+                interviewer_id:"required",
+                interview_date: "required",
+                interview_start_time: "required",
+                duration: "required",
+                interview_instruction: "required",
+            },
+            messages: {
+                interview_process:"required",
+                interviewer_id:"required",
+                interview_date: "Interview date is required",
+                interview_start_time: "Interview start time is required",
+                duration: "Interview end time is required",
+                interview_instruction: "Message is required",
+            }
+        });
+
+        $('#next_round_of_interview_form').on('submit', function(event) {
+            event.preventDefault();
+            // var isAdd = $('#is_add').val();
+            var url = '{{ url('next_round_of_interview/submit') }}';
+            var successMsg = "Next round of interview successfully created";
+
+            // if (isAdd != 1) {
+            //     var url = '{{ url('next_round_of_interview/update') }}';
+            //     successMsg = "Next round of interview successfully created";
+            // }
+            $('#loadingImg').show();
+            var formData = new FormData(this);
+            $.ajax({
+                url: url,
+                type: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(data) {
+                    if (data.errors) {
+                        if (data.errors.interview_process) {
+                            $('#interview_process-error').html(data.errors.interview_process[0]);
+                        }
+                        if (data.errors.interviewer_id) {
+                            $('#interviewer_id-error').html(data.errors.interviewer_id[0]);
+                        }
+                        if (data.errors.interview_date) {
+                            $('#interview_date-error').html(data.errors.interview_date[0]);
+                        }
+                        if (data.errors.interview_start_time) {
+                            $('#interview_start_time-error').html(data.errors
+                                .interview_start_time[0]);
+                        }
+                        if (data.errors.duration) {
+                            $('#duration-error').html(data.errors
+                                .duration[0]);
+                        }
+                        if (data.errors.video_link) {
+                            $('#video_link-error').html(data.errors.video_link[0]);
+                        }
+                        if (data.errors.phone) {
+                            $('#phone-error').html(data.errors.phone[0]);
+                        }
+                        if (data.errors.interview_instruction) {
+                            $('#interview_instruction-error').html(data.errors.interview_instruction[0]);
+                        }
+                        $('#loadingImg').hide();
+                    } else {
+
+                        if (data.success) {
+                            $('#loadingImg').hide();
+                            $('#interview_date-error').html('');
+                            $('#interview_start_time-error').html('');
+                            $('#duration-error').html('');
+                            $('#video_link-error').html('');
+                            $('#phone-error').html('');
+                            $('#interview_instruction-error').html('');
+                            // $('#schedule_interview_form')[0].reset();
+                            // $('#interviewModel').modal('hide');
+                            $('#success').css('display', 'block');
+                            setInterval(function() {
+                                location.reload();
+                            }, 3000);
+
+                        }
+                    }
+
+                },
+                error: function(xhr, textStatus, errorThrown) {
+                    console.log(xhr.responseText);
+                }
+            });
         });
 
     });

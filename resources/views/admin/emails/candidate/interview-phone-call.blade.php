@@ -71,17 +71,17 @@
                         </p>
                         <br>
                         <br>
-                        <a href="{{ route('interview.confirmed', ['empCode' => $mailData['empCode']]) }}"
+                        <a href="{{ route('interview.confirmed', ['interviewEmpRoundsId' => $mailData['interviewEmpRoundsId']]) }}"
                             style="margin-bottom:15px; font-size:20px; font-weight: 600; padding: 20px 0; background: #5533ff; float: left; width: 100%; border-radius: 5px; color: #fff; text-decoration: none;"
                             target="_black">
                             <sapn style="padding: 0 5px;">Schedule interview</sapn>
                         </a>
-                        <a href="{{ route('interview.newtime', ['empCode' => $mailData['empCode']]) }}"
+                        <a href="{{ route('interview.newtime', ['interviewEmpRoundsId' => $mailData['interviewEmpRoundsId']]) }}"
                             style="margin-bottom:15px; font-size:20px; font-weight: 600; padding: 20px 0; background: #5533ff; float: left; width: 100%; border-radius: 5px; color: #fff; text-decoration: none;"
                             target="_black">
                             <sapn style="padding: 0 5px;">Suggest a new time</sapn>
                         </a>
-                        <a href="{{ route('interview.declined', ['empCode' => $mailData['empCode']]) }}"
+                        <a href="{{ route('interview.declined', ['interviewEmpRoundsId' => $mailData['interviewEmpRoundsId']]) }}"
                             style="margin-bottom:15px; font-size:20px; font-weight: 600; padding: 20px 0; background: #5533ff; float: left; width: 100%; border-radius: 5px; color: #fff; text-decoration: none;"
                             target="_black">
                             <sapn style="padding: 0 5px;">Decline interview</sapn>

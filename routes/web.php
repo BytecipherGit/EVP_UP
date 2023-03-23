@@ -149,6 +149,8 @@ Route::middleware([Admin::class])->group(function () {
     Route::post('interview_process/submit', [InterviewProcess::class, 'createInterviewProcess'])->middleware('documents');
     Route::post('interview_process/update', [InterviewProcess::class, 'updateInterviewProcess'])->middleware('documents');
     Route::post('interview_process/destroy', [InterviewProcess::class, 'deleteInterviewProcess'])->middleware('documents');
+    Route::any('next_round_of_interview/form/{id?}', [InterviewEmployee::class, 'getNextRoundOfInterviewForm'])->middleware('documents');
+    Route::post('next_round_of_interview/submit', [InterviewEmployee::class, 'scheduleNextRoundOfInterview'])->middleware('documents');
     
 
 });

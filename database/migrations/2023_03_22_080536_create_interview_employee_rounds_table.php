@@ -40,6 +40,7 @@ return new class extends Migration
             $table->longText('interviewee_comment')->nullable();
             $table->date('interviewee_comment_date')->nullable();
             $table->longText('interviewer_feedback')->nullable();
+            $table->enum('interviewer_status',['Clear','Unclear'])->comment('Clear / Unclear')->default('Unclear');
             $table->timestamps();
         });
     }

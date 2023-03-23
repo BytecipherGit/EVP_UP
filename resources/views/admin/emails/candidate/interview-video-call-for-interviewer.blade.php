@@ -66,7 +66,7 @@
                             {{ $mailData['duration'] }}
                         </h6>
 
-                        <a href="{{ route('interview.feedback', ['empIntRounds' => $mailData['interviewRoundId']]) }}"
+                        <a href="{{ route('interview.feedback', ['interviewEmpRoundsId' => $mailData['interviewEmpRoundsId']]) }}"
                             style="margin-bottom:15px; font-size:20px; font-weight: 600; padding: 20px 0; background: #5533ff; float: left; width: 100%; border-radius: 5px; color: #fff; text-decoration: none;"
                             target="_black">
                             <sapn style="padding: 0 5px;">Interview Feedback </sapn>
