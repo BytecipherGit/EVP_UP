@@ -66,7 +66,7 @@ class RegisteredUserController extends Controller
             'country' => ['required', 'string', 'max:255'],
             'city' => ['required', 'string', 'max:255'],
             'state' => ['required', 'string', 'max:255'],
-            'pin' => ['required', 'string']
+            'pin' => ['required', 'string','max:255']
 
         ]);
 
@@ -84,12 +84,13 @@ class RegisteredUserController extends Controller
             'city' =>$request->city,
             'pin' =>$request->pin,
             'password' => Hash::make($request->password),
+            'status' => '0',
         ]);
 
         
 
         event(new Registered($user));
-
+    
         if($user){
             $mailData = [
                 'name' => !empty($request->name) ? $request->name : '',
@@ -99,6 +100,7 @@ class RegisteredUserController extends Controller
             $verifyMailData = [
                 'name' => !empty($request->name) ? $request->name : '',
                 'id' => encrypt($user->id),
+                'status' => $user->status
             ];
             FacadesMail::to($request->email)->send(new CompanyVerificationMail($verifyMailData));
         }

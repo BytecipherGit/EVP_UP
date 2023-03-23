@@ -2,12 +2,7 @@
 @section('content')
 @section('title', 'Registration')
 
-<style>
-   .error {
-      color: red !important;
-      font-weight: 400;
-  }
-</style>
+
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
@@ -35,7 +30,9 @@
                             <a href="login"><img src="assets/company/images/back-icon.png"></a>
                         </div>
                         <h6>Create an Account</h6>
-
+                    
+                    <div class="profibottom_head">Organization Details</div>
+                    <div class="admiPrtop">
                         <div class="form-group">
                             <label>Organization Name <strong style="color:red">*</strong></label>
                             <input type="text" id="org_name" name="org_name" class="form-control" value="{{ old('org_name') }}"
@@ -45,15 +42,7 @@
                             @enderror --}}
                             <strong class="error" id="org_name-error"></strong>
                         </div>
-                        <div class="form-group">
-                            <label>Admin Name <strong style="color:red">*</strong> </label>
-                            <input type="text" id="name" name="name" class="form-control" value="{{ old('name') }}"
-                                placeholder="Enter Your name" autofocus autocomplete="name" >
-                            {{-- @error('name')
-                                <p class="velidation">{{ $message }}</p>
-                            @enderror --}}
-                            <strong class="error" id="name-error"></strong>
-                        </div>
+                    
                         <div class="form-group">
                             <label>Organization Website <strong style="color:red">*</strong> </label>
                             <input type="text" id="org_web" name="org_web" class="form-control" value="{{ old('org_web') }}"
@@ -72,7 +61,20 @@
                             @enderror --}}
                             <strong class="error" id="email-error"></strong>
                         </div>
+                    </div>
 
+                    <div class="profibottom_head">Profile Details</div>
+
+                   <div class="profibottom"> 
+                        <div class="form-group">
+                            <label>Name <strong style="color:red">*</strong> </label>
+                            <input type="text" id="name" name="name" class="form-control" value="{{ old('name') }}"
+                                placeholder="Enter Your name" autofocus autocomplete="name" >
+                            {{-- @error('name')
+                                <p class="velidation">{{ $message }}</p>
+                            @enderror --}}
+                            <strong class="error" id="name-error"></strong>
+                        </div>
                         <div class="row">
                             <div class="col-xl-6">
                                 <div class="form-group">
@@ -114,7 +116,7 @@
                             </div>
                             <div class="col-xl-6">
                                 <div class="form-group">
-                                    <label>Admin Department<strong style="color:red">*</strong></label>
+                                    <label>Admin Department <strong style="color:red">*</strong></label>
                                     <input type="text" id="department" name="department" class="form-control"
                                         value="{{ old('department') }}" placeholder="Department" autofocus autocomplete="department">
                                     {{-- @error('department')
@@ -209,7 +211,8 @@
                             @enderror --}}
                             <strong class="error" id="address-error"></strong>
                         </div>
-
+                    </div>    
+                 
                         {{-- data-toggle="modal" --}}
                         <div class="form-group">
                             <button type="submit"  data-target="#seccess-veri">Sign Up</button>

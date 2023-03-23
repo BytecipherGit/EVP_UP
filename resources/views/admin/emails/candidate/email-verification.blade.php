@@ -31,9 +31,11 @@
             </div>
           
             <button style="background: #5533FF; border:none; border-radius: 6px; padding:15px 40px; margin:25px 0">
-             <a href="{{route('verification.success')}}/{{ $verifyMailData['id'] }}" style="color: #fff; text-decoration:none; font-weight: 500; font-size: 20px; line-height: 26px; font-family: 'DM Sans', sans-serif;">
+        
+                <a href="{{route('verification.success')}}/{{ $verifyMailData['id'] }}" style="color: #fff; text-decoration:none; font-weight: 500; font-size: 20px; line-height: 26px; font-family: 'DM Sans', sans-serif;">
                 Verify Account
                 </a>
+         
             </button>
 
             <footer style="padding:20px;">

@@ -297,12 +297,18 @@ class InterviewEmployee extends Controller
             $id = decrypt($request->id);
             $companyData = User::where('id',$id)->first();
             if ($companyData) {
+                if($companyData->status == '0'){
                 $changeStatus=DB::table('users')->where('id',$id)
                 ->update([
                       'status'=>'1',         
                 ]);
               return view('admin/emails/candidate/verification-success', compact('companyData', 'id'));   
-            } else {
+            } 
+            else{
+                return view('admin/emails/candidate/already-verify', compact('companyData', 'id'));   
+            }
+         }
+            else {
                 return Response::json(['success' => '0']);
             }
         }

@@ -1167,7 +1167,7 @@
          
 
               <div class="form-group">
-                <label>Attech File<span style="color:red">*</span></label>
+                <label>Attech File<span style="color:red">*</span></br>Only .jpeg, .pdf, .docs, or .doc files allowed.</label>
                 <div class="upload-img-file">
                     <input type="file" id="document" name="document" class="form-control">
                     <strong class="error" id="document-error"></strong>
@@ -1343,10 +1343,11 @@
                 </div>
               </div>
               <div class="form-group">
-                <label>Attech File<span style="color:red">*</span></label>
+                <label>Attech File<span style="color:red">*</span></br>Only .jpeg, .pdf, .docs, or .doc files allowed.</label>
                 <div class="upload-img-file">
                     <input type="file" id="document" name="document" class="form-control">
                     <strong class="error" id="document-error"></strong>
+                   
                 </div>
             </div>
 
@@ -1535,7 +1536,7 @@
 
       
               <div class="form-group">
-                <label>Offer Letter<span style="color:red">*</span></label>
+                <label>Offer Letter<span style="color:red">*</span></br>Only .jpeg, .pdf, .docs, or .doc files allowed.</label>
                 <div class="upload-img-file">
                     <input type="file" id="offer_letter" name="offer_letter" class="form-control"/>
                     <strong class="error" id="offer_letter-error"></strong>
@@ -1543,7 +1544,7 @@
             </div>
 
               <div class="form-group">
-                <label>Experience Letter<span style="color:red">*</span></label>
+                <label>Experience Letter<span style="color:red">*</span></br>Only .jpeg, .pdf, .docs, or .doc files allowed.</label>
                 <div class="upload-img-file">
                     <input type="file" id="exp_letter" name="exp_letter" class="form-control"/>
                     <strong class="error" id="exp_letter-error"></strong>
@@ -1551,7 +1552,7 @@
             </div>
              
               <div class="form-group">
-                <label>Salary Slips<span style="color:red">*</span></label>
+                <label>Salary Slips<span style="color:red">*</span></br>Only .jpeg, .pdf, .docs, or .doc files allowed.</label>
                 <div class="upload-img-file">
                     <input type="file" id="salary_slip" name="salary_slip" class="form-control"/>
                     <strong class="error" id="salary_slip-error"></strong>
@@ -1928,7 +1929,10 @@
               duration_from: "required",
               duration_to: "required",
               verification_type: "required",
-              document: "required",
+              document: {
+              required: true,
+              extension:'pdf|doc|docx'
+              }
             },
 
             messages: {

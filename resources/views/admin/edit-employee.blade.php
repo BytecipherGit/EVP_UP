@@ -302,12 +302,12 @@
                                         <div class="col-xl-12">
                                   <h2>Identity Details</h2>
                               </div>
-
+                              @if ($identity)
                                         <div class="col-xl-12">
                                             <div class="eml-per-main">
                                                 <div class="table-responsive">
                                                 
-                                                    @if ($identity)
+                                                 
                                                         <table class="table">
                                                             <thead>
                                                                 <tr>
@@ -347,15 +347,16 @@
                                                                 </td>
                                                             </tr>
                                                             @endforeach
-                                                            <tbody>
-                                                            </tbody>
-                                                        </table>
-                                                    @endif
-                                                 
+                                                          </table>
+                                                   
+
                                                 </div>
                                             </div>
                                         </div>
-
+                                        @else
+                                        <p class="no-data-clg">No Data Available</p>
+                                          
+                                       @endif
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 {{-- <div class="add-btn-part">
@@ -1258,7 +1259,7 @@
                                                 <img class="profile-pic" id="profile-pic2" name="document"
                                                     @if ($item['document'] !== null) value="/image/{{ old('document', $item['document']) }}" src="/image/{{ $item['document'] }}" @else src="{{ asset('assets') }}/admin/images/pan-card.png" @endif>
                                             </div>
-                                            {{-- <p>You can drag or drop <span>png. jpeg</span> </p> --}}
+                                            <p>You can drag or drop <span>png. jpeg</span> </p>
                                             {{-- <div class="p-image ml-auto">
                                                 <span class="upload-button" id="upload-button2">Choose File</span>
                                                 <input class="file-upload" name="document" id="file-upload2"
@@ -1488,7 +1489,7 @@
                                                 <img class="profile-pic" id="profile-pic4" name="document"
                                                     @if ($item['document'] !== null) value="/image/{{ old('document', $item['document']) }}" src="/image/{{ $item['document'] }}" @else src="{{ asset('assets') }}/admin/images/file-icon-img.png" @endif />
                                             </div>
-                                            {{-- <p>You can drag or drop <span>png. jpeg</span> </p> --}}
+                                            <p>You can drag or drop <span>png. jpeg</span> </p>
                                             <div class="upload-img-file">
                                                 <input type="file" id="document" name="document" class="form-control"/>
                                                 {{-- <strong class="error" id="document-error"></strong> --}}
@@ -1754,7 +1755,7 @@
                                                 <img class="profile-pic" id="profile-pic8"
                                                     @if ($item['offer_letter'] !== null) value="/image/{{ old('document', $item['offer_letter']) }}" src="/image/{{ $item['offer_letter'] }}" @else src="{{ asset('assets') }}/admin/images/job-offer-letter.png" @endif>
                                             </div>
-                                            {{-- <p>You can drag or drop <span>png. jpeg</span> </p> --}}
+                                            <p>You can drag or drop <span>png. jpeg</span> </p>
                                             <div class="upload-img-file">
                                                 <input type="file" id="offer_letter" name="offer_letter" class="form-control"/>
                                                 {{-- <strong class="error" id="offer_letter-error"></strong> --}}
@@ -1776,7 +1777,7 @@
                                                 <img class="profile-pic" id="profile-pic9"
                                                     @if ($item['exp_letter'] !== null) value="/image/{{ old('exp_letter', $item['exp_letter']) }}" src="/image/{{ $item['exp_letter'] }}" @else src="{{ asset('assets') }}/admin/images/job-offer-letter.png" @endif>
                                             </div>
-                                            {{-- <p>You can drag or drop <span>png. jpeg</span> </p> --}}
+                                            <p>You can drag or drop <span>png. jpeg</span> </p>
                                             <div class="upload-img-file">
                                                 <input type="file" id="exp_letter" name="exp_letter" class="form-control"/>
                                                 <strong class="error" id="exp_letter-error"></strong>
@@ -1795,7 +1796,7 @@
                                                 <img class="profile-pic" id="profile-pic10"
                                                     @if ($item['salary_slip'] !== null) value="/image/{{ old('salary_slip', $item['salary_slip']) }}" src="/image/{{ $item['salary_slip'] }}" @else src="{{ asset('assets') }}/admin/images/pdf-icon.png" @endif>
                                             </div>
-                                            {{-- <p>You can drag or drop <span>pdf</span> </p> --}}
+                                            <p>You can drag or drop <span>pdf</span> </p>
                                             <div class="upload-img-file">
                                                 <input type="file" id="salary_slip" name="salary_slip" class="form-control"/>
                                                 <strong class="error" id="salary_slip-error"></strong>
