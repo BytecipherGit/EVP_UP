@@ -63,7 +63,7 @@
                         </div>
                     </div>
 
-                    <div class="profibottom_head">Profile Details</div>
+                    <div class="profibottom_head">Admin Details</div>
 
                    <div class="profibottom"> 
                         <div class="form-group">
