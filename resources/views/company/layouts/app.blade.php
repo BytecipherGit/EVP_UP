@@ -136,7 +136,7 @@
                                 <img src="{{ asset('assets') }}/admin/images/droup-down-gray.png" class="right-doun">
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item" href="/settings">
+                                <a class="dropdown-item" href="/company_profile">
                                     Profile
                                 </a>
                                 <a class="dropdown-item" href="/change_password">

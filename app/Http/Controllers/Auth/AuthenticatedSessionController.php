@@ -32,7 +32,7 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
         $request->session()->regenerate();
         if (Auth::check()) {
-            if (Auth::user()->role == 'admin') {
+            if (Auth::user()->role == 'admin' && Auth::user()->status == '1') {
                 $checkDocuments = Documents::where('user_id', Auth::id())->get();
                 if (count($checkDocuments) > 0) {
                     $flagStatus = true;
@@ -53,7 +53,10 @@ class AuthenticatedSessionController extends Controller
                 } else {
                     return redirect()->intended(RouteServiceProvider::DOCUMENT);
                 }
-            }
+             }
+             else{
+                return redirect('resetverify_status');
+             }
             if (Auth::user()->role == 'superadmin') {
                 return redirect()->intended(RouteServiceProvider::SUPERADMIN);
             }

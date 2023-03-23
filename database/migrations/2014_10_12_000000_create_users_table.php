@@ -36,6 +36,7 @@ return new class extends Migration
             $table->string('cor_office_address')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->tinyInteger('status')->default('0')->comment('1=Verified, 0=Pending');
             $table->rememberToken();
             $table->timestamps();
         });

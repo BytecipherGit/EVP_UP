@@ -154,7 +154,7 @@ class InviteempController extends Controller
     public function exportsCSVInvite(Request $request)
     {
         $fileName = 'invite_employee.csv';
-        $employee = Employee::all();
+        $employee = Employee::where('company_id', Auth::id())->get();
 
         $headers = array(
             "Content-type" => "text/csv",
@@ -425,6 +425,13 @@ class InviteempController extends Controller
             }
 
             $emp_ident->save();
+
+            $official = new Empofficial();
+
+            $official->company_id=Auth::id();
+            $official->emp_id=$basic_id->id;
+            $official->save();
+
             $identityinfo = Empqualification::where('emp_id', $request->id)->first();
             if (empty($identityinfo)) {
 
@@ -577,14 +584,13 @@ class InviteempController extends Controller
               
             
               DB::table('emp_language')->insert($insertDatalang);  
-        }
-            $official = Empofficial::where('emp_id', $request->id)->first();
-            if (empty($official)) {
+          }
+
+            $officialData = Empofficial::where('emp_id', $request->id)->first();
+            if (empty($officialData)) {
 
                 $skill = Empskills::where('emp_id', $request->id)->first();
                 $id = $skill->emp_id;
-                // $table=$basic->getTable();
-                // return view('admin/basic-info/'.$id ,compact('basic'));
                 return redirect('basic-info/' . $id)->with('tabs-5_active', true);
 
             } else {

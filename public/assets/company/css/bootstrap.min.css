@@ -1989,6 +1989,49 @@ pre code {
     border: 1px solid #dee2e6
 }
 
+.error {
+    color: red !important;
+    font-weight: 400;
+}
+
+.admiPrtop, .profibottom  {
+    width: 100%;
+    padding: 30px 30px 15px;
+    background: #fff;
+    box-shadow: 0 9px 20px 7px rgba(0,0,0,0.1);
+    border-radius: 10px;
+}
+.profibottom  {
+    width: 100%;
+    padding: 30px 30px 15px;
+    background: #fff;
+    box-shadow: 0 9px 20px 7px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    margin: 0 0 30px;
+}
+.profibottom_head {
+    font-size: 18px;
+    text-align: left;
+    line-height: 35px;
+    margin: 25px 0 10px;
+    font-weight: 600;
+}
+
+.error{
+    color: red !important;
+       font-size: 12px;
+       display: block;
+       margin: 5px 0;
+       display: flex;
+       font-weight: 400;
+   }
+ 
+ .pass{
+   position: static !important;
+   font-size: 14px !important;
+   text-align: left;
+ }
+
 .table-bordered td,
 .table-bordered th {
     border: 1px solid #dee2e6

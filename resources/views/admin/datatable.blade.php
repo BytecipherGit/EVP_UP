@@ -23,8 +23,8 @@
           </div>
           <div class="col-md-8">
             <div class="main-right-button-box"> 
-               <a href="/current-employee" class="emp">Current Employee</a>
-               <a href="/post-employee" class="emp">Old Employee</a>     
+               <a href="/current-employee" class="emp">Current Employees</a>
+               <a href="/post-employee" class="emp">Old Employees</a>     
                <a href="/add-employee" class="emp"><img src="{{ asset('assets') }}/admin/images/button-plus.png">Add New</a>                     
               </div>
           </div>

@@ -188,7 +188,7 @@ class EmployeeController extends Controller
                 'id_type' => ['required', 'string', 'max:255'],
                 'id_number' => ['required', 'string', 'max:255'],
                 'verification_type' => ['required', 'string', 'max:255'],
-                // 'document' => ['required','file','mimes:jpeg,png,pdf,docs,doc','max:2048']
+                'document' => ['required','file','mimes:jpeg,pdf,docs,doc','max:2048']
                 ]);
 
               $basic_id=Employee::where('id',$request->id)->first();
@@ -237,7 +237,7 @@ class EmployeeController extends Controller
                 'duration_to' => ['required'],
                 'verification_type' => ['required','string', 'max:255'],
                 // 'document' => ['required','file','mimes:jpeg,png,pdf,docs,doc','max:2048']
-
+              
                 ]);
                 
                 $identity_id=Employee::where('id',$request->id)->first();

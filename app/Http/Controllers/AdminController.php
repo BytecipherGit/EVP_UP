@@ -19,7 +19,7 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $allemployee = Employee::where('company_id',Auth::id())->count();
+        $allemployee = Employee::where('company_id',Auth::id())->where('status','!=','2')->count();
         $current = Employee::where('status', 1)->where('company_id',Auth::id())->count();
         $empinvite = Employee::where('status',2)->where('company_id',Auth::id())->count();
         return view('company/index',compact('current','empinvite','allemployee'));

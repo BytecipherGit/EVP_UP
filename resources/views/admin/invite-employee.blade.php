@@ -428,60 +428,72 @@
 </script>
 
 <script>
-    // $(document).on('click', '#bulk_mail', function() {
-    //     // if (confirm("Are you sure you want to send invitation email?")) {
-    //       var checkboxes = document.querySelectorAll('input[class="users_checkbox"]:checked');
-    //       var id = [];
-    //       for (var i = 0; i < checkboxes.length; i++) {
-    //         id.push(checkboxes[i].value);
-    //       }
-    //         if (id.length > 0) {
-    //             $.ajax({
-    //                 url: "{{ route('send_invidation_to_employee') }}",
-    //                 headers: {
-    //                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    //                 },
-    //                 method: "post",
-    //                 data: {id: id},
-    //                 dataType: 'json', 
-    //                 success: function(data) {
-    //                   alert(data);
-    //                     // window.location.assign('invite-email');
-    //                 },
-    //                 error: function(data) {
-    //                     var errors = data.responseJSON;
-    //                     // console.log(errors);
-    //                 }
-    //             });
-    //         } else {
-    //             alert("Please select atleast one checkbox");
-    //         }
-    //     // }
-    // });
-
+ 
     $("#selectAll").click(function() {
         $('input:checkbox').not(this).prop('checked', this.checked);
     });
 
-    $(document).on('click', '#bulk_mail_invite', function() {
+    // $(document).on('click', '#bulk_mail_invite', function() {
      
-        swal({
-                title: "Are you sure?",
-                text: "You want to send invitation to selected employee!",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-            })
+    //     swal({
+    //             title: "Are you sure?",
+    //             text: "You want to send invitation to selected employee!",
+    //             icon: "warning",
+    //             buttons: true,
+    //             dangerMode: true,
+    //         })
    
-            .then((result) => {
+    //         .then((result) => {
                
-                if (result) {
-                    var checkboxes = document.querySelectorAll('input[class="users_checkbox"]:checked');
-                    var id = [];
-                    for (var i = 0; i < checkboxes.length; i++) {
-                        id.push(checkboxes[i].value);
+    //             if (result) {
+    //                 var checkboxes = document.querySelectorAll('input[class="users_checkbox"]:checked');
+    //                 var id = [];
+    //                 for (var i = 0; i < checkboxes.length; i++) {
+    //                     id.push(checkboxes[i].value);
+    //                 }
+    //                 if (id.length > 0) {
+    //                     var url = '{{ url('send_invidation_to_employee') }}';
+    //                     var my_data = {
+    //                         id: id
+    //                     };
+    //                     $.ajax({
+    //                         url: url,
+    //                         type: 'POST',
+    //                         headers: {
+    //                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+    //                                 'content')
+    //                         },
+    //                         data: my_data,
+    //                         success: function(data) {
+    //                             if (data.success) {
+    //                                 swal("Invitation successfully sent.", {
+    //                                     icon: "success",
+    //                                 });
+    //                                 location.reload();
+    //                             }
+    //                         },
+    //                         error: function(xhr, textStatus, errorThrown) {
+    //                             console.log(xhr.responseText);
+    //                         }
+    //                     });
+    //                 }
+    //             } else {
+    //                 swal("Please select atleast one checkbox!");
+    //                 location.reload();
+                    
+    //             }
+    //         });
+    // });
+
+    $(document).on('click', '#bulk_mail_invite', function() {
+    if (confirm("Are you sure you want to send invitation email?")) {
+                
+        var checkboxes = document.querySelectorAll('input[class="users_checkbox"]:checked');
+        var id = [];
+                for (var i = 0; i < checkboxes.length; i++) {
+                id.push(checkboxes[i].value);
                     }
-                    if (id.length > 0) {
+                    if (id.length > 0) { 
                         var url = '{{ url('send_invidation_to_employee') }}';
                         var my_data = {
                             id: id
@@ -499,20 +511,23 @@
                                     swal("Invitation successfully sent.", {
                                         icon: "success",
                                     });
-                                    location.reload();
+                                    // location.reload();
+                                    setTimeout(function(){
+                                    window.location.reload();
+                                    }, 2000);
                                 }
                             },
                             error: function(xhr, textStatus, errorThrown) {
                                 console.log(xhr.responseText);
                             }
                         });
-                    }
+                    
                 } else {
                     swal("Please select atleast one checkbox!");
-                    location.reload();
-                    
+                    // location.reload();
                 }
-            });
+             }
+       
     });
 </script>
 

@@ -141,6 +141,7 @@ Route::middleware([Admin::class])->group(function () {
     Route::post('interview/declined/{id?}', [InterviewEmployee::class, 'declineInterview'])->middleware('documents');
     Route::post('interview/newtime/{id?}', [InterviewEmployee::class, 'suggestNewTime'])->middleware('documents');
     Route::get('interview/confirmed/{id?}', [InterviewEmployee::class, 'interviewConfirmed'])->name('interview.confirmed')->middleware('documents');
+  
     Route::get('interview/newtime/{id?}', [InterviewEmployee::class, 'interviewNewTime'])->name('interview.newtime')->middleware('documents');
     Route::get('interview/declined/{id?}', [InterviewEmployee::class, 'interviewDeclined'])->name('interview.declined')->middleware('documents');
     Route::post('interview/replied', [InterviewEmployee::class, 'interviewRepliedFromMail'])->name('interview.replied.mail')->middleware('documents');
@@ -154,6 +155,11 @@ Route::middleware([Admin::class])->group(function () {
     
 
 });
+Route::get('verification-success/{id?}', [InterviewEmployee::class, 'verificationEmail'])->name('verification.success');
+Route::any('resetverification-mail/{id?}', [App\Http\Controllers\Auth\RegisteredUserController::class, 'resetMailSend'])->name('resetverification.mail');
+
+Route::get('verify_status', [InterviewEmployee::class, 'getCheckStatus']);
+Route::get('resetverify_status', [InterviewEmployee::class, 'getResetStatus']);
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
