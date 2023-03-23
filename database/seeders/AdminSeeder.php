@@ -30,7 +30,8 @@ class AdminSeeder extends Seeder
             'country'=>'India',
             'state'=>'Madhya Pradesh',
             'city'=>'Indore',
-            'pin'=>'482003'
+            'pin'=>'482003',
+            'status'=>'1'
         ]);
 
         User::create([
@@ -46,7 +47,8 @@ class AdminSeeder extends Seeder
             'country'=>'India',
             'state'=>'Madhya Pradesh',
             'city'=>'Indore',
-            'pin'=>'482003'
+            'pin'=>'482003',
+            'status'=>'1'
         ]);
     }
 }

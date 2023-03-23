@@ -61,72 +61,6 @@
                             @enderror --}}
                             <strong class="error" id="email-error"></strong>
                         </div>
-                    </div>
-
-                    <div class="profibottom_head">Admin Details</div>
-
-                   <div class="profibottom"> 
-                        <div class="form-group">
-                            <label>Name <strong style="color:red">*</strong> </label>
-                            <input type="text" id="name" name="name" class="form-control" value="{{ old('name') }}"
-                                placeholder="Enter Your name" autofocus autocomplete="name" >
-                            {{-- @error('name')
-                                <p class="velidation">{{ $message }}</p>
-                            @enderror --}}
-                            <strong class="error" id="name-error"></strong>
-                        </div>
-                        <div class="row">
-                            <div class="col-xl-6">
-                                <div class="form-group">
-                                    <label>Password <strong style="color:red">*</strong></label>
-                                    <input type="password" id="password" name="password" class="form-control"
-                                     placeholder="Enter Your Password" autocomplete="new-password" />
-                                    {{-- @error('password')
-                                        <p class="velidation">{{ $message }}</p>
-                                    @enderror --}}
-                                    <strong class="error" id="password-error"></strong>
-                                </div>
-
-                            </div>
-                            <div class="col-xl-6">
-                                <div class="form-group">
-                                    <label>Confirm Password <strong style="color:red">*</strong> </label>
-                                    <input type="password" name="password_confirmation" class="form-control"
-                                        value="{{ old('password_confirmation') }}"
-                                        placeholder="Enter Your Confirm Password" autocomplete="new-password" >
-                                    {{-- @error('password')
-                                        <p class="velidation">{{ $message }}</p>
-                                    @enderror --}}
-                                    <strong class="error" id="password_confirmation-error"></strong>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-xl-6">
-                                <div class="form-group">
-                                    <label>Admin Designation <strong style="color:red">*</strong> </label>
-                                    <input type="text" id="designation" name="designation" class="form-control"
-                                        value="{{ old('designation') }}" placeholder="Designation" autofocus autocomplete="designation">
-                                    {{-- @error('designation')
-                                        <p class="velidation">{{ $message }}</p>
-                                    @enderror --}}
-                                    <strong class="error" id="designation-error"></strong>
-                                </div>
-                            </div>
-                            <div class="col-xl-6">
-                                <div class="form-group">
-                                    <label>Admin Department <strong style="color:red">*</strong></label>
-                                    <input type="text" id="department" name="department" class="form-control"
-                                        value="{{ old('department') }}" placeholder="Department" autofocus autocomplete="department">
-                                    {{-- @error('department')
-                                        <p class="velidation">{{ $message }}</p>
-                                    @enderror --}}
-                                    <strong class="error" id="department-error"></strong>
-                                </div>
-                            </div>
-                        </div>
-
                         <div class="row">
                             <div class="col-xl-6">
                                 <div class="form-group">
@@ -211,6 +145,75 @@
                             @enderror --}}
                             <strong class="error" id="address-error"></strong>
                         </div>
+                    </div>
+
+                    
+                    <div class="profibottom_head">Admin Details</div>
+
+                   <div class="profibottom"> 
+                        <div class="form-group">
+                            <label>Name <strong style="color:red">*</strong> </label>
+                            <input type="text" id="name" name="name" class="form-control" value="{{ old('name') }}"
+                                placeholder="Enter Your name" autofocus autocomplete="name" >
+                            {{-- @error('name')
+                                <p class="velidation">{{ $message }}</p>
+                            @enderror --}}
+                            <strong class="error" id="name-error"></strong>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-6">
+                                <div class="form-group">
+                                    <label>Password <strong style="color:red">*</strong></label>
+                                    <input type="password" id="password" name="password" class="form-control"
+                                     placeholder="Enter Your Password" autocomplete="new-password" />
+                                    {{-- @error('password')
+                                        <p class="velidation">{{ $message }}</p>
+                                    @enderror --}}
+                                    <strong class="error" id="password-error"></strong>
+                                </div>
+
+                            </div>
+                            <div class="col-xl-6">
+                                <div class="form-group">
+                                    <label>Confirm Password <strong style="color:red">*</strong> </label>
+                                    <input type="password" name="password_confirmation" class="form-control"
+                                        value="{{ old('password_confirmation') }}"
+                                        placeholder="Enter Your Confirm Password" autocomplete="new-password" >
+                                    {{-- @error('password')
+                                        <p class="velidation">{{ $message }}</p>
+                                    @enderror --}}
+                                    <strong class="error" id="password_confirmation-error"></strong>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xl-6">
+                                <div class="form-group">
+                                    <label>Admin Designation <strong style="color:red">*</strong> </label>
+                                    <input type="text" id="designation" name="designation" class="form-control"
+                                        value="{{ old('designation') }}" placeholder="Designation" autofocus autocomplete="designation">
+                                    {{-- @error('designation')
+                                        <p class="velidation">{{ $message }}</p>
+                                    @enderror --}}
+                                    <strong class="error" id="designation-error"></strong>
+                                </div>
+                            </div>
+                            <div class="col-xl-6">
+                                <div class="form-group">
+                                    <label>Admin Department <strong style="color:red">*</strong></label>
+                                    <input type="text" id="department" name="department" class="form-control"
+                                        value="{{ old('department') }}" placeholder="Department" autofocus autocomplete="department">
+                                    {{-- @error('department')
+                                        <p class="velidation">{{ $message }}</p>
+                                    @enderror --}}
+                                    <strong class="error" id="department-error"></strong>
+                                </div>
+                            </div>
+
+                            
+                        </div>
+    
                     </div>    
                  
                         {{-- data-toggle="modal" --}}

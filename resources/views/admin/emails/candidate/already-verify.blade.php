@@ -42,7 +42,7 @@
         <i class="checkmark">✓</i>
       </div>
         <h1>Success</h1> 
-        <p>Hello, {{ $companyData->name }} <br/>You already verify your account..</p>
+        <p>Hello, {{ $companyData->name }} <br/>You account is already verifed....</p>
         <p>Click  <a href="{{ route('login') }}">here</a> for login. </p>
       </div>
     </body>

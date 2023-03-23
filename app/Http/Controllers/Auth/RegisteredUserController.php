@@ -124,7 +124,7 @@ class RegisteredUserController extends Controller
             $user = User::find($request->id);
             if (!empty($user->email)) {
                 $verifyMailData = [
-                    'name' => !empty($request->name) ? $request->name : '',
+                    'name' => !empty($user->name) ? $user->name : '',
                     'id' => encrypt($user->id),
                     'status' => $user->status,
                 ];
