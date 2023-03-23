@@ -18,8 +18,6 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('interview_employees_id');
             $table->foreign('interview_employees_id')->references('id')->on('interview_employees')->comment('Id from interview_employees table')->onDelete('cascade');
-            $table->unsignedInteger('company_id');
-            $table->foreign('company_id')->references('id')->on('users')->onDelete('cascade');
             $table->unsignedBigInteger('interviewer_id');
             $table->foreign('interviewer_id')->references('id')->on('emp_basicinfo')->comment('as employee id from emp_basicinfo')->onDelete('cascade');
             $table->unsignedBigInteger('interview_processes_id');

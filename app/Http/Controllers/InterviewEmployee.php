@@ -146,29 +146,14 @@ class InterviewEmployee extends Controller
                         'interview_employees.empCode',
                         'interview_employees.first_name',
                         'interview_employees.last_name',
-                        // 'interview_employees.email',
                         'interview_employees.position',
-                        // 'interview_employee_rounds.id as interviewEmployeeRoundsId',
-                        // 'interview_employee_rounds.interview_employees_id',
-                        // 'interview_employee_rounds.interviewer_id',
-                        // 'interview_employee_rounds.interview_processes_id',
                         'interview_employee_rounds.offer_status',
                         'interview_employee_rounds.interview_status',
-                        // 'interview_employee_rounds.employee_interview_status',
-                        // 'interview_employee_rounds.interview_date',
-                        // 'interview_employee_rounds.interview_start_time',
-                        // 'interview_employee_rounds.duration',
-                        // 'interview_employee_rounds.interview_type',
-                        // 'interview_employee_rounds.phone',
-                        // 'interview_employee_rounds.video_link',
-                        // 'interview_employee_rounds.interview_instructions',
-                        // 'interview_employee_rounds.interviewee_comment',
-                        // 'interview_employee_rounds.interviewee_comment_date',
-                        // 'interview_employee_rounds.interviewer_feedback',
-                        // 'interview_employee_rounds.interviewer_status',
                         'employee_interview_statuses.title'
                     )
                     ->get();
+                    // $interviewEmployees = EmployeeInterview::where('interview_employees.company_id', Auth::id())
+                    // ->get();
             }
             $hiringStages = HiringStage::all();
             $employeeInterviewStatuses = EmployeeInterviewStatus::all();
@@ -261,7 +246,6 @@ class InterviewEmployee extends Controller
                         //Insert record into Emoloyee Inerview Rounds
                         $insertEmployeeInterviewRounds = [
                             'interview_employees_id' => $employeeInterviewData->id,
-                            'company_id' => Auth::id(),
                             'interviewer_id' => !empty($request->interviewer_id) ? $request->interviewer_id : null,
                             'interview_processes_id' => !empty($request->interview_process) ? $request->interview_process : null,
                             'offer_status' => !empty($request->offer_status) ? $request->offer_status : 'Pending',
@@ -408,7 +392,6 @@ class InterviewEmployee extends Controller
                     //Insert record into Emoloyee Inerview Rounds
                     $insertEmployeeInterviewRounds = [
                         'interview_employees_id' => !empty($request->interview_id) ? $request->interview_id : null,
-                        'company_id' => Auth::id(),
                         'interviewer_id' => !empty($request->interviewer_id) ? $request->interviewer_id : null,
                         'interview_processes_id' => !empty($request->interview_process) ? $request->interview_process : null,
                         'offer_status' => !empty($request->offer_status) ? $request->offer_status : 'Pending',

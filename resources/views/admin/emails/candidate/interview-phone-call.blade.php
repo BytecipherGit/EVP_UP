@@ -74,7 +74,7 @@
                         <a href="{{ route('interview.confirmed', ['interviewEmpRoundsId' => $mailData['interviewEmpRoundsId']]) }}"
                             style="margin-bottom:15px; font-size:20px; font-weight: 600; padding: 20px 0; background: #5533ff; float: left; width: 100%; border-radius: 5px; color: #fff; text-decoration: none;"
                             target="_black">
-                            <sapn style="padding: 0 5px;">Schedule interview</sapn>
+                            <sapn style="padding: 0 5px;">Yes, I am available</sapn>
                         </a>
                         <a href="{{ route('interview.newtime', ['interviewEmpRoundsId' => $mailData['interviewEmpRoundsId']]) }}"
                             style="margin-bottom:15px; font-size:20px; font-weight: 600; padding: 20px 0; background: #5533ff; float: left; width: 100%; border-radius: 5px; color: #fff; text-decoration: none;"
@@ -84,7 +84,7 @@
                         <a href="{{ route('interview.declined', ['interviewEmpRoundsId' => $mailData['interviewEmpRoundsId']]) }}"
                             style="margin-bottom:15px; font-size:20px; font-weight: 600; padding: 20px 0; background: #5533ff; float: left; width: 100%; border-radius: 5px; color: #fff; text-decoration: none;"
                             target="_black">
-                            <sapn style="padding: 0 5px;">Decline interview</sapn>
+                            <sapn style="padding: 0 5px;">No, I am not available</sapn>
                         </a>
 
                     </div>
