@@ -1,29 +1,11 @@
 @extends('company/layouts.appcom')
 @section('content')
 @section('title','EVP - Company Login')
-
 <style>
-    .error{
-     color: red;
-        font-size: 12px;
-        display: block;
-        margin: 5px 0;
-        display: flex;
-    }
-  
-  .pass{
-    position: static !important;
-    font-size: 14px !important;
-    text-align: left;
+  li{
+    display:block !important;
   }
-
-  .error {
-      color: red !important;
-      font-weight: 400;
-  }
-
- </style>
-
+</style>
 
 <div class="d-flex main-form-part">
     <div class="container-fluid">
@@ -54,7 +36,7 @@
               <div class="form-group">
                 <label>Email Address</label>     
                 <input type="email" name="email" value="{{ old('email') }}" class="form-control" placeholder="Email Address">
-                {{-- <x-input-error :messages="$errors->get('email')" class="error" style=""/> --}}
+                <x-input-error :messages="$errors->get('email')" class="error" style="margin-left:-37px;"/>
                   {{-- @error('email')
                   <span class="text-danger pass">{{ $message }}</span>
                   @enderror  --}}

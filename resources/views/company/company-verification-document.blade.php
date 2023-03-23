@@ -43,7 +43,7 @@
                             <div class="row new-changeLS customer_records">
                                 <div class="col-md-12">
                                     <div class="form-groupbox">
-                                        <label>Company Registration ID Proof <strong style="color:red">*</strong></label>
+                                        <label>Registration ID Proof <strong style="color:red">*</strong></label>
                                         <div class="upload-img-file">
                                             <div class="p-image ml-auto">
                                                 <input type="file" name="id_proof" id="id_proof"
@@ -57,7 +57,7 @@
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-groupbox">
-                                        <label>Company Address Proof <strong style="color:red">*</strong></label>
+                                        <label>Address Proof <strong style="color:red">*</strong></label>
                                         <div class="upload-img-file">
                                             <div class="p-image ml-auto">
                                                 <input type="file" name="address_proof" id="address_proof"
@@ -71,7 +71,7 @@
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-groupbox">
-                                        <label>Company Registration Document Proof <strong style="color:red">*</strong></label>
+                                        <label>Registration Document Proof <strong style="color:red">*</strong></label>
                                         <div class="upload-img-file">
                                             <div class="p-image ml-auto">
                                                 <input type="file" name="document_proof" id="document_proof"
