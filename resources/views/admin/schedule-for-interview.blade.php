@@ -46,7 +46,7 @@
         <div class="table-responsive-bg">
             <div class="row">
                 <div class="col-xs-4">
-                    <label>Filter By Hiring Status</label>
+                    {{-- <label>Filter By Hiring Status</label>
                     @if ($hiringStages)
                         <select class="form-control" id="hStatus" name="hStatus">
                             @foreach ($hiringStages as $hiringStage)
@@ -55,7 +55,7 @@
                                 </option>
                             @endforeach
                         </select>
-                    @endif
+                    @endif --}}
                 </div>
                 <div class="col-xs-4">
 
@@ -81,6 +81,7 @@
                             <tr>
                                 <th>EVP Id</th>
                                 <th>Name</th>
+                                {{-- <th>Email</th> --}}
                                 <th>Position</th>
                                 <th>Employee Interview Response</th>
                                 <th>Hiring Status</th>
@@ -95,6 +96,7 @@
                                 <tr>
                                     <td># {{ $employee->empCode }}</td>
                                     <td>{{ $employee->first_name . ' ' . $employee->last_name }}</td>
+                                    {{-- <td>{{ $employee->email }}</td> --}}
                                     <td>{{ $employee->position }}</td>
                                     <td><span class="tb-accept"></span> {{ $employee->title }}</td>
                                     <td>
