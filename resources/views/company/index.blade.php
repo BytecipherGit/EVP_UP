@@ -20,7 +20,7 @@
             <div class="col-xl-4 col-lg-6 col-md-6">
               <div class="ser-box">
                 <div class="head-sec">
-                  <h2>All Employee <span></span></h2>
+                  <h2>All Employees <span></span></h2>
                   <div class="img-bg ml-auto">
                     <img src="assets/admin/images/employees-view.png">
                   </div>
@@ -36,7 +36,7 @@
             <div class="col-xl-4 col-lg-6 col-md-6">
               <div class="ser-box">
                 <div class="head-sec">
-                  <h2>Current Employee<span></span></h2>
+                  <h2>Current Employees<span></span></h2>
                   <div class="img-bg ml-auto">
                     <img src="assets/admin/images/current-user.png">
                   </div>  
@@ -52,7 +52,7 @@
             <div class="col-xl-4 col-lg-6 col-md-6">
               <div class="ser-box">
                 <div class="head-sec">
-                  <h2>Invite Employee <span></span></h2>
+                  <h2>Invite Employees <span></span></h2>
                   <div class="img-bg ml-auto">
                     <img src="assets/admin/images/invite-icon.png">
                   </div>  
