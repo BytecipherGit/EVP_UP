@@ -147,7 +147,7 @@ class InterviewProcess extends Controller
             $checkResponse = InterviewEmployeeRounds::where('id', $request->interviewEmpRoundsId)->first();
             if (!$checkResponse->interviewer_feedback) {
                 $feedback = InterviewEmployeeRounds::where('id', $request->interviewEmpRoundsId)
-                    ->update(['interviewer_feedback' => $request->input('interviewer_feedback')]);
+                    ->update(['interviewer_feedback' => $request->input('interviewer_feedback'),'interviewer_status' => $request->input('interviewer_status')]);
                 if ($feedback) {
                     return redirect('/success');
                 }
