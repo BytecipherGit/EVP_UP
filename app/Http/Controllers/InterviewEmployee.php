@@ -257,7 +257,7 @@ class InterviewEmployee extends Controller
                         ];
                         $employeeInterviewRoundData = InterviewEmployeeRounds::create($insertEmployeeInterviewRounds);
                         if ($employeeInterviewRoundData) {
-
+                            $getInterviewTitle = InterviewProcess::where('id', $request->interview_process)->first();
                             //Send email to Interviewee
                             if ($request->interview_type == 'Video') {
                                 $mailData = [
@@ -270,6 +270,7 @@ class InterviewEmployee extends Controller
                                     'meeting_start_time' => !empty($startFormattedTime) ? $startFormattedTime : '',
                                     'duration' => !empty($request->duration) ? $request->duration : '',
                                     'interview_instruction' => !empty($request->interview_instruction) ? $request->interview_instruction : '',
+                                    'interview_title' => !empty($getInterviewTitle->title) ? $getInterviewTitle->title : '',
                                 ];
                                 FacadesMail::to($request->email)->send(new SendInterviewScheduleMail($mailData));
                             } else {
@@ -283,6 +284,7 @@ class InterviewEmployee extends Controller
                                     'meeting_start_time' => !empty($startFormattedTime) ? $startFormattedTime : '',
                                     'duration' => !empty($request->duration) ? $request->duration : '',
                                     'interview_instruction' => !empty($request->interview_instruction) ? $request->interview_instruction : '',
+                                    'interview_title' => !empty($getInterviewTitle->title) ? $getInterviewTitle->title : '',
                                 ];
 
                                 FacadesMail::to($request->email)->send(new SendInterviewSchedulePhoneMail($mailData));
@@ -305,6 +307,7 @@ class InterviewEmployee extends Controller
                                         'meeting_start_time' => !empty($startFormattedTime) ? $startFormattedTime : '',
                                         'duration' => !empty($request->duration) ? $request->duration : '',
                                         'interviewRoundId' => encrypt($employeeInterviewRoundData->id),
+                                        'interview_title' => !empty($getInterviewTitle->title) ? $getInterviewTitle->title : '',
                                     ];
                                     FacadesMail::to($getInterviewerDetails->email)->send(new SendInterviewScheduleMailToInterviewer($mailData));
                                 } else {
@@ -319,6 +322,7 @@ class InterviewEmployee extends Controller
                                         'meeting_start_time' => !empty($startFormattedTime) ? $startFormattedTime : '',
                                         'duration' => !empty($request->duration) ? $request->duration : '',
                                         'interviewRoundId' => encrypt($employeeInterviewRoundData->id),
+                                        'interview_title' => !empty($getInterviewTitle->title) ? $getInterviewTitle->title : '',
                                     ];
                                     FacadesMail::to($getInterviewerDetails->email)->send(new SendInterviewSchedulePhoneMailToInterviewer($mailData));
                                 }
@@ -385,92 +389,102 @@ class InterviewEmployee extends Controller
                 $checkRecordExist = EmployeeInterview::where('id', $request->interview_id)->first();
                 if (!empty($checkRecordExist)) {
 
-                    //Insert record into Emoloyee Inerview Rounds
-                    $insertEmployeeInterviewRounds = [
-                        'interview_employees_id' => !empty($request->interview_id) ? $request->interview_id : null,
-                        'interviewer_id' => !empty($request->interviewer_id) ? $request->interviewer_id : null,
-                        'interview_processes_id' => !empty($request->interview_process) ? $request->interview_process : null,
-                        'offer_status' => !empty($request->offer_status) ? $request->offer_status : 'Pending',
-                        'interview_status' => !empty($request->interview_status) ? $request->interview_status : 1,
-                        'employee_interview_status' => !empty($request->employee_interview_status) ? $request->employee_interview_status : 1,
-                        'interview_date' => !empty($request->interview_date) ? $request->interview_date : Carbon::now()->format('Y-m-d'),
-                        'interview_start_time' => !empty($startFormattedTime) ? $startFormattedTime : null,
-                        'duration' => !empty($request->duration) ? $request->duration : null,
-                        'interview_type' => !empty($request->interview_type) ? $request->interview_type : null,
-                        'phone' => !empty($request->phone) ? $request->phone : null,
-                        'video_link' => !empty($request->video_link) ? $request->video_link : null,
-                        'interview_instructions' => !empty($request->interview_instruction) ? $request->interview_instruction : null,
-                    ];
-                    $employeeInterviewRoundData = InterviewEmployeeRounds::create($insertEmployeeInterviewRounds);
-                    if ($employeeInterviewRoundData) {
-
-                        //Send email to Interviewee
-                        if ($request->interview_type == 'Video') {
-                            $mailData = [
-                                'organisationName' => !empty($userDetails->org_name) ? $userDetails->org_name : '',
-                                'interviewEmpRoundsId' => encrypt($employeeInterviewRoundData->id),
-                                'name' => !empty($checkRecordExist->first_name) ? $checkRecordExist->first_name . ' ' . $checkRecordExist->last_name : '',
-                                'position' => !empty($checkRecordExist->position) ? $checkRecordExist->position : '',
-                                'meeting_url' => !empty($request->video_link) ? $request->video_link : '',
-                                'meeting_date' => !empty($request->interview_date) ? $request->interview_date : '',
-                                'meeting_start_time' => !empty($startFormattedTime) ? $startFormattedTime : '',
-                                'duration' => !empty($request->duration) ? $request->duration : '',
-                                'interview_instruction' => !empty($request->interview_instruction) ? $request->interview_instruction : '',
-                            ];
-                            FacadesMail::to($checkRecordExist->email)->send(new SendInterviewScheduleMail($mailData));
-                        } else {
-                            $mailData = [
-                                'organisationName' => !empty($userDetails->org_name) ? $userDetails->org_name : '',
-                                'interviewEmpRoundsId' => encrypt($employeeInterviewRoundData->id),
-                                'name' => !empty($checkRecordExist->first_name) ? $checkRecordExist->first_name . ' ' . $checkRecordExist->last_name : '',
-                                'position' => !empty($checkRecordExist->position) ? $checkRecordExist->position : '',
-                                'phone' => !empty($request->phone) ? $request->phone : '',
-                                'meeting_date' => !empty($request->interview_date) ? $request->interview_date : '',
-                                'meeting_start_time' => !empty($startFormattedTime) ? $startFormattedTime : '',
-                                'duration' => !empty($request->duration) ? $request->duration : '',
-                                'interview_instruction' => !empty($request->interview_instruction) ? $request->interview_instruction : '',
-                            ];
-
-                            FacadesMail::to($checkRecordExist->email)->send(new SendInterviewSchedulePhoneMail($mailData));
-                        }
-
-                        //Get Interviewer details from employee information table
-                        $getInterviewerDetails = Employee::where('id', $request->interviewer_id)->first();
-                        if (!empty($getInterviewerDetails->email) && !empty($employeeInterviewRoundData)) {
-                            //Send email to Interviewer
+                    //Check Interview is already created or not
+                    $checkInterviewExist = InterviewEmployeeRounds::where('interview_employees_id', $request->interview_id)->where('interview_processes_id', $request->interview_process)->first();
+                    if(empty($checkInterviewExist)){
+                        //Insert record into Emoloyee Inerview Rounds
+                        $insertEmployeeInterviewRounds = [
+                            'interview_employees_id' => !empty($request->interview_id) ? $request->interview_id : null,
+                            'interviewer_id' => !empty($request->interviewer_id) ? $request->interviewer_id : null,
+                            'interview_processes_id' => !empty($request->interview_process) ? $request->interview_process : null,
+                            'offer_status' => !empty($request->offer_status) ? $request->offer_status : 'Pending',
+                            'interview_status' => !empty($request->interview_status) ? $request->interview_status : 1,
+                            'employee_interview_status' => !empty($request->employee_interview_status) ? $request->employee_interview_status : 1,
+                            'interview_date' => !empty($request->interview_date) ? $request->interview_date : Carbon::now()->format('Y-m-d'),
+                            'interview_start_time' => !empty($startFormattedTime) ? $startFormattedTime : null,
+                            'duration' => !empty($request->duration) ? $request->duration : null,
+                            'interview_type' => !empty($request->interview_type) ? $request->interview_type : null,
+                            'phone' => !empty($request->phone) ? $request->phone : null,
+                            'video_link' => !empty($request->video_link) ? $request->video_link : null,
+                            'interview_instructions' => !empty($request->interview_instruction) ? $request->interview_instruction : null,
+                        ];
+                        $employeeInterviewRoundData = InterviewEmployeeRounds::create($insertEmployeeInterviewRounds);
+                        if ($employeeInterviewRoundData) {
+                            $getInterviewTitle = InterviewProcess::where('id', $request->interview_process)->first();
+                            //Send email to Interviewee
                             if ($request->interview_type == 'Video') {
-
                                 $mailData = [
                                     'organisationName' => !empty($userDetails->org_name) ? $userDetails->org_name : '',
                                     'interviewEmpRoundsId' => encrypt($employeeInterviewRoundData->id),
-                                    'interviewer_name' => !empty($getInterviewerDetails->first_name) ? $getInterviewerDetails->first_name . ' ' . $getInterviewerDetails->last_name : '',
-                                    'interviewee_name' => !empty($checkRecordExist->first_name) ? $checkRecordExist->first_name . ' ' . $checkRecordExist->last_name : '',
+                                    'name' => !empty($checkRecordExist->first_name) ? $checkRecordExist->first_name . ' ' . $checkRecordExist->last_name : '',
                                     'position' => !empty($checkRecordExist->position) ? $checkRecordExist->position : '',
                                     'meeting_url' => !empty($request->video_link) ? $request->video_link : '',
                                     'meeting_date' => !empty($request->interview_date) ? $request->interview_date : '',
                                     'meeting_start_time' => !empty($startFormattedTime) ? $startFormattedTime : '',
                                     'duration' => !empty($request->duration) ? $request->duration : '',
-                                    'interviewRoundId' => encrypt($employeeInterviewRoundData->id),
+                                    'interview_instruction' => !empty($request->interview_instruction) ? $request->interview_instruction : '',
+                                    'interview_title' => !empty($getInterviewTitle->title) ? $getInterviewTitle->title : '',
                                 ];
-                                FacadesMail::to($getInterviewerDetails->email)->send(new SendInterviewScheduleMailToInterviewer($mailData));
+                                FacadesMail::to($checkRecordExist->email)->send(new SendInterviewScheduleMail($mailData));
                             } else {
                                 $mailData = [
                                     'organisationName' => !empty($userDetails->org_name) ? $userDetails->org_name : '',
                                     'interviewEmpRoundsId' => encrypt($employeeInterviewRoundData->id),
-                                    'interviewer_name' => !empty($getInterviewerDetails->first_name) ? $getInterviewerDetails->first_name . ' ' . $getInterviewerDetails->last_name : '',
-                                    'interviewee_name' => !empty($checkRecordExist->first_name) ? $checkRecordExist->first_name . ' ' . $checkRecordExist->last_name : '',
+                                    'name' => !empty($checkRecordExist->first_name) ? $checkRecordExist->first_name . ' ' . $checkRecordExist->last_name : '',
                                     'position' => !empty($checkRecordExist->position) ? $checkRecordExist->position : '',
                                     'phone' => !empty($request->phone) ? $request->phone : '',
                                     'meeting_date' => !empty($request->interview_date) ? $request->interview_date : '',
                                     'meeting_start_time' => !empty($startFormattedTime) ? $startFormattedTime : '',
                                     'duration' => !empty($request->duration) ? $request->duration : '',
-                                    'interviewRoundId' => encrypt($employeeInterviewRoundData->id),
+                                    'interview_instruction' => !empty($request->interview_instruction) ? $request->interview_instruction : '',
+                                    'interview_title' => !empty($getInterviewTitle->title) ? $getInterviewTitle->title : '',
                                 ];
-                                FacadesMail::to($getInterviewerDetails->email)->send(new SendInterviewSchedulePhoneMailToInterviewer($mailData));
+    
+                                FacadesMail::to($checkRecordExist->email)->send(new SendInterviewSchedulePhoneMail($mailData));
+                            }
+    
+                            //Get Interviewer details from employee information table
+                            $getInterviewerDetails = Employee::where('id', $request->interviewer_id)->first();
+                            if (!empty($getInterviewerDetails->email) && !empty($employeeInterviewRoundData)) {
+                                //Send email to Interviewer
+                                if ($request->interview_type == 'Video') {
+    
+                                    $mailData = [
+                                        'organisationName' => !empty($userDetails->org_name) ? $userDetails->org_name : '',
+                                        'interviewEmpRoundsId' => encrypt($employeeInterviewRoundData->id),
+                                        'interviewer_name' => !empty($getInterviewerDetails->first_name) ? $getInterviewerDetails->first_name . ' ' . $getInterviewerDetails->last_name : '',
+                                        'interviewee_name' => !empty($checkRecordExist->first_name) ? $checkRecordExist->first_name . ' ' . $checkRecordExist->last_name : '',
+                                        'position' => !empty($checkRecordExist->position) ? $checkRecordExist->position : '',
+                                        'meeting_url' => !empty($request->video_link) ? $request->video_link : '',
+                                        'meeting_date' => !empty($request->interview_date) ? $request->interview_date : '',
+                                        'meeting_start_time' => !empty($startFormattedTime) ? $startFormattedTime : '',
+                                        'duration' => !empty($request->duration) ? $request->duration : '',
+                                        'interviewRoundId' => encrypt($employeeInterviewRoundData->id),
+                                        'interview_title' => !empty($getInterviewTitle->title) ? $getInterviewTitle->title : '',
+                                    ];
+                                    FacadesMail::to($getInterviewerDetails->email)->send(new SendInterviewScheduleMailToInterviewer($mailData));
+                                } else {
+                                    $mailData = [
+                                        'organisationName' => !empty($userDetails->org_name) ? $userDetails->org_name : '',
+                                        'interviewEmpRoundsId' => encrypt($employeeInterviewRoundData->id),
+                                        'interviewer_name' => !empty($getInterviewerDetails->first_name) ? $getInterviewerDetails->first_name . ' ' . $getInterviewerDetails->last_name : '',
+                                        'interviewee_name' => !empty($checkRecordExist->first_name) ? $checkRecordExist->first_name . ' ' . $checkRecordExist->last_name : '',
+                                        'position' => !empty($checkRecordExist->position) ? $checkRecordExist->position : '',
+                                        'phone' => !empty($request->phone) ? $request->phone : '',
+                                        'meeting_date' => !empty($request->interview_date) ? $request->interview_date : '',
+                                        'meeting_start_time' => !empty($startFormattedTime) ? $startFormattedTime : '',
+                                        'duration' => !empty($request->duration) ? $request->duration : '',
+                                        'interviewRoundId' => encrypt($employeeInterviewRoundData->id),
+                                        'interview_title' => !empty($getInterviewTitle->title) ? $getInterviewTitle->title : '',
+                                    ];
+                                    FacadesMail::to($getInterviewerDetails->email)->send(new SendInterviewSchedulePhoneMailToInterviewer($mailData));
+                                }
                             }
                         }
+                        return Response::json(['success' => '1']);
+                    } else {
+                        return Response::json(['success' => '0']);
                     }
-                    return Response::json(['success' => '1']);
                 } else {
                     return Response::json(['success' => '0']);
                 }
