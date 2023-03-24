@@ -15,8 +15,8 @@
     }
 
     label.error {
-         color: #dc3545 !important;
-         font-size: 14px;
+        color: #dc3545 !important;
+        font-size: 14px;
     }
 </style>
 
@@ -60,7 +60,7 @@
                 <div class="col-xs-4">
 
                 </div>
-                <div class="col-xs-4">
+                {{-- <div class="col-xs-4">
                     <label>Filter By Employee Interview Response</label>
                     @if ($employeeInterviewStatuses)
                         <select class="form-control" id="eStatus" name="eStatus">
@@ -72,7 +72,7 @@
                             @endforeach
                         </select>
                     @endif
-                </div>
+                </div> --}}
             </div>
             <div class="row" style="margin-top: 20px;">
                 <div class="col-xs-12">
@@ -88,7 +88,7 @@
                                 {{-- <th>Employee Status</th> --}}
                                 {{-- <th>Employee Comment</th> --}}
                                 <th>Send Remider</th>
-                                <th width="200px">Action</th>
+                                <th width="250px">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -98,7 +98,11 @@
                                     <td>{{ $employee->first_name . ' ' . $employee->last_name }}</td>
                                     {{-- <td>{{ $employee->email }}</td> --}}
                                     <td>{{ $employee->position }}</td>
-                                    <td><span class="tb-accept"></span> {{ $employee->title }}</td>
+                                    <td><span class="tb-accept"></span>
+                                        @if ($employee->lastInterviewEmployeeRounds)
+                                            {{ $employee->lastInterviewEmployeeRounds->employeeInterviewStatus->title }}
+                                        @endif
+                                    </td>
                                     <td>
                                         <select style="width: 150px;" class="form-control" name="hiring_stage"
                                             id="hiring_stage">
@@ -120,16 +124,17 @@
                                     {{-- <td>{{ ($employee->interviewee_comment) ? $employee->interviewee_comment : '' }}</td> --}}
                                     <td>
                                         <span class="notifi-td" id="reminder_interview"
-                                        data-id="{{ $employee->id }}"><img
-                                                src="assets/admin/images/bell-icon.png" width="30px;"
-                                                height="30px"></span>
+                                            data-id="{{ $employee->id }}"><img src="assets/admin/images/bell-icon.png"
+                                                width="30px;" height="30px"></span>
                                     </td>
                                     <td>
                                         {{-- <span class="notifi-td" data-toggle="modal" data-target="#remaiderbtninfo"><img
                                                 src="assets/admin/images/bell-icon.png" width="30px;"
                                                 height="30px"></span> --}}
-                                                <a href="#" class="edit-btn" id="updateInterview"
-                                                data-id="{{ $employee->id }}">Next Round</a>
+                                        <a href="#" class="edit-btn" id="viewInterview"
+                                        data-id="{{ $employee->id }}">Details</a>
+                                        <a href="#" class="edit-btn" id="updateInterview"
+                                            data-id="{{ $employee->id }}">Next Round</a>
                                         <a href="#" class="edit-btn" id="delete_interview"
                                             data-id="{{ $employee->id }}">Delete</a>
                                     </td>
@@ -218,7 +223,8 @@
                 </div>
                 <div class="modal-footer">
                     <div id="loadingImg"></div>
-                    <div style="font-size: 16px; display:none;" class="text-success" id="success">Schedule interview successfully done.</div>
+                    <div style="font-size: 16px; display:none;" class="text-success" id="success">Schedule
+                        interview successfully done.</div>
                     <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
                     <button type="submit" id="scheduleInterviewSubmit" class="btn-primary-cust">Submit</button>
                 </div>
@@ -228,8 +234,8 @@
 </div>
 
 <!-- The Modal Interview  -->
-<div class="modal fade custu-modal-popup" id="updateInterviewModel" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
+<div class="modal fade custu-modal-popup" id="updateInterviewModel" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <form id="next_round_of_interview_form" method="post" autocomplete="off" enctype="multipart/form-data">
             <div class="modal-content">
@@ -246,9 +252,39 @@
                 </div>
                 <div class="modal-footer">
                     <div id="loadingImg"></div>
-                    <div style="font-size: 16px; display:none;" class="text-success" id="success">Next interview round successfully done.</div>
+                    <div style="font-size: 16px; display:none;" class="text-success" id="success">Next interview
+                        round successfully done.</div>
                     <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
                     <button type="submit" id="nextRoundOfInterviewSubmit" class="btn-primary-cust">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div class="modal fade custu-modal-popup" id="viewInterviewModel" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form id="update_interview_form" method="post" autocomplete="off" enctype="multipart/form-data">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title" id="Heading">Employee interview rounds details</h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <img src="assets/admin/images/close-btn-icon.png">
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="comman-body">
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    {{-- <div id="loadingImg"></div>
+                    <div style="font-size: 16px; display:none;" class="text-success" id="success">Next interview
+                        round successfully done.</div>
+                    <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
+                    <button type="submit" id="nextRoundOfInterviewSubmit" class="btn-primary-cust">Submit</button> --}}
                 </div>
             </div>
         </form>
@@ -312,8 +348,8 @@
                 last_name: "required",
                 email: "required",
                 position: "required",
-                interview_process:"required",
-                interviewer_id:"required",
+                interview_process: "required",
+                interviewer_id: "required",
                 interview_date: "required",
                 interview_start_time: "required",
                 duration: "required",
@@ -325,8 +361,8 @@
                 last_name: "Last name is required",
                 email: "Email is required",
                 position: "Position number is required",
-                interview_process:"required",
-                interviewer_id:"required",
+                interview_process: "required",
+                interviewer_id: "required",
                 interview_date: "Interview date is required",
                 interview_start_time: "Interview start time is required",
                 duration: "Interview end time is required",
@@ -398,7 +434,8 @@
                             $('#position-error').html(data.errors.position[0]);
                         }
                         if (data.errors.interview_process) {
-                            $('#interview_process-error').html(data.errors.interview_process[0]);
+                            $('#interview_process-error').html(data.errors
+                                .interview_process[0]);
                         }
                         if (data.errors.interviewer_id) {
                             $('#interviewer_id-error').html(data.errors.interviewer_id[0]);
@@ -421,7 +458,8 @@
                             $('#phone-error').html(data.errors.phone[0]);
                         }
                         if (data.errors.interview_instruction) {
-                            $('#interview_instruction-error').html(data.errors.interview_instruction[0]);
+                            $('#interview_instruction-error').html(data.errors
+                                .interview_instruction[0]);
                         }
                         if (data.errors.attachment) {
                             $('#attachment-error').html(data.errors.attachment[0]);
@@ -627,10 +665,10 @@
                 });
         });
 
-        $(document).on('click','#updateInterview', function(){
+        $(document).on('click', '#updateInterview', function() {
             // getScheduleInterviewForm();
             var interviewId = $(this).data('id');
-            if(interviewId != ''){
+            if (interviewId != '') {
                 getNextRoundOfInterviewForm(interviewId);
             }
         })
@@ -662,16 +700,16 @@
 
         $("#next_round_of_interview_form").validate({
             rules: {
-                interview_process:"required",
-                interviewer_id:"required",
+                interview_process: "required",
+                interviewer_id: "required",
                 interview_date: "required",
                 interview_start_time: "required",
                 duration: "required",
                 interview_instruction: "required",
             },
             messages: {
-                interview_process:"required",
-                interviewer_id:"required",
+                interview_process: "required",
+                interviewer_id: "required",
                 interview_date: "Interview date is required",
                 interview_start_time: "Interview start time is required",
                 duration: "Interview end time is required",
@@ -679,16 +717,11 @@
             }
         });
 
-        $('#next_round_of_interview_form').on('submit', function(event) {
+        // $('#next_round_of_interview_form').on('submit', function(event) {
+        $(document).on('submit', '#next_round_of_interview_form', function(event) {
             event.preventDefault();
-            // var isAdd = $('#is_add').val();
             var url = '{{ url('next_round_of_interview/submit') }}';
             var successMsg = "Next round of interview successfully created";
-
-            // if (isAdd != 1) {
-            //     var url = '{{ url('next_round_of_interview/update') }}';
-            //     successMsg = "Next round of interview successfully created";
-            // }
             $('#loadingImg').show();
             var formData = new FormData(this);
             $.ajax({
@@ -703,7 +736,8 @@
                 success: function(data) {
                     if (data.errors) {
                         if (data.errors.interview_process) {
-                            $('#interview_process-error').html(data.errors.interview_process[0]);
+                            $('#interview_process-error').html(data.errors
+                                .interview_process[0]);
                         }
                         if (data.errors.interviewer_id) {
                             $('#interviewer_id-error').html(data.errors.interviewer_id[0]);
@@ -726,7 +760,8 @@
                             $('#phone-error').html(data.errors.phone[0]);
                         }
                         if (data.errors.interview_instruction) {
-                            $('#interview_instruction-error').html(data.errors.interview_instruction[0]);
+                            $('#interview_instruction-error').html(data.errors
+                                .interview_instruction[0]);
                         }
                         $('#loadingImg').hide();
                     } else {
@@ -755,6 +790,39 @@
                 }
             });
         });
+
+        $(document).on('click', '#viewInterview', function() {
+            // getScheduleInterviewForm();
+            var interviewId = $(this).data('id');
+            if (interviewId != '') {
+                getInterviewDetailsForm(interviewId);
+            }
+        });
+
+        function getInterviewDetailsForm(id = '') {
+            let getFormUrl = '{{ url('get_interview_details/form') }}';
+            if (id !== '') {
+                getFormUrl = getFormUrl + "/" + id;
+            }
+            $.ajax({
+                url: getFormUrl,
+                type: "get",
+                datatype: "html",
+            }).done(function(data) {
+                if (id === '') {
+                    $('#Heading').text("Interivew Details");
+                } else {
+                    $('#Heading').text("Interivew Details");
+                }
+                $('#viewInterviewModel').find('.modal-body').html(data);
+                $('#viewInterviewModel').modal({
+                    backdrop: 'static',
+                    keyboard: false
+                });
+            }).fail(function(jqXHR, ajaxOptions, thrownError) {
+                alert('No response from server');
+            });
+        }
 
     });
 </script>

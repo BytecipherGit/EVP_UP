@@ -34,7 +34,7 @@
                     <div class="profibottom_head">Organization Details</div>
                     <div class="admiPrtop">
                         <div class="form-group">
-                            <label>Organization Name <strong style="color:red">*</strong></label>
+                            <label>Name <strong style="color:red">*</strong></label>
                             <input type="text" id="org_name" name="org_name" class="form-control" value="{{ old('org_name') }}"
                                 placeholder="Enter Organization Name" autofocus autocomplete="org_name" >
                             {{-- @error('org_name')
@@ -44,7 +44,7 @@
                         </div>
                     
                         <div class="form-group">
-                            <label>Organization Website <strong style="color:red">*</strong> </label>
+                            <label>Website <strong style="color:red">*</strong> </label>
                             <input type="text" id="org_web" name="org_web" class="form-control" value="{{ old('org_web') }}"
                                 placeholder="Enter Company Website" autofocus autocomplete="org_web">
                             {{-- @error('org_web')
@@ -53,7 +53,7 @@
                             <strong class="error" id="org_web-error"></strong>
                         </div>
                         <div class="form-group">
-                            <label>Organization Admin Email <strong style="color:red">*</strong> </label>
+                            <label>Email <strong style="color:red">*</strong> </label>
                             <input type="text" id="email" name="email" class="form-control" value="{{ old('email') }}"
                                 placeholder="Enter Your Email" autofocus autocomplete="email">
                             {{-- @error('email')
@@ -105,7 +105,7 @@
                         <div class="row">
                             <div class="col-xl-6">
                                 <div class="form-group">
-                                    <label>Admin Designation <strong style="color:red">*</strong> </label>
+                                    <label>Designation <strong style="color:red">*</strong> </label>
                                     <input type="text" id="designation" name="designation" class="form-control"
                                         value="{{ old('designation') }}" placeholder="Designation" autofocus autocomplete="designation">
                                     {{-- @error('designation')
@@ -116,7 +116,7 @@
                             </div>
                             <div class="col-xl-6">
                                 <div class="form-group">
-                                    <label>Admin Department <strong style="color:red">*</strong></label>
+                                    <label>Department <strong style="color:red">*</strong></label>
                                     <input type="text" id="department" name="department" class="form-control"
                                         value="{{ old('department') }}" placeholder="Department" autofocus autocomplete="department">
                                     {{-- @error('department')

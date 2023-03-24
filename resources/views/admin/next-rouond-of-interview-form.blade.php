@@ -8,6 +8,27 @@
 <input type="hidden" id="is_add" value="{{ $interview ? '' : 1 }}" />
 <input type="hidden" id="interview_id" name="interview_id" value="{{ $interview ? $interview->id : '' }}" />
 <div class="form-group">
+    <div class="form-group">
+        <label>First Name</label>
+        <input type="type" disabled name="first_name" class="form-control" placeholder="First Name" value="{{ $interview->first_name}}">
+        <strong class="error" id="first_name-error"></strong>
+    </div>
+    <div class="form-group">
+        <label>Last Name</label>
+        <input type="type" disabled name="last_name" class="form-control" placeholder="Last Name" value="{{ $interview->last_name}}">
+        <strong class="error" id="last_name-error"></strong>
+    </div>
+    <div class="form-group">
+        <label>Email</label>
+        <input type="email" disabled name="email" class="form-control" placeholder="Email" value="{{ $interview->email}}">
+        <strong class="error" id="email-error"></strong>
+    </div>
+    <div class="form-group">
+        <label>Position</label>
+        <input type="type" disabled name="position" class="form-control" placeholder="Position" value="{{ $interview->position}}">
+        <strong class="error" id="position-error"></strong>
+    </div>
+
     <label>Select Interview Round<span style="color:red">*</span></label>
     @if ($interviewProcesses)
         <select id="interview_process" name="interview_process" class="form-control">

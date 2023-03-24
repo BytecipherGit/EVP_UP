@@ -30,8 +30,44 @@ class InterviewEmployee extends Controller
     public function index(Request $request)
     {
         if (Auth::check()) {
+            $interviewEmployees = EmployeeInterview::where('company_id',Auth::id())->get();
+            // $emloyeeStatusId = $request->employeeStatusId;
+            // $interviewEmployees = EmployeeInterview::with('lastInterviewEmployeeRounds')->where('company_id',Auth::id())->get();
+            // dd($interviewEmployees[0]->lastInterviewEmployeeRounds->interview_instructions);
+            // dd($interviewEmployees);
 
-            if ($request->hiringStatusId && $request->employeeStatusId) {
+            //With where clause
+            /*$interviewProcessId = 2;
+            $interviewEmployees = EmployeeInterview::where('company_id', Auth::id())->whereHas('interviewEmployeeRounds', function ($query) use ($interviewProcessId) {
+                $query->where('interview_processes_id', $interviewProcessId);
+            }, '>', 0)->with(['lastInterviewEmployeeRounds' => function ($query) use ($interviewProcessId) {
+                $query->where('interview_processes_id', $interviewProcessId);
+            }])->get();
+            dd($interviewEmployees);*/
+            // dd($interviewEmployees[0]->lastInterviewEmployeeRounds->interview_instructions);
+
+            /*$interviewProcessId = 1;
+            $parentTable = EmployeeInterview::where('company_id', Auth::id())->with(['lastInterviewEmployeeRounds' => function ($query) use ($interviewProcessId) {
+                $query->with('employeeInterviewStatus');
+                $query->where('interview_processes_id', $interviewProcessId);
+                $query->orderBy('id', 'desc')->take(1);
+            }])->get();
+            dd($parentTable);*/
+            
+            // dd($interviewEmployees[0]->lastInterviewEmployeeRounds->employeeInterviewStatus->title);
+
+            // }])->where('parent_column', 'parent_value')->get();
+
+
+            // $companyId = Auth::id();
+            // $interviewEmployees = InterviewEmployeeRounds::whereHas('employeeinterview', function ($query) use ($companyId) {
+            //     $query->where('company_id', $companyId);
+            // })->get();
+
+            // $interviewEmployees = EmployeeInterview::find(1);
+            // dd($interviewEmployees);
+            // $posts = $user->posts;
+            /*if ($request->hiringStatusId && $emloyeeStatusId) {
                 $interviewEmployees = EmployeeInterview::join('interview_employee_rounds', 'interview_employee_rounds.interview_employees_id', '=', 'interview_employees.id')
                     ->join('employee_interview_statuses', 'employee_interview_statuses.id', '=', 'interview_employee_rounds.employee_interview_status')
                     ->where('interview_employee_rounds.interview_status', $request->hiringStatusId)
@@ -102,60 +138,19 @@ class InterviewEmployee extends Controller
                     )
                     ->get();
 
-            } else if ($request->employeeStatusId) {
-                $interviewEmployees = EmployeeInterview::join('interview_employee_rounds', 'interview_employee_rounds.interview_employees_id', '=', 'interview_employees.id')
-                    ->join('employee_interview_statuses', 'employee_interview_statuses.id', '=', 'interview_employee_rounds.employee_interview_status')
-                    ->where('interview_employee_rounds.employee_interview_status', $request->employeeStatusId)
-                    ->where('interview_employees.company_id', Auth::id())
-                    ->select(
-                        'interview_employees.id as id',
-                        'interview_employees.company_id',
-                        'interview_employees.empCode',
-                        'interview_employees.first_name',
-                        'interview_employees.last_name',
-                        // 'interview_employees.email',
-                        'interview_employees.position',
-                        // 'interview_employee_rounds.id as interviewEmployeeRoundsId',
-                        // 'interview_employee_rounds.interview_employees_id',
-                        // 'interview_employee_rounds.interviewer_id',
-                        // 'interview_employee_rounds.interview_processes_id',
-                        'interview_employee_rounds.offer_status',
-                        'interview_employee_rounds.interview_status',
-                        // 'interview_employee_rounds.employee_interview_status',
-                        // 'interview_employee_rounds.interview_date',
-                        // 'interview_employee_rounds.interview_start_time',
-                        // 'interview_employee_rounds.duration',
-                        // 'interview_employee_rounds.interview_type',
-                        // 'interview_employee_rounds.phone',
-                        // 'interview_employee_rounds.video_link',
-                        // 'interview_employee_rounds.interview_instructions',
-                        // 'interview_employee_rounds.interviewee_comment',
-                        // 'interview_employee_rounds.interviewee_comment_date',
-                        // 'interview_employee_rounds.interviewer_feedback',
-                        // 'interview_employee_rounds.interviewer_status',
-                        'employee_interview_statuses.title'
-                    )
-                    ->get();
-
+            } else if ($emloyeeStatusId) {
+                
+                $interviewEmployees = EmployeeInterview::where('company_id', Auth::id())->with(['lastInterviewEmployeeRounds' => function ($query) use ($emloyeeStatusId){
+                    $query->where('interview_employee_rounds.employee_interview_status', $emloyeeStatusId);
+                    $query->with('employeeInterviewStatus');
+                    $query->orderBy('id', 'desc')->take(1);
+                }])->get();
             } else {
-                $interviewEmployees = EmployeeInterview::join('interview_employee_rounds', 'interview_employee_rounds.interview_employees_id', '=', 'interview_employees.id')
-                    ->join('employee_interview_statuses', 'employee_interview_statuses.id', '=', 'interview_employee_rounds.employee_interview_status')
-                    ->where('interview_employees.company_id', Auth::id())
-                    ->select(
-                        'interview_employees.id as id',
-                        'interview_employees.company_id',
-                        'interview_employees.empCode',
-                        'interview_employees.first_name',
-                        'interview_employees.last_name',
-                        'interview_employees.position',
-                        'interview_employee_rounds.offer_status',
-                        'interview_employee_rounds.interview_status',
-                        'employee_interview_statuses.title'
-                    )
-                    ->get();
-                    // $interviewEmployees = EmployeeInterview::where('interview_employees.company_id', Auth::id())
-                    // ->get();
-            }
+                $interviewEmployees = EmployeeInterview::where('company_id', Auth::id())->with(['lastInterviewEmployeeRounds' => function ($query){
+                    $query->with('employeeInterviewStatus');
+                    $query->orderBy('id', 'desc')->take(1);
+                }])->get();
+            }*/
             $hiringStages = HiringStage::all();
             $employeeInterviewStatuses = EmployeeInterviewStatus::all();
             return view('admin.schedule-for-interview', compact('interviewEmployees', 'hiringStages', 'employeeInterviewStatuses'));
@@ -485,6 +480,16 @@ class InterviewEmployee extends Controller
             }
         }
 
+    }
+
+    public function getInterviewDetailForm($id = '')
+    {
+        if (Auth::check()) {
+            $interviewEmpoloyeeRounds = InterviewEmployeeRounds::join('interview_processes','interview_processes.id','=','interview_processes_id')
+            ->where('interview_employee_rounds.interview_employees_id',$id)
+            ->get();
+            return view('admin.interview-rounds-details-form', compact('interviewEmpoloyeeRounds'));
+        }
     }
 
     public function update_hiring_stage(request $request)
