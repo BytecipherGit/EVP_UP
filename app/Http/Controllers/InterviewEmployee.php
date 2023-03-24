@@ -215,6 +215,7 @@ class InterviewEmployee extends Controller
             }
 
             $uploadAttachementPath = '';
+            $uploadInstructionPath = '';
             if ($validator->passes()) {
                 if ($request->hasFile('attachment')) {
                     $file = $request->file('attachment');
@@ -222,6 +223,14 @@ class InterviewEmployee extends Controller
                     $file->storeAs('public/interview_documents', $fileName);
                     $uploadAttachementPath = asset('storage/interview_documents/' . $fileName);
                 }
+
+                if ($request->hasFile('instruction')) {
+                    $file = $request->file('instruction');
+                    $fileName = time() . '_' . $file->getClientOriginalName();
+                    $file->storeAs('public/interview_instruction_documents', $fileName);
+                    $uploadInstructionPath = asset('storage/interview_instruction_documents/' . $fileName);
+                }
+
                 $empCode = substr(time(), -6) . sprintf('%04d', rand(0, 9999));
                 $checkRecordExist = EmployeeInterview::where('empCode', $empCode)->first();
                 if (empty($checkRecordExist) && !empty($empCode)) {
@@ -234,6 +243,7 @@ class InterviewEmployee extends Controller
                         'position' => !empty($request->position) ? $request->position : null,
                         'rating' => !empty($request->rating) ? $request->rating : null,
                         'resume' => $uploadAttachementPath,
+                        'instruction' => $uploadInstructionPath,
 
                     ];
                     $employeeInterviewData = EmployeeInterview::create($insertEmployeeInterview);
@@ -271,6 +281,8 @@ class InterviewEmployee extends Controller
                                     'duration' => !empty($request->duration) ? $request->duration : '',
                                     'interview_instruction' => !empty($request->interview_instruction) ? $request->interview_instruction : '',
                                     'interview_title' => !empty($getInterviewTitle->title) ? $getInterviewTitle->title : '',
+                                    'instruction' => !empty($uploadInstructionPath) ? $uploadInstructionPath : '',
+                                    
                                 ];
                                 FacadesMail::to($request->email)->send(new SendInterviewScheduleMail($mailData));
                             } else {
@@ -285,6 +297,7 @@ class InterviewEmployee extends Controller
                                     'duration' => !empty($request->duration) ? $request->duration : '',
                                     'interview_instruction' => !empty($request->interview_instruction) ? $request->interview_instruction : '',
                                     'interview_title' => !empty($getInterviewTitle->title) ? $getInterviewTitle->title : '',
+                                    'instruction' => !empty($uploadInstructionPath) ? $uploadInstructionPath : '',
                                 ];
 
                                 FacadesMail::to($request->email)->send(new SendInterviewSchedulePhoneMail($mailData));

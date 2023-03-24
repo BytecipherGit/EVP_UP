@@ -29,9 +29,10 @@
                     style="font-weight: 800; font-size: 26px; line-height: 32px; color: #373E57; padding: 0 20px 22px; margin:0; text-align: left;">
                     You received a phone interview request for one of the candidate {{ $mailData['interviewee_name'] }}
                 </h1>
-                 <h4
-                    style="font-weight: 800; font-size: 26px; line-height: 32px; color: #373E57; padding: 0 20px 22px; margin:0; text-align: left;">
-                    This is {{ $mailData['interview_title'] }} Round Of Interview</h4>
+                <h2
+                    style="font-weight: 600; font-size: 18px; line-height: 32px; color: #373E57; padding: 27px 20px 22px; margin:0; text-align: left;">
+                    This is {{ $mailData['interview_title'] }} Round Of Interview
+                </h2>
                 <p
                     style="font-size: 18px; line-height: 28px; color: #373E57; padding: 0 20px 0px; margin:0; font-family: 'DM Sans', sans-serif; text-align: left;">
                     We requested to you please take this video interview on urgnet basis for {{ $mailData['position'] }}
@@ -62,10 +63,10 @@
                         <h6
                             style="font-size:16px; line-height: 24px; font-weight: 600; text-align: left; display: flex; align-items: center; word-break: break-all;">
                             <img src="{{ asset('assets') }}/admin/candidate/images/calendar-icon.png"
-                                style="width: 24px; margin-right: 10px;"> 
-                                Interview Date :- {{ $mailData['meeting_date'] }} <br>
-                                Interview Time :- {{ $mailData['meeting_start_time'] }} <br>
-                                Interview Duration :- {{ $mailData['duration'] }} <br>
+                                style="width: 24px; margin-right: 10px;">
+                            Interview Date :- {{ $mailData['meeting_date'] }} <br>
+                            Interview Time :- {{ $mailData['meeting_start_time'] }} <br>
+                            Interview Duration :- {{ $mailData['duration'] }} <br>
                         </h6>
 
                         <a href="{{ route('interview.feedback', ['interviewEmpRoundsId' => $mailData['interviewEmpRoundsId']]) }}"

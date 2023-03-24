@@ -95,6 +95,16 @@
         </div>
         <input type="hidden" id="interview_type" name="interview_type" value="Video">
         <div class="form-group">
+            <label>Attech Resume<span style="color:red">*</span>
+                <h6>Only .jpeg, .pdf, .docs, or .doc files allowed  and max upload file size is (10MB)</h6>
+            </label>
+            <div class="upload-img-file">
+                <input type="file" id="attachment" name="attachment" class="form-control">
+                <strong class="error" id="attachment-error"></strong>
+            </div>
+        </div>
+
+        <div class="form-group">
             <label>Interviewer name<span style="color:red">*</span></label>
             @if ($cmpEmployees)
                 <select id="interviewer_id" name="interviewer_id" class="form-control">
@@ -111,18 +121,12 @@
             <textarea name="interview_instruction" rows="3" class="form-control" placeholder="Interview Instruction"></textarea>
             <strong class="error" id="interview_instruction-error"></strong>
         </div>
-        {{-- <div class="form-group">
-                <label>Add Additianal Employers</label>
-                <input type="type" name="" class="form-control"
-                    placeholder="Enter one pr more emails separated by a comma">
-            </div> --}}
         <div class="form-group">
-            <label>Attech Resume<span style="color:red">*</span>
-                <h6>Only .jpeg, .pdf, .docs, or .doc files allowed.</h6>
+            <label>Attech Interview Instruction File
+                <h6>Only .pdf, .docs, or .doc files allowed and max upload file size is (10MB)</h6>
             </label>
             <div class="upload-img-file">
-                <input type="file" id="attachment" name="attachment" class="form-control">
-                <strong class="error" id="attachment-error"></strong>
+                <input type="file" id="instruction" name="instruction" class="form-control">
             </div>
         </div>
 
