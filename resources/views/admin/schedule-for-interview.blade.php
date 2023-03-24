@@ -34,7 +34,7 @@
             </div>
             <div class="col-md-4">
                 <div class="main-right-button-box">
-                    <a style="text-decoration:none" href="#" id="scheduleInterview" class="mr-2">Interview</a>
+                    <a style="text-decoration:none" href="#" id="scheduleInterview" class="mr-2">+ Interview</a>
                     {{-- <a href="#" data-toggle="modal" data-target="#rejectbtninfo">Reject</a> --}}
                 </div>
             </div>

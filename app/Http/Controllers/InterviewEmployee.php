@@ -97,7 +97,7 @@ class InterviewEmployee extends Controller
                         // 'interview_employee_rounds.interview_instructions',
                         // 'interview_employee_rounds.interviewee_comment',
                         // 'interview_employee_rounds.interviewee_comment_date',
-                        // 'interview_employee_rounds.interviewer_feedback',
+                        // 'interview_employee_rounds.interview_feedback',
                         // 'interview_employee_rounds.interviewer_status',
                         'employee_interview_statuses.title'
                     )
@@ -132,7 +132,7 @@ class InterviewEmployee extends Controller
                         // 'interview_employee_rounds.interview_instructions',
                         // 'interview_employee_rounds.interviewee_comment',
                         // 'interview_employee_rounds.interviewee_comment_date',
-                        // 'interview_employee_rounds.interviewer_feedback',
+                        // 'interview_employee_rounds.interview_feedback',
                         // 'interview_employee_rounds.interviewer_status',
                         'employee_interview_statuses.title'
                     )

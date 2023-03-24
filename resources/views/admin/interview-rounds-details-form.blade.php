@@ -28,7 +28,7 @@
                         <td>{{ $interviewEmpoloyeeRound->interview_date}}</td>
                         <td>{{ $interviewEmpoloyeeRound->interview_start_time}}</td>
                         <td>{{ $interviewEmpoloyeeRound->duration}}</td>
-                        <td>{{ $interviewEmpoloyeeRound->interviewer_feedback}}</td>
+                        <td>{{ $interviewEmpoloyeeRound->interview_feedback}}</td>
                         <td>{{ $interviewEmpoloyeeRound->interviewer_status}}</td>
                     </tr>
                     @php $counter++ @endphp
