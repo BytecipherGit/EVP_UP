@@ -26,7 +26,7 @@
                     <form method="POST" action="{{ route('store.document') }}" enctype="multipart/form-data">
                         @csrf
                         <div class="d-flex close-butn">
-                            <a href=""><img src="assets/company/images/back-icon.png"></a>
+                            <a href="{{route('login')}}"><img src="assets/company/images/back-icon.png"></a>
                         </div>
                         <h6>Company Verification Document</h6>
                         {{-- <div class="form-group">
@@ -43,7 +43,9 @@
                             <div class="row new-changeLS customer_records">
                                 <div class="col-md-12">
                                     <div class="form-groupbox">
-                                        <label>Registration ID Proof <strong style="color:red">*</strong></label>
+                                        <label>Registration ID Proof <strong style="color:red">*</strong>
+                                        <p><b>File type:</b> Only .jpeg, .pdf, .docs, or .doc files allowed.
+                                        <b>File Size:</b> Max:10mb</p></label>
                                         <div class="upload-img-file">
                                             <div class="p-image ml-auto">
                                                 <input type="file" name="id_proof" id="id_proof"
@@ -57,7 +59,9 @@
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-groupbox">
-                                        <label>Address Proof <strong style="color:red">*</strong></label>
+                                        <label>Address Proof <strong style="color:red">*</strong>
+                                        <p><b>File type:</b> Only .jpeg, .pdf, .docs, or .doc files allowed.
+                                            <b>File Size:</b> Max:10mb</p></label>
                                         <div class="upload-img-file">
                                             <div class="p-image ml-auto">
                                                 <input type="file" name="address_proof" id="address_proof"
@@ -71,7 +75,9 @@
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-groupbox">
-                                        <label>Registration Document Proof <strong style="color:red">*</strong></label>
+                                        <label>Registration Document Proof <strong style="color:red">*</strong>
+                                            <p><b>File type:</b> Only .jpeg, .pdf, .docs, or .doc files allowed.
+                                            <b>File Size:</b> Max:10mb</p></label>
                                         <div class="upload-img-file">
                                             <div class="p-image ml-auto">
                                                 <input type="file" name="document_proof" id="document_proof"

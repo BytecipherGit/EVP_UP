@@ -360,32 +360,32 @@
                         <h4>Rating</h4>
                         <div class="rating-box-pm">
                           <fieldset class="rating">
-                            <input type="radio" id="textiles-star5" name="textiles-rating" value="5" />
+                            <input type="radio" id="textiles-star5" name="textiles-rating" value="5" <?php  if ($exitemp->rating == '5') { ?> checked <?php } ?> />
                             <label class = "full" for="textiles-star5"></label>
-                            <input type="radio" id="textiles-star4half" name="textiles-rating" value="4 and a half" / checked="">
+                            <input type="radio" id="textiles-star4half" name="textiles-rating" value="4.5"<?php  if ($exitemp->rating == '4.5') { ?> checked <?php } ?> >
                             <label class="half" for="textiles-star4half"></label>
 
-                            <input type="radio" id="textiles-star4" name="textiles-rating" value="4" / >
+                            <input type="radio" id="textiles-star4" name="textiles-rating" value="4" <?php  if ($exitemp->rating == '4') { ?> checked <?php } ?> />
                             <label class = "full" for="textiles-star4" ></label>
-                            <input type="radio" id="textiles-star3half" name="textiles-rating" value="3 and a half" />
+                            <input type="radio" id="textiles-star3half" name="textiles-rating" value="3.5" <?php  if ($exitemp->rating == '3.5') { ?> checked <?php } ?>  />
                             <label class="half" for="textiles-star3half"></label>
 
-                            <input type="radio" id="textiles-star3" name="textiles-rating" value="3" />
+                            <input type="radio" id="textiles-star3" name="textiles-rating" value="3" <?php  if ($exitemp->rating == '3') { ?> checked <?php } ?> />
                             <label class = "full" for="textiles-star3"></label>
-                            <input type="radio" id="textiles-star2half" name="textiles-rating" value="2 and a half" />
+                            <input type="radio" id="textiles-star2half" name="textiles-rating" value="2.5" <?php  if ($exitemp->rating == '2.5') { ?> checked <?php } ?> />
                             <label class="half" for="textiles-star2half" ></label>
 
-                            <input type="radio" id="textiles-star2" name="textiles-rating" value="2" />
+                            <input type="radio" id="textiles-star2" name="textiles-rating" value="2" <?php  if ($exitemp->rating == '2') { ?> checked <?php } ?> />
                             <label class = "full" for="textiles-star2"></label>
-                            <input type="radio" id="textiles-star1half" name="textiles-rating" value="1 and a half" />
+                            <input type="radio" id="textiles-star1half" name="textiles-rating" value="1.5" <?php  if ($exitemp->rating == '1.5') { ?> checked <?php } ?>  />
                             <label class="half" for="textiles-star1half" ></label>
 
-                            <input type="radio" id="textiles-star1" name="textiles-rating" value="1" />
+                            <input type="radio" id="textiles-star1" name="textiles-rating" value="1" <?php  if ($exitemp->rating== '1') { ?> checked <?php } ?> />
                             <label class = "full" for="textiles-star1"></label>
-                            <input type="radio" id="textiles-starhalf" name="textiles-rating" value="half" />
+                            <input type="radio" id="textiles-starhalf" name="textiles-rating" value="0.5" <?php  if ($exitemp->rating == '0.5') { ?> checked <?php } ?> />
                             <label class="half" for="textiles-starhalf"></label>
                           </fieldset>
-                          <span class="ml-3">(4.5)</span>
+                          <span class="ml-3">({{$exitemp->rating}})</span>
                         </div>
                       </div>                     
                     </div>

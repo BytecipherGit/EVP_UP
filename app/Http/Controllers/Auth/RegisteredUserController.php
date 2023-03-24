@@ -19,7 +19,6 @@ use Response;
 use App\Mail\CompanyRegisterationMail;
 use App\Mail\CompanyResetVerifyMail;
 use App\Mail\CompanyVerificationMail;
-
 use App\Mail\CompanyVerificationMessage;
 use Illuminate\Support\Facades\Mail as FacadesMail;
 
@@ -66,7 +65,8 @@ class RegisteredUserController extends Controller
             'country' => ['required', 'string', 'max:255'],
             'city' => ['required', 'string', 'max:255'],
             'state' => ['required', 'string', 'max:255'],
-            'pin' => ['required', 'string','max:255']
+            'pin' => ['required', 'string','max:255'],
+            // 'g-recaptcha-response' => ['required','captcha']
 
         ]);
 
@@ -124,7 +124,7 @@ class RegisteredUserController extends Controller
             $user = User::find($request->id);
             if (!empty($user->email)) {
                 $verifyMailData = [
-                    'name' => !empty($request->name) ? $request->name : '',
+                    'name' => !empty($user->name) ? $user->name : '',
                     'id' => encrypt($user->id),
                     'status' => $user->status,
                 ];

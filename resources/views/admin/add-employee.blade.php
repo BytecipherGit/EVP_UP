@@ -1167,10 +1167,10 @@
          
 
               <div class="form-group">
-                <label>Attech File<span style="color:red">*</span></br>Only .jpeg, .pdf, .docs, or .doc files allowed.</label>
+                <label>Attech File<span style="color:red">*</span></br><b>File type:</b> Only .jpeg, .pdf, .docs, or .doc files allowed. <b>File Size:</b> Max:10mb</p></label>
                 <div class="upload-img-file">
                     <input type="file" id="document" name="document" class="form-control">
-                    <strong class="error" id="document-error"></strong>
+                    {{-- <strong class="error" id="document-error"></strong> --}}
                 </div>
             </div>
               <div class="form-group">
@@ -1343,7 +1343,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label>Attech File<span style="color:red">*</span></br>Only .jpeg, .pdf, .docs, or .doc files allowed.</label>
+                <label>Attech File<span style="color:red">*</span></br><b>File type:</b> Only .jpeg, .pdf, .docs, or .doc files allowed. <b>File Size:</b> Max:10mb</p></label>
                 <div class="upload-img-file">
                     <input type="file" id="document" name="document" class="form-control">
                     <strong class="error" id="document-error"></strong>
@@ -1536,7 +1536,7 @@
 
       
               <div class="form-group">
-                <label>Offer Letter<span style="color:red">*</span></br>Only .jpeg, .pdf, .docs, or .doc files allowed.</label>
+                <label>Offer Letter<span style="color:red">*</span></br><b>File type:</b> Only .jpeg, .pdf, .docs, or .doc files allowed. <b>File Size:</b> Max:10mb</p></label>
                 <div class="upload-img-file">
                     <input type="file" id="offer_letter" name="offer_letter" class="form-control"/>
                     <strong class="error" id="offer_letter-error"></strong>
@@ -1544,7 +1544,7 @@
             </div>
 
               <div class="form-group">
-                <label>Experience Letter<span style="color:red">*</span></br>Only .jpeg, .pdf, .docs, or .doc files allowed.</label>
+                <label>Experience Letter<span style="color:red">*</span></br><b>File type:</b> Only .jpeg, .pdf, .docs, or .doc files allowed. <b>File Size:</b> Max:10mb</p></label>
                 <div class="upload-img-file">
                     <input type="file" id="exp_letter" name="exp_letter" class="form-control"/>
                     <strong class="error" id="exp_letter-error"></strong>
@@ -1552,7 +1552,7 @@
             </div>
              
               <div class="form-group">
-                <label>Salary Slips<span style="color:red">*</span></br>Only .jpeg, .pdf, .docs, or .doc files allowed.</label>
+                <label>Salary Slips<span style="color:red">*</span></br><b>File type:</b> Only .jpeg, .pdf, .docs, or .doc files allowed. <b>File Size:</b> Max:10mb</p></label>
                 <div class="upload-img-file">
                     <input type="file" id="salary_slip" name="salary_slip" class="form-control"/>
                     <strong class="error" id="salary_slip-error"></strong>
@@ -1948,8 +1948,8 @@
 
          $("#add_basicinfo").validate({
             rules: {
-              first_name: "required",
-              last_name: "required",
+              first_name:"required",
+              last_name:"required",
               email: "required",
               blood_group: "required",
               gender: "required",
@@ -1965,7 +1965,7 @@
             },
  
             messages: {
-              first_name: "First name is required",
+              firstName: "first name is required",
               last_name: "Last name is required",
               email: "Email is required",
               blood_group: "Blood group is required",
@@ -2060,14 +2060,21 @@
             rules: {
               id_type: "required",
               id_number: "required",
-              document: "required",
+              document:{
+                        required: true,
+                        extension:'jpeg,pdf,doc,docx',
+                        uploadFile:true,
+                       },
               verification_type: "required",
             },
           
             messages: {
               id_type: "ID type is required",
               id_number: "ID number is required",
-              document: "Work documentation is required",
+              document: {
+                        required: "Document is required",
+                        extension: "File should be .jpeg, .pdf, .doc and .docx"
+                    },
               verification_type: "Verification type is required",
               
             }

@@ -67,27 +67,27 @@
                             <fieldset class="rating">
                               <input type="radio" id="textiles-star5" name="rating" value="5" />
                               <label class = "full" for="textiles-star5"></label>
-                              <input type="radio" id="textiles-star4half" name="rating" value="4 and a half" />
+                              <input type="radio" id="textiles-star4half" name="rating" value="4.5" />
                               <label class="half" for="textiles-star4half"></label>
 
                               <input type="radio" id="textiles-star4" name="rating" value="4" />
                               <label class = "full" for="textiles-star4" ></label>
-                              <input type="radio" id="textiles-star3half" name="rating" value="3 and a half" />
+                              <input type="radio" id="textiles-star3half" name="rating" value="3.5" />
                               <label class="half" for="textiles-star3half"></label>
 
                               <input type="radio" id="textiles-star3" name="rating" value="3" />
                               <label class = "full" for="textiles-star3"></label>
-                              <input type="radio" id="textiles-star2half" name="rating" value="2 and a half" />
+                              <input type="radio" id="textiles-star2half" name="rating" value="2.5" />
                               <label class="half" for="textiles-star2half" ></label>
 
                               <input type="radio" id="textiles-star2" name="rating" value="2" />
                               <label class = "full" for="textiles-star2"></label>
-                              <input type="radio" id="textiles-star1half" name="textiles-rating" value="1 and a half" />
+                              <input type="radio" id="textiles-star1half" name="textiles-rating" value="1.5" />
                               <label class="half" for="textiles-star1half" ></label>
 
                               <input type="radio" id="textiles-star1" name="rating" value="1" />
                               <label class = "full" for="textiles-star1"></label>
-                              <input type="radio" id="textiles-starhalf" name="textiles-rating" value="half" />
+                              <input type="radio" id="textiles-starhalf" name="textiles-rating" value="0.5" />
                               <label class="half" for="textiles-starhalf"></label>
 
                             </fieldset>
@@ -103,7 +103,7 @@
                                   <div class="circle">
                                    <img class="profile-pic" id="profile-pic1" src="{{ asset('assets') }}/admin/images/file-icon-img.png">
                                  </div>
-                                 <p>You can drag or drop <span>png. jpeg</span> </p>
+                                 <p><b>File type:</b>.jpeg, .pdf, .docs, or .doc</br><b>File Size:</b> Max:10mb</p></label></p>
                                  <div class="p-image ml-auto">
                                    <span class="upload-button" id="upload-button1">Choose File</span>
                                     <input class="file-upload" name="document" id="file-upload1" type="file" accept="image/*">

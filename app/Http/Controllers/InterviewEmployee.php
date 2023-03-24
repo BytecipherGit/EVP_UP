@@ -633,14 +633,15 @@ class InterviewEmployee extends Controller
 
     public function getCheckStatus(request $request)
     {
-        $userid = User::latest()->first()->id;
-        return view('company/verify-message',compact('userid'));
+        $user = DB::table('users')->latest()->first();
+        return view('company/verify-message',compact('user'));
     }
 
     public function getResetStatus(request $request)
     {
-        $userid = User::latest()->first()->id;
-        return view('company/reset-verify-message',compact('userid'));
+      
+        $user = User::where('id',Auth::id())->first();
+        return view('company/reset-verify-message',compact('user'));
     }
 
     public function verificationEmail(request $request)
