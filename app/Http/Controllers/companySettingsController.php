@@ -19,13 +19,12 @@ class companySettingsController extends Controller
 
     public function profiledata(){
         $profile = User::where('id',Auth::id())->first();
-        // $profile_address = User::where('id',Auth::id())->first();
         $department = Department::all();
         $designat = Designation::all();
         $plans = Plan::latest()->first();
     
         return view('admin/settings', compact('profile','department','designat','plans'));
-        // return view('admin/settings');
+    
     }
 
     public function updateCompanyProfile(request $request){

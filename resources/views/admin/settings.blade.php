@@ -104,7 +104,7 @@
                         </div>
                         <div class="col-xl-6 input-mt-from">
                           <label>Brand Name</label>
-                          <input type="text" name="brand_name" placeholder="Brand Name"  @if ($profile) value="{{old('brand_name',$profile->brand_name)}}" @endif class="form-control" required>
+                          <input type="text" name="brand_name" placeholder="Brand Name"  @if ($profile) value="{{old('brand_name',$profile->brand_name)}}" @endif class="form-control">
                         </div>  
                       </div>
                     </div>
@@ -114,12 +114,12 @@
                           <label>Website</label>
                           <div class="input_field">
                             <span>http://</span>
-                            <input type="text" name="org_web" placeholder="Website"  @if ($profile) value="{{old('org_web',$profile->org_web)}}" @endif class="form-control" required>
+                            <input type="text" name="org_web" placeholder="Website"  @if ($profile) value="{{old('org_web',$profile->org_web)}}" @endif class="form-control">
                           </div>
                         </div> 
                         <div class="col-xl-6 input-mt-from">
                           <label>Domain Name</label>
-                          <input type="text" name="domain_name" placeholder="Domain Name" @if ($profile) value="{{old('domain_name',$profile->domain_name)}}" @endif class="form-control" required>
+                          <input type="text" name="domain_name" placeholder="Domain Name" @if ($profile) value="{{old('domain_name',$profile->domain_name)}}" @endif class="form-control">
                         </div>                         
                       </div>
                     </div> 
@@ -146,7 +146,7 @@
 
                         <div class="col-xl-6 input-mt-from">
                           <label>Phone Number</label>
-                          <input type="text" name="phone_number"  placeholder="Phone Number" @if ($profile) value="{{old('phone_number',$profile->phone_number)}}" @endif class="form-control" required>
+                          <input type="text" name="phone_number"  placeholder="Phone Number" @if ($profile) value="{{old('phone_number',$profile->phone_number)}}" @endif class="form-control">
                         </div>  
                       </div>
                     </div>                    
@@ -161,7 +161,8 @@
                         <div class="circle">
                          <img class="profile-pic" id="profile-pic" name="company_logo" @if ($profile->company_logo!== Null) value="/image/{{ old('company_logo', $profile->company_logo) }}" src="/image/{{ $profile->company_logo }}" @else src="assets/admin/images/logo.png" @endif >
                        </div>
-                       <p>You can drag or drop <span>your file logo here.</span> </p>
+                       {{-- <p>You can drag or drop <span>your file logo here.</span> </p> --}}
+                       <p><b>File type:</b>.jpeg, .pdf, .docs, or .doc</br><b>File Size:</b> Max:10mb</p></label></p>
                        <div class="p-image ml-auto">
                          <span class="upload-button" id="upload-button">Choose File</span>
                           <input class="file-upload"  name="company_logo" id="file-upload" type="file" accept="image/*"/>

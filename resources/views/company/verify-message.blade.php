@@ -10,7 +10,7 @@
             <img src="{{ asset('assets') }}/company/images/login-bg.jpg">
           </div>
         </div>
-     <input type="hidden" name="id" value={{$userid}}>
+     <input type="hidden" name="id" value={{ $user->id }}>
         <div class="col-lg-6 form-section">
           {{-- <span class="">Your Documents is Under Verification.</span><br/>
             <span>We Will Verified Soon.</span>
@@ -24,8 +24,10 @@
         <div class="modal-content">
             <div class="modal-body">
                 <img src="{{ asset('assets') }}/company/images/email-verify.png">
-                <h2>Please verify your account.</h2></b>
-                <h2>Check your email</h2>
+                <h2>Please verify your account</h2></b>
+                <h4>We sent an email to</h4>
+                <h4>{{$user->email}}</h4>
+                <h4>Click the link inside to get started</h4>
                 <div class="add-btn-part">
                     <a href="{{route('login')}}"><button class="btn btn-primary">Login</button></a>
                   </div>

@@ -5,8 +5,12 @@
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-    
+{!! NoCaptcha::renderJs() !!}
+    <style>
+        .frm_form_field .grecaptcha-badge { 
+  display:none;
+}
+    </style>
 
 <div class="d-flex main-form-part">
     <div class="container-fluid">
@@ -56,9 +60,9 @@
                             <label>Organization Admin Email <strong style="color:red">*</strong> </label>
                             <input type="text" id="email" name="email" class="form-control" value="{{ old('email') }}"
                                 placeholder="Enter Your Email" autofocus autocomplete="email">
-                            {{-- @error('email')
+                            @error('email')
                                 <p class="velidation">{{ $message }}</p>
-                            @enderror --}}
+                            @enderror
                             <strong class="error" id="email-error"></strong>
                         </div>
                         <div class="row">
@@ -214,7 +218,19 @@
                             
                         </div>
     
-                    </div>    
+                     </div>    
+                     <div class="form-group{{ $errors->has('g-recaptcha-response') ? ' has-error' : '' }}">
+                        <label class="col-md-4 control-label">Captcha</label>
+                        <div class="col-md-6">
+                            {!! app('captcha')->display() !!}
+                            @if ($errors->has('g-recaptcha-response'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('g-recaptcha-response') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+                    </div>
+
                  
                         {{-- data-toggle="modal" --}}
                         <div class="form-group">

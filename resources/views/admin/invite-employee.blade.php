@@ -435,13 +435,13 @@
 
     // $(document).on('click', '#bulk_mail_invite', function() {
      
-    //     swal({
-    //             title: "Are you sure?",
-    //             text: "You want to send invitation to selected employee!",
-    //             icon: "warning",
-    //             buttons: true,
-    //             dangerMode: true,
-    //         })
+        // swal({
+        //         title: "Are you sure?",
+        //         text: "You want to send invitation to selected employee!",
+        //         icon: "warning",
+        //         buttons: true,
+        //         dangerMode: true,
+        //     })
    
     //         .then((result) => {
                
@@ -486,18 +486,26 @@
     // });
 
     $(document).on('click', '#bulk_mail_invite', function() {
-    if (confirm("Are you sure you want to send invitation email?")) {
-                
+  if(confirm){
+        // swal({
+        //         title: "Are you sure?",
+        //         text: "You want to send invitation to selected employee!",
+        //         icon: "warning",
+        //         buttons: true,
+        //         dangerMode: true,
+        //     })
         var checkboxes = document.querySelectorAll('input[class="users_checkbox"]:checked');
         var id = [];
                 for (var i = 0; i < checkboxes.length; i++) {
                 id.push(checkboxes[i].value);
                     }
                     if (id.length > 0) { 
+                       swal('Are you sure you want to send email?');
                         var url = '{{ url('send_invidation_to_employee') }}';
                         var my_data = {
                             id: id
                         };
+               
                         $.ajax({
                             url: url,
                             type: 'POST',
@@ -512,9 +520,9 @@
                                         icon: "success",
                                     });
                                     // location.reload();
-                                    setTimeout(function(){
-                                    window.location.reload();
-                                    }, 2000);
+                                    setInterval(function() {
+                                        location.reload();
+                                    }, 3000);
                                 }
                             },
                             error: function(xhr, textStatus, errorThrown) {
@@ -526,7 +534,7 @@
                     swal("Please select atleast one checkbox!");
                     // location.reload();
                 }
-             }
+            }
        
     });
 </script>

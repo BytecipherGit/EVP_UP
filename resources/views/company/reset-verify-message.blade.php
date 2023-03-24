@@ -11,7 +11,7 @@
             <img src="{{ asset('assets') }}/company/images/login-bg.jpg">
           </div>
         </div>
-     <input type="hidden" name="id" value={{$userid}}>
+     <input type="hidden" name="id" value={{$user->id}}>
         <div class="col-lg-6 form-section">
           {{-- <span class="">Your Documents is Under Verification.</span><br/>
             <span>We Will Verified Soon.</span>
@@ -25,8 +25,10 @@
         <div class="modal-content">
             <div class="modal-body">
                 <img src="{{ asset('assets') }}/company/images/email-verify.png">
-                <h2>Your account is not verified.</h2>
-                 <a href="{{route('resetverification.mail')}}/{{$userid}}"><button class="btn btn-primary">Reset Verification Link</button></a>
+                <h2>Your account </h2>
+                <h3>{{$user->email}}</h3>
+                <h3>is not verified.</h3>
+                 <a href="{{route('resetverification.mail')}}/{{$user->id}}"><button class="btn btn-primary">Reset Verification Link</button></a>
                 <!-- <p>Please check your rigistered email for email verification</p> -->
         </div>
     </div>
