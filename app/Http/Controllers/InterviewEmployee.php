@@ -437,6 +437,7 @@ class InterviewEmployee extends Controller
                                     'duration' => !empty($request->duration) ? $request->duration : '',
                                     'interview_instruction' => !empty($request->interview_instruction) ? $request->interview_instruction : '',
                                     'interview_title' => !empty($getInterviewTitle->title) ? $getInterviewTitle->title : '',
+                                    'instruction'   => '',
                                 ];
                                 FacadesMail::to($checkRecordExist->email)->send(new SendInterviewScheduleMail($mailData));
                             } else {
@@ -451,6 +452,7 @@ class InterviewEmployee extends Controller
                                     'duration' => !empty($request->duration) ? $request->duration : '',
                                     'interview_instruction' => !empty($request->interview_instruction) ? $request->interview_instruction : '',
                                     'interview_title' => !empty($getInterviewTitle->title) ? $getInterviewTitle->title : '',
+                                    'instruction'   => '',
                                 ];
     
                                 FacadesMail::to($checkRecordExist->email)->send(new SendInterviewSchedulePhoneMail($mailData));

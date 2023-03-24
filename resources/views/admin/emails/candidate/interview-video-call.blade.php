@@ -95,16 +95,19 @@
                     {{ $mailData['interview_instruction'] }}
                 </p>
                 <br>
-                <h2
-                    style="font-weight: 600; font-size: 18px; line-height: 32px; color: #373E57; padding: 27px 20px 22px; margin:0; text-align: left;">
-                    Click the belwo link to know more about Interview Instructions
-                </h2>
-                <br>
-                <p
-                    style="font-size: 18px; line-height: 32px; color: #373E57; padding:0 20px 0px; margin:0; font-family: 'DM Sans', sans-serif; text-align: left;">
-                    <a href="{{ $mailData['instruction'] }}" target="_blank">Click Here</a>
-                </p>
-                
+                @if ($mailData['instruction'])
+                    <h2
+                        style="font-weight: 600; font-size: 18px; line-height: 32px; color: #373E57; padding: 27px 20px 22px; margin:0; text-align: left;">
+                        Click the belwo link to know more about Interview Instructions
+                    </h2>
+                    <br>
+                    <p
+                        style="font-size: 18px; line-height: 32px; color: #373E57; padding:0 20px 0px; margin:0; font-family: 'DM Sans', sans-serif; text-align: left;">
+                        <a href="{{ $mailData['instruction'] }}" target="_blank">Click Here</a>
+                    </p>
+                @endif
+
+
                 <div style="display: block; border-top: 1px solid #c3baba; margin:15px 20px; float: left; width: 92%;">
 
                 </div>

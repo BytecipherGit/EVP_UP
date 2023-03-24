@@ -28,7 +28,7 @@
                 <h1
                     style="font-weight: 800; font-size: 26px; line-height: 32px; color: #373E57; padding: 0 20px 22px; margin:0; text-align: left;">
                     You received a phone interview request</h1>
-                    <h2
+                <h2
                     style="font-weight: 600; font-size: 18px; line-height: 32px; color: #373E57; padding: 27px 20px 22px; margin:0; text-align: left;">
                     This is {{ $mailData['interview_title'] }} Round Of Interview
                 </h2>
@@ -95,18 +95,20 @@
                     {{ $mailData['interview_instruction'] }}
                 </p>
                 <br>
-                <h2
-                    style="font-weight: 600; font-size: 18px; line-height: 32px; color: #373E57; padding: 27px 20px 22px; margin:0; text-align: left;">
-                    Click the belwo link to know more about Interview Instructions
-                </h2>
-                <br>
-                <p
-                    style="font-size: 18px; line-height: 32px; color: #373E57; padding:0 20px 0px; margin:0; font-family: 'DM Sans', sans-serif; text-align: left;">
-                    <a href="{{ $mailData['instruction'] }}" target="_blank">Click Here</a>
-                </p>
+                @if ($mailData['instruction'])
+                    <h2
+                        style="font-weight: 600; font-size: 18px; line-height: 32px; color: #373E57; padding: 27px 20px 22px; margin:0; text-align: left;">
+                        Click the belwo link to know more about Interview Instructions
+                    </h2>
+                    <br>
+                    <p
+                        style="font-size: 18px; line-height: 32px; color: #373E57; padding:0 20px 0px; margin:0; font-family: 'DM Sans', sans-serif; text-align: left;">
+                        <a href="{{ $mailData['instruction'] }}" target="_blank">Click Here</a>
+                    </p>
+                @endif
                 <div style="display: block; border-top: 1px solid #c3baba; margin:15px 20px; float: left; width: 92%;">
-                    
-                    
+
+
                 </div>
                 <p
                     style="width:100%; margin-top:15px;margin-bottom:15px; margin-top: 30px; font-size:16px;line-height: 24px; color: #373E57;  text-align: left; padding: 0 20px 0px; font-family: 'DM Sans', sans-serif;">
