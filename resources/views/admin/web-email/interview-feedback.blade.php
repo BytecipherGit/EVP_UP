@@ -51,7 +51,7 @@
                         <div class="">
                             <input type="hidden" name="interviewEmpRoundsId" id="interviewEmpRoundsId" value="{{ $interviewEmpRoundsId }}">
                             <h2>Share your feedback</h2>
-                            <textarea rows="3" name="interviewer_feedback" class="form-textarea"></textarea>
+                            <textarea rows="3" name="interview_feedback" class="form-textarea"></textarea>
                         </div>
                     </div>
                     <button type="submit" class="buttun-classA">Submit Request</button>

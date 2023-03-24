@@ -27,6 +27,11 @@
                 <h1
                     style="font-weight: 800; font-size: 26px; line-height: 32px; color: #373E57; padding: 0 20px 22px; margin:0; text-align: left;">
                     You received a video interview request</h1>
+                <h2
+                    style="font-weight: 600; font-size: 18px; line-height: 32px; color: #373E57; padding: 27px 20px 22px; margin:0; text-align: left;">
+                    This is {{ $mailData['interview_title'] }} Round Of Interview
+                </h2>
+
                 <p
                     style="font-size: 18px; line-height: 28px; color: #373E57; padding: 0 20px 0px; margin:0; font-family: 'DM Sans', sans-serif; text-align: left;">
                     You are invited to a video interview for the Urgent Requirement for {{ $mailData['position'] }}
@@ -60,17 +65,12 @@
                         </h6>
                         <h6
                             style="font-size:16px; line-height: 24px; font-weight: 600; text-align: left; display: flex; align-items: center; word-break: break-all;">
-                            <img src="{{ URL::asset('assets/admin/candidate/images/calendar-icon.png') }}"
-                                style="width: 24px; margin-right: 10px;"> On dated {{ $mailData['meeting_date'] }} and
-                            <br> start time {{ $mailData['meeting_start_time'] }} and duration of interview is
-                            {{ $mailData['duration'] }}
+                            <img src="{{ asset('assets') }}/admin/candidate/images/calendar-icon.png"
+                                style="width: 24px; margin-right: 10px;">
+                            Interview Date :- {{ $mailData['meeting_date'] }} <br>
+                            Interview Time :- {{ $mailData['meeting_start_time'] }} <br>
+                            Interview Duration :- {{ $mailData['duration'] }} <br>
                         </h6>
-                        <h2>Interview Instructions</h2>
-                        <p
-                            style="font-size: 18px; line-height: 32px; color: #373E57; padding:0 20px 0px; margin:0; font-family: 'DM Sans', sans-serif; text-align: left;">
-                            {{ $mailData['interview_instruction'] }}
-                        </p>
-                        <br><br>
                         <a href="{{ route('interview.confirmed', ['interviewEmpRoundsId' => $mailData['interviewEmpRoundsId']]) }}"
                             style="margin-bottom:15px; font-size:20px; font-weight: 600; padding: 20px 0; background: #5533ff; float: left; width: 100%; border-radius: 5px; color: #fff; text-decoration: none;"
                             target="_black">
@@ -89,11 +89,28 @@
 
                     </div>
                 </div>
+                <h2>Interview Instructions</h2>
+                <p
+                    style="font-size: 18px; line-height: 32px; color: #373E57; padding:0 20px 0px; margin:0; font-family: 'DM Sans', sans-serif; text-align: left;">
+                    {{ $mailData['interview_instruction'] }}
+                </p>
+                <br>
+                @if ($mailData['instruction'])
+                    <h2
+                        style="font-weight: 600; font-size: 18px; line-height: 32px; color: #373E57; padding: 27px 20px 22px; margin:0; text-align: left;">
+                        Click the belwo link to know more about Interview Instructions
+                    </h2>
+                    <br>
+                    <p
+                        style="font-size: 18px; line-height: 32px; color: #373E57; padding:0 20px 0px; margin:0; font-family: 'DM Sans', sans-serif; text-align: left;">
+                        <a href="{{ $mailData['instruction'] }}" target="_blank">Click Here</a>
+                    </p>
+                @endif
+
 
                 <div style="display: block; border-top: 1px solid #c3baba; margin:15px 20px; float: left; width: 92%;">
+
                 </div>
-
-
                 <p
                     style="width:100%; margin-top:15px;margin-bottom:15px; margin-top: 30px; font-size:16px;line-height: 24px; color: #373E57;  text-align: left; padding: 0 20px 0px; font-family: 'DM Sans', sans-serif;">
                     Kind regards,</br>

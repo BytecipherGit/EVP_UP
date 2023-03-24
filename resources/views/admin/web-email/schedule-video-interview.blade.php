@@ -89,7 +89,7 @@
 
       <p class="schud-pare">Tip: if you are unable to attend a scheduled interview, cancel or request to reschedule for another time. Employers appreciate being kept up to date.</p>
       
-      <button type="submit" class="buttun-classA">Schedule Interview</button>
+      <button type="submit" class="buttun-classA">Submit</button>
       
     </form>
     </div>  

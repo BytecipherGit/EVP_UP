@@ -15,7 +15,6 @@
 </div>
 <div class="form-group">
     <label>Descriptions<span style="color:red">*</span></label>
-    <input type="type" name="descriptions" class="form-control" placeholder="Interview Scheduled"
-        value="{{ $interview ? $interview->descriptions : '' }}">
+    <textarea rows="3" name="descriptions" class="form-control">{{ $interview ? $interview->descriptions : '' }}</textarea>
     <strong class="error" id="descriptions-error"></strong>
 </div>
