@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\InterviewEmployee;
 use App\Http\Controllers\InterviewProcess;
+use App\Http\Controllers\PositionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\Admin;
 use App\Http\Middleware\Superadmin;
@@ -153,6 +154,13 @@ Route::middleware([Admin::class])->group(function () {
     Route::any('next_round_of_interview/form/{id?}', [InterviewEmployee::class, 'getNextRoundOfInterviewForm'])->middleware('documents');
     Route::post('next_round_of_interview/submit', [InterviewEmployee::class, 'scheduleNextRoundOfInterview'])->middleware('documents');
     Route::any('get_interview_details/form/{id?}', [InterviewEmployee::class, 'getInterviewDetailForm'])->middleware('documents');
+
+
+    Route::get('position', [PositionController::class, 'index'])->name('position.index')->middleware('documents');
+    Route::any('position/form/{id?}', [PositionController::class, 'getPositionForm'])->middleware('documents');
+    Route::post('position/submit', [PositionController::class, 'createPosition'])->middleware('documents');
+    Route::post('position/update', [PositionController::class, 'updatePosition'])->middleware('documents');
+    Route::post('position/destroy', [PositionController::class, 'deletePosition'])->middleware('documents');
     
 
 });

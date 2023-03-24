@@ -275,23 +275,12 @@
                                                 Interview Process
                                             </a>
                                         </li>
-                                        {{-- <li>
-                                            <a href="/employee">
-                                                <img src="{{ asset('assets') }}/admin/images/employees-view.png">
-                                                All Employee
+                                        <li>
+                                            <a href="/position">
+                                                <img src="{{ asset('assets') }}/admin/images/setting-icon.png">
+                                                Positions
                                             </a>
-                                        </li> --}}
-                                        {{-- <li>
-                      <a href="/current-employee">
-                        <img src="{{ asset('assets') }}/admin/images/current-user.png">
-                         Current Employee
-                      </a>
-                    </li>                     --}}
-                                        {{-- <li>
-                      <a href="/post-employee">
-                        <img src="{{ asset('assets') }}/admin/images/employees-icon.png"> Past Employee
-                      </a>
-                    </li> --}}
+                                        </li>
 
                                     </ul>
                                 </div>
