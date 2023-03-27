@@ -1168,11 +1168,11 @@
                                             <img class="profile-pic" id="profile-pic1"
                                                 src="{{ asset('assets') }}/admin/images/file-icon-img.png">
                                         </div>
-                                        <p><b>File type:</b>.jpeg, .pdf, .docs, or .doc</br><b>File Size:</b> Max:10mb</p></label></p>
+                                        <p><b>File type:</b>.jpeg, .pdf, .docs, or .doc</br><b>File Size:</b> Max:10MB</p></label></p>
                                         <div class="p-image ml-auto">
                                             <span class="upload-button" id="upload-button1">Choose File</span>
                                             <input class="file-upload" id="file-upload1" type="file"
-                                                accept="image/*">
+                                                accept="image/jpg,image/png,image/pdf">
                                         </div>
                                     </div>
                                     {{-- <strong class="error" id="lang-error"></strong> --}}
@@ -1259,7 +1259,7 @@
                                                 <img class="profile-pic" id="profile-pic2" name="document"
                                                     @if ($item['document'] !== null) value="/image/{{ old('document', $item['document']) }}" src="/image/{{ $item['document'] }}" @else src="{{ asset('assets') }}/admin/images/pan-card.png" @endif>
                                             </div>
-                                            <p><b>File type:</b>.jpeg, .pdf, .docs, or .doc</br><b>File Size:</b> Max:10mb</p></label></p>
+                                            <p><b>File type:</b>.jpeg, .pdf, .docs, or .doc</br><b>File Size:</b> Max:10MB</p></label></p>
                                             {{-- <div class="p-image ml-auto">
                                                 <span class="upload-button" id="upload-button2">Choose File</span>
                                                 <input class="file-upload" name="document" id="file-upload2"
@@ -1267,7 +1267,7 @@
                                                     <strong class="error" id="document-error"></strong>
                                             </div> --}}
                                                  <div class="upload-img-file">
-                                                <input type="file" id="document" name="document" class="form-control"/>
+                                                <input type="file" id="document" name="document" class="form-control" accept="image/jpg,image/doc,image/pdf"/>
                                                 {{-- <strong class="error" id="document-error"></strong> --}}
                                             </div>
                                         </div>
@@ -1375,11 +1375,11 @@
                                             <img class="profile-pic" id="profile-pic3"
                                                 src="{{ asset('assets') }}/admin/images/file-icon-img.png">
                                         </div>
-                                        <p><b>File type:</b>.jpeg, .pdf, .docs, or .doc</br><b>File Size:</b> Max:10mb</p></label></p>
+                                        <p><b>File type:</b>.jpeg, .pdf, .docs, or .doc</br><b>File Size:</b> Max:10MB</p></label></p>
                                         <div class="p-image ml-auto">
                                             <span class="upload-button" id="upload-button3">Choose File</span>
                                             <input class="file-upload" name="document" id="file-upload3"
-                                                type="file" accept="image/*">
+                                                type="file" accept="image/jpg,image/doc,image/pdf">
                                         </div>
                                     </div>
                                 </div>
@@ -1489,9 +1489,9 @@
                                                 <img class="profile-pic" id="profile-pic4" name="document"
                                                     @if ($item['document'] !== null) value="/image/{{ old('document', $item['document']) }}" src="/image/{{ $item['document'] }}" @else src="{{ asset('assets') }}/admin/images/file-icon-img.png" @endif />
                                             </div>
-                                            <p><b>File type:</b>.jpeg, .pdf, .docs, or .doc</br><b>File Size:</b> Max:10mb</p></label></p>
+                                            <p><b>File type:</b>.jpeg, .pdf, .docs, or .doc</br><b>File Size:</b> Max:10MB</p></label></p>
                                             <div class="upload-img-file">
-                                                <input type="file" id="document" name="document" class="form-control"/>
+                                                <input type="file" id="document" name="document" class="form-control" accept="image/jpg,image/doc,image/pdf"/>
                                                 {{-- <strong class="error" id="document-error"></strong> --}}
                                             </div>
                                         </div>
@@ -1755,9 +1755,9 @@
                                                 <img class="profile-pic" id="profile-pic8"
                                                     @if ($item['offer_letter'] !== null) value="/image/{{ old('document', $item['offer_letter']) }}" src="/image/{{ $item['offer_letter'] }}" @else src="{{ asset('assets') }}/admin/images/job-offer-letter.png" @endif>
                                             </div>
-                                            <p><b>File type:</b>.jpeg, .pdf, .docs, or .doc</br><b>File Size:</b> Max:10mb</p></label></p>
+                                            <p><b>File type:</b>.jpeg, .pdf, .docs, or .doc</br><b>File Size:</b> Max:10MB</p></label></p>
                                             <div class="upload-img-file">
-                                                <input type="file" id="offer_letter" name="offer_letter" class="form-control"/>
+                                                <input type="file" id="offer_letter" name="offer_letter" class="form-control" accept="image/jpg,image/doc,image/pdf"//>
                                                 {{-- <strong class="error" id="offer_letter-error"></strong> --}}
                                             </div>
                                         </div>
@@ -1777,9 +1777,9 @@
                                                 <img class="profile-pic" id="profile-pic9"
                                                     @if ($item['exp_letter'] !== null) value="/image/{{ old('exp_letter', $item['exp_letter']) }}" src="/image/{{ $item['exp_letter'] }}" @else src="{{ asset('assets') }}/admin/images/job-offer-letter.png" @endif>
                                             </div>
-                                            <p><b>File type:</b>.jpeg, .pdf, .docs, or .doc</br><b>File Size:</b> Max:10mb</p></label></p>
+                                            <p><b>File type:</b>.jpeg, .pdf, .docs, or .doc</br><b>File Size:</b> Max:10MB</p></label></p>
                                             <div class="upload-img-file">
-                                                <input type="file" id="exp_letter" name="exp_letter" class="form-control"/>
+                                                <input type="file" id="exp_letter" name="exp_letter" class="form-control" accept="image/jpg,image/doc,image/pdf"//>
                                                 <strong class="error" id="exp_letter-error"></strong>
                                             </div>
                                         </div>
@@ -1796,7 +1796,7 @@
                                                 <img class="profile-pic" id="profile-pic10"
                                                     @if ($item['salary_slip'] !== null) value="/image/{{ old('salary_slip', $item['salary_slip']) }}" src="/image/{{ $item['salary_slip'] }}" @else src="{{ asset('assets') }}/admin/images/pdf-icon.png" @endif>
                                             </div>
-                                            <p><b>File type:</b>.jpeg, .pdf, .docs, or .doc</br><b>File Size:</b> Max:10mb</p></label></p>
+                                            <p><b>File type:</b>.jpeg, .pdf, .docs, or .doc</br><b>File Size:</b> Max:10MB</p></label></p>
                                             <div class="upload-img-file">
                                                 <input type="file" id="salary_slip" name="salary_slip" class="form-control"/>
                                                 <strong class="error" id="salary_slip-error"></strong>
@@ -1860,17 +1860,16 @@
 </div>
 
 
-<!-- Bootstrap core JavaScript
+ <!-- Bootstrap core JavaScript
     ================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
-<script>
-      window.jQuery || document.write('<script src="../../{{ asset('assets') }}/admin/js/vendor/jquery.min.js"><\/script>')
-</script>
-
-<script src="{{ asset('assets') }}/admin/js/bootstrap.min.js"></script>
-<script src="{{ asset('assets') }}/admin/js/file-upload.js"></script>
-
-
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script>
+        window.jQuery || document.write('<script src="../../{{ asset('assets') }}/admin/js/vendor/jquery.min.js"><\/script>')
+      </script>
+      <script src="{{ asset('assets') }}/admin/js/bootstrap.min.js"></script> 
+      <script src="{{ asset('assets') }}/admin/js/file-upload.js"></script>
+     <script src="{{ asset('assets') }}/admin/js/typeahead.min.js"></script>
+     
 <script>
     $(".selectBox").on("click", function(e) {
         $(this).toggleClass("show");
@@ -1885,7 +1884,7 @@
 </script>
 
 
-<script>
+<script type="text/javascript">
     // Initializes  input( name of states)
     // with a typeahead
     var $input = $(".typeahead");
@@ -1987,6 +1986,7 @@
         e.preventDefault();
     });
 </script>
+
 <script>
     $(document).ready(function() {
 
@@ -2168,7 +2168,7 @@
       });
 
    });
-  </script>
+</script>
 
 <script>
     $('.extra-fields-customeroff').click(function() {
@@ -2192,7 +2192,7 @@
     $(document).on('click', '.remove-field', function(e) {
         $(this).parent('.row').remove();
         e.preventDefault();
-    });
-   </script>
+     });
+ </script>
  
   @endsection

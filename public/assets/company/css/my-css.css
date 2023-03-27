@@ -521,7 +521,7 @@ header .navbar-brand img {
 
 /*---==== New Changes===---*/
 .new-changeLS .upload-img-file {
-    padding: 0px 8px;
+    padding: 0px 0px;
 }
 .new-changeLS .add-plus span {
     margin-top: 0;

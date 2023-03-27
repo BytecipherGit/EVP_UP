@@ -39,7 +39,7 @@ class InviteempController extends Controller
     public function deleteInvite(request $request, $id)
     {
         Employee::where('id', $request->id)->delete();
-        return redirect('invite-employee')->with('message', 'Employee Delete Successfully.');
+        return redirect('invite-employee')->with('message', 'Employee delete successfully.');
     }
 
     public function geteditInvite(request $request)
@@ -62,7 +62,7 @@ class InviteempController extends Controller
 
             ]);
 
-        return redirect('invite-employee')->with('message', 'Infomation Updated Successfully.');
+        return redirect('invite-employee')->with('message', 'Infomation updated successfully.');
 
     }
 
@@ -146,7 +146,7 @@ class InviteempController extends Controller
             // print_r($information);die();
             return redirect()->back()->with('message', 'Upload successfully');
         } else {
-            return redirect()->back()->with('message', 'Not selected any File To Upload');
+            return redirect()->back()->with('message', 'Not select any file to upload');
 
         }
     }
@@ -395,7 +395,7 @@ class InviteempController extends Controller
                     'status' => '1',
                 ]);
 
-            return redirect()->back()->with('tabs-1_active', true)->with('message', 'Infomation Updated Successfully.');
+            return redirect()->back()->with('tabs-1_active', true)->with('message', 'Infomation updated successfully.');
 
         }
 

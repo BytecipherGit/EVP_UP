@@ -26,9 +26,10 @@
                 <img src="assets/company/images/email-verify.png">
                 <h2>Your account is under verification</h2>
                 <h3>We will notify you soon</h3>
-                <!-- <p>Please check your rigistered email for email verification</p> -->
-               
-                <a href="{{ route('login') }}">Back to Login</a>
+                <div class="add-btn-part">
+                  <a href="{{route('login')}}"><button class="btn btn-primary">Back to Login</button></a>
+                </div>
+                {{-- <a href="{{ route('login') }}">Back to Login</a> --}}
         </div>
     </div>
 </div>
