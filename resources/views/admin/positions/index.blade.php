@@ -34,7 +34,7 @@
             </div>
             <div class="col-md-4">
                 <div class="main-right-button-box">
-                    <a style="text-decoration:none" href="#" id="createPosition" class="mr-2">Create Position</a>
+                    <a style="text-decoration:none" href="#" id="createPosition" class="mr-2"><img src="{{ asset('assets') }}/admin/images/button-plus.png">Position</a>
                     {{-- <a href="#" data-toggle="modal" data-target="#rejectbtninfo">Reject</a> --}}
                 </div>
             </div>

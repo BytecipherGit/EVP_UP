@@ -45,7 +45,7 @@
                                     <div class="form-groupbox">
                                         <label>Registration ID Proof <strong style="color:red">*</strong>
                                         <p><b>File type:</b> Only .jpeg, .pdf, .docs, or .doc files allowed.
-                                        <b>File Size:</b> Max:10mb</p></label>
+                                        <b>File Size:</b> Max:10MB</p></label>
                                         <div class="upload-img-file">
                                             <div class="p-image ml-auto">
                                                 <input type="file" name="id_proof" id="id_proof"
@@ -61,7 +61,7 @@
                                     <div class="form-groupbox">
                                         <label>Address Proof <strong style="color:red">*</strong>
                                         <p><b>File type:</b> Only .jpeg, .pdf, .docs, or .doc files allowed.
-                                            <b>File Size:</b> Max:10mb</p></label>
+                                            <b>File Size:</b> Max:10MB</p></label>
                                         <div class="upload-img-file">
                                             <div class="p-image ml-auto">
                                                 <input type="file" name="address_proof" id="address_proof"
@@ -77,7 +77,7 @@
                                     <div class="form-groupbox">
                                         <label>Registration Document Proof <strong style="color:red">*</strong>
                                             <p><b>File type:</b> Only .jpeg, .pdf, .docs, or .doc files allowed.
-                                            <b>File Size:</b> Max:10mb</p></label>
+                                            <b>File Size:</b> Max:10MB</p></label>
                                         <div class="upload-img-file">
                                             <div class="p-image ml-auto">
                                                 <input type="file" name="document_proof" id="document_proof"

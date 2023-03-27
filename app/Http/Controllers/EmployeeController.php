@@ -178,7 +178,7 @@ class EmployeeController extends Controller
                 'emg_address'=>$request->input('emg_address'),
                ]);
 
-               return redirect()->back()->with('tabs-3_active', true)->with('message','Infomation Updated Successfully.');
+               return redirect()->back()->with('tabs-3_active', true)->with('message','Infomation updated successfully.');
             
           }
 
@@ -222,7 +222,7 @@ class EmployeeController extends Controller
                 return redirect()->back()->with('tabs-2_active', true);
                }
            
-                return redirect()->back();
+               return redirect()->back()->with('tabs-2_active', true);
              
             }
 
@@ -271,7 +271,7 @@ class EmployeeController extends Controller
                   return redirect()->back()->with('tabs-3_active', true);
                  }
 
-                  return redirect()->back();
+                 return redirect()->back()->with('tabs-3_active', true);
               }
 
 
@@ -506,7 +506,7 @@ class EmployeeController extends Controller
                 'emg_address'=>$request->input('emg_address'),
         ]);
 
-        return redirect()->back()->with('message','Infomation Updated Successfully.');
+        return redirect()->back()->with('message','Infomation updated successfully.');
         }
 
         if(isset($_POST['identity-edit'])){
@@ -530,7 +530,7 @@ class EmployeeController extends Controller
                   'verification_type'=>$request->input('verification_type'),
           
             ]);
-          return redirect()->back()->with('message','Infomation Updated Successfully.');
+          return redirect()->back()->with('message','Infomation updated successfully.');
         }
 
         if(isset($_POST['qualification-edit'])){
@@ -557,7 +557,7 @@ class EmployeeController extends Controller
                   'verification_type'=>$request->input('verification_type'),
           
             ]);
-          return redirect()->back()->with('message','Infomation Updated Successfully.');
+          return redirect()->back()->with('message','Infomation updated successfully.');
         }
 
         if(isset($_POST['workhistory-edit'])){
@@ -607,7 +607,7 @@ class EmployeeController extends Controller
                   'verification_type'=>$request->input('verification_type'),
           
             ]);
-          return redirect()->back()->with('message','Infomation Updated Successfully.');
+          return redirect()->back()->with('message','Infomation updated successfully.');
         }
 
         if(isset($_POST['official-edit'])){
@@ -638,7 +638,7 @@ class EmployeeController extends Controller
             ]);
 
 
-          return redirect()->back()->with('message','Infomation Updated Successfully.');
+          return redirect()->back()->with('message','Infomation updated successfully.');
         }
 
         if(isset($_POST['skill-edit'])){
@@ -654,7 +654,7 @@ class EmployeeController extends Controller
             ]);
           
         
-          return redirect()->back()->with('message','Infomation Updated Successfully.');
+          return redirect()->back()->with('message','Infomation updated successfully.');
           }
 
         if(isset($_POST['skilllang-edit'])){
@@ -664,13 +664,13 @@ class EmployeeController extends Controller
                   'lang_type'=>$request->input('lang_type'),
           
             ]);
-          return redirect()->back()->with('message','Infomation Updated Successfully.');
+          return redirect()->back()->with('message','Infomation updated successfully.');
         }
 
       }
      
      
-      public function basicIndex(request $request,$id){
+      public function getEditEmployee(request $request,$id){
         $basic=Employee::where('id',$id)->first();
         $identity=Employeeidentity::where('emp_id',$request->id)->first();
         $qualification=Empqualification::where('emp_id',$request->id)->first();
@@ -865,7 +865,7 @@ class EmployeeController extends Controller
           return redirect()->back()->with('message','Upload successfully');
       }
       else{
-          return redirect()->back()->with('message','Not selected any File To Upload');
+          return redirect()->back()->with('message','Not selected any file to upload');
 
       }
       }
@@ -876,7 +876,7 @@ class EmployeeController extends Controller
          return view('admin/employee-exit',compact('exitemp'));
       }
 
-      public function getExitEmp(request $request,$id){
+      public function exitEmployee(request $request,$id){
         $emp_id=Employee::where('id',$id)->first();
         $exitemp = new Exitemp();
         $exitemp->emp_id=$emp_id->id;
@@ -899,7 +899,7 @@ class EmployeeController extends Controller
           'status'  => '0'
         ]);
 
-        return redirect('employee')->with('message','Employee Exit Successfully');
+        return redirect('employee')->with('message','Employee exit successfully');
      }
 
      public function pastEmp(){

@@ -68,6 +68,32 @@
                         <div class="row">
                             <div class="col-xl-6">
                                 <div class="form-group">
+                                    <label>Password <strong style="color:red">*</strong></label>
+                                    <input type="password" id="password" name="password" class="form-control"
+                                     placeholder="Enter Your Password" autocomplete="new-password" />
+                                    {{-- @error('password')
+                                        <p class="velidation">{{ $message }}</p>
+                                    @enderror --}}
+                                    <strong class="error" id="password-error"></strong>
+                                </div>
+
+                            </div>
+                            <div class="col-xl-6">
+                                <div class="form-group">
+                                    <label>Confirm Password <strong style="color:red">*</strong> </label>
+                                    <input type="password" name="password_confirmation" class="form-control"
+                                        value="{{ old('password_confirmation') }}"
+                                        placeholder="Enter Your Confirm Password" autocomplete="new-password" >
+                                    {{-- @error('password')
+                                        <p class="velidation">{{ $message }}</p>
+                                    @enderror --}}
+                                    <strong class="error" id="password_confirmation-error"></strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-6">
+                                <div class="form-group">
                                     <label for="country">Country <strong style="color:red">*</strong></label>
                                     <div>
 
@@ -143,7 +169,7 @@
                         <div class="form-group">
                             <label>Registered Address <strong style="color:red">*</strong> </label>
                             <textarea class="form-control" id="address" name="address" value="{{ old('address') }}" placeholder="Enter Your Address"
-                                rows="2" autofocus autocomplete="address" ></textarea>
+                                rows="2" autofocus autocomplete="address" >{{ old('address') }}</textarea>
                             {{-- @error('address')
                                 <p class="velidation">{{ $message }}</p>
                             @enderror --}}
@@ -164,37 +190,12 @@
                             @enderror --}}
                             <strong class="error" id="name-error"></strong>
                         </div>
-                        <div class="row">
-                            <div class="col-xl-6">
-                                <div class="form-group">
-                                    <label>Password <strong style="color:red">*</strong></label>
-                                    <input type="password" id="password" name="password" class="form-control"
-                                     placeholder="Enter Your Password" autocomplete="new-password" />
-                                    {{-- @error('password')
-                                        <p class="velidation">{{ $message }}</p>
-                                    @enderror --}}
-                                    <strong class="error" id="password-error"></strong>
-                                </div>
-
-                            </div>
-                            <div class="col-xl-6">
-                                <div class="form-group">
-                                    <label>Confirm Password <strong style="color:red">*</strong> </label>
-                                    <input type="password" name="password_confirmation" class="form-control"
-                                        value="{{ old('password_confirmation') }}"
-                                        placeholder="Enter Your Confirm Password" autocomplete="new-password" >
-                                    {{-- @error('password')
-                                        <p class="velidation">{{ $message }}</p>
-                                    @enderror --}}
-                                    <strong class="error" id="password_confirmation-error"></strong>
-                                </div>
-                            </div>
-                        </div>
+                       
 
                         <div class="row">
                             <div class="col-xl-6">
                                 <div class="form-group">
-                                    <label>Admin Designation <strong style="color:red">*</strong> </label>
+                                    <label>Designation <strong style="color:red">*</strong> </label>
                                     <input type="text" id="designation" name="designation" class="form-control"
                                         value="{{ old('designation') }}" placeholder="Designation" autofocus autocomplete="designation">
                                     {{-- @error('designation')
@@ -205,7 +206,7 @@
                             </div>
                             <div class="col-xl-6">
                                 <div class="form-group">
-                                    <label>Admin Department <strong style="color:red">*</strong></label>
+                                    <label>Department <strong style="color:red">*</strong></label>
                                     <input type="text" id="department" name="department" class="form-control"
                                         value="{{ old('department') }}" placeholder="Department" autofocus autocomplete="department">
                                     {{-- @error('department')

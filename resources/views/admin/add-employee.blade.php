@@ -1167,9 +1167,9 @@
          
 
               <div class="form-group">
-                <label>Attech File<span style="color:red">*</span></br><b>File type:</b> Only .jpeg, .pdf, .docs, or .doc files allowed. <b>File Size:</b> Max:10mb</p></label>
+                <label>Attech File<span style="color:red">*</span></br><b>File type:</b> Only .jpeg, .pdf, .docs, or .doc files allowed. <b>File Size:</b> Max:10MB</p></label>
                 <div class="upload-img-file">
-                    <input type="file" id="document" name="document" class="form-control">
+                    <input type="file" id="document" name="document" class="form-control" accept="image/jpeg,image/doc,image/pdf" />
                     {{-- <strong class="error" id="document-error"></strong> --}}
                 </div>
             </div>
@@ -1343,9 +1343,12 @@
                 </div>
               </div>
               <div class="form-group">
-                <label>Attech File<span style="color:red">*</span></br><b>File type:</b> Only .jpeg, .pdf, .docs, or .doc files allowed. <b>File Size:</b> Max:10mb</p></label>
+                <label>Attech File<span style="color:red">*</span></br><b>File type:</b> Only .jpeg, .pdf, .docs, or .doc files allowed. <b>File Size:</b> Max:10MB</p></label>
                 <div class="upload-img-file">
-                    <input type="file" id="document" name="document" class="form-control">
+                    <input type="file" id="document" name="document" class="form-control" accept="image/jpg,image/doc,image/pdf"/>
+                       {{-- @error('document')
+                    <span class="velidation">{{ $message }}</span>
+                    @enderror  --}}
                     <strong class="error" id="document-error"></strong>
                    
                 </div>
@@ -1536,25 +1539,25 @@
 
       
               <div class="form-group">
-                <label>Offer Letter<span style="color:red">*</span></br><b>File type:</b> Only .jpeg, .pdf, .docs, or .doc files allowed. <b>File Size:</b> Max:10mb</p></label>
+                <label>Offer Letter<span style="color:red">*</span></br><b>File type:</b> Only .jpeg, .pdf, .docs, or .doc files allowed. <b>File Size:</b> Max:10MB</p></label>
                 <div class="upload-img-file">
-                    <input type="file" id="offer_letter" name="offer_letter" class="form-control"/>
+                    <input type="file" id="offer_letter" name="offer_letter" class="form-control" accept="image/jpg,image/doc,image/pdf" />
                     <strong class="error" id="offer_letter-error"></strong>
                 </div>
             </div>
 
               <div class="form-group">
-                <label>Experience Letter<span style="color:red">*</span></br><b>File type:</b> Only .jpeg, .pdf, .docs, or .doc files allowed. <b>File Size:</b> Max:10mb</p></label>
+                <label>Experience Letter<span style="color:red">*</span></br><b>File type:</b> Only .jpeg, .pdf, .docs, or .doc files allowed. <b>File Size:</b> Max:10MB</p></label>
                 <div class="upload-img-file">
-                    <input type="file" id="exp_letter" name="exp_letter" class="form-control"/>
+                    <input type="file" id="exp_letter" name="exp_letter" class="form-control"accept="image/jpg,image/doc,image/pdf"/>
                     <strong class="error" id="exp_letter-error"></strong>
                 </div>
             </div>
              
               <div class="form-group">
-                <label>Salary Slips<span style="color:red">*</span></br><b>File type:</b> Only .jpeg, .pdf, .docs, or .doc files allowed. <b>File Size:</b> Max:10mb</p></label>
+                <label>Salary Slips<span style="color:red">*</span></br><b>File type:</b> Only .jpeg, .pdf, .docs, or .doc files allowed. <b>File Size:</b> Max:10MB</p></label>
                 <div class="upload-img-file">
-                    <input type="file" id="salary_slip" name="salary_slip" class="form-control"/>
+                    <input type="file" id="salary_slip" name="salary_slip" class="form-control" accept="image/jpg,image/doc,image/pdf"/>
                     <strong class="error" id="salary_slip-error"></strong>
                 </div>
             </div>
@@ -1931,7 +1934,7 @@
               verification_type: "required",
               document: {
               required: true,
-              extension:'pdf|doc|docx'
+              extension:"pdf|doc|docx",
               }
             },
 
@@ -1942,7 +1945,10 @@
               duration_from: "Duration date is required",
               duration_to: "Duration to is required",
               verification_type: "Verification type is required",
-              document: "Document is required",
+              document:{
+                required: "Document is required hai",
+                extension: "extension shuold not wrong",
+              }, 
             }
          });
 

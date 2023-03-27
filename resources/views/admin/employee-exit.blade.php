@@ -103,10 +103,10 @@
                                   <div class="circle">
                                    <img class="profile-pic" id="profile-pic1" src="{{ asset('assets') }}/admin/images/file-icon-img.png">
                                  </div>
-                                 <p><b>File type:</b>.jpeg, .pdf, .docs, or .doc</br><b>File Size:</b> Max:10mb</p></label></p>
+                                 <p><b>File type:</b>.jpeg, .pdf, .docs, or .doc</br><b>File Size:</b> Max:10MB</p></label></p>
                                  <div class="p-image ml-auto">
                                    <span class="upload-button" id="upload-button1">Choose File</span>
-                                    <input class="file-upload" name="document" id="file-upload1" type="file" accept="image/*">
+                                    <input class="file-upload" name="document" id="file-upload1" type="file" accept="image/jpg,image/doc,image/pdf"/>
                                  </div>
                                 </div>                            
                               </div>

@@ -74,7 +74,7 @@ class CsvController extends Controller
         }
     }
     else{
-        return redirect()->back()->with('msg','Select any File for upload');
+        return redirect()->back()->with('msg','Select any file to upload');
     }
         
     }
