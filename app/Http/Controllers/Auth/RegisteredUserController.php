@@ -14,6 +14,7 @@ use Illuminate\Validation\Rules;
 use App\Models\Country;
 use App\Models\State;
 use App\Models\City;
+use App\Rules\EmailDomain;
 use Illuminate\View\View;
 use Response;
 use App\Mail\CompanyRegisterationMail;
@@ -55,7 +56,7 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class, new EmailDomain],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'org_name' => ['required', 'string', 'max:255'],
             'org_web' => ['required', 'string', 'max:255'],
@@ -130,7 +131,7 @@ class RegisteredUserController extends Controller
                 ];
                 FacadesMail::to($user->email)->send(new CompanyResetVerifyMail($verifyMailData));
 
-               return redirect()->back()->with('message','Reset verification link has been send.');
+               return redirect()->back()->with('message','Reset verification link has been sent to your email address.');
             } else {
                 return Response::json(['success' => '0']);
             }

@@ -54,10 +54,9 @@ class companySettingsController extends Controller
 
       ]);
       
-        return redirect()->back()->with('message',"Profile Data Successfully Added");
+        return redirect()->back()->with('message',"Profile data successfully added");
 
       }
-
 
       if(isset($_POST['add_address'])){
         $address=DB::table('users')->where('id',Auth::id())
@@ -66,7 +65,7 @@ class companySettingsController extends Controller
         'cor_office_address'=> $request->input('cor_office_address'),
          ]);
        
-        return redirect()->back()->with('success',"Address Successfully Added");
+        return redirect()->back()->with('success',"Address successfully added");
       }
 
       if(isset($_POST['dept'])){
@@ -74,7 +73,7 @@ class companySettingsController extends Controller
         $department->department=$request->input('department');
         $department->sub_department=$request->input('sub_department');
         $department->save();
-        return redirect()->back()->with('succ',"Data Successfully Added");
+        return redirect()->back()->with('succ',"Data successfully added");
       
       }
 
@@ -83,7 +82,7 @@ class companySettingsController extends Controller
         $desi=new Designation();
         $desi->designation_name=$request->input('designation_name');
         $desi->save();
-        return redirect()->back()->with('msg',"Data Successfully Added");
+        return redirect()->back()->with('msg',"Data successfully added");
       }
 
       
@@ -93,7 +92,7 @@ class companySettingsController extends Controller
         $planss->authority=$request->input('authority');
         $planss->plan_type=$request->input('plan_type');
         $planss->save();
-        return redirect()->back()->with('msg',"Data Successfully Added");
+        return redirect()->back()->with('msg',"Data successfully added");
       }
         // return('admin/settings');
 
@@ -104,7 +103,7 @@ class companySettingsController extends Controller
           'department'=>$request->input('department'),
           'sub_department'=>$request->input('sub_department')
           ]);
-        return redirect()->back()->with('succ',"Data Successfully Added");
+        return redirect()->back()->with('succ',"Data successfully added");
         }
 
         if(isset($_POST['desig_edit'])){
@@ -114,7 +113,7 @@ class companySettingsController extends Controller
           'designation_name'=>$request->input('designation_name')
           ]);
           // echo($desi); die();
-          return redirect()->back()->with('succ',"Data Successfully Added");
+          return redirect()->back()->with('succ',"Data successfully added");
         }
         
     }

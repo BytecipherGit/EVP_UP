@@ -127,15 +127,9 @@
                       <div class="row">
                         <div class="col-xl-6">
                           <label>Industry</label>
-                          {{-- <div class="selectBox active"> --}}
-                            {{-- <div class="selectBox__value">IT Company</div> --}}
-                            <select name="industry" @if ($profile) value="{{ old('industry', $profile->industry) }}" @endif class="form-control">
-                            {{-- <div class="selectBox active"> --}}
-                              @if($profile)
-                              <option value="{{ old('industry', $profile->industry) }}">{{ old('industry', $profile->industry) }}</option>
-                              @else
-                              <option value="">Select Industry</option>
-                              @endif
+                        
+                            <select name="industry" class="form-control">
+                              <option  @if($profile->industry ) value="{{ old('industry', $profile->industry) }}" @endif>@if($profile->industry) {{ old('industry', $profile->industry) }} @else Select Industry @endif</option>
                               <option value="IT Company">IT Company</option>
                               <option value="Non it Company">Non IT Company</option>
                              
@@ -162,10 +156,10 @@
                          <img class="profile-pic" id="profile-pic" name="company_logo" @if ($profile->company_logo!== Null) value="/image/{{ old('company_logo', $profile->company_logo) }}" src="/image/{{ $profile->company_logo }}" @else src="assets/admin/images/logo.png" @endif >
                        </div>
                        {{-- <p>You can drag or drop <span>your file logo here.</span> </p> --}}
-                       <p><b>File type:</b>.jpeg, .pdf, .docs, or .doc</br><b>File Size:</b> Max:10mb</p></label></p>
+                       <p><b>File type:</b>.jpeg, .pdf, .docs, or .doc</br><b>File Size:</b> Max:10MB</p></label></p>
                        <div class="p-image ml-auto">
                          <span class="upload-button" id="upload-button">Choose File</span>
-                          <input class="file-upload"  name="company_logo" id="file-upload" type="file" accept="image/*"/>
+                          <input class="file-upload"  name="company_logo" id="file-upload" type="file" accept="image/jpg,image/doc,image/pdf"/>
                        </div>
                       </div>
 
@@ -191,14 +185,15 @@
               <div class="tab-pane fade" id="applicants-Tab2" role="tabpanel" aria-labelledby="applicants-Tab2-tab">
                 <div class="tab-content-details">
                   <h2>Address</h2>
-                  <form method="POST" action="">
+                  <form method="POST" action="{{ route('update_company_profile') }}" enctype="multipart/form-data">
                     @csrf
                  
                     <div class="form-group">
                       <div class="row">
                         <div class="col-xl-12">
-                          <label>Registered Office</label>
-                          <textarea class="form-control" name="address" @if ($profile->address) value="{{old('address',$profile->address)}}" @endif rows="2" placeholder="Add Registered Office Address">@if ($profile->address) {{old('address',$profile->address)}}@endif</textarea>
+                          <label>Registered Office<span style="color:red">*</span></label>
+                          <textarea class="form-control" name="address" @if ($profile->address) value="{{old('address',$profile->address)}}" @endif rows="2" placeholder="Add Registered Office Address" required>@if ($profile->address) {{old('address',$profile->address)}}@endif</textarea>
+                       
                         </div>  
                       </div>
                     </div>
@@ -210,12 +205,12 @@
                         </div>  
                       </div>
                     </div>
-                </div>
-                <div class="tab-button-bx">
+                  </div>
+                   <div class="tab-button-bx">
                    {{-- <button class="btn-secondary-cust">Cancel</button>  --}}
                    <button type="submit" name="add_address" class="btn-primary-cust">Change Save</button>
-                </div> 
-              </div>   
+                 </div> 
+                </div>   
             </form>
               <div class="tab-pane fade" id="applicants-Tab3" role="tabpanel" aria-labelledby="applicants-Tab3-tab">
                 <div class="tab-content-details">
@@ -324,7 +319,7 @@
               <div class="tab-pane fade" id="applicants-Tab6" role="tabpanel" aria-labelledby="applicants-Tab6-tab">
                 <div class="tab-content-details">
                   <h2>My Plan</h2>
-                  <form method="POST" action="">
+                  <form method="POST" action="{{ route('update_company_profile') }}" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
                       <div class="row">
@@ -337,7 +332,7 @@
                           <label>Authority</label>
                           {{-- <div class="selectBox active"> --}}
                             <select name="authority" @if ($plans) value="{{ old('authority', $plans->authority) }}" @endif class="form-control" required>
-                              <option @if ($plans) value="{{ old('authority', $plans->authority) }}" @else value="Select Authority" @endif>@if ($plans) {{ old('authority', $plans->authority) }} @endif</option>
+                              <option @if ($plans) value="{{ old('authority', $plans->authority) }}" @else value="" @endif>@if ($plans) {{ old('authority', $plans->authority) }} @else Select Authority @endif</option>
                               <option value="01">01</option>
                               <option value="02">02</option>
                               <option value="03">03</option>
@@ -353,7 +348,7 @@
                         <div class="col-xl-12">
                           <label>Change My Plan</label>
                           <select name="plan_type" @if ($plans) value="{{ old('plan_type' , $plans->plan_type) }}" @endif class="form-control" required>
-                            <option @if ($plans) value="{{ old('plan_type' , $plans->plan_type) }}" @else value="Select Type" @endif>@if ($plans) {{ old('plan_type', $plans->plan_type) }} @endif</option>
+                            <option @if ($plans) value="{{ old('plan_type' , $plans->plan_type) }}" @else value="" @endif>@if ($plans) {{ old('plan_type', $plans->plan_type) }} @else Select Type @endif</option>
                               <option value="Gold">Gold 01</option>
                               <option value="Silver">Silver 02</option>
                               <option value="Bronze">Bronze 03</option>
@@ -389,7 +384,7 @@
         </div>
         <div class="modal-body">
           <div class="comman-body">
-            <form method="POST" action="">
+            <form method="POST" action="{{ route('update_company_profile') }}" enctype="multipart/form-data">
               @csrf
               
               <div class="form-group">
@@ -428,7 +423,7 @@
         </div>
         <div class="modal-body">
           <div class="comman-body">
-            <form method="POST" action="">
+            <form method="POST" action="{{ route('update_company_profile') }}" enctype="multipart/form-data">
               @csrf
               <input type="hidden" name="id" value="{{ $dept['id'] }}">
               <div class="form-group">
@@ -467,7 +462,7 @@
         </div>
         <div class="modal-body">
           <div class="comman-body">
-            <form method="POST" action="">
+            <form method="POST" action="{{ route('update_company_profile') }}" enctype="multipart/form-data">
               @csrf
               <div class="form-group">
                 <div class="row">
@@ -500,7 +495,7 @@
         </div>
         <div class="modal-body">
           <div class="comman-body">
-            <form method="POST" action="">
+            <form method="POST" action="{{ route('update_company_profile') }}" enctype="multipart/form-data">
               @csrf
               <input type="hidden" name="id" value="{{ $desig['id'] }}">
               <div class="form-group">

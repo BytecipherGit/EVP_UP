@@ -146,12 +146,10 @@
                                 {{-- <a class="dropdown-item dropdown-item-no" href="{{ route('logout') }}">     --}}
 
 
-                                <a class="dropdown-item" href="{{ route('logout') }}"
-                                    onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                                     Sign out
-                                    <img src="{{ asset('assets') }}/admin/images/logout-icon.png" class="ml-auto">
-                                </a>
+                         <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            Sign out
+                           <img src="{{ asset('assets') }}/admin/images/logout-icon.png" class="ml-auto">
+                          </a>
                                 <form id='logout-form' action="{{ route('logout') }}" method="POST" class="d-none">
                                     @csrf
                                 </form>
@@ -212,16 +210,16 @@
                                             </a>
                                         </li>
                                         {{-- <li>
-                      <a href="/current-employee">
-                        <img src="{{ asset('assets') }}/admin/images/current-user.png">
-                         Current Employee
-                      </a>
-                    </li>                     --}}
-                                        {{-- <li>
-                      <a href="/post-employee">
-                        <img src="{{ asset('assets') }}/admin/images/employees-icon.png"> Past Employee
-                      </a>
-                    </li> --}}
+                                                <a href="/current-employee">
+                                                    <img src="{{ asset('assets') }}/admin/images/current-user.png">
+                                                    Current Employee
+                                                </a>
+                                                </li>                     --}}
+                                                                    {{-- <li>
+                                                <a href="/post-employee">
+                                                    <img src="{{ asset('assets') }}/admin/images/employees-icon.png"> Past Employee
+                                                </a>
+                                           </li> --}}
 
                                     </ul>
                                 </div>
@@ -261,14 +259,9 @@
                             aria-labelledby="heading-2" style="">
                             <div class="card-body">
 
-                                <div id="accordion-2">
+                                <div id="accordion-1">
                                     <ul>
-                                        <li>
-                                            <a href="/company_profile">
-                                                <img src="{{ asset('assets') }}/admin/images/setting-icon.png">
-                                                Company Profile
-                                            </a>
-                                        </li>
+                                     
                                         <li>
                                             <a href="/interview_process">
                                                 <img src="{{ asset('assets') }}/admin/images/setting-icon.png">
@@ -279,6 +272,12 @@
                                             <a href="/position">
                                                 <img src="{{ asset('assets') }}/admin/images/setting-icon.png">
                                                 Positions
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/company_profile">
+                                                <img src="{{ asset('assets') }}/admin/images/setting-icon.png">
+                                                Company Profile
                                             </a>
                                         </li>
 

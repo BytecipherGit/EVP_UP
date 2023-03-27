@@ -204,8 +204,8 @@
                             <td>{{$quali['degree']}}</td> 
                             <td>{{$quali['inst_name']}}</td> 
                             <td>{{$quali['subject']}}</td>
-                            <td>{{$quali['duretion_from']}}</td>  
-                            <td>{{$quali['duretion_to']}}</td>  
+                            <td>{{$quali['duration_from']}}</td>  
+                            <td>{{$quali['duration_to']}}</td>  
 
                             @if($quali['verification_type'] == 'Verified')
                             <td><span class="verified-clr"><i class="fa fa-check"></i> {{$quali['verification_type']}}</span></td>
@@ -316,8 +316,8 @@
                         @foreach($workdetails as $work)
                           <tr>
                             <td>{{$work['com_name']}}</td>
-                            <td>{{$work['duration_from']}}</td>  
-                            <td>{{$work['duration_to']}}</td>
+                            <td>{{$work['work_duration_from']}}</td>  
+                            <td>{{$work['work_duration_to']}}</td>
                             <td>{{$work['designation']}}r</td>  
                             <td><a href="#" target="_black" class="docu-down" data-toggle="modal" data-target="#workofferdocument{{$work['id']}}"><img src="{{ asset('assets') }}/admin/images/document.png"></a> </td>
                             <td><a href="#" target="_black" class="docu-down" data-toggle="modal" data-target="#workexpdocument{{$work['id']}}"><img  src="{{ asset('assets') }}/admin/images/document.png"></a>
