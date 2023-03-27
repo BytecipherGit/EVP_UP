@@ -24,7 +24,14 @@
 </div>
 <div class="form-group">
     <label>Position<span style="color:red">*</span></label>
-    <input type="type" name="position" class="form-control" placeholder="Position">
+    {{-- <input type="type" name="position" class="form-control" placeholder="Position"> --}}
+    @if ($positions)
+        <select id="position" name="position" class="form-control">
+            @foreach ($positions as $position)
+                <option value="{{ $position->title }}">{{ $position->title }}</option>
+            @endforeach
+        </select>
+    @endif
     <strong class="error" id="position-error"></strong>
 </div>
 <div class="form-group">

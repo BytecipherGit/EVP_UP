@@ -14,6 +14,7 @@ use App\Models\EmployeeInterviewStatus;
 use App\Models\HiringStage;
 use App\Models\InterviewEmployeeRounds;
 use App\Models\InterviewProcess;
+use App\Models\Position;
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Http\Request;
@@ -162,9 +163,10 @@ class InterviewEmployee extends Controller
     {
         if (Auth::check()) {
             $interviewProcesses = InterviewProcess::where('company_id', Auth::id())->orderby('id', 'asc')->get();
+            $positions = Position::where('company_id', Auth::id())->orderby('id', 'asc')->get();
             $cmpEmployees = Employee::where('company_id', Auth::id())->orderby('id', 'desc')->get();
             $interview = (!empty($id)) ? EmployeeInterview::find($id) : false;
-            return view('admin.schedule-interview-form', compact('interview', 'interviewProcesses', 'cmpEmployees'));
+            return view('admin.schedule-interview-form', compact('interview', 'interviewProcesses', 'cmpEmployees','positions'));
         }
 
     }
