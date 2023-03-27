@@ -98,7 +98,7 @@
                 @if ($mailData['instruction'])
                     <h2
                         style="font-weight: 600; font-size: 18px; line-height: 32px; color: #373E57; padding: 27px 20px 22px; margin:0; text-align: left;">
-                        Click the belwo link to know more about Interview Instructions
+                        Click the below link to know more about Interview Instructions
                     </h2>
                     <br>
                     <p
