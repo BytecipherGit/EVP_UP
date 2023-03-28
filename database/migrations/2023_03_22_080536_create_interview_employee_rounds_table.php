@@ -31,7 +31,7 @@ return new class extends Migration
             $table->date('interview_date')->default(Carbon::now()->format('Y-m-d'));
             $table->string('interview_start_time')->nullable();
             $table->string('duration')->nullable();
-            $table->enum('interview_type',['Telephonic','Video'])->comment('Telephonic / Video')->default('Telephonic');
+            $table->enum('interview_type',['Telephonic','Video','At Office','At Home'])->comment('Telephonic / Video / At Office / At Home')->default('Telephonic');
             $table->string('phone')->nullable();
             $table->string('video_link')->nullable();
             $table->longText('interview_instructions')->nullable();

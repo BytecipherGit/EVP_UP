@@ -131,12 +131,12 @@
                                         {{-- <span class="notifi-td" data-toggle="modal" data-target="#remaiderbtninfo"><img
                                                 src="assets/admin/images/bell-icon.png" width="30px;"
                                                 height="30px"></span> --}}
-                                        <a href="#" class="edit-btn" id="viewInterview"
-                                        data-id="{{ $employee->id }}">Details</a>
+                                        <a href="#" class="edit-btn fa fa-eye" id="viewInterview"
+                                        data-id="{{ $employee->id }}" data-title="Details"></a>
                                         <a href="#" class="edit-btn" id="updateInterview"
                                             data-id="{{ $employee->id }}">Next Round</a>
-                                        <a href="#" class="edit-btn" id="delete_interview"
-                                            data-id="{{ $employee->id }}">Delete</a>
+                                        <a href="#" class="edit-btn fa fa-trash " id="delete_interview"
+                                            data-id="{{ $employee->id }}" data-title="Delete"></a>
                                     </td>
                                 </tr>
                             @endforeach

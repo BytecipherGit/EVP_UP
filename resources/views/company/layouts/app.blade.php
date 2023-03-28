@@ -271,7 +271,7 @@
                                         <li>
                                             <a href="/position">
                                                 <img src="{{ asset('assets') }}/admin/images/setting-icon.png">
-                                                Positions
+                                               Open Job Positions
                                             </a>
                                         </li>
                                         <li>

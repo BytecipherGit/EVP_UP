@@ -25,7 +25,7 @@ class EmailDomain implements Rule
      */
     public function passes($attribute, $value)
     {
-        $domain_allow=['gmail.com','gmail.net'];
+        $domain_allow=['gmail.com','gmail.net','yahoo.com'];
         $domain=explode('@',$value)[1];
         return in_array($domain, $domain_allow);
     }
