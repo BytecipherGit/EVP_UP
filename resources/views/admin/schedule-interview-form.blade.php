@@ -84,6 +84,14 @@
             <a class="nav-link" id="InterviewTypePhone" data-toggle="tab" data-id="Telephonic" href="#tabs-2"
                 role="tab"><img src="assets/admin/images/phone-call.png">Phone</a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" id="InterviewTypeOffice" data-toggle="tab" data-id="At Office" href="#tabs-3"
+                role="tab">At Office</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="InterviewTypeHome" data-toggle="tab" data-id="At Home" href="#tabs-4"
+                role="tab">At Home</a>
+        </li>
     </ul>
     <div class="tab-content">
         <div class="tab-pane active" id="tabs-1" role="tabpanel">
@@ -95,12 +103,16 @@
         </div>
         <div class="tab-pane" id="tabs-2" role="tabpanel">
             <div class="form-group">
-                <label>Interviewer's Phone Number<span style="color:red">*</span></label>
+                <label>Interviewer Phone Number<span style="color:red">*</span></label>
                 <input type="type" name="phone" class="form-control" placeholder="Phone Number">
                 <strong class="error" id="phone-error"></strong>
             </div>
-        </div>
+        </div> 
+        <div class="tab-pane" id="tabs-3" role="tabpanel"></div>
+        <div class="tab-pane" id="tabs-4" role="tabpanel"></div>
+        
         <input type="hidden" id="interview_type" name="interview_type" value="Video">
+      
         <div class="form-group">
             <label>Attech Resume<span style="color:red">*</span>
                 <h6>Only .jpeg, .pdf, .docs, or .doc files allowed  and max upload file size is (10MB)</h6>
@@ -129,7 +141,7 @@
             <strong class="error" id="interview_instruction-error"></strong>
         </div>
         <div class="form-group">
-            <label>Attech Interview Instruction File
+            <label>Attech Interview Instruction/Test File
                 <h6>Only .pdf, .docs, or .doc files allowed and max upload file size is (10MB)</h6>
             </label>
             <div class="upload-img-file">
@@ -149,6 +161,14 @@
     $("#InterviewTypePhone").on("click", function() {
         var dataId = $(this).attr("data-id");
         // alert("The data-id of clicked item is: " + dataId);
+        $('#interview_type').val(dataId);
+    });
+    $("#InterviewTypeOffice").on("click", function() {
+        var dataId = $(this).attr("data-id");
+        $('#interview_type').val(dataId);
+    });
+    $("#InterviewTypeHome").on("click", function() {
+        var dataId = $(this).attr("data-id");
         $('#interview_type').val(dataId);
     });
 </script>

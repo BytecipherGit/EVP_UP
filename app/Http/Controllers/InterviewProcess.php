@@ -26,11 +26,11 @@ class InterviewProcess extends Controller
      public function index(Request $request)
      {
          if ($request->ajax()) {
-             $data = InterviewProcessModel::select('id','title','descriptions')->get();
+             $data = InterviewProcessModel::where('company_id',Auth::id())->select('id','title','descriptions')->get();
              return FacadesDataTables::of($data)->addIndexColumn()
                  ->addColumn('action', function($row){
-                     $btn = '<a href="javascript:void(0)" data-id="'.$row->id.'" class="edit-btn updateProcess">Edit</a>';
-                     $btn .= '<a href="javascript:void(0)" data-id="'.$row->id.'" class="edit-btn deleteProcess">Delete</a>';
+                     $btn = '<a href="javascript:void(0)" data-id="'.$row->id.'" class="edit-btn updateProcess fa fa-edit" data-title="Edit"></a>';
+                     $btn .= '<a href="javascript:void(0)" data-id="'.$row->id.'" class="edit-btn deleteProcess fa fa-trash" data-title="Delete"></a>';
                      return $btn;
                  })
                  ->rawColumns(['action'])

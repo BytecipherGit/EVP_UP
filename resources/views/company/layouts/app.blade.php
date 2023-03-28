@@ -19,7 +19,7 @@
     <script src="{{ asset('assets') }}/admin/js/jquery.min.js"></script>
 
     <style>
-        #loadingImg {
+        .loadingImg {
             display: none;
             content: url('{{ asset('ajaxLoading.gif') }}') !important;
         }
@@ -271,7 +271,7 @@
                                         <li>
                                             <a href="/position">
                                                 <img src="{{ asset('assets') }}/admin/images/setting-icon.png">
-                                                Positions
+                                               Open Job Positions
                                             </a>
                                         </li>
                                         <li>
