@@ -222,7 +222,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <div id="loadingImg"></div>
+                    <div class="loadingImg"></div>
                     <div style="font-size: 16px; display:none;" class="text-success" id="success">Schedule
                         interview successfully done.</div>
                     <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
@@ -251,7 +251,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <div id="loadingImg"></div>
+                    <div class="loadingImg"></div>
                     <div style="font-size: 16px; display:none;" class="text-success" id="success">Next interview
                         round successfully done.</div>
                     <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
@@ -408,7 +408,7 @@
                 var url = '{{ url('schedule-interview/update') }}';
                 successMsg = "Successfully Updated";
             }
-            $('#loadingImg').show();
+            $('.loadingImg').show();
             var formData = new FormData(this);
             $.ajax({
                 url: url,
@@ -464,11 +464,11 @@
                         if (data.errors.attachment) {
                             $('#attachment-error').html(data.errors.attachment[0]);
                         }
-                        $('#loadingImg').hide();
+                        $('.loadingImg').hide();
                     } else {
 
                         if (data.success) {
-                            $('#loadingImg').hide();
+                            $('.loadingImg').hide();
                             $('#first_name-error').html('');
                             $('#last_name-error').html('');
                             $('#email-error').html('');
@@ -722,7 +722,7 @@
             event.preventDefault();
             var url = '{{ url('next_round_of_interview/submit') }}';
             var successMsg = "Next round of interview successfully created";
-            $('#loadingImg').show();
+            $('.loadingImg').show();
             var formData = new FormData(this);
             $.ajax({
                 url: url,
@@ -763,11 +763,11 @@
                             $('#interview_instruction-error').html(data.errors
                                 .interview_instruction[0]);
                         }
-                        $('#loadingImg').hide();
+                        $('.loadingImg').hide();
                     } else {
 
                         if (data.success) {
-                            $('#loadingImg').hide();
+                            $('.loadingImg').hide();
                             $('#interview_date-error').html('');
                             $('#interview_start_time-error').html('');
                             $('#duration-error').html('');

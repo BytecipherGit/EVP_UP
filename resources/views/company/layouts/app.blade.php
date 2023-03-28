@@ -19,7 +19,7 @@
     <script src="{{ asset('assets') }}/admin/js/jquery.min.js"></script>
 
     <style>
-        #loadingImg {
+        .loadingImg {
             display: none;
             content: url('{{ asset('ajaxLoading.gif') }}') !important;
         }
