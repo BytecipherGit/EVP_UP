@@ -13,8 +13,3 @@
         value="{{ $position ? $position->title : '' }}">
     <strong class="error" id="title-error"></strong>
 </div>
-<div class="form-group">
-    <label>Descriptions<span style="color:red">*</span></label>
-    <textarea rows="3" name="descriptions" class="form-control">{{ $position ? $position->descriptions : '' }}</textarea>
-    <strong class="error" id="descriptions-error"></strong>
-</div>
