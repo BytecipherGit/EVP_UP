@@ -44,7 +44,7 @@ class SendInterviewScheduleOfficeMailToInterviewer extends Mailable
     public function content()
     {
         return new Content(
-            view: 'admin.emails.candidate.offer-email',
+            view: 'admin.emails.candidate.interview-office-for-interviewer',
         );
     }
 

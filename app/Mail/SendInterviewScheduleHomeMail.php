@@ -45,7 +45,7 @@ class SendInterviewScheduleHomeMail extends Mailable
     {
         return new Content(
             // view: 'view.name',
-            view: 'admin.emails.candidate.offer-email',
+            view: 'admin.emails.candidate.interview-home',
         );
     }
 
