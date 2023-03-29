@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\InterviewEmployee;
 use App\Http\Controllers\InterviewProcess;
 use App\Http\Controllers\PositionController;
@@ -164,6 +165,13 @@ Route::middleware([Admin::class])->group(function () {
     Route::post('position/submit', [PositionController::class, 'createPosition'])->middleware('documents');
     Route::post('position/update', [PositionController::class, 'updatePosition'])->middleware('documents');
     Route::post('position/destroy', [PositionController::class, 'deletePosition'])->middleware('documents');
+
+
+    Route::get('feedback', [FeedbackController::class, 'index'])->name('feedback.index')->middleware('documents');
+    Route::any('feedback/form/{id?}', [FeedbackController::class, 'getFeedbackForm'])->middleware('documents');
+    Route::post('feedback/submit', [FeedbackController::class, 'createFeedback'])->middleware('documents');
+    Route::post('feedback/update', [FeedbackController::class, 'updateFeedback'])->middleware('documents');
+    Route::post('feedback/destroy', [FeedbackController::class, 'deleteFeedback'])->middleware('documents');
     
 
 });
