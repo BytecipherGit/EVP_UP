@@ -4,6 +4,12 @@
         font-weight: 400;
     }
 </style>
+
+{{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script> --}}
+
 <h2 class="modal-title" id=""></h2>
 <input type="hidden" id="is_add" value="{{ $interview ? '' : 1 }}" />
 <input type="hidden" id="interview_id" name="interview_id" value="{{ $interview ? $interview->id : '' }}" />
@@ -135,6 +141,10 @@
             @endif
             <strong class="error" id="interviewer_id-error"></strong>
         </div>
+        {{-- <div class="form-group">
+            <label>Interviewer name<span style="color:red">*</span></label>
+            <input class="typeahead form-control" id="search" name="interviewer_id" type="text">
+        </div> --}}
         <div class="form-group">
             <label>Interview Instruction<span style="color:red">*</span></label>
             <textarea name="interview_instruction" rows="3" class="form-control" placeholder="Interview Instruction"></textarea>
@@ -151,6 +161,32 @@
 
     </div>
 </div>
+
+<script type="text/javascript">
+    var path = "{{ route('autocomplete') }}";
+  
+    $( "#search" ).autocomplete({
+        source: function( request, response ) {
+          $.ajax({
+            url: path,
+            type: 'GET',
+            dataType: "json",
+            data: {
+               search: request.term
+            },
+            success: function( data ) {
+               response( data );
+            }
+          });
+        },
+        select: function (event, ui) {
+           $('#search').val(ui.item.label);
+           console.log(ui.item); 
+           return false;
+        }
+      });
+  
+</script>
 
 <script>
     $("#InterviewTypeVideo").on("click", function() {

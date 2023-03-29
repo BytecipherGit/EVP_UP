@@ -47,6 +47,16 @@ class RegisteredUserController extends Controller
                     ->get(["name","id"]);
         return response()->json($data);
     }
+    
+    public function autocomplete(Request $request)
+    {
+        $data = User::select("name as value", "id")
+                    ->where('name', 'LIKE', '%'. $request->get('search'). '%')
+                    ->get();
+    
+        return response()->json($data);
+    }
+
     /**
      * Handle an incoming registration request.
      *
