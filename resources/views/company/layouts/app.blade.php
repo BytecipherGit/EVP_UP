@@ -274,6 +274,12 @@
                                             </a>
                                         </li>
                                         <li>
+                                            <a href="/feedback">
+                                                <img src="{{ asset('assets') }}/admin/images/setting-icon.png">
+                                               Interview Feedback Points
+                                            </a>
+                                        </li>
+                                        <li>
                                             <a href="/company_profile">
                                                 <img src="{{ asset('assets') }}/admin/images/setting-icon.png">
                                                 Company Profile

@@ -162,7 +162,7 @@
     </div>
 </div>
 
-<script type="text/javascript">
+{{-- <script type="text/javascript">
     var path = "{{ route('autocomplete') }}";
   
     $( "#search" ).autocomplete({
@@ -186,7 +186,7 @@
         }
       });
   
-</script>
+</script> --}}
 
 <script>
     $("#InterviewTypeVideo").on("click", function() {
