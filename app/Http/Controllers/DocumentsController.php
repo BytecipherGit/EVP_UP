@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Documents;
+use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -114,5 +115,18 @@ class DocumentsController extends Controller
         } catch (Exception $e) {
             return $e->getMessage();
         }
+    }
+
+    public function demoSearch(){
+        return view('searchDemo');
+    }
+
+    public function autocomplete(Request $request)
+    {
+        $data = User::select("name as value", "id")
+                    ->where('name', 'LIKE', '%'. $request->get('search'). '%')
+                    ->get();
+    
+        return response()->json($data);
     }
 }
