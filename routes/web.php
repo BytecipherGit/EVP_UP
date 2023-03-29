@@ -95,6 +95,8 @@ Route::middleware([Superadmin::class])->group(function () {
 Route::get('/upload_document', [App\Http\Controllers\DocumentsController::class, 'index'])->name('upload.document');
 Route::post('/store_document', [App\Http\Controllers\DocumentsController::class, 'store'])->name('store.document');
 
+Route::get('autocomplete', [App\Http\Controllers\Auth\RegisteredUserController::class, 'autocomplete'])->name('autocomplete');
+
 Route::get('/email-config/{id?}', [App\Http\Controllers\InviteempController::class, 'getConfig'])->name('email-config');
 Route::get('/basic-info/{id?}', [App\Http\Controllers\InviteempController::class, 'getBasicDetails'])->name('basic-info');
 Route::post('/basic-info/{id?}', [App\Http\Controllers\InviteempController::class, 'getInviteDetails']);

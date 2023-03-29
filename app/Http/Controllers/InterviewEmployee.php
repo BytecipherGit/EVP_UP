@@ -249,18 +249,20 @@ class InterviewEmployee extends Controller
             $company_name=User::where('id',Auth::id())->first();
             if ($validator->passes()) {
                 if ($request->hasFile('attachment')) {
-                   
+                   $name = $company_name->org_name;
                     $file = $request->file('attachment');
                     $fileName = time() . '_' . $file->getClientOriginalName();
-                    $file->storeAs('public/'.$company_name->org_name.'/interview_documents', $fileName);
-                    $uploadAttachementPath = asset('storage/'.$company_name->org_name. '/interview_documents/' . $fileName);
+                    $fileTrim = str_replace(" ","-",$name);
+                    $file->storeAs('public/'.$fileTrim. '/interview_documents', $fileName);
+                    $uploadAttachementPath = asset('storage/'.$fileTrim. '/interview_documents/' . $fileName);
                 }
 
                 if ($request->hasFile('instruction')) {
                     $file = $request->file('instruction');
                     $fileName = time() . '_' . $file->getClientOriginalName();
-                    $file->storeAs('public/'.$company_name->org_name.'/interview_instruction_documents', $fileName);
-                    $uploadInstructionPath = asset('storage/'.$company_name->org_name.'/interview_instruction_documents/' . $fileName);
+                    $fileTrim = str_replace(" ","-",$name);
+                    $file->storeAs('public/'.$fileTrim.'/interview_instruction_documents', $fileName);
+                    $uploadInstructionPath = asset('storage/'.$fileTrim.'/interview_instruction_documents/' . $fileName);
                 }
 
                 $empCode = substr(time(), -6) . sprintf('%04d', rand(0, 9999));
