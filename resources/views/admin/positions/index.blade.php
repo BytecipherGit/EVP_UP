@@ -50,6 +50,7 @@
                         <thead>
                             <tr>
                                 <th>Title</th>
+                                <th>Descriptions</th>
                                 <th width="100px">Action</th>
                             </tr>
                         </thead>
@@ -111,6 +112,10 @@
                     name: 'title'
                 },
                 {
+                    data: 'descriptions',
+                    name: 'descriptions'
+                },
+                {
                     data: 'action',
                     name: 'action',
                     orderable: false,
@@ -130,9 +135,11 @@
         $("#position_form").validate({
             rules: {
                 title: "required",
+                descriptions: "required",
             },
             messages: {
                 title: "Title is required",
+                descriptions: "Descriptios is required",
             }
         });
 
@@ -195,12 +202,16 @@
                         if (data.errors.first_name) {
                             $('#title-error').html(data.errors.title[0]);
                         }
+                        if (data.errors.descriptions) {
+                            $('#descriptions-error').html(data.errors.descriptions[0]);
+                        }
                         $('#loadingImg').hide();
                     } else {
 
                         if (data.success) {
                             $('#loadingImg').hide();
                             $('#title-error').html('');
+                            $('#descriptions-error').html('');
                             $('#success').css('display', 'block');
                             setInterval(function() {
                                 location.reload();

@@ -77,6 +77,7 @@ class RegisteredUserController extends Controller
             'city' => ['required', 'string', 'max:255'],
             'state' => ['required', 'string', 'max:255'],
             'pin' => ['required', 'string','max:255'],
+            'captcha' => ['required','captcha'],
             // 'g-recaptcha-response' => ['required','captcha']
 
         ]);
@@ -127,6 +128,12 @@ class RegisteredUserController extends Controller
         return redirect('verify_status')->with('message','Thanks for your registration.');
        }
      
+    }
+
+    public function reloadCaptcha()
+    {
+        // dd('hello');
+        return response()->json(['captcha'=> captcha_img()]);
     }
 
     public function resetMailSend(request $request){

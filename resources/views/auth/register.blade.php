@@ -3,9 +3,11 @@
 @section('title', 'Registration')
 
 
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+{{-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> --}}
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.0-alpha1/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-{!! NoCaptcha::renderJs() !!}
+{{-- {!! NoCaptcha::renderJs() !!} --}}
     <style>
         .frm_form_field .grecaptcha-badge { 
   display:none;
@@ -220,7 +222,7 @@
                         </div>
     
                      </div>    
-                     <div class="form-group{{ $errors->has('g-recaptcha-response') ? ' has-error' : '' }}">
+                     {{-- <div class="form-group{{ $errors->has('g-recaptcha-response') ? ' has-error' : '' }}">
                         <label class="col-md-4 control-label">Captcha</label>
                         <div class="col-md-6">
                             {!! app('captcha')->display() !!}
@@ -230,9 +232,25 @@
                                 </span>
                             @endif
                         </div>
-                    </div>
-
-                 
+                    </div> --}}
+                    <div class="row">
+                        <div class="col-xl-6">
+                          <div class="form-group captcha">
+                                <span>{!! captcha_img() !!}</span>
+                          </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="form-group">
+                                <button type="button" class="btn btn-danger" class="reload" id="reload">
+                                    &#x21bb;
+                                </button> 
+                             </div>
+                        </div>
+                        <div class="form-group">
+                            <input id="captcha" type="text" class="form-control" placeholder="Enter Captcha" name="captcha">
+                         </div>
+                     
+              
                         {{-- data-toggle="modal" --}}
                         <div class="form-group">
                             <button type="submit"  data-target="#seccess-veri">Sign Up</button>
@@ -264,7 +282,18 @@
         </div>
     </div>
 </div>
-
+<script type="text/javascript">
+    $('#reload').click(function () {
+        $.ajax({
+            type: 'GET',
+            url: "{{ route('reloadCaptcha') }}",
+            success: function (data) {
+                console.log(data);
+                $(".captcha span").html(data.captcha);
+            }
+        });
+    });
+</script>
 <script>
     //     $(document).ready(function(){
     //         $('.form').on('submit', function(){

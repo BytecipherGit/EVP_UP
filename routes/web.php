@@ -137,6 +137,7 @@ Route::middleware([Admin::class])->group(function () {
     Route::get('/download_identity_doc/{id?}', [App\Http\Controllers\InviteempController::class, 'downloadIdDoc'])->middleware('documents');
 
     Route::get('/schedule-interview', [InterviewEmployee::class, 'index'])->name('schedule.interview')->middleware('documents');
+    Route::get('/interview-round-details/{id?}', [InterviewEmployee::class, 'interviewRoundDetails'])->name('interview.round.details')->middleware('documents');
     Route::any('/schedule-interview/form/{id?}', [InterviewEmployee::class, 'getScheduleInterviewForm'])->middleware('documents');
     Route::post('schedule-interview/submit', [InterviewEmployee::class, 'scheduleInterview'])->middleware('documents');
     Route::post('schedule-interview/changeHiringStage', [InterviewEmployee::class, 'update_hiring_stage'])->middleware('documents');
@@ -172,9 +173,10 @@ Route::middleware([Admin::class])->group(function () {
     Route::post('feedback/submit', [FeedbackController::class, 'createFeedback'])->middleware('documents');
     Route::post('feedback/update', [FeedbackController::class, 'updateFeedback'])->middleware('documents');
     Route::post('feedback/destroy', [FeedbackController::class, 'deleteFeedback'])->middleware('documents');
-    
+  
 
 });
+Route::get('reload-captcha', [App\Http\Controllers\Auth\RegisteredUserController::class, 'reloadCaptcha'])->name('reloadCaptcha');
 Route::get('verification-success/{id?}', [InterviewEmployee::class, 'verificationEmail'])->name('verification.success');
 Route::any('resetverification-mail/{id?}', [App\Http\Controllers\Auth\RegisteredUserController::class, 'resetMailSend'])->name('resetverification.mail');
 

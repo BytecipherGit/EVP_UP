@@ -16,6 +16,7 @@ use App\Models\Employee;
 use App\Models\EmployeeInterview;
 use App\Models\EmployeeInterviewStatus;
 use App\Models\HiringStage;
+use App\Models\EmployeeFeedback;
 use App\Models\InterviewEmployeeRounds;
 use App\Models\InterviewProcess;
 use App\Models\Position;
@@ -171,6 +172,15 @@ class InterviewEmployee extends Controller
 
     }
 
+    public function interviewRoundDetails(Request $request){
+        if (Auth::check()) {
+            $interviewEmpoloyeeRounds = InterviewEmployeeRounds::join('interview_processes','interview_processes.id','=','interview_processes_id')
+            ->where('interview_employee_rounds.interview_employees_id',$request->id)
+            ->get();
+            return view('admin.interview-round-details', compact('interviewEmpoloyeeRounds'));
+        }
+    }
+
     public function getScheduleInterviewForm($id = '')
     {
         if (Auth::check()) {
@@ -286,6 +296,7 @@ class InterviewEmployee extends Controller
                         //Insert record into Emoloyee Inerview Rounds
                         $insertEmployeeInterviewRounds = [
                             'interview_employees_id' => $employeeInterviewData->id,
+                            'company_id' => Auth::id(),
                             'interviewer_id' => !empty($request->interviewer_id) ? $request->interviewer_id : null,
                             'interview_processes_id' => !empty($request->interview_process) ? $request->interview_process : null,
                             'offer_status' => !empty($request->offer_status) ? $request->offer_status : 'Pending',
@@ -307,6 +318,7 @@ class InterviewEmployee extends Controller
                                 $mailData = [
                                     'organisationName' => !empty($userDetails->org_name) ? $userDetails->org_name : '',
                                     'interviewEmpRoundsId' => encrypt($employeeInterviewRoundData->id),
+                                    'company_id' => Auth::id(),
                                     'name' => !empty($request->first_name) ? $request->first_name . ' ' . $request->last_name : '',
                                     'position' => !empty($request->position) ? $request->position : '',
                                     'meeting_url' => !empty($request->video_link) ? $request->video_link : '',
@@ -324,6 +336,7 @@ class InterviewEmployee extends Controller
                                 $mailData = [
                                     'organisationName' => !empty($userDetails->org_name) ? $userDetails->org_name : '',
                                     'interviewEmpRoundsId' => encrypt($employeeInterviewRoundData->id),
+                                    'company_id' => Auth::id(),
                                     'name' => !empty($request->first_name) ? $request->first_name . ' ' . $request->last_name : '',
                                     'position' => !empty($request->position) ? $request->position : '',
                                     'phone' => !empty($request->phone) ? $request->phone : '',
@@ -340,6 +353,7 @@ class InterviewEmployee extends Controller
                                 $mailData = [
                                     'organisationName' => !empty($userDetails->org_name) ? $userDetails->org_name : '',
                                     'interviewEmpRoundsId' => encrypt($employeeInterviewRoundData->id),
+                                    'company_id' => Auth::id(),
                                     'name' => !empty($request->first_name) ? $request->first_name . ' ' . $request->last_name : '',
                                     'position' => !empty($request->position) ? $request->position : '',
                                     'meeting_date' => !empty($request->interview_date) ? $request->interview_date : '',
@@ -356,6 +370,7 @@ class InterviewEmployee extends Controller
                                 $mailData = [
                                     'organisationName' => !empty($userDetails->org_name) ? $userDetails->org_name : '',
                                     'interviewEmpRoundsId' => encrypt($employeeInterviewRoundData->id),
+                                    'company_id' => Auth::id(),
                                     'name' => !empty($request->first_name) ? $request->first_name . ' ' . $request->last_name : '',
                                     'position' => !empty($request->position) ? $request->position : '',
                                     'meeting_date' => !empty($request->interview_date) ? $request->interview_date : '',
@@ -371,6 +386,7 @@ class InterviewEmployee extends Controller
 
                             //Get Interviewer details from employee information table
                             $getInterviewerDetails = Employee::where('id', $request->interviewer_id)->first();
+                            // dd($getInterviewerDetails);
                             if (!empty($getInterviewerDetails->email) && !empty($employeeInterviewRoundData)) {
                                 //Send email to Interviewer
                                 if ($request->interview_type == 'Video') {
@@ -378,6 +394,7 @@ class InterviewEmployee extends Controller
                                     $mailData = [
                                         'organisationName' => !empty($userDetails->org_name) ? $userDetails->org_name : '',
                                         'interviewEmpRoundsId' => encrypt($employeeInterviewRoundData->id),
+                                        'company_id' => Auth::id(),
                                         'interviewer_name' => !empty($getInterviewerDetails->first_name) ? $getInterviewerDetails->first_name . ' ' . $getInterviewerDetails->last_name : '',
                                         'interviewee_name' => !empty($request->first_name) ? $request->first_name . ' ' . $request->last_name : '',
                                         'position' => !empty($request->position) ? $request->position : '',
@@ -393,6 +410,7 @@ class InterviewEmployee extends Controller
                                     $mailData = [
                                         'organisationName' => !empty($userDetails->org_name) ? $userDetails->org_name : '',
                                         'interviewEmpRoundsId' => encrypt($employeeInterviewRoundData->id),
+                                        'company_id' => Auth::id(),
                                         'interviewer_name' => !empty($getInterviewerDetails->first_name) ? $getInterviewerDetails->first_name . ' ' . $getInterviewerDetails->last_name : '',
                                         'interviewee_name' => !empty($request->first_name) ? $request->first_name . ' ' . $request->last_name : '',
                                         'position' => !empty($request->position) ? $request->position : '',
@@ -408,6 +426,7 @@ class InterviewEmployee extends Controller
                                     $mailData = [
                                         'organisationName' => !empty($userDetails->org_name) ? $userDetails->org_name : '',
                                         'interviewEmpRoundsId' => encrypt($employeeInterviewRoundData->id),
+                                        'company_id' => Auth::id(),
                                         'interviewer_name' => !empty($getInterviewerDetails->first_name) ? $getInterviewerDetails->first_name . ' ' . $getInterviewerDetails->last_name : '',
                                         'interviewee_name' => !empty($request->first_name) ? $request->first_name . ' ' . $request->last_name : '',
                                         'position' => !empty($request->position) ? $request->position : '',
@@ -423,6 +442,7 @@ class InterviewEmployee extends Controller
                                     $mailData = [
                                         'organisationName' => !empty($userDetails->org_name) ? $userDetails->org_name : '',
                                         'interviewEmpRoundsId' => encrypt($employeeInterviewRoundData->id),
+                                        'company_id' => Auth::id(),
                                         'interviewer_name' => !empty($getInterviewerDetails->first_name) ? $getInterviewerDetails->first_name . ' ' . $getInterviewerDetails->last_name : '',
                                         'interviewee_name' => !empty($request->first_name) ? $request->first_name . ' ' . $request->last_name : '',
                                         'position' => !empty($request->position) ? $request->position : '',
@@ -514,6 +534,7 @@ class InterviewEmployee extends Controller
                         $insertEmployeeInterviewRounds = [
                             'interview_employees_id' => !empty($request->interview_id) ? $request->interview_id : null,
                             'interviewer_id' => !empty($request->interviewer_id) ? $request->interviewer_id : null,
+                            'company_id' => Auth::id(),
                             'interview_processes_id' => !empty($request->interview_process) ? $request->interview_process : null,
                             'offer_status' => !empty($request->offer_status) ? $request->offer_status : 'Pending',
                             'interview_status' => !empty($request->interview_status) ? $request->interview_status : 1,
@@ -534,6 +555,7 @@ class InterviewEmployee extends Controller
                                 $mailData = [
                                     'organisationName' => !empty($userDetails->org_name) ? $userDetails->org_name : '',
                                     'interviewEmpRoundsId' => encrypt($employeeInterviewRoundData->id),
+                                    'company_id' => Auth::id(),
                                     'name' => !empty($checkRecordExist->first_name) ? $checkRecordExist->first_name . ' ' . $checkRecordExist->last_name : '',
                                     'position' => !empty($checkRecordExist->position) ? $checkRecordExist->position : '',
                                     'meeting_url' => !empty($request->video_link) ? $request->video_link : '',
@@ -549,6 +571,7 @@ class InterviewEmployee extends Controller
                                 $mailData = [
                                     'organisationName' => !empty($userDetails->org_name) ? $userDetails->org_name : '',
                                     'interviewEmpRoundsId' => encrypt($employeeInterviewRoundData->id),
+                                    'company_id' => Auth::id(),
                                     'name' => !empty($checkRecordExist->first_name) ? $checkRecordExist->first_name . ' ' . $checkRecordExist->last_name : '',
                                     'position' => !empty($checkRecordExist->position) ? $checkRecordExist->position : '',
                                     'phone' => !empty($request->phone) ? $request->phone : '',
@@ -565,6 +588,7 @@ class InterviewEmployee extends Controller
                                 $mailData = [
                                     'organisationName' => !empty($userDetails->org_name) ? $userDetails->org_name : '',
                                     'interviewEmpRoundsId' => encrypt($employeeInterviewRoundData->id),
+                                    'company_id' => Auth::id(),
                                     'name' => !empty($checkRecordExist->first_name) ? $checkRecordExist->first_name . ' ' . $checkRecordExist->last_name : '',
                                     'position' => !empty($checkRecordExist->position) ? $checkRecordExist->position : '',
                                     'meeting_date' => !empty($request->interview_date) ? $request->interview_date : '',
@@ -580,6 +604,7 @@ class InterviewEmployee extends Controller
                                 $mailData = [
                                     'organisationName' => !empty($userDetails->org_name) ? $userDetails->org_name : '',
                                     'interviewEmpRoundsId' => encrypt($employeeInterviewRoundData->id),
+                                    'company_id' => Auth::id(),
                                     'name' => !empty($checkRecordExist->first_name) ? $checkRecordExist->first_name . ' ' . $checkRecordExist->last_name : '',
                                     'position' => !empty($checkRecordExist->position) ? $checkRecordExist->position : '',
                                     'meeting_date' => !empty($request->interview_date) ? $request->interview_date : '',
@@ -602,6 +627,7 @@ class InterviewEmployee extends Controller
                                     $mailData = [
                                         'organisationName' => !empty($userDetails->org_name) ? $userDetails->org_name : '',
                                         'interviewEmpRoundsId' => encrypt($employeeInterviewRoundData->id),
+                                       
                                         'interviewer_name' => !empty($getInterviewerDetails->first_name) ? $getInterviewerDetails->first_name . ' ' . $getInterviewerDetails->last_name : '',
                                         'interviewee_name' => !empty($checkRecordExist->first_name) ? $checkRecordExist->first_name . ' ' . $checkRecordExist->last_name : '',
                                         'position' => !empty($checkRecordExist->position) ? $checkRecordExist->position : '',
@@ -618,6 +644,7 @@ class InterviewEmployee extends Controller
                                     $mailData = [
                                         'organisationName' => !empty($userDetails->org_name) ? $userDetails->org_name : '',
                                         'interviewEmpRoundsId' => encrypt($employeeInterviewRoundData->id),
+                                  
                                         'interviewer_name' => !empty($getInterviewerDetails->first_name) ? $getInterviewerDetails->first_name . ' ' . $getInterviewerDetails->last_name : '',
                                         'interviewee_name' => !empty($checkRecordExist->first_name) ? $checkRecordExist->first_name . ' ' . $checkRecordExist->last_name : '',
                                         'position' => !empty($checkRecordExist->position) ? $checkRecordExist->position : '',
@@ -635,6 +662,7 @@ class InterviewEmployee extends Controller
                                     $mailData = [
                                         'organisationName' => !empty($userDetails->org_name) ? $userDetails->org_name : '',
                                         'interviewEmpRoundsId' => encrypt($employeeInterviewRoundData->id),
+                                      
                                         'interviewer_name' => !empty($getInterviewerDetails->first_name) ? $getInterviewerDetails->first_name . ' ' . $getInterviewerDetails->last_name : '',
                                         'interviewee_name' => !empty($checkRecordExist->first_name) ? $checkRecordExist->first_name . ' ' . $checkRecordExist->last_name : '',
                                         'position' => !empty($checkRecordExist->position) ? $checkRecordExist->position : '',
@@ -651,6 +679,7 @@ class InterviewEmployee extends Controller
                                     $mailData = [
                                         'organisationName' => !empty($userDetails->org_name) ? $userDetails->org_name : '',
                                         'interviewEmpRoundsId' => encrypt($employeeInterviewRoundData->id),
+                                     
                                         'interviewer_name' => !empty($getInterviewerDetails->first_name) ? $getInterviewerDetails->first_name . ' ' . $getInterviewerDetails->last_name : '',
                                         'interviewee_name' => !empty($checkRecordExist->first_name) ? $checkRecordExist->first_name . ' ' . $checkRecordExist->last_name : '',
                                         'position' => !empty($checkRecordExist->position) ? $checkRecordExist->position : '',
@@ -684,10 +713,11 @@ class InterviewEmployee extends Controller
     public function getInterviewDetailForm($id = '')
     {
         if (Auth::check()) {
-            $interviewEmpoloyeeRounds = InterviewEmployeeRounds::join('interview_processes','interview_processes.id','=','interview_processes_id')
-            ->where('interview_employee_rounds.interview_employees_id',$id)
-            ->get();
-            return view('admin.interview-rounds-details-form', compact('interviewEmpoloyeeRounds'));
+            $interviewEmpoloyeeFeedback = EmployeeFeedback::join('feedbacks','feedbacks.id','=','interview_employee_feedback.feedback_id')
+                                            ->where('interview_employee_feedback.interview_employees_id',$id)
+                                            ->get();
+                            // dd($interviewEmpoloyeeFeedback);
+            return view('admin.interview-rounds-details-form', compact('interviewEmpoloyeeFeedback'));
         }
     }
 

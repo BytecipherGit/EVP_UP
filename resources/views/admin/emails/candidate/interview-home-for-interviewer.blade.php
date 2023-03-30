@@ -54,12 +54,8 @@
                         style="width:75%; border: 1px solid #c3baba; border-radius: 6px; float: left; padding: 10px 15px; margin: 20px 0; background: #f3f1f1;">
                         <h1
                             style="font-size:20px; line-height: 24px; font-weight: 800; border-bottom: 1px solid #c3baba;padding-bottom: 15px; margin-bottom: 15px;">
-                            Phone interview with {{ $mailData['organisationName'] }}.</h1>
-                        <h6
-                            style="text-align: left; font-size: 16px; font-weight: 200; display: flex; align-items: center; word-break: break-all;">
-                            <img src="{{ asset('assets') }}/admin/candidate/images/phone-call.png"
-                                style="width: 24px; margin-right: 10px;"> {{ $mailData['phone'] }}
-                        </h6>
+                            Home interview with {{ $mailData['organisationName'] }}.</h1>
+                      
                         <h6
                             style="font-size:16px; line-height: 24px; font-weight: 600; text-align: left; display: flex; align-items: center; word-break: break-all;">
                             <img src="{{ asset('assets') }}/admin/candidate/images/calendar-icon.png"
