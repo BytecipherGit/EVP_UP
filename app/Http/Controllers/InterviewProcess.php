@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Helpers\Helper as HelpersHelper;
 use App\Models\InterviewEmployeeRounds;
+use App\Models\Feedbacks;
+use App\Models\EmployeeFeedback;
 use Illuminate\Http\Request;
 use App\Models\InterviewProcess as InterviewProcessModel;
 use Yajra\DataTables\Facades\DataTables as FacadesDataTables;
@@ -124,6 +126,7 @@ class InterviewProcess extends Controller
     {
         if (!empty($request->interviewEmpRoundsId)) {
             $interviewEmpRoundsId = decrypt($request->interviewEmpRoundsId);
+            $feedbackResponse = Feedbacks::where('company_id',Auth::id())->get();
             // $interviewEmpRoundsId = $request->interviewEmpRoundsId;
             $employeetime = DB::table('interview_employee_rounds')
             ->join('interview_employees', 'interview_employees.id', '=', 'interview_employee_rounds.interview_employees_id')
@@ -133,7 +136,7 @@ class InterviewProcess extends Controller
             ->first();
             
             if ($employeetime) {
-                return view('admin/web-email/interview-feedback', compact('employeetime', 'interviewEmpRoundsId'));
+                return view('admin/web-email/interview-feedback', compact('employeetime', 'interviewEmpRoundsId','feedbackResponse'));
             } else {
                 return Response::json(['success' => '0']);
             }
@@ -142,18 +145,56 @@ class InterviewProcess extends Controller
 
     public function interviewFeedbackForEmployee(request $request)
     {
-        if (!empty($request->interviewEmpRoundsId)) {
-            //Check if alrady response is submitted
-            $checkResponse = InterviewEmployeeRounds::where('id', $request->interviewEmpRoundsId)->first();
-            if (!$checkResponse->interview_feedback) {
+        // if (!empty($request->interviewEmpRoundsId)) {
+        //     //Check if alrady response is submitted
+        //     $checkResponse = InterviewEmployeeRounds::where('id', $request->interviewEmpRoundsId)->first();
+        //     if (!$checkResponse->interview_feedback) {
+        //         $feedback = InterviewEmployeeRounds::where('id', $request->interviewEmpRoundsId)
+        //             ->update(['interview_feedback' => $request->input('interview_feedback'),'interviewer_status' => $request->input('interviewer_status')]);
+        //         if ($feedback) {
+        //             return redirect('/success');
+        //         }
+        //     } else {
+        //         return redirect('/response_submited');
+        //     }
+        // }
+
+    
+          if (!empty($request->interviewEmpRoundsId)) {
+                $checkResponse = InterviewEmployeeRounds::where('id', $request->interviewEmpRoundsId)->first();
+                $feedbacksResponse = Feedbacks::where('company_id', Auth::id())->get();
+                $employeestatus = DB::table('interview_employee_feedback')
+                        ->join('interview_employees', 'interview_employees.id', '=', 'interview_employee_feedback.interview_employees_id')
+                        ->join('interview_employee_rounds', 'interview_employees.id', '=', 'interview_employee_rounds.interview_employees_id')
+                        ->select('interview_employee_feedback.status')
+                        ->where('interview_employee_rounds.id', $request->interviewEmpRoundsId)
+                        ->first();
+                        // dd($employeetime);
+        if (!$employeestatus) {
+           if ($feedbacksResponse) {
+            for ($i=0; $i < count($feedbacksResponse); $i++) {
+                 $technicalSkill =array(
+                    'company_id' => Auth::id(),
+                    'interview_employees_id' => $checkResponse->interview_employees_id,
+                    'interview_round_id' => $checkResponse->id,
+                    'feedback_id' => $request->feedback_id[$i],
+                    'feedback_rating' => $request->feedback_rating[$i],
+                    'status'=> '1',
+                  );    
+                EmployeeFeedback::create($technicalSkill);
+               }
+            
+               if (!$checkResponse->interview_feedback) {
                 $feedback = InterviewEmployeeRounds::where('id', $request->interviewEmpRoundsId)
-                    ->update(['interview_feedback' => $request->input('interview_feedback'),'interviewer_status' => $request->input('interviewer_status')]);
-                if ($feedback) {
-                    return redirect('/success');
-                }
-            } else {
-                return redirect('/response_submited');
+                    ->update(['interview_feedback' => $request->input('interview_feedback')]);       
+                  }
             }
-        }
+            return redirect('/success');
+          }  
+          else {
+             return redirect('/response_submited');
+           }
+       }
     }
-}
+ }
+

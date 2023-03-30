@@ -38,12 +38,11 @@
         <div class="container">
             <div class="scheduBox">
                 <h1>Your feedback is very important to us.</h1>
-                <form action="{{ route('interview.feedback.mail') }}" method="post">
+                <form action="" method="post">
                     @csrf
                     <div class="ul-part">
                         <div class="">
                             {{-- <h2>Interview Status</h2></br> --}}
-                            <form>  
                                  <table class="table">
                                     <thead>
                                     <tr>
@@ -51,11 +50,14 @@
                                         <th>Feedback Rating</th>
                                      </tr>
                                     </thead>
+                                    @foreach($feedbackResponse as $feedback)
+                                    <input type="hidden" name="feedback_id[]" value={{$feedback->id}}>
                                     <tbody>
                                      <tr>
-                                       <td> Technical Skills:  </td> 
+                                       <td>{{ $feedback->title}}</td> 
                                        <td>
-                                        <select>  
+                                        <select class="form-control" id="feedback_rating" name="feedback_rating[]">  
+                                            <option value = "0"> 0 </option>  
                                             <option value = "1"> 1 </option>  
                                             <option value = "2"> 2</option>  
                                             <option value = "3"> 3 </option>  
@@ -63,59 +65,23 @@
                                             <option value = "5"> 5 </option>  
                                             </select>
                                        </td>
-                                    </tr>
-                                    <tr>
-                                       <td> Communication Skills: </td> 
-                                       <td>
-                                        <select>  
-                                            <option value = "1"> 1 </option>  
-                                            <option value = "2"> 2</option>  
-                                            <option value = "3"> 3 </option>  
-                                            <option value = "4"> 4 </option>  
-                                            <option value = "5"> 5 </option>  
-                                            </select>
-                                       </td>
-                                    </tr>
-                                       <tr>
-                                       <td> Language Knowledge:  </td>  
-                                       <td>
-                                        <select>  
-                                            <option value = "1"> 1 </option>  
-                                            <option value = "2"> 2</option>  
-                                            <option value = "3"> 3 </option>  
-                                            <option value = "4"> 4 </option>  
-                                            <option value = "5"> 5 </option>  
-                                            </select>
-                                       </td>
-                                    </tr>
-                                       <tr>
-                                       <td> Behaviour Skills: </td>  
-                                       <td>
-                                        <select>  
-                                            <option value = "1"> 1 </option>  
-                                            <option value = "2"> 2</option>  
-                                            <option value = "3"> 3 </option>  
-                                            <option value = "4"> 4 </option>  
-                                            <option value = "5"> 5 </option>  
-                                            </select>
-                                       </td>
-                                    </tr>
-                                      
+                                    </tr>  
                                     </tbody>
+                                    @endforeach
                                 </table>
-                                </form>  
+                               
                             {{-- <select class="form-control" id="interviewer_status" name="interviewer_status">
                                 <option value="Unclear">Not Clear</option>
                                 <option value="Clear">Clear</option>
                             </select> --}}
                         </div>
-                        {{-- <div class="">
+                        <div class="">
                             <input type="hidden" name="interviewEmpRoundsId" id="interviewEmpRoundsId" value="{{ $interviewEmpRoundsId }}">
                             <h2>Share your feedback</h2>
                             <textarea rows="3" name="interview_feedback" class="form-textarea"></textarea>
-                        </div> --}}
+                        </div>
                     </div>
-                    <button type="submit" class="buttun-classA">Submit Request</button>
+                    <button type="submit" class="buttun-classA">Submit Feedback</button>
                 </form>
 
             </div>

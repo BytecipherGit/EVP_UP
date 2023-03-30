@@ -24,7 +24,7 @@ class PositionController extends Controller
      public function index(Request $request)
      {
          if ($request->ajax()) {
-             $data = Position::where('company_id',Auth::id())->select('id','title')->get();
+             $data = Position::where('company_id',Auth::id())->select('id','title','descriptions')->get();
              return FacadesDataTables::of($data)->addIndexColumn()
                  ->addColumn('action', function($row){
                      $btn = '<a href="javascript:void(0)" data-id="'.$row->id.'" class="edit-btn updatePosition fa fa-edit" data-title="Edit"></a>';
@@ -49,11 +49,13 @@ class PositionController extends Controller
             $userDetails = HelpersHelper::getUserDetails(Auth::id());
             $validator = Validator::make($request->all(), [
                 'title' => 'required|string|max:255',
+                'descriptions' => 'required|string|max:255',
             ]);
             if ($validator->passes()) {
                     $insert = [
                         'company_id' => Auth::id(),
                         'title' => !empty($request->title) ? $request->title : null,
+                        'descriptions' => !empty($request->descriptions) ? $request->descriptions : null,
                     ];
                     $positionData = Position::create($insert);
                     if (!empty($positionData)) {
@@ -75,12 +77,14 @@ class PositionController extends Controller
             $userDetails = HelpersHelper::getUserDetails(Auth::id());
             $validator = Validator::make($request->all(), [
                 'title' => 'required|string|max:255',
+                'descriptions' => 'required|string|max:255',
             ]);
             if ($validator->passes()) {
                 if($request->position_id){
                     $update = [
                         'company_id' => Auth::id(),
                         'title' => !empty($request->title) ? $request->title : null,
+                        'descriptions' => !empty($request->descriptions) ? $request->descriptions : null,
                     ];
                     $positionData = Position::where('id',$request->position_id)->update($update);
                     if (!empty($positionData)) {

@@ -30,13 +30,12 @@
     <div class="main-heading">
         <div class="row">
             <div class="col-md-8">
-                <h1>Schedule for Interview</h1>
+                <h1>Employee interview rounds details</h1>
             </div>
             <div class="col-md-4">
                 <div class="main-right-button-box">
-                    <a style="text-decoration:none" href="#" id="scheduleInterview" class="mr-2"><img src="{{ asset('assets') }}/admin/images/button-plus.png">Interview</a>
-                    {{-- <a href="#" data-toggle="modal" data-target="#rejectbtninfo">Reject</a> --}}
-                </div>
+                    <a href="/schedule-interview"><img src="{{ asset('assets') }}/admin/images/back-icon.png"> Back</a>
+              </div>
             </div>
         </div>
     </div>
@@ -44,105 +43,41 @@
 
     <div class="employee-view-page">
         <div class="table-responsive-bg">
-            <div class="row">
-                <div class="col-xs-4">
-                    {{-- <label>Filter By Hiring Status</label>
-                    @if ($hiringStages)
-                        <select class="form-control" id="hStatus" name="hStatus">
-                            @foreach ($hiringStages as $hiringStage)
-                                <option class="dropdown-item" value="{{ $hiringStage->id }}"
-                                    @if ($hiringStage->id == Request::get('hiringStatusId')) selected @endif>{{ $hiringStage->title }}
-                                </option>
-                            @endforeach
-                        </select>
-                    @endif --}}
-                </div>
-                <div class="col-xs-4">
-
-                </div>
-                {{-- <div class="col-xs-4">
-                    <label>Filter By Employee Interview Response</label>
-                    @if ($employeeInterviewStatuses)
-                        <select class="form-control" id="eStatus" name="eStatus">
-                            @foreach ($employeeInterviewStatuses as $employeeInterviewStatuse)
-                                <option class="dropdown-item" value="{{ $employeeInterviewStatuse->id }}"
-                                    @if ($employeeInterviewStatuse->id == Request::get('employeeStatusId')) selected="selected" @endif>
-                                    {{ $employeeInterviewStatuse->title }}
-                                </option>
-                            @endforeach
-                        </select>
-                    @endif
-                </div> --}}
+            <div class="row">    
             </div>
             <div class="row" style="margin-top: 20px;">
                 <div class="col-xs-12">
                     <table id="example" class="table-bordered table">
                         <thead>
                             <tr>
-                                <th>EVP Id</th>
-                                <th>Name</th>
-                                {{-- <th>Email</th> --}}
-                                <th>Position</th>
-                                <th>Employee Interview Response</th>
-                                {{-- <th>Hiring Status</th> --}}
-                                {{-- <th>Employee Status</th> --}}
-                                {{-- <th>Employee Comment</th> --}}
-                                <th>Send Remider</th>
-                                <th width="250px">Action</th>
+                                <th>Round</th>
+                                <th>Interview Type</th>
+                                <th>Interview Date</th>
+                                <th>Interview Time</th>
+                                <th>Duration</th>
+                                {{-- <th>Description</th> --}}
+                                {{-- <th>Status</th> --}}
+                                <th width="250px">Feedback Details</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            @foreach ($interviewEmployees as $employee)
+                        @if ($interviewEmpoloyeeRounds)
+                        @php $counter = 1 @endphp
+                            @foreach ($interviewEmpoloyeeRounds as $interviewEmpoloyeeRound)
                                 <tr>
-                                    <td># {{ $employee->empCode }}</td>
-                                    <td>{{ $employee->first_name . ' ' . $employee->last_name }}</td>
-                                    {{-- <td>{{ $employee->email }}</td> --}}
-                                    <td>{{ $employee->position }}</td>
-                                    <td><span class="tb-accept"></span>
-                                        @if ($employee->lastInterviewEmployeeRounds)
-                                            {{ $employee->lastInterviewEmployeeRounds->employeeInterviewStatus->title }}
-                                        @endif
-                                    </td>
-                                    {{-- <td>
-                                        <select style="width: 150px;" class="form-control" name="hiring_stage"
-                                            id="hiring_stage">
-                                            @foreach ($hiringStages as $hiringStage)
-                                                <option value="{{ $hiringStage->id }}"
-                                                    @if ($hiringStage->id === $employee->interview_status) selected="selected" @endif
-                                                    data-id="{{ $employee->id }}">{{ $hiringStage->title }}</option>
-                                            @endforeach
-                                        </select>
-                                    </td> --}}
-                                    {{-- <td>
-                                        @foreach ($employeeInterviewStatuses as $employeeInterviewStatus)
-                                            @if ($employeeInterviewStatus->id === $employee->employee_interview_status)
-                                                <strong
-                                                    style="color: #007bff">{{ $employeeInterviewStatus->title }}</strong>
-                                            @endif
-                                        @endforeach
-                                    </td> --}}
-                                    {{-- <td>{{ ($employee->interviewee_comment) ? $employee->interviewee_comment : '' }}</td> --}}
+                                    <th scope="row">{{ $counter }}</th>
+                                    <td>{{ $interviewEmpoloyeeRound->title}}</td>
+                                    <td>{{ $interviewEmpoloyeeRound->interview_date}}</td>
+                                    <td>{{ $interviewEmpoloyeeRound->interview_start_time}}</td>
+                                    <td>{{ $interviewEmpoloyeeRound->duration}}</td>
+                                    {{-- <td>{{ $interviewEmpoloyeeRound->interviewer_status}}</td> --}}
                                     <td>
-                                        <span class="notifi-td" id="reminder_interview"
-                                            data-id="{{ $employee->id }}"><img src="assets/admin/images/bell-icon.png"
-                                                width="30px;" height="30px"></span>
-                                    </td>
-                                    <td>
-                                        {{-- <span class="notifi-td" data-toggle="modal" data-target="#remaiderbtninfo"><img
-                                                src="assets/admin/images/bell-icon.png" width="30px;"
-                                                height="30px"></span> --}}
-                                        <a href="{{route('interview.round.details')}}/{{ $employee->id }}" class="edit-btn fa fa-eye" id="viewInterview"
-                                        data-id="{{ $employee->id }}" data-title="Details"></a>
-                                        <a href="#" class="edit-btn" id="updateInterview"
-                                            data-id="{{ $employee->id }}">Next Round</a>
-                                        <a href="#" class="edit-btn fa fa-trash " id="delete_interview"
-                                            data-id="{{ $employee->id }}" data-title="Delete"></a>
+                                        <a href="#" class="edit-btn" id="viewInterview"
+                                        data-id="{{ $interviewEmpoloyeeRound->id }}" data-title="Details">Feedback</a>
                                     </td>
                                 </tr>
-                            @endforeach
-
-
-                        </tbody>
+                                @php $counter++ @endphp
+                            @endforeach    
+                        @endif
                     </table>
                 </div>
             </div>
@@ -154,124 +89,15 @@
 </div>
 <!--- Main Container Close ----->
 
-<!-- The Modal Delete INFO -->
-<div class="modal fade custu-no-select" id="deletebtninfo" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-body">
-                <img src="assets/admin/images/deactivate-popup-icon.png" class="img-size-wth">
-                <h1 class="h1-delete">Are you sure?</h1>
-                <p>Are you Really want to Delete this account.</p>
-                <a href="#" data-dismiss="modal" class="cancel-btn">Delete</a>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- The Modal Remaider Notification -->
-<div class="modal fade schedu-modal" id="scheduleInterviewModel" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-body">
-                <h1 class="schedhead">Send reminder to complete registration.</h1>
-                <p class="sheddpare">Your invitation or last reminder was sent 4 days ago</p>
-                <div class="bottom-part">
-                    <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn-primary-cust">Send remainder</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- The Modal Remaider Notification -->
-<div class="modal fade schedu-modal" id="rejectbtninfo" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-body">
-                <h1 class="schedhead">Reject Candidate</h1>
-                <p class="sheddpare">Do you want to sent a rejection email to this candidate?</p>
-                <div class="bottom-part">
-                    <button type="button" class="btn-secondary-cust" data-dismiss="modal">No</button>
-                    <a href="rejected-email" class="link-href" target="_black"><button type="button"
-                            class="btn-primary-cust">Yes</button></a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- The Modal Interview  -->
-<div class="modal fade custu-modal-popup" id="interviewModel" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <form id="schedule_interview_form" method="post" autocomplete="off" enctype="multipart/form-data">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 class="modal-title" id="Heading">Schedule Interview</h2>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <img src="assets/admin/images/close-btn-icon.png">
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="comman-body">
-
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <div class="loadingImg"></div>
-                    <div style="font-size: 16px; display:none;" class="text-success" id="success">Schedule
-                        interview successfully done.</div>
-                    <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
-                    <button type="submit" id="scheduleInterviewSubmit" class="btn-primary-cust">Submit</button>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
-
-<!-- The Modal Interview  -->
-<div class="modal fade custu-modal-popup" id="updateInterviewModel" role="dialog"
-    aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <form id="next_round_of_interview_form" method="post" autocomplete="off" enctype="multipart/form-data">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 class="modal-title" id="Heading">Schedule Next Round Of Interview</h2>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <img src="assets/admin/images/close-btn-icon.png">
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="comman-body">
-
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <div class="loadingImg"></div>
-                    <div style="font-size: 16px; display:none;" class="text-success" id="success">Next interview
-                        round successfully done.</div>
-                    <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
-                    <button type="submit" id="nextRoundOfInterviewSubmit" class="btn-primary-cust">Submit</button>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
-
-
 <div class="modal fade custu-modal-popup" id="viewInterviewModel" role="dialog"
     aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <form id="update_interview_form" method="post" autocomplete="off" enctype="multipart/form-data">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h2 class="modal-title" id="Heading">Employee interview rounds details</h2>
+                    <h2 class="modal-title" id="Heading">Employee interview feedback details</h2>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <img src="assets/admin/images/close-btn-icon.png">
+                        <img src="{{ asset('assets') }}/admin/images/close-btn-icon.png">
                     </button>
                 </div>
                 <div class="modal-body">

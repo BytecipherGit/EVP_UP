@@ -5,7 +5,7 @@
     }
 </style>
 
-<div class="form-group">
+{{-- <div class="form-group">
     <table class="table">
         <thead>
             <tr>
@@ -36,4 +36,34 @@
             @endif
         </tbody>
     </table>
+</div> --}}
+<div class="form-group">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Feedback Points</th>
+                <th scope="col">Rating</th>
+            </tr>
+        </thead>
+        @if ($interviewEmpoloyeeFeedback)
+        @php $counter = 1 @endphp
+            @foreach ($interviewEmpoloyeeFeedback as $interviewEmpoloyeeRound)
+                <tr>
+                    <th scope="row">{{ $counter }}</th>
+                    {{-- <td>{{ $interviewEmpoloyeeRound->title}}</td>
+                    <td>{{ $interviewEmpoloyeeRound->interview_date}}</td>
+                    <td>{{ $interviewEmpoloyeeRound->interview_start_time}}</td>
+                    <td>{{ $interviewEmpoloyeeRound->duration}}</td>
+                    <td>{{ $interviewEmpoloyeeRound->interviewer_status}}</td> --}}
+                    <td>
+                        <a href="#" class="edit-btn" id="viewInterview"
+                        data-id="{{ $interviewEmpoloyeeRound->id }}" data-title="Details">Feedback</a>
+                    </td>
+                </tr>
+                @php $counter++ @endphp
+            @endforeach    
+        @endif
+    </table>
 </div>
+
+
