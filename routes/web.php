@@ -97,7 +97,7 @@ Route::get('/upload_document', [App\Http\Controllers\DocumentsController::class,
 Route::post('/store_document', [App\Http\Controllers\DocumentsController::class, 'store'])->name('store.document');
 
 Route::get('demo-search', [App\Http\Controllers\DocumentsController::class, 'demoSearch'])->name('demo.search');
-Route::get('autocomplete', [App\Http\Controllers\DocumentsController::class, 'autocomplete'])->name('autocomplete');
+Route::get('getEmployeeNameThroughAutocomplete', [App\Http\Controllers\DocumentsController::class, 'getEmployeeNameThroughAutocomplete'])->name('employeeNameAutocomplete');
 
 Route::get('/email-config/{id?}', [App\Http\Controllers\InviteempController::class, 'getConfig'])->name('email-config');
 Route::get('/basic-info/{id?}', [App\Http\Controllers\InviteempController::class, 'getBasicDetails'])->name('basic-info');

@@ -13,16 +13,27 @@
     <link rel="stylesheet" href="{{ asset('assets') }}/admin/css/header-css.css">
     <link rel="stylesheet" href="{{ asset('assets') }}/admin/css/main-container.css">
 
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
-    <script src="{{ asset('assets') }}/admin/js/jquery.min.js"></script>
- 
+    <link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/datatables.bootstrap.min.css">
+    <link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/fixedheader.bootstrap.min.css">
+    <link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/responsive.bootstrap.min.css">
+
+    {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"> --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" />
+
+
     <style>
         .loadingImg {
             display: none;
             content: url('{{ asset('ajaxLoading.gif') }}') !important;
         }
     </style>
+
+    <script src="{{ asset('assets') }}/admin/js/jquery.min.js"></script>
+
 
 </head>
 
@@ -145,11 +156,13 @@
                                 {{-- <a class="dropdown-item dropdown-item-no" href="{{ route('logout') }}">     --}}
 
 
-                         <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                            Sign out
-                           <img src="{{ asset('assets') }}/admin/images/logout-icon.png" class="ml-auto">
-                          </a>
-                                <form id='logout-form' action="{{ route('logout') }}" method="POST" class="d-none">
+                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    Sign out
+                                    <img src="{{ asset('assets') }}/admin/images/logout-icon.png" class="ml-auto">
+                                </a>
+                                <form id='logout-form' action="{{ route('logout') }}" method="POST"
+                                    class="d-none">
                                     @csrf
                                 </form>
 
@@ -214,7 +227,7 @@
                                                     Current Employee
                                                 </a>
                                                 </li>                     --}}
-                                                                    {{-- <li>
+                                        {{-- <li>
                                                 <a href="/post-employee">
                                                     <img src="{{ asset('assets') }}/admin/images/employees-icon.png"> Past Employee
                                                 </a>
@@ -260,7 +273,7 @@
 
                                 <div id="accordion-1">
                                     <ul>
-                                     
+
                                         <li>
                                             <a href="/interview_process">
                                                 <img src="{{ asset('assets') }}/admin/images/setting-icon.png">
@@ -270,7 +283,7 @@
                                         <li>
                                             <a href="/position">
                                                 <img src="{{ asset('assets') }}/admin/images/setting-icon.png">
-                                               Open Job Positions
+                                                Open Job Positions
                                             </a>
                                         </li>
                                         <li>
@@ -309,6 +322,8 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="{{ asset('assets') }}/admin/js/bootstrap.min.js"></script>
     <script src="{{ asset('assets') }}/admin/js/sweetalert.min.js"></script>
     <script src="{{ asset('assets') }}/admin/js/jquery.validate.min.js"></script>
@@ -317,7 +332,6 @@
     <script src="{{ asset('assets') }}/datatable/js/dataTables.fixedHeader.min.js"></script>
     <script src="{{ asset('assets') }}/datatable/js/dataTables.responsive.min.js"></script>
     <script src="{{ asset('assets') }}/datatable/js/responsive.bootstrap.min.js"></script>
-
     @yield('pagescript')
 
 </body>
