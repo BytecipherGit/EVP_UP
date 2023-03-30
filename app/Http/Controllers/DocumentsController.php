@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Documents;
-use App\Models\User;
+use App\Models\Employee;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Session;
 
@@ -18,19 +19,19 @@ class DocumentsController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
-    {   
+    {
         if (Auth::check()) {
             $checkDocuments = Documents::where('user_id', Auth::id())->get();
-            if(count($checkDocuments) > 0){
+            if (count($checkDocuments) > 0) {
                 $flagStatus = true;
-                foreach($checkDocuments as $row){
-                    if($row->status == 'pending'){
+                foreach ($checkDocuments as $row) {
+                    if ($row->status == 'pending') {
                         $flagStatus = false;
                     } else {
                         $flagStatus = true;
                     }
                 }
-                if(!$flagStatus){
+                if (!$flagStatus) {
                     return view('company/company-verification-document')->with('message', 'Thank you for uploading verification documents. Once verified then you will be able to use this portal.');
                 } else {
                     return view('company/company-verification-document');
@@ -39,11 +40,11 @@ class DocumentsController extends Controller
                 return view('company/company-verification-document');
             }
         } else {
-                Auth::logout();
-                Session::flush();    
-                return redirect('admin');
+            Auth::logout();
+            Session::flush();
+            return redirect('admin');
         }
-        
+
     }
 
     public function store(request $request)
@@ -56,11 +57,11 @@ class DocumentsController extends Controller
                 'address_proof' => 'required|file|mimes:jpeg,pdf,docs,doc|max:2048',
                 'document_proof' => 'required|file|mimes:jpeg,pdf,docs,doc|max:2048',
             ]
-            //  [
-            //     'reg_id.required' => 'Registration number is must.',
-            //     'reg_id.min' => 'Registration number not more then 255 character.',
-            // ]
-           );
+                //  [
+                //     'reg_id.required' => 'Registration number is must.',
+                //     'reg_id.min' => 'Registration number not more then 255 character.',
+                // ]
+            );
             if ($validator->fails()) {
                 return back()->withErrors($validator->errors())->withInput();
             }
@@ -117,16 +118,19 @@ class DocumentsController extends Controller
         }
     }
 
-    public function demoSearch(){
+    public function demoSearch()
+    {
         return view('searchDemo');
     }
 
-    public function autocomplete(Request $request)
+    public function getEmployeeNameThroughAutocomplete(Request $request)
     {
-        $data = User::select("name as value", "id")
-                    ->where('name', 'LIKE', '%'. $request->get('search'). '%')
+        // $data = User::select("name as value", "id")
+        //             ->where('name', 'LIKE', '%'. $request->get('search'). '%')
+        //             ->get();
+        $data = Employee::select(DB::raw("CONCAT(first_name, ' ', middle_name, ' ', last_name) as value"), "id")
+                    ->where('first_name', 'LIKE', '%'. $request->get('search'). '%')
                     ->get();
-    
         return response()->json($data);
     }
 }
