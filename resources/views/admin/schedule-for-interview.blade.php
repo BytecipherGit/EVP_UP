@@ -828,32 +828,6 @@
         }
 
     });
-
-    var path = "{{ route('autocomplete') }}";
-    // $(document).on('autocomplete', '#interviewer_id', function() {
-    //     alert (path);
-    // });
-
-    $( "#interviewer_id" ).autocomplete({
-        source: function( request, response ) {
-          $.ajax({
-            url: path,
-            type: 'GET',
-            dataType: "json",
-            data: {
-               search: request.term
-            },
-            success: function( data ) {
-               response( data );
-            }
-          });
-        },
-        select: function (event, ui) {
-           $('#interviewer_id').val(ui.item.label);
-           console.log(ui.item); 
-           return false;
-        }
-      });
 </script>
 
 @stop
