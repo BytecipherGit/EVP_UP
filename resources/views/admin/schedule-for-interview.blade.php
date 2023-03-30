@@ -20,11 +20,13 @@
     }
 </style>
 
-
 <link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/bootstrap.min.css">
 <link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/datatables.bootstrap.min.css">
 <link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/fixedheader.bootstrap.min.css">
 <link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/responsive.bootstrap.min.css">
+
+
+
 <!--- Main Container Start ----->
 <div class="main-container">
     <div class="main-heading">
@@ -34,7 +36,8 @@
             </div>
             <div class="col-md-4">
                 <div class="main-right-button-box">
-                    <a style="text-decoration:none" href="#" id="scheduleInterview" class="mr-2"><img src="{{ asset('assets') }}/admin/images/button-plus.png">Interview</a>
+                    <a style="text-decoration:none" href="#" id="scheduleInterview" class="mr-2"><img
+                            src="{{ asset('assets') }}/admin/images/button-plus.png">Interview</a>
                     {{-- <a href="#" data-toggle="modal" data-target="#rejectbtninfo">Reject</a> --}}
                 </div>
             </div>
@@ -132,7 +135,7 @@
                                                 src="assets/admin/images/bell-icon.png" width="30px;"
                                                 height="30px"></span> --}}
                                         <a href="#" class="edit-btn fa fa-eye" id="viewInterview"
-                                        data-id="{{ $employee->id }}" data-title="Details"></a>
+                                            data-id="{{ $employee->id }}" data-title="Details"></a>
                                         <a href="#" class="edit-btn" id="updateInterview"
                                             data-id="{{ $employee->id }}">Next Round</a>
                                         <a href="#" class="edit-btn fa fa-trash " id="delete_interview"
@@ -263,8 +266,8 @@
 </div>
 
 
-<div class="modal fade custu-modal-popup" id="viewInterviewModel" role="dialog"
-    aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade custu-modal-popup" id="viewInterviewModel" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
         <form id="update_interview_form" method="post" autocomplete="off" enctype="multipart/form-data">
             <div class="modal-content">
@@ -825,6 +828,32 @@
         }
 
     });
+
+    var path = "{{ route('autocomplete') }}";
+    // $(document).on('autocomplete', '#interviewer_id', function() {
+    //     alert (path);
+    // });
+
+    $( "#interviewer_id" ).autocomplete({
+        source: function( request, response ) {
+          $.ajax({
+            url: path,
+            type: 'GET',
+            dataType: "json",
+            data: {
+               search: request.term
+            },
+            success: function( data ) {
+               response( data );
+            }
+          });
+        },
+        select: function (event, ui) {
+           $('#interviewer_id').val(ui.item.label);
+           console.log(ui.item); 
+           return false;
+        }
+      });
 </script>
 
 @stop
