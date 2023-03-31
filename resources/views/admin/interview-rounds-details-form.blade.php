@@ -38,32 +38,30 @@
     </table>
 </div> --}}
 <div class="form-group">
+    @if($checkfeedback)
     <table class="table">
         <thead>
             <tr>
+                <th scope="col">#</th>
                 <th scope="col">Feedback Points</th>
                 <th scope="col">Rating</th>
             </tr>
         </thead>
         @if ($interviewEmpoloyeeFeedback)
         @php $counter = 1 @endphp
-            @foreach ($interviewEmpoloyeeFeedback as $interviewEmpoloyeeRound)
+            @foreach ($interviewEmpoloyeeFeedback as $interviewEmpoloyeeFeed)
                 <tr>
                     <th scope="row">{{ $counter }}</th>
-                    {{-- <td>{{ $interviewEmpoloyeeRound->title}}</td>
-                    <td>{{ $interviewEmpoloyeeRound->interview_date}}</td>
-                    <td>{{ $interviewEmpoloyeeRound->interview_start_time}}</td>
-                    <td>{{ $interviewEmpoloyeeRound->duration}}</td>
-                    <td>{{ $interviewEmpoloyeeRound->interviewer_status}}</td> --}}
-                    <td>
-                        <a href="#" class="edit-btn" id="viewInterview"
-                        data-id="{{ $interviewEmpoloyeeRound->id }}" data-title="Details">Feedback</a>
-                    </td>
+                    <td>{{ $interviewEmpoloyeeFeed->title}}</td>
+                    <td>{{ $interviewEmpoloyeeFeed->feedback_rating}}</td>
                 </tr>
                 @php $counter++ @endphp
-            @endforeach    
+            @endforeach              
         @endif
     </table>
+    @else
+    <p>Feedback not yet</p>
+    @endif
 </div>
 
 

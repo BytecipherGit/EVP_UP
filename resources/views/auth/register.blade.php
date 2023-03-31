@@ -248,9 +248,9 @@
                         </div>
                         <div class="form-group">
                             <input id="captcha" type="text" class="form-control" placeholder="Enter Captcha" name="captcha">
-                            @error('captcha')
+                            {{-- @error('captcha')
                                         <p class="velidation">{{ $message }}</p>
-                            @enderror
+                            @enderror --}}
                          </div>
                      
               

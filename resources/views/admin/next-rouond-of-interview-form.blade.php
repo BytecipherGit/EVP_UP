@@ -3,6 +3,9 @@
         color: red;
         font-weight: 400;
     }
+    .ui-front {
+        z-index: 9999 !important;
+    }
 </style>
 <h2 class="modal-title" id=""></h2>
 <input type="hidden" id="is_add" value="{{ $interview ? '' : 1 }}" />
@@ -72,11 +75,15 @@
     <ul class="nav nav-tabs" role="tablist">
         <li class="nav-item">
             <a class="nav-link active" id="InterviewTypeVideo" data-id="Video" data-toggle="tab" href="#tabs-1"
-                role="tab"><img src="assets/admin/images/video-call.png"> Video</a>
+                role="tab">
+                {{-- <img src="assets/admin/images/video-call.png"> --}}
+                 Video</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" id="InterviewTypePhone" data-toggle="tab" data-id="Telephonic" href="#tabs-2"
-                role="tab"><img src="assets/admin/images/phone-call.png">Phone</a>
+                role="tab">
+                {{-- <img src="assets/admin/images/phone-call.png"> --}}
+                Phone</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" id="InterviewTypeOffice" data-toggle="tab" data-id="At Office" href="#tabs-3"
@@ -86,7 +93,7 @@
             <a class="nav-link" id="InterviewTypeHome" data-toggle="tab" data-id="At Home" href="#tabs-4"
                 role="tab">At Home</a>
         </li>
-    </ul>
+    </ul> 
     <div class="tab-content">
         <div class="tab-pane active" id="tabs-1" role="tabpanel">
             <div class="form-group">
@@ -108,14 +115,16 @@
         <input type="hidden" id="interview_type" name="interview_type" value="Video">
         <div class="form-group">
             <label>Interviewer name<span style="color:red">*</span></label>
-            @if ($cmpEmployees)
+            <input class="typeahead form-control" id="search" type="text">
+            <input type="hidden" id="interviewer_id" name="interviewer_id">
+            {{-- @if ($cmpEmployees)
                 <select id="interviewer_id" name="interviewer_id" class="form-control">
                     <option value="">Select Employeee</option>
                     @foreach ($cmpEmployees as $cmpEmployee)
                         <option value="{{ $cmpEmployee->id }}">{{ $cmpEmployee->first_name.' '.$cmpEmployee->last_name }}</option>
                     @endforeach
                 </select>
-            @endif
+            @endif --}}
             <strong class="error" id="interviewer_id-error"></strong>
         </div>
         <div class="form-group">
@@ -126,6 +135,32 @@
     </div>
 </div>
 
+<script type="text/javascript">
+    var path = "{{ route('employeeNameAutocomplete') }}";
+  
+    $( "#search" ).autocomplete({
+        source: function( request, response ) {
+          $.ajax({
+            url: path,
+            type: 'GET',
+            dataType: "json",
+            data: {
+               search: request.term
+            },
+            success: function( data ) {
+               response( data );
+            }
+          });
+        },
+        select: function (event, ui) {
+           $('#search').val(ui.item.label);
+           $('#interviewer_id').val(ui.item.id);
+           console.log(ui.item); 
+           return false;
+        }
+      });
+  
+</script> 
 <script>
     $("#InterviewTypeVideo").on("click", function() {
         var dataId = $(this).attr("data-id");

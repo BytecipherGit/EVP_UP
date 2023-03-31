@@ -18,6 +18,9 @@
         color: #dc3545 !important;
         font-size: 14px;
     }
+    .fa{
+        font-size: 17px;
+    }
 </style>
 
 <link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/bootstrap.min.css">
@@ -136,8 +139,8 @@
                                                 height="30px"></span> --}}
                                         <a href="{{route('interview.round.details')}}/{{ $employee->id }}" class="edit-btn fa fa-eye" id="viewInterview"
                                         data-id="{{ $employee->id }}" data-title="Details"></a>
-                                        <a href="#" class="edit-btn" id="updateInterview"
-                                            data-id="{{ $employee->id }}">Next Round</a>
+                                        <a href="#" class="edit-btn fa fa-arrow-circle-right" id="updateInterview"
+                                            data-id="{{ $employee->id }}" data-title="Next Round"></a>
                                         <a href="#" class="edit-btn fa fa-trash " id="delete_interview"
                                             data-id="{{ $employee->id }}" data-title="Delete"></a>
                                     </td>
