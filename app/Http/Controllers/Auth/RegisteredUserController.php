@@ -125,7 +125,7 @@ class RegisteredUserController extends Controller
        }
        else{
     
-        return redirect('verify_status')->with('message','Thanks for your registration.');
+        return redirect('account_verify')->with('message','Thanks for your registration.');
        }
      
     }

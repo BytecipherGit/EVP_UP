@@ -181,8 +181,8 @@ Route::get('reload-captcha', [App\Http\Controllers\Auth\RegisteredUserController
 Route::get('verification-success/{id?}', [InterviewEmployee::class, 'verificationEmail'])->name('verification.success');
 Route::any('resetverification-mail/{id?}', [App\Http\Controllers\Auth\RegisteredUserController::class, 'resetMailSend'])->name('resetverification.mail');
 
-Route::get('verify_status', [InterviewEmployee::class, 'getCheckStatus']);
-Route::get('resetverify_status', [InterviewEmployee::class, 'getResetStatus']);
+Route::get('account_verify', [InterviewEmployee::class, 'getCheckStatus']);
+Route::get('resetaccount_verify', [InterviewEmployee::class, 'getResetStatus']);
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
