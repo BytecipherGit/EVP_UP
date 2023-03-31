@@ -127,6 +127,7 @@ class InterviewProcess extends Controller
         if (!empty($request->interviewEmpRoundsId)) {
             $interviewEmpRoundsId = decrypt($request->interviewEmpRoundsId);
             $feedbackResponse = Feedbacks::where('company_id',Auth::id())->get();
+            $feedbackRespons = Feedbacks::where('company_id',Auth::id())->first();
             // $interviewEmpRoundsId = $request->interviewEmpRoundsId;
             $employeetime = DB::table('interview_employee_rounds')
             ->join('interview_employees', 'interview_employees.id', '=', 'interview_employee_rounds.interview_employees_id')
@@ -134,9 +135,9 @@ class InterviewProcess extends Controller
             ->select('interview_employee_rounds.*','interview_employees.*', 'users.*', 'interview_employees.position')
             ->where('interview_employee_rounds.id', $interviewEmpRoundsId)
             ->first();
-            
+            // dd($feedbackResponse);
             if ($employeetime) {
-                return view('admin/web-email/interview-feedback', compact('employeetime', 'interviewEmpRoundsId','feedbackResponse'));
+                return view('admin/web-email/interview-feedback', compact('employeetime', 'interviewEmpRoundsId','feedbackResponse','feedbackRespons'));
             } else {
                 return Response::json(['success' => '0']);
             }
@@ -162,39 +163,34 @@ class InterviewProcess extends Controller
     
           if (!empty($request->interviewEmpRoundsId)) {
                 $checkResponse = InterviewEmployeeRounds::where('id', $request->interviewEmpRoundsId)->first();
+                $status= EmployeeFeedback::where('interview_round_id',$request->interviewEmpRoundsId)->where('company_id',Auth::id())->first();
                 $feedbacksResponse = Feedbacks::where('company_id', Auth::id())->get();
-                $employeestatus = DB::table('interview_employee_feedback')
-                        ->join('interview_employees', 'interview_employees.id', '=', 'interview_employee_feedback.interview_employees_id')
-                        ->join('interview_employee_rounds', 'interview_employees.id', '=', 'interview_employee_rounds.interview_employees_id')
-                        ->select('interview_employee_feedback.status')
-                        ->where('interview_employee_rounds.id', $request->interviewEmpRoundsId)
-                        ->first();
-                        // dd($employeetime);
-        if (!$employeestatus) {
-           if ($feedbacksResponse) {
+    
+          if (!$status) {
+            if($feedbacksResponse){
             for ($i=0; $i < count($feedbacksResponse); $i++) {
                  $technicalSkill =array(
                     'company_id' => Auth::id(),
                     'interview_employees_id' => $checkResponse->interview_employees_id,
-                    'interview_round_id' => $checkResponse->id,
+                    'interview_round_id' => $request->interview_round_id[$i],
                     'feedback_id' => $request->feedback_id[$i],
                     'feedback_rating' => $request->feedback_rating[$i],
                     'status'=> '1',
                   );    
                 EmployeeFeedback::create($technicalSkill);
                }
-            
+              }
                if (!$checkResponse->interview_feedback) {
                 $feedback = InterviewEmployeeRounds::where('id', $request->interviewEmpRoundsId)
                     ->update(['interview_feedback' => $request->input('interview_feedback')]);       
                   }
-            }
-            return redirect('/success');
+            
+               return redirect('/success');
           }  
           else {
              return redirect('/response_submited');
            }
-       }
+        }
     }
  }
 

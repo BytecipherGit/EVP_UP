@@ -40,7 +40,7 @@ return new class extends Migration
             $table->longText('interviewee_comment')->nullable();
             $table->date('interviewee_comment_date')->nullable();
             $table->longText('interview_feedback')->nullable();
-            $table->enum('interviewer_status',['Clear','Unclear'])->comment('Clear / Unclear')->default('Unclear');
+            $table->enum('interviewer_status',['Qualified','Not Qualified','Not Appeared'])->comment('Qualified / Not Qualified / Not Appeared')->default('Not Qualified');
             $table->timestamps();
         });
     }

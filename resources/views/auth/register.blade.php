@@ -240,7 +240,7 @@
                           </div>
                         </div>
                         <div class="col-xl-6">
-                            <div class="form-group">
+                            <div class="form-group captcha">
                                 <button type="button" class="btn btn-danger" class="reload" id="reload">
                                     &#x21bb;
                                 </button> 
@@ -248,6 +248,9 @@
                         </div>
                         <div class="form-group">
                             <input id="captcha" type="text" class="form-control" placeholder="Enter Captcha" name="captcha">
+                            {{-- @error('captcha')
+                                        <p class="velidation">{{ $message }}</p>
+                            @enderror --}}
                          </div>
                      
               

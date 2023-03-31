@@ -694,7 +694,8 @@ class EmployeeController extends Controller
 
       public function getAllEmp(){
       
-         $allemp=DB::table('emp_basicinfo')->join('emp_officials', 'emp_basicinfo.id', '=', 'emp_officials.emp_id')->select('emp_basicinfo.*', 'emp_officials.*')->where('emp_basicinfo.company_id', Auth::id())->get();
+         $allemp=DB::table('emp_basicinfo')->join('emp_officials', 'emp_basicinfo.id', '=', 'emp_officials.emp_id')
+                          ->select('emp_basicinfo.*', 'emp_officials.*')->where('emp_basicinfo.company_id', Auth::id())->get();
 
          return view('admin/datatable',compact('allemp'));
       }
@@ -931,13 +932,6 @@ class EmployeeController extends Controller
         // print_r($current);die();
         return view('admin/current-employee',compact('current'));
       }
-
-
-      // public function exportCSV(){
-      //   $pdf = Excel::loadView('admin/all-employee');
-      //   return Excel::download(new UsersExport, 'users.csv');
-   
-      // }
 
         public function exportsCSV(Request $request)
         {

@@ -137,7 +137,9 @@
 
     </div>
     <!--- Main Container Close ----->
+    @endsection
 
+    @section('pagescript')
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
@@ -148,4 +150,4 @@
     <script src="{{ asset('assets') }}/admin/js/bootstrap.min.js"></script> 
     <script src="{{ asset('assets') }}/admin/js/file-upload.js"></script>
 
-    @endsection
+    @stop

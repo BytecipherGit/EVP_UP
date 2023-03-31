@@ -56,7 +56,7 @@
                                 <th>Interview Time</th>
                                 <th>Duration</th>
                                 {{-- <th>Description</th> --}}
-                                {{-- <th>Status</th> --}}
+                                <th>Status</th>
                                 <th width="250px">Feedback Details</th>
                             </tr>
                         </thead>
@@ -69,7 +69,21 @@
                                     <td>{{ $interviewEmpoloyeeRound->interview_date}}</td>
                                     <td>{{ $interviewEmpoloyeeRound->interview_start_time}}</td>
                                     <td>{{ $interviewEmpoloyeeRound->duration}}</td>
-                                    {{-- <td>{{ $interviewEmpoloyeeRound->interviewer_status}}</td> --}}
+                                   <td>
+                                    <select style="width: 150px;" class="form-control" name="interviewer_status"
+                                        id="interviewer_status">
+                                            <option value="Qualified"
+                                                @if ($interviewEmpoloyeeRound->interviewer_status == 'Qualified') selected="selected" @endif
+                                                data-id="{{ $interviewEmpoloyeeRound->id}}">Qualified</option>
+                                            <option value="Not Qualified"
+                                                @if ($interviewEmpoloyeeRound->interviewer_status == 'Not Qualified') selected="selected" @endif
+                                               data-id="{{ $interviewEmpoloyeeRound->id }}">Not Qualified</option>
+                                            <option value="Not Appeared"
+                                                 @if ($interviewEmpoloyeeRound->interviewer_status == 'Not Appeared') selected="selected" @endif
+                                                data-id="{{ $interviewEmpoloyeeRound->id }}">Not Appeared</option>
+
+                                    </select>
+                                </td> 
                                     <td>
                                         <a href="#" class="edit-btn" id="viewInterview"
                                         data-id="{{ $interviewEmpoloyeeRound->id }}" data-title="Details">Feedback</a>
@@ -322,23 +336,23 @@
                 }
             });
         });
-        $(document).on('change', '#hiring_stage', function() {
+        $(document).on('change', '#interviewer_status', function() {
             swal({
                     title: "Are you sure?",
                     text: "You want to change the status of this interview!",
                     icon: "warning",
                     buttons: true,
-                    dangerMode: true,
+                    dangerMode: true, 
                 })
                 .then((result) => {
                     if (result) {
                         // Handle the change event
-                        var stageId = $(this).val();
+                        var status = $(this).val();
                         var interviewId = $('option:selected', this).data('id');
-                        if (stageId != '' && interviewId != '') {
-                            var url = '{{ url('schedule-interview/changeHiringStage') }}';
+                        if (status != '' && interviewId != '') {
+                            var url = '{{ url('schedule-interview/changeInterviewerStatus') }}';
                             var my_data = {
-                                stageId: stageId,
+                                status: status,
                                 interviewId: interviewId
                             };
                             $.ajax({
@@ -636,9 +650,9 @@
                 datatype: "html",
             }).done(function(data) {
                 if (id === '') {
-                    $('#Heading').text("Interivew Details");
+                    $('#Heading').text("Employee feedback details");
                 } else {
-                    $('#Heading').text("Interivew Details");
+                    $('#Heading').text("Employee feedback details");
                 }
                 $('#viewInterviewModel').find('.modal-body').html(data);
                 $('#viewInterviewModel').modal({

@@ -165,6 +165,7 @@ class InterviewEmployee extends Controller
                     $query->orderBy('id', 'desc')->take(1);
                 }])->get();
             }*/
+            
             $hiringStages = HiringStage::all();
             $employeeInterviewStatuses = EmployeeInterviewStatus::all();
             return view('admin.schedule-for-interview', compact('interviewEmployees', 'hiringStages', 'employeeInterviewStatuses'));
@@ -174,10 +175,12 @@ class InterviewEmployee extends Controller
 
     public function interviewRoundDetails(Request $request){
         if (Auth::check()) {
+            $hiringStages = HiringStage::all();
             $interviewEmpoloyeeRounds = InterviewEmployeeRounds::join('interview_processes','interview_processes.id','=','interview_processes_id')
+            ->select('interview_employee_rounds.*','interview_processes.title')
             ->where('interview_employee_rounds.interview_employees_id',$request->id)
             ->get();
-            return view('admin.interview-round-details', compact('interviewEmpoloyeeRounds'));
+            return view('admin.interview-round-details', compact('interviewEmpoloyeeRounds','hiringStages'));
         }
     }
 
@@ -402,8 +405,10 @@ class InterviewEmployee extends Controller
                                         'meeting_date' => !empty($request->interview_date) ? $request->interview_date : '',
                                         'meeting_start_time' => !empty($startFormattedTime) ? $startFormattedTime : '',
                                         'duration' => !empty($request->duration) ? $request->duration : '',
+                                        'interview_instruction' => !empty($request->interview_instruction) ? $request->interview_instruction : '',
                                         'interviewRoundId' => encrypt($employeeInterviewRoundData->id),
                                         'interview_title' => !empty($getInterviewTitle->title) ? $getInterviewTitle->title : '',
+                                        'instruction' => !empty($uploadInstructionPath) ? $uploadInstructionPath : '',
                                     ];
                                     FacadesMail::to($getInterviewerDetails->email)->send(new SendInterviewScheduleMailToInterviewer($mailData));
                                 } elseif ($request->interview_type == 'Telephonic') {
@@ -418,8 +423,10 @@ class InterviewEmployee extends Controller
                                         'meeting_date' => !empty($request->interview_date) ? $request->interview_date : '',
                                         'meeting_start_time' => !empty($startFormattedTime) ? $startFormattedTime : '',
                                         'duration' => !empty($request->duration) ? $request->duration : '',
+                                        'interview_instruction' => !empty($request->interview_instruction) ? $request->interview_instruction : '',
                                         'interviewRoundId' => encrypt($employeeInterviewRoundData->id),
                                         'interview_title' => !empty($getInterviewTitle->title) ? $getInterviewTitle->title : '',
+                                        'instruction' => !empty($uploadInstructionPath) ? $uploadInstructionPath : '',
                                     ];
                                     FacadesMail::to($getInterviewerDetails->email)->send(new SendInterviewSchedulePhoneMailToInterviewer($mailData));
                                 } elseif ($request->interview_type == 'At Office') {
@@ -433,8 +440,10 @@ class InterviewEmployee extends Controller
                                         'meeting_date' => !empty($request->interview_date) ? $request->interview_date : '',
                                         'meeting_start_time' => !empty($startFormattedTime) ? $startFormattedTime : '',
                                         'duration' => !empty($request->duration) ? $request->duration : '',
+                                        'interview_instruction' => !empty($request->interview_instruction) ? $request->interview_instruction : '',
                                         'interviewRoundId' => encrypt($employeeInterviewRoundData->id),
                                         'interview_title' => !empty($getInterviewTitle->title) ? $getInterviewTitle->title : '',
+                                        'instruction' => !empty($uploadInstructionPath) ? $uploadInstructionPath : '',
                                     ];
                                     FacadesMail::to($getInterviewerDetails->email)->send(new SendInterviewScheduleOfficeMailToInterviewer($mailData));
                                 }
@@ -449,8 +458,10 @@ class InterviewEmployee extends Controller
                                         'meeting_date' => !empty($request->interview_date) ? $request->interview_date : '',
                                         'meeting_start_time' => !empty($startFormattedTime) ? $startFormattedTime : '',
                                         'duration' => !empty($request->duration) ? $request->duration : '',
+                                        'interview_instruction' => !empty($request->interview_instruction) ? $request->interview_instruction : '',
                                         'interviewRoundId' => encrypt($employeeInterviewRoundData->id),
                                         'interview_title' => !empty($getInterviewTitle->title) ? $getInterviewTitle->title : '',
+                                        'instruction' => !empty($uploadInstructionPath) ? $uploadInstructionPath : '',
                                     ];
                                     FacadesMail::to($getInterviewerDetails->email)->send(new SendInterviewScheduleHomeMailToInterviewer($mailData));
                                 }
@@ -712,12 +723,14 @@ class InterviewEmployee extends Controller
 
     public function getInterviewDetailForm($id = '')
     {
+
         if (Auth::check()) {
+            $checkfeedback = EmployeeFeedback::where('interview_round_id',$id)->first();
             $interviewEmpoloyeeFeedback = EmployeeFeedback::join('feedbacks','feedbacks.id','=','interview_employee_feedback.feedback_id')
-                                            ->where('interview_employee_feedback.interview_employees_id',$id)
+                                            ->where('interview_employee_feedback.interview_round_id',$id)
                                             ->get();
                             // dd($interviewEmpoloyeeFeedback);
-            return view('admin.interview-rounds-details-form', compact('interviewEmpoloyeeFeedback'));
+            return view('admin.interview-rounds-details-form', compact('interviewEmpoloyeeFeedback','checkfeedback'));
         }
     }
 
@@ -727,6 +740,23 @@ class InterviewEmployee extends Controller
         if (!empty($request->interviewId) && !empty($request->stageId)) {
             $interview = EmployeeInterview::find($request->interviewId);
             $interview->interview_status = $request->stageId;
+
+            if ($interview->save()) {
+                return Response::json(['success' => '1']);
+            } else {
+                return Response::json(['success' => '0']);
+            }
+        } else {
+            return Response::json(['success' => '0']);
+        }
+    }
+
+    public function update_interviewer_status(request $request)
+    {
+//   dd($request->all());
+        if (!empty($request->interviewId) && !empty($request->status)) {
+            $interview = InterviewEmployeeRounds::find($request->interviewId);
+            $interview->interviewer_status = $request->status;
 
             if ($interview->save()) {
                 return Response::json(['success' => '1']);
@@ -821,11 +851,16 @@ class InterviewEmployee extends Controller
                 ->select('interview_employee_rounds.*', 'interview_employees.*', 'users.*', 'interview_employees.position')
                 ->where('interview_employee_rounds.id', $interviewEmpRoundsId)
                 ->first();
+                // dd($employeeStatus);
             if ($employeeStatus) {
                 if ($employeeStatus->interview_type == 'Telephonic') {
                     return view('admin/web-email/schedule-phone-interview', compact('employeeStatus', 'interviewEmpRoundsId'));
-                } else {
+                } elseif ($employeeStatus->interview_type == 'Video') { 
                     return view('admin/web-email/schedule-video-interview', compact('employeeStatus', 'interviewEmpRoundsId'));
+                } elseif ($employeeStatus->interview_type == 'At Office') {
+                    return view('admin/web-email/schedule-office-interview', compact('employeeStatus', 'interviewEmpRoundsId'));
+                } else {
+                    return view('admin/web-email/schedule-home-interview', compact('employeeStatus', 'interviewEmpRoundsId'));
                 }
             } else {
                 return Response::json(['success' => '0']);

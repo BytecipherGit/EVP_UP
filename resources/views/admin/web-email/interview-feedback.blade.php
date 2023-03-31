@@ -43,6 +43,7 @@
                     <div class="ul-part">
                         <div class="">
                             {{-- <h2>Interview Status</h2></br> --}}
+                            @if($feedbackRespons)
                                  <table class="table">
                                     <thead>
                                     <tr>
@@ -52,6 +53,7 @@
                                     </thead>
                                     @foreach($feedbackResponse as $feedback)
                                     <input type="hidden" name="feedback_id[]" value={{$feedback->id}}>
+                                    <input type="hidden" name="interview_round_id[]" id="interviewEmpRoundsId" value="{{ $interviewEmpRoundsId }}">
                                     <tbody>
                                      <tr>
                                        <td>{{ $feedback->title}}</td> 
@@ -69,7 +71,8 @@
                                     </tbody>
                                     @endforeach
                                 </table>
-                               
+                            
+                               @endif
                             {{-- <select class="form-control" id="interviewer_status" name="interviewer_status">
                                 <option value="Unclear">Not Clear</option>
                                 <option value="Clear">Clear</option>

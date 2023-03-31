@@ -540,7 +540,9 @@
     </div>
   </div>   
   @endforeach
+  @endsection
 
+  @section('pagescript')
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
@@ -549,4 +551,4 @@
     </script>
     <script src="{{ asset('assets') }}/admin/js/bootstrap.min.js"></script>  
 
-    @endsection
+    @stop
