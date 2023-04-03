@@ -85,8 +85,8 @@
                                     </select>
                                 </td> 
                                     <td>
-                                        <a href="#" class="edit-btn" id="viewInterview"
-                                        data-id="{{ $interviewEmpoloyeeRound->id }}" data-title="Details">Feedback</a>
+                                        <a href="#" class="edit-btn fa fa-comments-o" id="viewInterview"
+                                        data-id="{{ $interviewEmpoloyeeRound->id }}" data-title="Feedback" style="font-size:18px"></a>
                                     </td>
                                 </tr>
                                 @php $counter++ @endphp

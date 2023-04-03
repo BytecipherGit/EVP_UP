@@ -55,7 +55,7 @@ class AuthenticatedSessionController extends Controller
                 }
              }
              else{
-                return redirect('resetverify_status');
+                return redirect('resetaccount_verify');
              }
             if (Auth::user()->role == 'superadmin') {
                 return redirect()->intended(RouteServiceProvider::SUPERADMIN);

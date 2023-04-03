@@ -1751,87 +1751,6 @@
       </div>
     </div>
 
-    @endsection
-
-   @section('pagescript')
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script>
-      window.jQuery || document.write('<script src="../../{{ asset('assets') }}/admin/js/vendor/jquery.min.js"><\/script>')
-    </script>
-    <script src="{{ asset('assets') }}/admin/js/bootstrap.min.js"></script> 
-    <script src="{{ asset('assets') }}/admin/js/file-upload.js"></script>
-   <!--  <script src="{{ asset('assets') }}/admin/js/typeahead.min.js"></script> -->
-
-    <script>
-      $(".selectBox").on("click", function(e) {
-        $(this).toggleClass("show");
-        var dropdownItem = e.target;
-        var container = $(this).find(".selectBox__value");
-        container.text(dropdownItem.text);
-        $(dropdownItem)
-          .addClass("active")
-          .siblings()
-          .removeClass("active");
-      });
-    </script>
-
-    
-    <script>
-      
-        // Initializes  input( name of states)
-        // with a typeahead
-        var $input = $(".typeahead");
-        $input.typeahead({
-            source: [
-                "Css",
-                "Css3",
-                "Java",
-                "Figma",
-                "Html",
-                "Html5",
-                "Laravel",
-                "Php",
-                "ios",
-                "React Js",
-                "React Native",
-            ],
-            autoSelect: true,
-        });
-  
-        $input.change(function () {
-            var current = $input.typeahead("getActive");
-            matches = [];
-  
-            if (current) {
-  
-                // Some item from your input matches
-                // with entered data
-                if (current.name == $input.val()) {
-                    matches.push(current.name);
-                }
-            }
-        });
-    </script>
-      <script>
-      
-          $input.change(function () {
-            var current = $input.typeahead("getActive");
-            matches = [];
-  
-            if (current) {
-  
-                // Some item from your input matches
-                // with entered data
-                if (current.name == $input.val()) {
-                    matches.push(current.name);
-                }
-            }
-        });
-    </script>
-   
-
 
 @foreach($workhistory as $item)
 <div class="modal fade custu-modal-popup" id="workofferdocument{{$item['id']}}" role="dialog"
@@ -1896,6 +1815,88 @@
     </div>
 </div>
 @endforeach
+
+@endsection
+
+@section('pagescript')
+
+ <!-- Bootstrap core JavaScript
+ ================================================== -->
+ <!-- Placed at the end of the document so the pages load faster -->
+ <script>
+   window.jQuery || document.write('<script src="../../{{ asset('assets') }}/admin/js/vendor/jquery.min.js"><\/script>')
+ </script>
+ <script src="{{ asset('assets') }}/admin/js/bootstrap.min.js"></script> 
+ <script src="{{ asset('assets') }}/admin/js/file-upload.js"></script>
+<!--  <script src="{{ asset('assets') }}/admin/js/typeahead.min.js"></script> -->
+
+ <script>
+   $(".selectBox").on("click", function(e) {
+     $(this).toggleClass("show");
+     var dropdownItem = e.target;
+     var container = $(this).find(".selectBox__value");
+     container.text(dropdownItem.text);
+     $(dropdownItem)
+       .addClass("active")
+       .siblings()
+       .removeClass("active");
+   });
+ </script>
+
+ 
+ <script>
+   
+     // Initializes  input( name of states)
+     // with a typeahead
+     var $input = $(".typeahead");
+     $input.typeahead({
+         source: [
+             "Css",
+             "Css3",
+             "Java",
+             "Figma",
+             "Html",
+             "Html5",
+             "Laravel",
+             "Php",
+             "ios",
+             "React Js",
+             "React Native",
+         ],
+         autoSelect: true,
+     });
+
+     $input.change(function () {
+         var current = $input.typeahead("getActive");
+         matches = [];
+
+         if (current) {
+
+             // Some item from your input matches
+             // with entered data
+             if (current.name == $input.val()) {
+                 matches.push(current.name);
+             }
+         }
+     });
+ </script>
+   <script>
+   
+       $input.change(function () {
+         var current = $input.typeahead("getActive");
+         matches = [];
+
+         if (current) {
+
+             // Some item from your input matches
+             // with entered data
+             if (current.name == $input.val()) {
+                 matches.push(current.name);
+             }
+         }
+     });
+ </script>
+
 
             <script type="text/javascript">
                   var i = 0;

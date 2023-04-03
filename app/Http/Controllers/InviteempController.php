@@ -276,7 +276,7 @@ class InviteempController extends Controller
                 $dat = ['first' => $name];
                 $id = ['ids' => $row['id']];
                 Mail::send('org-invite/invite-email', ['data' => $dat, 'data2' => $id], function ($message) use ($email, $name) {
-                    $message->to("jharshita259@gmail.com", $name)->subject
+                    $message->to($email, $name)->subject
                         ('ByteCipher Pvt Ltd Interview Invitation Email');
                     $message->from('jharshita259@gmail.com', 'ByteCipher Pvt Ltd');
                 });

@@ -90,6 +90,7 @@
                                 {{-- <th>Email</th> --}}
                                 <th>Position</th>
                                 <th>Employee Interview Response</th>
+                                <th>Interview Type</th>
                                 {{-- <th>Hiring Status</th> --}}
                                 {{-- <th>Employee Status</th> --}}
                                 {{-- <th>Employee Comment</th> --}}
@@ -107,6 +108,11 @@
                                     <td><span class="tb-accept"></span>
                                         @if ($employee->lastInterviewEmployeeRounds)
                                             {{ $employee->lastInterviewEmployeeRounds->employeeInterviewStatus->title }}
+                                        @endif
+                                    </td>
+                                    <td><span class="tb-accept"></span>
+                                        @if ($employee->lastInterviewEmployeeRounds)
+                                            {{ $employee->lastInterviewEmployeeRounds->employeeInterviewProcess->title }}
                                         @endif
                                     </td>
                                     {{-- <td>
@@ -137,7 +143,7 @@
                                         {{-- <span class="notifi-td" data-toggle="modal" data-target="#remaiderbtninfo"><img
                                                 src="assets/admin/images/bell-icon.png" width="30px;"
                                                 height="30px"></span> --}}
-                                        <a href="{{route('interview.round.details')}}/{{ $employee->id }}" class="edit-btn fa fa-eye" id="viewInterview"
+                                        <a href="{{route('interview.round.details')}}/{{ $employee->id }}" class="edit-btn fa fa-eye"
                                         data-id="{{ $employee->id }}" data-title="Details"></a>
                                         <a href="#" class="edit-btn fa fa-arrow-circle-right" id="updateInterview"
                                             data-id="{{ $employee->id }}" data-title="Next Round"></a>
@@ -262,35 +268,6 @@
                         round successfully done.</div>
                     <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
                     <button type="submit" id="nextRoundOfInterviewSubmit" class="btn-primary-cust">Submit</button>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
-
-
-<div class="modal fade custu-modal-popup" id="viewInterviewModel" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <form id="update_interview_form" method="post" autocomplete="off" enctype="multipart/form-data">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 class="modal-title" id="Heading">Employee interview rounds details</h2>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <img src="assets/admin/images/close-btn-icon.png">
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="comman-body">
-
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    {{-- <div id="loadingImg"></div>
-                    <div style="font-size: 16px; display:none;" class="text-success" id="success">Next interview
-                        round successfully done.</div>
-                    <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
-                    <button type="submit" id="nextRoundOfInterviewSubmit" class="btn-primary-cust">Submit</button> --}}
                 </div>
             </div>
         </form>
@@ -796,39 +773,6 @@
                 }
             });
         });
-
-        $(document).on('click', '#viewInterview', function() {
-            // getScheduleInterviewForm();
-            var interviewId = $(this).data('id');
-            if (interviewId != '') {
-                getInterviewDetailsForm(interviewId);
-            }
-        });
-
-        function getInterviewDetailsForm(id = '') {
-            let getFormUrl = '{{ url('get_interview_details/form') }}';
-            if (id !== '') {
-                getFormUrl = getFormUrl + "/" + id;
-            }
-            $.ajax({
-                url: getFormUrl,
-                type: "get",
-                datatype: "html",
-            }).done(function(data) {
-                if (id === '') {
-                    $('#Heading').text("Interivew Details");
-                } else {
-                    $('#Heading').text("Interivew Details");
-                }
-                $('#viewInterviewModel').find('.modal-body').html(data);
-                $('#viewInterviewModel').modal({
-                    backdrop: 'static',
-                    keyboard: false
-                });
-            }).fail(function(jqXHR, ajaxOptions, thrownError) {
-                alert('No response from server');
-            });
-        }
 
     });
 </script>

@@ -1863,9 +1863,9 @@
  <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script>
+    {{-- <script>
         window.jQuery || document.write('<script src="../../{{ asset('assets') }}/admin/js/vendor/jquery.min.js"><\/script>')
-      </script>
+      </script> --}}
       <script src="{{ asset('assets') }}/admin/js/bootstrap.min.js"></script> 
       <script src="{{ asset('assets') }}/admin/js/file-upload.js"></script>
      <script src="{{ asset('assets') }}/admin/js/typeahead.min.js"></script>
@@ -1986,6 +1986,30 @@
         e.preventDefault();
     });
 </script>
+ <script>
+    $('.extra-fields-customeroff').click(function() {
+        $('.customer_recordsoff').clone().appendTo('.customer_records_dynamicoff');
+        $('.customer_records_dynamicoff .customer_recordsoff').addClass('single remove');
+        $('.single .extra-fields-customeroff').remove();
+        $('.single').append(
+            '<a href="#" class="remove-field btn-remove-customer add-plus minus-icon"><span><img src="{{ asset('assets') }}/admin/images/minus-icon.png"></span></a>'
+        );
+        $('.customer_records_dynamicoff > .single').attr("class", "row");
+
+        $('.customer_records_dynamicoff input').each(function() {
+            var count = 0;
+            var fieldname = $(this).attr("name");
+            $(this).attr('name', fieldname + count);
+            count++;
+        });
+
+    });
+
+    $(document).on('click', '.remove-field', function(e) {
+        $(this).parent('.row').remove();
+        e.preventDefault();
+     });
+ </script>
 
 <script>
     $(document).ready(function() {
@@ -2168,31 +2192,6 @@
       });
 
    });
-</script>
+</script> 
 
-<script>
-    $('.extra-fields-customeroff').click(function() {
-        $('.customer_recordsoff').clone().appendTo('.customer_records_dynamicoff');
-        $('.customer_records_dynamicoff .customer_recordsoff').addClass('single remove');
-        $('.single .extra-fields-customeroff').remove();
-        $('.single').append(
-            '<a href="#" class="remove-field btn-remove-customer add-plus minus-icon"><span><img src="{{ asset('assets') }}/admin/images/minus-icon.png"></span></a>'
-        );
-        $('.customer_records_dynamicoff > .single').attr("class", "row");
-
-        $('.customer_records_dynamicoff input').each(function() {
-            var count = 0;
-            var fieldname = $(this).attr("name");
-            $(this).attr('name', fieldname + count);
-            count++;
-        });
-
-    });
-
-    $(document).on('click', '.remove-field', function(e) {
-        $(this).parent('.row').remove();
-        e.preventDefault();
-     });
- </script>
- 
-  @endsection
+@endsection

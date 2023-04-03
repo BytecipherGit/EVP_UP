@@ -23,4 +23,9 @@ class InterviewEmployeeRounds extends Model
     {
         return $this->belongsTo(EmployeeInterviewStatus::class,'employee_interview_status', 'id');
     }
+
+    public function employeeInterviewProcess()
+    {
+        return $this->belongsTo(InterviewProcess::class,'interview_processes_id', 'id');
+    }
 }

@@ -103,9 +103,7 @@
                                             class="form-control dropdownReg">
                                             <option value="">Select Country</option>
                                             @foreach ($countries as $country)
-                                                <option value="{{ $country->id }}">
-                                                    {{ $country->name }}
-                                                </option>
+                                                <option value="{{ $country->id }}" {{ old('country') == $country->id ? 'selected' : '' }}> {{ $country->name }} </option>
                                             @endforeach
                                         </select>
                                         {{-- @error('country')
@@ -125,6 +123,7 @@
                                             <select id="state-dropdown" name="state" value="{{ old('state') }}"
                                                 class="form-control dropdownReg">
                                                 <option value="">Select State</option>
+                                              
                                             </select>
                                             {{-- @error('state')
                                                 <p class="velidation">{{ $message }}</p>

@@ -248,6 +248,8 @@
 
   </div>
   <!--- Main Container Close ----->
+  @endsection
+  @section('pagescript')
   <script>
     $(".selectBox").on("click", function(e) {
       $(this).toggleClass("show");
@@ -283,4 +285,4 @@
     }
   </script>
   
-  @endsection
+@stop

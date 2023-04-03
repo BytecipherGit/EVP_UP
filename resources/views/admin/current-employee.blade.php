@@ -56,12 +56,12 @@
               <tr>
                 {{-- <td><input type="checkbox" id="customcheck1" name="customcheck1"></td> --}}
                 <td>#000{{ $curremp->emp_id}}</td>
-                <td>{{ $curremp->first_name }} {{ $curremp->last_name}}</td>
+                <td>{{ $curremp->first_name .' '. $curremp->last_name}}</td>
                 <td>{{ $curremp->current_app_desig}}</td>
                 <td>{{ $curremp->mang_dept }}</td>
                 <td>{{ $curremp->mang_name}}</td>
-                <td class="d-flex"><a href="edit-employee/{{ $curremp->emp_id }}" class="view-btn">Edit</a>
-                  <a href="employee-exit/{{ $curremp->emp_id }}" class="edit-btn">Exit</a></td>
+                <td class="d-flex"><a href="edit-employee/{{ $curremp->emp_id }}" class="edit-btn fa fa-edit" data-title="Edit"></a>
+                  <a href="employee-exit/{{ $curremp->emp_id }}" class="edit-btn fa fa-user-times" data-title="Exit"></a></td>
               </tr>  
               @endforeach                              
             </tbody>

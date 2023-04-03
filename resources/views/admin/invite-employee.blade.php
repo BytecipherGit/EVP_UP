@@ -64,15 +64,15 @@
                             <td><input type="checkbox" name="users_id[]" class="users_checkbox"
                                     value="{{ $invite->id }}" /></td>
                             <td>#00{{ $invite->id }}</td>
-                            <td>{{ $invite->first_name }} {{ $invite->last_name }}</td>
+                            <td>{{ $invite->first_name . ' ' . $invite->last_name }}</td>
                             <td>{{ $invite->email }}</td>
                             <td>{{ $invite->phone }}</td>
                             {{-- <td><button class="pushme with-color active-btn-bg">Joined</button></td> --}}
                             <td class="d-flex">
                                 {{-- <span class="notifi-td" data-toggle="modal" data-target="#remaiderbtninfo"><img src="assets/admin/images/bell-icon.png"></span>  --}}
-                                <a href="edit-invite-employee/{{ $invite->id }}" class="view-btn">Edit</a>
-                                <a href="" class="edit-btn" data-toggle="modal"
-                                    data-target="#deletebtninfo{{ $invite->id }}">Delete</a>
+                                <a href="edit-invite-employee/{{ $invite->id }}" class="edit-btn fa fa-edit" data-title="Edit"></a>
+                                <a href="" class="edit-btn fa fa-trash" data-toggle="modal"
+                                    data-target="#deletebtninfo{{ $invite->id }}" data-title="Delete"></a>
                             </td>
 
                         </tr>
