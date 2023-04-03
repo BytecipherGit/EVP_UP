@@ -90,6 +90,7 @@
                                 {{-- <th>Email</th> --}}
                                 <th>Position</th>
                                 <th>Employee Interview Response</th>
+                                <th>Interview Type</th>
                                 {{-- <th>Hiring Status</th> --}}
                                 {{-- <th>Employee Status</th> --}}
                                 {{-- <th>Employee Comment</th> --}}
@@ -107,6 +108,11 @@
                                     <td><span class="tb-accept"></span>
                                         @if ($employee->lastInterviewEmployeeRounds)
                                             {{ $employee->lastInterviewEmployeeRounds->employeeInterviewStatus->title }}
+                                        @endif
+                                    </td>
+                                    <td><span class="tb-accept"></span>
+                                        @if ($employee->lastInterviewEmployeeRounds)
+                                            {{ $employee->lastInterviewEmployeeRounds->employeeInterviewProcess->title }}
                                         @endif
                                     </td>
                                     {{-- <td>

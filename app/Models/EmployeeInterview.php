@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\InterviewEmployeeRounds;
 use App\Models\EmployeeInterviewStatus;
+use App\Models\InterviewProcess;
 
 class EmployeeInterview extends Model
 {
@@ -27,5 +28,10 @@ class EmployeeInterview extends Model
     public function interviewEmployeeStatus()
     {
         return $this->hasOne(InterviewEmployeeRounds::class, 'employee_interview_status', 'id');
+    }
+
+    public function interviewEmployeeProcess()
+    {
+        return $this->hasOne(InterviewEmployeeRounds::class, 'interview_processes_id', 'id');
     }
 }

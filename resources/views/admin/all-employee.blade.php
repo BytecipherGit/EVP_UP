@@ -75,7 +75,7 @@
             <tr>
               <td><input type="checkbox" id="customcheck1" name="customcheck1"></td>
               <td>#00{{ $emp->emp_id }}</td>
-              <td>{{ $emp->first_name }} {{ $emp->last_name }}</td>
+              <td>{{ $emp->first_name .' '. $emp->last_name }}</td>
               <td>{{$emp->mang_desig }}</td>
               <td>{{$emp->mang_dept }}</td>
               <td>{{$emp->mang_name }}</td>

@@ -28,7 +28,7 @@
              </div>             
           </div>
           <h2>
-            {{$basic->first_name}} {{$basic->last_name}}
+            {{$basic->first_name .' '. $basic->last_name}}
             <span>Code - <small>#BCS{{$workhistory->emp_id}}</small></span>   
             <span>Designation - <small>{{$workhistory->designation}}</small></span>          
           </h2>
@@ -64,7 +64,7 @@
                     <div class="row">
                       <div class="col-lg-4 col-md-6">
                         <h4>Name</h4>
-                        <p>{{$basic->first_name}} {{$basic->last_name}}</p>
+                        <p>{{$basic->first_name .' '. $basic->last_name}}</p>
                       </div>
                       <div class="col-lg-4 col-md-6">
                         <h4>Date of Birth</h4>

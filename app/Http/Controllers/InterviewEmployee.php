@@ -638,7 +638,7 @@ class InterviewEmployee extends Controller
                                     $mailData = [
                                         'organisationName' => !empty($userDetails->org_name) ? $userDetails->org_name : '',
                                         'interviewEmpRoundsId' => encrypt($employeeInterviewRoundData->id),
-                                       
+                                        'company_id' => Auth::id(),
                                         'interviewer_name' => !empty($getInterviewerDetails->first_name) ? $getInterviewerDetails->first_name . ' ' . $getInterviewerDetails->last_name : '',
                                         'interviewee_name' => !empty($checkRecordExist->first_name) ? $checkRecordExist->first_name . ' ' . $checkRecordExist->last_name : '',
                                         'position' => !empty($checkRecordExist->position) ? $checkRecordExist->position : '',
@@ -647,7 +647,9 @@ class InterviewEmployee extends Controller
                                         'meeting_start_time' => !empty($startFormattedTime) ? $startFormattedTime : '',
                                         'duration' => !empty($request->duration) ? $request->duration : '',
                                         'interviewRoundId' => encrypt($employeeInterviewRoundData->id),
+                                        'interview_instruction' => !empty($request->interview_instruction) ? $request->interview_instruction : '',
                                         'interview_title' => !empty($getInterviewTitle->title) ? $getInterviewTitle->title : '',
+                                        'instruction'   => '',
                                     ];
                                     FacadesMail::to($getInterviewerDetails->email)->send(new SendInterviewScheduleMailToInterviewer($mailData));
 
@@ -664,7 +666,9 @@ class InterviewEmployee extends Controller
                                         'meeting_start_time' => !empty($startFormattedTime) ? $startFormattedTime : '',
                                         'duration' => !empty($request->duration) ? $request->duration : '',
                                         'interviewRoundId' => encrypt($employeeInterviewRoundData->id),
+                                        'interview_instruction' => !empty($request->interview_instruction) ? $request->interview_instruction : '',
                                         'interview_title' => !empty($getInterviewTitle->title) ? $getInterviewTitle->title : '',
+                                        'instruction'   => '',
                                     ];
                                     FacadesMail::to($getInterviewerDetails->email)->send(new SendInterviewSchedulePhoneMailToInterviewer($mailData));
                                 }
@@ -673,7 +677,7 @@ class InterviewEmployee extends Controller
                                     $mailData = [
                                         'organisationName' => !empty($userDetails->org_name) ? $userDetails->org_name : '',
                                         'interviewEmpRoundsId' => encrypt($employeeInterviewRoundData->id),
-                                      
+                                        'company_id' => Auth::id(),
                                         'interviewer_name' => !empty($getInterviewerDetails->first_name) ? $getInterviewerDetails->first_name . ' ' . $getInterviewerDetails->last_name : '',
                                         'interviewee_name' => !empty($checkRecordExist->first_name) ? $checkRecordExist->first_name . ' ' . $checkRecordExist->last_name : '',
                                         'position' => !empty($checkRecordExist->position) ? $checkRecordExist->position : '',
@@ -682,7 +686,9 @@ class InterviewEmployee extends Controller
                                         'meeting_start_time' => !empty($startFormattedTime) ? $startFormattedTime : '',
                                         'duration' => !empty($request->duration) ? $request->duration : '',
                                         'interviewRoundId' => encrypt($employeeInterviewRoundData->id),
+                                        'interview_instruction' => !empty($request->interview_instruction) ? $request->interview_instruction : '',
                                         'interview_title' => !empty($getInterviewTitle->title) ? $getInterviewTitle->title : '',
+                                        'instruction'   => '',
                                     ];
                                     FacadesMail::to($getInterviewerDetails->email)->send(new SendInterviewScheduleOfficeMailToInterviewer($mailData));
                                 }
@@ -690,7 +696,7 @@ class InterviewEmployee extends Controller
                                     $mailData = [
                                         'organisationName' => !empty($userDetails->org_name) ? $userDetails->org_name : '',
                                         'interviewEmpRoundsId' => encrypt($employeeInterviewRoundData->id),
-                                     
+                                        'company_id' => Auth::id(),
                                         'interviewer_name' => !empty($getInterviewerDetails->first_name) ? $getInterviewerDetails->first_name . ' ' . $getInterviewerDetails->last_name : '',
                                         'interviewee_name' => !empty($checkRecordExist->first_name) ? $checkRecordExist->first_name . ' ' . $checkRecordExist->last_name : '',
                                         'position' => !empty($checkRecordExist->position) ? $checkRecordExist->position : '',
@@ -699,7 +705,9 @@ class InterviewEmployee extends Controller
                                         'meeting_start_time' => !empty($startFormattedTime) ? $startFormattedTime : '',
                                         'duration' => !empty($request->duration) ? $request->duration : '',
                                         'interviewRoundId' => encrypt($employeeInterviewRoundData->id),
+                                        'interview_instruction' => !empty($request->interview_instruction) ? $request->interview_instruction : '',
                                         'interview_title' => !empty($getInterviewTitle->title) ? $getInterviewTitle->title : '',
+                                        'instruction'   => '',
                                     ];
                                     FacadesMail::to($getInterviewerDetails->email)->send(new SendInterviewScheduleHomeMailToInterviewer($mailData));
                                 }

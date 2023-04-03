@@ -11,4 +11,8 @@ class InterviewProcess extends Model
     protected $table='interview_processes';
     public $guarded = ['id'];
     
+    public function interviewEmployeeProcess()
+    {
+        return $this->hasOne(InterviewEmployeeRounds::class, 'interview_processes_id', 'id');
+    }
 }
