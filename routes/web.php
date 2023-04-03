@@ -52,10 +52,6 @@ Route::get('/confirmation', function () {
     return view('admin/confirm-msg');
 });
 
-Route::get('/settings', function () {
-    return view('admin/settings');
-});
-
 Route::get('/status', function () {
     return view('welcome');
 });
@@ -80,11 +76,7 @@ Route::get('/organization', function () {
     return view('superadmin/organization');
 });
 
-// Route::get('/invite-email',function(){
-//   Mail::to('jharshita259@gmail.com')
-//   ->send(new Emailinvite());
-// return redirect()->back()->with('message','Invitation Email Successfully Send');
-// });
+
 Route::get('/superlogin', [App\Http\Controllers\SuperAdminController::class, 'superAdminLogin'])->name('superlogin');
 Route::post('/invite-email/{id?}', [App\Http\Controllers\InviteempController::class, 'sendemail'])->name('invite-email');
 Route::post('send_invidation_to_employee',[App\Http\Controllers\InviteempController::class, 'sendInvidationToEmployee'])->name('send_invidation_to_employee');
@@ -112,7 +104,7 @@ Route::middleware([Admin::class])->group(function () {
     Route::post('/add-employee/{id?}', [App\Http\Controllers\EmployeeController::class, 'basicInfo'])->middleware('documents');
     Route::get('/edit-employee/{id?}', [App\Http\Controllers\EmployeeController::class, 'getEditEmployee'])->middleware('documents');
     Route::post('/edit-employee/{id?}', [App\Http\Controllers\EmployeeController::class, 'editEmployee'])->middleware('documents');
-    Route::get('/company_profile', [App\Http\Controllers\companySettingsController::class, 'profiledata'])->name('settings')->middleware('documents');
+    Route::get('/company_profile', [App\Http\Controllers\companySettingsController::class, 'profiledata'])->middleware('documents');
     Route::post('/update_company_profile', [App\Http\Controllers\companySettingsController::class, 'updateCompanyProfile'])->name('update_company_profile')->middleware('documents');
     Route::get('/employee-exit/{id?}', [App\Http\Controllers\EmployeeController::class, 'exitEmp'])->middleware('documents');
     Route::post('/employee-exit/{id?}', [App\Http\Controllers\EmployeeController::class, 'exitEmployee'])->middleware('documents');

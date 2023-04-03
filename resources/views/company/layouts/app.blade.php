@@ -30,6 +30,9 @@
             display: none;
             content: url('{{ asset('ajaxLoading.gif') }}') !important;
         }
+        .fa{
+            font-size: 18px;
+        }
     </style>
 
     <script src="{{ asset('assets') }}/admin/js/jquery.min.js"></script>
@@ -276,25 +279,25 @@
 
                                         <li>
                                             <a href="/interview_process">
-                                                <img src="{{ asset('assets') }}/admin/images/setting-icon.png">
+                                                <img src="" class="fa fa-question-circle">
                                                 Interview Process
                                             </a>
                                         </li>
                                         <li>
                                             <a href="/position">
-                                                <img src="{{ asset('assets') }}/admin/images/setting-icon.png">
+                                                <img src="" class="fa fa-user-plus">
                                                 Open Job Positions
                                             </a>
                                         </li>
                                         <li>
                                             <a href="/feedback">
-                                                <img src="{{ asset('assets') }}/admin/images/setting-icon.png">
-                                               Interview Feedback Points
+                                                <img src="" class="fa fa-comments">
+                                                Interview Feedback Points
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="/company_profile">
-                                                <img src="{{ asset('assets') }}/admin/images/setting-icon.png">
+                                            <a href="/company_profile" >
+                                                <img src="{{ asset('assets') }}/admin/images/company-icon.png">
                                                 Company Profile
                                             </a>
                                         </li>

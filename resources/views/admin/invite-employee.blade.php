@@ -70,8 +70,8 @@
                             {{-- <td><button class="pushme with-color active-btn-bg">Joined</button></td> --}}
                             <td class="d-flex">
                                 {{-- <span class="notifi-td" data-toggle="modal" data-target="#remaiderbtninfo"><img src="assets/admin/images/bell-icon.png"></span>  --}}
-                                <a href="edit-invite-employee/{{ $invite->id }}" class="view-btn fa fa-edit" data-title="Edit"></a>
-                                <a href="" class="view-btn fa fa-trash" data-toggle="modal"
+                                <a href="edit-invite-employee/{{ $invite->id }}" class="edit-btn fa fa-edit" data-title="Edit"></a>
+                                <a href="" class="edit-btn fa fa-trash" data-toggle="modal"
                                     data-target="#deletebtninfo{{ $invite->id }}" data-title="Delete"></a>
                             </td>
 

@@ -49,7 +49,7 @@
                 <td>{{$pastemps->mang_dept}}</td>
                 <td>{{$pastemps->mang_name}}</td>
                
-                <td class="d-flex"><a href="/post-employee-details/{{ $pastemps->emp_id }}" class="view-btn fa fa-eye" data-title="View"></a></td>
+                <td class="d-flex"><a href="/post-employee-details/{{ $pastemps->emp_id }}" class="edit-btn fa fa-eye" data-title="View"></a></td>
               </tr> 
               @endforeach                    
             </tbody>
