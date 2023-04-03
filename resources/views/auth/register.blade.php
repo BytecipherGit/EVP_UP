@@ -240,7 +240,7 @@
                         </div>
                         <div class="col-xl-6">
                             <div class="form-group captcha">
-                                <button type="button" class="btn btn-danger" class="reload" id="reload">
+                                <button type="button" class="reload" id="reload">
                                     &#x21bb;
                                 </button> 
                              </div>

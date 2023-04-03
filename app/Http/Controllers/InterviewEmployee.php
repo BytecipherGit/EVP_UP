@@ -657,7 +657,7 @@ class InterviewEmployee extends Controller
                                     $mailData = [
                                         'organisationName' => !empty($userDetails->org_name) ? $userDetails->org_name : '',
                                         'interviewEmpRoundsId' => encrypt($employeeInterviewRoundData->id),
-                                  
+                                        'company_id' => Auth::id(),
                                         'interviewer_name' => !empty($getInterviewerDetails->first_name) ? $getInterviewerDetails->first_name . ' ' . $getInterviewerDetails->last_name : '',
                                         'interviewee_name' => !empty($checkRecordExist->first_name) ? $checkRecordExist->first_name . ' ' . $checkRecordExist->last_name : '',
                                         'position' => !empty($checkRecordExist->position) ? $checkRecordExist->position : '',
