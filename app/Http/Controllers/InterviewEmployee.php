@@ -1,15 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Helpers\Helper as HelpersHelper;
 use App\Mail\InterviewReminderMail;
-<<<<<<< HEAD
-use App\Mail\SendInterviewScheduleHomeMail;
-use App\Mail\SendInterviewScheduleHomeMailToInterviewer;
-=======
 use App\Mail\InterviewerReminderMail;
->>>>>>> Harshita_04
 use App\Mail\SendInterviewScheduleMail;
 use App\Mail\SendInterviewScheduleMailToInterviewer;
 use App\Mail\SendInterviewScheduleOfficeMail;
@@ -214,7 +208,6 @@ class InterviewEmployee extends Controller
                         'position' => 'required|string|max:255',
                         'interview_process' => 'required',
                         'interviewer_id' => 'required',
-<<<<<<< HEAD
                         'interview_date' => 'required|string|max:255',
                         'interview_start_time' => 'required|string|max:255',
                         'duration' => 'required',
@@ -237,14 +230,6 @@ class InterviewEmployee extends Controller
                         'phone' => 'required|string|max:255',
                         'interview_instruction' => 'required',
                         'attachment' => 'required|file|mimes:jpeg,png,pdf,docs,doc|max:10240',
-=======
-                        // 'interview_date' => 'required|string|max:255',
-                        // 'interview_start_time' => 'required|string|max:255',
-                        // 'duration' => 'required',
-                        // 'video_link' => 'required|string|max:255',
-                        // 'interview_instruction' => 'required',
-                        // 'attachment' => 'required|file|mimes:jpeg,png,pdf,docs,doc|max:10240',
->>>>>>> Harshita_04
 
                     ]);
                 } else {
@@ -516,7 +501,6 @@ class InterviewEmployee extends Controller
                     $validator = Validator::make($request->all(), [
                         'interview_process' => 'required',
                         'interviewer_id' => 'required',
-<<<<<<< HEAD
                         'interview_date' => 'required|string|max:255',
                         'interview_start_time' => 'required|string|max:255',
                         'duration' => 'required',
@@ -541,13 +525,6 @@ class InterviewEmployee extends Controller
                         'interview_start_time' => 'required|string|max:255',
                         'duration' => 'required|string|max:255',
                         'interview_instruction' => 'required',
-=======
-                        // 'interview_date' => 'required|string|max:255',
-                        // 'interview_start_time' => 'required|string|max:255',
-                        // 'duration' => 'required',
-                        // 'video_link' => 'required|string|max:255',
-                        // 'interview_instruction' => 'required',
->>>>>>> Harshita_04
                     ]);
                 } else{
                       $validator = Validator::make($request->all(), [
@@ -663,7 +640,6 @@ class InterviewEmployee extends Controller
                                 FacadesMail::to($checkRecordExist->email)->send(new SendInterviewScheduleHomeMail($mailData));
                             }
 
-<<<<<<< HEAD
                             //We have multiple interviewer, so get each interviewer email & send mail to him
                             if ($request->interviewer_id) {
                                 foreach ($request->interviewer_id as $key => $interviewerId) {
@@ -672,27 +648,6 @@ class InterviewEmployee extends Controller
                                     if (!empty($getInterviewerDetails->email) && !empty($employeeInterviewRoundData)) {
                                         //Send email to Interviewer
                                         if ($request->interview_type == 'Video') {
-=======
-                                } elseif ($request->interview_type == 'Telephonic') {
-                                    $mailData = [
-                                        'organisationName' => !empty($userDetails->org_name) ? $userDetails->org_name : '',
-                                        'interviewEmpRoundsId' => encrypt($employeeInterviewRoundData->id),
-                                        'company_id' => Auth::id(),
-                                        'interviewer_name' => !empty($getInterviewerDetails->first_name) ? $getInterviewerDetails->first_name . ' ' . $getInterviewerDetails->last_name : '',
-                                        'interviewee_name' => !empty($checkRecordExist->first_name) ? $checkRecordExist->first_name . ' ' . $checkRecordExist->last_name : '',
-                                        'position' => !empty($checkRecordExist->position) ? $checkRecordExist->position : '',
-                                        'phone' => !empty($request->phone) ? $request->phone : '',
-                                        'meeting_date' => !empty($request->interview_date) ? $request->interview_date : '',
-                                        'meeting_start_time' => !empty($startFormattedTime) ? $startFormattedTime : '',
-                                        'duration' => !empty($request->duration) ? $request->duration : '',
-                                        'interviewRoundId' => encrypt($employeeInterviewRoundData->id),
-                                        'interview_instruction' => !empty($request->interview_instruction) ? $request->interview_instruction : '',
-                                        'interview_title' => !empty($getInterviewTitle->title) ? $getInterviewTitle->title : '',
-                                        'instruction'   => '',
-                                    ];
-                                    FacadesMail::to($getInterviewerDetails->email)->send(new SendInterviewSchedulePhoneMailToInterviewer($mailData));
-                                }
->>>>>>> Harshita_04
 
                                             $mailData = [
                                                 'organisationName' => !empty($userDetails->org_name) ? $userDetails->org_name : '',
