@@ -517,7 +517,7 @@ class InterviewEmployee extends Controller
                         'phone' => 'required|string|max:255',
                         'interview_instruction' => 'required',
                     ]);
-                } else {
+                } else{
                     $validator = Validator::make($request->all(), [
                         'interview_process' => 'required',
                         'interviewer_id' => 'required',
@@ -526,16 +526,6 @@ class InterviewEmployee extends Controller
                         'duration' => 'required|string|max:255',
                         'interview_instruction' => 'required',
                     ]);
-                } else{
-                      $validator = Validator::make($request->all(), [
-                            'interview_process' => 'required',
-                            'interviewer_id' => 'required',
-                            // 'interview_date' => 'required|string|max:255',
-                            // 'interview_start_time' => 'required|string|max:255',
-                            // 'duration' => 'required',
-                            // 'video_link' => 'required|string|max:255',
-                            // 'interview_instruction' => 'required',
-                        ]);
                 }
             }
             $startFormattedTime = '';
