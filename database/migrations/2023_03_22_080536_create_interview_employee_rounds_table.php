@@ -18,8 +18,9 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('interview_employees_id');
             $table->foreign('interview_employees_id')->references('id')->on('interview_employees')->comment('Id from interview_employees table')->onDelete('cascade');
-            $table->unsignedBigInteger('interviewer_id');
-            $table->foreign('interviewer_id')->references('id')->on('emp_basicinfo')->comment('as employee id from emp_basicinfo')->onDelete('cascade');
+            $table->string('interviewer_id')->nullable()->comment('Comma seprated multiple interviewer_id');
+            // $table->unsignedBigInteger('interviewer_id');
+            // $table->foreign('interviewer_id')->references('id')->on('emp_basicinfo')->comment('as employee id from emp_basicinfo')->onDelete('cascade');
             $table->unsignedBigInteger('interview_processes_id');
             $table->foreign('interview_processes_id')->references('id')->on('interview_processes')->comment('Id from interview_processes')->onDelete('cascade');
             $table->unsignedInteger('company_id');

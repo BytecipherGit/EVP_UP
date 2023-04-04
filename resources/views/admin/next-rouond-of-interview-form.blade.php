@@ -114,17 +114,17 @@
 
         <input type="hidden" id="interview_type" name="interview_type" value="Video">
         <div class="form-group">
-            <label>Interviewer name<span style="color:red">*</span></label>
+            {{-- <label>Interviewer name<span style="color:red">*</span></label>
             <input class="typeahead form-control" id="search" type="text">
-            <input type="hidden" id="interviewer_id" name="interviewer_id">
-            {{-- @if ($cmpEmployees)
-                <select id="interviewer_id" name="interviewer_id" class="form-control">
-                    <option value="">Select Employeee</option>
-                    @foreach ($cmpEmployees as $cmpEmployee)
-                        <option value="{{ $cmpEmployee->id }}">{{ $cmpEmployee->first_name.' '.$cmpEmployee->last_name }}</option>
-                    @endforeach
-                </select>
-            @endif --}}
+            <input type="hidden" id="interviewer_id" name="interviewer_id"> --}}
+            <label>Interviewer name<span style="color:red">*</span></label>
+            <select class="form-control" id="interviewIds" select2 select2-hidden-accessible multiple="multiple"
+                name="interviewer_id[]">
+                @foreach ($cmpEmployees as $emp)
+                    <option value="{{ $emp->id }}">
+                        {{ $emp->first_name . ' ' . $emp->middle_name . ' ' . $emp->last_name }}</option>
+                @endforeach
+            </select>
             <strong class="error" id="interviewer_id-error"></strong>
         </div>
         <div class="form-group">
@@ -162,6 +162,10 @@
   
 </script> 
 <script>
+    $('#interviewIds').select2({
+        placeholder: "Please Select Interviewer"
+    });
+    
     $("#InterviewTypeVideo").on("click", function() {
         var dataId = $(this).attr("data-id");
         $('#interview_type').val(dataId);

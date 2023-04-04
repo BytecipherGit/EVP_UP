@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="{{ asset('assets') }}/admin/css/font-awesome.min.css">
     <link rel="stylesheet" href="{{ asset('assets') }}/admin/css/header-css.css">
     <link rel="stylesheet" href="{{ asset('assets') }}/admin/css/main-container.css">
+    <link rel="stylesheet" href="{{ asset('assets') }}/admin/css/select2.min.css">
 
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
@@ -20,9 +21,7 @@
     <link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/datatables.bootstrap.min.css">
     <link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/fixedheader.bootstrap.min.css">
     <link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/responsive.bootstrap.min.css">
-
-    {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"> --}}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" />
+    <link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/jquery-ui.min.css" />
 
 
     <style>
@@ -325,9 +324,10 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="{{ asset('assets') }}/admin/js/jquery.min.js"></script>
+    <script src="{{ asset('assets') }}/admin/js/jquery-ui.min.js"></script>
     <script src="{{ asset('assets') }}/admin/js/bootstrap.min.js"></script>
+    <script src="{{ asset('assets') }}/admin/js/select2.min.js"></script>
     <script src="{{ asset('assets') }}/admin/js/sweetalert.min.js"></script>
     <script src="{{ asset('assets') }}/admin/js/jquery.validate.min.js"></script>
     <script src="{{ asset('assets') }}/datatable/js/jquery.dataTables.min.js"></script>
