@@ -4,8 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Helpers\Helper as HelpersHelper;
 use App\Mail\InterviewReminderMail;
+<<<<<<< HEAD
 use App\Mail\SendInterviewScheduleHomeMail;
 use App\Mail\SendInterviewScheduleHomeMailToInterviewer;
+=======
+use App\Mail\InterviewerReminderMail;
+>>>>>>> Harshita_04
 use App\Mail\SendInterviewScheduleMail;
 use App\Mail\SendInterviewScheduleMailToInterviewer;
 use App\Mail\SendInterviewScheduleOfficeMail;
@@ -210,6 +214,7 @@ class InterviewEmployee extends Controller
                         'position' => 'required|string|max:255',
                         'interview_process' => 'required',
                         'interviewer_id' => 'required',
+<<<<<<< HEAD
                         'interview_date' => 'required|string|max:255',
                         'interview_start_time' => 'required|string|max:255',
                         'duration' => 'required',
@@ -232,6 +237,14 @@ class InterviewEmployee extends Controller
                         'phone' => 'required|string|max:255',
                         'interview_instruction' => 'required',
                         'attachment' => 'required|file|mimes:jpeg,png,pdf,docs,doc|max:10240',
+=======
+                        // 'interview_date' => 'required|string|max:255',
+                        // 'interview_start_time' => 'required|string|max:255',
+                        // 'duration' => 'required',
+                        // 'video_link' => 'required|string|max:255',
+                        // 'interview_instruction' => 'required',
+                        // 'attachment' => 'required|file|mimes:jpeg,png,pdf,docs,doc|max:10240',
+>>>>>>> Harshita_04
 
                     ]);
                 } else {
@@ -242,11 +255,11 @@ class InterviewEmployee extends Controller
                         'position' => 'required|string|max:255',
                         'interview_process' => 'required',
                         'interviewer_id' => 'required',
-                        'interview_date' => 'required|string|max:255',
-                        'interview_start_time' => 'required|string|max:255',
-                        'duration' => 'required|string|max:255',
-                        'interview_instruction' => 'required',
-                        'attachment' => 'required|file|mimes:jpeg,png,pdf,docs,doc|max:10240',
+                        // 'interview_date' => 'required|string|max:255',
+                        // 'interview_start_time' => 'required|string|max:255',
+                        // 'duration' => 'required|string|max:255',
+                        // 'interview_instruction' => 'required',
+                        // 'attachment' => 'required|file|mimes:jpeg,png,pdf,docs,doc|max:10240',
 
                     ]);
                 }
@@ -503,6 +516,7 @@ class InterviewEmployee extends Controller
                     $validator = Validator::make($request->all(), [
                         'interview_process' => 'required',
                         'interviewer_id' => 'required',
+<<<<<<< HEAD
                         'interview_date' => 'required|string|max:255',
                         'interview_start_time' => 'required|string|max:255',
                         'duration' => 'required',
@@ -527,7 +541,24 @@ class InterviewEmployee extends Controller
                         'interview_start_time' => 'required|string|max:255',
                         'duration' => 'required|string|max:255',
                         'interview_instruction' => 'required',
+=======
+                        // 'interview_date' => 'required|string|max:255',
+                        // 'interview_start_time' => 'required|string|max:255',
+                        // 'duration' => 'required',
+                        // 'video_link' => 'required|string|max:255',
+                        // 'interview_instruction' => 'required',
+>>>>>>> Harshita_04
                     ]);
+                } else{
+                      $validator = Validator::make($request->all(), [
+                            'interview_process' => 'required',
+                            'interviewer_id' => 'required',
+                            // 'interview_date' => 'required|string|max:255',
+                            // 'interview_start_time' => 'required|string|max:255',
+                            // 'duration' => 'required',
+                            // 'video_link' => 'required|string|max:255',
+                            // 'interview_instruction' => 'required',
+                        ]);
                 }
             }
             $startFormattedTime = '';
@@ -632,6 +663,7 @@ class InterviewEmployee extends Controller
                                 FacadesMail::to($checkRecordExist->email)->send(new SendInterviewScheduleHomeMail($mailData));
                             }
 
+<<<<<<< HEAD
                             //We have multiple interviewer, so get each interviewer email & send mail to him
                             if ($request->interviewer_id) {
                                 foreach ($request->interviewer_id as $key => $interviewerId) {
@@ -640,6 +672,27 @@ class InterviewEmployee extends Controller
                                     if (!empty($getInterviewerDetails->email) && !empty($employeeInterviewRoundData)) {
                                         //Send email to Interviewer
                                         if ($request->interview_type == 'Video') {
+=======
+                                } elseif ($request->interview_type == 'Telephonic') {
+                                    $mailData = [
+                                        'organisationName' => !empty($userDetails->org_name) ? $userDetails->org_name : '',
+                                        'interviewEmpRoundsId' => encrypt($employeeInterviewRoundData->id),
+                                        'company_id' => Auth::id(),
+                                        'interviewer_name' => !empty($getInterviewerDetails->first_name) ? $getInterviewerDetails->first_name . ' ' . $getInterviewerDetails->last_name : '',
+                                        'interviewee_name' => !empty($checkRecordExist->first_name) ? $checkRecordExist->first_name . ' ' . $checkRecordExist->last_name : '',
+                                        'position' => !empty($checkRecordExist->position) ? $checkRecordExist->position : '',
+                                        'phone' => !empty($request->phone) ? $request->phone : '',
+                                        'meeting_date' => !empty($request->interview_date) ? $request->interview_date : '',
+                                        'meeting_start_time' => !empty($startFormattedTime) ? $startFormattedTime : '',
+                                        'duration' => !empty($request->duration) ? $request->duration : '',
+                                        'interviewRoundId' => encrypt($employeeInterviewRoundData->id),
+                                        'interview_instruction' => !empty($request->interview_instruction) ? $request->interview_instruction : '',
+                                        'interview_title' => !empty($getInterviewTitle->title) ? $getInterviewTitle->title : '',
+                                        'instruction'   => '',
+                                    ];
+                                    FacadesMail::to($getInterviewerDetails->email)->send(new SendInterviewSchedulePhoneMailToInterviewer($mailData));
+                                }
+>>>>>>> Harshita_04
 
                                             $mailData = [
                                                 'organisationName' => !empty($userDetails->org_name) ? $userDetails->org_name : '',
@@ -738,12 +791,13 @@ class InterviewEmployee extends Controller
     {
 
         if (Auth::check()) {
-            $checkfeedback = EmployeeFeedback::where('interview_round_id', $id)->first();
-            $interviewEmpoloyeeFeedback = EmployeeFeedback::join('feedbacks', 'feedbacks.id', '=', 'interview_employee_feedback.feedback_id')
-                ->where('interview_employee_feedback.interview_round_id', $id)
-                ->get();
-            // dd($interviewEmpoloyeeFeedback);
-            return view('admin.interview-rounds-details-form', compact('interviewEmpoloyeeFeedback', 'checkfeedback'));
+            $checkfeedback = EmployeeFeedback::where('interview_round_id',$id)->join('interview_employee_rounds','interview_employee_rounds.id','=','interview_employee_feedback.interview_round_id')->first();
+            $interviewEmpoloyeeFeedback = EmployeeFeedback::join('feedbacks','feedbacks.id','=','interview_employee_feedback.feedback_id')
+                                            //  ->join('interview_employee_rounds','interview_employee_rounds.id','=','interview_employee_feedback.interview_round_id')
+                                             ->where('interview_employee_feedback.interview_round_id',$id)
+                                            ->get();
+                            // dd($checkfeedback);
+            return view('admin.interview-rounds-details-form', compact('interviewEmpoloyeeFeedback','checkfeedback'));
         }
     }
 
@@ -797,13 +851,24 @@ class InterviewEmployee extends Controller
 
     public function sendReminderForInterview(request $request)
     {
+     
         if (!empty($request->interviewId)) {
             $interview = EmployeeInterview::find($request->interviewId);
-            if (!empty($interview->email)) {
+            $interviewer = EmployeeInterview::join('interview_employee_rounds','interview_employee_rounds.interview_employees_id','=','interview_employees.id')
+                         ->join('emp_basicinfo','emp_basicinfo.id','=','interview_employee_rounds.interviewer_id')->select('emp_basicinfo.*')
+                         ->where('interview_employees.id', $request->interviewId)->first();
+
+            if (!empty($interview->email) && !empty($interviewer->email)) { 
                 $mailData = [
                     'name' => !empty($interview->first_name) ? $interview->first_name . ' ' . $interview->last_name : '',
                 ];
                 FacadesMail::to($interview->email)->send(new InterviewReminderMail($mailData));
+
+                $mailDataInterviewer = [
+                    'name' => !empty($interviewer->first_name) ? $interviewer->first_name . ' ' . $interviewer->last_name : '',
+                ];
+
+                FacadesMail::to($interviewer->email)->send(new InterviewerReminderMail($mailDataInterviewer));
 
                 return Response::json(['success' => '1']);
             } else {

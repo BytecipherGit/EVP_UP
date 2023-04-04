@@ -12,22 +12,22 @@
 <input type="hidden" id="interview_id" name="interview_id" value="{{ $interview ? $interview->id : '' }}" />
 <div class="form-group">
     <div class="form-group">
-        <label>First Name</label>
+        <label>First Name<span style="color:red">*</span></label>
         <input type="type" disabled name="first_name" class="form-control" placeholder="First Name" value="{{ $interview->first_name}}">
         <strong class="error" id="first_name-error"></strong>
     </div>
     <div class="form-group">
-        <label>Last Name</label>
+        <label>Last Name<span style="color:red">*</span></label>
         <input type="type" disabled name="last_name" class="form-control" placeholder="Last Name" value="{{ $interview->last_name}}">
         <strong class="error" id="last_name-error"></strong>
     </div>
     <div class="form-group">
-        <label>Email</label>
+        <label>Email<span style="color:red">*</span></label>
         <input type="email" disabled name="email" class="form-control" placeholder="Email" value="{{ $interview->email}}">
         <strong class="error" id="email-error"></strong>
     </div>
     <div class="form-group">
-        <label>Position</label>
+        <label>Position<span style="color:red">*</span></label>
         <input type="type" disabled name="position" class="form-control" placeholder="Position" value="{{ $interview->position}}">
         <strong class="error" id="position-error"></strong>
     </div>
@@ -45,27 +45,27 @@
 <div class="form-group">
     <div class="row">
         <div class="col-md-5">
-            <label>Date<span style="color:red">*</span></label>
+            <label>Date</label>
             <input type="date" name="interview_date" class="form-control">
-            <strong class="error" id="interview_date-error"></strong>
+            {{-- <strong class="error" id="interview_date-error"></strong> --}}
         </div>
         <div class="col-md-3">
-            <label>Start Time<span style="color:red">*</span></label>
+            <label>Start Time</label>
             <input type="time" name="interview_start_time" class="form-control">
-            <strong class="error" id="interview_start_time-error"></strong>
+            {{-- <strong class="error" id="interview_start_time-error"></strong> --}}
         </div>
         <div class="col-md-1">
             <label>&nbsp;</label>
             <span class="time-schud">And</span>
         </div>
         <div class="col-md-3">
-            <label>Duration<span style="color:red">*</span></label>
+            <label>Duration</label>
             <select class="form-control" id="duration" name="duration">
                 <option value="30M">30M</option>
                 <option value="1H">1H</option>
                 <option value="2H">2H</option>
             </select>
-            <strong class="error" id="duration-error"></strong>
+            {{-- <strong class="error" id="duration-error"></strong> --}}
         </div>
     </div>
 </div>
@@ -97,16 +97,16 @@
     <div class="tab-content">
         <div class="tab-pane active" id="tabs-1" role="tabpanel">
             <div class="form-group">
-                <label>Use Third-party Video Conference Service<span style="color:red">*</span></label>
+                <label>Use Third-party Video Conference Service</label>
                 <input type="type" name="video_link" class="form-control" placeholder="Video Meeting Link">
-                <strong class="error" id="video_link-error"></strong>
+                {{-- <strong class="error" id="video_link-error"></strong> --}}
             </div>
         </div>
         <div class="tab-pane" id="tabs-2" role="tabpanel">
             <div class="form-group">
-                <label>Interviewer's Phone Number<span style="color:red">*</span></label>
+                <label>Interviewer's Phone Number</label>
                 <input type="type" name="phone" class="form-control" placeholder="Phone Number">
-                <strong class="error" id="phone-error"></strong>
+                {{-- <strong class="error" id="phone-error"></strong> --}}
             </div>
         </div>
         <div class="tab-pane" id="tabs-3" role="tabpanel"></div>
@@ -128,9 +128,9 @@
             <strong class="error" id="interviewer_id-error"></strong>
         </div>
         <div class="form-group">
-            <label>Interview Instruction<span style="color:red">*</span></label>
+            <label>Interview Instruction</label>
             <textarea name="interview_instruction" rows="3" class="form-control" placeholder="Interview Instruction"></textarea>
-            <strong class="error" id="interview_instruction-error"></strong>
+            {{-- <strong class="error" id="interview_instruction-error"></strong> --}}
         </div>
     </div>
 </div>
