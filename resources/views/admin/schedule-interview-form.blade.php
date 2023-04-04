@@ -116,15 +116,15 @@
                 <input type="type" name="phone" class="form-control" placeholder="Phone Number">
                 <strong class="error" id="phone-error"></strong>
             </div>
-        </div> 
+        </div>
         <div class="tab-pane" id="tabs-3" role="tabpanel"></div>
         <div class="tab-pane" id="tabs-4" role="tabpanel"></div>
-        
+
         <input type="hidden" id="interview_type" name="interview_type" value="Video">
-      
+
         <div class="form-group">
             <label>Attech Resume<span style="color:red">*</span>
-                <h6>Only .jpeg, .pdf, .docs, or .doc files allowed  and max upload file size is (10MB)</h6>
+                <h6>Only .jpeg, .pdf, .docs, or .doc files allowed and max upload file size is (10MB)</h6>
             </label>
             <div class="upload-img-file">
                 <input type="file" id="attachment" name="attachment" class="form-control">
@@ -134,16 +134,29 @@
 
         <div class="form-group">
             <label>Interviewer name<span style="color:red">*</span></label>
-            <input class="typeahead form-control" id="search" type="text">
-            <input type="hidden" id="interviewer_id" name="interviewer_id">
-            {{-- @if ($cmpEmployees)
-                <select id="interviewer_id" name="interviewer_id" class="form-control">
-                    <option value="">Select Employeee</option>
-                    @foreach ($cmpEmployees as $cmpEmployee)
-                        <option value="{{ $cmpEmployee->id }}">{{ $cmpEmployee->first_name.' '.$cmpEmployee->last_name }}</option>
-                    @endforeach
-                </select>
-            @endif --}}
+            <select class="form-control" id="interviewIds" select2 select2-hidden-accessible multiple="multiple"
+                name="interviewer_id[]">
+                @foreach ($cmpEmployees as $emp)
+                    <option value="{{ $emp->id }}">
+                        {{ $emp->first_name . ' ' . $emp->middle_name . ' ' . $emp->last_name }}</option>
+                @endforeach
+            </select>
+
+            {{-- <select id="tags" select2 select2-hidden-accessible multiple="multiple" style="width: 300px">
+                <option value="1" selected="true">Apple1</option>
+                <option value="2">Bat</option>
+                <option value="Cat">Cat</option>
+                <option value="Dog" selected>Dog1</option>
+                <option value="Elephant">Elephant</option>
+                <option value="View/Exposure" >View/Exposure</option>
+                <option value="View / Exposure">View / Exposure</option>
+                <option value="Dummy - Data" selected>Dummy - Data</option>
+                <option value="Dummy-Data">Dummy-Data</option>
+                <option value="Dummy:Data">Dummy:Data</option>
+                <option value="Dummy(Data)">Dummy(Data)</option>    
+            </select> --}}
+            {{-- <input class="typeahead form-control" id="search" type="text">
+            <input type="hidden" id="interviewer_id" name="interviewer_id"> --}}
             <strong class="error" id="interviewer_id-error"></strong>
         </div>
         {{-- <div class="form-group">
@@ -169,32 +182,40 @@
 
 <script type="text/javascript">
     var path = "{{ route('employeeNameAutocomplete') }}";
-  
-    $( "#search" ).autocomplete({
-        source: function( request, response ) {
-          $.ajax({
-            url: path,
-            type: 'GET',
-            dataType: "json",
-            data: {
-               search: request.term
-            },
-            success: function( data ) {
-               response( data );
-            }
-          });
+
+    $("#search").autocomplete({
+        source: function(request, response) {
+            $.ajax({
+                url: path,
+                type: 'GET',
+                dataType: "json",
+                data: {
+                    search: request.term
+                },
+                success: function(data) {
+                    response(data);
+                }
+            });
         },
-        select: function (event, ui) {
-           $('#search').val(ui.item.label);
-           $('#interviewer_id').val(ui.item.id);
-           console.log(ui.item); 
-           return false;
+        select: function(event, ui) {
+            $('#search').val(ui.item.label);
+            $('#interviewer_id').val(ui.item.id);
+            console.log(ui.item);
+            return false;
         }
-      });
-  
-</script> 
+    });
+</script>
 
 <script>
+    // var values = $('#interviewIds option[selected="true"]').map(function() {
+    //     return $(this).val();
+    // }).get();
+    // you have no need of .trigger("change") if you dont want to trigger an event
+    $('#interviewIds').select2({
+        placeholder: "Please select at least one interviewer"
+    });
+
+
     $("#InterviewTypeVideo").on("click", function() {
         var dataId = $(this).attr("data-id");
         $('#interview_type').val(dataId);
