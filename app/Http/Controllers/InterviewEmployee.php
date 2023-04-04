@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\Helper as HelpersHelper;
 use App\Mail\InterviewReminderMail;
+use App\Mail\InterviewerReminderMail;
 use App\Mail\SendInterviewScheduleMail;
 use App\Mail\SendInterviewScheduleMailToInterviewer;
 use App\Mail\SendInterviewSchedulePhoneMail;
@@ -209,28 +210,12 @@ class InterviewEmployee extends Controller
                         'position' => 'required|string|max:255',
                         'interview_process' => 'required',
                         'interviewer_id' => 'required',
-                        'interview_date' => 'required|string|max:255',
-                        'interview_start_time' => 'required|string|max:255',
-                        'duration' => 'required',
-                        'video_link' => 'required|string|max:255',
-                        'interview_instruction' => 'required',
-                        'attachment' => 'required|file|mimes:jpeg,png,pdf,docs,doc|max:10240',
-
-                    ]);
-                } elseif($request->interview_type == 'Telephonic') {
-                    $validator = Validator::make($request->all(), [
-                        'first_name' => 'required|string|max:255',
-                        'last_name' => 'required|string|max:255',
-                        'email' => 'required|email',
-                        'position' => 'required|string|max:255',
-                        'interview_process' => 'required',
-                        'interviewer_id' => 'required',
-                        'interview_date' => 'required|string|max:255',
-                        'interview_start_time' => 'required|string|max:255',
-                        'duration' => 'required|string|max:255',
-                        'phone' => 'required|string|max:255',
-                        'interview_instruction' => 'required',
-                        'attachment' => 'required|file|mimes:jpeg,png,pdf,docs,doc|max:10240',
+                        // 'interview_date' => 'required|string|max:255',
+                        // 'interview_start_time' => 'required|string|max:255',
+                        // 'duration' => 'required',
+                        // 'video_link' => 'required|string|max:255',
+                        // 'interview_instruction' => 'required',
+                        // 'attachment' => 'required|file|mimes:jpeg,png,pdf,docs,doc|max:10240',
 
                     ]);
                 }
@@ -242,11 +227,11 @@ class InterviewEmployee extends Controller
                         'position' => 'required|string|max:255',
                         'interview_process' => 'required',
                         'interviewer_id' => 'required',
-                        'interview_date' => 'required|string|max:255',
-                        'interview_start_time' => 'required|string|max:255',
-                        'duration' => 'required|string|max:255',
-                        'interview_instruction' => 'required',
-                        'attachment' => 'required|file|mimes:jpeg,png,pdf,docs,doc|max:10240',
+                        // 'interview_date' => 'required|string|max:255',
+                        // 'interview_start_time' => 'required|string|max:255',
+                        // 'duration' => 'required|string|max:255',
+                        // 'interview_instruction' => 'required',
+                        // 'attachment' => 'required|file|mimes:jpeg,png,pdf,docs,doc|max:10240',
 
                     ]);
                 }
@@ -499,32 +484,22 @@ class InterviewEmployee extends Controller
                     $validator = Validator::make($request->all(), [
                         'interview_process' => 'required',
                         'interviewer_id' => 'required',
-                        'interview_date' => 'required|string|max:255',
-                        'interview_start_time' => 'required|string|max:255',
-                        'duration' => 'required',
-                        'video_link' => 'required|string|max:255',
-                        'interview_instruction' => 'required',
+                        // 'interview_date' => 'required|string|max:255',
+                        // 'interview_start_time' => 'required|string|max:255',
+                        // 'duration' => 'required',
+                        // 'video_link' => 'required|string|max:255',
+                        // 'interview_instruction' => 'required',
                     ]);
-                } elseif ($request->interview_type == 'Telephonic') {
-                    $validator = Validator::make($request->all(), [
-                        'interview_process' => 'required',
-                        'interviewer_id' => 'required',
-                        'interview_date' => 'required|string|max:255',
-                        'interview_start_time' => 'required|string|max:255',
-                        'duration' => 'required|string|max:255',
-                        'phone' => 'required|string|max:255',
-                        'interview_instruction' => 'required',
-                    ]);
-                }
-                 else {
-                    $validator = Validator::make($request->all(), [
-                        'interview_process' => 'required',
-                        'interviewer_id' => 'required',
-                        'interview_date' => 'required|string|max:255',
-                        'interview_start_time' => 'required|string|max:255',
-                        'duration' => 'required|string|max:255',
-                        'interview_instruction' => 'required',
-                    ]);
+                } else{
+                      $validator = Validator::make($request->all(), [
+                            'interview_process' => 'required',
+                            'interviewer_id' => 'required',
+                            // 'interview_date' => 'required|string|max:255',
+                            // 'interview_start_time' => 'required|string|max:255',
+                            // 'duration' => 'required',
+                            // 'video_link' => 'required|string|max:255',
+                            // 'interview_instruction' => 'required',
+                        ]);
                 }
             }
             $startFormattedTime = '';
@@ -733,11 +708,12 @@ class InterviewEmployee extends Controller
     {
 
         if (Auth::check()) {
-            $checkfeedback = EmployeeFeedback::where('interview_round_id',$id)->first();
+            $checkfeedback = EmployeeFeedback::where('interview_round_id',$id)->join('interview_employee_rounds','interview_employee_rounds.id','=','interview_employee_feedback.interview_round_id')->first();
             $interviewEmpoloyeeFeedback = EmployeeFeedback::join('feedbacks','feedbacks.id','=','interview_employee_feedback.feedback_id')
-                                            ->where('interview_employee_feedback.interview_round_id',$id)
+                                            //  ->join('interview_employee_rounds','interview_employee_rounds.id','=','interview_employee_feedback.interview_round_id')
+                                             ->where('interview_employee_feedback.interview_round_id',$id)
                                             ->get();
-                            // dd($interviewEmpoloyeeFeedback);
+                            // dd($checkfeedback);
             return view('admin.interview-rounds-details-form', compact('interviewEmpoloyeeFeedback','checkfeedback'));
         }
     }
@@ -792,13 +768,24 @@ class InterviewEmployee extends Controller
 
     public function sendReminderForInterview(request $request)
     {
+     
         if (!empty($request->interviewId)) {
             $interview = EmployeeInterview::find($request->interviewId);
-            if (!empty($interview->email)) {
+            $interviewer = EmployeeInterview::join('interview_employee_rounds','interview_employee_rounds.interview_employees_id','=','interview_employees.id')
+                         ->join('emp_basicinfo','emp_basicinfo.id','=','interview_employee_rounds.interviewer_id')->select('emp_basicinfo.*')
+                         ->where('interview_employees.id', $request->interviewId)->first();
+
+            if (!empty($interview->email) && !empty($interviewer->email)) { 
                 $mailData = [
                     'name' => !empty($interview->first_name) ? $interview->first_name . ' ' . $interview->last_name : '',
                 ];
                 FacadesMail::to($interview->email)->send(new InterviewReminderMail($mailData));
+
+                $mailDataInterviewer = [
+                    'name' => !empty($interviewer->first_name) ? $interviewer->first_name . ' ' . $interviewer->last_name : '',
+                ];
+
+                FacadesMail::to($interviewer->email)->send(new InterviewerReminderMail($mailDataInterviewer));
 
                 return Response::json(['success' => '1']);
             } else {

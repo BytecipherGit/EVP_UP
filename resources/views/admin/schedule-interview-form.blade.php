@@ -53,27 +53,27 @@
 <div class="form-group">
     <div class="row">
         <div class="col-md-5">
-            <label>Date<span style="color:red">*</span></label>
+            <label>Date</label>
             <input type="date" name="interview_date" class="form-control">
-            <strong class="error" id="interview_date-error"></strong>
+            {{-- <strong class="error" id="interview_date-error"></strong> --}}
         </div>
         <div class="col-md-3">
-            <label>Start Time<span style="color:red">*</span></label>
+            <label>Start Time</label>
             <input type="time" name="interview_start_time" class="form-control">
-            <strong class="error" id="interview_start_time-error"></strong>
+            {{-- <strong class="error" id="interview_start_time-error"></strong> --}}
         </div>
         <div class="col-md-1">
             <label>&nbsp;</label>
             <span class="time-schud">And</span>
         </div>
         <div class="col-md-3">
-            <label>Duration<span style="color:red">*</span></label>
+            <label>Duration</label>
             <select class="form-control" id="duration" name="duration">
                 <option value="30M">30M</option>
                 <option value="1H">1H</option>
                 <option value="2H">2H</option>
             </select>
-            <strong class="error" id="duration-error"></strong>
+            {{-- <strong class="error" id="duration-error"></strong> --}}
         </div>
     </div>
 </div>
@@ -105,16 +105,16 @@
     <div class="tab-content">
         <div class="tab-pane active" id="tabs-1" role="tabpanel">
             <div class="form-group">
-                <label>Use Third-party Video Conference Service<span style="color:red">*</span></label>
+                <label>Use Third-party Video Conference Service</label>
                 <input type="type" name="video_link" class="form-control" placeholder="Video Meeting Link">
-                <strong class="error" id="video_link-error"></strong>
+                {{-- <strong class="error" id="video_link-error"></strong> --}}
             </div>
         </div>
         <div class="tab-pane" id="tabs-2" role="tabpanel">
             <div class="form-group">
-                <label>Interviewer Phone Number<span style="color:red">*</span></label>
+                <label>Interviewer Phone Number</label>
                 <input type="type" name="phone" class="form-control" placeholder="Phone Number">
-                <strong class="error" id="phone-error"></strong>
+                {{-- <strong class="error" id="phone-error"></strong> --}}
             </div>
         </div> 
         <div class="tab-pane" id="tabs-3" role="tabpanel"></div>
@@ -123,12 +123,12 @@
         <input type="hidden" id="interview_type" name="interview_type" value="Video">
       
         <div class="form-group">
-            <label>Attech Resume<span style="color:red">*</span>
+            <label>Attech Resume
                 <h6>Only .jpeg, .pdf, .docs, or .doc files allowed  and max upload file size is (10MB)</h6>
             </label>
             <div class="upload-img-file">
                 <input type="file" id="attachment" name="attachment" class="form-control">
-                <strong class="error" id="attachment-error"></strong>
+                {{-- <strong class="error" id="attachment-error"></strong> --}}
             </div>
         </div>
 
@@ -151,9 +151,9 @@
             <input class="typeahead form-control" id="search" name="interviewer_id" type="text">
         </div> --}}
         <div class="form-group">
-            <label>Interview Instruction<span style="color:red">*</span></label>
+            <label>Interview Instruction</label>
             <textarea name="interview_instruction" rows="3" class="form-control" placeholder="Interview Instruction"></textarea>
-            <strong class="error" id="interview_instruction-error"></strong>
+            {{-- <strong class="error" id="interview_instruction-error"></strong> --}}
         </div>
         <div class="form-group">
             <label>Attech Interview Instruction/Test File

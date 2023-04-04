@@ -57,7 +57,7 @@
                                     <tbody>
                                      <tr>
                                        <td>{{ $feedback->title}}</td> 
-                                       <td>
+                                       <td id="feedback_rating" name="feedback_rating[]">
                                         <select class="form-control" id="feedback_rating" name="feedback_rating[]">  
                                             <option value = "0"> 0 </option>  
                                             <option value = "1"> 1 </option>  
@@ -65,6 +65,13 @@
                                             <option value = "3"> 3 </option>  
                                             <option value = "4"> 4 </option>  
                                             <option value = "5"> 5 </option>  
+                                            <option value = "0"> 6 </option>  
+                                            <option value = "1"> 7 </option>  
+                                            <option value = "2"> 8</option>  
+                                            <option value = "3"> 9 </option>  
+                                            <option value = "4"> 10 </option>  
+                                        
+                                          
                                             </select>
                                        </td>
                                     </tr>  
@@ -80,7 +87,7 @@
                         </div>
                         <div class="">
                             <input type="hidden" name="interviewEmpRoundsId" id="interviewEmpRoundsId" value="{{ $interviewEmpRoundsId }}">
-                            <h2>Share your feedback</h2>
+                            <h2>Feedback comment</h2>
                             <textarea rows="3" name="interview_feedback" class="form-textarea"></textarea>
                         </div>
                     </div>

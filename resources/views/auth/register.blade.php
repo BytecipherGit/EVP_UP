@@ -2,16 +2,14 @@
 @section('content')
 @section('title', 'Registration')
 
-
-{{-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> --}}
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.0-alpha1/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-{{-- {!! NoCaptcha::renderJs() !!} --}}
+
     <style>
         .frm_form_field .grecaptcha-badge { 
-  display:none;
-}
+          display:none;
+           }
+       
     </style>
 
 <div class="d-flex main-form-part">
@@ -199,9 +197,6 @@
                                     <label>Designation <strong style="color:red">*</strong> </label>
                                     <input type="text" id="designation" name="designation" class="form-control"
                                         value="{{ old('designation') }}" placeholder="Designation" autofocus autocomplete="designation">
-                                    {{-- @error('designation')
-                                        <p class="velidation">{{ $message }}</p>
-                                    @enderror --}}
                                     <strong class="error" id="designation-error"></strong>
                                 </div>
                             </div>
@@ -210,9 +205,6 @@
                                     <label>Department <strong style="color:red">*</strong></label>
                                     <input type="text" id="department" name="department" class="form-control"
                                         value="{{ old('department') }}" placeholder="Department" autofocus autocomplete="department">
-                                    {{-- @error('department')
-                                        <p class="velidation">{{ $message }}</p>
-                                    @enderror --}}
                                     <strong class="error" id="department-error"></strong>
                                 </div>
                             </div>
@@ -236,20 +228,13 @@
                         <div class="col-xl-6">
                           <div class="form-group captcha">
                                 <span>{!! captcha_img() !!}</span>
-                          </div>
+                                    <button type="button" class="reload" id="reload">
+                                        &#x21bb;
+                                    </button> 
+                          </div>  
                         </div>
-                        <div class="col-xl-6">
-                            <div class="form-group captcha">
-                                <button type="button" class="reload" id="reload">
-                                    &#x21bb;
-                                </button> 
-                             </div>
-                        </div>
-                        <div class="form-group">
+                         <div class="form-group">
                             <input id="captcha" type="text" class="form-control" placeholder="Enter Captcha" name="captcha">
-                            {{-- @error('captcha')
-                                        <p class="velidation">{{ $message }}</p>
-                            @enderror --}}
                          </div>
                      
               
@@ -261,6 +246,7 @@
                         <div class="form-group">
                             <p>Already have an account, <a href="{{ route('login') }}">Login</a></p>
                         </div>
+                    </div>
                     </form>
 
                 </div>

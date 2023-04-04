@@ -37,8 +37,9 @@
         </tbody>
     </table>
 </div> --}}
-<div class="form-group">
-    @if($checkfeedback)
+@if($checkfeedback)
+
+  <div class="form-group">   
     <table class="table">
         <thead>
             <tr>
@@ -53,15 +54,24 @@
                 <tr>
                     <th scope="row">{{ $counter }}</th>
                     <td>{{ $interviewEmpoloyeeFeed->title}}</td>
-                    <td>{{ $interviewEmpoloyeeFeed->feedback_rating}}</td>
-                </tr>
-                @php $counter++ @endphp
-            @endforeach              
+                    <td>{{ $interviewEmpoloyeeFeed->feedback_rating}}/10</td>
+                    {{-- <td>{{ $checkfeedback->interview_feedback}}</td>     --}}
+                  </tr> 
+                    @php $counter++ @endphp
+            @endforeach        
         @endif
-    </table>
-    @else
-    <p>Feedback not yet</p>
-    @endif
+    </table>    
 </div>
+
+    @if($checkfeedback->interview_feedback)
+        <div class="form-group">
+        <label for="">Feedback Comment:</label>    
+            {{ $checkfeedback->interview_feedback}}                
+        </div>
+    @endif
+
+@else
+   <p>Feedback not yet</p>
+@endif
 
 

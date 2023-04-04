@@ -333,11 +333,11 @@
                 position: "required",
                 interview_process: "required",
                 interviewer_id: "required",
-                interview_date: "required",
-                interview_start_time: "required",
-                duration: "required",
-                interview_instruction: "required",
-                attachment: "required",
+                // interview_date: "required",
+                // interview_start_time: "required",
+                // duration: "required",
+                // interview_instruction: "required",
+                // attachment: "required",
             },
             messages: {
                 first_name: "First name is required",
@@ -346,11 +346,11 @@
                 position: "Position number is required",
                 interview_process: "required",
                 interviewer_id: "required",
-                interview_date: "Interview date is required",
-                interview_start_time: "Interview start time is required",
-                duration: "Interview end time is required",
-                interview_instruction: "Message is required",
-                attachment: "Attachment is required",
+                // interview_date: "Interview date is required",
+                // interview_start_time: "Interview start time is required",
+                // duration: "Interview end time is required",
+                // interview_instruction: "Message is required",
+                // attachment: "Attachment is required",
             }
         });
 
@@ -423,30 +423,30 @@
                         if (data.errors.interviewer_id) {
                             $('#interviewer_id-error').html(data.errors.interviewer_id[0]);
                         }
-                        if (data.errors.interview_date) {
-                            $('#interview_date-error').html(data.errors.interview_date[0]);
-                        }
-                        if (data.errors.interview_start_time) {
-                            $('#interview_start_time-error').html(data.errors
-                                .interview_start_time[0]);
-                        }
-                        if (data.errors.duration) {
-                            $('#duration-error').html(data.errors
-                                .duration[0]);
-                        }
-                        if (data.errors.video_link) {
-                            $('#video_link-error').html(data.errors.video_link[0]);
-                        }
-                        if (data.errors.phone) {
-                            $('#phone-error').html(data.errors.phone[0]);
-                        }
-                        if (data.errors.interview_instruction) {
-                            $('#interview_instruction-error').html(data.errors
-                                .interview_instruction[0]);
-                        }
-                        if (data.errors.attachment) {
-                            $('#attachment-error').html(data.errors.attachment[0]);
-                        }
+                        // if (data.errors.interview_date) {
+                        //     $('#interview_date-error').html(data.errors.interview_date[0]);
+                        // }
+                        // if (data.errors.interview_start_time) {
+                        //     $('#interview_start_time-error').html(data.errors
+                        //         .interview_start_time[0]);
+                        // }
+                        // if (data.errors.duration) {
+                        //     $('#duration-error').html(data.errors
+                        //         .duration[0]);
+                        // }
+                        // if (data.errors.video_link) {
+                        //     $('#video_link-error').html(data.errors.video_link[0]);
+                        // }
+                        // if (data.errors.phone) {
+                        //     $('#phone-error').html(data.errors.phone[0]);
+                        // }
+                        // if (data.errors.interview_instruction) {
+                        //     $('#interview_instruction-error').html(data.errors
+                        //         .interview_instruction[0]);
+                        // }
+                        // if (data.errors.attachment) {
+                        //     $('#attachment-error').html(data.errors.attachment[0]);
+                        // }
                         $('.loadingImg').hide();
                     } else {
 
@@ -456,13 +456,13 @@
                             $('#last_name-error').html('');
                             $('#email-error').html('');
                             $('#position-error').html('');
-                            $('#interview_date-error').html('');
-                            $('#interview_start_time-error').html('');
-                            $('#duration-error').html('');
-                            $('#video_link-error').html('');
-                            $('#phone-error').html('');
-                            $('#interview_instruction-error').html('');
-                            $('#attachment-error').html('');
+                            // $('#interview_date-error').html('');
+                            // $('#interview_start_time-error').html('');
+                            // $('#duration-error').html('');
+                            // $('#video_link-error').html('');
+                            // $('#phone-error').html('');
+                            // $('#interview_instruction-error').html('');
+                            // $('#attachment-error').html('');
                             // $('#schedule_interview_form')[0].reset();
                             // $('#interviewModel').modal('hide');
                             $('#success').css('display', 'block');
@@ -685,18 +685,18 @@
             rules: {
                 interview_process: "required",
                 interviewer_id: "required",
-                interview_date: "required",
-                interview_start_time: "required",
-                duration: "required",
-                interview_instruction: "required",
+                // interview_date: "required",
+                // interview_start_time: "required",
+                // duration: "required",
+                // interview_instruction: "required",
             },
             messages: {
                 interview_process: "required",
                 interviewer_id: "required",
-                interview_date: "Interview date is required",
-                interview_start_time: "Interview start time is required",
-                duration: "Interview end time is required",
-                interview_instruction: "Message is required",
+                // interview_date: "Interview date is required",
+                // interview_start_time: "Interview start time is required",
+                // duration: "Interview end time is required",
+                // interview_instruction: "Message is required",
             }
         });
 
@@ -725,38 +725,38 @@
                         if (data.errors.interviewer_id) {
                             $('#interviewer_id-error').html(data.errors.interviewer_id[0]);
                         }
-                        if (data.errors.interview_date) {
-                            $('#interview_date-error').html(data.errors.interview_date[0]);
-                        }
-                        if (data.errors.interview_start_time) {
-                            $('#interview_start_time-error').html(data.errors
-                                .interview_start_time[0]);
-                        }
-                        if (data.errors.duration) {
-                            $('#duration-error').html(data.errors
-                                .duration[0]);
-                        }
-                        if (data.errors.video_link) {
-                            $('#video_link-error').html(data.errors.video_link[0]);
-                        }
-                        if (data.errors.phone) {
-                            $('#phone-error').html(data.errors.phone[0]);
-                        }
-                        if (data.errors.interview_instruction) {
-                            $('#interview_instruction-error').html(data.errors
-                                .interview_instruction[0]);
-                        }
+                        // if (data.errors.interview_date) {
+                        //     $('#interview_date-error').html(data.errors.interview_date[0]);
+                        // }
+                        // if (data.errors.interview_start_time) {
+                        //     $('#interview_start_time-error').html(data.errors
+                        //         .interview_start_time[0]);
+                        // }
+                        // if (data.errors.duration) {
+                        //     $('#duration-error').html(data.errors
+                        //         .duration[0]);
+                        // }
+                        // if (data.errors.video_link) {
+                        //     $('#video_link-error').html(data.errors.video_link[0]);
+                        // }
+                        // if (data.errors.phone) {
+                        //     $('#phone-error').html(data.errors.phone[0]);
+                        // }
+                        // if (data.errors.interview_instruction) {
+                        //     $('#interview_instruction-error').html(data.errors
+                        //         .interview_instruction[0]);
+                        // }
                         $('.loadingImg').hide();
                     } else {
 
                         if (data.success) {
                             $('.loadingImg').hide();
-                            $('#interview_date-error').html('');
-                            $('#interview_start_time-error').html('');
-                            $('#duration-error').html('');
-                            $('#video_link-error').html('');
-                            $('#phone-error').html('');
-                            $('#interview_instruction-error').html('');
+                            // $('#interview_date-error').html('');
+                            // $('#interview_start_time-error').html('');
+                            // $('#duration-error').html('');
+                            // $('#video_link-error').html('');
+                            // $('#phone-error').html('');
+                            // $('#interview_instruction-error').html('');
                             // $('#schedule_interview_form')[0].reset();
                             // $('#interviewModel').modal('hide');
                             $('#success').css('display', 'block');

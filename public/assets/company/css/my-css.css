@@ -181,6 +181,34 @@ header .navbar-brand img {
 .login-box-txt button:hover{
     box-shadow: 0px 4px 31px rgba(85, 51, 255, 0.45);
 }
+  button#reload {
+    background: transparent;
+    color: #000;
+    border: none;
+    padding-left: 0;
+    width: max-content;
+    padding-right: 0;
+    font-size: 31px;
+    margin: 0 0 0 15px;
+  }
+  button#reload:hover {
+    background: transparent;
+    box-shadow: none;
+  }
+  .form-group.captcha {
+    display: flex;
+    align-items: center;
+  }
+  .form-group.captcha span {
+    position: relative;
+    display: block;
+    color: #d4d4d4;
+    left: 0;
+    width: 55%;
+    top: 0;
+    font-size: 20px;
+    opacity: 1;
+  }
 .login-box-txt button{
   background: #5533FF;
   color: #fff;
