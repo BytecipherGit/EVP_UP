@@ -207,12 +207,9 @@
 </script>
 
 <script>
-    // var values = $('#interviewIds option[selected="true"]').map(function() {
-    //     return $(this).val();
-    // }).get();
-    // you have no need of .trigger("change") if you dont want to trigger an event
+    
     $('#interviewIds').select2({
-        placeholder: "Please select at least one interviewer"
+        placeholder: "Please Select Interviewer"
     });
 
 

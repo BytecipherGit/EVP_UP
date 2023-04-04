@@ -296,13 +296,13 @@ class InterviewEmployee extends Controller
                     ];
                     $employeeInterviewData = EmployeeInterview::create($insertEmployeeInterview);
                     if (!empty($employeeInterviewData)) {
-                        $interviewerArray = implode(",",$request->interviewer_id);
+                        // $interviewerArray = implode(",",$request->interviewer_id);
                         // dd($interviewerArray);
                         //Insert record into Emoloyee Inerview Rounds
                         $insertEmployeeInterviewRounds = [
                             'interview_employees_id' => $employeeInterviewData->id,
                             'company_id' => Auth::id(),
-                            'interviewer_id' => !empty($interviewerArray) ? '"'.$interviewerArray.'"' : null,
+                            'interviewer_id' => !empty($request->interviewer_id) ? implode(",",$request->interviewer_id) : null,
                             'interview_processes_id' => !empty($request->interview_process) ? $request->interview_process : null,
                             'offer_status' => !empty($request->offer_status) ? $request->offer_status : 'Pending',
                             'interview_status' => !empty($request->interview_status) ? $request->interview_status : 1,
@@ -546,7 +546,7 @@ class InterviewEmployee extends Controller
                         //Insert record into Emoloyee Inerview Rounds
                         $insertEmployeeInterviewRounds = [
                             'interview_employees_id' => !empty($request->interview_id) ? $request->interview_id : null,
-                            'interviewer_id' => !empty($request->interviewer_id) ? $request->interviewer_id : null,
+                            'interviewer_id' => !empty($request->interviewer_id) ? implode(",",$request->interviewer_id) : null,
                             'company_id' => Auth::id(),
                             'interview_processes_id' => !empty($request->interview_process) ? $request->interview_process : null,
                             'offer_status' => !empty($request->offer_status) ? $request->offer_status : 'Pending',
