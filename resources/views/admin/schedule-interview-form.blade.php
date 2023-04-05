@@ -7,6 +7,14 @@
     .ui-front {
         z-index: 9999 !important;
     }
+
+    .velidation {
+    color: red;
+    font-size: 12px;
+    display: block;
+    margin: 5px 0;
+    display: flex;
+   }   
 </style>
 
 <h2 class="modal-title" id=""></h2>
@@ -28,12 +36,52 @@
     <strong class="error" id="email-error"></strong>
 </div>
 <div class="form-group">
+    <label>Phone Number</label>
+    <input type="text" name="phone" class="form-control" placeholder="Enter phone number">
+   
+    
+</div>
+@error('phone')
+<span class="velidation">{{ $message }}</span>
+@enderror 
+
+<div class="form-group">
+    <label>Document Type</label>
+    <select name="document_type" class="form-control" id="document_type">
+        <option value="Pan Card">Pan Card</option>
+        <option value="Aadhar Card">Aadhar Card</option>
+        <option value="Passport">Passport</option>
+    </select>
+</div>
+<div class="form-group">
+    <label>Document Number</label>
+    <input type="text" name="document_number" class="form-control" placeholder="Enter selected document number">
+  
+</div>
+@error('document_number')
+<span class="velidation">{{ $message }}</span>
+@enderror 
+<div class="form-group">
+    <label>Document Id
+        <h6>Only .jpeg, .pdf, .docs, or .doc files allowed  and max upload file size is (10MB)</h6>
+    </label>
+    <div class="upload-img-file">
+        <input type="file" id="document_id" name="document_id" class="form-control">
+    </div>
+    @error('document_id')
+    <span class="velidation">{{ $message }}</span>
+    @enderror 
+</div>
+
+<div class="form-group">
     <label>Position<span style="color:red">*</span></label>
     {{-- <input type="type" name="position" class="form-control" placeholder="Position"> --}}
     @if ($positions)
         <select id="position" name="position" class="form-control">
             @foreach ($positions as $position)
+               @if($position->status == '1')
                 <option value="{{ $position->title }}">{{ $position->title }}</option>
+                @endif
             @endforeach
         </select>
     @endif

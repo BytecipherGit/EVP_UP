@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreign('company_id')->references('id')->on('users')->onDelete('cascade');
             $table->longText('descriptions')->nullable();
             $table->string('title')->nullable();
+            $table->boolean('status')->default(0)->comment('1 Active, 0 Inactive');
             $table->timestamps();
         });
     }

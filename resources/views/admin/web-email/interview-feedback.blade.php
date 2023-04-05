@@ -51,31 +51,42 @@
                                         <th>Feedback Rating</th>
                                      </tr>
                                     </thead>
-                                    @foreach($feedbackResponse as $feedback)
+                                    @php $num = 0 @endphp
+                                    @foreach($feedbackResponse as $feedback) 
                                     <input type="hidden" name="feedback_id[]" value={{$feedback->id}}>
                                     <input type="hidden" name="interview_round_id[]" id="interviewEmpRoundsId" value="{{ $interviewEmpRoundsId }}">
                                     <tbody>
                                      <tr>
                                        <td>{{ $feedback->title}}</td> 
-                                       <td id="feedback_rating" name="feedback_rating[]">
-                                        <select class="form-control" id="feedback_rating" name="feedback_rating[]">  
+                                       <td>
+                                        {{-- <select class="form-control" id="feedback_rating" name="feedback_rating[{{$i}}]">  
                                             <option value = "0"> 0 </option>  
                                             <option value = "1"> 1 </option>  
                                             <option value = "2"> 2</option>  
                                             <option value = "3"> 3 </option>  
                                             <option value = "4"> 4 </option>  
                                             <option value = "5"> 5 </option>  
-                                            <option value = "0"> 6 </option>  
-                                            <option value = "1"> 7 </option>  
-                                            <option value = "2"> 8</option>  
-                                            <option value = "3"> 9 </option>  
-                                            <option value = "4"> 10 </option>  
-                                        
-                                          
-                                            </select>
+                                            <option value = "6"> 6 </option>  
+                                            <option value = "7"> 7 </option>  
+                                            <option value = "8"> 8</option>  
+                                            <option value = "9"> 9 </option>  
+                                            <option value = "10"> 10 </option>  
+                                            </select> --}}
+                                            <span> <label class="" for="rating1">1</label>  <input type="radio" id="rating1" name="feedback_rating[{{$num}}]" class=""  value="1" checked=""></span>  
+                                            <span> <label class="" for="rating2">2</label>  <input type="radio" id="rating2" name="feedback_rating[{{$num}}]" class="" value="2"> </span>
+                                            <span><label class="" for="rating3">3</label>  <input type="radio" id="rating3" name="feedback_rating[{{$num}}]" class=""  value="3"> </span>  
+                                            <span> <label class="" for="rating4">4</label> <input type="radio" id="rating4" name="feedback_rating[{{$num}}]" class="" value="4"></span>
+                                            <span><label class="" for="rating5">5</label>  <input type="radio" id="rating5" name="feedback_rating[{{$num}}]" class=""  value="5">  </span>  
+                                            <span> <label class="" for="rating6">6</label>  <input type="radio" id="rating6" name="feedback_rating[{{$num}}]" class="" value="6"> </span>
+                                            <span> <label class="" for="rating7">7</label>  <input type="radio" id="rating7" name="feedback_rating[{{$num}}]" class=""  value="7"> </span>  
+                                            <span> <label class="" for="rating8">8</label>  <input type="radio" id="rating8" name="feedback_rating[{{$num}}]" class="" value="8"> </span>
+                                            <span> <label class="" for="rating9">9</label>  <input type="radio" id="rating9" name="feedback_rating[{{$num}}]" class=""  value="9" > </span>  
+                                            <span><label class="" for="rating10">10</label>  <input type="radio" id="rating10" name="feedback_rating[{{$num}}]" class="" value="10">  </span>
+                                                           
                                        </td>
                                     </tr>  
                                     </tbody>
+                                    @php $num++ @endphp
                                     @endforeach
                                 </table>
                             

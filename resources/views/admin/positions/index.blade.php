@@ -18,6 +18,9 @@
         color: #dc3545 !important;
         font-size: 14px;
     }
+    .position{
+        border-radius: 12px !important;
+    }
 </style>
 
 
@@ -38,6 +41,12 @@
                     {{-- <a href="#" data-toggle="modal" data-target="#rejectbtninfo">Reject</a> --}}
                 </div>
             </div>
+            <div id="showHideAlert" class="col-md-8 alert alert-success" role="alert" style="display:none;">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <strong><span id="success_msg"></span> </strong>
+            </div>
         </div>
     </div>
     <!--- Main Heading ----->
@@ -51,6 +60,7 @@
                             <tr>
                                 <th>Title</th>
                                 <th>Descriptions</th>
+                                <th>Status</th>
                                 <th width="100px">Action</th>
                             </tr>
                         </thead>
@@ -116,6 +126,10 @@
                     name: 'descriptions'
                 },
                 {
+                    data: 'status',
+                    name: 'status'
+                },
+                {
                     data: 'action',
                     name: 'action',
                     orderable: false,
@@ -127,7 +141,50 @@
 </script>
 
 
+<script>
+       function update_position_status(id, status) {
+            var statusMsg = (status) ? "deactivate" : "activate";
+            if (confirm('Are you sure you want to ' + statusMsg + '?')) {
 
+                $.ajax({
+                    type: 'post',
+                    url: "{{route('update_process_status')}}",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: 'id=' + id + '&status=' + status,
+                    success: function(data) {
+
+                        var status = data.status;
+                        var msg = data.msg;
+                        $('#success_msg').html(msg);
+                        if (status == 'success') {
+                            $("#showHideAlert").removeClass('alert-warning');
+                            $("#showHideAlert").addClass('alert-success');
+
+                            var page = window.location.hash.substr(1);
+                            if (page) {
+                                getData(page);
+                            } else {
+                                location.reload();
+                            }   
+                        } 
+                        if (status == 'error') {
+                            $("#showHideAlert").removeClass('alert-success');
+                            $("#showHideAlert").addClass('alert-warning');
+                        }
+                        $("#showHideAlert").show();
+                        
+                    },
+                    'error': function(data) {
+                        console.log(data);
+                    }
+                });
+            }
+
+
+        }
+</script>
 
 <script>
     $(document).ready(function() {

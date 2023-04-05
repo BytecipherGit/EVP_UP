@@ -24,17 +24,52 @@ class PositionController extends Controller
      public function index(Request $request)
      {
          if ($request->ajax()) {
-             $data = Position::where('company_id',Auth::id())->select('id','title','descriptions')->get();
+             $data = Position::where('company_id',Auth::id())->select('id','title','descriptions','status')->get();
              return FacadesDataTables::of($data)->addIndexColumn()
-                 ->addColumn('action', function($row){
+                    ->addColumn('status', function ($row) {
+                        $button = "";
+                        if ($row->status == 1) {
+                            $button = '<span style="cursor:pointer"
+                       onclick="update_position_status(' . $row->id . ',' . $row->status . ')" class="btn btn-success position">
+                       <i style="font-size: 10px;"></i>&nbsp;Active</span>';
+    
+                        } else {
+                            $button = '<span style="cursor:pointer" class="btn btn-danger position" onclick="update_position_status(' . $row->id . ',' . $row->status . ')">Inactive</span>';
+                        }
+                        return $button;
+                    })
+                  ->addColumn('action', function($row){
                      $btn = '<a href="javascript:void(0)" data-id="'.$row->id.'" class="edit-btn updatePosition fa fa-edit" data-title="Edit"></a>';
                      $btn .= '<a href="javascript:void(0)" data-id="'.$row->id.'" class="edit-btn deletePosition fa fa-trash" data-title="Delete"></a>';
                      return $btn;
                  })
-                 ->rawColumns(['action'])
+                 ->rawColumns(['action','status'])
                  ->make(true);
          }
          return view('admin.positions.index');
+     }
+
+
+     public function update_process_status(request $request)
+     {
+        // dd('h');
+         $validator = Validator::make($request->all(), [
+             'id' => 'required',
+             'status' => 'required',
+         ]);
+         $position_id = $request->get('id');
+         $status = $request->get('status');
+         if ($validator->passes()) {
+             if ($status == 0) {
+                 DB::table('positions')->where('id', $position_id)->update(['status' => 1]);
+                 return Response::json(['status' => 'success', 'msg' => 'Successfully updated']);
+             } else {
+                 DB::table('positions')->where('id', $position_id)->update(['status' => 0]);
+                 return Response::json(['status' => 'success', 'msg' => 'Successfully updated']);
+             }
+         } else {
+             return Response::json(['status' => 'error', 'msg' => 'Unable to updated']);
+         }
      }
 
     public function getPositionForm($id = '')
@@ -50,12 +85,14 @@ class PositionController extends Controller
             $validator = Validator::make($request->all(), [
                 'title' => 'required|string|max:255',
                 'descriptions' => 'required|string|max:255',
+                
             ]);
             if ($validator->passes()) {
                     $insert = [
                         'company_id' => Auth::id(),
                         'title' => !empty($request->title) ? $request->title : null,
                         'descriptions' => !empty($request->descriptions) ? $request->descriptions : null,
+                        'status' => '0',
                     ];
                     $positionData = Position::create($insert);
                     if (!empty($positionData)) {
