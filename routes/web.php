@@ -149,17 +149,18 @@ Route::middleware([Admin::class])->group(function () {
     Route::post('interview_process/submit', [InterviewProcess::class, 'createInterviewProcess'])->middleware('documents');
     Route::post('interview_process/update', [InterviewProcess::class, 'updateInterviewProcess'])->middleware('documents');
     Route::post('interview_process/destroy', [InterviewProcess::class, 'deleteInterviewProcess'])->middleware('documents');
+    
     Route::any('next_round_of_interview/form/{id?}', [InterviewEmployee::class, 'getNextRoundOfInterviewForm'])->middleware('documents');
     Route::post('next_round_of_interview/submit', [InterviewEmployee::class, 'scheduleNextRoundOfInterview'])->middleware('documents');
     Route::any('get_interview_details/form/{id?}', [InterviewEmployee::class, 'getInterviewDetailForm'])->middleware('documents');
-
+  
 
     Route::get('position', [PositionController::class, 'index'])->name('position.index')->middleware('documents');
     Route::any('position/form/{id?}', [PositionController::class, 'getPositionForm'])->middleware('documents');
     Route::post('position/submit', [PositionController::class, 'createPosition'])->middleware('documents');
     Route::post('position/update', [PositionController::class, 'updatePosition'])->middleware('documents');
     Route::post('position/destroy', [PositionController::class, 'deletePosition'])->middleware('documents');
-
+    Route::post('update_status', [PositionController::class, 'update_process_status'])->name('update_process_status')->middleware('documents');
 
     Route::get('feedback', [FeedbackController::class, 'index'])->name('feedback.index')->middleware('documents');
     Route::any('feedback/form/{id?}', [FeedbackController::class, 'getFeedbackForm'])->middleware('documents');

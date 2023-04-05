@@ -188,7 +188,7 @@ class InterviewEmployee extends Controller
             $interviewProcesses = InterviewProcess::where('company_id', Auth::id())->orderby('id', 'asc')->get();
             $positions = Position::where('company_id', Auth::id())->orderby('id', 'asc')->get();
             $cmpEmployees = Employee::where('company_id', Auth::id())->orderby('id', 'desc')->get();
-            // dd($cmpEmployees);
+            // dd($positions);
             $interview = (!empty($id)) ? EmployeeInterview::find($id) : false;
             return view('admin.schedule-interview-form', compact('interview', 'interviewProcesses', 'cmpEmployees', 'positions'));
         }
@@ -208,12 +208,12 @@ class InterviewEmployee extends Controller
                         'position' => 'required|string|max:255',
                         'interview_process' => 'required',
                         'interviewer_id' => 'required',
-                        'interview_date' => 'required|string|max:255',
-                        'interview_start_time' => 'required|string|max:255',
-                        'duration' => 'required',
-                        'video_link' => 'required|string|max:255',
-                        'interview_instruction' => 'required',
-                        'attachment' => 'required|file|mimes:jpeg,png,pdf,docs,doc|max:10240',
+                        // 'interview_date' => 'required|string|max:255',
+                        // 'interview_start_time' => 'required|string|max:255',
+                        // 'duration' => 'required',
+                        // 'video_link' => 'required|string|max:255',
+                        // 'interview_instruction' => 'required',
+                    
 
                     ]);
                 } elseif ($request->interview_type == 'Telephonic') {
@@ -224,12 +224,12 @@ class InterviewEmployee extends Controller
                         'position' => 'required|string|max:255',
                         'interview_process' => 'required',
                         'interviewer_id' => 'required',
-                        'interview_date' => 'required|string|max:255',
-                        'interview_start_time' => 'required|string|max:255',
-                        'duration' => 'required|string|max:255',
-                        'phone' => 'required|string|max:255',
-                        'interview_instruction' => 'required',
-                        'attachment' => 'required|file|mimes:jpeg,png,pdf,docs,doc|max:10240',
+                        // 'interview_date' => 'required|string|max:255',
+                        // 'interview_start_time' => 'required|string|max:255',
+                        // 'duration' => 'required|string|max:255',
+                        // 'phone' => 'required|string|max:255',
+                        // 'interview_instruction' => 'required',
+                   
 
                     ]);
                 } else {
@@ -244,7 +244,7 @@ class InterviewEmployee extends Controller
                         // 'interview_start_time' => 'required|string|max:255',
                         // 'duration' => 'required|string|max:255',
                         // 'interview_instruction' => 'required',
-                        // 'attachment' => 'required|file|mimes:jpeg,png,pdf,docs,doc|max:10240',
+                
 
                     ]);
                 }
@@ -258,9 +258,9 @@ class InterviewEmployee extends Controller
             $uploadAttachementPath = '';
             $uploadInstructionPath = '';
             $company_name = User::where('id', Auth::id())->first();
+            $name = $company_name->org_name;
             if ($validator->passes()) {
-                if ($request->hasFile('attachment')) {
-                    $name = $company_name->org_name;
+                if ($request->hasFile('attachment')) {  
                     $file = $request->file('attachment');
                     $fileName = time() . '_' . $file->getClientOriginalName();
                     $fileTrim = str_replace(" ", "-", $name);
@@ -276,6 +276,16 @@ class InterviewEmployee extends Controller
                     $uploadInstructionPath = asset('storage/' . $fileTrim . '/interview_instruction_documents/' . $fileName);
                 }
 
+                if ($request->hasFile('document_id')) {
+                    $file = $request->file('document_id');
+                    $fileName = time() . '_' . $file->getClientOriginalName();
+                    $fileTrim = str_replace(" ", "-", $name);
+                    $file->storeAs('public/' . $fileTrim . '/employee_document_id', $fileName);
+                    $uploadDocumentIdPath = asset('storage/' . $fileTrim . '/employee_document_id/' . $fileName);
+                }
+
+                
+
                 $empCode = substr(time(), -6) . sprintf('%04d', rand(0, 9999));
                 $checkRecordExist = EmployeeInterview::where('empCode', $empCode)->first();
                 if (empty($checkRecordExist) && !empty($empCode)) {
@@ -285,10 +295,14 @@ class InterviewEmployee extends Controller
                         'first_name' => !empty($request->first_name) ? $request->first_name : null,
                         'last_name' => !empty($request->last_name) ? $request->last_name : null,
                         'email' => !empty($request->email) ? $request->email : null,
+                        'phone'=> !empty($request->phone) ? $request->phone : null,
                         'position' => !empty($request->position) ? $request->position : null,
                         'rating' => !empty($request->rating) ? $request->rating : null,
                         'resume' => $uploadAttachementPath,
                         'instruction' => $uploadInstructionPath,
+                        'document_type' => !empty($request->document_type) ? $request->document_type : null,
+                        'document_number' => !empty($request->document_number) ? $request->document_number : null,
+                        'document_id' => $uploadDocumentIdPath,
 
                     ];
                     $employeeInterviewData = EmployeeInterview::create($insertEmployeeInterview);
@@ -312,6 +326,7 @@ class InterviewEmployee extends Controller
                             'video_link' => !empty($request->video_link) ? $request->video_link : null,
                             'interview_instructions' => !empty($request->interview_instruction) ? $request->interview_instruction : null,
                         ];
+                        // dd($insertEmployeeInterviewRounds);
                         $employeeInterviewRoundData = InterviewEmployeeRounds::create($insertEmployeeInterviewRounds);
                         if ($employeeInterviewRoundData) {
                             $getInterviewTitle = InterviewProcess::where('id', $request->interview_process)->first();
@@ -501,30 +516,30 @@ class InterviewEmployee extends Controller
                     $validator = Validator::make($request->all(), [
                         'interview_process' => 'required',
                         'interviewer_id' => 'required',
-                        'interview_date' => 'required|string|max:255',
-                        'interview_start_time' => 'required|string|max:255',
-                        'duration' => 'required',
-                        'video_link' => 'required|string|max:255',
-                        'interview_instruction' => 'required',
+                        // 'interview_date' => 'required|string|max:255',
+                        // 'interview_start_time' => 'required|string|max:255',
+                        // 'duration' => 'required',
+                        // 'video_link' => 'required|string|max:255',
+                        // 'interview_instruction' => 'required',
                     ]);
                 } elseif ($request->interview_type == 'Telephonic') {
                     $validator = Validator::make($request->all(), [
                         'interview_process' => 'required',
                         'interviewer_id' => 'required',
-                        'interview_date' => 'required|string|max:255',
-                        'interview_start_time' => 'required|string|max:255',
-                        'duration' => 'required|string|max:255',
-                        'phone' => 'required|string|max:255',
-                        'interview_instruction' => 'required',
+                        // 'interview_date' => 'required|string|max:255',
+                        // 'interview_start_time' => 'required|string|max:255',
+                        // 'duration' => 'required|string|max:255',
+                        // 'phone' => 'required|string|max:255',
+                        // 'interview_instruction' => 'required',
                     ]);
                 } else{
                     $validator = Validator::make($request->all(), [
                         'interview_process' => 'required',
                         'interviewer_id' => 'required',
-                        'interview_date' => 'required|string|max:255',
-                        'interview_start_time' => 'required|string|max:255',
-                        'duration' => 'required|string|max:255',
-                        'interview_instruction' => 'required',
+                        // 'interview_date' => 'required|string|max:255',
+                        // 'interview_start_time' => 'required|string|max:255',
+                        // 'duration' => 'required|string|max:255',
+                        // 'interview_instruction' => 'required',
                     ]);
                 }
             }

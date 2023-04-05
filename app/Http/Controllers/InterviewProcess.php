@@ -177,7 +177,7 @@ class InterviewProcess extends Controller
                     'feedback_rating' => $request->feedback_rating[$i],
                     'status'=> '1',
                   );   
-            
+            // dd($technicalSkill);
                 EmployeeFeedback::create($technicalSkill);
                }
               }

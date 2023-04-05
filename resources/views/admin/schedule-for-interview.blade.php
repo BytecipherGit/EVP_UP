@@ -369,9 +369,9 @@
                 datatype: "html",
             }).done(function(data) {
                 if (id === '') {
-                    $('#Heading').text("Schedule Interivew");
+                    $('#Heading').text("Schedule Interview");
                 } else {
-                    $('#Heading').text("Update Schedule Interivew");
+                    $('#Heading').text("Update Schedule Interview");
                 }
                 $('#interviewModel').find('.modal-body').html(data);
                 $('#interviewModel').modal({
