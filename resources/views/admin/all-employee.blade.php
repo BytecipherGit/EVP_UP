@@ -74,17 +74,17 @@
           <tbody>             
             <tr>
               <td><input type="checkbox" id="customcheck1" name="customcheck1"></td>
-              <td>#00{{ $emp->emp_id }}</td>
+              <td>#00{{ $emp->employee_id }}</td>
               <td>{{ $emp->first_name .' '. $emp->last_name }}</td>
               <td>{{$emp->mang_desig }}</td>
               <td>{{$emp->mang_dept }}</td>
               <td>{{$emp->mang_name }}</td>
               @if($emp->status == 1)
               <td style="color:#5BD94E">Available Employee</td>
-              <td class="d-flex"><a href="edit-employee/{{ $emp->emp_id }}" class="view-btn">View</a><a href="employee-exit/{{ $emp->emp_id }}" title="Exit Employee" class="edit-btn">Exit</a></td>
+              <td class="d-flex"><a href="edit-employee/{{ $emp->employee_id }}" class="view-btn">View</a><a href="employee-exit/{{ $emp->employee_id }}" title="Exit Employee" class="edit-btn">Exit</a></td>
               @else
               <td style="color:#ac2029">Exit Employee</td>
-              <td class="d-flex disabled"><a href="edit-employee/{{ $emp->emp_id }}" class="view-btn">View</a><a href="employee-exit/{{ $emp->emp_id }}" title="Employee Already Exit" class="edit-btn disabled">Exit</a></td>
+              <td class="d-flex disabled"><a href="edit-employee/{{ $emp->employee_id }}" class="view-btn">View</a><a href="employee-exit/{{ $emp->employee_id }}" title="Employee Already Exit" class="edit-btn disabled">Exit</a></td>
               @endif
             </tr> 
                              

@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('exit_employee', function (Blueprint $table) {
             $table->id();
-            $table->string('emp_id');
+            $table->string('employee_id');
             $table->string('do_exit');
             $table->string('decipline')->nullable();
             $table->string('reason')->nullable();

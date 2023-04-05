@@ -1,5 +1,5 @@
 @extends('admin/layouts/emp_app')
-@section('emp_identity')
+@section('employee_identity')
 @section('title','EVP - Onboarding-Employee')
 
  <!--- Main Container Start ----->
@@ -176,7 +176,7 @@
   <!--- Main Container Close ----->
 
   {{-- Identity Field --}}
-  {{-- @yield('emp_identity');
+  {{-- @yield('employee_identity');
   @yield('emp_quali'); --}}
 
    

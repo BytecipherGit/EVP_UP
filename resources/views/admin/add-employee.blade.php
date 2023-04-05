@@ -834,7 +834,7 @@
                         <div class="col-xl-3 col-lg-6 col-md-12">
                           <div class="form-group">
                             <label>Employee ID</label>
-                            <input type="text" name="emp_id" class="form-control" @if($basic) value="#00{{ $basic->id }}" @else value="" @endif placeholder="Id Number" readonly>
+                            <input type="text" name="employee_id" class="form-control" @if($basic) value="#00{{ $basic->id }}" @else value="" @endif placeholder="Id Number" readonly>
                           </div>
                         </div>
                         <div class="col-xl-3 col-lg-6 col-md-12">

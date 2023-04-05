@@ -43,13 +43,13 @@
               @foreach($pastemp as $pastemps) 
               <tr>
                 {{-- <td><input type="checkbox" id="customcheck1" name="customcheck1"></td> --}}
-                <td>#00{{$pastemps->emp_id}}</td>
+                <td>#00{{$pastemps->employee_id}}</td>
                 <td>{{ $pastemps->first_name . ' ' . $pastemps->last_name }}</td>
                 <td>{{$pastemps->mang_desig}}</td>
                 <td>{{$pastemps->mang_dept}}</td>
                 <td>{{$pastemps->mang_name}}</td>
                
-                <td class="d-flex"><a href="/post-employee-details/{{ $pastemps->emp_id }}" class="edit-btn fa fa-eye" data-title="View"></a></td>
+                <td class="d-flex"><a href="/post-employee-details/{{ $pastemps->employee_id }}" class="edit-btn fa fa-eye" data-title="View"></a></td>
               </tr> 
               @endforeach                    
             </tbody>

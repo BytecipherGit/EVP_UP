@@ -815,7 +815,7 @@ class InterviewEmployee extends Controller
         if (!empty($request->interviewId)) {
             $interview = EmployeeInterview::find($request->interviewId);
             $interviewer = EmployeeInterview::join('interview_employee_rounds','interview_employee_rounds.interview_employees_id','=','interview_employees.id')
-                         ->join('emp_basicinfo','emp_basicinfo.id','=','interview_employee_rounds.interviewer_id')->select('emp_basicinfo.*')
+                         ->join('employee','employee.id','=','interview_employee_rounds.interviewer_id')->select('employee.*')
                          ->where('interview_employees.id', $request->interviewId)->first();
 
             if (!empty($interview->email) && !empty($interviewer->email)) { 

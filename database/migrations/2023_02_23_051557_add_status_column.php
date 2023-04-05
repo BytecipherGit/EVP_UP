@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('emp_basicinfo', function (Blueprint $table) {
+        Schema::table('employee', function (Blueprint $table) {
             $table->boolean('status')->default(1)->comment('2 Invite,1 Current, 0 Past');
         });
     }
@@ -25,7 +25,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('emp_basicinfo', function (Blueprint $table) {
+        Schema::table('employee', function (Blueprint $table) {
             $table->dropColumn('status');
         });
     }

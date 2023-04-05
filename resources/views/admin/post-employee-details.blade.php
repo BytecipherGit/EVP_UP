@@ -29,7 +29,7 @@
           </div>
           <h2>
             {{$basic->first_name .' '. $basic->last_name}}
-            <span>Code - <small>#BCS{{$workhistory->emp_id}}</small></span>   
+            <span>Code - <small>#BCS{{$workhistory->employee_id}}</small></span>   
             <span>Designation - <small>{{$workhistory->designation}}</small></span>          
           </h2>
         </div>   
@@ -238,7 +238,7 @@
                     <div class="row">
                       <div class="col-lg-4 col-md-6">
                         <h4>Employee ID</h4>
-                        <p>BEC/{{$workhistory->emp_id}}</p>
+                        <p>BEC/{{$workhistory->employee_id}}</p>
                       </div>
                       <div class="col-lg-4 col-md-6">
                         <h4>Date of Joining</h4>

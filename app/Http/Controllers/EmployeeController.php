@@ -22,43 +22,18 @@ class EmployeeController extends Controller
     public function index(request $request){
   
         $basic=Employee:: where('id',$request->id)->first();
-        $identity=Employeeidentity:: where('emp_id',$request->id)->get();
-        $ident=Employeeidentity:: where('emp_id',$request->id)->first();
-        $qual_item=Empqualification:: where('emp_id',$request->id)->get();
-        $quali=Empqualification:: where('emp_id',$request->id)->first();
-        $workhistory=Empworkhistory:: where('emp_id',$request->id)->get();
-        $workh=Empworkhistory:: where('emp_id',$request->id)->first();
-        $skills=Empskills:: where('emp_id',$request->id)->first();
-        $skill_item=Empskills:: where('emp_id',$request->id)->get();
-        $lang_item=Emplang:: where('emp_id',$request->id)->get();
-        $official= Empofficial::where('emp_id',$request->id)->first();
+        $identity=Employeeidentity:: where('employee_id',$request->id)->get();
+        $ident=Employeeidentity:: where('employee_id',$request->id)->first();
+        $qual_item=Empqualification:: where('employee_id',$request->id)->get();
+        $quali=Empqualification:: where('employee_id',$request->id)->first();
+        $workhistory=Empworkhistory:: where('employee_id',$request->id)->get();
+        $workh=Empworkhistory:: where('employee_id',$request->id)->first();
+        $skills=Empskills:: where('employee_id',$request->id)->first();
+        $skill_item=Empskills:: where('employee_id',$request->id)->get();
+        $lang_item=Emplang:: where('employee_id',$request->id)->get();
+        $official= Empofficial::where('employee_id',$request->id)->first();
     
         return view('admin/add-employee',compact('basic','identity','qual_item','ident','workhistory','quali','workh','skills','official','lang_item','skill_item'));
-    }
-    public function identity(){
-    
-          return view('admin/emp_identity');
-      }
-      public function qualification(){
-    
-          return view('admin/emp_qualification');
-      }
-      public function workHistory(){
-  
-        return view('admin/emp_workhistory');
-      }
-      public function skills(){
-   
-        return view('admin/emp_skills');
-      }
-      public function getOfficial(){
-
-        return view('admin/emp_official');
-      }
-
-      public function editIdentity(){
-   
-        return view('admin/edit_identity');
     }
 
         public function editQualification(){
@@ -84,7 +59,7 @@ class EmployeeController extends Controller
        $request->validate([
         'first_name' => ['required', 'string', 'max:255'],
         'last_name' => ['required', 'string', 'max:255'],
-        'email' => ['required', 'unique:emp_basicinfo,email', 'email'],
+        'email' => ['required', 'unique:employee,email', 'email'],
         'blood_group' => ['required'],
         'gender' => ['required'],
         'dob' => ['required'],
@@ -98,11 +73,12 @@ class EmployeeController extends Controller
         'emg_address' => ['required','string', 'max:255'],
 
         ]);
+        $empCode = substr(time(), -6) . sprintf('%04d', rand(0, 9999));
 
         $employe = new Employee();
         $employe->first_name=$request->input('first_name');
         $employe->profile=$request->input('profile');
-        $employe->company_id=Auth::id();
+        $employe->empCode = $empCode;
         $employe->last_name=$request->input('last_name');
         $employe->middle_name=$request->input('middle_name');
         $employe->email=$request->input('email');
@@ -127,7 +103,7 @@ class EmployeeController extends Controller
      
          $employe->save();
     
-          $basicinfo = Employeeidentity::where('emp_id',$request->id)->first();
+          $basicinfo = Employeeidentity::where('employee_id',$request->id)->first();
           if (empty($basicinfo)) {
       
             $basic=Employee::where('email',$request->email)->first();
@@ -153,17 +129,16 @@ class EmployeeController extends Controller
             $basic_info['profile']= $filename;
           }
          else{
-          $image=DB::table('emp_basicinfo')->where('id',$request->id)->first();
+          $image=DB::table('employee')->where('id',$request->id)->first();
           $filename=$image->profile;
           // print_r($image->profile);die();
          }
-          $basic_info=DB::table('emp_basicinfo')->where('id',$request->id)
+          $basic_info=DB::table('employee')->where('id',$request->id)
           ->update([
                 'first_name'=>$request->input('first_name'),
                 'last_name'=>$request->input('last_name'),
                 'middle_name'=>$request->input('middle_name'),
                 'email'=>$request->input('email'),
-                'company_id'=>Auth::id(),
                 'profile'=>$filename,
                 'phone'=>$request->input('phone'),
                 'dob'=>$request->input('dob'),
@@ -193,27 +168,27 @@ class EmployeeController extends Controller
 
               $basic_id=Employee::where('id',$request->id)->first();
               // print_r($basic_id);die();
-              $emp_ident = new Employeeidentity();
-              $emp_ident->emp_id=$basic_id->id;
-              $emp_ident->company_id= Auth::id();
-              $emp_ident->id_type=$request->input('id_type');
-              $emp_ident->id_number=$request->input('id_number');
-              $emp_ident->document=$request->input('document');
-              $emp_ident->verification_type=$request->input('verification_type');
+              $employee_ident = new Employeeidentity();
+              $employee_ident->employee_id=$basic_id->id;
+              $employee_ident->company_id= Auth::id();
+              $employee_ident->id_type=$request->input('id_type');
+              $employee_ident->id_number=$request->input('id_number');
+              $employee_ident->document=$request->input('document');
+              $employee_ident->verification_type=$request->input('verification_type');
             
 
               if($request->has('document')) {
                 $image = $request->file('document');
-                $emp_ident->document = $image->getClientOriginalName();
+                $employee_ident->document = $image->getClientOriginalName();
                 $image->move(public_path('/Image'), $image->getClientOriginalName());
                 }
       
-              $emp_ident->save();
-              $identityinfo = Empqualification::where('emp_id',$request->id)->first();
+              $employee_ident->save();
+              $identityinfo = Empqualification::where('employee_id',$request->id)->first();
               if (empty($identityinfo)) {
           
-                $basic=Employeeidentity::where('emp_id',$request->id)->first();
-                $id=$basic->emp_id;
+                $basic=Employeeidentity::where('employee_id',$request->id)->first();
+                $id=$basic->employee_id;
             
                 return redirect('add-employee/'.$id)->with('tabs-2_active', true);
           
@@ -241,30 +216,30 @@ class EmployeeController extends Controller
                 ]);
                 
                 $identity_id=Employee::where('id',$request->id)->first();
-                $emp_qualf = new Empqualification();
-                $emp_qualf->emp_id=$identity_id->id;
-                $emp_qualf->company_id=Auth::id();
-                $emp_qualf->inst_name=$request->input('inst_name');
-                $emp_qualf->degree=$request->input('degree');
-                $emp_qualf->subject=$request->input('subject');
-                $emp_qualf->duration_from=$request->input('duration_from');
-                $emp_qualf->duration_to=$request->input('duration_to');
-                $emp_qualf->document=$request->input('document');
-                $emp_qualf->verification_type=$request->input('verification_type');
+                $employee_qualf = new Empqualification();
+                $employee_qualf->employee_id=$identity_id->id;
+                $employee_qualf->company_id=Auth::id();
+                $employee_qualf->inst_name=$request->input('inst_name');
+                $employee_qualf->degree=$request->input('degree');
+                $employee_qualf->subject=$request->input('subject');
+                $employee_qualf->duration_from=$request->input('duration_from');
+                $employee_qualf->duration_to=$request->input('duration_to');
+                $employee_qualf->document=$request->input('document');
+                $employee_qualf->verification_type=$request->input('verification_type');
               
                 if($request->has('document')) {
                   $image = $request->file('document');
-                  $emp_qualf->document = $image->getClientOriginalName();
+                  $employee_qualf->document = $image->getClientOriginalName();
                   $image->move(public_path('/Image'), $image->getClientOriginalName());
                  }
         
-                $emp_qualf->save();
+                $employee_qualf->save();
              
-                $qualifinfo = Empworkhistory::where('emp_id',$request->id)->first();
+                $qualifinfo = Empworkhistory::where('employee_id',$request->id)->first();
                 if (empty($qualifinfo)) {
             
-                  $qual=Empqualification::where('emp_id',$request->id)->first();
-                  $id=$qual->emp_id;
+                  $qual=Empqualification::where('employee_id',$request->id)->first();
+                  $id=$qual->employee_id;
                   return redirect('add-employee/'.$id)->with('tabs-3_active', true);
                  }
                  else{
@@ -290,42 +265,42 @@ class EmployeeController extends Controller
                 ]);
 
                 $identity_id=Employee::where('id',$request->id)->first();
-                $emp_work = new Empworkhistory();
-                $emp_work->emp_id=$identity_id->id;
-                $emp_work->company_id=Auth::id();
-                $emp_work->com_name=$request->input('com_name');
-                $emp_work->designation=$request->input('designation');
-                $emp_work->offer_letter=$request->input('offer_letter');
-                $emp_work->work_duration_from=$request->input('work_duration_from');
-                $emp_work->work_duration_to=$request->input('work_duration_to');
-                $emp_work->exp_letter=$request->input('exp_letter');
-                $emp_work->salary_slip=$request->input('salary_slip');
-                $emp_work->verification_type=$request->input('verification_type');
+                $employee_work = new Empworkhistory();
+                $employee_work->employee_id=$identity_id->id;
+                $employee_work->company_id=Auth::id();
+                $employee_work->com_name=$request->input('com_name');
+                $employee_work->designation=$request->input('designation');
+                $employee_work->offer_letter=$request->input('offer_letter');
+                $employee_work->work_duration_from=$request->input('work_duration_from');
+                $employee_work->work_duration_to=$request->input('work_duration_to');
+                $employee_work->exp_letter=$request->input('exp_letter');
+                $employee_work->salary_slip=$request->input('salary_slip');
+                $employee_work->verification_type=$request->input('verification_type');
               
 
                 if($request->has('offer_letter')) {
                   $image = $request->file('offer_letter');
-                  $emp_work->offer_letter = $image->getClientOriginalName();
+                  $employee_work->offer_letter = $image->getClientOriginalName();
                   $image->move(public_path('/Image'), $image->getClientOriginalName());
                 }
                 if($request->has('exp_letter')) {
                   $image = $request->file('exp_letter');
-                  $emp_work->exp_letter = $image->getClientOriginalName();
+                  $employee_work->exp_letter = $image->getClientOriginalName();
                   $image->move(public_path('/Image'), $image->getClientOriginalName());
                 }
                 if($request->has('salary_slip')) {
                 $image = $request->file('salary_slip');
-                $emp_work->salary_slip = $image->getClientOriginalName();
+                $employee_work->salary_slip = $image->getClientOriginalName();
                 $image->move(public_path('/Image'), $image->getClientOriginalName());
                 }
         
         
-                $emp_work->save();
-                $workinfo = Empskills::where('emp_id',$request->id)->first();
+                $employee_work->save();
+                $workinfo = Empskills::where('employee_id',$request->id)->first();
                 if (empty($workinfo)) {
             
-                  $work=Empworkhistory::where('emp_id',$request->id)->first();
-                  $id=$work->emp_id;
+                  $work=Empworkhistory::where('employee_id',$request->id)->first();
+                  $id=$work->employee_id;
                   // $table=$basic->getTable();
                   // return view('admin/add-employee/'.$id ,compact('basic'));
                   return redirect('add-employee/'.$id)->with('tabs-4_active', true);
@@ -347,31 +322,31 @@ class EmployeeController extends Controller
                 for ($i=0; $i < count($request->skill); $i++) 
                 {   
                   $insertDataSkill = array(  
-                    'emp_id' => $identity_id->id,
+                    'employee_id' => $identity_id->id,
                     'company_id' => Auth::id(),
                     'skill' => $request->skill[$i],
                     'skill_type' => $request->skill_type[$i],
                     ); 
-                    DB::table('emp_skills')->insert($insertDataSkill);  
+                    DB::table('employee_skills')->insert($insertDataSkill);  
                   }
               for ($j=0; $j < count($request->lang); $j++) 
               {   
                 $insertDatalang = array(  
-                  'emp_id' => $identity_id->id,
+                  'employee_id' => $identity_id->id,
                   'company_id' => Auth::id(),
                   'lang' =>  $request->lang[$j],
                   'lang_type' => $request->lang_type[$j],
                   ); 
                   
                 
-                  DB::table('emp_language')->insert($insertDatalang);  
+                  DB::table('employee_language')->insert($insertDatalang);  
             }
           
-                $official = Empofficial::where('emp_id',$request->id)->first();
+                $official = Empofficial::where('employee_id',$request->id)->first();
                 if (empty($official)) {
             
-                  $skill=Empskills::where('emp_id',$request->id)->first();
-                  $id=$skill->emp_id;
+                  $skill=Empskills::where('employee_id',$request->id)->first();
+                  $id=$skill->employee_id;
                   // $table=$basic->getTable();
                   // return view('admin/add-employee/'.$id ,compact('basic'));
                   return redirect('add-employee/'.$id)->with('tabs-5_active', true);
@@ -388,7 +363,7 @@ class EmployeeController extends Controller
                 $userid=Employee::where('id',$request->id)->first();
 
                 $skill = new Empskills();
-                $skill->emp_id=$userid->id;
+                $skill->employee_id=$userid->id;
                 $skill->company_id=Auth::id();
                 $skill->skill = $request->input('skill'); ;
                 $skill->skill_type=$request->input('skill_type');
@@ -401,7 +376,7 @@ class EmployeeController extends Controller
                 $userid=Employee::where('id',$request->id)->first();
                 
                 $lang = new Emplang();
-                $lang->emp_id=$userid->id;
+                $lang->employee_id=$userid->id;
                 $lang->company_id=Auth::id();
                 $lang->lang = $request->input('lang'); ;
                 $lang->lang_type=$request->input('lang_type');
@@ -437,33 +412,33 @@ class EmployeeController extends Controller
                   ]);
 
                 $identity_id=Employee::where('id',$request->id)->first();
-                $emp_off = new Empofficial();
-                $emp_off->emp_id=$identity_id->id;
-                $emp_off->doj=$request->input('doj');
-                $emp_off->company_id = Auth::id();
-                $emp_off->prob_period=$request->input('prob_period');
-                $emp_off->emp_type=$request->input('emp_type');
-                $emp_off->work_location=$request->input('work_location');
-                $emp_off->emp_status=$request->input('emp_status');
-                $emp_off->salary=$request->input('salary');
-                $emp_off->lpa=$request->input('lpa');
-                $emp_off->app_from=$request->input('app_from');
-                $emp_off->app_to=$request->input('app_to');
-                $emp_off->last_app_desig=$request->input('last_app_desig');
-                $emp_off->current_app_desig=$request->input('current_app_desig');
-                $emp_off->app_date=$request->input('app_date');
-                $emp_off->pro_from=$request->input('pro_from');
-                $emp_off->pro_to=$request->input('pro_to');
-                $emp_off->last_pro_desig=$request->input('last_pro_desig');
-                $emp_off->current_pro_desig=$request->input('current_pro_desig');
-                $emp_off->pro_date=$request->input('pro_date');
-                $emp_off->mang_name=$request->input('mang_name');
-                $emp_off->mang_type=$request->input('mang_type');
-                $emp_off->mang_dept=$request->input('mang_dept');
-                $emp_off->mang_desig=$request->input('mang_desig');
+                $employee_off = new Empofficial();
+                $employee_off->employee_id=$identity_id->id;
+                $employee_off->doj=$request->input('doj');
+                $employee_off->company_id = Auth::id();
+                $employee_off->prob_period=$request->input('prob_period');
+                $employee_off->emp_type=$request->input('emp_type');
+                $employee_off->work_location=$request->input('work_location');
+                $employee_off->emp_status=$request->input('emp_status');
+                $employee_off->salary=$request->input('salary');
+                $employee_off->lpa=$request->input('lpa');
+                $employee_off->app_from=$request->input('app_from');
+                $employee_off->app_to=$request->input('app_to');
+                $employee_off->last_app_desig=$request->input('last_app_desig');
+                $employee_off->current_app_desig=$request->input('current_app_desig');
+                $employee_off->app_date=$request->input('app_date');
+                $employee_off->pro_from=$request->input('pro_from');
+                $employee_off->pro_to=$request->input('pro_to');
+                $employee_off->last_pro_desig=$request->input('last_pro_desig');
+                $employee_off->current_pro_desig=$request->input('current_pro_desig');
+                $employee_off->pro_date=$request->input('pro_date');
+                $employee_off->mang_name=$request->input('mang_name');
+                $employee_off->mang_type=$request->input('mang_type');
+                $employee_off->mang_dept=$request->input('mang_dept');
+                $employee_off->mang_desig=$request->input('mang_desig');
             
           
-                $emp_off->save();
+                $employee_off->save();
 
                 return redirect('employee');
              }
@@ -482,11 +457,11 @@ class EmployeeController extends Controller
             $basic_info['profile']= $filename;
           }
          else{
-          $image=DB::table('emp_basicinfo')->where('id',$request->id)->first();
+          $image=DB::table('employee')->where('id',$request->id)->first();
           $filename=$image->profile;
           // print_r($image->profile);die();
          }
-         $basic_info=DB::table('emp_basicinfo')->where('id',$request->id)
+         $basic_info=DB::table('employee')->where('id',$request->id)
          ->update([
                 'first_name'=>$request->input('first_name'),
                 'last_name'=>$request->input('last_name'),
@@ -517,12 +492,12 @@ class EmployeeController extends Controller
             $identity_info['document']= $filename;
         }
         else{
-          $image2=DB::table('emp_identity')->where('id',$request->id)->first();
+          $image2=DB::table('employee_identity')->where('id',$request->id)->first();
           $filename=$image2->document;
         
         }
   
-          $identity_info=DB::table('emp_identity')->where('id',$request->id)
+          $identity_info=DB::table('employee_identity')->where('id',$request->id)
           ->update([
                   'id_type'=>$request->input('id_type'),
                   'id_number'=>$request->input('id_number'),
@@ -541,12 +516,12 @@ class EmployeeController extends Controller
             $qua_inf['document']= $filename;
         }
         else{
-          $image=DB::table('emp_qualifications')->where('id',$request->id)->get();
+          $image=DB::table('employee_qualifications')->where('id',$request->id)->get();
           foreach($image as $img){
           $filename=$img->document;
           }
         }
-          $qua_inf=DB::table('emp_qualifications')->where('id',$request->id)
+          $qua_inf=DB::table('employee_qualifications')->where('id',$request->id)
           ->update([
                   'inst_name'=>$request->input('inst_name'),
                   'degree'=>$request->input('degree'),
@@ -568,7 +543,7 @@ class EmployeeController extends Controller
             $work_inf['offer_letter']= $filename1;
           }
           else{
-            $image=DB::table('emp_workhistories')->where('id',$request->id)->first();
+            $image=DB::table('employee_workhistories')->where('id',$request->id)->first();
             $filename1=$image->offer_letter;
        
           }
@@ -580,7 +555,7 @@ class EmployeeController extends Controller
             $work_inf['exp_letter']= $filename2;
               }
               else{
-                $image=DB::table('emp_workhistories')->where('id',$request->id)->first();
+                $image=DB::table('employee_workhistories')->where('id',$request->id)->first();
                 $filename2=$image->exp_letter;
               }
 
@@ -591,11 +566,11 @@ class EmployeeController extends Controller
               $work_inf['salary_slip']= $filename3;
           }
           else{
-            $image=DB::table('emp_workhistories')->where('id',$request->id)->first();
+            $image=DB::table('employee_workhistories')->where('id',$request->id)->first();
             $filename3=$image->salary_slip;
           
           }
-          $work_inf=DB::table('emp_workhistories')->where('id',$request->id)
+          $work_inf=DB::table('employee_workhistories')->where('id',$request->id)
               ->update([
                   'com_name'=>$request->input('com_name'),
                   'designation'=>$request->input('designation'),
@@ -611,7 +586,7 @@ class EmployeeController extends Controller
         }
 
         if(isset($_POST['official-edit'])){
-          $identity_inf=DB::table('emp_officials')->where('emp_id',$id)
+          $identity_inf=DB::table('employee_officials')->where('employee_id',$id)
           ->update([
                   'doj'=>$request->input('doj'),
                   'prob_period'=>$request->input('prob_period'),
@@ -645,7 +620,7 @@ class EmployeeController extends Controller
           
        
           // dd($skill->id);
-          $identity_inf=DB::table('emp_skills')->where('id', $request->id)
+          $identity_inf=DB::table('employee_skills')->where('id', $request->id)
           ->update([
             
                   'skill'=>$request->input('skill'),
@@ -658,7 +633,7 @@ class EmployeeController extends Controller
           }
 
         if(isset($_POST['skilllang-edit'])){
-          $identity_inf=DB::table('emp_language')->where('id', $request->id)
+          $identity_inf=DB::table('employee_language')->where('id', $request->id)
           ->update([
                   'lang'=>$request->input('lang'),
                   'lang_type'=>$request->input('lang_type'),
@@ -672,16 +647,16 @@ class EmployeeController extends Controller
      
       public function getEditEmployee(request $request,$id){
         $basic=Employee::where('id',$id)->first();
-        $identity=Employeeidentity::where('emp_id',$request->id)->first();
-        $qualification=Empqualification::where('emp_id',$request->id)->first();
-        $qual_item=Empqualification::where('emp_id',$request->id)->get();
-        $workhistory=Empworkhistory::where('emp_id',$request->id)->first();
-        $skills=Empskills::where('emp_id',$request->id)->first();
-        $skill_item=Empskills:: where('emp_id',$request->id)->get();
-        $lang_item=Emplang:: where('emp_id',$request->id)->get();
-        $ident_item=Employeeidentity::where('emp_id',$request->id)->get();
-        $work_item=Empworkhistory::where('emp_id',$request->id)->get();
-        $official= Empofficial::where('emp_id',$request->id)->first();
+        $identity=Employeeidentity::where('employee_id',$request->id)->first();
+        $qualification=Empqualification::where('employee_id',$request->id)->first();
+        $qual_item=Empqualification::where('employee_id',$request->id)->get();
+        $workhistory=Empworkhistory::where('employee_id',$request->id)->first();
+        $skills=Empskills::where('employee_id',$request->id)->first();
+        $skill_item=Empskills:: where('employee_id',$request->id)->get();
+        $lang_item=Emplang:: where('employee_id',$request->id)->get();
+        $ident_item=Employeeidentity::where('employee_id',$request->id)->get();
+        $work_item=Empworkhistory::where('employee_id',$request->id)->get();
+        $official= Empofficial::where('employee_id',$request->id)->first();
 
         return view('admin/edit-employee',compact('basic','identity','qualification','workhistory','skills','official','skill_item','lang_item','qual_item','ident_item','work_item'));
       }
@@ -694,8 +669,8 @@ class EmployeeController extends Controller
 
       public function getAllEmp(){
       
-         $allemp=DB::table('emp_basicinfo')->join('emp_officials', 'emp_basicinfo.id', '=', 'emp_officials.emp_id')
-                          ->select('emp_basicinfo.*', 'emp_officials.*')->where('emp_basicinfo.company_id', Auth::id())->get();
+         $allemp=DB::table('employee')->join('employee_officials', 'employee.id', '=', 'employee_officials.employee_id')
+                          ->select('employee.*', 'employee_officials.*')->get();
 
          return view('admin/datatable',compact('allemp'));
       }
@@ -758,12 +733,13 @@ class EmployeeController extends Controller
              }
             //  dd($data);
             //  $email=$data['email'];
+            $empCode = substr(time(), -6) . sprintf('%04d', rand(0, 9999));
              // Table update
-             $id = DB::table('emp_basicinfo')->insertGetId(
+             $id = DB::table('employee')->insertGetId(
               [
                 'first_name' => $data['first_name'], 
                 'last_name' => $data['last_name'],
-                'company_id' => Auth::id(),
+                'empCode' => $empCode,
                 'first_name' => $data['first_name'], 
                 'last_name' => $data['last_name'],
                 'middle_name' => $data['middle_name'], 
@@ -786,14 +762,14 @@ class EmployeeController extends Controller
          
              $identity= new Employeeidentity;
              $identity->id_type=$data['id_type'];
-             $identity->emp_id=$id;
+             $identity->employee_id=$id;
              $identity->company_id=Auth::id();
              $identity->id_number=$data['id_number'];
              $identity->verification_type='Not Verified';
              $identity->save();
 
              $qualification= new Empqualification;
-             $qualification->emp_id=$id;
+             $qualification->employee_id=$id;
 
              $qualification->inst_name=$data['inst_name'];
              $qualification->degree=$data['degree'];
@@ -806,14 +782,14 @@ class EmployeeController extends Controller
 
 
              $skills= new Empskills;
-             $skills->emp_id=$id;
+             $skills->employee_id=$id;
              $skills->company_id=Auth::id();
              $skills->skill=$data['skill'];
              $skills->skill_type=$data['skill_type'];
              $skills->save();
 
              $skills= new Emplang;
-             $skills->emp_id=$id;
+             $skills->employee_id=$id;
              $skills->company_id=Auth::id();
              $skills->lang=$data['lang'];
              $skills->lang_type=$data['lang_type'];
@@ -821,43 +797,43 @@ class EmployeeController extends Controller
 
 
 
-                $emp_work = new Empworkhistory;
-                $emp_work->emp_id=$id;
-                $emp_work->com_name=$data['com_name'];
-                $emp_work->company_id=Auth::id();
-                $emp_work->designation=$data['designation'];
-                $emp_work->work_duration_from=$data['work_duration_from'];
-                $emp_work->work_duration_to=$data['work_duration_to'];
-                $emp_work->verification_type='Not Verified';
+                $employee_work = new Empworkhistory;
+                $employee_work->employee_id=$id;
+                $employee_work->com_name=$data['com_name'];
+                $employee_work->company_id=Auth::id();
+                $employee_work->designation=$data['designation'];
+                $employee_work->work_duration_from=$data['work_duration_from'];
+                $employee_work->work_duration_to=$data['work_duration_to'];
+                $employee_work->verification_type='Not Verified';
 
-                $emp_work->save();
+                $employee_work->save();
 
-                $emp_off = new Empofficial;
-                $emp_off->emp_id=$id;
-                $emp_off->doj=$data['doj'];
-                $emp_off->company_id=Auth::id();
-                $emp_off->prob_period=$data['prob_period'];
-                $emp_off->emp_type=$data['emp_type'];
-                $emp_off->work_location=$data['work_location'];
-                $emp_off->emp_status=$data['emp_status'];
-                $emp_off->salary=$data['salary'];
-                $emp_off->lpa=$data['lpa'];
-                $emp_off->app_from=$data['app_from'];
-                $emp_off->app_to=$data['app_to'];
-                $emp_off->last_app_desig=$data['last_app_desig'];
-                $emp_off->current_app_desig=$data['current_app_desig'];
-                $emp_off->app_date=$data['app_date'];
-                $emp_off->pro_from=$data['pro_from'];
-                $emp_off->pro_to=$data['pro_to'];
-                $emp_off->last_pro_desig=$data['last_pro_desig'];
-                $emp_off->current_pro_desig=$data['current_pro_desig'];
-                $emp_off->pro_date=$data['pro_date'];
-                $emp_off->mang_name=$data['mang_name'];
-                $emp_off->mang_type=$data['mang_type'];
-                $emp_off->mang_dept=$data['mang_dept'];
-                $emp_off->mang_desig=$data['mang_desig'];
+                $employee_off = new Empofficial;
+                $employee_off->employee_id=$id;
+                $employee_off->doj=$data['doj'];
+                $employee_off->company_id=Auth::id();
+                $employee_off->prob_period=$data['prob_period'];
+                $employee_off->emp_type=$data['emp_type'];
+                $employee_off->work_location=$data['work_location'];
+                $employee_off->emp_status=$data['emp_status'];
+                $employee_off->salary=$data['salary'];
+                $employee_off->lpa=$data['lpa'];
+                $employee_off->app_from=$data['app_from'];
+                $employee_off->app_to=$data['app_to'];
+                $employee_off->last_app_desig=$data['last_app_desig'];
+                $employee_off->current_app_desig=$data['current_app_desig'];
+                $employee_off->app_date=$data['app_date'];
+                $employee_off->pro_from=$data['pro_from'];
+                $employee_off->pro_to=$data['pro_to'];
+                $employee_off->last_pro_desig=$data['last_pro_desig'];
+                $employee_off->current_pro_desig=$data['current_pro_desig'];
+                $employee_off->pro_date=$data['pro_date'];
+                $employee_off->mang_name=$data['mang_name'];
+                $employee_off->mang_type=$data['mang_type'];
+                $employee_off->mang_dept=$data['mang_dept'];
+                $employee_off->mang_desig=$data['mang_desig'];
 
-                $emp_off->save();
+                $employee_off->save();
 
             
           }
@@ -872,15 +848,15 @@ class EmployeeController extends Controller
       }
 
       public function exitEmp($id){
-         $exitemp=DB::table('emp_basicinfo')->join('emp_officials', 'emp_basicinfo.id', '=', 'emp_officials.emp_id')->select('emp_basicinfo.id','emp_basicinfo.*', 'emp_officials.*')
-         ->where('emp_basicinfo.id',$id)->first();
+         $exitemp=DB::table('employee')->join('employee_officials', 'employee.id', '=', 'employee_officials.employee_id')->select('employee.id','employee.*', 'employee_officials.*')
+         ->where('employee.id',$id)->first();
          return view('admin/employee-exit',compact('exitemp'));
       }
 
       public function exitEmployee(request $request,$id){
-        $emp_id=Employee::where('id',$id)->first();
+        $employee_id=Employee::where('id',$id)->first();
         $exitemp = new Exitemp();
-        $exitemp->emp_id=$emp_id->id;
+        $exitemp->employee_id=$employee_id->id;
         $exitemp->do_exit=$request->input('do_exit');
         $exitemp->decipline=$request->input('decipline');
         $exitemp->reason=$request->input('reason');
@@ -896,7 +872,7 @@ class EmployeeController extends Controller
 
         $exitemp->save();
 
-       Employee::where('id',$exitemp->emp_id)->update([
+       Employee::where('id',$exitemp->employee_id)->update([
           'status'  => '0'
         ]);
 
@@ -904,8 +880,8 @@ class EmployeeController extends Controller
      }
 
      public function pastEmp(){
-      $pastemp=DB::table('exit_employee')->join('emp_basicinfo', 'exit_employee.emp_id', '=', 'emp_basicinfo.id')
-      ->join('emp_officials', 'emp_basicinfo.id', '=', 'emp_officials.emp_id')->select('emp_basicinfo.id','emp_basicinfo.*', 'exit_employee.*','emp_officials.*')->where('emp_basicinfo.company_id',Auth::id())->get();
+      $pastemp=DB::table('exit_employee')->join('employee', 'exit_employee.employee_id', '=', 'employee.id')
+      ->join('employee_officials', 'employee.id', '=', 'employee_officials.employee_id')->select('employee.id','employee.*', 'exit_employee.*','employee_officials.*')->get();
       return view('admin/post-employee',compact('pastemp'));
       }
 
@@ -913,22 +889,22 @@ class EmployeeController extends Controller
       
           // return redirect('edit-employee/40/identity');
           $basic=Employee:: where('id',$request->id)->first();
-          $identity=Employeeidentity:: where('emp_id',$request->id)->get();
-          $qualification=Empqualification:: where('emp_id',$request->id)->get();
-          $workhistory=Empworkhistory:: where('emp_id',$request->id)->first();
-          $workdetails=Empworkhistory:: where('emp_id',$request->id)->get();
-          $skills=Empskills:: where('emp_id',$request->id)->first();
-          $skill_item=Empskills:: where('emp_id',$request->id)->get();
-          $lang_item=Emplang:: where('emp_id',$request->id)->get();
-          $official= Empofficial::where('emp_id',$request->id)->first();
-          $exitemp= Exitemp::where('emp_id',$request->id)->first();
+          $identity=Employeeidentity:: where('employee_id',$request->id)->get();
+          $qualification=Empqualification:: where('employee_id',$request->id)->get();
+          $workhistory=Empworkhistory:: where('employee_id',$request->id)->first();
+          $workdetails=Empworkhistory:: where('employee_id',$request->id)->get();
+          $skills=Empskills:: where('employee_id',$request->id)->first();
+          $skill_item=Empskills:: where('employee_id',$request->id)->get();
+          $lang_item=Emplang:: where('employee_id',$request->id)->get();
+          $official= Empofficial::where('employee_id',$request->id)->first();
+          $exitemp= Exitemp::where('employee_id',$request->id)->first();
           return view('admin/post-employee-details',compact('basic','identity','qualification','workhistory','skills','official','exitemp','skill_item','lang_item','workdetails'));
       }
 
       public function currentEmp(){
   
-        $current=DB::table('emp_basicinfo')->join('emp_officials', 'emp_basicinfo.id', '=', 'emp_officials.emp_id')->select('emp_basicinfo.id','emp_basicinfo.*', 'emp_officials.*')
-        ->where('emp_basicinfo.status',1)->where('emp_basicinfo.company_id',Auth::id())->get();
+        $current=DB::table('employee')->join('employee_officials', 'employee.id', '=', 'employee_officials.employee_id')->select('employee.id','employee.*', 'employee_officials.*')
+        ->where('employee.status',1)->get();
         // print_r($current);die();
         return view('admin/current-employee',compact('current'));
       }
@@ -937,12 +913,12 @@ class EmployeeController extends Controller
         {
           $fileName = 'employee.csv';
           // $employee = Employee::all();
-          $employee = Employee::join('emp_identity', 'emp_identity.emp_id', '=', 'emp_basicinfo.id')
-                    ->join('emp_officials', 'emp_officials.emp_id', '=', 'emp_identity.emp_id')
-                    ->join('emp_skills', 'emp_skills.emp_id', '=', 'emp_officials.emp_id')
-                    ->join('emp_workhistories', 'emp_workhistories.emp_id', '=', 'emp_skills.emp_id')
-                    ->join('emp_qualifications', 'emp_qualifications.emp_id', '=', 'emp_workhistories.emp_id')->where('emp_basicinfo.company_id',Auth::id())
-                    ->get(['emp_basicinfo.*', 'emp_identity.*', 'emp_officials.*','emp_skills.*','emp_qualifications.*']);
+          $employee = Employee::join('employee_identity', 'employee_identity.employee_id', '=', 'employee.id')
+                    ->join('employee_officials', 'employee_officials.employee_id', '=', 'employee_identity.employee_id')
+                    ->join('employee_skills', 'employee_skills.employee_id', '=', 'employee_officials.employee_id')
+                    ->join('employee_workhistories', 'employee_workhistories.employee_id', '=', 'employee_skills.employee_id')
+                    ->join('employee_qualifications', 'employee_qualifications.employee_id', '=', 'employee_workhistories.employee_id')
+                    ->get(['employee.*', 'employee_identity.*', 'employee_officials.*','employee_skills.*','employee_qualifications.*']);
     
                   
         $headers = array(
