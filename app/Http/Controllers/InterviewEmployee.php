@@ -18,6 +18,7 @@ use App\Models\HiringStage;
 use App\Models\InterviewEmployeeRounds;
 use App\Models\InterviewProcess;
 use App\Models\Position;
+use App\Models\Employeeidentity;
 use App\Models\user;
 use Carbon\Carbon;
 use DateTime;
@@ -34,7 +35,7 @@ class InterviewEmployee extends Controller
     public function index(Request $request)
     {
         if (Auth::check()) {
-            $interviewEmployees = EmployeeInterview::where('company_id', Auth::id())->get();
+            $interviewEmployees = EmployeeInterview::all();
 
             // $interviewEmployees = EmployeeInterview::join('interview_employee_rounds', 'interview_employee_rounds.interview_employees_id', '=', 'interview_employees.id')
             //                       ->where('interview_employees.company_id', Auth::id())->select('interview_employees.*','interview_employee_rounds.interview_status')->latest()->get();
@@ -210,11 +211,7 @@ class InterviewEmployee extends Controller
                         'position' => 'required|string|max:255',
                         'interview_process' => 'required',
                         'interviewer_id' => 'required',
-                        // 'interview_date' => 'required|string|max:255',
-                        // 'interview_start_time' => 'required|string|max:255',
-                        // 'duration' => 'required',
-                        // 'video_link' => 'required|string|max:255',
-                        // 'interview_instruction' => 'required',
+
                     
 
                     ]);
@@ -226,11 +223,7 @@ class InterviewEmployee extends Controller
                         'position' => 'required|string|max:255',
                         'interview_process' => 'required',
                         'interviewer_id' => 'required',
-                        // 'interview_date' => 'required|string|max:255',
-                        // 'interview_start_time' => 'required|string|max:255',
-                        // 'duration' => 'required|string|max:255',
-                        // 'phone' => 'required|string|max:255',
-                        // 'interview_instruction' => 'required',
+
                    
 
                     ]);
@@ -242,10 +235,7 @@ class InterviewEmployee extends Controller
                         'position' => 'required|string|max:255',
                         'interview_process' => 'required',
                         'interviewer_id' => 'required',
-                        // 'interview_date' => 'required|string|max:255',
-                        // 'interview_start_time' => 'required|string|max:255',
-                        // 'duration' => 'required|string|max:255',
-                        // 'interview_instruction' => 'required',
+
                 
 
                     ]);
@@ -282,32 +272,50 @@ class InterviewEmployee extends Controller
                     $file = $request->file('document_id');
                     $fileName = time() . '_' . $file->getClientOriginalName();
                     $fileTrim = str_replace(" ", "-", $name);
-                    $file->storeAs('public/' . $fileTrim . '/employee_document_id', $fileName);
-                    $uploadDocumentIdPath = asset('storage/' . $fileTrim . '/employee_document_id/' . $fileName);
+                    $file->storeAs('public/' . $fileTrim . '/interview_instruction_documents', $fileName);
+                    $uploadDocumentIdPath = asset('storage/' . $fileTrim . '/interview_instruction_documents/' . $fileName);
                 }
 
-                
-
+              
                 $empCode = substr(time(), -6) . sprintf('%04d', rand(0, 9999));
-                $checkRecordExist = EmployeeInterview::where('empCode', $empCode)->first();
+                // $checkRecordExist = EmployeeInterview::where('empCode', $empCode)->first();
+                $checkRecordExist = Employee::where('empCode', $empCode)->first();
                 if (empty($checkRecordExist) && !empty($empCode)) {
-                    $insertEmployeeInterview = [
-                        'company_id' => Auth::id(),
+                    $insertEmployee = [
                         'empCode' => $empCode,
                         'first_name' => !empty($request->first_name) ? $request->first_name : null,
                         'last_name' => !empty($request->last_name) ? $request->last_name : null,
                         'email' => !empty($request->email) ? $request->email : null,
                         'phone'=> !empty($request->phone) ? $request->phone : null,
+
+
+                    ];
+                    $employeeData = Employee::create($insertEmployee);
+
+                    if (!empty($employeeData)) {
+                    $insertEmployeeIdentity = [
+                        'employee_id' => $employeeData->id,
+                        'id_type'=> !empty($request->document_type) ? $request->document_type : null,
+                        'id_number'=> !empty($request->document_number) ? $request->document_number : null,
+                        'document'=> $uploadDocumentIdPath,
+
+                    ];
+                    $employeeDataIdentity = Employeeidentity::create($insertEmployeeIdentity);
+                   }
+
+                   if (!empty($employeeData)) {
+                    $insertEmployeeInteview = [  
+                        'company_id' => Auth::id(),
+                        'employee_id' => $employeeData->id,
                         'position' => !empty($request->position) ? $request->position : null,
                         'rating' => !empty($request->rating) ? $request->rating : null,
                         'resume' => $uploadAttachementPath,
                         'instruction' => $uploadInstructionPath,
-                        'document_type' => !empty($request->document_type) ? $request->document_type : null,
-                        'document_number' => !empty($request->document_number) ? $request->document_number : null,
-                        'document_id' => $uploadDocumentIdPath,
 
                     ];
-                    $employeeInterviewData = EmployeeInterview::create($insertEmployeeInterview);
+                    $employeeInterviewData = EmployeeInterview::create($insertEmployeeInteview);
+                   }
+
                     if (!empty($employeeInterviewData)) {
                         // $interviewerArray = implode(",",$request->interviewer_id);
                         // dd($interviewerArray);

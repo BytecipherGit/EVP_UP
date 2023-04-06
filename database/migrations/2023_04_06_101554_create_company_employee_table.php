@@ -1,6 +1,5 @@
 <?php
 
-use Carbon\Carbon;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,18 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('interview_employees', function (Blueprint $table) {
+        Schema::create('company_employee', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('employee_id')->comment('employee Table PK');
-            $table->foreign('employee_id')->references('id')->on('employee')->comment('Id form employee')->onDelete('cascade');
             $table->unsignedInteger('company_id');
             $table->foreign('company_id')->references('id')->on('users')->onDelete('cascade');
-            $table->string('position')->nullable();
-            $table->string('rating')->nullable();
-            $table->string('resume')->nullable();
-            $table->string('instruction')->nullable();
+            $table->unsignedBigInteger('employee_id')->comment('employee Table PK');
+            $table->foreign('employee_id')->references('id')->on('employee')->comment('Id form employee')->onDelete('cascade');
+            // $table->string('empCode')->nullable();
+            $table->string('start_date')->nullable();
+            $table->string('end_date')->nullable();
+            $table->tinyInteger('status')->default('0')->comment('1=Active, 0=Inactive');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -36,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('interview_employees');
+        Schema::dropIfExists('company_employee');
     }
 };

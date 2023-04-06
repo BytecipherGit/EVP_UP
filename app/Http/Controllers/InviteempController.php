@@ -8,6 +8,7 @@ use App\Models\Empofficial;
 use App\Models\Empqualification;
 use App\Models\Empskills;
 use App\Models\Emplang;
+use App\Models\CompanyEmployee;
 use App\Models\Empworkhistory;
 use Auth;
 use Illuminate\Http\Request;
@@ -22,6 +23,9 @@ class InviteempController extends Controller
     public function index()
     {
         $empinvite = Employee::where('status', '2')->get();
+        $empinvite= CompanyEmployee::join('users','users.id','=','company_employee.company_id')
+                    ->join('employee','company_employee.employee_id','=','employee.id')->select('company_employee.*','users.id','employee.*')
+                    ->where('employee.status',2)->where('company_employee.company_id',Auth::user()->id)->get();
         return view('admin/invite-employee', compact('empinvite'));
     }
 
@@ -222,7 +226,7 @@ class InviteempController extends Controller
     public function downloadIdDoc(request $request)
     {
         $identity = Employeeidentity::where('id', $request->id)->first();
-        $file = public_path() . '/image/' . $identity->document;
+        $file = $identity->document;
         $headers = array(
             'Content-Type: application/jpg',
         );
