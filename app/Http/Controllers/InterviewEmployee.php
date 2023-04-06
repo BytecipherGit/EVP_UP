@@ -186,8 +186,10 @@ class InterviewEmployee extends Controller
     {
         if (Auth::check()) {
             $interviewProcesses = InterviewProcess::where('company_id', Auth::id())->orderby('id', 'asc')->get();
-            $positions = Position::where('company_id', Auth::id())->orderby('id', 'asc')->get();
-            $cmpEmployees = Employee::where('company_id', Auth::id())->orderby('id', 'desc')->get();
+            // $positions = Position::where('company_id', Auth::id())->orderby('id', 'asc')->get();
+            // $cmpEmployees = Employee::where('company_id', Auth::id())->orderby('id', 'desc')->get();
+            $positions = Position::orderby('id', 'asc')->get();
+            $cmpEmployees = Employee::orderby('id', 'desc')->get();
             // dd($positions);
             $interview = (!empty($id)) ? EmployeeInterview::find($id) : false;
             return view('admin.schedule-interview-form', compact('interview', 'interviewProcesses', 'cmpEmployees', 'positions'));
@@ -500,8 +502,10 @@ class InterviewEmployee extends Controller
     public function getNextRoundOfInterviewForm($id = '')
     {
         if (Auth::check()) {
-            $interviewProcesses = InterviewProcess::where('company_id', Auth::id())->orderby('id', 'asc')->get();
-            $cmpEmployees = Employee::where('company_id', Auth::id())->orderby('id', 'desc')->get();
+            // $interviewProcesses = InterviewProcess::where('company_id', Auth::id())->orderby('id', 'asc')->get();
+            // $cmpEmployees = Employee::where('company_id', Auth::id())->orderby('id', 'desc')->get();
+            $interviewProcesses = InterviewProcess::orderby('id', 'asc')->get();
+            $cmpEmployees = Employee::orderby('id', 'desc')->get();
             $interview = (!empty($id)) ? EmployeeInterview::find($id) : false;
             return view('admin.next-rouond-of-interview-form', compact('interview', 'interviewProcesses', 'cmpEmployees'));
         }

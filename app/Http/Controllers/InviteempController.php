@@ -130,11 +130,11 @@ class InviteempController extends Controller
                     // $value=($key=="role" || $key=="pin")?(string)$value: (integer)$value;
                     $value = ($key == "first_name") ? (string) $value : (integer) $value;
                 }
-
+                $empCode = substr(time(), -6) . sprintf('%04d', rand(0, 9999));
                 $info = new Employee;
                 $info->first_name = $data['first_name'];
                 $info->last_name = $data['last_name'];
-                $info->company_id = Auth::id();
+                $info->empCode = $empCode;
                 $info->middle_name = $data['middle_name'];
                 $info->email = $data['email'];
                 $info->phone = $data['phone'];
@@ -412,7 +412,6 @@ class InviteempController extends Controller
             // print_r($basic_id);die();
             $employee_ident = new Employeeidentity();
             $employee_ident->employee_id = $basic_id->id;
-            $employee_ident->company_id=Auth::id();
             $employee_ident->id_type = $request->input('id_type');
             $employee_ident->id_number = $request->input('id_number');
             $employee_ident->document = $request->input('document');
@@ -427,8 +426,6 @@ class InviteempController extends Controller
             $employee_ident->save();
 
             $official = new Empofficial();
-
-            $official->company_id=Auth::id();
             $official->employee_id=$basic_id->id;
             $official->save();
 
@@ -464,7 +461,6 @@ class InviteempController extends Controller
             $identity_id = Employee::where('id', $request->id)->first();
             $emp_qualf = new Empqualification();
             $emp_qualf->employee_id = $identity_id->id;
-            $emp_qualf->company_id=Auth::id();
             $emp_qualf->inst_name = $request->input('inst_name');
             $emp_qualf->degree = $request->input('degree');
             $emp_qualf->subject = $request->input('subject');
@@ -511,7 +507,6 @@ class InviteempController extends Controller
             $identity_id = Employee::where('id', $request->id)->first();
             $emp_work = new Empworkhistory();
             $emp_work->employee_id = $identity_id->id;
-            $emp_work->company_id=Auth::id();
             $emp_work->com_name = $request->input('com_name');
             $emp_work->designation = $request->input('designation');
             $emp_work->offer_letter = $request->input('offer_letter');
@@ -567,7 +562,6 @@ class InviteempController extends Controller
               $insertDataSkill = array(  
                 'employee_id' => $identity_id->id,
                 'skill' => $request->skill[$i],
-                'company_id' => Auth::id(),
                 'skill_type' => $request->skill_type[$i],
                 ); 
                 DB::table('employee_skills')->insert($insertDataSkill);  
@@ -577,7 +571,6 @@ class InviteempController extends Controller
           {   
             $insertDatalang = array(  
               'employee_id' => $identity_id->id,
-              'company_id' => Auth::id(),
               'lang' =>  $request->lang[$j],
               'lang_type' => $request->lang_type[$j],
               ); 

@@ -170,7 +170,6 @@ class EmployeeController extends Controller
               // print_r($basic_id);die();
               $employee_ident = new Employeeidentity();
               $employee_ident->employee_id=$basic_id->id;
-              $employee_ident->company_id= Auth::id();
               $employee_ident->id_type=$request->input('id_type');
               $employee_ident->id_number=$request->input('id_number');
               $employee_ident->document=$request->input('document');
@@ -218,7 +217,6 @@ class EmployeeController extends Controller
                 $identity_id=Employee::where('id',$request->id)->first();
                 $employee_qualf = new Empqualification();
                 $employee_qualf->employee_id=$identity_id->id;
-                $employee_qualf->company_id=Auth::id();
                 $employee_qualf->inst_name=$request->input('inst_name');
                 $employee_qualf->degree=$request->input('degree');
                 $employee_qualf->subject=$request->input('subject');
@@ -267,7 +265,6 @@ class EmployeeController extends Controller
                 $identity_id=Employee::where('id',$request->id)->first();
                 $employee_work = new Empworkhistory();
                 $employee_work->employee_id=$identity_id->id;
-                $employee_work->company_id=Auth::id();
                 $employee_work->com_name=$request->input('com_name');
                 $employee_work->designation=$request->input('designation');
                 $employee_work->offer_letter=$request->input('offer_letter');
@@ -323,7 +320,6 @@ class EmployeeController extends Controller
                 {   
                   $insertDataSkill = array(  
                     'employee_id' => $identity_id->id,
-                    'company_id' => Auth::id(),
                     'skill' => $request->skill[$i],
                     'skill_type' => $request->skill_type[$i],
                     ); 
@@ -333,7 +329,6 @@ class EmployeeController extends Controller
               {   
                 $insertDatalang = array(  
                   'employee_id' => $identity_id->id,
-                  'company_id' => Auth::id(),
                   'lang' =>  $request->lang[$j],
                   'lang_type' => $request->lang_type[$j],
                   ); 
@@ -364,7 +359,6 @@ class EmployeeController extends Controller
 
                 $skill = new Empskills();
                 $skill->employee_id=$userid->id;
-                $skill->company_id=Auth::id();
                 $skill->skill = $request->input('skill'); ;
                 $skill->skill_type=$request->input('skill_type');
                 $skill->save();
@@ -377,7 +371,6 @@ class EmployeeController extends Controller
                 
                 $lang = new Emplang();
                 $lang->employee_id=$userid->id;
-                $lang->company_id=Auth::id();
                 $lang->lang = $request->input('lang'); ;
                 $lang->lang_type=$request->input('lang_type');
                 $lang->save();
@@ -415,7 +408,6 @@ class EmployeeController extends Controller
                 $employee_off = new Empofficial();
                 $employee_off->employee_id=$identity_id->id;
                 $employee_off->doj=$request->input('doj');
-                $employee_off->company_id = Auth::id();
                 $employee_off->prob_period=$request->input('prob_period');
                 $employee_off->emp_type=$request->input('emp_type');
                 $employee_off->work_location=$request->input('work_location');
@@ -763,7 +755,6 @@ class EmployeeController extends Controller
              $identity= new Employeeidentity;
              $identity->id_type=$data['id_type'];
              $identity->employee_id=$id;
-             $identity->company_id=Auth::id();
              $identity->id_number=$data['id_number'];
              $identity->verification_type='Not Verified';
              $identity->save();
@@ -773,7 +764,6 @@ class EmployeeController extends Controller
 
              $qualification->inst_name=$data['inst_name'];
              $qualification->degree=$data['degree'];
-             $qualification->company_id=Auth::id();
              $qualification->subject=$data['subject'];
              $qualification->duration_from=$data['duration_from'];
              $qualification->duration_to=$data['duration_to'];
@@ -783,14 +773,12 @@ class EmployeeController extends Controller
 
              $skills= new Empskills;
              $skills->employee_id=$id;
-             $skills->company_id=Auth::id();
              $skills->skill=$data['skill'];
              $skills->skill_type=$data['skill_type'];
              $skills->save();
 
              $skills= new Emplang;
              $skills->employee_id=$id;
-             $skills->company_id=Auth::id();
              $skills->lang=$data['lang'];
              $skills->lang_type=$data['lang_type'];
              $skills->save();
@@ -800,7 +788,6 @@ class EmployeeController extends Controller
                 $employee_work = new Empworkhistory;
                 $employee_work->employee_id=$id;
                 $employee_work->com_name=$data['com_name'];
-                $employee_work->company_id=Auth::id();
                 $employee_work->designation=$data['designation'];
                 $employee_work->work_duration_from=$data['work_duration_from'];
                 $employee_work->work_duration_to=$data['work_duration_to'];
@@ -811,7 +798,6 @@ class EmployeeController extends Controller
                 $employee_off = new Empofficial;
                 $employee_off->employee_id=$id;
                 $employee_off->doj=$data['doj'];
-                $employee_off->company_id=Auth::id();
                 $employee_off->prob_period=$data['prob_period'];
                 $employee_off->emp_type=$data['emp_type'];
                 $employee_off->work_location=$data['work_location'];

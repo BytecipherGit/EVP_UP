@@ -18,7 +18,6 @@ return new class extends Migration
             $table->unsignedBigInteger('employee_id')->comment('employee Table PK');
             $table->foreign('employee_id')->references('id')->on('employee')->comment('Id form employee')->onDelete('cascade');
             $table->string('id_type')->nullable();
-            $table->integer('company_id');
             $table->bigInteger('id_number')->nullable();
             $table->string('document')->nullable();
             $table->string('verification_type')->nullable();
