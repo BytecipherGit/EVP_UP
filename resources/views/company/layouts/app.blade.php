@@ -13,7 +13,9 @@
     <link rel="stylesheet" href="{{ asset('assets') }}/admin/css/header-css.css">
     <link rel="stylesheet" href="{{ asset('assets') }}/admin/css/main-container.css">
     <link rel="stylesheet" href="{{ asset('assets') }}/admin/css/select2.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 
+    <script src="//cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
@@ -187,12 +189,12 @@
             </div>
             <aside>
 
-                {{-- <li>
+                <li>
                     <a href="search">
                         <img src="{{ asset('assets') }}/admin/images/search-icon-gray.png">
                         Search
                     </a>
-                </li> --}}
+                </li>
 
                 <li class="active">
                     <a href="/admin">
@@ -301,6 +303,42 @@
                                             </a>
                                         </li>
 
+                                    </ul>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="accordion">
+                    <div class="card">
+                        <div class="card-header" id="heading-3">
+                            <h5 class="mb-0">
+                                <a role="button" data-toggle="collapse" href="#collapse-3" aria-expanded="true"
+                                    aria-controls="collapse-3" class="">
+                                    Interview Email Template
+                                </a>
+                            </h5>
+                        </div>
+                        <div id="collapse-3" class="collapse show" data-parent="#accordion"
+                            aria-labelledby="heading-3" style="">
+                            <div class="card-body">
+
+                                <div id="accordion-1">
+                                    <ul>
+                                        <li>
+                                            <a href="/qualified-email-template">
+                                                <img src="" class="fa fa-user-plus">
+                                               For Qualified
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/not-qualified-template">
+                                                <img src="" class="fa fa-users">
+                                               For Not Qualified 
+                                            </a>
+                                        </li>
                                     </ul>
                                 </div>
 

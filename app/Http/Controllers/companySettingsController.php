@@ -98,11 +98,11 @@ class companySettingsController extends Controller
 
         if(isset($_POST['department_edit'])){
         // $department=new Department();
-        $depart= DB::table('departments')->where('id',$request->id)
-        ->update([
-          'department'=>$request->input('department'),
-          'sub_department'=>$request->input('sub_department')
-          ]);
+          $depart= DB::table('departments')->where('id',$request->id)
+          ->update([
+            'department'=>$request->input('department'),
+            'sub_department'=>$request->input('sub_department')
+            ]);
         return redirect()->back()->with('succ',"Data successfully added");
         }
 
@@ -117,4 +117,5 @@ class companySettingsController extends Controller
         }
         
     }
+
 }

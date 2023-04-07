@@ -40,10 +40,6 @@ Route::get('/table', function () {
     return view('admin/datatable');
 });
 
-Route::get('/search', function () {
-    return view('admin/search-history');
-});
-
 Route::get('/current-employee', function () {
     return view('admin/current-employee');
 });
@@ -167,7 +163,15 @@ Route::middleware([Admin::class])->group(function () {
     Route::post('feedback/submit', [FeedbackController::class, 'createFeedback'])->middleware('documents');
     Route::post('feedback/update', [FeedbackController::class, 'updateFeedback'])->middleware('documents');
     Route::post('feedback/destroy', [FeedbackController::class, 'deleteFeedback'])->middleware('documents');
-  
+    
+    Route::get('search', [App\Http\Controllers\SearchController::class, 'index'])->middleware('documents');
+    Route::get('search-global', [App\Http\Controllers\SearchController::class, 'search'])->name('search-global')->middleware('documents');
+    
+    // Route::get('posts', [App\Http\Controllers\EmailTemplatesController::class, "index"])->middleware('documents');
+    Route::get("qualified-email-template", [App\Http\Controllers\EmailTemplatesController::class, "createQualifiedEmail"])->middleware('documents');
+    Route::post('qualified-email-template', [App\Http\Controllers\EmailTemplatesController::class, "store"])->name('qualified-template')->middleware('documents');
+    Route::get("not-qualified-template", [App\Http\Controllers\EmailTemplatesController::class, "createNotQualifiedEmail"])->middleware('documents');
+    Route::post("not-qualified-template", [App\Http\Controllers\EmailTemplatesController::class,"upload"])->name('not-qualified-template')->middleware('documents');
 
 });
 Route::get('reload-captcha', [App\Http\Controllers\Auth\RegisteredUserController::class, 'reloadCaptcha'])->name('reloadCaptcha');
