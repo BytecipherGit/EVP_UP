@@ -34,7 +34,7 @@ return new class extends Migration
             $table->text('emg_address')->nullable();
             $table->string('document_type')->nullable();
             $table->string('document_number')->nullable()->unique();
-            $table->string('document_id')->nullable()->unique();
+            $table->string('document_id')->nullable();
             $table->timestamps();
         });
     }

@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="{{ asset('assets') }}/admin/css/font-awesome.min.css">
     <link rel="stylesheet" href="{{ asset('assets') }}/admin/css/header-css.css">
     <link rel="stylesheet" href="{{ asset('assets') }}/admin/css/main-container.css">
+    <link rel="stylesheet" href="{{ asset('assets') }}/admin/css/jquery-ui.min.css" />
     <link rel="stylesheet" href="{{ asset('assets') }}/admin/css/select2.min.css">
 
 

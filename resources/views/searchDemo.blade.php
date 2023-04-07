@@ -15,7 +15,7 @@
 </div>
      
 <script type="text/javascript">
-    var path = "{{ route('autocomplete') }}";
+    var path = "{{ route('employeeNameAutocomplete') }}";
   
     $( "#search" ).autocomplete({
         source: function( request, response ) {

@@ -20,24 +20,29 @@
 <h2 class="modal-title" id=""></h2>
 <input type="hidden" id="is_add" value="{{ $interview ? '' : 1 }}" />
 <input type="hidden" id="interview_id" name="interview_id" value="{{ $interview ? $interview->id : '' }}" />
+<input type="hidden" id="employee_id" name="employee_id" value="{{ $interview ? $interview->employee_id : '' }}" />
+<div class="form-group">
+    <label>Search Employee</label>
+    <input type="type" name="search_employee" id="search_employee" class="form-control" placeholder="Enter employee name">
+</div>
 <div class="form-group">
     <label>First Name<span style="color:red">*</span></label>
-    <input type="type" name="first_name" class="form-control" placeholder="First Name">
+    <input type="type" name="first_name" id="first_name" class="form-control" placeholder="First Name">
     <strong class="error" id="first_name-error"></strong>
 </div>
 <div class="form-group">
     <label>Last Name<span style="color:red">*</span></label>
-    <input type="type" name="last_name" class="form-control" placeholder="Last Name">
+    <input type="type" name="last_name" id="last_name" class="form-control" placeholder="Last Name">
     <strong class="error" id="last_name-error"></strong>
 </div>
 <div class="form-group">
     <label>Email<span style="color:red">*</span></label>
-    <input type="email" name="email" class="form-control" placeholder="Email">
+    <input type="email" name="email" id="email" class="form-control" placeholder="Email">
     <strong class="error" id="email-error"></strong>
  </div>
     <div class="form-group">
         <label>Phone Number</label>
-        <input type="text" name="phone" class="form-control" placeholder="Enter phone number">      
+        <input type="text" name="phone" id="phone" class="form-control" placeholder="Enter phone number">      
     </div>
     @error('phone')
     <span class="velidation">{{ $message }}</span>
@@ -52,14 +57,14 @@
     </div>
     <div class="form-group">
         <label>Document Number</label>
-        <input type="text" name="document_number" class="form-control" placeholder="Enter document number">
+        <input type="text" name="document_number" id="document_number" class="form-control" placeholder="Enter document number">
     
     </div>
     @error('document_number')
     <span class="velidation">{{ $message }}</span>
     @enderror 
     <div class="form-group">
-        <label>Document Id
+        <label>Upload ID Proof Document
         <h6>Only .jpeg, .pdf, .docs, or .doc files allowed  and max upload file size is (10MB)</h6>
     </label>
     <div class="upload-img-file">
@@ -67,9 +72,10 @@
     </div>
     @error('document_id')
     <span class="velidation">{{ $message }}</span>
-    @enderror 
+    @enderror
 </div>
-
+<div class="form-group" id="uploadedDocument">
+</div>
 <div class="form-group">
     <label>Position<span style="color:red">*</span></label>
     {{-- <input type="type" name="position" class="form-control" placeholder="Position"> --}}
@@ -186,28 +192,8 @@
                         {{ $emp->first_name . ' ' . $emp->middle_name . ' ' . $emp->last_name }}</option>
                 @endforeach
             </select>
-
-            {{-- <select id="tags" select2 select2-hidden-accessible multiple="multiple" style="width: 300px">
-                <option value="1" selected="true">Apple1</option>
-                <option value="2">Bat</option>
-                <option value="Cat">Cat</option>
-                <option value="Dog" selected>Dog1</option>
-                <option value="Elephant">Elephant</option>
-                <option value="View/Exposure" >View/Exposure</option>
-                <option value="View / Exposure">View / Exposure</option>
-                <option value="Dummy - Data" selected>Dummy - Data</option>
-                <option value="Dummy-Data">Dummy-Data</option>
-                <option value="Dummy:Data">Dummy:Data</option>
-                <option value="Dummy(Data)">Dummy(Data)</option>    
-            </select> --}}
-            {{-- <input class="typeahead form-control" id="search" type="text">
-            <input type="hidden" id="interviewer_id" name="interviewer_id"> --}}
             <strong class="error" id="interviewer_id-error"></strong>
         </div>
-        {{-- <div class="form-group">
-            <label>Interviewer name<span style="color:red">*</span></label>
-            <input class="typeahead form-control" id="search" name="interviewer_id" type="text">
-        </div> --}}
         <div class="form-group">
             <label>Interview Instruction</label>
             <textarea name="interview_instruction" rows="3" class="form-control" placeholder="Interview Instruction"></textarea>
@@ -226,9 +212,8 @@
 </div>
 
 <script type="text/javascript">
-    var path = "{{ route('employeeNameAutocomplete') }}";
-
-    $("#search").autocomplete({
+    var path = "{{ route('getEmployeeDetailsForScheduleInterview') }}";
+    $("#search_employee").autocomplete({
         source: function(request, response) {
             $.ajax({
                 url: path,
@@ -243,9 +228,18 @@
             });
         },
         select: function(event, ui) {
-            $('#search').val(ui.item.label);
-            $('#interviewer_id').val(ui.item.id);
             console.log(ui.item);
+            $("#uploadedDocument").append(`<button class="btn btn-primary" onClick="javascript:window.open('${ui.item.document_id}', '_blank');">Uploaded Document</button>`);
+            // $('#uploadedDocument').html("<a href="+ui.item.document_id+" >Click Here</a>");
+            $('#search_employee').val(ui.item.label);
+            $('#employee_id').val(ui.item.id);
+            $('#first_name').val(ui.item.first_name);
+            $('#last_name').val(ui.item.last_name);
+            $('#email').val(ui.item.email);
+            $('#phone').val(ui.item.phone);
+            $('#document_number').val(ui.item.document_number);
+            $('#document_type option[value='+ui.item.document_type+']').attr('selected','selected');
+            
             return false;
         }
     });

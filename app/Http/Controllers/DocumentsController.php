@@ -133,4 +133,12 @@ class DocumentsController extends Controller
                     ->get();
         return response()->json($data);
     }
+
+    public function getEmployeeDetailsForScheduleInterview(Request $request)
+    {
+        $data = Employee::select(DB::raw("CONCAT(first_name, ' ', last_name) as value"),"employee.*")
+                    ->where('first_name', 'LIKE', '%'. $request->get('search'). '%')
+                    ->get();
+        return response()->json($data);
+    }
 }
