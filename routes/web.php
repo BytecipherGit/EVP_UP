@@ -90,6 +90,7 @@ Route::post('/store_document', [App\Http\Controllers\DocumentsController::class,
 
 Route::get('demo-search', [App\Http\Controllers\DocumentsController::class, 'demoSearch'])->name('demo.search');
 Route::get('getEmployeeNameThroughAutocomplete', [App\Http\Controllers\DocumentsController::class, 'getEmployeeNameThroughAutocomplete'])->name('employeeNameAutocomplete');
+Route::get('getEmployeeDetailsForScheduleInterview', [App\Http\Controllers\DocumentsController::class, 'getEmployeeDetailsForScheduleInterview'])->name('getEmployeeDetailsForScheduleInterview');
 
 Route::get('/email-config/{id?}', [App\Http\Controllers\InviteempController::class, 'getConfig'])->name('email-config');
 Route::get('/basic-info/{id?}', [App\Http\Controllers\InviteempController::class, 'getBasicDetails'])->name('basic-info');

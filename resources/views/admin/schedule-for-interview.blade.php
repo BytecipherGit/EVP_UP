@@ -237,6 +237,7 @@
                     <div class="loadingImg"></div>
                     <div style="font-size: 16px; display:none;" class="text-success" id="success">Schedule
                         interview successfully done.</div>
+                    <div style="font-size: 16px; display:none;" class="text-danger" id="failed">Interview already has been schedule for this employee.</div>
                     <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
                     <button type="submit" id="scheduleInterviewSubmit" class="btn-primary-cust">Submit</button>
                 </div>
@@ -266,6 +267,7 @@
                     <div class="loadingImg"></div>
                     <div style="font-size: 16px; display:none;" class="text-success" id="success">Next interview
                         round successfully done.</div>
+                        <div style="font-size: 16px; display:none;" class="text-danger" id="failed">Interview already has been schedule for this employee.</div>
                     <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
                     <button type="submit" id="nextRoundOfInterviewSubmit" class="btn-primary-cust">Submit</button>
                 </div>
@@ -449,8 +451,7 @@
                         // }
                         $('.loadingImg').hide();
                     } else {
-
-                        if (data.success) {
+                        if (data.success != 0) {
                             $('.loadingImg').hide();
                             $('#first_name-error').html('');
                             $('#last_name-error').html('');
@@ -470,6 +471,11 @@
                                 location.reload();
                             }, 3000);
 
+                        } else {
+                            $('#failed').css('display', 'block');
+                            setInterval(function() {
+                                location.reload();
+                            }, 3000);
                         }
                     }
 
