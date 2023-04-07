@@ -34,35 +34,32 @@
     <label>Email<span style="color:red">*</span></label>
     <input type="email" name="email" class="form-control" placeholder="Email">
     <strong class="error" id="email-error"></strong>
-</div>
-<div class="form-group">
-    <label>Phone Number</label>
-    <input type="text" name="phone" class="form-control" placeholder="Enter phone number">
-   
+ </div>
+    <div class="form-group">
+        <label>Phone Number</label>
+        <input type="text" name="phone" class="form-control" placeholder="Enter phone number">      
+    </div>
+    @error('phone')
+    <span class="velidation">{{ $message }}</span>
+    @enderror 
+    <div class="form-group">
+        <label>Document Type</label>
+        <select name="document_type" class="form-control" id="document_type">
+            <option value="Pan Card">Pan Card</option>
+            <option value="Aadhar Card">Aadhar Card</option>
+            <option value="Passport">Passport</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label>Document Number</label>
+        <input type="text" name="document_number" class="form-control" placeholder="Enter document number">
     
-</div>
-@error('phone')
-<span class="velidation">{{ $message }}</span>
-@enderror 
-
-<div class="form-group">
-    <label>Document Type</label>
-    <select name="document_type" class="form-control" id="document_type">
-        <option value="Pan Card">Pan Card</option>
-        <option value="Aadhar Card">Aadhar Card</option>
-        <option value="Passport">Passport</option>
-    </select>
-</div>
-<div class="form-group">
-    <label>Document Number</label>
-    <input type="text" name="document_number" class="form-control" placeholder="Enter selected document number">
-  
-</div>
-@error('document_number')
-<span class="velidation">{{ $message }}</span>
-@enderror 
-<div class="form-group">
-    <label>Document Id
+    </div>
+    @error('document_number')
+    <span class="velidation">{{ $message }}</span>
+    @enderror 
+    <div class="form-group">
+        <label>Document Id
         <h6>Only .jpeg, .pdf, .docs, or .doc files allowed  and max upload file size is (10MB)</h6>
     </label>
     <div class="upload-img-file">

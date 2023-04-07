@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Empqualification extends Model
 {
     use HasFactory;
-    protected $table='emp_qualifications';
+    protected $table='employee_qualifications';
     protected $fillable=['inst_name','degree','subject','duration_from','duration_to','document','verification_type'];
 }

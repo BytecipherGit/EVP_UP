@@ -13,11 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('emp_skills', function (Blueprint $table) {
+        Schema::create('employee_skills', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('emp_id')->comment('emp_basicinfo Table PK');
-            $table->foreign('emp_id')->references('id')->on('emp_basicinfo')->onDelete('cascade');
-            $table->integer('company_id');
+            $table->unsignedBigInteger('employee_id')->comment('employee Table PK');
+            $table->foreign('employee_id')->references('id')->on('employee')->comment('Id form employee')->onDelete('cascade');
             $table->string('skill');
             $table->string('skill_type');
             $table->timestamps();
@@ -31,10 +30,10 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('emp_skills', function (Blueprint $table) {
-            $table->dropForeign('emp_skills_emp_id_foreign');
-            $table->dropColumn('emp_id');
+        Schema::table('employee_skills', function (Blueprint $table) {
+            $table->dropForeign('employee_skills_employee_id_foreign');
+            $table->dropColumn('employee_id');
         });
-        Schema::dropIfExists('emp_skills');
+        Schema::dropIfExists('employee_skills');
     }
 };

@@ -13,10 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('company_addresses', function (Blueprint $table) {
+        Schema::create('employee_language', function (Blueprint $table) {
             $table->id();
-            $table->longText('reg_office')->nullable()->default('text');
-            $table->longText('cor_office')->nullable()->default('text');
+            $table->unsignedBigInteger('employee_id')->comment('employee Table PK');
+            $table->foreign('employee_id')->references('id')->on('employee')->comment('Id form employee')->onDelete('cascade');
+            $table->string('lang');
+            $table->string('lang_type');
             $table->timestamps();
         });
     }
@@ -28,6 +30,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('company_addresses');
+     
+        Schema::dropIfExists('employee_language');
     }
 };

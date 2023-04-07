@@ -8,6 +8,7 @@ use App\Models\Empofficial;
 use App\Models\Empqualification;
 use App\Models\Empskills;
 use App\Models\Emplang;
+use App\Models\CompanyEmployee;
 use App\Models\Empworkhistory;
 use Auth;
 use Illuminate\Http\Request;
@@ -21,7 +22,10 @@ class InviteempController extends Controller
 
     public function index()
     {
-        $empinvite = Employee::where('status', '2')->where('company_id', Auth::id())->get();
+        $empinvite = Employee::where('status', '2')->get();
+        $empinvite= CompanyEmployee::join('users','users.id','=','company_employee.company_id')
+                    ->join('employee','company_employee.employee_id','=','employee.id')->select('company_employee.*','users.id','employee.*')
+                    ->where('employee.status',2)->where('company_employee.company_id',Auth::user()->id)->get();
         return view('admin/invite-employee', compact('empinvite'));
     }
 
@@ -52,7 +56,7 @@ class InviteempController extends Controller
             'phone' => ['required', 'max:12'],
 
         ]);
-        $data = DB::table('emp_basicinfo')->where('id', $request->id)
+        $data = DB::table('employee')->where('id', $request->id)
             ->update([
                 'first_name' => $request->input('first_name'),
                 'last_name' => $request->input('last_name'),
@@ -77,11 +81,11 @@ class InviteempController extends Controller
             'phone' => ['required', 'max:12'],
 
         ]);
-
+        $empCode = substr(time(), -6) . sprintf('%04d', rand(0, 9999));
+        
         $employee = new Employee();
-
         $employee->first_name = $request->input('first_name');
-        $employee->company_id = Auth::id();
+        $employee->empCode = $empCode;
         $employee->middle_name = $request->input('middle_name');
         $employee->last_name = $request->input('last_name');
         $employee->email = $request->input('email');
@@ -130,11 +134,11 @@ class InviteempController extends Controller
                     // $value=($key=="role" || $key=="pin")?(string)$value: (integer)$value;
                     $value = ($key == "first_name") ? (string) $value : (integer) $value;
                 }
-
+                $empCode = substr(time(), -6) . sprintf('%04d', rand(0, 9999));
                 $info = new Employee;
                 $info->first_name = $data['first_name'];
                 $info->last_name = $data['last_name'];
-                $info->company_id = Auth::id();
+                $info->empCode = $empCode;
                 $info->middle_name = $data['middle_name'];
                 $info->email = $data['email'];
                 $info->phone = $data['phone'];
@@ -154,7 +158,7 @@ class InviteempController extends Controller
     public function exportsCSVInvite(Request $request)
     {
         $fileName = 'invite_employee.csv';
-        $employee = Employee::where('company_id', Auth::id())->get();
+        $employee = Employee::all();
 
         $headers = array(
             "Content-type" => "text/csv",
@@ -222,7 +226,7 @@ class InviteempController extends Controller
     public function downloadIdDoc(request $request)
     {
         $identity = Employeeidentity::where('id', $request->id)->first();
-        $file = public_path() . '/image/' . $identity->document;
+        $file = $identity->document;
         $headers = array(
             'Content-Type: application/jpg',
         );
@@ -254,7 +258,7 @@ class InviteempController extends Controller
 
         
 
-        $emp = DB::table('emp_basicinfo')->whereIn('id', $temp)->get();
+        $emp = DB::table('employee')->whereIn('id', $temp)->get();
         $info = array();
         
         foreach ($emp as $row) {
@@ -300,7 +304,7 @@ class InviteempController extends Controller
         }
         dd($temp);
         // print_r($temp); die();
-        $emp = DB::table('emp_basicinfo')->whereIn('id', $temp)->get();
+        $emp = DB::table('employee')->whereIn('id', $temp)->get();
 
         $info = array();
         foreach ($emp as $row) {
@@ -344,16 +348,16 @@ class InviteempController extends Controller
     {
 
         $basic = Employee::where('id', $request->id)->first();
-        $identity = Employeeidentity::where('emp_id', $request->id)->get();
-        $ident = Employeeidentity::where('emp_id', $request->id)->first();
-        $qualification = Empqualification::where('emp_id', $request->id)->get();
-        $quali = Empqualification::where('emp_id', $request->id)->first();
-        $workhistory = Empworkhistory::where('emp_id', $request->id)->get();
-        $workh = Empworkhistory::where('emp_id', $request->id)->first();
-        $skills = Empskills::where('emp_id', $request->id)->first();
-        $official = Empofficial::where('emp_id', $request->id)->first();
-        $skill_item=Empskills:: where('emp_id',$request->id)->get();
-        $lang_item=Emplang:: where('emp_id',$request->id)->get();
+        $identity = Employeeidentity::where('employee_id', $request->id)->get();
+        $ident = Employeeidentity::where('employee_id', $request->id)->first();
+        $qualification = Empqualification::where('employee_id', $request->id)->get();
+        $quali = Empqualification::where('employee_id', $request->id)->first();
+        $workhistory = Empworkhistory::where('employee_id', $request->id)->get();
+        $workh = Empworkhistory::where('employee_id', $request->id)->first();
+        $skills = Empskills::where('employee_id', $request->id)->first();
+        $official = Empofficial::where('employee_id', $request->id)->first();
+        $skill_item=Empskills:: where('employee_id',$request->id)->get();
+        $lang_item=Emplang:: where('employee_id',$request->id)->get();
 
         return view('org-invite/basic-info', compact('basic', 'identity', 'qualification', 'ident', 'workhistory', 'quali', 'workh', 'skills', 'official','skill_item','lang_item'));
     }
@@ -370,11 +374,11 @@ class InviteempController extends Controller
                 $file->move(public_path() . '/Image/', $filename);
                 $basic_info['profile'] = $filename;
             } else {
-                $image = DB::table('emp_basicinfo')->where('id', $request->id)->first();
+                $image = DB::table('employee')->where('id', $request->id)->first();
                 $filename = $image->profile;
                 // print_r($image->profile);die();
             }
-            $basic_info = DB::table('emp_basicinfo')->where('id', $request->id)
+            $basic_info = DB::table('employee')->where('id', $request->id)
                 ->update([
                     'first_name' => $request->input('first_name'),
                     'last_name' => $request->input('last_name'),
@@ -410,33 +414,30 @@ class InviteempController extends Controller
 
             $basic_id = Employee::where('id', $request->id)->first();
             // print_r($basic_id);die();
-            $emp_ident = new Employeeidentity();
-            $emp_ident->emp_id = $basic_id->id;
-            $emp_ident->company_id=Auth::id();
-            $emp_ident->id_type = $request->input('id_type');
-            $emp_ident->id_number = $request->input('id_number');
-            $emp_ident->document = $request->input('document');
-            $emp_ident->verification_type = 'Not Verified';
+            $employee_ident = new Employeeidentity();
+            $employee_ident->employee_id = $basic_id->id;
+            $employee_ident->id_type = $request->input('id_type');
+            $employee_ident->id_number = $request->input('id_number');
+            $employee_ident->document = $request->input('document');
+            $employee_ident->verification_type = 'Not Verified';
 
             if ($request->has('document')) {
                 $image = $request->file('document');
-                $emp_ident->document = $image->getClientOriginalName();
+                $employee_ident->document = $image->getClientOriginalName();
                 $image->move(public_path('/Image'), $image->getClientOriginalName());
             }
 
-            $emp_ident->save();
+            $employee_ident->save();
 
             $official = new Empofficial();
-
-            $official->company_id=Auth::id();
-            $official->emp_id=$basic_id->id;
+            $official->employee_id=$basic_id->id;
             $official->save();
 
-            $identityinfo = Empqualification::where('emp_id', $request->id)->first();
+            $identityinfo = Empqualification::where('employee_id', $request->id)->first();
             if (empty($identityinfo)) {
 
-                $basic = Employeeidentity::where('emp_id', $request->id)->first();
-                $id = $basic->emp_id;
+                $basic = Employeeidentity::where('employee_id', $request->id)->first();
+                $id = $basic->employee_id;
 
                 return redirect('basic-info/' . $id)->with('tabs-2_active', true);
 
@@ -463,8 +464,7 @@ class InviteempController extends Controller
 
             $identity_id = Employee::where('id', $request->id)->first();
             $emp_qualf = new Empqualification();
-            $emp_qualf->emp_id = $identity_id->id;
-            $emp_qualf->company_id=Auth::id();
+            $emp_qualf->employee_id = $identity_id->id;
             $emp_qualf->inst_name = $request->input('inst_name');
             $emp_qualf->degree = $request->input('degree');
             $emp_qualf->subject = $request->input('subject');
@@ -481,11 +481,11 @@ class InviteempController extends Controller
 
             $emp_qualf->save();
 
-            $qualifinfo = Empworkhistory::where('emp_id', $request->id)->first();
+            $qualifinfo = Empworkhistory::where('employee_id', $request->id)->first();
             if (empty($qualifinfo)) {
 
-                $qual = Empqualification::where('emp_id', $request->id)->first();
-                $id = $qual->emp_id;
+                $qual = Empqualification::where('employee_id', $request->id)->first();
+                $id = $qual->employee_id;
                 return redirect('basic-info/' . $id)->with('tabs-3_active', true);
             } else {
                 return redirect()->back()->with('tabs-3_active', true);
@@ -510,8 +510,7 @@ class InviteempController extends Controller
 
             $identity_id = Employee::where('id', $request->id)->first();
             $emp_work = new Empworkhistory();
-            $emp_work->emp_id = $identity_id->id;
-            $emp_work->company_id=Auth::id();
+            $emp_work->employee_id = $identity_id->id;
             $emp_work->com_name = $request->input('com_name');
             $emp_work->designation = $request->input('designation');
             $emp_work->offer_letter = $request->input('offer_letter');
@@ -538,11 +537,11 @@ class InviteempController extends Controller
             }
 
             $emp_work->save();
-            $workinfo = Empskills::where('emp_id', $request->id)->first();
+            $workinfo = Empskills::where('employee_id', $request->id)->first();
             if (empty($workinfo)) {
 
-                $work = Empworkhistory::where('emp_id', $request->id)->first();
-                $id = $work->emp_id;
+                $work = Empworkhistory::where('employee_id', $request->id)->first();
+                $id = $work->employee_id;
                 // $table=$basic->getTable();
                 // return view('admin/basic-info/'.$id ,compact('basic'));
                 return redirect('basic-info/' . $id)->with('tabs-4_active', true);
@@ -565,32 +564,30 @@ class InviteempController extends Controller
             for ($i=0; $i < count($request->skill); $i++) 
             {   
               $insertDataSkill = array(  
-                'emp_id' => $identity_id->id,
+                'employee_id' => $identity_id->id,
                 'skill' => $request->skill[$i],
-                'company_id' => Auth::id(),
                 'skill_type' => $request->skill_type[$i],
                 ); 
-                DB::table('emp_skills')->insert($insertDataSkill);  
+                DB::table('employee_skills')->insert($insertDataSkill);  
               }
               
           for ($j=0; $j < count($request->lang); $j++) 
           {   
             $insertDatalang = array(  
-              'emp_id' => $identity_id->id,
-              'company_id' => Auth::id(),
+              'employee_id' => $identity_id->id,
               'lang' =>  $request->lang[$j],
               'lang_type' => $request->lang_type[$j],
               ); 
               
             
-              DB::table('emp_language')->insert($insertDatalang);  
+              DB::table('employee_language')->insert($insertDatalang);  
           }
 
-            $officialData = Empofficial::where('emp_id', $request->id)->first();
+            $officialData = Empofficial::where('employee_id', $request->id)->first();
             if (empty($officialData)) {
 
-                $skill = Empskills::where('emp_id', $request->id)->first();
-                $id = $skill->emp_id;
+                $skill = Empskills::where('employee_id', $request->id)->first();
+                $id = $skill->employee_id;
                 return redirect('basic-info/' . $id)->with('tabs-5_active', true);
 
             } else {
@@ -601,10 +598,10 @@ class InviteempController extends Controller
         }
 
         if (isset($_POST['submit'])) {
-            $identity = Employeeidentity::where('emp_id', $request->id)->first();
-            $quali = Empqualification::where('emp_id', $request->id)->first();
-            $skills = Empskills::where('emp_id', $request->id)->first();
-            $work = Empworkhistory::where('emp_id', $request->id)->first();
+            $identity = Employeeidentity::where('employee_id', $request->id)->first();
+            $quali = Empqualification::where('employee_id', $request->id)->first();
+            $skills = Empskills::where('employee_id', $request->id)->first();
+            $work = Empworkhistory::where('employee_id', $request->id)->first();
             if (empty($identity) || empty($quali) || empty($work) || empty($skills)) {
                 return redirect()->back()->with('tabs-2_active', true);
             } else {

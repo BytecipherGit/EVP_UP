@@ -29,7 +29,7 @@
           </div>
           <h2>
             {{$basic->first_name .' '. $basic->last_name}}
-            <span>Code - <small>#BCS{{$workhistory->emp_id}}</small></span>   
+            <span>Code - <small>#BCS{{$workhistory->employee_id}}</small></span>   
             <span>Designation - <small>{{$workhistory->designation}}</small></span>          
           </h2>
         </div>   
@@ -164,7 +164,7 @@
                               <td>
                                 <span class="d-flex tbl-iconBx">
                                   <a href="#" target="_black" class="docu-down" data-toggle="modal" data-target="#exampleModaldocument{{$iden['id']}}"><img src="{{ asset('assets') }}/admin/images/document.png"></a>
-                                  <a href="/image/{{ $iden['document'] }}" target="_black" class="docu-download"><img src="{{ asset('assets') }}/admin/images/download-icon.png"></a>
+                                  <a href="{{ $iden['document'] }}" target="_black" class="docu-download"><img src="{{ asset('assets') }}/admin/images/download-icon.png"></a>
                                 </span>
                               </td>
                             </tr>
@@ -238,16 +238,16 @@
                     <div class="row">
                       <div class="col-lg-4 col-md-6">
                         <h4>Employee ID</h4>
-                        <p>BEC/{{$workhistory->emp_id}}</p>
+                        <p>BEC/{{$workhistory->employee_id}}</p>
                       </div>
                       <div class="col-lg-4 col-md-6">
                         <h4>Date of Joining</h4>
                         <p>{{$official->doj}}</p>
                       </div>
-                      <div class="col-lg-4 col-md-6">
+                      {{-- <div class="col-lg-4 col-md-6">
                         <h4>Probation Period</h4>
                         <p>{{$official->prob_period}}</p>
-                      </div>
+                      </div> --}}
                       <div class="col-lg-4 col-md-6">
                         <h4>Employee Type</h4>
                         <p>{{$official->emp_type}}</p>
@@ -271,7 +271,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-xl-12">
+                {{-- <div class="col-xl-12">
                   <div class="eml-per-main">
                     <h2>REPORTING MANAGER</h2>
                     <div class="table-responsive">
@@ -295,7 +295,7 @@
                       </table>
                     </div>
                   </div>
-                </div>
+                </div> --}}
                 <div class="col-xl-12">
                   <div class="eml-per-main">
                     <h2>WORK HISTORY </h2>
@@ -418,7 +418,7 @@
         @else
         <div class="modal-body">
           <div class="document-body">
-              <img src="/image/{{ $iden['document'] }}">
+              <img src="{{ $iden['document'] }}">
           </div>
           <a href="/download_identity_doc/{{ $iden['id'] }}" target="_black">Download</a>
        </div>

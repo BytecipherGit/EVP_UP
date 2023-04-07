@@ -683,8 +683,8 @@
                                             <div class="form-group">
                                                 <label>Employee ID<span style="color:red">*</span></label>
                                                 <input type="text"
-                                                    @if ($official) value="#00{{ old('emp_id', $official->emp_id) }}" @endif
-                                                    name="emp_id" class="form-control" placeholder="Id Number"
+                                                    @if ($official) value="#00{{ old('employee_id', $official->employee_id) }}" @endif
+                                                    name="employee_id" class="form-control" placeholder="Id Number"
                                                     readonly>
                                             </div>
                                         </div>

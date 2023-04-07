@@ -45,8 +45,8 @@
                 <th>Employee Code</th>
                 <th>Employee Name</th>
                 <th>Employee Designation</th>
-                <th>Employee Department</th>
-                <th>Reporting Manager</th>
+                <th>Employee Email</th>
+                {{-- <th>Reporting Manager</th> --}}
                 <th>Action</th>
               </tr>
             </thead>
@@ -55,13 +55,13 @@
               @foreach($current as $curremp)         
               <tr>
                 {{-- <td><input type="checkbox" id="customcheck1" name="customcheck1"></td> --}}
-                <td>#000{{ $curremp->emp_id}}</td>
+                <td>#000{{ $curremp->employee_id}}</td>
                 <td>{{ $curremp->first_name .' '. $curremp->last_name}}</td>
-                <td>{{ $curremp->current_app_desig}}</td>
-                <td>{{ $curremp->mang_dept }}</td>
-                <td>{{ $curremp->mang_name}}</td>
-                <td class="d-flex"><a href="edit-employee/{{ $curremp->emp_id }}" class="edit-btn fa fa-edit" data-title="Edit"></a>
-                  <a href="employee-exit/{{ $curremp->emp_id }}" class="edit-btn fa fa-user-times" data-title="Exit"></a></td>
+                <td>{{ $curremp->designation}}</td>
+                <td>{{ $curremp->email }}</td>
+                {{-- <td>{{ $curremp->mang_name}}</td> --}}
+                <td class="d-flex"><a href="edit-employee/{{ $curremp->employee_id }}" class="edit-btn fa fa-edit" data-title="Edit"></a>
+                  <a href="employee-exit/{{ $curremp->employee_id }}" class="edit-btn fa fa-user-times" data-title="Exit"></a></td>
               </tr>  
               @endforeach                              
             </tbody>

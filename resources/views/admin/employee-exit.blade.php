@@ -34,7 +34,7 @@
                       <img  @if ($exitemp->profile!== Null) value="/image/{{ old('profile', $exitemp->profile) }}" src="/image/{{ $exitemp->profile }}" @else src="{{ asset('assets') }}/admin/images/user-img.png" @endif >                  
                       <h1>{{$exitemp->first_name .' '. $exitemp->last_name}}</h1>
                       <p>Code - #00{{ $exitemp->id}}</p>
-                      <p>Date of joining - {{ $exitemp->doj}}</p>
+                      <p>Date of joining - {{ $exitemp->date_of_joining}}</p>
                     </div>
                   </div>
                

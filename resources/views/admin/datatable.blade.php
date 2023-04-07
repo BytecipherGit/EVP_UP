@@ -54,9 +54,9 @@
             {{-- <th><input type="checkbox" id="selectAll" name="customcheck1"></th> --}}
             <th>Employee Code</th>
             <th>Employee Name</th>
-            <th>Employee Designation</th>
-            <th>Employee Department</th>
-            <th>Reporting Manager</th>
+            {{-- <th>Employee Designation</th> --}}
+            <th>Employee Email</th>
+            {{-- <th>Reporting Manager</th> --}}
             <th>Employee Status</th>
        
             <th>Action</th>
@@ -69,16 +69,16 @@
         @foreach($allemp as $emp)  
       <tr>
         {{-- <td><input type="checkbox" id="customcheck1" name="customcheck1"></td> --}}
-        <td>#00{{ $emp->emp_id }}</td>
+        <td>#00{{ $emp->employee_id }}</td>
         <td>{{ $emp->first_name .' '. $emp->last_name }}</td>
-        <td>{{$emp->mang_desig }}</td>
-        <td>{{$emp->mang_dept }}</td>
-        <td>{{$emp->mang_name }}</td>
+        {{-- <td>{{$emp->designation }}</td> --}}
+        <td>{{$emp->email }}</td>
+        {{-- <td>{{$emp->mang_name }}</td> --}}
     
         @if($emp->status == 1 || $emp->status == 2)
         <td style="color:#5BD94E"><b>Active</b></td>
-        <td class="d-flex"><a href="edit-employee/{{ $emp->emp_id }}" class="edit-btn fa fa-edit" data-title="Edit"></a>
-          <a href="employee-exit/{{ $emp->emp_id }}" title="Exit Employee" class="edit-btn fa fa-user-times" data-title="Exit"></a></td>
+        <td class="d-flex"><a href="edit-employee/{{ $emp->employee_id }}" class="edit-btn fa fa-edit" data-title="Edit"></a>
+          <a href="employee-exit/{{ $emp->employee_id }}" title="Exit Employee" class="edit-btn fa fa-user-times" data-title="Exit"></a></td>
         @else
         <td style="color:#ac2029"><b>Exit</b></td>
         <td class="d-flex"></td>

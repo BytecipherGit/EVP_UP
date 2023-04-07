@@ -13,15 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('emp_basicinfo', function (Blueprint $table) {
+        Schema::create('employee', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('company_id');
-            $table->foreign('company_id')->references('id')->on('users')->onDelete('cascade');
-            $table->string('first_name');
+            $table->string('empCode')->nullable()->unique();
+            $table->string('first_name')->nullable();
             $table->string('middle_name')->nullable();
             $table->string('last_name')->nullable();
             $table->string('profile')->nullable();
-            $table->string('email')->nullable();
+            $table->string('email')->nullable()->unique();
             $table->string('phone')->nullable();
             $table->string('dob')->nullable();
             $table->string('blood_group')->nullable();
@@ -33,6 +32,9 @@ return new class extends Migration
             $table->string('emg_relationship')->nullable();
             $table->string('emg_phone')->nullable();
             $table->text('emg_address')->nullable();
+            $table->string('document_type')->nullable();
+            $table->string('document_number')->nullable()->unique();
+            $table->string('document_id')->nullable()->unique();
             $table->timestamps();
         });
     }
@@ -45,6 +47,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('emp_basicinfo');
+        Schema::dropIfExists('employee');
     }
 };

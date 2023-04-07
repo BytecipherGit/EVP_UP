@@ -37,12 +37,15 @@
           <li class="nav-item">
             <a  class="nav-link {{ session('tabs-5_active') ? 'active': '' }}" data-toggle="tab" href="#tabs-5" role="tab">Skills</a>
           </li>                 
-          <li class="nav-item">
+          {{-- <li class="nav-item">
             <a class="nav-link {{ session('tabs-2_active') ? 'active': '' }}"  data-toggle="tab" href="#tabs-2" role="tab">Identity</a>
-          </li>                                                                         
-          <li class="nav-item"> 
+          </li>                                                                          --}}
+          {{-- <li class="nav-item"> 
             <a class="nav-link {{ session('tabs-6_active') ? 'active': '' }}"  data-toggle="tab" href="#tabs-6" role="tab">Official Use</a>
-          </li>  
+          </li>   --}}
+          <li class="nav-item"> 
+            <a class="nav-link {{ session('tabs-2_active') ? 'active': '' }}"  data-toggle="tab" href="#tabs-2" role="tab">Official Use</a>
+          </li>
 
         </ul> 
     
@@ -121,6 +124,8 @@
                             <strong class="error" id="phone-error"></strong>
                           </div>
                         </div>
+
+  
                       </div> 
                     </div>
                   </div>  
@@ -190,6 +195,34 @@
                           <strong class="error" id="marital_status-error"></strong>
                       </div>
                     </div>
+                    <div class="col-xl-4 col-lg-6 col-md-12">
+                      <div class="form-group">
+                          <label>Document Type<span style="color:red">*</span></label>
+                          <select name="document_type" class="form-control" id="document_type">
+                            <option value="">Select document type</option>
+                              <option value="Pan Card">Pan Card</option>
+                              <option value="Aadhar Card">Aadhar Card</option>
+                              <option value="Passport">Passport</option>
+                          </select>
+                          <strong class="error" id="document_type-error"></strong> 
+                      </div>
+                   </div>
+
+                   <div class="col-xl-4 col-lg-6 col-md-12">
+                    <div class="form-group">
+                        <label>Document Number<span style="color:red">*</span></label>
+                        <input type="text" name="document_number" class="form-control" placeholder="Enter document number">
+                        <strong class="error" id="document_number-error"></strong> 
+                    </div>
+                  </div>
+
+                  <div class="col-xl-4 col-lg-6 col-md-12">
+                    <div class="form-group">
+                        <label>Document Id<span style="color:red">*</span></label>
+                        <input type="file" id="document_id" name="document_id" class="form-control">
+                         <strong class="error" id="document_id-error"></strong> 
+                    </div>
+                 </div>
                     <div class="col-xl-6 col-lg-6 col-md-12">
                       <div class="form-group">
                         <label for="current_address">Current Address<span style="color:red">*</span></label>
@@ -241,6 +274,8 @@
                         <strong class="error" id="emg_phone-error"></strong>
                       </div>
                     </div>
+
+                    
                     <div class="col-xl-6 col-lg-6 col-md-12">
                       <div class="form-group">
                         <label for="emg_address">Address<span style="color:red">*</span></label>
@@ -279,7 +314,7 @@
                     <div class="col-lg-3">
                       <div class="profile-add-img">
                         <div class="circle">
-                          <img class="profile-pic" id="profile-pic" name="profile" @if ($basic->profile!== Null) value="/image/{{ old('profile', $basic->profile) }}" src="/image/{{ $basic->profile }}" @else src="{{ asset('assets') }}/admin/images/user-img.png" @endif required>
+                          <img class="profile-pic" id="profile-pic" name="profile" @if ($basic->profile!== Null) value="/image/{{ old('profile', $basic->profile) }}" src="{{ $basic->profile }}" @else src="{{ asset('assets') }}/admin/images/user-img.png" @endif required>
                          </div>
                          <div class="p-image ml-auto">
                            <span class="upload-button" id="upload-button"><img src="{{ asset('assets') }}/admin/images/edit-icon.png"></span>
@@ -440,7 +475,7 @@
           </div>
           @endif
        
-          <div   class="tab-pane {{ session('tabs-2_active') ? 'active': '' }}" id="tabs-2" role="tabpanel">
+          <div   class="tab-pane {{ session('tabs-6_active') ? 'active': '' }}" id="tabs-6" role="tabpanel">
             <div class="eml-persnal ">
               <div class="add-emply-details">                
                 <div class="row">
@@ -819,10 +854,10 @@
               </div>                
             </div>
           </div>
-        </div>
+         </div>
 
-        @endif
-          <div class="tab-pane {{ session('tabs-6_active') ? 'active': '' }}" id="tabs-6" role="tabpanel">
+          @endif
+          <div class="tab-pane {{ session('tabs-2_active') ? 'active': '' }}" id="tabs-2" role="tabpanel">
             <div class="eml-persnal ">
               <div class="add-emply-details">                
                 <div class="row">
@@ -831,36 +866,25 @@
                       @csrf
                       <div class="row">
                         <div class="col-xl-12"><h2>Official Info</h2></div>
-                        <div class="col-xl-3 col-lg-6 col-md-12">
+                        {{-- <div class="col-xl-3 col-lg-6 col-md-12">
                           <div class="form-group">
                             <label>Employee ID</label>
-                            <input type="text" name="emp_id" class="form-control" @if($basic) value="#00{{ $basic->id }}" @else value="" @endif placeholder="Id Number" readonly>
+                            <input type="text" name="employee_id" class="form-control" @if($basic) value="#00{{ $basic->id }}" @else value="" @endif placeholder="Id Number" readonly>
                           </div>
-                        </div>
+                        </div> --}}
                         <div class="col-xl-3 col-lg-6 col-md-12">
                           <div class="form-group">
                             <label>Date of Joining<span style="color:red">*</span></label>
-                            <input type="date" name="doj" class="form-control" placeholder="Date">
-                            @error('doj')
+                            <input type="date" name="date_of_joining" class="form-control" placeholder="Date">
+                            @error('date_of_joining')
                             <span class="velidation">{{ $message }}</span>
                             @enderror 
-                            <strong class="error" id="doj-error"></strong>
+                            <strong class="error" id="date_of_joining-error"></strong>
                           </div>
                         </div>
                         <div class="col-xl-3 col-lg-6 col-md-12">
                           <div class="form-group">
-                            <label>Probation Period<span style="color:red">*</span></label>
-                            <input type="text" name="prob_period" class="form-control" placeholder="In Day">
-                            @error('prob_period')
-                            <span class="velidation">{{ $message }}</span>
-                            @enderror 
-                            <strong class="error" id="prob_period-error"></strong>
-                          </div>
-                        </div> 
-                        <div class="col-xl-3 col-lg-6 col-md-12">
-                          <div class="form-group">
                             <label>Employee Type<span style="color:red">*</span></label>
-                      
                             <select class="form-control" name="emp_type" id="emp_type" >
                               <option value="">Select Employee Type</option>
                               <option value="Part Time">Part Time</option>
@@ -895,9 +919,8 @@
                             <label>Employee Status<span style="color:red">*</span></label>
                             <select class="form-control" name="emp_status" id="emp_status">
                               <option value="">Select Status</option>
-                              <option value="Active">Active</option>
-                              <option value="Inactive">Inactive</option>
-                            
+                              <option value="1">Active</option>
+                              <option value="0">Inactive</option>   
                             </select>
                             @error('emp_status')
                             <span class="velidation">{{ $message }}</span>
@@ -905,18 +928,15 @@
                             <strong class="error" id="emp_status-error"></strong> 
                           </div>
                         </div>  
-
-                        <div class="col-xl-12 mt-3"><h2>Salary Info</h2></div>
-                        <div class="col-xl-3 col-lg-6 col-md-12">
+                        <div class="col-xl-3 col-lg-5 col-md-10">
                           <div class="form-group">
-                            <label>Salary<span style="color:red">*</span></label>
-                            <input type="text" name="salary" class="form-control" placeholder="In Hand">
-                            @error('salary')
-                            <span class="velidation">{{ $message }}</span>
-                            @enderror 
-                            <strong class="error" id="salary-error"></strong>
+                            <label>Designation<span style="color:red">*</span></label>
+                            <input type="text" name="designation" class="form-control" placeholder="Designation">
+                            <strong class="error" id="designation-error"></strong>
                           </div>
-                        </div>
+                        </div>    
+
+                      <div class="col-xl-12 mt-3"><h2>Salary Info</h2></div>
                         <div class="col-xl-3 col-lg-6 col-md-12">
                           <div class="form-group">
                             <label>LPA<span style="color:red">*</span></label>
@@ -926,183 +946,7 @@
                             @enderror 
                             <strong class="error" id="lpa-error"></strong>
                           </div>
-                        </div>
-
-                        <div class="col-xl-12">
-                          <div class="row salary-bg-on">
-                            <div class="col-xl-12"><h6 class="d-flex">Appraisal <span class="ml-auto on-head-right" data-toggle="modal" data-target="#salaryaddbtn">
-                              {{-- <img src="{{ asset('assets') }}/admin/images/button-plus-clr.png"> <small>Add</small> --}}
-                            </span></h6></div>
-                            <div class="col-xl-2 col-lg-4 col-md-6">
-                              <div class="form-group">
-                                <label>From<span style="color:red">*</span></label>
-                                <input type="text" name="app_from" class="form-control" placeholder="10,000" >
-                                @error('app_from')
-                                <span class="velidation">{{ $message }}</span>
-                                @enderror 
-                                <strong class="error" id="app_from-error"></strong>
-                              </div>
-                            </div>
-                            <div class="col-xl-2 col-lg-4 col-md-6">
-                              <div class="form-group">
-                                <label>To<span style="color:red">*</span></label>
-                                <input type="text" name="app_to" class="form-control" placeholder="To">
-                                @error('app_to')
-                                <span class="velidation">{{ $message }}</span>
-                                @enderror 
-                                <strong class="error" id="app_to-error"></strong>
-                              </div>
-                            </div>
-                            <div class="col-xl-3 col-lg-4 col-md-12">
-                              <div class="form-group">
-                                <label>Last Desig.<span style="color:red">*</span></label>
-                                <input type="text" name="last_app_desig" class="form-control" placeholder="Last Desig.">
-                                @error('last_app_desig')
-                                <span class="velidation">{{ $message }}</span>
-                                @enderror 
-                                <strong class="error" id="last_app_desig-error"></strong>
-                              </div>
-                            </div>
-                            <div class="col-xl-3 col-lg-4 col-md-12">
-                              <div class="form-group">
-                                <label>Current Desig.<span style="color:red">*</span></label>
-                                <input type="text" name="current_app_desig" class="form-control" placeholder="Current Desig.">
-                                @error('current_app_desig')
-                                <span class="velidation">{{ $message }}</span>
-                                @enderror 
-                                <strong class="error" id="current_app_desig-error"></strong>
-                              </div>
-                            </div>
-                            <div class="col-xl-2 col-lg-4 col-md-12">
-                              <div class="form-group">
-                                <label>Date<span style="color:red">*</span></label>
-                                <input type="date" name="app_date" class="form-control" placeholder="Date">
-                                @error('app_date')
-                                <span class="velidation">{{ $message }}</span>
-                                @enderror 
-                                <strong class="error" id="app_date-error"></strong>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-xl-12 ">
-                          <div class="row salary-bg-on">
-                            <div class="col-xl-12"><h6 class="d-flex"> Promotion <span class="ml-auto on-head-right" data-toggle="modal" data-target="#salaryaddbtn">
-                              {{-- <img src="{{ asset('assets') }}/admin/images/button-plus-clr.png"> <small>Add</small> --}}
-                            </span>
-                            </h6></div>
-                            <div class="col-xl-2 col-lg-4 col-md-12">
-                              <div class="form-group">
-                                <label>From<span style="color:red">*</span></label>
-                                <input type="text" name="pro_from" class="form-control" placeholder="10,000">
-                                @error('pro_from')
-                                <span class="velidation">{{ $message }}</span>
-                                @enderror 
-                                <strong class="error" id="pro_from-error"></strong>
-                              </div>
-                            </div>
-                            <div class="col-xl-2 col-lg-4 col-md-12">
-                              <div class="form-group">
-                                <label>To<span style="color:red">*</span></label>
-                                <input type="text" name="pro_to" class="form-control" placeholder="To">
-                                @error('pro_to')
-                                <span class="velidation">{{ $message }}</span>
-                                @enderror 
-                                <strong class="error" id="pro_to-error"></strong>
-                              </div>
-                            </div>
-                            <div class="col-xl-3 col-lg-4 col-md-12">
-                              <div class="form-group">
-                                <label>Last Desig.<span style="color:red">*</span></label>
-                                <input type="text" name="last_pro_desig" class="form-control" placeholder="Last Desig.">
-                                @error('last_pro_desig')
-                                <span class="velidation">{{ $message }}</span>
-                                @enderror 
-                                <strong class="error" id="last_pro_desig-error"></strong>
-                              </div>
-                            </div>
-                            <div class="col-xl-3 col-lg-4 col-md-12">
-                              <div class="form-group">
-                                <label>Current Desig.<span style="color:red">*</span></label>
-                                <input type="text" name="current_pro_desig" class="form-control" placeholder="Current Desig.">
-                                @error('current_pro_desig')
-                                <span class="velidation">{{ $message }}</span>
-                                @enderror 
-                                <strong class="error" id="current_pro_desig-error"></strong>
-                              </div>
-                            </div>
-                            <div class="col-xl-2 col-lg-4 col-md-12">
-                              <div class="form-group">
-                                <label>Date<span style="color:red">*</span></label>
-                                <input type="date" name="pro_date" class="form-control" placeholder="Date">
-                                @error('pro_date')
-                                <span class="velidation">{{ $message }}</span>
-                                @enderror 
-                                <strong class="error" id="pro_date-error"></strong>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        <!-- <div class="col-xl-12 mt-3"><h2>Reporting Manager</h2></div> -->
-                        
-
-                      <div class="col-xl-12">
-                        <div class="form-group repo-mange-box mt-3">
-                            <h2>Reporting Manager</h2>
-                            <div class="row customer_recordsoff">
-                              <div class="col-xl-3 col-lg-5 col-md-10">
-                                <div class="form-group">
-                                  <label>Name<span style="color:red">*</span></label>
-                                  <input type="text" name="mang_name" class="form-control" placeholder="Name">
-                                  @error('mang_name')
-                                  <span class="velidation">{{ $message }}</span>
-                                  @enderror 
-                                  <strong class="error" id="mang_name-error"></strong>
-                                </div>
-                              </div>
-                              <div class="col-xl-2 col-lg-5 col-md-10">
-                                <div class="form-group">
-                                  <label>Type<span style="color:red">*</span></label>
-                                  <select class="form-control" name="mang_type" id="mang_type">
-                                    <option value="">Select Type</option>
-                                    <option value="Primary">Primary</option>
-                                    <option value="Secondary">Secondary</option>
-                                  
-                                  </select>
-                                  @error('mang_type')
-                                  <span class="velidation">{{ $message }}</span>
-                                  @enderror 
-                                  <strong class="error" id="mang_type-error"></strong>
-                                </div>
-                              </div>                                
-                              <div class="col-xl-3 col-lg-5 col-md-10">
-                                <div class="form-group">
-                                  <label>Department<span style="color:red">*</span></label>
-                                  <input type="text" name="mang_dept" class="form-control" placeholder="Department">
-                                  @error('mang_dept')
-                                  <span class="velidation">{{ $message }}</span>
-                                  @enderror 
-                                  <strong class="error" id="mang_dept-error"></strong>
-                                </div>
-                              </div>
-                              <div class="col-xl-3 col-lg-5 col-md-10">
-                                <div class="form-group">
-                                  <label>Designation<span style="color:red">*</span></label>
-                                  <input type="text" name="mang_desig" class="form-control" placeholder="Designation">
-                                  @error('mang_desig')
-                                  <span class="velidation">{{ $message }}</span>
-                                  @enderror 
-                                  <strong class="error" id="mang_desig-error"></strong>
-                                </div>
-                              </div>                              
-                              {{-- <a class="add-plus extra-fields-customeroff"><span><img src="{{ asset('assets') }}/admin/images/button-plus.png"></span></a> --}}
-                            </div>
-                            <div class="customer_records_dynamicoff"></div>
-                        </div>
-                      </div>  
-
-
+                        </div> 
                         <div class="col-md-12">
                           <div class="form-group">
                             <div class="add-btn-part">
@@ -1112,7 +956,6 @@
                           </div>
                         </div>
                       </div>
-                  
                   </div>
                 </div>                
               </div>
@@ -1972,7 +1815,10 @@
               marital_status: "required",
               emg_name: "required",
               emg_relationship: "required",
-              emg_address: "required",
+              document_type: "required",
+              document_number: "required",
+              document_id: "required",
+              
             },
  
             messages: {
@@ -1990,56 +1836,31 @@
               emg_name: "Emergency name is required",
               emg_relationship: "Emergency relationship is required",
               emg_address: "Emergency address is required",
+              document_id: "document id is required",
+              document_number: "document number is required",
+              document_type: "document type is required",
+
             }
          });
 
          $("#add_official").validate({
             rules: {
-              doj: "required",
-              prob_period: "required",
+              date_of_joining: "required",
               emp_type: "required",
               work_location: "required",
               emp_status: "required",
-              salary: "required",
               lpa: "required",
-              app_from: "required",
-              app_to: "required",
-              pro_to: "required",
-              last_app_desig: "required",
-              current_pro_desig: "required",
-              pro_date: "required",
-              pro_from:"required",
-              mang_name: "required",
-              mang_type: "required",
-              mang_dept: "required",
-              mang_desig: "required",
-              current_app_desig: "required",
-              app_date:"required",
-              last_pro_desig: "required",
+              designation:"required",
             },
 
             messages: {
-              doj: "Date of joining is required",
-              prob_period: "Probation period is required",
+              date_of_joining: "Date of joining is required",
               emp_type: "Employee type is required",
               work_location: "Work location is required",
               emp_status: "Employee status to is required",
-              salary: "Salary is required",
               lpa: "LPA is required",
-              app_from: "Appraisal from is required",
-              app_to: "Appraisal to is required",
-              pro_to: "Promotion to is required",
-              pro_from:"Promotion from is required",
-              last_app_desig: "Last appraisal designationis required",
-              last_pro_desig: "Last promotion designation is required",
-              current_pro_desig: "Current promotion designation is required",
-              pro_date: "Promotion date is required",
-              mang_name: "Manager name is required",
-              mang_type: "Manager type is required",
-              mang_dept: "Manager department is required",
-              mang_desig: "Manager designation is required",
-              current_app_desig: "Current apprasial designation is required",
-              app_date: "Apprasial date is required",
+              designation: "Manager designation is required",
+
             }
          });
 
