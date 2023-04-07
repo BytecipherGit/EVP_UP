@@ -223,23 +223,33 @@
                     search: request.term
                 },
                 success: function(data) {
-                    response(data);
+                    if($.isEmptyObject(data)) {
+                        $("#uploadedDocument").html('');
+                        $('#employee_id').val('');
+                        $('#first_name').val('');
+                        $('#last_name').val('');
+                        $('#email').val('');
+                        $('#phone').val('');
+                        $('#document_number').val('');
+                        // $('#document_type option[value='']').attr('selected','');
+                    }else {
+                        response(data);
+                    }
                 }
             });
         },
         select: function(event, ui) {
-            console.log(ui.item);
-            $("#uploadedDocument").append(`<button class="btn btn-primary" onClick="javascript:window.open('${ui.item.document_id}', '_blank');">Uploaded Document</button>`);
-            // $('#uploadedDocument').html("<a href="+ui.item.document_id+" >Click Here</a>");
             $('#search_employee').val(ui.item.label);
-            $('#employee_id').val(ui.item.id);
-            $('#first_name').val(ui.item.first_name);
-            $('#last_name').val(ui.item.last_name);
-            $('#email').val(ui.item.email);
-            $('#phone').val(ui.item.phone);
-            $('#document_number').val(ui.item.document_number);
-            $('#document_type option[value='+ui.item.document_type+']').attr('selected','selected');
-            
+            if(ui.item.id != ''){
+                $("#uploadedDocument").append(`<button class="btn btn-primary" onClick="javascript:window.open('${ui.item.document_id}', '_blank');">Uploaded Document</button>`);
+                $('#employee_id').val(ui.item.id);
+                $('#first_name').val(ui.item.first_name);
+                $('#last_name').val(ui.item.last_name);
+                $('#email').val(ui.item.email);
+                $('#phone').val(ui.item.phone);
+                $('#document_number').val(ui.item.document_number);
+                $('#document_type option[value='+ui.item.document_type+']').attr('selected','selected');
+            } 
             return false;
         }
     });
