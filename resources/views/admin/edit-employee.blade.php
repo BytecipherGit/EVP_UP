@@ -35,12 +35,15 @@
             <li class="nav-item">
                 <a class="nav-link" data-toggle="tab" href="#tabs-5" role="tab">Skills</a>
             </li>
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab" aria-controls="tab">Identity</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" data-toggle="tab" href="#tabs-6" role="tab">Official Use</a>
-            </li>
+            </li> --}}
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab">Official Use</a>
+            </li> 
 
         </ul>
         <div class="tab-content">
@@ -290,7 +293,7 @@
             </div>
 
 
-            <div class="tab-pane" id="tabs-2" role="tabpanel">
+            <div class="tab-pane" id="tabs-6" role="tabpanel">
 
                 <div class="eml-persnal ">
                     <div class="add-emply-details">
@@ -667,7 +670,7 @@
                     </div>
                 </div>
             </div>
-            <div class="tab-pane" id="tabs-6" role="tabpanel">
+            <div class="tab-pane" id="tabs-2" role="tabpanel">
                 <div class="eml-persnal ">
                     <div class="add-emply-details">
                         <div class="row">
