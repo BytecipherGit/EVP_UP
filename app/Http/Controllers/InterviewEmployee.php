@@ -249,6 +249,7 @@ class InterviewEmployee extends Controller
 
             $uploadAttachementPath = '';
             $uploadInstructionPath = '';
+            $uploadDocumentIdPath = '';
             $company_name = User::where('id', Auth::id())->first();
             $name = $company_name->org_name;
             if ($validator->passes()) {
@@ -287,21 +288,14 @@ class InterviewEmployee extends Controller
                         'last_name' => !empty($request->last_name) ? $request->last_name : null,
                         'email' => !empty($request->email) ? $request->email : null,
                         'phone'=> !empty($request->phone) ? $request->phone : null,
+                        'document_type' => !empty($request->document_type) ? $request->document_type : null,
+                        'document_number' => !empty($request->document_number) ? $request->document_number : null,
+                        'document_id' => $uploadDocumentIdPath,
 
 
                     ];
                     $employeeData = Employee::create($insertEmployee);
 
-                    if (!empty($employeeData)) {
-                    $insertEmployeeIdentity = [
-                        'employee_id' => $employeeData->id,
-                        'id_type'=> !empty($request->document_type) ? $request->document_type : null,
-                        'id_number'=> !empty($request->document_number) ? $request->document_number : null,
-                        'document'=> $uploadDocumentIdPath,
-
-                    ];
-                    $employeeDataIdentity = Employeeidentity::create($insertEmployeeIdentity);
-                   }
 
                    if (!empty($employeeData)) {
                     $insertEmployeeInteview = [  
