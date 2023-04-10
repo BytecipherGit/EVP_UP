@@ -40,7 +40,7 @@ class InterviewEmployee extends Controller
             $interviewEmployees = EmployeeInterview::join('users','users.id','=','interview_employees.company_id')
             ->join('company_employee','company_employee.employee_id','=','interview_employees.employee_id')
             ->join('employee','company_employee.employee_id','=','employee.id')
-            ->select('company_employee.*','users.id','interview_employees.*','employee.empCode')
+            ->select('company_employee.*','users.id','interview_employees.*','employee.empCode','employee.first_name','employee.last_name')
             ->where('company_employee.company_id',Auth::user()->id)->get();
             // CompanyEmployee::join('users','users.id','=','company_employee.company_id')
             // ->join('employee','company_employee.employee_id','=','employee.id')->select('company_employee.*','users.id','employee.*')
@@ -199,7 +199,7 @@ class InterviewEmployee extends Controller
             $positions = Position::where('company_id', Auth::id())->orderby('id', 'asc')->get();
             $cmpEmployees=CompanyEmployee::join('users','users.id','=','company_employee.company_id')
                             ->join('employee','company_employee.employee_id','=','employee.id')->select('company_employee.*','users.id','employee.*')
-                            ->where('company_employee.company_id',Auth::user()->id)->where('company_employee.status',1)->orderby('employee.id', 'desc')->get();
+                            ->where('company_employee.company_id',Auth::user()->id)->orderby('employee.id', 'desc')->get();
 
             $interview = (!empty($id)) ? EmployeeInterview::find($id) : false;
             return view('admin.schedule-interview-form', compact('interview', 'interviewProcesses', 'cmpEmployees', 'positions'));

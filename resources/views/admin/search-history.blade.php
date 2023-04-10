@@ -26,7 +26,7 @@
           </div>
         
           <div class="col-lg-3 col-md-4">
-            <button type="submit" class="search-btnkey">Saerch</button>
+            <button type="submit" class="search-btnkey">Search</button>
           </div>
           {{-- <div class="viewsearch"></div> --}}
         </div>
