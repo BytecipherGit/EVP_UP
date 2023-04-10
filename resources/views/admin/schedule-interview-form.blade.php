@@ -38,6 +38,9 @@
 <div class="form-group">
     <label>Email<span style="color:red">*</span></label>
     <input type="email" name="email" id="email" class="form-control" placeholder="Email">
+    @error('email')
+    <p class="velidation">{{ $message }}</p>
+    @enderror
     <strong class="error" id="email-error"></strong>
  </div>
     <div class="form-group">
@@ -248,8 +251,10 @@
                 $('#email').val(ui.item.email);
                 $('#phone').val(ui.item.phone);
                 $('#document_number').val(ui.item.document_number);
-                $('#document_type option[value='+ui.item.document_type+']').attr('selected','selected');
+                $('#document_type option[value='+ui.item.document_type+']').attr('selected','selected');   
+             
             } 
+         
             return false;
         }
     });

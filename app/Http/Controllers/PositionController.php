@@ -92,7 +92,7 @@ class PositionController extends Controller
                         'company_id' => Auth::id(),
                         'title' => !empty($request->title) ? $request->title : null,
                         'descriptions' => !empty($request->descriptions) ? $request->descriptions : null,
-                        'status' => '0',
+                        'status' => '1',
                     ];
                     $positionData = Position::create($insert);
                     if (!empty($positionData)) {
