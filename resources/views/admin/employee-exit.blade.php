@@ -24,14 +24,16 @@
           {{ session()->get('msg') }}
       </div>
         @endif
+    
       <div class="employee-tab-bar">  
         <div class="eml-persnal ">
           <div class="add-emply-details exit-custom-page">
                 <div class="row">
+                  @if($exitemp)
                   <div class="col-lg-3">                     
                     <div class="empl-exit-detial">
                       {{-- <img src="{{ asset('assets') }}/admin/images/vijay-patil.png"> --}}
-                      <img  @if ($exitemp->profile!== Null) value="/image/{{ old('profile', $exitemp->profile) }}" src="/image/{{ $exitemp->profile }}" @else src="{{ asset('assets') }}/admin/images/user-img.png" @endif >                  
+                      <img  @if ($exitemp->profile!== Null) value="/image/{{ old('profile', $exitemp->profile) }}" src="{{ $exitemp->profile }}" @else src="{{ asset('assets') }}/admin/images/user-img.png" @endif >                  
                       <h1>{{$exitemp->first_name .' '. $exitemp->last_name}}</h1>
                       <p>Code - #00{{ $exitemp->id}}</p>
                       <p>Date of joining - {{ $exitemp->date_of_joining}}</p>
@@ -130,11 +132,14 @@
                       </div>
                     </form>
                   </div>
-                </div>                
+                </div>
+                @else
+                <h3>Insufficient data</h3> 
+                @endif               
               </div>
         </div>
       </div>
-
+       
     </div>
     <!--- Main Container Close ----->
     @endsection

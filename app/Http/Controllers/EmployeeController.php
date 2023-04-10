@@ -798,9 +798,16 @@ class EmployeeController extends Controller
       }
 
       public function exitEmp($id){
-         $exitemp=DB::table('employee')->join('employee_officials', 'employee.id', '=', 'employee_officials.employee_id')->select('employee.id','employee.*', 'employee_officials.*')
-         ->where('employee.id',$id)->first();
+        //  $exitemp=DB::table('employee')->join('employee_officials', 'employee.id', '=', 'employee_officials.employee_id')->select('employee.id','employee.*', 'employee_officials.*')
+        //  ->where('employee.id',$id)->first();
+
+         $exitemp=Employee::join('employee_officials','employee.id','=','employee_officials.employee_id')
+            ->join('company_employee','company_employee.employee_id','=','employee.id')
+            ->join('users','users.id','=','company_employee.company_id')
+            ->select('employee_officials.*','users.id','employee.*')
+            ->where('employee.id',$id)->first();
         // $exitemp=DB::table('employee')->where('employee.id',$id)->first();
+        // dd($id);
          return view('admin/employee-exit',compact('exitemp'));
       }
 
