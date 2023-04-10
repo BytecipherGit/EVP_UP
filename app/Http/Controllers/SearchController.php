@@ -23,7 +23,9 @@ class SearchController extends Controller
         if ($request->get('search')) {
             // $output = "";
             $employees = Employee::select(FacadesDB::raw("CONCAT(first_name,' ', last_name) as value"), "id", "current_address")
-                ->where('first_name', 'LIKE', '%' . $request->get('search') . '%')
+                ->where('first_name', 'LIKE', '%' . $request->get('search') . '%')->orWhere('phone', 'LIKE', '%' . $request->get('search') . '%')
+                ->orWhere('document_number', 'LIKE', '%' . $request->get('search') . '%')->orWhere('empCode', 'LIKE', '%' . $request->get('search') . '%')
+                ->orWhere('email', 'LIKE', '%' . $request->get('search') . '%')
                 ->get();
             $html = '';
             if (count($employees) > 0) {
