@@ -800,6 +800,7 @@ class EmployeeController extends Controller
       public function exitEmp($id){
          $exitemp=DB::table('employee')->join('employee_officials', 'employee.id', '=', 'employee_officials.employee_id')->select('employee.id','employee.*', 'employee_officials.*')
          ->where('employee.id',$id)->first();
+        // $exitemp=DB::table('employee')->where('employee.id',$id)->first();
          return view('admin/employee-exit',compact('exitemp'));
       }
 

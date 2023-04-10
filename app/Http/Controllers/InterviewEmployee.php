@@ -19,6 +19,7 @@ use App\Models\HiringStage;
 use App\Models\InterviewEmployeeRounds;
 use App\Models\InterviewProcess;
 use App\Models\Position;
+use App\Models\CompanyEmployee;
 use App\Models\user;
 use Carbon\Carbon;
 use DateTime;
@@ -35,8 +36,15 @@ class InterviewEmployee extends Controller
     public function index(Request $request)
     {
         if (Auth::check()) {
-            $interviewEmployees = EmployeeInterview::all();
-
+            // $interviewEmployees = EmployeeInterview::all();
+            $interviewEmployees = EmployeeInterview::join('users','users.id','=','interview_employees.company_id')
+            ->join('company_employee','company_employee.employee_id','=','interview_employees.employee_id')
+            ->join('employee','company_employee.employee_id','=','employee.id')
+            ->select('company_employee.*','users.id','interview_employees.*','employee.empCode')
+            ->where('company_employee.company_id',Auth::user()->id)->get();
+            // CompanyEmployee::join('users','users.id','=','company_employee.company_id')
+            // ->join('employee','company_employee.employee_id','=','employee.id')->select('company_employee.*','users.id','employee.*')
+            // ->where('employee.status','!=', 2)->where('company_employee.company_id',Auth::user()->id)->count();
             // $interviewEmployees = EmployeeInterview::join('interview_employee_rounds', 'interview_employee_rounds.interview_employees_id', '=', 'interview_employees.id')
             //                       ->where('interview_employees.company_id', Auth::id())->select('interview_employees.*','interview_employee_rounds.interview_status')->latest()->get();
             // $interviewEmployees = EmployeeInterview::join('interview_employee_rounds', 'interview_employee_rounds.interview_employees_id', '=', 'interview_employees.id')
@@ -166,6 +174,7 @@ class InterviewEmployee extends Controller
 
             $hiringStages = HiringStage::all();
             $employeeInterviewStatuses = EmployeeInterviewStatus::all();
+            // dd($interviewEmployees);
             return view('admin.schedule-for-interview', compact('interviewEmployees', 'hiringStages', 'employeeInterviewStatuses'));
         }
 
@@ -187,11 +196,11 @@ class InterviewEmployee extends Controller
     {
         if (Auth::check()) {
             $interviewProcesses = InterviewProcess::where('company_id', Auth::id())->orderby('id', 'asc')->get();
-            // $positions = Position::where('company_id', Auth::id())->orderby('id', 'asc')->get();
-            // $cmpEmployees = Employee::where('company_id', Auth::id())->orderby('id', 'desc')->get();
-            $positions = Position::orderby('id', 'asc')->get();
-            $cmpEmployees = Employee::orderby('id', 'desc')->get();
-            // dd($positions);
+            $positions = Position::where('company_id', Auth::id())->orderby('id', 'asc')->get();
+            $cmpEmployees=CompanyEmployee::join('users','users.id','=','company_employee.company_id')
+                            ->join('employee','company_employee.employee_id','=','employee.id')->select('company_employee.*','users.id','employee.*')
+                            ->where('company_employee.company_id',Auth::user()->id)->where('company_employee.status',1)->orderby('employee.id', 'desc')->get();
+
             $interview = (!empty($id)) ? EmployeeInterview::find($id) : false;
             return view('admin.schedule-interview-form', compact('interview', 'interviewProcesses', 'cmpEmployees', 'positions'));
         }
@@ -282,10 +291,21 @@ class InterviewEmployee extends Controller
                         'document_number' => !empty($request->document_number) ? $request->document_number : null,
                         'document_id' => $uploadDocumentIdPath,
                     ];
+
                     if (!empty($request->employee_id)) {
                         $employeeData = Employee::find($request->employee_id);
                     } else {
                         $employeeData = Employee::create($insertEmployee);
+                    }
+
+                    if(!empty($employeeData)){
+
+                        $insertCompanyEmployee = [
+                            'employee_id' => $employeeData->id,
+                            'company_id' => Auth::id(),
+                            'status' => '0',
+                        ];
+                        $companyemployeeData = CompanyEmployee::create($insertCompanyEmployee);
                     }
 
                     if (!empty($employeeData)) {
@@ -298,8 +318,11 @@ class InterviewEmployee extends Controller
                             'instruction' => $uploadInstructionPath,
 
                         ];
+
                         //Check if record already exist for the same employee id & same company
                         $checkInterviewEmpRecordExist = EmployeeInterview::where('employee_id', $employeeData->id)->where('company_id', Auth::id())->first();
+
+
                         if (empty($checkInterviewEmpRecordExist)) {
                             $employeeInterviewData = EmployeeInterview::create($insertEmployeeInteview);
                             if (!empty($employeeInterviewData)) {
@@ -498,18 +521,37 @@ class InterviewEmployee extends Controller
 
     public function getNextRoundOfInterviewForm($id = '')
     {
+        // dd($id);
         if (Auth::check()) {
-            // $interviewProcesses = InterviewProcess::where('company_id', Auth::id())->orderby('id', 'asc')->get();
+            $interviewProcesses = InterviewProcess::where('company_id', Auth::id())->orderby('id', 'asc')->get();
             // $cmpEmployees = Employee::where('company_id', Auth::id())->orderby('id', 'desc')->get();
-            $interviewProcesses = InterviewProcess::orderby('id', 'asc')->get();
-            $cmpEmployees = Employee::orderby('id', 'desc')->get();
-            $interview = (!empty($id)) ? EmployeeInterview::find($id) : false;
+            $cmpEmployees = CompanyEmployee::join('users','users.id','=','company_employee.company_id')
+                            ->join('employee','company_employee.employee_id','=','employee.id')->select('company_employee.*','users.id','employee.*')
+                            ->where('company_employee.company_id',Auth::id())->orderby('employee.id', 'desc')->get();
+            // $cmpEmployees = Employee::orderby('id', 'desc')->get();
+            // $interview = (!empty($id)) ? EmployeeInterview::find($id) : false;
+            // $interview = EmployeeInterview::join('company_employee','interview_employees.employee_id','=','company_employee.employee_id')
+            //                 ->join('employee','company_employee.employee_id','=','employee.id')
+            //                 ->select('company_employee.*','interview_employees.id','interview_employees.employee_id','interview_employees.position','employee.*')
+            //                 ->where('interview_employees.id',$id)->first();
+
+            // $interview = EmployeeInterview::where('interview_employees.id',$id)->first();
+
+            // dd($interview);
+                            $interview = EmployeeInterview::join("company_employee",function($join){
+                                $join->on("company_employee.company_id","=","interview_employees.company_id")
+                                    ->on("company_employee.employee_id","=","interview_employees.employee_id");
+                            })->join('employee','company_employee.employee_id','=','employee.id')
+                            ->select('interview_employees.*','employee.first_name','employee.last_name','employee.email','employee.phone')
+                            ->where('interview_employees.id',$id)->first();
+                            // dd($interview);
             return view('admin.next-rouond-of-interview-form', compact('interview', 'interviewProcesses', 'cmpEmployees'));
         }
     }
 
     public function scheduleNextRoundOfInterview(request $request)
     {
+        // dd($request->interview_id); 
         if (Auth::check()) {
             $userDetails = HelpersHelper::getUserDetails(Auth::id());
             if (!empty($request->interview_type)) {
@@ -554,10 +596,12 @@ class InterviewEmployee extends Controller
 
                 $checkRecordExist = EmployeeInterview::where('id', $request->interview_id)->first();
                 if (!empty($checkRecordExist)) {
-
+                //  dd('hii');
                     //Check Interview is already created or not
                     $checkInterviewExist = InterviewEmployeeRounds::where('interview_employees_id', $request->interview_id)->where('interview_processes_id', $request->interview_process)->first();
+                    // dd($checkInterviewExist);
                     if (empty($checkInterviewExist)) {
+                        // dd('hii');
                         //Insert record into Emoloyee Inerview Rounds
                         $insertEmployeeInterviewRounds = [
                             'interview_employees_id' => !empty($request->interview_id) ? $request->interview_id : null,
@@ -575,7 +619,9 @@ class InterviewEmployee extends Controller
                             'video_link' => !empty($request->video_link) ? $request->video_link : null,
                             'interview_instructions' => !empty($request->interview_instruction) ? $request->interview_instruction : null,
                         ];
+                     
                         $employeeInterviewRoundData = InterviewEmployeeRounds::create($insertEmployeeInterviewRounds);
+                        // dd($employeeInterviewRoundData);
                         if ($employeeInterviewRoundData) {
                             $getInterviewTitle = InterviewProcess::where('id', $request->interview_process)->first();
                             //Send email to Interviewee
