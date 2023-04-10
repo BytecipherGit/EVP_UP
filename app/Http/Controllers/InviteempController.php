@@ -9,6 +9,7 @@ use App\Models\Empqualification;
 use App\Models\Empskills;
 use App\Models\Emplang;
 use App\Models\CompanyEmployee;
+use App\Models\EmployeeInterview;
 use App\Models\Empworkhistory;
 use Auth;
 use Illuminate\Http\Request;
@@ -23,9 +24,14 @@ class InviteempController extends Controller
     public function index()
     {
         $empinvite = Employee::where('status', '2')->get();
-        $empinvite= CompanyEmployee::join('users','users.id','=','company_employee.company_id')
-                    ->join('employee','company_employee.employee_id','=','employee.id')->select('company_employee.*','users.id','employee.*')
-                    ->where('employee.status',2)->where('company_employee.company_id',Auth::user()->id)->get();
+        // $empinvite= CompanyEmployee::join('users','users.id','=','company_employee.company_id')
+        //             ->join('employee','company_employee.employee_id','=','employee.id')->select('company_employee.*','users.id','employee.*')
+        //             ->where('employee.status',2)->where('company_employee.company_id',Auth::id())->get();
+                    $empinvite=  CompanyEmployee::join('users','users.id','=','company_employee.company_id')
+            ->join('employee','company_employee.employee_id','=','employee.id')
+            ->select('company_employee.*','users.id','employee.*')
+            ->where('company_employee.company_id',Auth::user()->id)->where('employee.status',2)->get();
+                    // dd($empinvite);
         return view('admin/invite-employee', compact('empinvite'));
     }
 
@@ -65,6 +71,7 @@ class InviteempController extends Controller
                 'phone' => $request->input('phone'),
 
             ]);
+         
 
         return redirect('invite-employee')->with('message', 'Infomation updated successfully.');
 
@@ -93,6 +100,17 @@ class InviteempController extends Controller
         $employee->status = '2';
 
         $employee->save();
+        
+        if(!empty($employee)){
+
+            $insertCompanyEmployee = [
+                'employee_id' => $employee->id,
+                'company_id' => Auth::id(),
+                'status' => '0',
+            ];
+            $companyemployeeData = CompanyEmployee::create($insertCompanyEmployee);
+        }
+
         return redirect('invite-employee');
     }
 

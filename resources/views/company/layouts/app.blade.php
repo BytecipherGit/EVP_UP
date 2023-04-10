@@ -191,7 +191,7 @@
             <aside>
 
                 <li>
-                    <a href="search">
+                    <a href="/search">
                         <img src="{{ asset('assets') }}/admin/images/search-icon-gray.png">
                         Search
                     </a>
