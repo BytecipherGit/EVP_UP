@@ -34,6 +34,7 @@
                 </div>
             @endif
          <form action="{{ route('not-qualified-template') }}" method="POST">
+
               @csrf
               <div class="row">
                   <div class="col-xl-12 col-lg-8 col-sm-12 col-12 m-auto"> 

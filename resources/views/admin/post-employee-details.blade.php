@@ -23,14 +23,14 @@
         <div class="heading-pro">
           <div class="pro-img">
             <div class="circle">
-               <img class="profile-pic" @if ($basic->profile!== Null) value="/image/{{ old('profile', $basic->profile) }}" src="/image/{{ $basic->profile }}" @else src="{{ asset('assets') }}/admin/images/user-img.png" @endif >
+               <img class="profile-pic" @if ($employee->profile!== Null) value="/image/{{ old('profile', $employee->profile) }}" src="/image/{{ $employee->profile }}" @else src="{{ asset('assets') }}/admin/images/user-img.png" @endif >
 
              </div>             
           </div>
           <h2>
-            {{$basic->first_name .' '. $basic->last_name}}
-            <span>Code - <small>#BCS{{$workhistory->employee_id}}</small></span>   
-            <span>Designation - <small>{{$workhistory->designation}}</small></span>          
+            {{$employee->first_name .' '. $employee->last_name}}
+            <span>Code - #{{$employee->empCode}}</span>   
+            <span>Designation - <small></small></span>          
           </h2>
         </div>   
       </div>
@@ -40,9 +40,9 @@
           <li class="nav-item">
             <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab">Basic Info</a>
           </li>
-          <li class="nav-item">
+          {{-- <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab">Identity</a>
-          </li>
+          </li> --}}
           <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab">Qualification</a>
           </li>          
@@ -60,27 +60,28 @@
               <div class="row">
                 <div class="col-xl-6">
                   <div class="eml-per-main">
+                    <input type="hidden" name="id" value="{{$employee->id}}">
                     <h2>PERSONAL INFO </h2>
                     <div class="row">
                       <div class="col-lg-4 col-md-6">
                         <h4>Name</h4>
-                        <p>{{$basic->first_name .' '. $basic->last_name}}</p>
+                        <p>{{$employee->first_name .' '. $employee->last_name}}</p>
                       </div>
                       <div class="col-lg-4 col-md-6">
                         <h4>Date of Birth</h4>
-                        <p>{{$basic->dob}}</p>
+                        <p>{{$employee->dob}}</p>
                       </div>
                       <div class="col-lg-4 col-md-6">
                         <h4>Gender</h4>
-                        <p>{{$basic->gender}}</p>
+                        <p>{{$employee->gender}}</p>
                       </div>
                       <div class="col-lg-4 col-md-6">
                         <h4>Blood Group</h4>
-                        <p>{{$basic->blood_group}}</p>
+                        <p>{{$employee->blood_group}}</p>
                       </div>
                        <div class="col-lg-4 col-md-6">
                         <h4>Marital Status</h4>
-                        <p>{{$basic->marital_status}}</p>
+                        <p>{{$employee->marital_status}}</p>
                       </div>                      
                     </div>
                   </div>
@@ -91,19 +92,19 @@
                     <div class="row">
                       <div class="col-lg-6 col-md-6">
                         <h4>Official Email ID</h4>
-                        <p>{{$basic->email}}</p>
+                        <p>{{$employee->email}}</p>
                       </div>
                       <div class="col-lg-6 col-md-6">
                         <h4>Personal Email ID</h4>
-                        <p>{{$basic->email}}</p>
+                        <p>{{$employee->email}}</p>
                       </div>
                       <div class="col-lg-6 col-md-6">
                         <h4>Current Address</h4>
-                        <p>{{$basic->current_address}}</p>
+                        <p>{{$employee->current_address}}</p>
                       </div>
                       <div class="col-lg-6 col-md-6">
                         <h4>Permanent Address</h4>
-                        <p>{{$basic->permanent_address}}</p>
+                        <p>{{$employee->permanent_address}}</p>
                       </div> 
                     </div>
                   </div>
@@ -122,10 +123,10 @@
                           </tr>
                         </thead>
                           <tr>
-                            <td>{{$basic->emg_name}}</td>
-                            <td>{{$basic->emg_relationship}}</td>
-                            <td>{{$basic->emg_phone}}</td>
-                            <td>{{$basic->emg_address}}</td>
+                            <td>{{$employee->emg_name}}</td>
+                            <td>{{$employee->emg_relationship}}</td>
+                            <td>{{$employee->emg_phone}}</td>
+                            <td>{{$employee->emg_address}}</td>
                           </tr>
                         <tbody>
                         </tbody>
@@ -198,28 +199,30 @@
                             <th>Action</th>
                           </tr>
                         </thead>
-                        @foreach($qualification as $quali)
-                        <tbody>
-                          <tr>                                    
-                            <td>{{$quali['degree']}}</td> 
-                            <td>{{$quali['inst_name']}}</td> 
-                            <td>{{$quali['subject']}}</td>
-                            <td>{{$quali['duration_from']}}</td>  
-                            <td>{{$quali['duration_to']}}</td>  
+                        @if($qualification)
+                          @foreach($qualification as $quali)
+                              <tbody>
+                                <tr>                                    
+                                  <td>{{$quali['degree']}}</td> 
+                                  <td>{{$quali['inst_name']}}</td> 
+                                  <td>{{$quali['subject']}}</td>
+                                  <td>{{$quali['duration_from']}}</td>  
+                                  <td>{{$quali['duration_to']}}</td>  
 
-                            @if($quali['verification_type'] == 'Verified')
-                            <td><span class="verified-clr"><i class="fa fa-check"></i> {{$quali['verification_type']}}</span></td>
-                            @else
-                            <td><span class="not-verified-clr"><i class="fa fa-times"></i> {{$quali['verification_type']}}</span></td>
-                            @endif
-        
-                            <td>
-                              <a href="#" target="_black" class="docu-down" data-toggle="modal" data-target="#qualificationdocument{{$quali['id']}}"><img src="{{ asset('assets') }}/admin/images/document.png"></a>
-                              <a href="/image/{{ $quali['document'] }}" target="_black" class="docu-download"><img src="{{ asset('assets') }}/admin/images/download-icon.png"></a>
-                            </td>
-                          </tr>
-                        </tbody>
+                                  @if($quali['verification_type'] == 'Verified')
+                                  <td><span class="verified-clr"><i class="fa fa-check"></i> {{$quali['verification_type']}}</span></td>
+                                  @else
+                                  <td><span class="not-verified-clr"><i class="fa fa-times"></i> {{$quali['verification_type']}}</span></td>
+                                  @endif
+              
+                                  <td>
+                                    <a href="#" target="_black" class="docu-down" data-toggle="modal" data-target="#qualificationdocument{{$quali['id']}}"><img src="{{ asset('assets') }}/admin/images/document.png"></a>
+                                    <a href="/image/{{ $quali['document'] }}" target="_black" class="docu-download"><img src="{{ asset('assets') }}/admin/images/download-icon.png"></a>
+                                  </td>
+                                </tr>
+                              </tbody>
                         @endforeach
+                        @endif
                         <tbody>
                         </tbody>
                       </table>
@@ -228,17 +231,19 @@
                 </div>
               </div>
             </div>
-          </div>          
+          </div>     
+
           <div class="tab-pane" id="tabs-4" role="tabpanel">
             <div class="eml-persnal">
               <div class="row">
+                @if($official)
                 <div class="col-xl-12">
                   <div class="eml-per-main">
                     <h2>WORK INFO</h2>
                     <div class="row">
                       <div class="col-lg-4 col-md-6">
                         <h4>Employee ID</h4>
-                        <p>BEC/{{$workhistory->employee_id}}</p>
+                        <p>BEC/{{$employee->empCode}}</p>
                       </div>
                       <div class="col-lg-4 col-md-6">
                         <h4>Date of Joining</h4>
@@ -271,31 +276,7 @@
                     </div>
                   </div>
                 </div>
-                {{-- <div class="col-xl-12">
-                  <div class="eml-per-main">
-                    <h2>REPORTING MANAGER</h2>
-                    <div class="table-responsive">
-                      <table class="table">
-                        <thead>
-                          <tr>
-                            <th>Name</th>
-                            <th>Type</th>
-                            <th>Department</th>
-                            <th>Designation</th>
-                          </tr>
-                        </thead>
-                          <tr>
-                            <td>{{$official->mang_name}}</td>
-                            <td>{{$official->mang_type}}</td>  
-                            <td>{{$official->mang_dept}}</td>
-                            <td>{{$official->mang_desig}}</td>
-                          </tr>
-                        <tbody>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div> --}}
+              @endif
                 <div class="col-xl-12">
                   <div class="eml-per-main">
                     <h2>WORK HISTORY </h2>
@@ -353,7 +334,7 @@
                       </div>
                       <div class="col-lg-12">
                         <h4>Reason for leaving</h4>
-                        <p>{{$exitemp->reason}}</p>
+                        <p>{{$exitemp->reason_of_exit}}</p>
                       </div>
 
                       <div class="col-lg-12 col-md-12">

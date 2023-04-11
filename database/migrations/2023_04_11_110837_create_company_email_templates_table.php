@@ -13,12 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('interview_templates', function (Blueprint $table) {
+        Schema::create('company_email_templates', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('company_id');
             $table->foreign('company_id')->references('id')->on('users')->onDelete('cascade');
-            $table->enum('email_type',['Qualified','Not Qualified'])->comment('Qualified / Not Qualified');
-            $table->text('content')->nullable(); 
+            $table->unsignedBigInteger('template_id');
+            $table->foreign('template_id')->references('id')->on('company_templates')->comment('Primary key from company_templates table')->onDelete('cascade');
+            $table->enum('email_type',['Qualified','NotQualified'])->comment('Qualified / Not Qualified');
+            $table->longText('content')->nullable(); 
             $table->timestamps();
         });
     }
@@ -30,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('interview_templates');
+        Schema::dropIfExists('company_email_templates');
     }
 };

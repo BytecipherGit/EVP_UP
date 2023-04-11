@@ -13,14 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('exit_employee', function (Blueprint $table) {
+        Schema::create('employee_exit_processes', function (Blueprint $table) {
             $table->id();
-            $table->string('employee_id');
-            $table->string('date_of_exit');
-            $table->string('decipline')->nullable();
-            $table->string('reason_of_exit')->nullable();
-            $table->string('rating')->nullable();
-            $table->string('document')->nullable();
+            $table->unsignedInteger('company_id');
+            $table->foreign('company_id')->references('id')->on('users')->onDelete('cascade');
+            $table->string('title')->nullable();
+            $table->longText('descriptions')->nullable();
             $table->timestamps();
         });
     }
@@ -32,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('exit_employee');
+        Schema::dropIfExists('employee_exit_processes');
     }
 };

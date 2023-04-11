@@ -14,6 +14,8 @@ use Illuminate\Validation\Rules;
 use App\Models\Country;
 use App\Models\State;
 use App\Models\City;
+use App\Models\CompanyTemplate;
+use App\Models\CompanyEmailTemplate;
 use App\Rules\EmailDomain;
 use Illuminate\View\View;
 use Response;
@@ -102,7 +104,24 @@ class RegisteredUserController extends Controller
         
 
         event(new Registered($user));
-    
+
+        // Condition for template add
+        if($user){
+            $emailtemplate= CompanyTemplate::all();
+
+          foreach($emailtemplate as $emailtemp){
+            $insertTemplatesRecords = array(
+                'company_id' => $user->id,
+                'template_id' => $emailtemp->id,
+                'email_type' => $emailtemp->email_type,
+                'content' => $emailtemp->content,
+            );
+
+            CompanyEmailTemplate::create($insertTemplatesRecords);
+            }
+          }
+
+    // for email send
         if($user){
             $mailData = [
                 'name' => !empty($request->name) ? $request->name : '',

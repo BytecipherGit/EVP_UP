@@ -798,17 +798,18 @@ class EmployeeController extends Controller
       }
 
       public function exitEmp($id){
-        //  $exitemp=DB::table('employee')->join('employee_officials', 'employee.id', '=', 'employee_officials.employee_id')->select('employee.id','employee.*', 'employee_officials.*')
-        //  ->where('employee.id',$id)->first();
 
-         $exitemp=Employee::join('employee_officials','employee.id','=','employee_officials.employee_id')
-            ->join('company_employee','company_employee.employee_id','=','employee.id')
-            ->join('users','users.id','=','company_employee.company_id')
-            ->select('employee_officials.*','users.id','employee.*')
-            ->where('employee.id',$id)->first();
-        // $exitemp=DB::table('employee')->where('employee.id',$id)->first();
-        // dd($id);
-         return view('admin/employee-exit',compact('exitemp'));
+         $officialData=Employee::join('employee_officials','employee.id','=','employee_officials.employee_id')
+                      ->join('company_employee','company_employee.employee_id','=','employee.id')
+                      ->select('employee_officials.*')
+                      ->where('employee.id',$id)->first();
+
+         $exitemp=Employee::join('company_employee','company_employee.employee_id','=','employee.id')
+                    ->join('users','users.id','=','company_employee.company_id')
+                    ->select('users.id','employee.*')
+                    ->where('employee.id',$id)->first();
+
+         return view('admin/employee-exit',compact('exitemp','officialData'));
       }
 
       public function exitEmployee(request $request,$id){
@@ -816,9 +817,9 @@ class EmployeeController extends Controller
 
         $exitemp = new Exitemp();
         $exitemp->employee_id=$employee_id->id;
-        $exitemp->do_exit=$request->input('do_exit');
+        $exitemp->date_of_exit=$request->input('date_of_exit');
         $exitemp->decipline=$request->input('decipline');
-        $exitemp->reason=$request->input('reason');
+        $exitemp->reason_of_exit=$request->input('reason_of_exit');
         $exitemp->rating=$request->input('rating');
         $exitemp->document=$request->input('document');
       
@@ -832,7 +833,7 @@ class EmployeeController extends Controller
         $exitemp->save();
 
         CompanyEmployee::where('employee_id',$exitemp->employee_id)->update([
-          'end_date'  => $exitemp->do_exit,
+          'end_date'  => $exitemp->date_of_exit,
         ]);
    
         Employee::where('id',$exitemp->employee_id)->update([
@@ -842,16 +843,18 @@ class EmployeeController extends Controller
         return redirect('employee')->with('message','Employee exit successfully');
      }
 
-     public function pastEmp(){
-      $pastemp=DB::table('exit_employee')->join('employee', 'exit_employee.employee_id', '=', 'employee.id')
-      ->join('employee_officials', 'employee.id', '=', 'employee_officials.employee_id')->select('employee.id','employee.*', 'exit_employee.*','employee_officials.*')->get();
-      return view('admin/post-employee',compact('pastemp'));
+     public function addOldEmp(){
+      
+      $oldemployee=DB::table('exit_employee')->join('employee', 'exit_employee.employee_id', '=', 'employee.id')
+                ->join('company_employee','company_employee.employee_id','=','employee.id')
+                ->select('employee.id','employee.*', 'exit_employee.*')->get();
+
+      return view('admin/post-employee',compact('oldemployee'));
       }
 
       public function postEmpDetails(request $request){
       
-          // return redirect('edit-employee/40/identity');
-          $basic=Employee:: where('id',$request->id)->first();
+          $employee=Employee:: where('id',$request->id)->first();
           $identity=Employeeidentity:: where('employee_id',$request->id)->get();
           $qualification=Empqualification:: where('employee_id',$request->id)->get();
           $workhistory=Empworkhistory:: where('employee_id',$request->id)->first();
@@ -861,7 +864,8 @@ class EmployeeController extends Controller
           $lang_item=Emplang:: where('employee_id',$request->id)->get();
           $official= Empofficial::where('employee_id',$request->id)->first();
           $exitemp= Exitemp::where('employee_id',$request->id)->first();
-          return view('admin/post-employee-details',compact('basic','identity','qualification','workhistory','skills','official','exitemp','skill_item','lang_item','workdetails'));
+
+          return view('admin/post-employee-details',compact('employee','identity','qualification','workhistory','skills','official','exitemp','skill_item','lang_item','workdetails'));
       }
 
       public function currentEmp(){
@@ -884,9 +888,14 @@ class EmployeeController extends Controller
                     ->join('employee_skills', 'employee_skills.employee_id', '=', 'employee_officials.employee_id')
                     ->join('employee_workhistories', 'employee_workhistories.employee_id', '=', 'employee_skills.employee_id')
                     ->join('employee_qualifications', 'employee_qualifications.employee_id', '=', 'employee_workhistories.employee_id')
-                    ->get(['employee.*', 'employee_identity.*', 'employee_officials.*','employee_skills.*','employee_qualifications.*']);
-    
-                  
+                    ->join('company_employee','company_employee.employee_id','=','employee.id')
+                    ->where('company_employee.company_id',Auth::user()->id)
+                    ->select('employee.*', 'employee_identity.*', 'employee_officials.*','employee_skills.*','employee_qualifications.*')
+                    ->get();
+    // dd($employee);
+                  //   CompanyEmployee::join('users','users.id','=','company_employee.company_id')
+                  //   ->join('employee','company_employee.employee_id','=','employee.id')->select('company_employee.*','users.id','employee.*')
+                  //  ->where('company_employee.company_id',Auth::user()->id)->get();
         $headers = array(
             "Content-type"        => "text/csv",
             "Content-Disposition" => "attachment; filename=$fileName",

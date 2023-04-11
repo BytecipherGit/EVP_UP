@@ -33,10 +33,12 @@
                   <div class="col-lg-3">                     
                     <div class="empl-exit-detial">
                       {{-- <img src="{{ asset('assets') }}/admin/images/vijay-patil.png"> --}}
-                      <img  @if ($exitemp->profile!== Null) value="/image/{{ old('profile', $exitemp->profile) }}" src="{{ $exitemp->profile }}" @else src="{{ asset('assets') }}/admin/images/user-img.png" @endif >                  
+                      <img  @if ($exitemp->profile!== Null) value="{{ old('profile', $exitemp->profile) }}" src="{{ $exitemp->profile }}" @else src="{{ asset('assets') }}/admin/images/user-img.png" @endif >                  
                       <h1>{{$exitemp->first_name .' '. $exitemp->last_name}}</h1>
-                      <p>Code - #00{{ $exitemp->id}}</p>
-                      <p>Date of joining - {{ $exitemp->date_of_joining}}</p>
+                      <p>Code - #0{{ $exitemp->empCode}}</p>
+                      @if($officialData)
+                      <p>Date of joining - {{ $officialData->date_of_joining}}</p>
+                      @endif
                     </div>
                   </div>
                
@@ -48,7 +50,7 @@
                         <div class="col-xl-12 col-lg-6 col-md-12">
                           <div class="form-group">
                             <label>Date of Exit<span style="color:red">*</span></label>
-                            <input type="date" name="do_exit" class="form-control" placeholder="Date" required>
+                            <input type="date" name="date_of_exit" class="form-control" placeholder="Date" required>
                           </div>
                         </div>  
                         <div class="col-lg-6 col-md-12">
@@ -60,7 +62,7 @@
                         <div class="col-lg-6 col-md-12">
                           <div class="form-group">
                             <label>Reason for leaving<span style="color:red">*</span></label>
-                            <textarea rows="3" name="reason" class="form-control" required placeholder="Reason"></textarea>
+                            <textarea rows="3" name="reason_of_exit" class="form-control" required placeholder="Reason"></textarea>
                           </div>
                         </div>
                         <div class="col-lg-12 col-md-12">
@@ -133,8 +135,6 @@
                     </form>
                   </div>
                 </div>
-                @else
-                <h3>Insufficient data</h3> 
                 @endif               
               </div>
         </div>
