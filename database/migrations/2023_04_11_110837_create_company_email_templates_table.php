@@ -21,6 +21,7 @@ return new class extends Migration
             $table->foreign('template_id')->references('id')->on('company_templates')->comment('Primary key from company_templates table')->onDelete('cascade');
             $table->enum('email_type',['Qualified','NotQualified'])->comment('Qualified / Not Qualified');
             $table->longText('content')->nullable(); 
+            $table->enum('status',['True','False'])->comment('True / False');
             $table->timestamps();
         });
     }
