@@ -2737,13 +2737,13 @@ a{
   width: 100%;
 }
 .search-bg-round .form-control {
-    padding: 25px 12px;
+    /* padding: 25px 12px; */
     border: none;
     box-sizing: border-box;
     border-radius: 8px;
     font-weight: normal;
     font-size: 16px;
-    line-height: 24px;
+    line-height: 35px;
     color: #081131;
 }
 .search-bg-round input::placeholder{  
@@ -2751,7 +2751,7 @@ a{
 }
 .search-bg-round .input-search-box {
     padding-left: 38px !important;
-    background: url(../images/search-icon.png) 6px 28px no-repeat !important;
+    background: url(../images/search-icon.png) 6px 16px no-repeat !important;
     cursor: pointer;
     height: auto;
 }
@@ -2788,7 +2788,7 @@ a{
 }
 
 @media (max-width:1600px){
-.search-bg-round {width: 65%;}
+.search-bg-round {width: 100%;}
 }
 @media (max-width:1400px){
 .search-bg-round {width: 70%;}

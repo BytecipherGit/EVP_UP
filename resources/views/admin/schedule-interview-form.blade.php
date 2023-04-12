@@ -9,21 +9,40 @@
     }
 
     .velidation {
-    color: red;
-    font-size: 12px;
-    display: block;
-    margin: 5px 0;
-    display: flex;
-   }   
+        color: red;
+        font-size: 12px;
+        display: block;
+        margin: 5px 0;
+        display: flex;
+    }
 </style>
 
 <h2 class="modal-title" id=""></h2>
 <input type="hidden" id="is_add" value="{{ $interview ? '' : 1 }}" />
 <input type="hidden" id="interview_id" name="interview_id" value="{{ $interview ? $interview->id : '' }}" />
 <input type="hidden" id="employee_id" name="employee_id" value="{{ $interview ? $interview->employee_id : '' }}" />
-<div class="form-group">
-    <label>Search Employee</label>
-    <input type="type" name="search_employee" id="search_employee" class="form-control" placeholder="Enter employee name">
+<div class="row">
+    <div class="col-lg-6">
+        <div class="form-group">
+            <label>Filer By</label>
+            <select class="form-control" id="filter_by" name="filter_by">
+                <option value=""> Select Options </option>
+                <option value="name"> Name </option>
+                <option value="email"> Email </option>
+                <option value="mobile"> Mobile </option>
+                <option value="empcode"> Employee Code </option>
+                <option value="aadhar"> Aadhaar Number </option>
+                <option value="pan"> Pan Number </option>
+            </select>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="form-group">
+            <label>Search Employee</label>
+            <input type="type" name="search_employee" id="search_employee" class="form-control"
+            placeholder="Search employee">
+        </div>
+    </div>
 </div>
 <div class="form-group">
     <label>First Name<span style="color:red">*</span></label>
@@ -39,42 +58,43 @@
     <label>Email<span style="color:red">*</span></label>
     <input type="email" name="email" id="email" class="form-control" placeholder="Email">
     @error('email')
-    <p class="velidation">{{ $message }}</p>
+        <p class="velidation">{{ $message }}</p>
     @enderror
     <strong class="error" id="email-error"></strong>
- </div>
-    <div class="form-group">
-        <label>Phone Number</label>
-        <input type="text" name="phone" id="phone" class="form-control" placeholder="Enter phone number">      
-    </div>
-    @error('phone')
+</div>
+<div class="form-group">
+    <label>Phone Number</label>
+    <input type="text" name="phone" id="phone" class="form-control" placeholder="Enter phone number">
+</div>
+@error('phone')
     <span class="velidation">{{ $message }}</span>
-    @enderror 
-    <div class="form-group">
-        <label>Document Type</label>
-        <select name="document_type" class="form-control" id="document_type">
-            <option value="Pan Card">Pan Card</option>
-            <option value="Aadhar Card">Aadhar Card</option>
-            <option value="Passport">Passport</option>
-        </select>
-    </div>
-    <div class="form-group">
-        <label>Document Number</label>
-        <input type="text" name="document_number" id="document_number" class="form-control" placeholder="Enter document number">
-    
-    </div>
-    @error('document_number')
+@enderror
+<div class="form-group">
+    <label>Document Type</label>
+    <select name="document_type" class="form-control" id="document_type">
+        <option value="Pan Card">Pan Card</option>
+        <option value="Aadhar Card">Aadhar Card</option>
+        <option value="Passport">Passport</option>
+    </select>
+</div>
+<div class="form-group">
+    <label>Document Number</label>
+    <input type="text" name="document_number" id="document_number" class="form-control"
+        placeholder="Enter document number">
+
+</div>
+@error('document_number')
     <span class="velidation">{{ $message }}</span>
-    @enderror 
-    <div class="form-group">
-        <label>Upload ID Proof Document
-        <h6>Only .jpeg, .pdf, .docs, or .doc files allowed  and max upload file size is (10MB)</h6>
+@enderror
+<div class="form-group">
+    <label>Upload ID Proof Document
+        <h6>Only .jpeg, .pdf, .docs, or .doc files allowed and max upload file size is (10MB)</h6>
     </label>
     <div class="upload-img-file">
         <input type="file" id="document_id" name="document_id" class="form-control">
     </div>
     @error('document_id')
-    <span class="velidation">{{ $message }}</span>
+        <span class="velidation">{{ $message }}</span>
     @enderror
 </div>
 <div class="form-group" id="uploadedDocument">
@@ -85,8 +105,8 @@
     @if ($positions)
         <select id="position" name="position" class="form-control">
             @foreach ($positions as $position)
-               @if($position->status == '1')
-                <option value="{{ $position->title }}">{{ $position->title }}</option>
+                @if ($position->status == '1')
+                    <option value="{{ $position->title }}">{{ $position->title }}</option>
                 @endif
             @endforeach
         </select>
@@ -178,7 +198,7 @@
 
         <div class="form-group">
             <label>Attech Resume
-                <h6>Only .jpeg, .pdf, .docs, or .doc files allowed  and max upload file size is (10MB)</h6>
+                <h6>Only .jpeg, .pdf, .docs, or .doc files allowed and max upload file size is (10MB)</h6>
             </label>
             <div class="upload-img-file">
                 <input type="file" id="attachment" name="attachment" class="form-control">
@@ -218,15 +238,17 @@
     var path = "{{ route('getEmployeeDetailsForScheduleInterview') }}";
     $("#search_employee").autocomplete({
         source: function(request, response) {
+            console.log();
             $.ajax({
                 url: path,
                 type: 'GET',
                 dataType: "json",
                 data: {
-                    search: request.term
+                    search: request.term,
+                    filterby: $('#filter_by :selected').val()
                 },
                 success: function(data) {
-                    if($.isEmptyObject(data)) {
+                    if ($.isEmptyObject(data)) {
                         $("#uploadedDocument").html('');
                         $('#employee_id').val('');
                         $('#first_name').val('');
@@ -235,7 +257,7 @@
                         $('#phone').val('');
                         $('#document_number').val('');
                         // $('#document_type option[value='']').attr('selected','');
-                    }else {
+                    } else {
                         response(data);
                     }
                 }
@@ -243,29 +265,56 @@
         },
         select: function(event, ui) {
             $('#search_employee').val(ui.item.label);
-            if(ui.item.id != ''){
-                $("#uploadedDocument").append(`<button class="btn btn-primary" onClick="javascript:window.open('${ui.item.document_id}', '_blank');">Uploaded Document</button>`);
+            if (ui.item.id != '') {
+                $("#uploadedDocument").append(
+                    `<button class="btn btn-primary" onClick="javascript:window.open('${ui.item.document_id}', '_blank');">Uploaded Document</button>`
+                );
                 $('#employee_id').val(ui.item.id);
                 $('#first_name').val(ui.item.first_name);
                 $('#last_name').val(ui.item.last_name);
                 $('#email').val(ui.item.email);
                 $('#phone').val(ui.item.phone);
                 $('#document_number').val(ui.item.document_number);
-                $('#document_type option[value='+ui.item.document_type+']').attr('selected','selected');   
-             
-            } 
-         
+                $('#document_type option[value=' + ui.item.document_type + ']').attr('selected',
+                    'selected');
+
+            }
+
             return false;
         }
     });
 </script>
 
 <script>
-    
     $('#interviewIds').select2({
         placeholder: "Please Select Interviewer"
     });
-
+    
+    $("#filter_by").on("change", function() {
+        var option = this.value;
+        switch (option) { 
+            case 'name': 
+                $("#search_employee").attr("placeholder", "Enter Employee Name");
+                break;
+            case 'email': 
+                $("#search_employee").attr("placeholder", "Enter Employee Email Id");
+                break;
+            case 'mobile': 
+                $("#search_employee").attr("placeholder", "Enter Employee Mobile");
+                break;
+            case 'empcode': 
+                $("#search_employee").attr("placeholder", "Enter Employee Code");
+                break;		
+            case 'aadhar': 
+                $("#search_employee").attr("placeholder", "Enter Employee Adhaar Number");
+                break;
+            case 'pan': 
+                $("#search_employee").attr("placeholder", "Enter Employee PAN Number");
+                break;
+            default:
+                alert('No one filter by options is selected. Please select atleast one option.');
+        }
+    });
 
     $("#InterviewTypeVideo").on("click", function() {
         var dataId = $(this).attr("data-id");
