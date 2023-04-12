@@ -11,6 +11,8 @@ use App\Mail\SendInterviewScheduleOfficeMail;
 use App\Mail\SendInterviewScheduleOfficeMailToInterviewer;
 use App\Mail\SendInterviewSchedulePhoneMail;
 use App\Mail\SendInterviewSchedulePhoneMailToInterviewer;
+use App\Mail\QualifiedEmailTemplate;
+use App\Mail\NotQualifiedEmailTemplate;
 use App\Models\Employee;
 use App\Models\EmployeeFeedback;
 use App\Models\EmployeeInterview;
@@ -20,6 +22,7 @@ use App\Models\InterviewEmployeeRounds;
 use App\Models\InterviewProcess;
 use App\Models\Position;
 use App\Models\CompanyEmployee;
+use App\Models\CompanyEmailTemplate;
 use App\Models\user;
 use Carbon\Carbon;
 use DateTime;
@@ -188,7 +191,11 @@ class InterviewEmployee extends Controller
                 ->select('interview_employee_rounds.*', 'interview_processes.title')
                 ->where('interview_employee_rounds.interview_employees_id', $request->id)
                 ->get();
-            return view('admin.interview-round-details', compact('interviewEmpoloyeeRounds', 'hiringStages'));
+            $interviewEmpoloyee = InterviewEmployeeRounds::join('interview_processes', 'interview_processes.id', '=', 'interview_processes_id')
+                ->select('interview_employee_rounds.*', 'interview_processes.title')
+                ->where('interview_employee_rounds.interview_employees_id', $request->id)
+                ->first();
+            return view('admin.interview-round-details', compact('interviewEmpoloyeeRounds', 'hiringStages','interviewEmpoloyee'));
         }
     }
 
@@ -800,7 +807,6 @@ class InterviewEmployee extends Controller
         if (Auth::check()) {
             $checkfeedback = EmployeeFeedback::where('interview_round_id', $id)->join('interview_employee_rounds', 'interview_employee_rounds.id', '=', 'interview_employee_feedback.interview_round_id')->first();
             $interviewEmpoloyeeFeedback = EmployeeFeedback::join('feedbacks', 'feedbacks.id', '=', 'interview_employee_feedback.feedback_id')
-            //  ->join('interview_employee_rounds','interview_employee_rounds.id','=','interview_employee_feedback.interview_round_id')
                 ->where('interview_employee_feedback.interview_round_id', $id)
                 ->get();
             // dd($checkfeedback);
@@ -840,6 +846,58 @@ class InterviewEmployee extends Controller
         } else {
             return Response::json(['success' => '0']);
         }
+    }
+
+    public function getEmailTemplate(request $request)
+    {
+        if($request->interview_status){
+            $interviewStatus = $request->interview_status;
+            return view('admin.email_template_confirmation',compact('interviewStatus'));
+        }
+    }
+
+    public function sendEmailTemplate(request $request)
+    {
+        // dd($request->interview_status);
+        // if (!empty($request->interview_id) && !empty($request->status)) {
+            $candidate = Employee::join('interview_employees','interview_employees.employee_id','=','employee.id')
+                         ->join('interview_employee_rounds','interview_employees.id','=','interview_employee_rounds.interview_employees_id')
+                         ->where('interview_employee_rounds.company_id',Auth::id())->where('interview_employee_rounds.interview_employees_id',$request->interview_id)->first();
+            $templateData = CompanyEmailTemplate::where('company_id',Auth::id())->first();     
+
+         if (!empty($request->interview_id) && !empty($request->status) && ($request->interview_status == 'Qualified') ) {
+            $templateData = CompanyEmailTemplate::where('email_type','Qualified')->where('company_id',Auth::id())->first();
+            $mailDataTemplate = [
+
+                'content' => !empty($templateData->content) ? str_replace('#candidate',$candidate->first_name . ' ' . $candidate->last_name,$templateData->content) : '',
+            ];
+
+            FacadesMail::to($candidate->email)->send(new QualifiedEmailTemplate($mailDataTemplate));
+
+        }
+        elseif(!empty($request->interview_id) && !empty($request->status) && ($request->interview_status == 'Not Qualified')){
+            $templateData = CompanyEmailTemplate::where('email_type','NotQualified')->where('company_id',Auth::id())->first();     
+            $mailDataTemplate = [
+                'content' => !empty($templateData->content) ? str_replace('#candidate',$candidate->first_name . ' ' . $candidate->last_name,$templateData->content) : '',
+            ];
+
+            FacadesMail::to($candidate->email)->send(new NotQualifiedEmailTemplate($mailDataTemplate));
+        }
+
+        if(!empty($request->interview_id) && !empty($request->interview_status)){
+            $interview = InterviewEmployeeRounds::find($request->interview_id);
+            $interview->interviewer_status = $request->interview_status;
+
+            if ($interview->save()) {
+                return Response::json(['success' => '1']);
+            } else {
+                return Response::json(['success' => '0']);
+            }
+        }
+        else {
+            return Response::json(['success' => '0']);
+        }
+     
     }
 
     public function deleteInterview(request $request)

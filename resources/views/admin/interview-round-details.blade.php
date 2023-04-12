@@ -63,6 +63,7 @@
                         @if ($interviewEmpoloyeeRounds)
                         @php $counter = 1 @endphp
                             @foreach ($interviewEmpoloyeeRounds as $interviewEmpoloyeeRound)
+                            <input type="hidden" name="id" value="{{$interviewEmpoloyeeRound->id}}">
                                 <tr>
                                     <th scope="row">{{ $counter }}</th>
                                     <td>{{ $interviewEmpoloyeeRound->title}}</td>
@@ -70,19 +71,22 @@
                                     <td>{{ $interviewEmpoloyeeRound->interview_start_time}}</td>
                                     <td>{{ $interviewEmpoloyeeRound->duration}}</td>
                                    <td>
-                                    <select style="width: 150px;" class="form-control" name="interviewer_status"
-                                        id="interviewer_status">
+                                    {{-- <select style="width: 150px;" class="form-control" name="interviewer_status" 
+                                        id="interviewer_status"> --}}
+                                        <select style="width: 150px;" class="form-control" name="interviewer_status" id="interviewer_status" style="text-decoration:none" href="#"> 
                                             <option value="Qualified"
                                                 @if ($interviewEmpoloyeeRound->interviewer_status == 'Qualified') selected="selected" @endif
                                                 data-id="{{ $interviewEmpoloyeeRound->id}}">Qualified</option>
                                             <option value="Not Qualified"
                                                 @if ($interviewEmpoloyeeRound->interviewer_status == 'Not Qualified') selected="selected" @endif
                                                data-id="{{ $interviewEmpoloyeeRound->id }}">Not Qualified</option>
-                                            <option value="Not Appeared"
+                                            {{-- <option value="Not Appeared"
                                                  @if ($interviewEmpoloyeeRound->interviewer_status == 'Not Appeared') selected="selected" @endif
-                                                data-id="{{ $interviewEmpoloyeeRound->id }}">Not Appeared</option>
+                                                data-id="{{ $interviewEmpoloyeeRound->id }}">Not Appeared</option> --}}
 
                                     </select>
+                                    {{-- <a href="" class="edit-btn fa fa-trash" data-toggle="modal"
+                                    data-target="#deletebtninfo{{ $invite->id }}" data-title="Delete"></a> --}}
                                 </td> 
                                     <td>
                                         <a href="#" class="edit-btn fa fa-comments-o" id="viewInterview"
@@ -101,6 +105,40 @@
     <!--- Employeer View Page ----->
 
 </div>
+
+ <!-- The Modal Interview  -->
+<div class="modal fade custu-modal-popup" id="emailtemplate" role="dialog" aria-labelledby="exampleModalLabel"
+aria-hidden="true">
+<div class="modal-dialog" role="document">
+    <form id="send_email_to_employee" method="post" autocomplete="off" enctype="multipart/form-data">
+        <input type="hidden" value="{{$interviewEmpoloyee->id}}" name="interview_id">
+        {{-- <input type="hidden" id="interview_status" value="{{ $interviewStatus }}"> --}}
+        {{-- <input type="hidden" value="{{$interviewEmpoloyee->interviewer_status}}" name="interviewer_status"> --}}
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-titles" id="Heading"></h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <img src="{{ asset('assets') }}/admin/images/close-btn-icon.png">
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="comman-body">
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="loadingImg"></div>
+                <div style="font-size: 16px; display:none;" class="text-success" id="success">Status update successfully</div>
+                <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
+                <button type="submit" id="Submit" class="btn-primary-cust">Submit</button>
+            </div>
+        </div>
+    </form>
+</div>
+</div>
+
+
+
 <!--- Main Container Close ----->
 
 <div class="modal fade custu-modal-popup" id="viewInterviewModel" role="dialog"
@@ -146,9 +184,74 @@
         new $.fn.dataTable.FixedHeader(table);
     });
 </script>
+    <script>
+    
+    $(document).on('change', '#interviewer_status', function() {
+        var interviewerstatus = $('#interviewer_status').find(":selected").val();
+        getEmployeeTemplateConfirmation(interviewerstatus);
+    });
 
 
+    function getEmployeeTemplateConfirmation(interviewerstatus = '') {
+        
+        let getFormUrl = '{{ url('email_template/form') }}';
+        if (getFormUrl !== '') {
+            getFormUrl = getFormUrl + "?interview_status=" + interviewerstatus;
+        }
+        $.ajax({
+            url: getFormUrl,
+            type: "get",
+            datatype: "html",
+        }).done(function(data) {
+            if (interviewerstatus === '') {
+                $('#Heading').text("Change status");
+            } else {
+                $('#Heading').text("Change status");
+            }
+            $('#emailtemplate').find('.modal-body').html(data);
+            $('#emailtemplate').modal({
+                backdrop: 'static',
+                keyboard: false
+            });
+        }).fail(function(jqXHR, ajaxOptions, thrownError) {
+            alert('No response from server');
+        });
+    }
 
+        $('#send_email_to_employee').on('submit', function(event) {
+                event.preventDefault();
+                var isAdd = $('#is_add').val();
+                var url = '{{ url('send_email_template') }}';
+                $('.loadingImg').show();
+                var formData = new FormData(this);              
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function(data) {
+                            if (data.success) {
+                                $('#loadingImg').hide();
+                                $('#success').css('display', 'block');
+                                setInterval(function() {
+                                    location.reload();
+                                }, 2000);
+
+                            }
+
+                    },
+                    error: function(xhr, textStatus, errorThrown) {
+                        console.log(xhr.responseText);
+                    }
+                
+                });
+            
+            });
+    </script>
 
 <script>
     $(".selectBox").on("click", function(e) {
@@ -336,7 +439,54 @@
                 }
             });
         });
-        $(document).on('change', '#interviewer_status', function() {
+        // $(document).on('click', '#send_email_template', function() {
+        //     swal({
+        //             title: "Are you sure?",
+        //             text: "You want to send email for this!",
+        //             icon: "warning",
+        //             buttons: true,
+        //             dangerMode: true, 
+        //         })
+        //         .then((result) => {
+        //             if (result) {
+        //                 // Handle the change event
+        //                 var status = $(this).val();
+        //                 var interviewId = $('option:selected', this).data('id');
+        //                 if (status != '' && interviewId != '') {
+        //                     var url = '{{ url('send_email_template') }}';
+        //                     var my_data = {
+        //                         status: status,
+        //                         interviewId: interviewId
+        //                     };
+        //                     $.ajax({
+        //                         url: url,
+        //                         type: 'POST',
+        //                         headers: {
+        //                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+        //                                 'content')
+        //                         },
+        //                         data: my_data,
+        //                         success: function(data) {
+        //                             if (data.success) {
+        //                                 swal("Interview status has been updated.", {
+        //                                     icon: "success",
+        //                                 });
+        //                                 location.reload();
+        //                             }
+        //                         },
+        //                         error: function(xhr, textStatus, errorThrown) {
+        //                             console.log(xhr.responseText);
+        //                         }
+        //                     });
+        //                 }
+        //             } else {
+        //                 swal("Your data is safe!");
+        //                 location.reload();
+        //             }
+        //         });
+        // });
+
+        $(document).on('change', '#interviewer_statusgg', function() {
             swal({
                     title: "Are you sure?",
                     text: "You want to change the status of this interview!",

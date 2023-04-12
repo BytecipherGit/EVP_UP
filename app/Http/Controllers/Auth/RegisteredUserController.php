@@ -115,6 +115,7 @@ class RegisteredUserController extends Controller
                 'template_id' => $emailtemp->id,
                 'email_type' => $emailtemp->email_type,
                 'content' => $emailtemp->content,
+                'status' => 'True',
             );
 
             CompanyEmailTemplate::create($insertTemplatesRecords);

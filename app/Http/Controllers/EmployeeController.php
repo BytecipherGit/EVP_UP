@@ -883,12 +883,12 @@ class EmployeeController extends Controller
         {
           $fileName = 'employee.csv';
           // $employee = Employee::all();
-          $employee = Employee::join('employee_identity', 'employee_identity.employee_id', '=', 'employee.id')
-                    ->join('employee_officials', 'employee_officials.employee_id', '=', 'employee_identity.employee_id')
-                    ->join('employee_skills', 'employee_skills.employee_id', '=', 'employee_officials.employee_id')
-                    ->join('employee_workhistories', 'employee_workhistories.employee_id', '=', 'employee_skills.employee_id')
-                    ->join('employee_qualifications', 'employee_qualifications.employee_id', '=', 'employee_workhistories.employee_id')
-                    ->join('company_employee','company_employee.employee_id','=','employee.id')
+          $employee = Employee::leftjoin('employee_identity', 'employee_identity.employee_id', '=', 'employee.id')
+                    ->leftjoin('employee_officials', 'employee_officials.employee_id', '=', 'employee_identity.employee_id')
+                    ->leftjoin('employee_skills', 'employee_skills.employee_id', '=', 'employee_officials.employee_id')
+                    ->leftjoin('employee_workhistories', 'employee_workhistories.employee_id', '=', 'employee_skills.employee_id')
+                    ->leftjoin('employee_qualifications', 'employee_qualifications.employee_id', '=', 'employee_workhistories.employee_id')
+                    ->leftjoin('company_employee','company_employee.employee_id','=','employee.id')
                     ->where('company_employee.company_id',Auth::user()->id)
                     ->select('employee.*', 'employee_identity.*', 'employee_officials.*','employee_skills.*','employee_qualifications.*')
                     ->get();
