@@ -106,7 +106,7 @@ Route::middleware([Admin::class])->group(function () {
     Route::get('/employee-exit/{id?}', [App\Http\Controllers\EmployeeController::class, 'exitEmp'])->middleware('documents');
     Route::post('/employee-exit/{id?}', [App\Http\Controllers\EmployeeController::class, 'exitEmployee'])->middleware('documents');
     Route::get('/post-employee-details/{id}', [App\Http\Controllers\EmployeeController::class, 'postEmpDetails'])->middleware('documents');
-    Route::get('/post-employee', [App\Http\Controllers\EmployeeController::class, 'pastEmp'])->middleware('documents');
+    Route::get('/post-employee', [App\Http\Controllers\EmployeeController::class, 'addOldEmp'])->middleware('documents');
     Route::get('/current-employee', [App\Http\Controllers\EmployeeController::class, 'currentEmp'])->middleware('documents');
     Route::get('/employee', [App\Http\Controllers\EmployeeController::class, 'getAllEmp'])->middleware('documents');
     Route::post('/employee', [App\Http\Controllers\EmployeeController::class, 'getCsvEmp'])->middleware('documents');
@@ -146,6 +146,12 @@ Route::middleware([Admin::class])->group(function () {
     Route::post('interview_process/submit', [InterviewProcess::class, 'createInterviewProcess'])->middleware('documents');
     Route::post('interview_process/update', [InterviewProcess::class, 'updateInterviewProcess'])->middleware('documents');
     Route::post('interview_process/destroy', [InterviewProcess::class, 'deleteInterviewProcess'])->middleware('documents');
+
+    Route::get('exit_employee_process', [App\Http\Controllers\ExitEmployeeProcess::class, 'index'])->name('exitemployee.process.index')->middleware('documents');
+    Route::any('exit_employee_process/form/{id?}', [App\Http\Controllers\ExitEmployeeProcess::class, 'exitEmployeeForm'])->middleware('documents');
+    Route::post('exit_employee_process/submit', [App\Http\Controllers\ExitEmployeeProcess::class, 'createExitEmployeeProcess'])->middleware('documents');
+    Route::post('exit_employee_process/update', [App\Http\Controllers\ExitEmployeeProcess::class, 'updateExitEmployeeProcess'])->middleware('documents');
+    Route::post('exit_employee_process/destroy', [App\Http\Controllers\ExitEmployeeProcess::class, 'deleteExitEmployeeProcess'])->middleware('documents');
     
     Route::any('next_round_of_interview/form/{id?}', [InterviewEmployee::class, 'getNextRoundOfInterviewForm'])->middleware('documents');
     Route::post('next_round_of_interview/submit', [InterviewEmployee::class, 'scheduleNextRoundOfInterview'])->middleware('documents');
@@ -169,10 +175,10 @@ Route::middleware([Admin::class])->group(function () {
     Route::get('search-global', [App\Http\Controllers\SearchController::class, 'search'])->name('search-global')->middleware('documents');
     
     // Route::get('posts', [App\Http\Controllers\EmailTemplatesController::class, "index"])->middleware('documents');
-    Route::get("qualified-email-template", [App\Http\Controllers\EmailTemplatesController::class, "createQualifiedEmail"])->middleware('documents');
-    Route::post('qualified-email-template', [App\Http\Controllers\EmailTemplatesController::class, "store"])->name('qualified-template')->middleware('documents');
-    Route::get("not-qualified-template", [App\Http\Controllers\EmailTemplatesController::class, "createNotQualifiedEmail"])->middleware('documents');
-    Route::post("not-qualified-template", [App\Http\Controllers\EmailTemplatesController::class,"upload"])->name('not-qualified-template')->middleware('documents');
+    Route::get("qualified-email-template", [App\Http\Controllers\CompanyEmailTemplatesController::class, "createQualifiedEmail"])->middleware('documents');
+    Route::post('qualified-email-template', [App\Http\Controllers\CompanyEmailTemplatesController::class, "updateQualifiedTemplate"])->name('qualified-template')->middleware('documents');
+    Route::get("not-qualified-template", [App\Http\Controllers\CompanyEmailTemplatesController::class, "createNotQualifiedEmail"])->middleware('documents');
+    Route::post("not-qualified-template", [App\Http\Controllers\CompanyEmailTemplatesController::class,"updateNotQualifiedTemplate"])->name('not-qualified-template')->middleware('documents');
 
 });
 Route::get('reload-captcha', [App\Http\Controllers\Auth\RegisteredUserController::class, 'reloadCaptcha'])->name('reloadCaptcha');

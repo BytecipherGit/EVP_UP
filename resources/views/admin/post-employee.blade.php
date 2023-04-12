@@ -31,7 +31,7 @@
                 {{-- <th><input type="checkbox" id="customcheck" name="customcheck"></th> --}}
                 <th>Employee Code</th>
                 <th>Employee Name</th>
-                <th>Employee Designation</th>
+                {{-- <th>Employee Designation</th> --}}
                 <th>Employee Email</th>
                 {{-- <th>Reporting Manager</th> --}}
               
@@ -40,16 +40,16 @@
             </thead>
         
             <tbody>            
-              @foreach($pastemp as $pastemps) 
+              @foreach($oldemployee as $oldemp) 
               <tr>
                 {{-- <td><input type="checkbox" id="customcheck1" name="customcheck1"></td> --}}
-                <td>#00{{$pastemps->employee_id}}</td>
-                <td>{{ $pastemps->first_name . ' ' . $pastemps->last_name }}</td>
-                <td>{{$pastemps->designation}}</td>
-                <td>{{$pastemps->email}}</td>
+                <td>#{{$oldemp->empCode}}</td>
+                <td>{{ $oldemp->first_name . ' ' . $oldemp->last_name }}</td>
+                {{-- <td>{{$oldemp->designation}}</td> --}}
+                <td>{{$oldemp->email}}</td>
                 {{-- <td>{{$pastemps->mang_name}}</td> --}}
                
-                <td class="d-flex"><a href="/post-employee-details/{{ $pastemps->employee_id }}" class="edit-btn fa fa-eye" data-title="View"></a></td>
+                <td class="d-flex"><a href="/post-employee-details/{{ $oldemp->employee_id }}" class="edit-btn fa fa-eye" data-title="View"></a></td>
               </tr> 
               @endforeach                    
             </tbody>

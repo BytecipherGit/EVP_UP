@@ -14,10 +14,8 @@ class SearchController extends Controller
     {
         return view('admin/search-history');
     }
-    // public function search(){
-
-    // }
-
+    
+// global search function 
     public function search(Request $request)
     {
         if ($request->get('search')) {

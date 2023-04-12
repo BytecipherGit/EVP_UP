@@ -6,7 +6,7 @@
   <div class="main-container">
 
     <div class="seachMain">
-      <h1>1,000 Candidate Search</h1>
+      <h1>Search Talent Here</h1>
       <div class="search-bg-round">
         <div class="row">
           {{-- <div class="col-lg-4 col-md-12 p-0">
@@ -20,7 +20,7 @@
             </div>
           </div> --}}
           <div class="col-lg-9 col-md-8">
-            <input type="text" id="search" placeholder="Search for Candidate..." name="search" class="form-control input-search-box" autocomplete="off">
+            <input type="text" id="search" placeholder="Search for candidate by name, email, mobile, empcode, document no." name="search" class="form-control input-search-box" autocomplete="off">
             {{-- <input type="text" class="form-control" id="search" name="search"> --}}
   
           </div>

@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             StateSeeder::class,
             HiringStage::class,
             EmployeeStatus::class,
+            CompanyTemplates::class,
         ]);
     }
 }

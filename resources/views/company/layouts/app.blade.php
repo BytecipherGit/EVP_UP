@@ -226,6 +226,7 @@
                                                 All Employees
                                             </a>
                                         </li>
+                                        
                                         {{-- <li>
                                                 <a href="/current-employee">
                                                     <img src="{{ asset('assets') }}/admin/images/current-user.png">
@@ -283,6 +284,12 @@
                                             <a href="/interview_process">
                                                 <img src="" class="fa fa-question-circle">
                                                 Interview Process
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/exit_employee_process">
+                                                <img src="{{ asset('assets') }}/admin/images/employees-view.png">
+                                                Exit Employees Process
                                             </a>
                                         </li>
                                         <li>

@@ -38,9 +38,9 @@
                 {{-- <button><span data-toggle="modal" data-target="#bulkeditbtn"><img src="assets/admin/images/bulk-icon.png"></span> <a data-toggle="modal" data-target="#btninfo">Bulk Edit</a></button> --}}
                 {{-- <button><span><a href="https://mail.google.com/mail/u/0/" target="_black"><img src="assets/admin/images/email-icon.png"></a></span> <a data-toggle="modal" data-target="#btninfo">Mail</a></button> --}}
                 <span class="ml-auto d-flex">
-                    <button><span class="bg-red"><img src="assets/admin/images/import.png"></span> <a
+                    <button><span class="bg-red"><img src="assets/admin/images/import.png" data-toggle="modal" data-target="#btninfo"></span> <a
                             data-toggle="modal" data-target="#btninfo">Import</a></button>
-                    <button><span><img src="assets/admin/images/export.png"></span><a data-href="/export-csv-invite"
+                    <button><span><img src="assets/admin/images/export.png" data-href="/export-csv-invite" onclick="exportTasks (event.target);"></span><a data-href="/export-csv-invite"
                             id="export" onclick="exportTasks (event.target);">Export</a></button>
                     {{-- <button><span data-toggle="modal" data-target="#exporteditbtn"><img src="assets/admin/images/export.png"></span> <a data-toggle="modal" data-target="#btninfo">Export</a> --}}
                     </button>
@@ -63,7 +63,7 @@
                         <tr>
                             <td><input type="checkbox" name="users_id[]" class="users_checkbox"
                                     value="{{ $invite->id }}" /></td>
-                            <td>#00{{ $invite->id }}</td>
+                            <td>#{{ $invite->empCode }}</td>
                             <td>{{ $invite->first_name . ' ' . $invite->last_name }}</td>
                             <td>{{ $invite->email }}</td>
                             <td>{{ $invite->phone }}</td>
