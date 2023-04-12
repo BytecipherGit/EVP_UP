@@ -129,16 +129,62 @@ class DocumentsController extends Controller
         //             ->where('name', 'LIKE', '%'. $request->get('search'). '%')
         //             ->get();
         $data = Employee::select(DB::raw("CONCAT(first_name, ' ', middle_name, ' ', last_name) as value"), "id")
-                    ->where('first_name', 'LIKE', '%'. $request->get('search'). '%')
-                    ->get();
+            ->where('first_name', 'LIKE', '%' . $request->get('search') . '%')
+            ->get();
         return response()->json($data);
     }
 
     public function getEmployeeDetailsForScheduleInterview(Request $request)
     {
-        $data = Employee::select(DB::raw("CONCAT(first_name, ' ', last_name) as value"),"employee.*")
-                    ->where('first_name', 'LIKE', '%'. $request->get('search'). '%')
-                    ->get();
-        return response()->json($data);
+        if (!empty($request->get('filterby')) && !empty($request->get('search'))) {
+            switch ($request->get('filterby')) {
+                case ('name'):
+                    $data = Employee::select(DB::raw("CONCAT(first_name, ' ', last_name) as value"), "employee.*")
+                        ->where('first_name', 'LIKE', '%' . $request->get('search') . '%')
+                        ->get();
+                    return response()->json($data);
+                    break;
+                case ('email'):
+                    $data = Employee::select(DB::raw("CONCAT(first_name, ' ', last_name) as value"), "employee.*")
+                        ->where('email', 'LIKE', '%' . $request->get('search') . '%')
+                        ->get();
+                    return response()->json($data);
+                    break;
+                case ('mobile'):
+                    $data = Employee::select(DB::raw("CONCAT(first_name, ' ', last_name) as value"), "employee.*")
+                        ->where('phone', 'LIKE', '%' . $request->get('search') . '%')
+                        ->get();
+                    return response()->json($data);
+                    break;
+                case ('empcode'):
+                    $data = Employee::select(DB::raw("CONCAT(first_name, ' ', last_name) as value"), "employee.*")
+                        ->where('empCode', 'LIKE', '%' . $request->get('search') . '%')
+                        ->get();
+                    return response()->json($data);
+                    break;
+                case ('aadhar'):
+                    $data = Employee::select(DB::raw("CONCAT(first_name, ' ', last_name) as value"), "employee.*")
+                        ->where('document_type', 'Aadhar Card')
+                        ->where('document_number', 'LIKE', '%' . $request->get('search') . '%')
+                        ->get();
+                    return response()->json($data);
+                    break;
+                case ('pan'):
+                    $data = Employee::select(DB::raw("CONCAT(first_name, ' ', last_name) as value"), "employee.*")
+                        ->where('document_type', 'Pan Card')
+                        ->where('document_number', 'LIKE', '%' . $request->get('search') . '%')
+                        ->get();
+                    return response()->json($data);
+                    break;
+                default:
+                    $data = Employee::select(DB::raw("CONCAT(first_name, ' ', last_name) as value"), "employee.*")
+                        ->where('first_name', 'LIKE', '%' . $request->get('search') . '%')
+                        ->get();
+                    return response()->json($data);
+                    break;
+            }
+        } else {
+            return response()->json([]);
+        }
     }
 }

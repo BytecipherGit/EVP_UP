@@ -9,7 +9,40 @@
       <h1>Search Talent Here</h1>
       <div class="search-bg-round">
         <div class="row">
-          {{-- <div class="col-lg-4 col-md-12 p-0">
+          <div class="col-lg-4">
+              <div class="form-group" style="margin-top: 16px;">
+                  <select class="form-control" id="filter_by" name="filter_by">
+                      <option value=""> Select Options </option>
+                      <option value="name"> Name </option>
+                      <option value="email"> Email </option>
+                      <option value="mobile"> Mobile </option>
+                      <option value="empcode"> Employee Code </option>
+                      <option value="aadhar"> Aadhaar Number </option>
+                      <option value="pan"> Pan Number </option>
+                  </select>
+              </div>
+          </div>
+          <div class="col-lg-4">
+              <div class="form-group" style="margin-top: 16px;">
+                  <input type="text" id="search" placeholder="Search for candidate by name, email, mobile, empcode, document no." name="search" class="form-control input-search-box" autocomplete="off">
+              </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="form-group">
+              <button type="button" class="search-btnkey" onclick="searchEmployee()">Search</button>
+            </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12" >
+          <h4 id="search_msg" style="display:none; color:red">
+            Please select filter options before search.......
+          </h4>
+        </div>
+      </div>
+
+        {{-- <div class="row">
+           <div class="col-lg-4 col-md-12 p-0">
             <div class="selectBox active">
               <div class="selectBox__value">Search type</div>
               <div class="dropdown-menu" id="style-5">
@@ -18,18 +51,14 @@
                 <a class="dropdown-item">Pan Card</a>
               </div>
             </div>
-          </div> --}}
+          </div>
           <div class="col-lg-9 col-md-8">
             <input type="text" id="search" placeholder="Search for candidate by name, email, mobile, empcode, document no." name="search" class="form-control input-search-box" autocomplete="off">
-            {{-- <input type="text" class="form-control" id="search" name="search"> --}}
-  
           </div>
-        
           <div class="col-lg-3 col-md-4">
             <button type="submit" class="search-btnkey">Search</button>
           </div>
-          {{-- <div class="viewsearch"></div> --}}
-        </div>
+        </div> --}}
       </div>
     </div>
     <div id="myDIVsearch"></div>
@@ -40,19 +69,42 @@
   @section('pagescript')
 
 <script>
-  $('#search').on('change',function(){
-    $value = $(this).val();
-    $.ajax({
-        type : 'get',
-        url  : "{{ route('search-global') }}",
-        data : {'search':$value},
-        success:function(data){
-            if (data.success) {
-                $('#myDIVsearch').html(data.value);
-            }
-        }
-    });
-})
+  function searchEmployee(){
+    var filterby = $('#filter_by :selected').val();
+    var filter = $('#search').val();
+    if(filterby != '' && filter != ''){
+          $.ajax({
+              type : 'get',
+              url  : "{{ route('search-global') }}",
+              data: {
+                    search: filter,
+                    filterby: filterby
+                },
+              // data : {'search':$value},
+              success:function(data){
+                  if (data.success) {
+                      $('#myDIVsearch').html(data.value);
+                  }
+              }
+          });
+    } else {
+      $('#search_msg').css("display", "block");
+    }
+
+  }
+//   $('#search').on('change',function(){
+//     $value = $(this).val();
+//     $.ajax({
+//         type : 'get',
+//         url  : "{{ route('search-global') }}",
+//         data : {'search':$value},
+//         success:function(data){
+//             if (data.success) {
+//                 $('#myDIVsearch').html(data.value);
+//             }
+//         }
+//     });
+// })
 </script>
   <script>
     $(".selectBox").on("click", function(e) {
