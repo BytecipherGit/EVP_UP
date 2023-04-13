@@ -16,7 +16,7 @@ class SearchController extends Controller
         return view('admin.search-history');
     }
 
-// global search function
+    // global search function
     public function search(Request $request)
     {
         if (!empty($request->get('filterby')) && !empty($request->get('search'))) {

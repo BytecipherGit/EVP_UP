@@ -6,13 +6,13 @@
   <div class="main-container">
 
     <div class="seachMain">
-      <h1>Search Talent Here</h1>
+      <h1>Search Talent</h1>
       <div class="search-bg-round">
         <div class="row">
           <div class="col-lg-4">
               <div class="form-group" style="margin-top: 16px;">
-                  <select class="form-control" id="filter_by" name="filter_by">
-                      <option value=""> Select Options </option>
+                  <select class="form-control" id="filter_by" name="filter_by" style="height: 48px;">
+                      <option value=""> Select filter options </option>
                       <option value="name"> Name </option>
                       <option value="email"> Email </option>
                       <option value="mobile"> Mobile </option>
@@ -24,7 +24,7 @@
           </div>
           <div class="col-lg-4">
               <div class="form-group" style="margin-top: 16px;">
-                  <input type="text" id="search" placeholder="Search for candidate by name, email, mobile, empcode, document no." name="search" class="form-control input-search-box" autocomplete="off">
+                  <input type="text" id="search" placeholder="Search talent by name, email, mobile, empcode, document no." name="search" class="form-control input-search-box" autocomplete="off">
               </div>
           </div>
           <div class="col-lg-4">
@@ -40,25 +40,6 @@
           </h4>
         </div>
       </div>
-
-        {{-- <div class="row">
-           <div class="col-lg-4 col-md-12 p-0">
-            <div class="selectBox active">
-              <div class="selectBox__value">Search type</div>
-              <div class="dropdown-menu" id="style-5">
-                <a class="dropdown-item active">Search type</a>  
-                <a class="dropdown-item">EVP Id</a>
-                <a class="dropdown-item">Pan Card</a>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-9 col-md-8">
-            <input type="text" id="search" placeholder="Search for candidate by name, email, mobile, empcode, document no." name="search" class="form-control input-search-box" autocomplete="off">
-          </div>
-          <div class="col-lg-3 col-md-4">
-            <button type="submit" class="search-btnkey">Search</button>
-          </div>
-        </div> --}}
       </div>
     </div>
     <div id="myDIVsearch"></div>
@@ -69,6 +50,33 @@
   @section('pagescript')
 
 <script>
+
+$("#filter_by").on("change", function() {
+        var option = this.value;
+        switch (option) { 
+            case 'name': 
+                $("#search").attr("placeholder", "Search by name");
+                break;
+            case 'email': 
+                $("#search").attr("placeholder", "Search by email");
+                break;
+            case 'mobile': 
+                $("#search").attr("placeholder", "Search by mobile");
+                break;
+            case 'empcode': 
+                $("#search").attr("placeholder", "Search by employee code");
+                break;		
+            case 'aadhar': 
+                $("#search").attr("placeholder", "Search by adhaar number");
+                break;
+            case 'pan': 
+                $("#search").attr("placeholder", "Search by pan number");
+                break;
+            default:
+                alert('No one filter by options is selected. Please select atleast one option.');
+        }
+    });
+
   function searchEmployee(){
     var filterby = $('#filter_by :selected').val();
     var filter = $('#search').val();
