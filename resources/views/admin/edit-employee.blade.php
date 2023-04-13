@@ -65,7 +65,7 @@
                                     <div class="profile-add-img">
                                         <div class="circle">
                                             <img class="profile-pic" id="profile-pic" name="profile"
-                                                @if ($basic->profile !== null) value="/image/{{ old('profile', $basic->profile) }}" src="/image/{{ $basic->profile }}" @else src="{{ asset('assets') }}/admin/images/logo.png" @endif
+                                                @if ($basic->profile !== null) value="/image/{{ old('profile', $basic->profile) }}" src="{{ $basic->profile }}" @else src="{{ asset('assets') }}/admin/images/logo.png" @endif
                                                 required>
                                         </div>
                                         <div class="p-image ml-auto">
@@ -213,27 +213,17 @@
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-12">
                                     <div class="form-group">
-                                        <label for="current_address">Current Address<span
-                                                style="color:red">*</span></label>
-                                        <textarea rows="3" name="current_address" placeholder="Address" class="form-control"
-                                            @if ($basic) value="{{ old('current_address', $basic->current_address) }}" @endif>
-                                            @if ($basic)
-                                            {{ old('current_address', $basic->current_address) }}
-                                            @endif
-                                            </textarea>
+                                        <label for="current_address">Current Address<span style="color:red">*</span></label>
+                                        <textarea rows="3" name="current_address" placeholder="Address" class="form-control">
+                                            @if ($basic){{ old('current_address', $basic->current_address) }} @endif </textarea>
                                             <strong class="error" id="current_address-error"></strong>
                                     </div>
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-12">
                                     <div class="form-group">
                                         <label for="permanent_address">Permanent Address</label>
-                                        <textarea rows="3" name="permanent_address" placeholder="Address" class="form-control"
-                                            @if ($basic) value="{{ old('permanent_address', $basic->permanent_address) }}" @endif
-                                            >
-                                            @if ($basic)
-                                            {{ old('permanent_address', $basic->permanent_address) }}
-                                            @endif
-                                          </textarea>
+                                        <textarea rows="3" name="permanent_address" placeholder="Address" class="form-control">
+                                            @if ($basic){{ old('permanent_address', $basic->permanent_address) }} @endif </textarea>
                                           <strong class="error" id="permanent_address-error"></strong>
                                     </div>
                                 </div>
@@ -271,12 +261,8 @@
                                 <div class="col-xl-6 col-lg-6 col-md-12">
                                     <div class="form-group">
                                         <label for="emg_address">Address<span style="color:red">*</span></label>
-                                        <textarea rows="3" name="emg_address" class="form-control"
-                                            @if ($basic) value="{{ old('emg_address', $basic->emg_address) }}" @endif>
-                                            @if ($basic)
-                                            {{ old('emg_address', $basic->emg_address) }}
-                                            @endif
-                                        </textarea>
+                                        <textarea rows="3" name="emg_address" class="form-control">
+                                            @if ($basic) {{ old('emg_address', $basic->emg_address) }} @endif </textarea>
                                         <strong class="error" id="emg_address-error"></strong>
                                     </div>
                                 </div>
@@ -682,31 +668,14 @@
                                         <div class="col-xl-12">
                                             <h2>Official Info</h2>
                                         </div>
-                                        <div class="col-xl-3 col-lg-6 col-md-12">
-                                            <div class="form-group">
-                                                <label>Employee ID<span style="color:red">*</span></label>
-                                                <input type="text"
-                                                    @if ($official) value="#00{{ old('employee_id', $official->employee_id) }}" @endif
-                                                    name="employee_id" class="form-control" placeholder="Id Number"
-                                                    readonly>
-                                            </div>
-                                        </div>
+                                    
                                         <div class="col-xl-3 col-lg-6 col-md-12">
                                             <div class="form-group">
                                                 <label>Date of Joining<span style="color:red">*</span></label>
                                                 <input type="date"
-                                                    @if ($official) value="{{ old('doj', $official->doj) }}" @endif
-                                                    name="doj" class="form-control" placeholder="Date">
-                                                    <strong class="error" id="doj-error"></strong>
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-3 col-lg-6 col-md-12">
-                                            <div class="form-group">
-                                                <label>Probation Period<span style="color:red">*</span></label>
-                                                <input type="text"
-                                                    @if ($official) value="{{ old('prob_period', $official->prob_period) }}" @endif
-                                                    name="prob_period" class="form-control" placeholder="In Day">
-                                                    <strong class="error" id="prob_period-error"></strong>
+                                                    @if ($official) value="{{ old('date_of_joining', $official->date_of_joining) }}" @endif
+                                                    name="date_of_joining" class="form-control" placeholder="Date">
+                                                    <strong class="error" id="date_of_joining-error"></strong>
                                             </div>
                                         </div>
                                         <div class="col-xl-3 col-lg-6 col-md-12">
@@ -756,8 +725,8 @@
                                                             {{ old('emp_status', $official->emp_status) }}
                                                         @endif
                                                     </option>
-                                                    <option value="Active">Active</option>
-                                                    <option value="Inactive">Inactive</option>
+                                                    <option value="1">Active</option>
+                                                    <option value="0">Inactive</option>
                                                 </select>
                                                 <strong class="error" id="emp_status-error"></strong>
                                             </div>
@@ -766,15 +735,7 @@
                                         <div class="col-xl-12 mt-3">
                                             <h2>Salary Info</h2>
                                         </div>
-                                        <div class="col-xl-3 col-lg-6 col-md-12">
-                                            <div class="form-group">
-                                                <label>Salary<span style="color:red">*</span></label>
-                                                <input type="text"
-                                                    @if ($official) value="{{ old('salart_info', $official->salart_info) }}" @endif
-                                                    name="salart_info" class="form-control" placeholder="In Hand">
-                                                    <strong class="error" id="salart_info-error"></strong>
-                                            </div>
-                                        </div>
+                                     
                                         <div class="col-xl-3 col-lg-6 col-md-12">
                                             <div class="form-group">
                                                 <label>LPA<span style="color:red">*</span></label>
@@ -784,193 +745,17 @@
                                                     <strong class="error" id="lpa-error"></strong>
                                             </div>
                                         </div>
-
-                                        <div class="col-xl-12">
-                                            <div class="row salary-bg-on">
-                                                <div class="col-xl-12">
-                                                    <h6 class="d-flex">Appraisal <span class="ml-auto on-head-right"
-                                                            data-toggle="modal" data-target="#salaryaddbtn">
-                                                            {{-- <img src="{{ asset('assets') }}/admin/images/button-plus-clr.png"> <small>Add</small> --}}
-                                                        </span></h6>
-                                                </div>
-                                                <div class="col-xl-2 col-lg-4 col-md-6">
-                                                    <div class="form-group">
-                                                        <label>From<span style="color:red">*</span></label>
-                                                        <input type="text"
-                                                            @if ($official) value="{{ old('app_from', $official->app_from) }}" @endif
-                                                            name="app_from" class="form-control"
-                                                            placeholder="10,000">
-                                                            <strong class="error" id="app_from-error"></strong>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xl-2 col-lg-4 col-md-6">
-                                                    <div class="form-group">
-                                                        <label>To<span style="color:red">*</span></label>
-                                                        <input type="text"
-                                                            @if ($official) value="{{ old('app_to', $official->app_to) }}" @endif
-                                                            name="app_to" class="form-control" placeholder="To">
-                                                            <strong class="error" id="app_to-error"></strong>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xl-3 col-lg-4 col-md-12">
-                                                    <div class="form-group">
-                                                        <label>Last Desig.<span style="color:red">*</span></label>
-                                                        <input type="text"
-                                                            @if ($official) value="{{ old('last_app_desig', $official->last_app_desig) }}" @endif
-                                                            name="last_app_desig" class="form-control"
-                                                            placeholder="Last Desig.">
-                                                            <strong class="error" id="last_app_desig-error"></strong>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xl-3 col-lg-4 col-md-12">
-                                                    <div class="form-group">
-                                                        <label>Current Desig.<span style="color:red">*</span></label>
-                                                        <input type="text"
-                                                            @if ($official) value="{{ old('current_app_desig', $official->current_app_desig) }}" @endif
-                                                            name="current_app_desig" class="form-control"
-                                                            placeholder="Current Desig.">
-                                                            <strong class="error" id="current_app_desig-error"></strong>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xl-2 col-lg-4 col-md-12">
-                                                    <div class="form-group">
-                                                        <label>Date<span style="color:red">*</span></label>
-                                                        <input type="date"
-                                                            @if ($official) value="{{ old('app_date', $official->app_date) }}" @endif
-                                                            name="app_date" class="form-control" placeholder="Date">
-                                                            <strong class="error" id="app_date-error"></strong>
-                                                    </div>
-                                                </div>
+                                        <div class="col-xl-3 col-lg-6 col-md-12">
+                                        <div class="form-group">
+                                            <div class="add-btn-part">
+                                                {{-- <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button> --}}
+                                                <button type="button" id="exitemployee"
+                                                    class="btn-primary-cust" style="color:white;background:red;">Employee Exit</button>
+                                                    {{-- <a class="btn-primary-cust" style="color:white;background:red;" href="#" id="scheduleInterview"><img
+                                                        src="{{ asset('assets') }}/admin/images/button-plus.png">Interview</a> --}}
                                             </div>
                                         </div>
-                                        <div class="col-xl-12 ">
-                                            <div class="row salary-bg-on">
-                                                <div class="col-xl-12">
-                                                    <h6 class="d-flex"> Promotion <span class="ml-auto on-head-right"
-                                                            data-toggle="modal" data-target="#salaryaddbtn">
-                                                            {{-- <img src="{{ asset('assets') }}/admin/images/button-plus-clr.png"> <small>Add</small> --}}
-                                                        </span></h6>
-                                                </div>
-                                                <div class="col-xl-2 col-lg-4 col-md-12">
-                                                    <div class="form-group">
-                                                        <label>From<span style="color:red">*</span></label>
-                                                        <input type="text"
-                                                            @if ($official) value="{{ old('pro_from', $official->pro_from) }}" @endif
-                                                            name="pro_from" class="form-control"
-                                                            placeholder="10,000">
-                                                            <strong class="error" id="pro_from-error"></strong>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xl-2 col-lg-4 col-md-12">
-                                                    <div class="form-group">
-                                                        <label>To<span style="color:red">*</span></label>
-                                                        <input type="text"
-                                                            @if ($official) value="{{ old('pro_to', $official->pro_to) }}" @endif
-                                                            name="pro_to" class="form-control" placeholder="To">
-                                                            <strong class="error" id="pro_to-error"></strong>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xl-3 col-lg-4 col-md-12">
-                                                    <div class="form-group">
-                                                        <label>Last Desig.<span style="color:red">*</span></label>
-                                                        <input type="text"
-                                                            @if ($official) value="{{ old('last_pro_desig', $official->last_pro_desig) }}" @endif
-                                                            name="last_pro_desig" class="form-control"
-                                                            placeholder="Last Desig.">
-                                                            <strong class="error" id="last_pro_desig-error"></strong>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xl-3 col-lg-4 col-md-12">
-                                                    <div class="form-group">
-                                                        <label>Current Desig.<span style="color:red">*</span></label>
-                                                        <input type="text"
-                                                            @if ($official) value="{{ old('current_pro_desig', $official->current_pro_desig) }}" @endif
-                                                            name="current_pro_desig" class="form-control"
-                                                            placeholder="Current Desig.">
-                                                            <strong class="error" id="current_pro_desig-error"></strong>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xl-2 col-lg-4 col-md-12">
-                                                    <div class="form-group">
-                                                        <label>Date<span style="color:red">*</span></label>
-                                                        <input type="date"
-                                                            @if ($official) value="{{ old('pro_date', $official->pro_date) }}" @endif
-                                                            name="pro_date" class="form-control" placeholder="Date">
-                                                            <strong class="error" id="pro_date-error"></strong>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <!-- <div class="col-xl-12 mt-3"><h2>Reporting Manager</h2></div> -->
-
-
-                                        <div class="col-xl-12">
-                                            <div class="form-group repo-mange-box mt-3">
-                                                <h2>Reporting Manager</h2>
-                                                <div class="row customer_recordsoff">
-                                                    <div class="col-xl-3 col-lg-5 col-md-10">
-                                                        <div class="form-group">
-                                                            <label>Name<span style="color:red">*</span></label>
-                                                            <input type="text"
-                                                                @if ($official) value="{{ old('mang_name', $official->mang_name) }}" @endif
-                                                                name="mang_name" class="form-control"
-                                                                placeholder="Name">
-                                                                <strong class="error" id="mang_name-error"></strong>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-xl-2 col-lg-5 col-md-10">
-                                                        <div class="form-group">
-                                                            <label>Type<span style="color:red">*</span></label>
-                                                            {{-- <div class="selectBox active form-control">
-                                    <div class="selectBox__value">Type</div>
-                                    <div class="dropdown-menu">
-                                      <a class="dropdown-item active">Type</a>
-                                      <a class="dropdown-item">Primary</a>
-                                      <a class="dropdown-item">Secondary</a>
                                     </div>
-                                  </div> --}}
-                                                            <select name="mang_type" class="form-control"
-                                                                id="mang_type">
-                                                                <option name="mang_type"
-                                                                    @if ($official) value="{{ old('mang_type', $official->mang_type) }}" @endif>
-                                                                    @if ($official)
-                                                                        {{ old('mang_type', $official->mang_type) }}
-                                                                    @endif
-                                                                </option>
-                                                                <option value="Primary">Primary</option>
-                                                                <option value="Secondary">Secondary</option>
-                                                            </select>
-                                                            <strong class="error" id="mang_type-error"></strong>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-xl-3 col-lg-5 col-md-10">
-                                                        <div class="form-group">
-                                                            <label>Department<span style="color:red">*</span></label>
-                                                            <input type="text"
-                                                                @if ($official) value="{{ old('mang_dept', $official->mang_dept) }}" @endif
-                                                                name="mang_dept" class="form-control"
-                                                                placeholder="Department">
-                                                                <strong class="error" id="mang_dept-error"></strong>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-xl-3 col-lg-5 col-md-10">
-                                                        <div class="form-group">
-                                                            <label>Designation<span style="color:red">*</span></label>
-                                                            <input type="text"
-                                                                @if ($official) value="{{ old('mang_desig', $official->mang_desig) }}" @endif
-                                                                name="mang_desig" class="form-control"
-                                                                placeholder="Designation">
-                                                                <strong class="error" id="mang_desig-error"></strong>
-                                                        </div>
-                                                    </div>
-                                                    {{-- <a class="add-plus extra-fields-customeroff"><span><img src="{{ asset('assets') }}/admin/images/button-plus.png"></span></a> --}}
-                                                </div>
-                                                <div class="customer_records_dynamicoff"></div>
-                                            </div>
-                                        </div>
-
-
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <div class="add-btn-part">
@@ -1645,6 +1430,34 @@
     </div>
 </div>
 
+<div class="modal fade custu-modal-popup" id="exitemployeemodel" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form id="exit_employee_form" method="post" autocomplete="off" enctype="multipart/form-data">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title" id="Heading">Employee exit</h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <img src="{{ asset('assets') }}/admin/images/close-btn-icon.png">
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="comman-body">
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="loadingImg"></div>
+                    <div style="font-size: 16px; display:none;" class="text-success" id="success">Employee successfully exit.</div>
+                    <div style="font-size: 16px; display:none;" class="text-danger" id="failed">Employee already exit.</div>
+                    <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
+                    <button type="submit" id="scheduleInterviewSubmit" class="btn-primary-cust">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
 <!-- The Modal Docum INFO-->
 @foreach($ident_item as $item)
 <div class="modal fade custu-modal-popup" id="exampleModaldocument{{$item['id']}}" role="dialog"
@@ -1888,6 +1701,107 @@
     });
 </script>
 
+<script>
+
+     $("#exitemployee").click(function() {
+            getExitEmployeeForm();
+        });
+
+        function getExitEmployeeForm(id = '') {
+            let getFormUrl = '{{ url('exit-employee/form') }}';
+            if (id !== '') {
+                getFormUrl = getFormUrl + "/" + id;
+            }
+            $.ajax({
+                url: getFormUrl,
+                type: "get",
+                datatype: "html",
+            }).done(function(data) {
+                if (id === '') {
+                    $('#Heading').text("Emloyee exit");
+                } else {
+                    $('#Heading').text("Update Schedule Interview");
+                }
+                $('#exitemployeemodel').find('.modal-body').html(data);
+                $('#exitemployeemodel').modal({
+                    backdrop: 'static',
+                    keyboard: false
+                });
+            }).fail(function(jqXHR, ajaxOptions, thrownError) {
+                alert('No response from server');
+            });
+        }
+        $('#exit_employee_form').on('submit', function(event) {
+            event.preventDefault();
+            var isAdd = $('#is_add').val();
+            var url = '{{ url('exit-employee/submit') }}';
+
+            if (isAdd != 1) {
+                var url = '{{ url('exit-employee/update') }}';
+                successMsg = "Successfully Updated";
+            }
+            $('.loadingImg').show();
+            var formData = new FormData(this);
+            $.ajax({
+                url: url,
+                type: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(data) {
+                    if (data.errors) {
+                        if (data.errors.first_name) {
+                            $('#first_name-error').html(data.errors.first_name[0]);
+                        }
+                        if (data.errors.last_name) {
+                            $('#last_name-error').html(data.errors.last_name[0]);
+                        }
+                        if (data.errors.email) {
+                            $('#email-error').html(data.errors.email[0]);
+                        }
+                        if (data.errors.position) {
+                            $('#position-error').html(data.errors.position[0]);
+                        }
+                        if (data.errors.interview_process) {
+                            $('#interview_process-error').html(data.errors
+                                .interview_process[0]);
+                        }
+                        if (data.errors.interviewer_id) {
+                            $('#interviewer_id-error').html(data.errors.interviewer_id[0]);
+                        }
+                    
+                        $('.loadingImg').hide();
+                    } else {
+                        if (data.success != 0) {
+                            $('.loadingImg').hide();
+                            $('#first_name-error').html('');
+                            $('#last_name-error').html('');
+                            $('#email-error').html('');
+                            $('#position-error').html('');
+                            
+                            $('#success').css('display', 'block');
+                            setInterval(function() {
+                                location.reload();
+                            }, 3000);
+
+                        } else {
+                            $('#failed').css('display', 'block');
+                            setInterval(function() {
+                                location.reload();
+                            }, 3000);
+                        }
+                    }
+
+                },
+                error: function(xhr, textStatus, errorThrown) {
+                    console.log(xhr.responseText);
+                }
+            });
+        });
+</script>
 
 <script type="text/javascript">
     // Initializes  input( name of states)

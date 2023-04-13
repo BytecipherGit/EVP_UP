@@ -66,7 +66,7 @@ a{
 }
 
 input.btn-primary-custexport {
-  background: red;
+  background: #5533FF;
   border: none;
   color: #fff !important;
   padding: 10px 25px;
@@ -76,11 +76,12 @@ input.btn-primary-custexport {
   margin-right: 10px;
 }
 button.btn-secondary-custexport {
-  border: 1px solid red;
-  background: transparent;
-  color: red;
+  background: #FFE8E8;
+  color: #FF4A4A;
+  /* background: transparent; */
   padding: 10px 25px;
   border-radius: 5px;
+  border: none;
   font-size: 16px;
   line-height: 26px;
 }
@@ -2511,6 +2512,17 @@ button.btn-secondary-custexport {
     margin: 0;
 }
 .search-hist-page h2 a {
+  padding: 15px 45px;
+  display: block;
+  width: max-content;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 20px;
+  margin-top: 20px;
+}
+.search-hist-page h2 button {
   padding: 15px 45px;
   display: block;
   width: max-content;

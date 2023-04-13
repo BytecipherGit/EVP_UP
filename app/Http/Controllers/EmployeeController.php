@@ -571,7 +571,7 @@ class EmployeeController extends Controller
           $identity_inf=DB::table('employee_officials')->where('employee_id',$id)
           ->update([
                   'date_of_joining'=>$request->input('date_of_joining'),
-                  'prob_period'=>$request->input('prob_period'),
+                  // 'prob_period'=>$request->input('prob_period'),
                   'emp_type'=>$request->input('emp_type'),
                   'work_location'=>$request->input('work_location'),
                   'emp_status'=>$request->input('emp_status'),
@@ -813,6 +813,7 @@ class EmployeeController extends Controller
       }
 
       public function exitEmployee(request $request,$id){
+        
         $employee_id=Employee::where('id',$id)->first();
 
         $exitemp = new Exitemp();

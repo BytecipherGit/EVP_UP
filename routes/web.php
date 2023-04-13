@@ -186,6 +186,11 @@ Route::middleware([Admin::class])->group(function () {
     Route::get("email_template/form/{id?}", [InterviewEmployee::class, 'getEmailTemplate'])->middleware('documents');
     Route::any("send_email_template/{id?}", [InterviewEmployee::class, 'sendEmailTemplate'])->name('send-email-template')->middleware('documents');
 
+    Route::get("exit-employee/form/{id?}", [App\Http\Controllers\ExitEmployeeProcess::class, 'getExitEmployee'])->middleware('documents');
+    Route::any("exit-employee/submit/{id?}", [App\Http\Controllers\ExitEmployeeProcess::class, 'createExitEmployee'])->name('exit.employee.create')->middleware('documents');
+    // Route::post('exit-employee/update', [App\Http\Controllers\ExitEmployeeProcess::class, 'updateExitEmployee'])->middleware('documents');
+    
+
 });
 Route::get('reload-captcha', [App\Http\Controllers\Auth\RegisteredUserController::class, 'reloadCaptcha'])->name('reloadCaptcha');
 Route::get('verification-success/{id?}', [InterviewEmployee::class, 'verificationEmail'])->name('verification.success');

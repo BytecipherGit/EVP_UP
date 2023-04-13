@@ -129,7 +129,7 @@ aria-hidden="true">
             <div class="modal-footer">
                 <div class="loadingImg"></div>
                 <div style="font-size: 16px; display:none;" class="text-success" id="success">Status update successfully</div>
-                <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn-secondary-cust" onclick="refreshPage();" data-dismiss="modal">Cancel</button>
                 <button type="submit" id="Submit" class="btn-primary-cust">Submit</button>
             </div>
         </div>
@@ -184,6 +184,11 @@ aria-hidden="true">
         new $.fn.dataTable.FixedHeader(table);
     });
 </script>
+<script>
+      function refreshPage(){
+            window.location.reload();
+        } 
+</script>
     <script>
     
     $(document).on('change', '#interviewer_status', function() {
@@ -204,9 +209,9 @@ aria-hidden="true">
             datatype: "html",
         }).done(function(data) {
             if (interviewerstatus === '') {
-                $('#Heading').text("Change status");
+                $('#Heading').text("Employee interview final status");
             } else {
-                $('#Heading').text("Change status");
+                $('#Heading').text("Employee interview final status");
             }
             $('#emailtemplate').find('.modal-body').html(data);
             $('#emailtemplate').modal({
@@ -439,6 +444,8 @@ aria-hidden="true">
                 }
             });
         });
+
+      
         // $(document).on('click', '#send_email_template', function() {
         //     swal({
         //             title: "Are you sure?",
@@ -486,52 +493,7 @@ aria-hidden="true">
         //         });
         // });
 
-        $(document).on('change', '#interviewer_statusgg', function() {
-            swal({
-                    title: "Are you sure?",
-                    text: "You want to change the status of this interview!",
-                    icon: "warning",
-                    buttons: true,
-                    dangerMode: true, 
-                })
-                .then((result) => {
-                    if (result) {
-                        // Handle the change event
-                        var status = $(this).val();
-                        var interviewId = $('option:selected', this).data('id');
-                        if (status != '' && interviewId != '') {
-                            var url = '{{ url('schedule-interview/changeInterviewerStatus') }}';
-                            var my_data = {
-                                status: status,
-                                interviewId: interviewId
-                            };
-                            $.ajax({
-                                url: url,
-                                type: 'POST',
-                                headers: {
-                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
-                                        'content')
-                                },
-                                data: my_data,
-                                success: function(data) {
-                                    if (data.success) {
-                                        swal("Interview status has been updated.", {
-                                            icon: "success",
-                                        });
-                                        location.reload();
-                                    }
-                                },
-                                error: function(xhr, textStatus, errorThrown) {
-                                    console.log(xhr.responseText);
-                                }
-                            });
-                        }
-                    } else {
-                        swal("Your data is safe!");
-                        location.reload();
-                    }
-                });
-        });
+  
         $(document).on('click', '#delete_interview', function() {
             swal({
                     title: "Are you sure?",
