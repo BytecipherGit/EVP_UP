@@ -2770,7 +2770,7 @@ button.btn-secondary-custexport {
 }
 .search-bg-round .form-control {
     /* padding: 25px 12px; */
-    border: none;
+    /* border: none; */
     box-sizing: border-box;
     border-radius: 8px;
     font-weight: normal;
