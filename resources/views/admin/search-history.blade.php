@@ -62,9 +62,38 @@
       </div>
     </div>
     <div id="myDIVsearch"></div>
+    
   </div>
   <!--- Main Container Close ----->
+<!-- The Modal Interview  -->
+<div class="modal fade custu-modal-popup" id="interviewModel" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form id="schedule_interview_form" method="post" autocomplete="off" enctype="multipart/form-data">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title" id="Heading">Schedule Interview</h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <img src="assets/admin/images/close-btn-icon.png">
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="comman-body">
 
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="loadingImg"></div>
+                    <div style="font-size: 16px; display:none;" class="text-success" id="success">Schedule
+                        interview successfully done.</div>
+                    <div style="font-size: 16px; display:none;" class="text-danger" id="failed">Interview already has been schedule for this employee.</div>
+                    <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
+                    <button type="submit" id="scheduleInterviewSubmit" class="btn-primary-cust">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
   @endsection
   @section('pagescript')
 
@@ -131,8 +160,8 @@
   </script>
 
   <script type="text/javascript">
-    function myFunction() {
-      var x = document.getElementById("myDIV");
+    function myFunction(empCode) {    
+      var x = document.getElementById(empCode);
       if (x.style.display === "none") {
         x.style.display = "block";
       } else {
@@ -140,5 +169,137 @@
       }
     }
   </script>
-  
+
+  <script>
+     function getInterview() {    
+            getScheduleInterviewForm();
+        };
+
+        function getScheduleInterviewForm(id = '') {
+            let getFormUrl = '{{ url('schedule-interview/form') }}';
+            if (id !== '') {
+                getFormUrl = getFormUrl + "/" + id;
+            }
+            $.ajax({
+                url: getFormUrl,
+                type: "get",
+                datatype: "html",
+            }).done(function(data) {
+                if (id === '') {
+                    $('#Heading').text("Schedule Interview");
+                } else {
+                    $('#Heading').text("Update Schedule Interview");
+                }
+                $('#interviewModel').find('.modal-body').html(data);
+                $('#interviewModel').modal({
+                    backdrop: 'static',
+                    keyboard: false
+                });
+            }).fail(function(jqXHR, ajaxOptions, thrownError) {
+                alert('No response from server');
+            });
+        }
+        $('#schedule_interview_form').on('submit', function(event) {
+            event.preventDefault();
+            var isAdd = $('#is_add').val();
+            var url = '{{ url('schedule-interview/submit') }}';
+
+            if (isAdd != 1) {
+                var url = '{{ url('schedule-interview/update') }}';
+                successMsg = "Successfully Updated";
+            }
+            $('.loadingImg').show();
+            var formData = new FormData(this);
+            $.ajax({
+                url: url,
+                type: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(data) {
+                    if (data.errors) {
+                        if (data.errors.first_name) {
+                            $('#first_name-error').html(data.errors.first_name[0]);
+                        }
+                        if (data.errors.last_name) {
+                            $('#last_name-error').html(data.errors.last_name[0]);
+                        }
+                        if (data.errors.email) {
+                            $('#email-error').html(data.errors.email[0]);
+                        }
+                        if (data.errors.position) {
+                            $('#position-error').html(data.errors.position[0]);
+                        }
+                        if (data.errors.interview_process) {
+                            $('#interview_process-error').html(data.errors
+                                .interview_process[0]);
+                        }
+                        if (data.errors.interviewer_id) {
+                            $('#interviewer_id-error').html(data.errors.interviewer_id[0]);
+                        }
+                        // if (data.errors.interview_date) {
+                        //     $('#interview_date-error').html(data.errors.interview_date[0]);
+                        // }
+                        // if (data.errors.interview_start_time) {
+                        //     $('#interview_start_time-error').html(data.errors
+                        //         .interview_start_time[0]);
+                        // }
+                        // if (data.errors.duration) {
+                        //     $('#duration-error').html(data.errors
+                        //         .duration[0]);
+                        // }
+                        // if (data.errors.video_link) {
+                        //     $('#video_link-error').html(data.errors.video_link[0]);
+                        // }
+                        // if (data.errors.phone) {
+                        //     $('#phone-error').html(data.errors.phone[0]);
+                        // }
+                        // if (data.errors.interview_instruction) {
+                        //     $('#interview_instruction-error').html(data.errors
+                        //         .interview_instruction[0]);
+                        // }
+                        // if (data.errors.attachment) {
+                        //     $('#attachment-error').html(data.errors.attachment[0]);
+                        // }
+                        $('.loadingImg').hide();
+                    } else {
+                        if (data.success != 0) {
+                            $('.loadingImg').hide();
+                            $('#first_name-error').html('');
+                            $('#last_name-error').html('');
+                            $('#email-error').html('');
+                            $('#position-error').html('');
+                            // $('#interview_date-error').html('');
+                            // $('#interview_start_time-error').html('');
+                            // $('#duration-error').html('');
+                            // $('#video_link-error').html('');
+                            // $('#phone-error').html('');
+                            // $('#interview_instruction-error').html('');
+                            // $('#attachment-error').html('');
+                            // $('#schedule_interview_form')[0].reset();
+                            // $('#interviewModel').modal('hide');
+                            $('#success').css('display', 'block');
+                            setInterval(function() {
+                                location.reload();
+                            }, 3000);
+
+                        } else {
+                            $('#failed').css('display', 'block');
+                            setInterval(function() {
+                                location.reload();
+                            }, 3000);
+                        }
+                    }
+
+                },
+                error: function(xhr, textStatus, errorThrown) {
+                    console.log(xhr.responseText);
+                }
+            });
+        });
+  </script>
+
 @stop

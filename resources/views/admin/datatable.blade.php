@@ -15,7 +15,7 @@
     font-size: 21px;
     line-height: 30px;
 }
-input.form-control {
+input.export {
     padding: 10px 12px;
     height: auto;
 }
@@ -118,7 +118,7 @@ input.form-control {
              {{csrf_field()}}
                 <div class="form-group">
                     <label for="upload-file" class="exportlab">Import Employee Records</label>
-                    <input type="file" name="upload-file" class="form-control">
+                    <input type="file" name="upload-file" class="form-control export">
                 </div>
                 <input class="btn-primary-custexport" type="submit" value="Import" name="submit">
                 <button type="button" class="btn-secondary-custexport" data-dismiss="modal">Cancel</button>
