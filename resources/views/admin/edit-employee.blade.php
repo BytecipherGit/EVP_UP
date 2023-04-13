@@ -1441,6 +1441,7 @@
                         <img src="{{ asset('assets') }}/admin/images/close-btn-icon.png">
                     </button>
                 </div>
+                   <input type="hidden" name="id" value="{{ $basic->id }}">
                 <div class="modal-body">
                     <div class="comman-body">
 

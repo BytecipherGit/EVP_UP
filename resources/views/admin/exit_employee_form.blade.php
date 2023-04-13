@@ -71,10 +71,14 @@
                             {{-- <span class="theme-tem-active ml-2">(0.0)</span> --}}
                           </div>
                         </div>
-
+                        <div></div>
+                    @foreach($exitprocess as $process)
                         <div class="col-md-12">
-                           
                             <div class="form-group">
+                                <label>{{$process->title}}
+                                  <input type="checkbox" name="status" class="switch-input" value="1"/>
+                                </label>
+                       
                                 <label>Document<span style="color:red">*</span></br><b>File type:</b> Only .jpeg, .pdf, .docs, or .doc files allowed. <b>File Size:</b> Max:10MB</p></label>
                                 <div class="upload-img-file">
                                     <input type="file" id="document" name="document" class="form-control" accept="image/jpeg,image/doc,image/pdf" />
@@ -83,7 +87,7 @@
                             </div>
                              
                         </div>  
-                   
+                   @endforeach
                       </div>
                     </form>
                   </div>

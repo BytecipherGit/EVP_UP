@@ -126,13 +126,15 @@ class ExitEmployeeProcess extends Controller
 
     public function getExitEmployee($id = '')
     {
+        $exitprocess = ExitEmployee::where('company_id', Auth::id())->get();
         $employee = (!empty($id)) ? Employee::find($id) : false;
         // dd( $employee);
-        return view('admin.exit_employee_form', compact('employee'));
+        return view('admin.exit_employee_form', compact('employee','exitprocess'));
     }
 
     public function createExitEmployee(request $request)
     {
+        
         if (Auth::check()) {
             $userDetails = HelpersHelper::getUserDetails(Auth::id());
             $validator = Validator::make($request->all(), [
@@ -143,18 +145,26 @@ class ExitEmployeeProcess extends Controller
                 // 'document' => 'required|string|max:255',
 
             ]);
-    
+            $exitemployeeprocess = ExitEmployee::where('company_id', Auth::id())->get();
+
             if ($validator->passes()) {
-                
-                    $insert = [
-                        'company_id' => Auth::id(),
-                        'date_of_exit' => !empty($request->date_of_exit) ? $request->date_of_exit : null,
-                        'decipline' => !empty($request->decipline) ? $request->decipline : null,
-                        'reason_of_exit' => !empty($request->reason_of_exit) ? $request->reason_of_exit : null,
-                        'rating' => !empty($request->rating) ? $request->rating : null,
-                        'document' => !empty($request->document) ? $request->document : null,
-                    ];
-                    $employeeData = Exitemp::create($insert);
+            
+                    for ($i=0; $i < count($exitemployeeprocess); $i++) {
+                        $insert =array(
+                           'company_id' => Auth::id(),
+                           'employee_id'=> !empty($request->id) ? $request->id : null,
+                           'date_of_exit' => !empty($request->date_of_exit) ? $request->date_of_exit : null,
+                           'decipline' => !empty($request->decipline) ? $request->decipline : null,
+                           'reason_of_exit' => !empty($request->reason_of_exit) ? $request->reason_of_exit : null,
+                           'rating' => !empty($request->rating) ? $request->rating : null,
+                           'exit_process'=> $request->exit_process[$i],
+                           'document' => $request->document[$i],
+
+                         );   
+                   // dd($technicalSkill);
+
+                   $employeeData = Exitemp::create($insert);
+                      }
                     if (!empty($employeeData)) {
                         return Response::json(['success' => '1']);
                     } else {
@@ -180,6 +190,7 @@ class ExitEmployeeProcess extends Controller
                 if($request->interview_id){
                     $update = [
                         'company_id' => Auth::id(),
+                        'employee_id' =>  !empty($request->id) ? $request->id : null,
                         'date_of_exit' => !empty($request->date_of_exit) ? $request->date_of_exit : null,
                         'decipline' => !empty($request->decipline) ? $request->decipline : null,
                         'reason_of_exit' => !empty($request->reason_of_exit) ? $request->reason_of_exit : null,
