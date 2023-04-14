@@ -1098,7 +1098,7 @@
 
 
 <!-- The Modal Qualification Add -->
-
+@foreach($ident_item as $item)
 <div class="modal fade custu-modal-popup" id="qualificationAdd{{$item['id']}}" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -1201,8 +1201,7 @@
     </form>
     </div>
 </div>
-
-
+@endforeach
 <!-- The Modal Qualification Edit -->
 @foreach($qual_item as $item)
 <div class="modal fade custu-modal-popup" id="qualificationEdit{{$item['id']}}" role="dialog" aria-labelledby="exampleModalLabel"
@@ -1434,6 +1433,7 @@
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <form id="exit_employee_form" method="post" autocomplete="off" enctype="multipart/form-data">
+            <input type="hidden" value="{{$basic->id}}" name="emp_id">
             <div class="modal-content">
                 <div class="modal-header">
                     <h2 class="modal-title" id="Heading">Employee exit</h2>
@@ -1441,10 +1441,11 @@
                         <img src="{{ asset('assets') }}/admin/images/close-btn-icon.png">
                     </button>
                 </div>
-                   <input type="hidden" name="id" value="{{ $basic->id }}">
+                  
                 <div class="modal-body">
+                  
                     <div class="comman-body">
-
+                       
                     </div>
                 </div>
                 <div class="modal-footer">
