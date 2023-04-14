@@ -126,16 +126,16 @@ class ExitEmployeeProcess extends Controller
 
     public function getExitEmployee($id = '')
     {
+       
         $exitprocess = ExitEmployee::where('company_id', Auth::id())->get();
         $employee = (!empty($id)) ? Employee::find($id) : false;
-        // dd( $employee);
+        // dd($employee);
         return view('admin.exit_employee_form', compact('employee','exitprocess'));
     }
 
     public function createExitEmployee(request $request)
     {
-        
-        if (Auth::check()) {
+      
             $userDetails = HelpersHelper::getUserDetails(Auth::id());
             $validator = Validator::make($request->all(), [
                 'date_of_exit' => 'required|string|max:255',
@@ -145,26 +145,84 @@ class ExitEmployeeProcess extends Controller
                 // 'document' => 'required|string|max:255',
 
             ]);
-            $exitemployeeprocess = ExitEmployee::where('company_id', Auth::id())->get();
+
+            $exitprocess = ExitEmployee::where('company_id', Auth::id())->first();
+   
+          $checkRecordExist = Exitemp::where('employee_id', $request->emp_id)->first();
+
+           
+         if (empty($checkRecordExist)) {
 
             if ($validator->passes()) {
+        
+         for ($i=0; $i < count($request->exit_process_id); $i++) {
             
-                    for ($i=0; $i < count($exitemployeeprocess); $i++) {
+            // dd($request->hasFile('document'));
+            $uploadAttachementPath = '';
+                if(!empty($request->document[$i])) {
+                // echo $request->document[1]->getClientOriginalName();
+
+                   
+                    if ($request->document[$i]->getClientOriginalName()) {
+                        $file = $request->file('document');   
+                        // dd($file);
+                        $fileName = '';
+                        $fileName = time() . '_' . $file[$i]->getClientOriginalName();
+                        $file[$i]->storeAs('public/interview_documents', $fileName);
+                        $uploadAttachementPath = asset('storage/interview_documents/' . $fileName);
+                    }
+// dd($uploadAttachementPath);
+// dd($request->status);
+                    if(!empty($request->status[$i]) && $request->status[$i] == true){
+                        $status=1;
+                        }
+                         else{
+                          $status=0;
+                        }
+
                         $insert =array(
                            'company_id' => Auth::id(),
-                           'employee_id'=> !empty($request->id) ? $request->id : null,
-                           'date_of_exit' => !empty($request->date_of_exit) ? $request->date_of_exit : null,
-                           'decipline' => !empty($request->decipline) ? $request->decipline : null,
-                           'reason_of_exit' => !empty($request->reason_of_exit) ? $request->reason_of_exit : null,
-                           'rating' => !empty($request->rating) ? $request->rating : null,
-                           'exit_process'=> $request->exit_process[$i],
-                           'document' => $request->document[$i],
+                           'employee_id'=> $request->emp_id,
+                           'exit_process_id'=> $request->exit_process_id[$i],
+                           'date_of_exit' => $request->date_of_exit,
+                           'decipline' => $request->decipline,
+                           'reason_of_exit' => $request->reason_of_exit,
+                           'rating' =>$request->rating,
+                           'status' => $status,
+                           'document' => !empty($uploadAttachementPath) ? $uploadAttachementPath : '',
 
-                         );   
-                   // dd($technicalSkill);
+                        );   
+                   
+                         $employeeData = Exitemp::create($insert);
 
-                   $employeeData = Exitemp::create($insert);
+                  } else {
+                  
+                    if(!empty($request->status[$i]) && $request->status[$i] == true){
+                        $status=1;
+                        }
+                        else{
+                        $status=0;
+                        }
+
+                        $insert =array(
+                           'company_id' => Auth::id(),
+                           'employee_id'=> $request->emp_id,
+                           'exit_process_id'=> $request->exit_process_id[$i],
+                           'date_of_exit' => $request->date_of_exit,
+                           'decipline' => $request->decipline,
+                           'reason_of_exit' => $request->reason_of_exit,
+                           'rating' =>$request->rating,
+                           'status' => $status,
+                           'document' => !empty($uploadAttachementPath) ? $uploadAttachementPath : '',
+
+                        );   
+                   
+                         $employeeData = Exitemp::create($insert);
+
+                    }   
+           
                       }
+                    
                     if (!empty($employeeData)) {
                         return Response::json(['success' => '1']);
                     } else {
@@ -175,6 +233,10 @@ class ExitEmployeeProcess extends Controller
                 return Response::json(['errors' => $validator->errors()]);
             }
         }
+        else{
+            return Response::json(['success' => '0']);
+        }
+    
 
     }
 

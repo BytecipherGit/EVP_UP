@@ -15,6 +15,8 @@ return new class extends Migration
     {
         Schema::create('exit_employee', function (Blueprint $table) {
             $table->id();
+            $table->unsignedInteger('company_id');
+            $table->foreign('company_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('employee_id');
             $table->string('date_of_exit');
             $table->string('decipline')->nullable();

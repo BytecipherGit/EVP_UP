@@ -27,8 +27,7 @@ class SearchController extends Controller
                         ->where('first_name', 'LIKE', '%' . $request->get('search') . '%')
                         ->get();
 
-                    // $employees = Employee::join('company_employee','company_employee.employee_id','=','employee.id')
-                    // ->select(DB::raw("CONCAT(first_name, ' ', last_name) as value"), 'employee.*')
+                    // $basicinfomation = Employee::select(DB::raw("CONCAT(first_name, ' ', last_name) as value"), "employee.*")
                     // ->where('first_name', 'LIKE', '%' . $request->get('search') . '%')
                     // ->get();
 
@@ -42,7 +41,7 @@ class SearchController extends Controller
                     ->where('first_name', 'LIKE', '%' . $request->get('search') . '%')
                     ->get();
                     
-                // dd($basicinfomation);
+                // dd($employees);
                     $html = '';
                     if (count($employees) > 0) {
                         foreach ($employees as $key => $employee) {
@@ -66,7 +65,7 @@ class SearchController extends Controller
                                              </span> 
                                         </h2>
                                         </div>
-                                    </div>
+                                    </div> 
                                     <div id='.$employee->empCode.' style="display: none;">
                                 <input type="hidden" id="employee_code" name="employee_code" value="empCode">
                             <div class="serch-main-box">
@@ -135,7 +134,8 @@ class SearchController extends Controller
                                 </div>
 
                                 </div>       
-                            </div>';
+                            </div> 
+                            ';
                         }
 
                       if($experiences){

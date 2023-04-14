@@ -9,5 +9,5 @@ class Exitemp extends Model
 {
     use HasFactory;
     protected $table='exit_employee';
-    protected $fillable=['employee_id','date_of_exit','decipline','reason','rating','document'];
+    public $guarded = ['id'];
 }

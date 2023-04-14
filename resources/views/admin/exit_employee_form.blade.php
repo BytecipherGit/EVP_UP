@@ -13,7 +13,7 @@
           <div class="add-emply-details exit-custom-page">
                 <div class="row">
                     <input type="hidden" id="is_add" value="{{ $employee ? '' : 1 }}" />
-                    <input type="hidden" id="interview_id" name="interview_id" value="{{ $employee ? $employee->id : '' }}" />  
+                 
                   <div class="col-lg-12">
 
                     <form method="post">
@@ -72,32 +72,37 @@
                           </div>
                         </div>
                         <div></div>
+                        @php $a = 0 @endphp
                     @foreach($exitprocess as $process)
+
                         <div class="col-md-12">
                             <div class="form-group">
+                              <input type="hidden" name="exit_process_id[]" value={{$process->id}}>
+                             
                                 <label>{{$process->title}}
-                                  <input type="checkbox" name="status" class="switch-input" value="1"/>
+                                  {{-- <input type="checkbox" name="status" class="switch-input" value="1"/> --}}
+                                  {{-- <input type="hidden" name="status" value="0" /> --}}
+                                 <input type="checkbox" name="status[]"/>
                                 </label>
                        
                                 <label>Document<span style="color:red">*</span></br><b>File type:</b> Only .jpeg, .pdf, .docs, or .doc files allowed. <b>File Size:</b> Max:10MB</p></label>
                                 <div class="upload-img-file">
-                                    <input type="file" id="document" name="document" class="form-control" accept="image/jpeg,image/doc,image/pdf" />
-                                    {{-- <strong class="error" id="document-error"></strong> --}}
+                                    <input type="file" id="document" name="document[]" class="form-control" accept="image/jpeg,image/doc,image/pdf" />
                                 </div>
                             </div>
                              
                         </div>  
+                        @php $a++ @endphp
                    @endforeach
+               
                       </div>
                     </form>
                   </div>
                 </div>
-                {{-- @endif                --}}
+                {{-- @endif --}}
               </div>
         </div>
       </div>
-    
-  
     <!--- Main Container Close ----->
 
 
