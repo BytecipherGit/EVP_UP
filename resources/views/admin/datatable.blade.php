@@ -123,7 +123,7 @@ input.export {
                 <input class="btn-primary-custexport" type="submit" value="Import" name="submit">
                 <button type="button" class="btn-secondary-custexport" data-dismiss="modal">Cancel</button>
             </form>
-            <a href="/downloadcsv" class="sample">Download sample file here </a>
+            <a href="/downloadcsv" class="sample btn btn-primary">Download sample file here </a>
         </div>
       </div>
     </div>

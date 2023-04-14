@@ -19,23 +19,30 @@ class SearchController extends Controller
     // global search function
     public function search(Request $request)
     {
+       
         if (!empty($request->get('filterby')) && !empty($request->get('search'))) {
             switch ($request->get('filterby')) {
                 case ('name'):
-                    // $employees = Employee::select(DB::raw("CONCAT(first_name, ' ', last_name) as value"), "employee.*")
-                    //     ->where('first_name', 'LIKE', '%' . $request->get('search') . '%')
-                    //     ->get();
-                $employees = Employee::leftjoin('employee_identity', 'employee_identity.employee_id', '=', 'employee.id')
-                    ->leftjoin('company_employee','company_employee.employee_id','=','employee.id')
-                    ->leftjoin('employee_officials', 'employee_officials.employee_id', '=', 'employee.id')
-                    ->leftjoin('employee_skills', 'employee_skills.employee_id', '=', 'company_employee.employee_id')
-                    ->leftjoin('employee_qualifications', 'employee_qualifications.employee_id', '=', 'company_employee.employee_id')
-                    ->leftjoin('employee_workhistories', 'employee_workhistories.employee_id', '=', 'company_employee.employee_id')
-                    ->select(DB::raw("CONCAT(first_name, ' ', last_name) as value"), 'employee.*', 'employee_identity.*', 'employee_officials.*','employee_skills.*','employee_qualifications.*','employee_workhistories.*')
+                    $employees = Employee::select(DB::raw("CONCAT(first_name, ' ', last_name) as value"), "employee.*")
+                        ->where('first_name', 'LIKE', '%' . $request->get('search') . '%')
+                        ->get();
+
+                    // $employees = Employee::join('company_employee','company_employee.employee_id','=','employee.id')
+                    // ->select(DB::raw("CONCAT(first_name, ' ', last_name) as value"), 'employee.*')
+                    // ->where('first_name', 'LIKE', '%' . $request->get('search') . '%')
+                    // ->get();
+
+                    $experiences = Employee::join('employee_workhistories', 'employee_workhistories.employee_id', '=', 'employee.id')
+                    ->select(DB::raw("CONCAT(first_name, ' ', last_name) as value"), 'employee.*','employee_workhistories.*')
+                    ->where('first_name', 'LIKE', '%' . $request->get('search') . '%')
+                    ->get();
+
+                    $qualifications = Employee::join('employee_qualifications', 'employee_qualifications.employee_id', '=', 'employee.id')
+                    ->select(DB::raw("CONCAT(first_name, ' ', last_name) as value"), 'employee.*','employee_qualifications.*')
                     ->where('first_name', 'LIKE', '%' . $request->get('search') . '%')
                     ->get();
                     
-                //  dd($employees);
+                // dd($basicinfomation);
                     $html = '';
                     if (count($employees) > 0) {
                         foreach ($employees as $key => $employee) {
@@ -60,8 +67,7 @@ class SearchController extends Controller
                                         </h2>
                                         </div>
                                     </div>
-                                    
-                        <div id='.$employee->empCode.' style="display: none;">
+                                    <div id='.$employee->empCode.' style="display: none;">
                                 <input type="hidden" id="employee_code" name="employee_code" value="empCode">
                             <div class="serch-main-box">
                                 <h2 class="">Basic Info</h2>
@@ -129,9 +135,12 @@ class SearchController extends Controller
                                 </div>
 
                                 </div>       
-                            </div>
-                        
-                            <div class="serch-main-box">
+                            </div>';
+                        }
+
+                      if($experiences){
+                         foreach ($experiences as $key => $experience) {
+                            $html .= '<div class="serch-main-box">
                                 <h2 class="">Experience</h2>
                                 <div class="d-flex pt-3">
                                 <div class="searc-icon-bx">
@@ -139,9 +148,9 @@ class SearchController extends Controller
                                 </div>
                                 <div class="searc-icon-bx-text">
                                     <h2>React Native Developer</h2>
-                                    <h4>'.$employee->com_name .' · '.$employee->emp_type .' </h4>
-                                    <p class="pt-2"><span>'.$employee->work_duration_from .' . '.$employee->work_duration_to .'</span></p>
-                                    <p><span>' . $employee->work_location .'</span></p>
+                                    <h4>'.$experience->com_name .' · '.$experience->emp_type .' </h4>
+                                    <p class="pt-2"><span>'.$experience->work_duration_from .' . '.$experience->work_duration_to .'</span></p>
+                                    <p><span>' . $experience->work_location .'</span></p>
                                     <p class="pt-2">"Raw denim you probably havent heard of them jean shorts Austin."</p>
                                     <fieldset class="rating">
                                     <input type="radio" id="textiles-star51" name="textiles-rating1" value="5" />
@@ -174,26 +183,31 @@ class SearchController extends Controller
                                 <img src="assets/admin/images/verified-icon.png" class="verified-img">        
                                 </div>  
                                 <hr>      
-                            </div>
+                            </div>';
 
-                            <div class="serch-main-box">
+                         }
+                        }
+                        if($qualifications){
+                         foreach ($qualifications as $key => $qualification) {
+                            $html .='<div class="serch-main-box">
                                 <h2 class="">Education</h2>
                                 <div class="d-flex pt-3">
                                 <div class="searc-icon-bx">
                                     <img src="assets/admin/images/Sage_University_logo.png">
                                 </div>
                                 <div class="searc-icon-bx-text">
-                                    <h2>'.$employee->inst_name .'</h2>
-                                    <h4>'.$employee->degree .', '.$employee->subject .'</h4>
-                                    <p class="pt-2"><span>'.$employee->duration_from .' - '.$employee->duration_to .'</span></p>
+                                    <h2>'.$qualification->inst_name .'</h2>
+                                    <h4>'.$qualification->degree .', '.$qualification->subject .'</h4>
+                                    <p class="pt-2"><span>'.$qualification->duration_from .' - '.$qualification->duration_to .'</span></p>
                                 </div>
                                 <img src="assets/admin/images/verified-icon.png" class="verified-img">
                                 </div>        
                             </div>
                             
                         </div>';
-
+                         }
                         }
+                      
                     } else {
                         $html .= '<div class="search-hist-page">
                             <div class="search-hist-pro">

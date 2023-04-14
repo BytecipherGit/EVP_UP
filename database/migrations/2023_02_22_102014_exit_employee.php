@@ -20,6 +20,9 @@ return new class extends Migration
             $table->string('decipline')->nullable();
             $table->string('reason_of_exit')->nullable();
             $table->string('rating')->nullable();
+            $table->unsignedBigInteger('exit_process_id');
+            $table->foreign('exit_process_id')->references('id')->on('employee_exit_processes')->onDelete('cascade');
+            $table->tinyInteger('status')->default('0')->comment('1=Active, 0=Inactive');
             $table->string('document')->nullable();
             $table->timestamps();
         });
