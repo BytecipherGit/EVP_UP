@@ -77,9 +77,19 @@
 </div>
   @endsection
   @section('pagescript')
+  <script type="text/javascript">
+    function myFunction(id) {
+      alert(id)
+      var x = document.getElementById(id);
+      if (x.style.display === "none") {
+        x.style.display = "block";
+      } else {
+        x.style.display = "none";
+      }
+    }
+  </script>
 
-<script>
-
+<script type="text/javascript">
 $("#filter_by").on("change", function() {
         var option = this.value;
         switch (option) { 
@@ -168,14 +178,14 @@ $("#filter_by").on("change", function() {
   </script>
 
   <script type="text/javascript">
-    function myFunction(empCode) {    
-      var x = document.getElementById(empCode);
-      if (x.style.display === "none") {
-        x.style.display = "block";
-      } else {
-        x.style.display = "none";
-      }
-    }
+    // function myFunction(empCode) {    
+    //   var x = document.getElementById(empCode);
+    //   if (x.style.display === "none") {
+    //     x.style.display = "block";
+    //   } else {
+    //     x.style.display = "none";
+    //   }
+    // }
   </script>
 
   <script>
