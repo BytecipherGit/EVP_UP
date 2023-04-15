@@ -82,7 +82,7 @@
                                 <label>{{$process->title}}
                                   {{-- <input type="checkbox" name="status" class="switch-input" value="1"/> --}}
                                   {{-- <input type="hidden" name="status" value="0" /> --}}
-                                 <input type="checkbox" name="status[]"/>
+                                 <input type="checkbox" name="status[{{ $a }}]"/>
                                 </label>
                        
                                 <label>Document<span style="color:red">*</span></br><b>File type:</b> Only .jpeg, .pdf, .docs, or .doc files allowed. <b>File Size:</b> Max:10MB</p></label>
