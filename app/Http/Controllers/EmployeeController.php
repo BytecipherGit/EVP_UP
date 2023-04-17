@@ -63,12 +63,12 @@ class EmployeeController extends Controller
         $uploadDocumentId = '';
         $empCode = substr(time(), -6) . sprintf('%04d', rand(0, 9999));
 
-        if ($request->hasFile('profile')) {
-          $file = $request->file('profile');
-          $fileName = time() . '_' . $empCode .'_'. $file->getClientOriginalName();
-          $file->storeAs('public/employee/employee_document', $fileName);
-          $uploadProfile = asset('storage/employee/employee_document/' . $fileName);
-       }
+       if ($request->hasFile('profile')) {
+        $file = $request->file('profile');
+        $fileName = time() . '_' . $file->getClientOriginalName();
+        $file->storeAs('public/employee_document', $fileName);
+        $uploadProfile = asset('storage/employee_document/' . $fileName);
+    }
 
        if ($request->hasFile('document_id')) {
         $file = $request->file('document_id');
@@ -131,24 +131,36 @@ class EmployeeController extends Controller
            //For Update Basic Information
           if(isset($_POST['basic-edit'])){
 
-            if($request->file('profile')){
-            $file= $request->file('profile');
-            $filename=$file->getClientOriginalName();
-            $file->move(public_path().'_'.time().'.',$filename); 
-            $basic_info['profile']= $filename;
+            if ($request->hasFile('profile')) {
+              $file = $request->file('profile');
+              $fileName = time() . '_' . $file->getClientOriginalName();
+              $file->storeAs('public/employee_document', $fileName);
+              $uploadProfile = asset('storage/employee_document/' . $fileName);
           }
          else{
           $image=DB::table('employee')->where('id',$request->id)->first();
-          $filename=$image->profile;
+          $uploadProfile=$image->profile;
           // print_r($image->profile);die();
          }
+
+         if ($request->hasFile('document_id')) {
+          $file = $request->file('document_id');
+          $fileName = time() . '_'. $file->getClientOriginalName();
+          $file->storeAs('public/employee/employee_document', $fileName);
+          $uploadDocumentId = asset('storage/employee/employee_document/' . $fileName);
+       }
+       else{
+        $document=DB::table('employee')->where('id',$request->id)->first();
+        $uploadDocumentId=$document->document_id;
+        // print_r($image->profile);die();
+       }
           $basic_info=DB::table('employee')->where('id',$request->id)
           ->update([
                 'first_name'=>$request->input('first_name'),
                 'last_name'=>$request->input('last_name'),
                 'middle_name'=>$request->input('middle_name'),
                 'email'=>$request->input('email'),
-                'profile'=>$filename,
+                'profile'=>$uploadProfile,
                 'phone'=>$request->input('phone'),
                 'dob'=>$request->input('dob'),
                 'blood_group'=>$request->input('blood_group'),
@@ -160,7 +172,9 @@ class EmployeeController extends Controller
                 'emg_relationship'=>$request->input('emg_relationship'),
                 'emg_phone'=>$request->input('emg_phone'),
                 'emg_address'=>$request->input('emg_address'),
-
+                'document_type'=>$request->input('document_type'),
+                'document_id'=>$uploadDocumentId,
+                'document_number'=>$request->input('document_number'),
                ]);
 
                return redirect()->back()->with('tabs-3_active', true)->with('message','Infomation updated successfully.');
@@ -432,24 +446,35 @@ class EmployeeController extends Controller
         // $basicinfo=Employee::where('id',$request->id)->first();
         if(isset($_POST['basic-edit'])){
 
-            if($request->file('profile')){
-            $file= $request->file('profile');
-            $filename=$file->getClientOriginalName();
-            $file->move(public_path().'/Image/',$filename); 
-            $basic_info['profile']= $filename;
-          }
+          if ($request->hasFile('profile')) {
+            $file = $request->file('profile');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $file->storeAs('public/employee_document', $fileName);
+            $uploadProfile = asset('storage/employee_document/' . $fileName);
+        }
          else{
           $image=DB::table('employee')->where('id',$request->id)->first();
-          $filename=$image->profile;
+          $uploadProfile=$image->profile;
           // print_r($image->profile);die();
          }
+         if ($request->hasFile('document_id')) {
+          $file = $request->file('document_id');
+          $fileName = time() . '_'. $file->getClientOriginalName();
+          $file->storeAs('public/employee/employee_document', $fileName);
+          $uploadDocumentId = asset('storage/employee/employee_document/' . $fileName);
+       }
+       else{
+        $document=DB::table('employee')->where('id',$request->id)->first();
+        $uploadDocumentId=$document->document_id;
+        // print_r($image->profile);die();
+       }
          $basic_info=DB::table('employee')->where('id',$request->id)
          ->update([
                 'first_name'=>$request->input('first_name'),
                 'last_name'=>$request->input('last_name'),
                 'middle_name'=>$request->input('middle_name'),
                 'email'=>$request->input('email'),
-                'profile'=>$filename,
+                'profile'=>$uploadProfile,
                 'phone'=>$request->input('phone'),
                 'dob'=>$request->input('dob'),
                 'blood_group'=>$request->input('blood_group'),
@@ -461,6 +486,9 @@ class EmployeeController extends Controller
                 'emg_relationship'=>$request->input('emg_relationship'),
                 'emg_phone'=>$request->input('emg_phone'),
                 'emg_address'=>$request->input('emg_address'),
+                'document_type'=>$request->input('document_type'),
+                'document_id'=>$uploadDocumentId,
+                'document_number'=>$request->input('document_number'),
         ]);
 
         return redirect()->back()->with('message','Infomation updated successfully.');
