@@ -22,12 +22,12 @@
                   </select>
               </div>
           </div>
-          <div class="col-lg-4">
+          <div class="col-lg-6">
               <div class="form-group" style="margin-top: 16px;">
                   <input type="text" id="search" placeholder="Search talent by name, email, mobile, empcode, document no." name="search" class="form-control input-search-box" autocomplete="off">
               </div>
           </div>
-          <div class="col-lg-4">
+          <div class="col-lg-2">
             <div class="form-group">
               <button type="button" class="search-btnkey" onclick="searchEmployee()">Search</button>
             </div>
@@ -59,6 +59,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    {{-- <input type="hidden" name="employee_id" value="{{$id}}"> --}}
                     <div class="comman-body">
 
                     </div>
@@ -79,7 +80,7 @@
   @section('pagescript')
   <script type="text/javascript">
     function myFunction(id) {
-      alert(id)
+    //   alert(id)
       var x = document.getElementById(id);
       if (x.style.display === "none") {
         x.style.display = "block";
@@ -189,12 +190,12 @@ $("#filter_by").on("change", function() {
   </script>
 
   <script>
-     function getInterview() {    
-            getScheduleInterviewForm();
+     function getInterview(id) {    
+            getScheduleInterviewForm(id);
         };
 
         function getScheduleInterviewForm(id = '') {
-            let getFormUrl = '{{ url('schedule-interview/form') }}';
+            let getFormUrl = '{{ url('schedule-searchemployee-interview/form') }}';
             if (id !== '') {
                 getFormUrl = getFormUrl + "/" + id;
             }
@@ -206,7 +207,7 @@ $("#filter_by").on("change", function() {
                 if (id === '') {
                     $('#Heading').text("Schedule Interview");
                 } else {
-                    $('#Heading').text("Update Schedule Interview");
+                    $('#Heading').text("Schedule Interview");
                 }
                 $('#interviewModel').find('.modal-body').html(data);
                 $('#interviewModel').modal({
@@ -221,11 +222,6 @@ $("#filter_by").on("change", function() {
             event.preventDefault();
             var isAdd = $('#is_add').val();
             var url = '{{ url('schedule-interview/submit') }}';
-
-            if (isAdd != 1) {
-                var url = '{{ url('schedule-interview/update') }}';
-                successMsg = "Successfully Updated";
-            }
             $('.loadingImg').show();
             var formData = new FormData(this);
             $.ajax({

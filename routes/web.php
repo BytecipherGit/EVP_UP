@@ -128,6 +128,8 @@ Route::middleware([Admin::class])->group(function () {
     Route::get('/schedule-interview', [InterviewEmployee::class, 'index'])->name('schedule.interview')->middleware('documents');
     Route::get('/interview-round-details/{id?}', [InterviewEmployee::class, 'interviewRoundDetails'])->name('interview.round.details')->middleware('documents');
     Route::any('/schedule-interview/form/{id?}', [InterviewEmployee::class, 'getScheduleInterviewForm'])->middleware('documents');
+    Route::any('/schedule-searchemployee-interview/form/{id?}', [InterviewEmployee::class, 'getSearchEmpInterviewForm'])->middleware('documents');
+    Route::post('schedule-searchemp-interview/submit', [InterviewEmployee::class, 'scheduleSearchempInterview'])->middleware('documents');
     Route::post('schedule-interview/submit', [InterviewEmployee::class, 'scheduleInterview'])->middleware('documents');
     Route::post('schedule-interview/changeHiringStage', [InterviewEmployee::class, 'update_hiring_stage'])->middleware('documents');
     Route::post('schedule-interview/deleteInterview', [InterviewEmployee::class, 'deleteInterview'])->middleware('documents');
@@ -188,7 +190,7 @@ Route::middleware([Admin::class])->group(function () {
 
     Route::get("exit-employee/form/{id?}", [App\Http\Controllers\ExitEmployeeProcess::class, 'getExitEmployee'])->middleware('documents');
     Route::any("exit-employee/submit/{id?}", [App\Http\Controllers\ExitEmployeeProcess::class, 'createExitEmployee'])->name('exit.employee.create')->middleware('documents');
-    // Route::post('exit-employee/update', [App\Http\Controllers\ExitEmployeeProcess::class, 'updateExitEmployee'])->middleware('documents');
+    Route::post('exit-employee/update', [App\Http\Controllers\ExitEmployeeProcess::class, 'updateExitEmployee'])->middleware('documents');
     
 
 });

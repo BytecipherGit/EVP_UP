@@ -65,15 +65,12 @@
                                     <div class="profile-add-img">
                                         <div class="circle">
                                             <img class="profile-pic" id="profile-pic" name="profile"
-                                                @if ($basic->profile !== null) value="/image/{{ old('profile', $basic->profile) }}" src="{{ $basic->profile }}" @else src="{{ asset('assets') }}/admin/images/logo.png" @endif
-                                                required>
+                                          @if ($basic->profile!== Null) value="{{ old('profile', $basic->profile) }}" src="{{ $basic->profile }}" @else src="{{ asset('assets') }}/admin/images/user-img.png" @endif required>
                                         </div>
                                         <div class="p-image ml-auto">
-                                            <span class="upload-button" id="upload-button"><img
-                                                    src="{{ asset('assets') }}/admin/images/edit-icon.png"></span>
-                                            <input class="file-upload" name="profile" id="file-upload" type="file"
-                                                accept="image/*" />
-                                        </div>
+                                            <span class="upload-button" id="upload-button"><img src="{{ asset('assets') }}/admin/images/edit-icon.png"></span>
+                                             <input class="file-upload" name="profile" id="file-upload" type="file" accept="image/*"/>
+                                          </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-9">
@@ -211,6 +208,36 @@
                                         <strong class="error" id="marital_status-error"></strong>
                                     </div>
                                 </div>
+                                <div class="col-xl-4 col-lg-6 col-md-12">
+                                    <div class="form-group">
+                                        <label>Document Type<span style="color:red">*</span></label>
+                                        <select name="document_type" class="form-control" id="document_type">
+                                          <option @if ($basic) value="{{ old('document_type', $basic->document_type) }}" @endif>  @if ($basic)
+                                            {{ old('document_type', $basic->document_type) }}
+                                        @endif</option>
+                                            <option value="Pan Card">Pan Card</option>
+                                            <option value="Aadhar Card">Aadhar Card</option>
+                                            <option value="Passport">Passport</option>
+                                        </select>
+                                        <strong class="error" id="document_type-error"></strong> 
+                                    </div>
+                                 </div>
+              
+                                 <div class="col-xl-4 col-lg-6 col-md-12">
+                                  <div class="form-group">
+                                      <label>Document Number<span style="color:red">*</span></label>
+                                      <input type="text" name="document_number" class="form-control" @if ($basic) value="{{ old('document_number', $basic->document_number) }}" @endif placeholder="Enter document number">
+                                      <strong class="error" id="document_number-error"></strong> 
+                                  </div>
+                                </div>
+              
+                                <div class="col-xl-4 col-lg-6 col-md-12">
+                                  <div class="form-group">
+                                      <label>Document Id<span style="color:red">*</span></label>
+                                      <input type="file" id="document_id" @if ($basic) value="{{ old('document_id', $basic->document_id) }}" @endif name="document_id" class="form-control">
+                                       <strong class="error" id="document_id-error"></strong> 
+                                  </div>
+                               </div>
                                 <div class="col-xl-6 col-lg-6 col-md-12">
                                     <div class="form-group">
                                         <label for="current_address">Current Address<span style="color:red">*</span></label>
