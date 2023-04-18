@@ -21,7 +21,7 @@
 <input type="hidden" id="is_add" value="{{ $interview ? '' : 1 }}" />
 
 <input type="hidden" id="employee_id" name="employee_id" value="{{ $interview ? $interview->id : '' }}" />
-<div class="row">
+{{-- <div class="row">
     <div class="col-lg-6">
         <div class="form-group">
             <label>Filer By</label>
@@ -43,7 +43,7 @@
             placeholder="Search employee">
         </div>
     </div>
-</div>
+</div> --}}
 <div class="form-group">
     <label>First Name<span style="color:red">*</span></label>
     <input type="type" name="first_name" id="first_name" class="form-control" value="{{$interview->first_name}}" placeholder="First Name">

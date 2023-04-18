@@ -23,6 +23,11 @@ input.export {
 .custu-no-select a:hover {
     box-shadow: 0px 4px 31px rgba(85, 51, 255, 0);
 }
+
+/* .employee-view-page .table thead {
+  background: {{ $orangeBackgroud }};
+  border-radius: 4px;
+} */
 </style>
 <link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/bootstrap.min.css">
 <link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/datatables.bootstrap.min.css">
