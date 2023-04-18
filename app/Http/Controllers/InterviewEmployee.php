@@ -874,7 +874,7 @@ class InterviewEmployee extends Controller
             // $interview = EmployeeInterview::where('interview_employees.id',$id)->first();
 
 
-                            $interview = EmployeeInterview::join("company_employee",function($join){
+             $interview = EmployeeInterview::join("company_employee",function($join){
                                 $join->on("company_employee.company_id","=","interview_employees.company_id")
                                     ->on("company_employee.employee_id","=","interview_employees.employee_id");
                             })->join('employee','company_employee.employee_id','=','employee.id')

@@ -596,17 +596,16 @@ class EmployeeController extends Controller
         }
 
         if(isset($_POST['official-edit'])){
-          $identity_inf=DB::table('employee_officials')->where('employee_id',$id)
+          $identity_inf=DB::table('employee_officials')->where('employee_id',$request->id)
           ->update([
                   'date_of_joining'=>$request->input('date_of_joining'),
-                  // 'prob_period'=>$request->input('prob_period'),
                   'emp_type'=>$request->input('emp_type'),
                   'work_location'=>$request->input('work_location'),
                   'emp_status'=>$request->input('emp_status'),
                   'lpa'=>$request->input('lpa'),
+                  'designation'=>$request->input('designation'),
               
             ]);
-
 
           return redirect()->back()->with('message','Infomation updated successfully.');
         }
@@ -874,10 +873,10 @@ class EmployeeController extends Controller
 
      public function addOldEmp(){
       
-      $oldemployee=DB::table('exit_employee')->join('employee', 'exit_employee.employee_id', '=', 'employee.id')
-                ->join('company_employee','company_employee.employee_id','=','employee.id')
-                ->select('employee.id','employee.*', 'exit_employee.*')->get();
-
+      $oldemployee=Employee::join('company_employee', 'company_employee.employee_id', '=', 'employee.id')
+                ->where('employee.status',0)->where('company_employee.company_id',Auth::id())
+                ->select('employee.*')->get();
+// dd($oldemployee);
       return view('admin/post-employee',compact('oldemployee'));
       }
 

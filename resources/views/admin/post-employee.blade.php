@@ -49,7 +49,7 @@
                 <td>{{$oldemp->email}}</td>
                 {{-- <td>{{$pastemps->mang_name}}</td> --}}
                
-                <td class="d-flex"><a href="/post-employee-details/{{ $oldemp->employee_id }}" class="edit-btn fa fa-eye" data-title="View"></a></td>
+                <td class="d-flex"><a href="/post-employee-details/{{ $oldemp->id }}" class="edit-btn fa fa-eye" data-title="View"></a></td>
               </tr> 
               @endforeach                    
             </tbody>

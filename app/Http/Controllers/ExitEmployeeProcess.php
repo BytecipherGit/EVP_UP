@@ -7,6 +7,8 @@ use App\Models\Exitemp;
 use App\Models\ExitEmployeeProcess as ExitEmployee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\CompanyEmployee;
+use App\Models\Employee;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables as FacadesDataTables;
@@ -164,12 +166,14 @@ class ExitEmployeeProcess extends Controller
                             'decipline' => $request->decipline,
                             'reason_of_exit' => $request->reason_of_exit,
                             'rating' => $request->rating,
+                            'review' => $request->review,
                             'status' => $status,
                             'document' => !empty($uploadAttachementPath) ? $uploadAttachementPath : '',
 
                         );
 
                         $employeeData = Exitemp::create($insert);
+                        
 
                     } else {
 
@@ -187,13 +191,28 @@ class ExitEmployeeProcess extends Controller
                             'decipline' => $request->decipline,
                             'reason_of_exit' => $request->reason_of_exit,
                             'rating' => $request->rating,
+                            'review' => $request->review,
                             'status' => $status,
                             'document' => !empty($uploadAttachementPath) ? $uploadAttachementPath : '',
 
                         );
                         $employeeData = Exitemp::create($insert);
+                        
                     }
                 }
+                if(!empty($employeeData)){
+
+                 CompanyEmployee::where('employee_id',$employeeData->employee_id)->update([
+                    'end_date'  => $employeeData->date_of_exit,
+                  ]);
+             
+                  Employee::where('id',$employeeData->employee_id)->update([
+                    'status'  => '0'
+                  ]);
+          
+                  return redirect('employee')->with('message','Employee exit successfully');
+                }
+
                 if (!empty($employeeData)) {
                     return Response::json(['success' => '1']);
                 } else {
@@ -202,46 +221,46 @@ class ExitEmployeeProcess extends Controller
             } else {
                 return Response::json(['errors' => $validator->errors()]);
             }
-        } else {
+         } else {
             return Response::json(['success' => '0']);
         }
 
     }
 
-    public function updateExitEmployee(request $request)
-    {
-        if (Auth::check()) {
-            $userDetails = HelpersHelper::getUserDetails(Auth::id());
-            $validator = Validator::make($request->all(), [
-                'date_of_exit' => 'required|string|max:255',
+    // public function updateExitEmployee(request $request)
+    // {
+    //     if (Auth::check()) {
+    //         $userDetails = HelpersHelper::getUserDetails(Auth::id());
+    //         $validator = Validator::make($request->all(), [
+    //             'date_of_exit' => 'required|string|max:255',
 
-            ]);
-            if ($validator->passes()) {
-                if ($request->interview_id) {
-                    $update = [
-                        'company_id' => Auth::id(),
-                        'employee_id' => !empty($request->id) ? $request->id : null,
-                        'date_of_exit' => !empty($request->date_of_exit) ? $request->date_of_exit : null,
-                        'decipline' => !empty($request->decipline) ? $request->decipline : null,
-                        'reason_of_exit' => !empty($request->reason_of_exit) ? $request->reason_of_exit : null,
-                        'rating' => !empty($request->rating) ? $request->rating : null,
-                        'document' => !empty($request->document) ? $request->document : null,
-                    ];
-                    $interviewData = Exitemp::where('id', $request->interview_id)->update($update);
-                    if (!empty($interviewData)) {
-                        return Response::json(['success' => '1']);
-                    } else {
-                        return Response::json(['success' => '0']);
-                    }
-                } else {
-                    return Response::json(['success' => '0']);
-                }
+    //         ]);
+    //         if ($validator->passes()) {
+    //             if ($request->interview_id) {
+    //                 $update = [
+    //                     'company_id' => Auth::id(),
+    //                     'employee_id' => !empty($request->id) ? $request->id : null,
+    //                     'date_of_exit' => !empty($request->date_of_exit) ? $request->date_of_exit : null,
+    //                     'decipline' => !empty($request->decipline) ? $request->decipline : null,
+    //                     'reason_of_exit' => !empty($request->reason_of_exit) ? $request->reason_of_exit : null,
+    //                     'rating' => !empty($request->rating) ? $request->rating : null,
+    //                     'document' => !empty($request->document) ? $request->document : null,
+    //                 ];
+    //                 $interviewData = Exitemp::where('id', $request->interview_id)->update($update);
+    //                 if (!empty($interviewData)) {
+    //                     return Response::json(['success' => '1']);
+    //                 } else {
+    //                     return Response::json(['success' => '0']);
+    //                 }
+    //             } else {
+    //                 return Response::json(['success' => '0']);
+    //             }
 
-            } else {
-                return Response::json(['errors' => $validator->errors()]);
-            }
-        }
+    //         } else {
+    //             return Response::json(['errors' => $validator->errors()]);
+    //         }
+    //     }
 
-    }
+    // }
 
 }

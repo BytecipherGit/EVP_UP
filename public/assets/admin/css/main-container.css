@@ -10,6 +10,16 @@ body{
   color: #fff;
 }
 
+.error {
+  color: red !important;
+  font-weight: 400;
+}
+
+.checkboxexitform {
+  width: 20px;
+  height: 20px;
+}
+
 .link-href:hover{
   color: #fff;
 }
@@ -1698,11 +1708,11 @@ button.btn-secondary-custexport {
 }
 .rating > input:checked ~ label, /* show gold star when clicked */
 .rating:not(:checked) > label:hover, /* hover current star */
-.rating:not(:checked) > label:hover ~ label { color: #ffc600;  } /* hover previous stars in list */
+.rating:not(:checked) > label:hover ~ label { color: #5533FF;  } /* hover previous stars in list */
 .rating > input:checked + label:hover, /* hover current star when changing rating */
 .rating > input:checked ~ label:hover,
 .rating > label:hover ~ input:checked ~ label, /* lighten current selection */
-.rating > input:checked ~ label:hover ~ label { color: #ffc600;  }
+.rating > input:checked ~ label:hover ~ label { color: #5533FF;  }
 /****** Star Rating Css Close *****/
 @media (max-width: 991px){
 .exit-custom-page .add-plus span{margin-right: 0px !important;}
