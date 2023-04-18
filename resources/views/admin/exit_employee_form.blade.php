@@ -79,7 +79,10 @@
                             <textarea rows="3" name="decipline" class="form-control" placeholder="Decipline"></textarea>
                           </div>
                         </div>
-                        <div></div>
+                        <div class="col-lg-12 col-md-12">
+                          <label>Note for file uploads</label></br>
+                          <b>File type should be:</b> Only .jpeg, .pdf, .docs, or .doc files allowed. </br><b>File size should be:</b> Max:10MB</p>
+                        </div>
                         @php $a = 0 @endphp
                     @foreach($exitprocess as $process)
 
@@ -94,9 +97,9 @@
                                 </label> --}}
                                 <label> <input type="checkbox" name="status[{{ $a }}]" class="checkboxexitform"/>   {{$process->title}} </label>
                                 {{-- <label>Document</label> --}}
-                                <div class="upload-img-file">
+                                {{-- <div class="upload-img-file"> --}}
                                     <input type="file" id="document" name="document[]" class="form-control" accept="image/jpeg,image/doc,image/pdf" />
-                                </div>
+                                {{-- </div> --}}
                             </div>
                              
                         </div>  
@@ -105,7 +108,7 @@
                
                       </div>
                     </form>
-                    <b>File type:</b> Only .jpeg, .pdf, .docs, or .doc files allowed. </br><b>File Size:</b> Max:10MB</p>
+                 
                   </div>
                 </div>
                 {{-- @endif --}}
