@@ -149,6 +149,8 @@
                                             data-id="{{ $employee->id }}" data-title="Next Round"></a>
                                         <a href="#" class="edit-btn fa fa-trash " id="delete_interview"
                                             data-id="{{ $employee->id }}" data-title="Delete"></a>
+                                        <a href="#" class="edit-btn fa fa-handshake-o" id="onboarding"
+                                            data-id="{{ $employee->employee_id }}" data-title="Delete"></a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -276,6 +278,35 @@
     </div>
 </div>
 
+<!-- The Modal Onboarding  -->
+<div class="modal fade custu-modal-popup" id="onboardingModel" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form id="onboarding_form" method="post" autocomplete="off" enctype="multipart/form-data">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title" id="Heading">Onboarding form</h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <img src="assets/admin/images/close-btn-icon.png">
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="comman-body">
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div id="loadingImg"></div>
+                    <div style="font-size: 16px; display:none;" class="text-success" id="success">Onboarding successfully done.</div>
+                        <div style="font-size: 16px; display:none;" class="text-danger" id="failed">Onboarding already done.</div>
+                    <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn-primary-cust">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
 @endsection
 
 @section('pagescript')
@@ -292,7 +323,78 @@
     });
 </script>
 
+<script>
+    $(document).on('click', '#onboarding', function() {
+            var employeeId = $(this).data('id');
+            if (employeeId != '') {
+                getOnboardingForm(employeeId);
+            }
+        })
 
+        function getOnboardingForm(id = '') {
+            let getFormUrl = '{{ url('onboarding/form') }}';
+            if (id !== '') {
+                getFormUrl = getFormUrl + "/" + id;
+            }
+            $.ajax({
+                url: getFormUrl,
+                type: "get",
+                datatype: "html",
+            }).done(function(data) {
+                if (id === '') {
+                    $('#Heading').text("Create onboarding");
+                } else {
+                    $('#Heading').text("Update onboarding");
+                }
+                $('#onboardingModel').find('.modal-body').html(data);
+                $('#onboardingModel').modal({
+                    backdrop: 'static',
+                    keyboard: false
+                });
+            }).fail(function(jqXHR, ajaxOptions, thrownError) {
+                alert('No response from server');
+            });
+        }
+
+        $(document).on('submit', '#onboarding_form', function(event) {
+            event.preventDefault();
+            var url = '{{ url('onboarding/submit') }}';
+            
+            $('#loadingImg').show();        
+
+            var formData = new FormData(this);
+            $.ajax({
+                url: url,
+                type: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(data) {
+                    if (data.errors) {
+                        $('#loadingImg').hide();
+                    } else {
+
+                        if (data.success) {
+                            $('#loadingImg').hide();
+                            $('#success').css('display', 'block');
+                            setInterval(function() {
+                                location.reload();
+                            }, 3000);
+
+                        }
+                    }
+
+                },
+                error: function(xhr, textStatus, errorThrown) {
+                    console.log(xhr.responseText);
+                }
+            });
+        });
+
+    </script>
 
 
 <script>
@@ -779,8 +881,6 @@
                 }
             });
         });
-
     });
 </script>
-
 @stop

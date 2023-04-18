@@ -98,7 +98,9 @@ input.export {
           {{-- <a href="employee-exit/{{ $emp->employee_id }}" title="Exit Employee" class="edit-btn fa fa-user-times" data-title="Exit"></a></td> --}}
         @else
         <td style="color:#ac2029"><b>Exit</b></td>
-        <td class="d-flex"><a href="edit-employee/{{ $emp->employee_id }}" class="edit-btn fa fa-edit" data-title="Edit"></a></td>
+        <td class="d-flex">
+          {{-- <a href="edit-employee/{{ $emp->employee_id }}" class="edit-btn fa fa-edit" data-title="Edit"></a> --}}
+        </td>
         @endif
       </tr> 
       @endforeach          

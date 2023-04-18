@@ -1822,7 +1822,7 @@
               duration_to: "Duration to is required",
               verification_type: "Verification type is required",
               document:{
-                required: "Document is required hai",
+                required: "Document is required",
                 extension: "extension shuold not wrong",
               }, 
             }
