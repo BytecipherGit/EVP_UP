@@ -14,17 +14,16 @@
     <link rel="stylesheet" href="{{ asset('assets') }}/admin/css/main-container.css">
     <link rel="stylesheet" href="{{ asset('assets') }}/admin/css/jquery-ui.min.css" />
     <link rel="stylesheet" href="{{ asset('assets') }}/admin/css/select2.min.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-
-    <script src="//cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
-
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/bootstrap.min.css">
+    rel="stylesheet">
+    {{-- <link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/bootstrap.min.css"> --}}
     <link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/datatables.bootstrap.min.css">
     <link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/fixedheader.bootstrap.min.css">
     <link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/responsive.bootstrap.min.css">
     <link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/jquery-ui.min.css" />
+    {{-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"> --}}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/2.5.3/css/bootstrap-colorpicker.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('assets') }}/admin/css/bootstrap-colorpicker.min.css" rel="stylesheet">
 
 
     <style>
@@ -32,12 +31,18 @@
             display: none;
             content: url('{{ asset('ajaxLoading.gif') }}') !important;
         }
-        .fa{
+
+        .fa {
             font-size: 18px;
         }
+        .colorpicker-alpha.colorpicker-visible, .colorpicker-hue.colorpicker-visible, .colorpicker-saturation.colorpicker-visible, .colorpicker-selectors.colorpicker-visible, .colorpicker.colorpicker-visible {
+    display: block;
+    z-index: 99999 !important;
+    position: absolute;
+    top: 0;
+    left: 50%;
+}
     </style>
-
-    <script src="{{ asset('assets') }}/admin/js/jquery.min.js"></script>
 
 
 </head>
@@ -226,7 +231,7 @@
                                                 All Employees
                                             </a>
                                         </li>
-                                        
+
                                         {{-- <li>
                                                 <a href="/current-employee">
                                                     <img src="{{ asset('assets') }}/admin/images/current-user.png">
@@ -279,7 +284,12 @@
 
                                 <div id="accordion-1">
                                     <ul>
-
+                                        <li>
+                                            <a href="/theme_setting">
+                                                <img src="" class="fa fa-question-circle">
+                                                Theme Setting
+                                            </a>
+                                        </li>
                                         <li>
                                             <a href="/interview_process">
                                                 <img src="" class="fa fa-question-circle">
@@ -305,7 +315,7 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="/company_profile" >
+                                            <a href="/company_profile">
                                                 <img src="{{ asset('assets') }}/admin/images/company-icon.png">
                                                 Company Profile
                                             </a>
@@ -338,13 +348,13 @@
                                         <li>
                                             <a href="/qualified-email-template">
                                                 <img src="" class="fa fa-user-plus">
-                                               For Qualified
+                                                For Qualified
                                             </a>
                                         </li>
                                         <li>
                                             <a href="/not-qualified-template">
                                                 <img src="" class="fa fa-users">
-                                               For Not Qualified 
+                                                For Not Qualified
                                             </a>
                                         </li>
                                     </ul>
@@ -371,6 +381,8 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="{{ asset('assets') }}/admin/js/jquery.min.js"></script>
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> --}}
+    <script src="{{ asset('assets') }}/admin/js/bootstrap-colorpicker.min.js"></script>
     <script src="{{ asset('assets') }}/admin/js/jquery-ui.min.js"></script>
     <script src="{{ asset('assets') }}/admin/js/bootstrap.min.js"></script>
     <script src="{{ asset('assets') }}/admin/js/select2.min.js"></script>
@@ -381,6 +393,9 @@
     <script src="{{ asset('assets') }}/datatable/js/dataTables.fixedHeader.min.js"></script>
     <script src="{{ asset('assets') }}/datatable/js/dataTables.responsive.min.js"></script>
     <script src="{{ asset('assets') }}/datatable/js/responsive.bootstrap.min.js"></script>
+    <script src="//cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
+    
+    
     @yield('pagescript')
 
 </body>

@@ -234,3 +234,6 @@ Route::get('/export-csv-invite', [App\Http\Controllers\InviteempController::clas
 require __DIR__ . '/auth.php';
 
 
+Route::get('color_picker', [App\Http\Controllers\CsvController::class, 'colorPicker']);
+
+

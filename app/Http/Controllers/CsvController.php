@@ -14,6 +14,11 @@ class CsvController extends Controller
         return view('admin/csvfile');
     }
 
+    public function colorPicker()
+    {
+        return view('admin/colorpicker');
+    }
+
     public function store(Request $request)
     {   
         //get file check has

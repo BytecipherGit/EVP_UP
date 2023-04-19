@@ -18,6 +18,16 @@
         color: #dc3545 !important;
         font-size: 14px;
     }
+
+    .dropdown-menu {
+    position: absolute !important;
+    top: auto;
+    left: 0;
+    z-index: 1000;
+    display: none;
+    float: left;
+    min-width: auto !important;
+}
 </style>
 
 
@@ -69,7 +79,8 @@
 <div class="modal fade custu-modal-popup" id="interviewModel" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <form id="theme_setting_logo_form" action="{{ url('theme_setting/update') }}" method="post" autocomplete="off" enctype="multipart/form-data">
+        <form id="theme_setting_logo_form" action="{{ url('theme_setting/update') }}" method="post" autocomplete="off"
+            enctype="multipart/form-data">
             @csrf
             <div class="modal-content">
                 <div class="modal-header">
@@ -131,13 +142,8 @@
         });
     });
 </script>
-
-
-
-
 <script>
     $(document).ready(function() {
-
         $("#theme_setting_logo_form").validate({
             rules: {
                 logo: {
@@ -191,52 +197,6 @@
                 alert('No response from server');
             });
         }
-        // $('#theme_setting_logo_form').on('submit', function(event) {
-        //     event.preventDefault();
-        //     var isAdd = $('#is_add').val();
-        //     var url = '{{ url('interview_process/submit') }}';
-
-        //     if (isAdd != 1) {
-        //         var url = '{{ url('theme_setting/update') }}';
-        //         successMsg = "Successfully Updated";
-        //     }
-        //     alert(url);
-        //     $('#loadingImg').show();
-        //     var formData = new FormData(this);
-        //     $.ajax({
-        //         url: url,
-        //         type: 'POST',
-        //         headers: {
-        //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        //         },
-        //         data: formData,
-        //         contentType: false,
-        //         processData: false,
-        //         success: function(data) {
-        //             if (data.errors) {
-        //                 if (data.errors.logo) {
-        //                     $('#logo-error').html(data.errors.logo[0]);
-        //                 }
-        //                 $('#loadingImg').hide();
-        //             } else {
-
-        //                 if (data.success) {
-        //                     $('#loadingImg').hide();
-        //                     $('#logo-error').html('');
-        //                     $('#success').css('display', 'block');
-        //                     setInterval(function() {
-        //                         location.reload();
-        //                     }, 2000);
-
-        //                 }
-        //             }
-
-        //         },
-        //         error: function(xhr, textStatus, errorThrown) {
-        //             console.log(xhr.responseText);
-        //         }
-        //     });
-        // });
     });
 </script>
 
