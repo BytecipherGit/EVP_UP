@@ -12,7 +12,7 @@
       <div class="row">                
         <div class="col-lg-6 pad-0">
           <div class="main-box-img">
-            <img src="assets/company/images/login-bg.jpg">
+            <img src="{{ asset('assets') }}/company/images/login-bg.jpg">
           </div>
         </div>
         <div class="col-lg-6 form-section">
@@ -28,7 +28,7 @@
               @csrf
             
               <div class="d-flex close-butn">
-                <a href="/"><img src="assets/company/images/back-icon.png"></a>
+                <a href="/"><img src="{{ asset('assets') }}/company/images/back-icon.png"></a>
               </div>
               <h1>Welcome to EVP</h1> 
               <h6>Log in to your account</h6> 
@@ -77,9 +77,9 @@
   </div> 
 
   <script>
-      window.jQuery || document.write('<script src="../../assets/company/js/jquery.min.js"><\/script>')
+      window.jQuery || document.write('<script src="../../{{ asset('assets') }}/company/js/jquery.min.js"><\/script>')
     </script>
-    <script src="assets/company/js/bootstrap.min.js"></script>
+    <script src="{{ asset('assets') }}/company/js/bootstrap.min.js"></script>
     <script src="{{ asset('assets') }}/admin/js/jquery.validate.min.js"></script>
     <script>
     $(document).ready(function() {

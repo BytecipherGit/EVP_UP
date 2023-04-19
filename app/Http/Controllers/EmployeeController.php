@@ -753,12 +753,12 @@ class EmployeeController extends Controller
                 
            );
          
-             $identity= new Employeeidentity;
-             $identity->id_type=$data['id_type'];
-             $identity->employee_id=$id;
-             $identity->id_number=$data['id_number'];
-             $identity->verification_type='Not Verified';
-             $identity->save();
+            //  $identity= new Employeeidentity;
+            //  $identity->id_type=$data['id_type'];
+            //  $identity->employee_id=$id;
+            //  $identity->id_number=$data['id_number'];
+            //  $identity->verification_type='Not Verified';
+            //  $identity->save();
 
              $qualification= new Empqualification;
              $qualification->employee_id=$id;

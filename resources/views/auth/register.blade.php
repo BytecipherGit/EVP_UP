@@ -9,7 +9,14 @@
         .frm_form_field .grecaptcha-badge { 
           display:none;
            }
-       
+        
+        li{
+            display:block !important;
+            color: red;
+            font-size: 12px;
+        }
+
+
     </style>
 
 <div class="d-flex main-form-part">
@@ -17,7 +24,7 @@
         <div class="row">
             <div class="col-lg-6 pad-0">
                 <div class="main-box-img">
-                    <img src="assets/company/images/login-bg.jpg">
+                    <img src="{{ asset('assets') }}/company/images/login-bg.jpg">
                 </div>
             </div>
             <div class="col-lg-6 form-section">
@@ -31,7 +38,7 @@
                         @csrf
 
                         <div class="d-flex close-butn">
-                            <a href="login"><img src="assets/company/images/back-icon.png"></a>
+                            <a href="login"><img src="{{ asset('assets') }}/company/images/back-icon.png"></a>
                         </div>
                         <h6>Create an Account</h6>
                     
@@ -71,9 +78,7 @@
                                     <label>Password <strong style="color:red">*</strong></label>
                                     <input type="password" id="password" name="password" class="form-control"
                                      placeholder="Enter Your Password" autocomplete="new-password" />
-                                    {{-- @error('password')
-                                        <p class="velidation">{{ $message }}</p>
-                                    @enderror --}}
+                                    <x-input-error :messages="$errors->get('password')" class="passwordError"/>
                                     <strong class="error" id="password-error"></strong>
                                 </div>
 
@@ -84,10 +89,7 @@
                                     <input type="password" name="password_confirmation" class="form-control"
                                         value="{{ old('password_confirmation') }}"
                                         placeholder="Enter Your Confirm Password" autocomplete="new-password" >
-                                    {{-- @error('password')
-                                        <p class="velidation">{{ $message }}</p>
-                                    @enderror --}}
-                                    <strong class="error" id="password_confirmation-error"></strong>
+                                    {{-- <x-input-error :messages="$errors->get('password')" class="error" /> --}}
                                 </div>
                             </div>
                         </div>
@@ -262,7 +264,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-body">
-                <img src="assets/company/images/email-verify.png">
+                <img src="{{ asset('assets') }}/company/images/email-verify.png">
                 <h2>Registration completed successfully</h2>
                 <!-- <p>Please check your rigistered email for email verification</p> -->
                 <a href="{{ route('login') }}">Login</a>
@@ -305,9 +307,9 @@
     ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 <script>
-    window.jQuery || document.write('<script src="../../assets/company/js/jquery.min.js"><\script>')
+    window.jQuery || document.write('<script src="../../{{ asset('assets') }}/company/js/jquery.min.js"><\script>')
 </script>
-<script src="/assets/company/js/bootstrap.min.js"></script>
+<script src="/{{ asset('assets') }}/company/js/bootstrap.min.js"></script>
 <script>
     $(".selectBox").on("click", function(e) {
         $(this).toggleClass("show");

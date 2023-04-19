@@ -35,15 +35,16 @@
             <li class="nav-item">
                 <a class="nav-link" data-toggle="tab" href="#tabs-5" role="tab">Skills</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab">Official Use</a>
+            </li> 
             {{-- <li class="nav-item">
                 <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab" aria-controls="tab">Identity</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" data-toggle="tab" href="#tabs-6" role="tab">Official Use</a>
             </li> --}}
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab">Official Use</a>
-            </li> 
+           
 
         </ul>
         <div class="tab-content">
@@ -1467,18 +1468,15 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <img src="{{ asset('assets') }}/admin/images/close-btn-icon.png">
                     </button>
-                </div>
-                  
+                </div>      
                 <div class="modal-body">
-                  
-                    <div class="comman-body">
-                       
-                    </div>
+                     <div class="comman-body">     
+                     </div>
                 </div>
                 <div class="modal-footer">
                     <div class="loadingImg"></div>
                     <div style="font-size: 16px; display:none;" class="text-success" id="success">Employee successfully exit.</div>
-                    <div style="font-size: 16px; display:none;" class="text-danger" id="failed">Employee already exit.</div>
+                    <div style="font-size: 16px; display:none;" class="text-danger" id="failed">Employee already exit</div>
                     <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
                     <button type="submit" id="scheduleInterviewSubmit" class="btn-primary-cust">Submit</button>
                 </div>
@@ -1763,10 +1761,6 @@
             var isAdd = $('#is_add').val();
             var url = '{{ url('exit-employee/submit') }}';
 
-            // if (isAdd != 1) {
-            //     var url = '{{ url('exit-employee/update') }}';
-            //     successMsg = "Successfully Updated";
-            // }
             $('.loadingImg').show();
             var formData = new FormData(this);
             $.ajax({
@@ -1783,7 +1777,7 @@
                         if (data.errors.date_of_exit) {
                             $('#date_of_exit-error').html(data.errors.date_of_exit[0]);
                         }
-                        if (data.errors.last_name) {
+                        if (data.errors.reason_of_exit) {
                             $('#reason_of_exit-error').html(data.errors.reason_of_exit[0]);
                         }
                         $('.loadingImg').hide();

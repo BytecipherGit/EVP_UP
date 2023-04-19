@@ -79,34 +79,34 @@
                             <textarea rows="3" name="decipline" class="form-control" placeholder="Decipline"></textarea>
                           </div>
                         </div>
-                        <div class="col-lg-12 col-md-12">
-                          <label>Note for file uploads</label></br>
-                          <b>File type should be:</b> Only .jpeg, .pdf, .docs, or .doc files allowed. </br><b>File size should be:</b> Max:10MB</p>
-                        </div>
-                        @php $a = 0 @endphp
-                    @foreach($exitprocess as $process)
+                        @if($exitproces)
+                          <div class="col-lg-12 col-md-12">
+                            <label>Note for file uploads<span style="color:red">*</span></label></br>
+                            <b>File type should be:</b> Only .jpeg, .pdf, .docs, or .doc files allowed. </br><b>File size should be:</b> Max:10MB</p>
+                          </div>
+                           @php $a = 0 @endphp
+                          @foreach($exitprocess as $process)
 
-                        <div class="col-md-12">
-                            <div class="form-group">
-                              <input type="hidden" name="exit_process_id[]" value={{$process->id}}>
-                             
-                                {{-- <label>{{$process->title}} --}}
-                                  {{-- <input type="checkbox" name="status" class="switch-input" value="1"/> --}}
-                                  {{-- <input type="hidden" name="status" value="0" /> --}}
-                                 {{-- <input type="checkbox" name="status[{{ $a }}]"/>
-                                </label> --}}
-                                <label> <input type="checkbox" name="status[{{ $a }}]" class="checkboxexitform"/>   {{$process->title}} </label>
-                                {{-- <label>Document</label> --}}
-                                {{-- <div class="upload-img-file"> --}}
-                                    <input type="file" id="document" name="document[]" class="form-control" accept="image/jpeg,image/doc,image/pdf" />
-                                {{-- </div> --}}
-                            </div>
-                             
-                        </div>  
-                        @php $a++ @endphp
-                     @endforeach
-               
-                      </div>
+                             <div class="col-md-12">
+                                <div class="form-group">
+                                  <input type="hidden" name="exit_process_id[]" value={{$process->id}}>
+                                
+                                    {{-- <label>{{$process->title}} --}}
+                                      {{-- <input type="checkbox" name="status" class="switch-input" value="1"/> --}}
+                                      {{-- <input type="hidden" name="status" value="0" /> --}}
+                                    {{-- <input type="checkbox" name="status[{{ $a }}]"/>
+                                    </label> --}}
+                                    <label> <input type="checkbox" name="status[{{ $a }}]" class="checkboxexitform"/>   {{$process->title}} </label>
+                                    {{-- <label>Document</label> --}}
+                                    {{-- <div class="upload-img-file"> --}}
+                                        <input type="file" id="document" name="document[]" class="form-control" accept="image/jpeg,image/doc,image/pdf" />
+                                    {{-- </div> --}}
+                                </div>  
+                               </div>  
+                              @php $a++ @endphp
+                            @endforeach
+                          @endif
+                    </div>
                     </form>
                  
                   </div>

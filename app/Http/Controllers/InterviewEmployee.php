@@ -41,10 +41,15 @@ class InterviewEmployee extends Controller
         if (Auth::check()) {
             // $interviewEmployees = EmployeeInterview::all();
             $interviewEmployees = EmployeeInterview::join('users','users.id','=','interview_employees.company_id')
-            ->join('company_employee','company_employee.employee_id','=','interview_employees.employee_id')
-            ->join('employee','company_employee.employee_id','=','employee.id')
-            ->select('company_employee.*','users.id','interview_employees.*','employee.empCode','employee.first_name','employee.last_name')
-            ->where('company_employee.company_id',Auth::user()->id)->get();
+                                ->join('company_employee','company_employee.employee_id','=','interview_employees.employee_id')
+                                ->join('employee','company_employee.employee_id','=','employee.id')
+                                ->select('users.id','interview_employees.*','employee.empCode','employee.first_name','employee.last_name')
+                                ->where('interview_employees.company_id',Auth::id())->get();
+                                
+        //    $interviewEmployees = Employee::join('company_employee','company_employee.employee_id','=','employee.id')
+        //                         ->join('interview_employees','interview_employees.employee_id','=','company_employee.employee_id')
+        //                         ->select('interview_employees.*','employee.empCode','employee.first_name','employee.last_name')
+        //                         ->where('interview_employees.company_id',Auth::id())->get();
             // CompanyEmployee::join('users','users.id','=','company_employee.company_id')
             // ->join('employee','company_employee.employee_id','=','employee.id')->select('company_employee.*','users.id','employee.*')
             // ->where('employee.status','!=', 2)->where('company_employee.company_id',Auth::user()->id)->count();
@@ -174,6 +179,7 @@ class InterviewEmployee extends Controller
             $query->orderBy('id', 'desc')->take(1);
             }])->get();
             }*/
+            // dd($interviewEmployeess);
 
             $hiringStages = HiringStage::all();
             $employeeInterviewStatuses = EmployeeInterviewStatus::all();
@@ -1134,10 +1140,12 @@ class InterviewEmployee extends Controller
     {
 
         if (Auth::check()) {
-            $checkfeedback = EmployeeFeedback::where('interview_round_id', $id)->join('interview_employee_rounds', 'interview_employee_rounds.id', '=', 'interview_employee_feedback.interview_round_id')->first();
+            $checkfeedback = EmployeeFeedback::where('interview_round_id', $id)
+                            ->join('interview_employee_rounds', 'interview_employee_rounds.id', '=', 'interview_employee_feedback.interview_round_id')->first();
+
             $interviewEmpoloyeeFeedback = EmployeeFeedback::join('feedbacks', 'feedbacks.id', '=', 'interview_employee_feedback.feedback_id')
-                ->where('interview_employee_feedback.interview_round_id', $id)
-                ->get();
+                                         ->where('interview_employee_feedback.interview_round_id', $id)
+                                         ->get();
             // dd($checkfeedback);
             return view('admin.interview-rounds-details-form', compact('interviewEmpoloyeeFeedback', 'checkfeedback'));
         }
@@ -1193,6 +1201,7 @@ class InterviewEmployee extends Controller
                          ->join('interview_employee_rounds','interview_employees.id','=','interview_employee_rounds.interview_employees_id')
                          ->where('interview_employee_rounds.company_id',Auth::id())->where('interview_employee_rounds.interview_employees_id',$request->interview_id)->first();
             $templateData = CompanyEmailTemplate::where('company_id',Auth::id())->first();     
+  
 
          if (!empty($request->interview_id) && !empty($request->status) && ($request->interview_status == 'Qualified') ) {
             $templateData = CompanyEmailTemplate::where('email_type','Qualified')->where('company_id',Auth::id())->first();
@@ -1205,9 +1214,11 @@ class InterviewEmployee extends Controller
 
         }
         elseif(!empty($request->interview_id) && !empty($request->status) && ($request->interview_status == 'Not Qualified')){
-            $templateData = CompanyEmailTemplate::where('email_type','NotQualified')->where('company_id',Auth::id())->first();     
+            $templateData = CompanyEmailTemplate::where('email_type','NotQualified')->where('company_id',Auth::id())->first();   
+  
             $mailDataTemplate = [
                 'content' => !empty($templateData->content) ? str_replace('#candidate',$candidate->first_name . ' ' . $candidate->last_name,$templateData->content) : '',
+                   
             ];
 
             FacadesMail::to($candidate->email)->send(new NotQualifiedEmailTemplate($mailDataTemplate));

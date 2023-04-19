@@ -10,6 +10,23 @@ body{
 h1{
   font-family: 'Jost', sans-serif;
 }
+.passwordError{
+  margin-left:-29px;
+  text-align: left;
+}
+
+.error{
+  color: red;
+     font-size: 12px;
+     display: block;
+     margin: 5px 0;
+     display: flex;
+ }
+ .pass{
+ position: static !important;
+ font-size: 14px !important;
+ text-align: left;
+}
 a{
   color:#004FC4;
   text-decoration: none !important;

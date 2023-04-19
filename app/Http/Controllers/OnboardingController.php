@@ -120,10 +120,19 @@ class OnboardingController extends Controller
      { 
 
         if (Auth::check()) {
-            $onboardEmployee = Onboarding::where('employee_id', $id)->where('company_id', Auth::id())->first();
+            // $onboardEmployee = Onboarding::where('employee_id', $id)->where('company_id', Auth::id())->first();
+
+            $employeeonboarding = Onboarding::leftjoin('onboarding_processes', 'onboarding_processes.id', '=', 'onboarding_employee.onboarding_process_id')
+                                         ->leftjoin('company_employee','company_employee.company_id','=','onboarding_processes.company_id')
+                                         ->leftjoin('employee','employee.id','=','onboarding_employee.employee_id')
+                                         ->where('onboarding_employee.employee_id', $id)
+                                         ->select('onboarding_employee.*')
+                                         ->first();
+
             $employee = Employee::where('id',$id)->first();
             $onboardProcess = OnboardingProcess::where('company_id', Auth::id())->orderby('id', 'asc')->get();
-            return view('admin.onboarding-form', compact('onboardProcess','employee','onboardEmployee'));
+
+            return view('admin.onboarding-form', compact('onboardProcess','employee','employeeonboarding'));
         }
      }
 

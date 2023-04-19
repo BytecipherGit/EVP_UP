@@ -108,7 +108,7 @@ Route::middleware([Admin::class])->group(function () {
     Route::get('/post-employee-details/{id}', [App\Http\Controllers\EmployeeController::class, 'postEmpDetails'])->middleware('documents');
     Route::get('/post-employee', [App\Http\Controllers\EmployeeController::class, 'addOldEmp'])->middleware('documents');
     Route::get('/current-employee', [App\Http\Controllers\EmployeeController::class, 'currentEmp'])->middleware('documents');
-    Route::get('/employee', [App\Http\Controllers\EmployeeController::class, 'getAllEmp'])->middleware('documents');
+    Route::get('/employee', [App\Http\Controllers\EmployeeController::class, 'getAllEmp'])->name('employee.index')->middleware('documents');
     Route::post('/employee', [App\Http\Controllers\EmployeeController::class, 'getCsvEmp'])->middleware('documents');
     Route::get('/downloadcsv', [App\Http\Controllers\EmployeeController::class, 'downloadCsv'])->middleware('documents');
     Route::get('/download_invitecsv', [App\Http\Controllers\InviteempController::class, 'downloadInviteCsv'])->middleware('documents');

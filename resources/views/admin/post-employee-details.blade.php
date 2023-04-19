@@ -23,7 +23,7 @@
         <div class="heading-pro">
           <div class="pro-img">
             <div class="circle">
-               <img class="profile-pic" @if ($employee->profile!== Null) value="/image/{{ old('profile', $employee->profile) }}" src="/image/{{ $employee->profile }}" @else src="{{ asset('assets') }}/admin/images/user-img.png" @endif >
+               <img class="profile-pic" @if ($employee->profile!== Null) value="{{ old('profile', $employee->profile) }}" src="{{ $employee->profile }}" @else src="{{ asset('assets') }}/admin/images/user-img.png" @endif >
 
              </div>             
           </div>

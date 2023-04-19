@@ -22,12 +22,12 @@
                 <div class="head-sec">
                   <h2>All Employees <span></span></h2>
                   <div class="img-bg ml-auto">
-                    <img src="assets/admin/images/employees-view.png">
+                    <img src="{{ asset('assets') }}/admin/images/employees-view.png">
                   </div>
                 </div>
                 <h6>
                   <div class="bg-section">
-                    {{$allemployee}}<img src="assets/admin/images/button-plus-clr.png"> 
+                    {{$allemployee}}<img src="{{ asset('assets') }}/admin/images/button-plus-clr.png"> 
                   </div>  
                   <a href="/employee">View</a>              
                 </h6>
@@ -38,12 +38,12 @@
                 <div class="head-sec">
                   <h2>Current Employees<span></span></h2>
                   <div class="img-bg ml-auto">
-                    <img src="assets/admin/images/current-user.png">
+                    <img src="{{ asset('assets') }}/admin/images/current-user.png">
                   </div>  
                 </div>
                 <h6>
                   <div class="bg-section">
-                    {{$current}} <img src="assets/admin/images/button-plus-clr.png"> 
+                    {{$current}} <img src="{{ asset('assets') }}/admin/images/button-plus-clr.png"> 
                   </div>  
                   <a href="/current-employee">View</a>              
                 </h6>
@@ -54,12 +54,12 @@
                 <div class="head-sec">
                   <h2>Invite Employees <span></span></h2>
                   <div class="img-bg ml-auto">
-                    <img src="assets/admin/images/invite-icon.png">
+                    <img src="{{ asset('assets') }}/admin/images/invite-icon.png">
                   </div>  
                 </div>
                 <h6>
                   <div class="bg-section">
-                    {{$empinvite}} <img src="assets/admin/images/button-plus-clr.png"> 
+                    {{$empinvite}} <img src="{{ asset('assets') }}/admin/images/button-plus-clr.png"> 
                   </div>  
                   <a href="/invite-employee">View</a>              
                 </h6>
