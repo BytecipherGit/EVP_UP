@@ -25,13 +25,8 @@
                             <input type="date" name="date_of_exit" class="form-control" placeholder="Date" required>
                           </div>
                         </div>  
-                        <div class="col-lg-6 col-md-12">
-                          <div class="form-group">
-                            <label>Decipline</label>
-                            <textarea rows="3" name="decipline" class="form-control" placeholder="Decipline"></textarea>
-                          </div>
-                        </div>
-                        <div class="col-lg-6 col-md-12">
+
+                        <div class="col-lg-12 col-md-12">
                           <div class="form-group">
                             <label>Reason for leaving<span style="color:red">*</span></label>
                             <textarea rows="3" name="reason_of_exit" class="form-control" required placeholder="Reason"></textarea>
@@ -71,7 +66,23 @@
                             {{-- <span class="theme-tem-active ml-2">(0.0)</span> --}}
                           </div>
                         </div>
-                        <div></div>
+                        <div class="col-lg-12 col-md-12">
+                          <div class="form-group">
+                            <label>Review / Comment</label>
+                            <textarea rows="3" name="review" class="form-control" placeholder="Review"></textarea>
+                          </div>
+                        </div>
+
+                        <div class="col-lg-12 col-md-12">
+                          <div class="form-group">
+                            <label>Decipline</label>
+                            <textarea rows="3" name="decipline" class="form-control" placeholder="Decipline"></textarea>
+                          </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12">
+                          <label>Note for file uploads</label></br>
+                          <b>File type should be:</b> Only .jpeg, .pdf, .docs, or .doc files allowed. </br><b>File size should be:</b> Max:10MB</p>
+                        </div>
                         @php $a = 0 @endphp
                     @foreach($exitprocess as $process)
 
@@ -79,24 +90,25 @@
                             <div class="form-group">
                               <input type="hidden" name="exit_process_id[]" value={{$process->id}}>
                              
-                                <label>{{$process->title}}
+                                {{-- <label>{{$process->title}} --}}
                                   {{-- <input type="checkbox" name="status" class="switch-input" value="1"/> --}}
                                   {{-- <input type="hidden" name="status" value="0" /> --}}
-                                 <input type="checkbox" name="status[{{ $a }}]"/>
-                                </label>
-                       
-                                <label>Document<span style="color:red">*</span></br><b>File type:</b> Only .jpeg, .pdf, .docs, or .doc files allowed. <b>File Size:</b> Max:10MB</p></label>
-                                <div class="upload-img-file">
+                                 {{-- <input type="checkbox" name="status[{{ $a }}]"/>
+                                </label> --}}
+                                <label> <input type="checkbox" name="status[{{ $a }}]" class="checkboxexitform"/>   {{$process->title}} </label>
+                                {{-- <label>Document</label> --}}
+                                {{-- <div class="upload-img-file"> --}}
                                     <input type="file" id="document" name="document[]" class="form-control" accept="image/jpeg,image/doc,image/pdf" />
-                                </div>
+                                {{-- </div> --}}
                             </div>
                              
                         </div>  
                         @php $a++ @endphp
-                   @endforeach
+                     @endforeach
                
                       </div>
                     </form>
+                 
                   </div>
                 </div>
                 {{-- @endif --}}

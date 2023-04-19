@@ -299,7 +299,13 @@
                                         <li>
                                             <a href="/exit_employee_process">
                                                 <img src="{{ asset('assets') }}/admin/images/employees-view.png">
-                                                Exit Employees Process
+                                                Exit Employees Process 
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/onboarding_process">
+                                                <img src="" class="fa fa-handshake-o">
+                                                Onboarding Process 
                                             </a>
                                         </li>
                                         <li>

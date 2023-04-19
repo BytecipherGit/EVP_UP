@@ -164,8 +164,15 @@ Route::middleware([Admin::class])->group(function () {
     Route::post('exit_employee_process/update', [App\Http\Controllers\ExitEmployeeProcess::class, 'updateExitEmployeeProcess'])->middleware('documents');
     Route::post('exit_employee_process/destroy', [App\Http\Controllers\ExitEmployeeProcess::class, 'deleteExitEmployeeProcess'])->middleware('documents');
     
- 
+    Route::get('onboarding_process', [App\Http\Controllers\OnboardingController::class, 'index'])->name('onboarding.process.index')->middleware('documents');
+    Route::any('onboarding_process/form/{id?}', [App\Http\Controllers\OnboardingController::class, 'onboardingForm'])->middleware('documents');
+    Route::post('onboarding_process/submit', [App\Http\Controllers\OnboardingController::class, 'createOnboardingProcess'])->middleware('documents');
+    Route::post('onboarding_process/update', [App\Http\Controllers\OnboardingController::class, 'updateOnboardingProcess'])->middleware('documents');
+    Route::post('onboarding_process/destroy', [App\Http\Controllers\OnboardingController::class, 'deleteOnboardingProcess'])->middleware('documents');
 
+    Route::any('onboarding/form/{id?}', [App\Http\Controllers\OnboardingController::class, 'getOnboardingForm'])->middleware('documents');
+    Route::post('onboarding/submit', [App\Http\Controllers\OnboardingController::class, 'createOnboardingForm'])->middleware('documents');
+    // Route::post('onboarding/update', [App\Http\Controllers\OnboardingController::class, 'updateOnboardingForm'])->middleware('documents');
 
     Route::any('next_round_of_interview/form/{id?}', [InterviewEmployee::class, 'getNextRoundOfInterviewForm'])->middleware('documents');
     Route::post('next_round_of_interview/submit', [InterviewEmployee::class, 'scheduleNextRoundOfInterview'])->middleware('documents');

@@ -746,11 +746,8 @@
                                             <div class="form-group">
                                                 <label>Employee Status<span style="color:red">*</span></label>
                                                 <select name="emp_status" class="form-control" id="emp_status">
-                                                    <option name="emp_status"
-                                                        @if ($official) value="{{ old('emp_status', $official->emp_status) }}" @endif>
-                                                        @if ($official)
-                                                            {{ old('emp_status', $official->emp_status) }}
-                                                        @endif
+                                                    <option name="emp_status" @if ($official) value="{{ old('emp_status', $official->emp_status) }}" @endif>
+                                                        @if ($official) {{ old('emp_status', $official->emp_status) }}@endif
                                                     </option>
                                                     <option value="1">Active</option>
                                                     <option value="0">Inactive</option>
@@ -758,6 +755,14 @@
                                                 <strong class="error" id="emp_status-error"></strong>
                                             </div>
                                         </div>
+
+                                        <div class="col-xl-3 col-lg-5 col-md-10">
+                                            <div class="form-group">
+                                              <label>Designation<span style="color:red">*</span></label>
+                                              <input type="text" @if ($official) value="{{ old('designation', $official->designation) }}" @endif name="designation" class="form-control" placeholder="Designation">
+                                              <strong class="error" id="designation-error"></strong>
+                                            </div>
+                                          </div> 
 
                                         <div class="col-xl-12 mt-3">
                                             <h2>Salary Info</h2>
@@ -775,11 +780,7 @@
                                         <div class="col-xl-3 col-lg-6 col-md-12">
                                         <div class="form-group">
                                             <div class="add-btn-part">
-                                                {{-- <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button> --}}
-                                                <button type="button" id="exitemployee"
-                                                    class="btn-primary-cust" style="color:white;background:red;">Employee Exit</button>
-                                                    {{-- <a class="btn-primary-cust" style="color:white;background:red;" href="#" id="scheduleInterview"><img
-                                                        src="{{ asset('assets') }}/admin/images/button-plus.png">Interview</a> --}}
+                                                <button type="button" id="exitemployee" class="btn-primary-cust" style="color:white;background:red;">Employee Exit</button>     
                                             </div>
                                         </div>
                                     </div>
@@ -787,8 +788,7 @@
                                             <div class="form-group">
                                                 <div class="add-btn-part">
                                                     {{-- <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button> --}}
-                                                    <button type="submit" name="official-edit"
-                                                        class="btn-primary-cust">Save Changes</button>
+                                                    <button type="submit" name="official-edit" class="btn-primary-cust">Save Changes</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -1746,11 +1746,9 @@
                 type: "get",
                 datatype: "html",
             }).done(function(data) {
-                if (id === '') {
-                    $('#Heading').text("Emloyee exit");
-                } else {
-                    $('#Heading').text("Update Schedule Interview");
-                }
+
+               $('#Heading').text("Exit employee");
+
                 $('#exitemployeemodel').find('.modal-body').html(data);
                 $('#exitemployeemodel').modal({
                     backdrop: 'static',
@@ -1765,10 +1763,10 @@
             var isAdd = $('#is_add').val();
             var url = '{{ url('exit-employee/submit') }}';
 
-            if (isAdd != 1) {
-                var url = '{{ url('exit-employee/update') }}';
-                successMsg = "Successfully Updated";
-            }
+            // if (isAdd != 1) {
+            //     var url = '{{ url('exit-employee/update') }}';
+            //     successMsg = "Successfully Updated";
+            // }
             $('.loadingImg').show();
             var formData = new FormData(this);
             $.ajax({
@@ -1782,35 +1780,19 @@
                 processData: false,
                 success: function(data) {
                     if (data.errors) {
-                        if (data.errors.first_name) {
-                            $('#first_name-error').html(data.errors.first_name[0]);
+                        if (data.errors.date_of_exit) {
+                            $('#date_of_exit-error').html(data.errors.date_of_exit[0]);
                         }
                         if (data.errors.last_name) {
-                            $('#last_name-error').html(data.errors.last_name[0]);
+                            $('#reason_of_exit-error').html(data.errors.reason_of_exit[0]);
                         }
-                        if (data.errors.email) {
-                            $('#email-error').html(data.errors.email[0]);
-                        }
-                        if (data.errors.position) {
-                            $('#position-error').html(data.errors.position[0]);
-                        }
-                        if (data.errors.interview_process) {
-                            $('#interview_process-error').html(data.errors
-                                .interview_process[0]);
-                        }
-                        if (data.errors.interviewer_id) {
-                            $('#interviewer_id-error').html(data.errors.interviewer_id[0]);
-                        }
-                    
                         $('.loadingImg').hide();
                     } else {
                         if (data.success != 0) {
                             $('.loadingImg').hide();
-                            $('#first_name-error').html('');
-                            $('#last_name-error').html('');
-                            $('#email-error').html('');
-                            $('#position-error').html('');
-                            
+                            $('#date_of_exit-error').html('');
+                            $('#reason_of_exit-error').html('');
+
                             $('#success').css('display', 'block');
                             setInterval(function() {
                                 location.reload();
@@ -2141,5 +2123,4 @@
 
    });
 </script> 
-
 @stop

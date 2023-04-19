@@ -13,20 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('exit_employee', function (Blueprint $table) {
+        Schema::create('onboarding_employee', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('company_id');
             $table->foreign('company_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('employee_id');
-            $table->string('date_of_exit');
-            $table->string('decipline')->nullable();
-            $table->string('reason_of_exit')->nullable();
-            $table->string('rating')->nullable();
-            $table->string('review')->nullable();
-            $table->unsignedBigInteger('exit_process_id');
-            $table->foreign('exit_process_id')->references('id')->on('employee_exit_processes')->onDelete('cascade');
+            $table->string('onboarding_process_id');
             $table->tinyInteger('status')->default('0')->comment('1=Active, 0=Inactive');
-            $table->string('document')->nullable();
             $table->timestamps();
         });
     }
@@ -38,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('exit_employee');
+        Schema::dropIfExists('onboarding_employee');
     }
 };
