@@ -2,20 +2,6 @@
 @extends('superadmin/layouts.login')
 @section('content')
 @section('title','EVP - Forgot Password')
-<style>
-    .error{
-     color: red;
-        font-size: 12px;
-        display: block;
-        margin: 5px 0;
-        display: flex;
-    }
-    .pass{
-    position: static !important;
-    font-size: 14px !important;
-    text-align: left;
-  }
-</style>
 
 <!-- Main Container -->
 <div class="col-md-6 align-self-center pad-0 form-section">
@@ -29,7 +15,7 @@
         @csrf
 
         <input type="hidden" name="token" value="">
-        <img src="/assets/company/images/logo.png"class="login-logo">
+        <img src="{{ asset('assets') }}/company/images/logo.png"class="login-logo">
         <h1>Recover Your Password</h1>  
         
         <div class="form-group">       

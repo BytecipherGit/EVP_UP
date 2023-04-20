@@ -32,6 +32,10 @@
             display: none;
             content: url('{{ asset('ajaxLoading.gif') }}') !important;
         }
+        #loadingImgs {
+            display: none;
+            content: url('{{ asset('ajaxLoading.gif') }}') !important;
+        }
         .fa{
             font-size: 18px;
         }

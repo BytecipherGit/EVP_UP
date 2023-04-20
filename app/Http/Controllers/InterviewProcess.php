@@ -131,12 +131,12 @@ class InterviewProcess extends Controller
             $feedbackRespons = Feedbacks::where('company_id',Auth::id())->first();
             // $interviewEmpRoundsId = $request->interviewEmpRoundsId;
             $employeetime = DB::table('interview_employee_rounds')
-            ->join('interview_employees', 'interview_employees.id', '=', 'interview_employee_rounds.interview_employees_id')
-            ->join('users', 'interview_employees.company_id', '=', 'users.id')
-            ->select('interview_employee_rounds.*','interview_employees.*', 'users.*', 'interview_employees.position')
-            ->where('interview_employee_rounds.id', $interviewEmpRoundsId)
-            ->first();
-            // dd($feedbackResponse);
+                            ->join('interview_employees', 'interview_employees.id', '=', 'interview_employee_rounds.interview_employees_id')
+                            ->join('users', 'interview_employees.company_id', '=', 'users.id')
+                            ->select('interview_employee_rounds.*','interview_employees.*', 'users.*', 'interview_employees.position')
+                            ->where('interview_employee_rounds.id', $interviewEmpRoundsId)
+                            ->first();
+            // dd($employeetime);
             if ($employeetime) {
                 return view('admin/web-email/interview-feedback', compact('employeetime', 'interviewEmpRoundsId','feedbackResponse','feedbackRespons'));
             } else {
@@ -184,7 +184,11 @@ class InterviewProcess extends Controller
               }
                if (!$checkResponse->interview_feedback) {
                 $feedback = InterviewEmployeeRounds::where('id', $request->interviewEmpRoundsId)
-                    ->update(['interview_feedback' => $request->input('interview_feedback')]);       
+                    ->update(['interview_feedback' => $request->input('interview_feedback')]);     
+                    return redirect('/success');  
+                  }
+                  else{
+                    return redirect('/response_submited');
                   }
             
                return redirect('/success');
