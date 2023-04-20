@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail as FacadesMail;
 use Illuminate\View\View;
 use Response;
+use Illuminate\Validation\Rules;
 
 class RegisteredUserController extends Controller
 {
