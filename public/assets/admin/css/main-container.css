@@ -841,7 +841,7 @@ button.btn-secondary-custexport {
 }
 
 .employee-view-page .table thead {
-  background:#5533ff;
+  /* background:#5533ff; */
   border-radius: 4px;
 }
 .employee-view-page .table td, .table th{  

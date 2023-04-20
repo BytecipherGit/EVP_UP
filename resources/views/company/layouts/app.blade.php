@@ -53,6 +53,13 @@
             top: 0;
             left: 50%;
         }
+
+        .primacyBackgrondColor {
+            background: <?php if(!empty(session('primary_color'))){ echo session('primary_color'); } else { echo '#5533ff';}  ?>;
+        }
+        .fontPrimaryColor{
+            color: <?php echo session('secondry_color') ?>;
+        }
     </style>
 
 
