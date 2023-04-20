@@ -689,7 +689,6 @@
                     <div class="add-emply-details">
                         <div class="row">
                             <div class="col-lg-12">
-
                                 <form method="post" id="edit_official" enctype="multipart/form-data">
                                     @csrf
                                     <div class="row">

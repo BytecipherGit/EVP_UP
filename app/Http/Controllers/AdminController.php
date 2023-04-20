@@ -26,11 +26,11 @@ class AdminController extends Controller
 
         $current = CompanyEmployee::join('users','users.id','=','company_employee.company_id')
                     ->join('employee','company_employee.employee_id','=','employee.id')->select('company_employee.*','users.id','employee.*')
-                    ->where('employee.status', 1)->where('company_employee.company_id',Auth::user()->id)->count();
+                    ->where('company_employee.status', 1)->where('company_employee.company_id',Auth::user()->id)->count();
                     
         $empinvite =  CompanyEmployee::join('users','users.id','=','company_employee.company_id')
                     ->join('employee','company_employee.employee_id','=','employee.id')->select('company_employee.*','users.id','employee.*')
-                    ->where('employee.status', 2)->where('company_employee.company_id',Auth::user()->id)->count();
+                    ->where('company_employee.status', 1)->where('company_employee.company_id',Auth::user()->id)->count();
 
         // dd($allemployee);
         return view('company/index',compact('current','empinvite','allemployee'));

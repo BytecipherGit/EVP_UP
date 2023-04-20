@@ -138,13 +138,13 @@ class ExitEmployeeProcess extends Controller
             // 'document' => 'required|string|max:255',
 
         ]);
-
+    // $exitprocess = ExitEmployee::where('company_id',Auth::id())->first();
     $checkRecordExist = Exitemp::join('company_employee','company_employee.company_id','=','exit_employee.company_id')->where('exit_employee.company_id',Auth::id())
                         ->where('exit_employee.employee_id', $request->emp_id)->first();
-                        // dd($checkRecordExist);
+                        // dd($exitprocess);
         if (empty($checkRecordExist)) {
             if ($validator->passes()) {
-                for ($i = 0; $i < count($request->exit_process_id); $i++) {
+                  for ($i = 0; $i < count($request->exit_process_id); $i++) {
                     $uploadAttachementPath = '';
                     if (!empty($request->document[$i])) {
                         if ($request->document[$i]->getClientOriginalName()) {
@@ -199,21 +199,25 @@ class ExitEmployeeProcess extends Controller
 
                         );
                         $employeeData = Exitemp::create($insert);
-                        
-                    }
-                }
+                         
+                     }
+                  }
+            
+
                 if(!empty($employeeData)){
 
-                 CompanyEmployee::where('employee_id',$employeeData->employee_id)->update([
-                    'end_date'  => $employeeData->date_of_exit,
-                    'status'  => '0'
-                  ]);
-             
-                //   Employee::where('id',$employeeData->employee_id)->update([
-                //     'status'  => '0'
-                //   ]);
-          
-                  return redirect('employee')->with('message','Employee exit successfully');
+                    CompanyEmployee::where('employee_id',$employeeData->employee_id)->where('company_id',Auth::id())->update([
+                        'end_date'  => $employeeData->date_of_exit,
+                        'status'  => '0',
+                        'rating' => $request->rating,
+                        'review' => $request->review,
+                    ]);
+                
+                    //   Employee::where('id',$employeeData->employee_id)->update([
+                    //     'status'  => '0'
+                    //   ]);
+            
+                    return redirect('employee')->with('message','Employee exit successfully');
                 }
 
                 if (!empty($employeeData)) {

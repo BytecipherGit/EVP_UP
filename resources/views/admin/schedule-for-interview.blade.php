@@ -343,7 +343,7 @@
                 if (id === '') {
                     $('#Heading').text("Create onboarding");
                 } else {
-                    $('#Heading').text("Update onboarding");
+                    $('#Heading').text("Create onboarding");
                 }
                 $('#onboardingModel').find('.modal-body').html(data);
                 $('#onboardingModel').modal({

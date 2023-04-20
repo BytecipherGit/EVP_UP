@@ -68,14 +68,14 @@ class EmployeeController extends Controller
         $fileName = time() . '_' . $file->getClientOriginalName();
         $file->storeAs('public/employee_document', $fileName);
         $uploadProfile = asset('storage/employee_document/' . $fileName);
-    }
+         }
 
        if ($request->hasFile('document_id')) {
         $file = $request->file('document_id');
         $fileName = time() . '_' . $empCode .'_'. $file->getClientOriginalName();
         $file->storeAs('public/employee/employee_document', $fileName);
         $uploadDocumentId = asset('storage/employee/employee_document/' . $fileName);
-     }
+         }
       
         $employe = new Employee();
         $employe->first_name=$request->input('first_name');
@@ -438,8 +438,8 @@ class EmployeeController extends Controller
 
                 return redirect('employee');
              }
-        
-         }
+      
+    }
 
 
       public function editEmployee(request $request,$id){
@@ -523,7 +523,7 @@ class EmployeeController extends Controller
             $file= $request->file('document');
             $filename=$file->getClientOriginalName();
             $file->move(public_path().'/Image/',$filename); 
-            $qua_inf['document']= $filename;
+            $qua_info['document']= $filename;
         }
         else{
           $image=DB::table('employee_qualifications')->where('id',$request->id)->get();
@@ -531,7 +531,7 @@ class EmployeeController extends Controller
           $filename=$img->document;
           }
         }
-          $qua_inf=DB::table('employee_qualifications')->where('id',$request->id)
+          $qua_info=DB::table('employee_qualifications')->where('id',$request->id)
           ->update([
                   'inst_name'=>$request->input('inst_name'),
                   'degree'=>$request->input('degree'),
@@ -550,7 +550,7 @@ class EmployeeController extends Controller
             $file= $request->file('offer_letter');
             $filename1=$file->getClientOriginalName();
             $file->move(public_path().'/Image/',$filename1); 
-            $work_inf['offer_letter']= $filename1;
+            $work_info['offer_letter']= $filename1;
           }
           else{
             $image=DB::table('employee_workhistories')->where('id',$request->id)->first();
@@ -562,7 +562,7 @@ class EmployeeController extends Controller
             $file= $request->file('exp_letter');
             $filename2=$file->getClientOriginalName();
             $file->move(public_path().'/Image/',$filename2); 
-            $work_inf['exp_letter']= $filename2;
+            $work_info['exp_letter']= $filename2;
               }
               else{
                 $image=DB::table('employee_workhistories')->where('id',$request->id)->first();
@@ -573,14 +573,14 @@ class EmployeeController extends Controller
               $file= $request->file('salary_slip');
               $filename3=$file->getClientOriginalName();
               $file->move(public_path().'/Image/',$filename3); 
-              $work_inf['salary_slip']= $filename3;
+              $work_info['salary_slip']= $filename3;
           }
           else{
             $image=DB::table('employee_workhistories')->where('id',$request->id)->first();
             $filename3=$image->salary_slip;
           
           }
-          $work_inf=DB::table('employee_workhistories')->where('id',$request->id)
+          $work_info=DB::table('employee_workhistories')->where('id',$request->id)
               ->update([
                   'com_name'=>$request->input('com_name'),
                   'designation'=>$request->input('designation'),
@@ -595,26 +595,12 @@ class EmployeeController extends Controller
           return redirect()->back()->with('message','Infomation updated successfully.');
         }
 
-        if(isset($_POST['official-edit'])){
-          $identity_inf=DB::table('employee_officials')->where('employee_id',$request->id)
-          ->update([
-                  'date_of_joining'=>$request->input('date_of_joining'),
-                  'emp_type'=>$request->input('emp_type'),
-                  'work_location'=>$request->input('work_location'),
-                  'emp_status'=>$request->input('emp_status'),
-                  'lpa'=>$request->input('lpa'),
-                  'designation'=>$request->input('designation'),
-              
-            ]);
-
-          return redirect()->back()->with('message','Infomation updated successfully.');
-        }
 
         if(isset($_POST['skill-edit'])){
           
        
           // dd($skill->id);
-          $identity_inf=DB::table('employee_skills')->where('id', $request->id)
+          $identity_info=DB::table('employee_skills')->where('id', $request->id)
           ->update([
             
                   'skill'=>$request->input('skill'),
@@ -627,7 +613,7 @@ class EmployeeController extends Controller
           }
 
         if(isset($_POST['skilllang-edit'])){
-          $identity_inf=DB::table('employee_language')->where('id', $request->id)
+          $identity_info=DB::table('employee_language')->where('id', $request->id)
           ->update([
                   'lang'=>$request->input('lang'),
                   'lang_type'=>$request->input('lang_type'),
@@ -636,10 +622,51 @@ class EmployeeController extends Controller
           return redirect()->back()->with('message','Infomation updated successfully.');
         }
 
-      }
+        if(isset($_POST['official-edit'])){
+          $employeeId = Employee::where('id',$request->id)->first();
+          $dataExist =  Empofficial::where('employee_id', $request->id)->first();
+
+            if(empty($dataExist)){
+
+                $insertOfficialEmployeeData = [
+                  'employee_id' => $employeeId->id,
+                  'date_of_joining' => !empty($request->date_of_joining) ? $request->date_of_joining : null,
+                  'emp_type' => !empty($request->emp_type) ? $request->emp_type : null,
+                  'work_location' => !empty($request->work_location) ? $request->work_location : null,
+                  'emp_status' => !empty($request->emp_status) ? $request->emp_status : null,
+                  'lpa' => !empty($request->lpa) ? $request->lpa : null,
+                  'designation' => !empty($request->designation) ? $request->designation : null,
+              
+                ];
+                $employeeData = Empofficial::create($insertOfficialEmployeeData);
+                // dd( $employeeData);
+            }else{
+
+            DB::table('employee_officials')->where('employee_id',$request->id)
+              ->update([
+                      'date_of_joining'=>$request->input('date_of_joining'),
+                      'emp_type'=>$request->input('emp_type'),
+                      'work_location'=>$request->input('work_location'),
+                      'emp_status'=>$request->input('emp_status'),
+                      'lpa'=>$request->input('lpa'),
+                      'designation'=>$request->input('designation'),
+                  
+                ]);
+            }
+        
+             CompanyEmployee::where('employee_id',$dataExist->employee_id)->where('company_id',Auth::id())->update([
+              'start_date'  => $dataExist->date_of_joining,
+              'status' => $dataExist->emp_status
+            ]);
+
+          return redirect('employee');
+        }
+
+     }
      
      
       public function getEditEmployee(request $request,$id){
+
         $basic=Employee::where('id',$id)->first();
         $identity=Employeeidentity::where('employee_id',$request->id)->first();
         $qualification=Empqualification::where('employee_id',$request->id)->first();
@@ -659,10 +686,12 @@ class EmployeeController extends Controller
       
         //  $allemp=DB::table('employee')->join('employee_officials', 'employee.id', '=', 'employee_officials.employee_id')
         //                   ->select('employee.*', 'employee_officials.*')->get();
-       $allemp= CompanyEmployee::join('users','users.id','=','company_employee.company_id')
-                           ->join('employee','company_employee.employee_id','=','employee.id')->select('company_employee.*','users.id','employee.*')
-                          ->where('company_employee.company_id',Auth::user()->id)->get();
-         return view('admin/datatable',compact('allemp'));
+       $employeeDetails= CompanyEmployee::join('users','users.id','=','company_employee.company_id')
+                           ->join('employee','company_employee.employee_id','=','employee.id')
+                           ->select('company_employee.*','users.id','employee.*')
+                           ->where('company_employee.company_id',Auth::user()->id)->get();
+                          //  dd($employeeDetails);
+         return view('admin/employee-view',compact('employeeDetails'));
       }
 
 
@@ -810,18 +839,19 @@ class EmployeeController extends Controller
                 $companyEmp = new CompanyEmployee;
                 $companyEmp->employee_id=$id;
                 $companyEmp->company_id=Auth::id();
-                $companyEmp->status='0';
+                $companyEmp->status='1';
+                $companyEmp->start_date=$data['date_of_joining'];
                 
                 $companyEmp->save();
             
           }
 
           return redirect()->back()->with('message','Upload successfully');
-       }
+        }
       else{
           return redirect()->back()->with('message','Not selected any file to upload');
 
-      }
+       }
       }
 
       public function exitEmp($id){
@@ -874,7 +904,7 @@ class EmployeeController extends Controller
      public function addOldEmp(){
       
       $oldemployee=Employee::join('company_employee', 'company_employee.employee_id', '=', 'employee.id')
-                ->where('employee.status',0)->where('company_employee.company_id',Auth::id())
+                ->where('company_employee.status',0)->where('company_employee.company_id',Auth::id())
                 ->select('employee.*')->get();
 // dd($oldemployee);
       return view('admin/post-employee',compact('oldemployee'));
@@ -902,7 +932,7 @@ class EmployeeController extends Controller
         //          ->where('employee.status',1)->get();
                  $current= CompanyEmployee::join('users','users.id','=','company_employee.company_id')
                            ->join('employee','company_employee.employee_id','=','employee.id')->select('company_employee.*','users.id','employee.*')
-                           ->where('employee.status',1)->where('company_employee.company_id',Auth::user()->id)->get();
+                           ->where('company_employee.status',1)->where('company_employee.company_id',Auth::user()->id)->get();
         // print_r($current);die();
         return view('admin/current-employee',compact('current'));
       }
@@ -958,8 +988,7 @@ class EmployeeController extends Controller
                 $row['Emg Name']  = $task->emg_name;
                 $row['Emg Relationship']  = $task->emg_relationship;
                 $row['Emg Phone']  = $task->emg_phone;
-                $row['Emg Address']  = $task->emg_address;
-                
+                $row['Emg Address']  = $task->emg_address; 
                 $row['Id Type']  = $task->id_type;
                 $row['Id Number']    = $task->id_number;
                 $row['Date of Joining']    = $task->date_of_joining;
@@ -986,7 +1015,6 @@ class EmployeeController extends Controller
                 $row['Skill']  = $task->skill;
                 $row['Skill Type']  = $task->skill_type;
                 $row['Language Known']  = $task->lang;
-
                 $row['Language Type']  = $task->lang_type;
                 $row['Company Name']  = $task->com_name;
                 $row['Designation']  = $task->designation;
@@ -999,9 +1027,7 @@ class EmployeeController extends Controller
                 $row['Duration To']  = $task->duration_to;
             
            
-                fputcsv($file, array($row['First Name'], $row['Last Name'], $row['Middle Name'], $row['Email'], $row['Phone'],$row['Date of Birth'], $row['Blood Group'], $row['Gender'],$row['Marital Status'], $row['Current Address'], $row['Permanent Address'],
-                $row['Emg Name'],$row['Emg Relationship'], $row['Emg Phone'], $row['Emg Address'],$row['Id Type'], $row['Id Number'],
-                $row['Date of Joining'],$row['Employee Type'],$row['Work Location'], $row['Employee Status'],$row['Lakhs Per Year'],
+                fputcsv($file, array($row['First Name'], $row['Last Name'], $row['Middle Name'], $row['Email'], $row['Phone'],$row['Date of Birth'], $row['Blood Group'], $row['Gender'],$row['Marital Status'], $row['Current Address'], $row['Permanent Address'],$row['Emg Name'],$row['Emg Relationship'], $row['Emg Phone'], $row['Emg Address'],$row['Id Type'], $row['Id Number'],$row['Date of Joining'],$row['Employee Type'],$row['Work Location'], $row['Employee Status'],$row['Lakhs Per Year'],
                 // $row['Last Appraisal Designation'],$row['Current Appraisal Designation'], $row['Appraisal Date'], $row['Promotion From'],
                 // $row['Promotion To'], $row['Last Promotion Designation'], $row['Current Promotion Designation'], $row['Promotion Date'], $row['Manager Name'],$row['Manager Type'],$row['Manager Department'], $row['Manager Designation'],
                 $row['Skill'], $row['Skill Type'], $row['Language Known'],$row['Language Type'],$row['Company Name'], $row['Designation'], $row['Work Duration From'],$row['Work Duration To'],

@@ -23,7 +23,9 @@ class InviteempController extends Controller
 
     public function index()
     {
-        $empinvite = Employee::where('status', '2')->get();
+        $empinvite = Employee::join('company_employee', 'company_employee.employee_id', '=', 'employee.id')
+                    ->where('company_employee.status',0)->where('company_employee.company_id',Auth::id())
+                    ->select('employee.*')->get();
         return view('admin/invite-employee', compact('empinvite'));
     }
 

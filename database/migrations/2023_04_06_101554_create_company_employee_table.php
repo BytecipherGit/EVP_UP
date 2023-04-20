@@ -19,9 +19,10 @@ return new class extends Migration
             $table->foreign('company_id')->references('id')->on('users')->onDelete('cascade');
             $table->unsignedBigInteger('employee_id')->comment('employee Table PK');
             $table->foreign('employee_id')->references('id')->on('employee')->comment('Id form employee')->onDelete('cascade');
-            // $table->string('empCode')->nullable();
             $table->string('start_date')->nullable();
             $table->string('end_date')->nullable();
+            $table->string('rating')->nullable();
+            $table->string('review')->nullable();
             $table->tinyInteger('status')->default('0')->comment('1=Active, 0=Inactive');
             $table->timestamps();
         });
