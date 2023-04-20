@@ -60,7 +60,7 @@ class ThemeSettingController extends Controller
                     'key' => 'logo',
                     'value' => !empty($uploadLogoFilePath) ? $uploadLogoFilePath : null,
                 ];
-                $success = ThemeSetting::create($insertNewCompanyRecords);
+                $success = ThemeSetting::where('id',$request->theme_id)->update($insertNewCompanyRecords);
                 if($success){
                     return redirect('theme_setting');            
                 }
@@ -70,7 +70,7 @@ class ThemeSettingController extends Controller
                     'key' => 'primary_color',
                     'value' => !empty($request->primary_color) ? $request->primary_color : null,
                 ];
-                $success = ThemeSetting::create($insertNewCompanyRecords);
+                $success = ThemeSetting::where('id',$request->theme_id)->update($insertNewCompanyRecords);
                 if($success){
                     return redirect('theme_setting');            
                 }
@@ -80,7 +80,7 @@ class ThemeSettingController extends Controller
                     'key' => 'secondry_color',
                     'value' => !empty($request->secondry_color) ? $request->secondry_color : null,
                 ];
-                $success = ThemeSetting::create($insertNewCompanyRecords);
+                $success = ThemeSetting::where('id',$request->theme_id)->update($insertNewCompanyRecords);
                 if($success){
                     return redirect('theme_setting');            
                 }
