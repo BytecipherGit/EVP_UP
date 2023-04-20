@@ -154,7 +154,7 @@ Route::middleware([Admin::class])->group(function () {
 
     Route::get('theme_setting', [ThemeSettingController::class, 'index'])->name('theme.setting.index')->middleware('documents');
     Route::any('theme_setting/form/{id?}', [ThemeSettingController::class, 'getThemeSettingForm'])->middleware('documents');
-    Route::post('theme_setting/update', [ThemeSettingController::class, 'updateThemeSettingLogo'])->middleware('documents');
+    Route::post('theme_setting/update', [ThemeSettingController::class, 'updateThemeSetting'])->middleware('documents');
 
     
 

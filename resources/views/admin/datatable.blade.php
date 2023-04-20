@@ -23,6 +23,8 @@ input.export {
 .custu-no-select a:hover {
     box-shadow: 0px 4px 31px rgba(85, 51, 255, 0);
 }
+
+
 </style>
 <link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/bootstrap.min.css">
 <link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/datatables.bootstrap.min.css">
@@ -43,9 +45,9 @@ input.export {
           </div>
           <div class="col-md-8">
             <div class="main-right-button-box"> 
-               <a href="/current-employee" class="emp">Current Employees</a>
-               <a href="/post-employee" class="emp">Old Employees</a>     
-               <a href="/add-employee" class="emp"><img src="{{ asset('assets') }}/admin/images/button-plus.png">Add New</a>                     
+               <a href="/current-employee" class="emp primacyBackgrondColor">Current Employees</a>
+               <a href="/post-employee" class="emp primacyBackgrondColor">Old Employees</a>     
+               <a href="/add-employee" class="emp primacyBackgrondColor"><img src="{{ asset('assets') }}/admin/images/button-plus.png">Add New</a>                     
               </div>
           </div>
         </div>
@@ -58,7 +60,7 @@ input.export {
             {{-- <button><span><a href="https://mail.google.com/mail/u/0/" target="_black"><img src="assets/admin/images/email-icon.png"></a></span> <a data-toggle="modal" data-target="#btninfo">Mail</a></button> --}}
               <span class="ml-auto d-flex">
                 <button><span class="bg-red"><img src="assets/admin/images/import.png" data-toggle="modal" data-target="#btninfo"></span> <a data-toggle="modal" data-target="#btninfo">Import</a></button>
-                <button><span><img src="{{ asset('assets') }}/admin/images/export.png" data-href="/export-csv" onclick ="exportTasks (event.target);"></span><a data-href="/export-csv" id="export" onclick ="exportTasks (event.target);">Export</a></button>
+                <button><span class="primacyBackgrondColor"><img src="{{ asset('assets') }}/admin/images/export.png" data-href="/export-csv" onclick ="exportTasks (event.target);"></span><a data-href="/export-csv" id="export" onclick ="exportTasks (event.target);">Export</a></button>
               </span>
               {{-- <button><span data-toggle="modal" data-target="#exporteditbtn"><img src="assets/admin/images/export.png"></span> <a data-toggle="modal" data-target="#btninfo">Export</a> --}}
                 {{-- <span><a href="{{ url('/') }}/export/xlsx" class="btn btn-success">Export to .xlsx</a></span>
@@ -69,7 +71,7 @@ input.export {
           </div>    
           
           <table id="example" class="table-bordered nowrap table table-striped" style="width:100%">
-         <thead>
+            <thead class="primacyBackgrondColor">
         <tr>
             <th>Employee Code</th>
             <th>Employee Name</th>

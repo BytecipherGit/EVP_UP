@@ -48,7 +48,7 @@
             <div class="row" style="margin-top: 20px;">
                 <div class="col-xs-12">
                     <table class="table table-bordered exit_employee_process_datatable">
-                        <thead>
+                        <thead class="primacyBackgrondColor">
                             <tr>
                                 <th>Title</th>
                                 <th>Descriptions</th>

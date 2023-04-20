@@ -47,7 +47,7 @@ class ThemeSettingController extends Controller
         }
     }
 
-    public function updateThemeSettingLogo(request $request)
+    public function updateThemeSetting(request $request)
     {
         if (Auth::check()) {
             if($request->theme_id && ($request->theme_type == 'logo') && $request->hasFile('logo')){
@@ -62,6 +62,7 @@ class ThemeSettingController extends Controller
                 ];
                 $success = ThemeSetting::where('id',$request->theme_id)->update($insertNewCompanyRecords);
                 if($success){
+                    $request->session()->put('logo', !empty($uploadLogoFilePath) ? $uploadLogoFilePath : null);
                     return redirect('theme_setting');            
                 }
             } else if ($request->theme_id && ($request->theme_type == 'primary_color') && $request->primary_color){
@@ -72,6 +73,7 @@ class ThemeSettingController extends Controller
                 ];
                 $success = ThemeSetting::where('id',$request->theme_id)->update($insertNewCompanyRecords);
                 if($success){
+                    $request->session()->put('primary_color', !empty($request->primary_color) ? $request->primary_color : null);
                     return redirect('theme_setting');            
                 }
             } else if ($request->theme_id && ($request->theme_type == 'secondry_color') && $request->secondry_color){
@@ -82,6 +84,7 @@ class ThemeSettingController extends Controller
                 ];
                 $success = ThemeSetting::where('id',$request->theme_id)->update($insertNewCompanyRecords);
                 if($success){
+                    $request->session()->put('secondry_color', !empty($request->secondry_color) ? $request->secondry_color : null);
                     return redirect('theme_setting');            
                 }
             }
