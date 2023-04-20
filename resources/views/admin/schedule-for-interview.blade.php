@@ -83,7 +83,7 @@
             <div class="row" style="margin-top: 20px;">
                 <div class="col-xs-12">
                     <table id="example" class="table-bordered table">
-                        <thead>
+                        <thead class="primacyBackgrondColor">
                             <tr>
                                 <th>EVP Id</th>
                                 <th>Name</th>

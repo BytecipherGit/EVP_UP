@@ -40,7 +40,7 @@
                 <span class="ml-auto d-flex">
                     <button><span class="bg-red"><img src="assets/admin/images/import.png" data-toggle="modal" data-target="#btninfo"></span> <a
                             data-toggle="modal" data-target="#btninfo">Import</a></button>
-                    <button><span><img src="assets/admin/images/export.png" data-href="/export-csv-invite" onclick="exportTasks (event.target);"></span><a data-href="/export-csv-invite"
+                    <button><span class="primacyBackgrondColor"><img src="assets/admin/images/export.png" data-href="/export-csv-invite" onclick="exportTasks (event.target);"></span><a data-href="/export-csv-invite"
                             id="export" onclick="exportTasks (event.target);">Export</a></button>
                     {{-- <button><span data-toggle="modal" data-target="#exporteditbtn"><img src="assets/admin/images/export.png"></span> <a data-toggle="modal" data-target="#btninfo">Export</a> --}}
                     </button>
@@ -48,7 +48,7 @@
             </div>
             {{-- <table class="table table-striped invite-table-cust" style="width:100%"> --}}
             <table id="example" class="table-bordered nowrap table table-striped" style="width:100%">
-                <thead>
+                <thead class="primacyBackgrondColor">
                     <tr>
                         <th><input type="checkbox" id="selectAll" class=""></th>
                         <th>Employee Code</th>

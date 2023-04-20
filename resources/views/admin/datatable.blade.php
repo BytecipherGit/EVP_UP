@@ -45,9 +45,9 @@ input.export {
           </div>
           <div class="col-md-8">
             <div class="main-right-button-box"> 
-               <a href="/current-employee" class="emp">Current Employees</a>
-               <a href="/post-employee" class="emp">Old Employees</a>     
-               <a href="/add-employee" class="emp"><img src="{{ asset('assets') }}/admin/images/button-plus.png">Add New</a>                     
+               <a href="/current-employee" class="emp primacyBackgrondColor">Current Employees</a>
+               <a href="/post-employee" class="emp primacyBackgrondColor">Old Employees</a>     
+               <a href="/add-employee" class="emp primacyBackgrondColor"><img src="{{ asset('assets') }}/admin/images/button-plus.png">Add New</a>                     
               </div>
           </div>
         </div>
@@ -71,7 +71,7 @@ input.export {
           </div>    
           
           <table id="example" class="table-bordered nowrap table table-striped" style="width:100%">
-         <thead class="primacyBackgrondColor">
+            <thead class="primacyBackgrondColor">
         <tr>
             <th>Employee Code</th>
             <th>Employee Name</th>

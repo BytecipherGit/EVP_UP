@@ -24,7 +24,7 @@ class InviteempController extends Controller
     public function index()
     {
         $empinvite = Employee::where('status', '2')->get();
-        return view('admin/invite-employee', compact('empinvite'));
+        return view('admin.invite-employee', compact('empinvite'));
     }
 
     public function inviteEmp()

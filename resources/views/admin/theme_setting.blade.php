@@ -57,7 +57,7 @@
             <div class="row" style="margin-top: 20px;">
                 <div class="col-xs-12">
                     <table class="table table-bordered theme_setting_datatable">
-                        <thead>
+                        <thead class="primacyBackgrondColor">
                             <tr>
                                 <th>Key</th>
                                 <th>Value</th>
@@ -99,7 +99,7 @@
                     <div style="font-size: 16px; display:none;" class="text-success" id="success">Interview process
                         successfully done.</div>
                     <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
-                    <button type="submit" id="interviewProcessSubmit" class="btn-primary-cust">Submit</button>
+                    <button type="submit" id="interviewProcessSubmit" class="btn-primary-cust primacyBackgrondColor">Submit</button>
                 </div>
             </div>
         </form>
