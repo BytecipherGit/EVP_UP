@@ -34,7 +34,7 @@
                 </h2>
                 <p
                     style="font-size: 18px; line-height: 28px; color: #373E57; padding: 0 20px 0px; margin:0; font-family: 'DM Sans', sans-serif; text-align: left;">
-                    You are invited to a phone interview for the Urgent Requirement for {{ $mailData['position'] }}
+                    You are invited to a home interview for the Urgent Requirement for {{ $mailData['position'] }}
                     position at
                     {{ $mailData['organisationName'] }}.</p>
 

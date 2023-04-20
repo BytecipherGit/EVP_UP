@@ -26,8 +26,6 @@
                 </div>  
                 @php $a++ @endphp
             @endforeach
-        
-            @endif
      @else
         <p>Onboarding already submited.</p>
      @endif

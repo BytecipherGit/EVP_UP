@@ -6,7 +6,9 @@ use App\Models\CompanyEmployee;
 use App\Models\Employee;
 use App\Models\EmployeeInterview;
 use Illuminate\Http\Request;
+use App\Models\Empofficial;
 use Illuminate\Support\Facades\DB;
+use App\Models\User;
 use Illuminate\Support\Facades\Response as FacadesResponse;
 
 class SearchController extends Controller
@@ -46,14 +48,14 @@ class SearchController extends Controller
                                   $cmpName = !empty($empCurrentCmpDetails->org_name) ? $empCurrentCmpDetails->org_name : '';
                                   $cmpAddress = !empty($empCurrentCmpDetails->address) ? $empCurrentCmpDetails->address : '';
                                   $interviewEmp = EmployeeInterview::where('employee_id', $employee->id)->first();
-                                  // $reviewEmp = Exitemp::where('employee_id', $employee->id)->first();
+                                  $joinDate = Empofficial::where('employee_id', $employee->id)->first();
+                              
                                   $empPosition = !empty($interviewEmp->position) ? $interviewEmp->position : '';
                                   $reviewEmp = CompanyEmployee::join('exit_employee','exit_employee.employee_id','=','company_employee.employee_id')
                                               ->where('exit_employee.employee_id', $employee->id)
                                               ->groupBy('company_employee.id' )
                                               ->select(DB::raw( 'AVG( exit_employee.rating) as rating'))
                                               ->first();
-// dd(number_format($reviewEmp->rating, 1, '.', ','));
 
                                   $html .= '<div class="search-hist-page">
                                       <div class="search-hist-pro">
@@ -63,7 +65,7 @@ class SearchController extends Controller
                                           </div>
                                         </div>
                                         <h2> ' . $empDetails->first_name . ' ' . $empDetails->middle_name . ' ' . $empDetails->last_name . '
-                                        <span>'.$empPosition.'  at ' . $cmpName . '.</span>
+                                        <span>'. $empPosition.'  at ' . $cmpName . '.</span>
                                         <small>' .$cmpAddress. '</small>';
                                     if($reviewEmp){
                                            $html .='<small>'. number_format($reviewEmp->rating, 1, '.', ',') .' <span>reviews</span></small>';
@@ -111,7 +113,7 @@ class SearchController extends Controller
                                                       </div>
                                                       <div class="coneant">
                                                         <h4>Phone</h4>
-                                                        <p>' . $empDetails->phone . ' <span>(mobile)</span></p>
+                                                        <p>' . $empDetails->phone . ' </p>
                                                       </div>
                                                     </div>
                                                   </div>
@@ -134,7 +136,7 @@ class SearchController extends Controller
                                                       </div>
                                                       <div class="coneant">
                                                         <h4>Join </h4>
-                                                        <p>' . $empDetails->created_at->format('F Y') . '</p>
+                                                        <p>' . $joinDate->date_of_joining . '</p>
                                                       </div>
                                                     </div>
                                                   </div>
@@ -152,11 +154,12 @@ class SearchController extends Controller
                                       //           ->select('employee_workhistories.*','employee_officials.*')
                                       //           ->get();
                                   $experiences = Employee::join('company_employee', 'company_employee.employee_id', '=', 'employee.id')
-                                                // ->join('exit_employee','exit_employee.employee_id','=','employee.id')
+                                                ->join('exit_employee','exit_employee.employee_id','=','employee.id')
                                                 ->join('users', 'users.id', '=', 'company_employee.company_id')
                                                 ->where('employee.id',$empDetails->id)
                                                 ->select('users.org_name','company_employee.*','users.address')
                                                 ->get();
+
                                     //  dd($experiences);
                                       if(count($experiences) > 0){
                                         // foreach($experiences as $key => $experience){
@@ -172,40 +175,296 @@ class SearchController extends Controller
                                                     </div>
                                                     <div class="searc-icon-bx-text">
                                                       <h2>'.$experience->designation.'</h2>
-                                                      <h4>'.$experience->org_name.' - ' .$experience->emp_type.' </h4>
-                                                      <p class="pt-2"><span> '.$experience->start_date.' · ' .$experience->end_date.' </span></p>
-                                                      <p><span>'.$experience->address.'</span></p>
-                                                      <p class="pt-2">"Raw denim you probably have not heard of them jean shorts Austin."</p>
-                                                      <fieldset class="rating">
-                                                        <input type="radio" id="textiles-star51" name="textiles-rating1" value="5" />
-                                                        <label class = "full" for="textiles-star51"></label>
-                                                        <input type="radio" id="textiles-star4half1" name="textiles-rating1" value="4 and a half"  />
-                                                        <label class="half" for="textiles-star4half1"></label>
+                                                      <h4>'.$experience->org_name.' ' .$experience->emp_type.' </h4>
+                                                      <p class="pt-2"><span> '.$experience->start_date.' - ';
+
+                                                     if(empty($experience->end_date)){
+                                                      $html .= 'Present </span></p>';
+                                                      }
+                                                      else{
+                                                        $html .= $experience->end_date.'</span></p>';
+                                                      }
+
+                                                      $html .='<p><span>'.$experience->address.'</span></p>
+                                                      <p class="pt-2">'.$experience->review.'</p>';
+
+                                         if(!empty($experience->rating)){
+                                                  $html .='<fieldset class="rating">';
+                                                      if($experience->rating == 5){
+
+                                                        $html .= '<input type="radio"  name="textiles-rating'.$experience->id.'" value="5" checked=""/>
+                                                          <label class = "full" ></label>
+                                                          <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"/>
+                                                          <label class="half" ></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
+                                                          <label class = "full" ></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                          <label class="half" ></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                          <label class = "full" ></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                          <label class="half" ></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                          <label class = "full" ></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                          <label class="half" ></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                          <label class = "full" ></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                          <label class="half"></label>';
+                                                      }
+
+                                                      if($experience->rating == 4.5){
+                                                        $html .= '<input type="radio"  name="textiles-rating'.$experience->id.'" value="5"/>
+                                                        <label class = "full" ></label>
+                                                        <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5" checked=""/>
+                                                        <label class="half" ></label>
         
-                                                        <input type="radio" id="textiles-star41" name="textiles-rating1" value="4" checked=""/>
-                                                        <label class = "full" for="textiles-star41" ></label>
-                                                        <input type="radio" id="textiles-star3half1" name="textiles-rating1" value="3 and a half" />
-                                                        <label class="half" for="textiles-star3half1"></label>
+                                                        <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
+                                                        <label class = "full" ></label>
+                                                        <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                        <label class="half" ></label>
         
-                                                        <input type="radio" id="textiles-star31" name="textiles-rating1" value="3" />
-                                                        <label class = "full" for="textiles-star31"></label>
-                                                        <input type="radio" id="textiles-star2half1" name="textiles-rating1" value="2 and a half" />
-                                                        <label class="half" for="textiles-star2half1" ></label>
+                                                        <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                        <label class = "full" ></label>
+                                                        <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                        <label class="half" ></label>
         
-                                                        <input type="radio" id="textiles-star21" name="textiles-rating1" value="2" />
-                                                        <label class = "full" for="textiles-star21"></label>
-                                                        <input type="radio" id="textiles-star1half1" name="textiles-rating" value="1 and a half" />
-                                                        <label class="half" for="textiles-star1half1" ></label>
+                                                        <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                        <label class = "full" ></label>
+                                                        <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                        <label class="half" ></label>
         
-                                                        <input type="radio" id="textiles-star11" name="textiles-rating1" value="1" />
-                                                        <label class = "full" for="textiles-star11"></label>
-                                                        <input type="radio" id="textiles-starhalf1" name="textiles-rating1" value="half" />
-                                                        <label class="half" for="textiles-starhalf1"></label>
-        
-                                                      </fieldset>
-                                                    </div>
+                                                        <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                        <label class = "full" ></label>
+                                                        <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                        <label class="half" ></label>';
+                                                      }
+
+                                                      if($experience->rating == 4){
+                                                          $html .=' <input type="radio"  name="textiles-rating'.$experience->id.'" value="5"/>
+                                                          <label class = "full" ></label>
+                                                          <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"  />
+                                                          <label class="half" ></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="4" checked=""/>
+                                                          <label class = "full" ></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                          <label class="half" ></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                          <label class = "full" ></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                          <label class="half" ></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                          <label class = "full" ></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                          <label class="half" ></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                          <label class = "full" ></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                          <label class="half" ></label>';
+                                                      }
+
+                                                      if($experience->rating == 3.5){
+                                                          $html .='<input type="radio"  name="textiles-rating'.$experience->id.'" value="5"/>
+                                                          <label class = "full" ></label>
+                                                          <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"  />
+                                                          <label class="half" ></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
+                                                          <label class = "full" ></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" checked=""/>
+                                                          <label class="half" ></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                          <label class = "full" ></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                          <label class="half" ></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                          <label class = "full" ></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                          <label class="half" ></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                          <label class = "full" ></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                          <label class="half" ></label>';
+                                                      }
+
+                                                      if($experience->rating == 3){
+                                                          $html .='<input type="radio" name="textiles-rating'.$experience->id.'" value="5" />
+                                                          <label class = "full"></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="4.5"  />
+                                                          <label class="half"></label>
+          
+                                                          <input type="radio"  name="textiles-rating'.$experience->id.'" value="4"/>
+                                                          <label class = "full" ></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                          <label class="half"></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="3" checked=""/>
+                                                          <label class = "full"></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                          <label class="half"></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                          <label class = "full"></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                          <label class="half"></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                          <label class = "full"></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                          <label class="half"></label>';
+                                                      }
+
+                                                      if($experience->rating == 2.5){
+                                                          $html .='<input type="radio"  name="textiles-rating'.$experience->id.'" value="5"/>
+                                                          <label class = "full" ></label>
+                                                          <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"  />
+                                                          <label class="half" ></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
+                                                          <label class = "full" ></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                          <label class="half" ></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                          <label class = "full" ></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" checked=""/>
+                                                          <label class="half" ></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                          <label class = "full" ></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                          <label class="half" ></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                          <label class = "full" ></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                          <label class="half" ></label>';
+                                                      }
+
+                                                      if($experience->rating == 2){
+                                                          $html .='<input type="radio"  name="textiles-rating'.$experience->id.'" value="5"/>
+                                                          <label class = "full" ></label>
+                                                          <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"  />
+                                                          <label class="half" ></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
+                                                          <label class = "full" ></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                          <label class="half" ></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                          <label class = "full" ></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                          <label class="half" ></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="2" checked=""/>
+                                                          <label class = "full" ></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                          <label class="half" ></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                          <label class = "full" ></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                          <label class="half" ></label>';
+                                                      }
+
+                                                      if($experience->rating == 1.5){
+                                                          $html .='<input type="radio"  name="textiles-rating'.$experience->id.'" value="5"/>
+                                                          <label class = "full" ></label>
+                                                          <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"  />
+                                                          <label class="half" ></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
+                                                          <label class = "full" ></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                          <label class="half" ></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                          <label class = "full" ></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                          <label class="half" ></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                          <label class = "full" ></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" checked=""/>
+                                                          <label class="half" ></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                          <label class = "full" ></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                          <label class="half" ></label>';
+                                                      }
+
+                                                      if($experience->rating == 1){
+                                                          $html .='<input type="radio"  name="textiles-rating'.$experience->id.'" value="5"/>
+                                                          <label class ="full" ></label>
+                                                          <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"  />
+                                                          <label class="half" ></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
+                                                          <label class = "full" ></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                          <label class="half" ></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                          <label class = "full" ></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                          <label class="half" ></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                          <label class = "full" ></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                          <label class="half" ></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="1" checked="" />
+                                                          <label class = "full" ></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                          <label class="half" ></label>';
+                                                      }
+
+                                                      if($experience->rating == 0.5){
+                                                          $html .='<input type="radio"  name="textiles-rating'.$experience->id.'" value="5" />
+                                                          <label class = "full" ></label>
+                                                          <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"  />
+                                                          <label class="half" ></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
+                                                          <label class = "full" ></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                          <label class="half" ></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                          <label class = "full" ></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                          <label class="half"></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                          <label class = "full"></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                          <label class="half"></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                          <label class="full"></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" checked=""/>
+                                                          <label class="half"></label></fieldset>';
+                                                      }
+                                                    }
+                                                      $html .='</div>
                                                     <img src="assets/admin/images/verified-icon.png" class="verified-img"></div><hr>';
                                                   }
+
                                           $html .= '</div>';
   
                                        }
@@ -262,6 +521,8 @@ class SearchController extends Controller
                                 $empPhoto = !empty($empDetails->profile) ? $empDetails->profile : asset('assets/admin/images/vijay-patil.png');
                                 $cmpName = !empty($empCurrentCmpDetails->org_name) ? $empCurrentCmpDetails->org_name : '';
                                 $interviewEmp = EmployeeInterview::where('employee_id', $employee->id)->first();
+                                $joinDate = Empofficial::where('employee_id', $employee->id)->first();
+
                                 $empPosition = !empty($interviewEmp->position) ? $interviewEmp->position : '';
                                 $reviewEmp = CompanyEmployee::join('exit_employee','exit_employee.employee_id','=','company_employee.employee_id')
                                 ->where('exit_employee.employee_id', $employee->id)
@@ -278,9 +539,11 @@ class SearchController extends Controller
                                       </div>
                                       <h2> ' . $empDetails->first_name . ' ' . $empDetails->middle_name . ' ' . $empDetails->last_name . '
                                       <span>'.$empPosition.'  at ' . $cmpName . '.</span>
-                                      <small>' . $empDetails->current_address. '</small>
-                                      <small>'. number_format($reviewEmp->rating, 1, '.', ',') .' <span>reviews</span></small>
-                                      <span class="d-flex">
+                                      <small>' . $empDetails->current_address. '</small>';
+                                      if($reviewEmp){
+                                        $html .='<small>'. number_format($reviewEmp->rating, 1, '.', ',') .' <span>reviews</span></small>';
+                                        }
+                                      $html .='<span class="d-flex">
                                         <button onclick="myFunction(' . $empDetails->id . ')" class="full-bg">View Full Profile</button>
                                         <button class="only-border-btn" onclick="getInterview(' . $empDetails->id . ')" id="scheduleInterview">Add Candidate</button>
                                         </span>
@@ -324,7 +587,7 @@ class SearchController extends Controller
                                                     </div>
                                                     <div class="coneant">
                                                       <h4>Phone</h4>
-                                                      <p>' . $empDetails->phone . ' <span>(mobile)</span></p>
+                                                      <p>' . $empDetails->phone . ' </p>
                                                     </div>
                                                   </div>
                                                 </div>
@@ -347,7 +610,7 @@ class SearchController extends Controller
                                                     </div>
                                                     <div class="coneant">
                                                       <h4>Join </h4>
-                                                      <p>'. $empDetails->created_at->format('F Y') . '</p>
+                                                      <p>'. $joinDate->date_of_joining . '</p>
                                                     </div>
                                                   </div>
                                                 </div>
@@ -383,40 +646,295 @@ class SearchController extends Controller
                                                   </div>
                                                   <div class="searc-icon-bx-text">
                                                     <h2>'.$experience->designation.'</h2>
-                                                    <h4>'.$experience->org_name.' · '.$experience->emp_type.'</h4>
-                                                    <p class="pt-2"><span> '.$experience->start_date.' · ' .$experience->end_date.'</span></p>
-                                                    <p><span>Indore, Madhya Pradesh, India</span></p>
-                                                    <p class="pt-2">"Raw denim you probably have not heard of them jean shorts Austin."</p>
-                                                    <fieldset class="rating">
-                                                      <input type="radio" id="textiles-star51" name="textiles-rating1" value="5" />
-                                                      <label class = "full" for="textiles-star51"></label>
-                                                      <input type="radio" id="textiles-star4half1" name="textiles-rating1" value="4 and a half"  />
-                                                      <label class="half" for="textiles-star4half1"></label>
-      
-                                                      <input type="radio" id="textiles-star41" name="textiles-rating1" value="4" checked=""/>
-                                                      <label class = "full" for="textiles-star41" ></label>
-                                                      <input type="radio" id="textiles-star3half1" name="textiles-rating1" value="3 and a half" />
-                                                      <label class="half" for="textiles-star3half1"></label>
-      
-                                                      <input type="radio" id="textiles-star31" name="textiles-rating1" value="3" />
-                                                      <label class = "full" for="textiles-star31"></label>
-                                                      <input type="radio" id="textiles-star2half1" name="textiles-rating1" value="2 and a half" />
-                                                      <label class="half" for="textiles-star2half1" ></label>
-      
-                                                      <input type="radio" id="textiles-star21" name="textiles-rating1" value="2" />
-                                                      <label class = "full" for="textiles-star21"></label>
-                                                      <input type="radio" id="textiles-star1half1" name="textiles-rating" value="1 and a half" />
-                                                      <label class="half" for="textiles-star1half1" ></label>
-      
-                                                      <input type="radio" id="textiles-star11" name="textiles-rating1" value="1" />
-                                                      <label class = "full" for="textiles-star11"></label>
-                                                      <input type="radio" id="textiles-starhalf1" name="textiles-rating1" value="half" />
-                                                      <label class="half" for="textiles-starhalf1"></label>
-      
-                                                    </fieldset>
-                                                  </div>
-                                                  <img src="assets/admin/images/verified-icon.png" class="verified-img"></div><hr>';
-                                                }
+                                                    <h4>'.$experience->org_name.'  '.$experience->emp_type.'</h4>
+                                                    <p class="pt-2"><span> '.$experience->start_date.' - ';
+
+                                                    if(empty($experience->end_date)){
+                                                      $html .= 'Present </span></p>';
+                                                    }
+                                                    else{
+                                                        $html .= $experience->end_date.'</span></p>';
+                                                    }
+
+                                                   $html .= '<p><span>Indore, Madhya Pradesh, India</span></p>
+                                                    <p class="pt-2">'.$experience->review.'</p>';
+
+                                             if(!empty($experience->rating)){
+                                                      $html .='<fieldset class="rating">';
+                                                          if($experience->rating == 5){
+    
+                                                            $html .= '<input type="radio"  name="textiles-rating'.$experience->id.'" value="5" checked=""/>
+                                                              <label class = "full" ></label>
+                                                              <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"/>
+                                                              <label class="half" ></label>
+              
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
+                                                              <label class = "full" ></label>
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                              <label class="half" ></label>
+              
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                              <label class = "full" ></label>
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                              <label class="half" ></label>
+              
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                              <label class = "full" ></label>
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                              <label class="half" ></label>
+              
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                              <label class = "full" ></label>
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                              <label class="half"></label>';
+                                                          }
+    
+                                                          if($experience->rating == 4.5){
+                                                            $html .= '<input type="radio"  name="textiles-rating'.$experience->id.'" value="5"/>
+                                                            <label class = "full" ></label>
+                                                            <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5" checked=""/>
+                                                            <label class="half" ></label>
+            
+                                                            <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
+                                                            <label class = "full" ></label>
+                                                            <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                            <label class="half" ></label>
+            
+                                                            <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                            <label class = "full" ></label>
+                                                            <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                            <label class="half" ></label>
+            
+                                                            <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                            <label class = "full" ></label>
+                                                            <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                            <label class="half" ></label>
+            
+                                                            <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                            <label class = "full" ></label>
+                                                            <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                            <label class="half" ></label>';
+                                                          }
+    
+                                                          if($experience->rating == 4){
+                                                              $html .=' <input type="radio"  name="textiles-rating'.$experience->id.'" value="5"/>
+                                                              <label class = "full" ></label>
+                                                              <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"  />
+                                                              <label class="half" ></label>
+              
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="4" checked=""/>
+                                                              <label class = "full" ></label>
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                              <label class="half" ></label>
+              
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                              <label class = "full" ></label>
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                              <label class="half" ></label>
+              
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                              <label class = "full" ></label>
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                              <label class="half" ></label>
+              
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                              <label class = "full" ></label>
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                              <label class="half" ></label>';
+                                                          }
+    
+                                                          if($experience->rating == 3.5){
+                                                              $html .='<input type="radio"  name="textiles-rating'.$experience->id.'" value="5"/>
+                                                              <label class = "full" ></label>
+                                                              <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"  />
+                                                              <label class="half" ></label>
+              
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
+                                                              <label class = "full" ></label>
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" checked=""/>
+                                                              <label class="half" ></label>
+              
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                              <label class = "full" ></label>
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                              <label class="half" ></label>
+              
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                              <label class = "full" ></label>
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                              <label class="half" ></label>
+              
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                              <label class = "full" ></label>
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                              <label class="half" ></label>';
+                                                          }
+    
+                                                          if($experience->rating == 3){
+                                                              $html .='<input type="radio" name="textiles-rating'.$experience->id.'" value="5" />
+                                                              <label class = "full"></label>
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="4.5"  />
+                                                              <label class="half"></label>
+              
+                                                              <input type="radio"  name="textiles-rating'.$experience->id.'" value="4"/>
+                                                              <label class = "full" ></label>
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                              <label class="half"></label>
+              
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="3" checked=""/>
+                                                              <label class = "full"></label>
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                              <label class="half"></label>
+              
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                              <label class = "full"></label>
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                              <label class="half"></label>
+              
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                              <label class = "full"></label>
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                              <label class="half"></label>';
+                                                          }
+    
+                                                          if($experience->rating == 2.5){
+                                                              $html .='<input type="radio"  name="textiles-rating'.$experience->id.'" value="5"/>
+                                                              <label class = "full" ></label>
+                                                              <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"  />
+                                                              <label class="half" ></label>
+              
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
+                                                              <label class = "full" ></label>
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                              <label class="half" ></label>
+              
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                              <label class = "full" ></label>
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" checked=""/>
+                                                              <label class="half" ></label>
+              
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                              <label class = "full" ></label>
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                              <label class="half" ></label>
+              
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                              <label class = "full" ></label>
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                              <label class="half" ></label>';
+                                                          }
+    
+                                                          if($experience->rating == 2){
+                                                              $html .='<input type="radio"  name="textiles-rating'.$experience->id.'" value="5"/>
+                                                              <label class = "full" ></label>
+                                                              <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"  />
+                                                              <label class="half" ></label>
+              
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
+                                                              <label class = "full" ></label>
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                              <label class="half" ></label>
+              
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                              <label class = "full" ></label>
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                              <label class="half" ></label>
+              
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="2" checked=""/>
+                                                              <label class = "full" ></label>
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                              <label class="half" ></label>
+              
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                              <label class = "full" ></label>
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                              <label class="half" ></label>';
+                                                          }
+    
+                                                          if($experience->rating == 1.5){
+                                                              $html .='<input type="radio"  name="textiles-rating'.$experience->id.'" value="5"/>
+                                                              <label class = "full" ></label>
+                                                              <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"  />
+                                                              <label class="half" ></label>
+              
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
+                                                              <label class = "full" ></label>
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                              <label class="half" ></label>
+              
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                              <label class = "full" ></label>
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                              <label class="half" ></label>
+              
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                              <label class = "full" ></label>
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" checked=""/>
+                                                              <label class="half" ></label>
+              
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                              <label class = "full" ></label>
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                              <label class="half" ></label>';
+                                                          }
+    
+                                                          if($experience->rating == 1){
+                                                              $html .='<input type="radio"  name="textiles-rating'.$experience->id.'" value="5"/>
+                                                              <label class ="full" ></label>
+                                                              <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"  />
+                                                              <label class="half" ></label>
+              
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
+                                                              <label class = "full" ></label>
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                              <label class="half" ></label>
+              
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                              <label class = "full" ></label>
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                              <label class="half" ></label>
+              
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                              <label class = "full" ></label>
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                              <label class="half" ></label>
+              
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="1" checked="" />
+                                                              <label class = "full" ></label>
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                              <label class="half" ></label>';
+                                                          }
+    
+                                                          if($experience->rating == 0.5){
+                                                              $html .='<input type="radio"  name="textiles-rating'.$experience->id.'" value="5" />
+                                                              <label class = "full" ></label>
+                                                              <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"  />
+                                                              <label class="half" ></label>
+              
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
+                                                              <label class = "full" ></label>
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                              <label class="half" ></label>
+              
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                              <label class = "full" ></label>
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                              <label class="half"></label>
+              
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                              <label class = "full"></label>
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                              <label class="half"></label>
+              
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                              <label class="full"></label>
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" checked=""/>
+                                                              <label class="half"></label></fieldset>';
+                                                          }
+                                                        }
+                                                          $html .='</div>
+                                                        <img src="assets/admin/images/verified-icon.png" class="verified-img"></div><hr>';
+                                                      }
                                         $html .= '</div>';
 
                                      }
@@ -472,6 +990,8 @@ class SearchController extends Controller
                                   $empPhoto = !empty($empDetails->profile) ? $empDetails->profile : asset('assets/admin/images/vijay-patil.png');
                                   $cmpName = !empty($empCurrentCmpDetails->org_name) ? $empCurrentCmpDetails->org_name : '';
                                   $interviewEmp = EmployeeInterview::where('employee_id', $employee->id)->first();
+                                  $joinDate = Empofficial::where('employee_id', $employee->id)->first();
+
                                   $empPosition = !empty($interviewEmp->position) ? $interviewEmp->position : '';
                                 $reviewEmp = CompanyEmployee::join('exit_employee','exit_employee.employee_id','=','company_employee.employee_id')
                                 ->where('exit_employee.employee_id', $employee->id)
@@ -488,9 +1008,13 @@ class SearchController extends Controller
                                         </div>
                                         <h2> ' . $empDetails->first_name . ' ' . $empDetails->middle_name . ' ' . $empDetails->last_name . '
                                         <span>'.$empPosition.'  at ' . $cmpName . '.</span>
-                                        <small>' . $empDetails->current_address. '</small>
-                                        <small>'. number_format($reviewEmp->rating, 1, '.', ',') .'  <span>reviews</span></small>
-                                        <span class="d-flex">
+                                        <small>' . $empDetails->current_address. '</small>';
+
+                                       if(!empty($reviewEmp)){     
+                                          $html .= '<small>'. number_format($reviewEmp->rating, 1, '.', ',') .'<span>reviews</span></small>';
+                                       }
+
+                                        $html .='<span class="d-flex">
                                           <button onclick="myFunction(' . $empDetails->id . ')" class="full-bg">View Full Profile</button>
                                           <button class="only-border-btn" onclick="getInterview(' . $empDetails->id . ')" id="scheduleInterview">Add Candidate</button>
                                           </span>
@@ -534,7 +1058,7 @@ class SearchController extends Controller
                                                       </div>
                                                       <div class="coneant">
                                                         <h4>Phone</h4>
-                                                        <p>' . $empDetails->phone . ' <span>(mobile)</span></p>
+                                                        <p>' . $empDetails->phone . ' </p>
                                                       </div>
                                                     </div>
                                                   </div>
@@ -557,7 +1081,7 @@ class SearchController extends Controller
                                                       </div>
                                                       <div class="coneant">
                                                         <h4>Join </h4>
-                                                        <p>' . $empDetails->created_at->format('F Y') . '</p>
+                                                        <p>' . $joinDate->date_of_joining . '</p>
                                                       </div>
                                                     </div>
                                                   </div>
@@ -592,38 +1116,293 @@ class SearchController extends Controller
                                                     </div>
                                                     <div class="searc-icon-bx-text">
                                                       <h2>'.$experience->designation.'</h2>
-                                                      <h4>'.$experience->org_name.' · '.$experience->emp_type.'</h4>
-                                                      <p class="pt-2"><span> '.$experience->start_date.' · ' .$experience->end_date.' </span></p>
-                                                      <p><span>Indore, Madhya Pradesh, India</span></p>
-                                                      <p class="pt-2">"Raw denim you probably have not heard of them jean shorts Austin."</p>
-                                                      <fieldset class="rating">
-                                                        <input type="radio" id="textiles-star51" name="textiles-rating1" value="5" />
-                                                        <label class = "full" for="textiles-star51"></label>
-                                                        <input type="radio" id="textiles-star4half1" name="textiles-rating1" value="4 and a half"  />
-                                                        <label class="half" for="textiles-star4half1"></label>
+                                                      <h4>'.$experience->org_name.'  '.$experience->emp_type.'</h4>
+                                                      <p class="pt-2"><span> '.$experience->start_date.' - ' ;
+                                                      
+                                                      if(empty($experience->end_date)){
+                                                        $html .= 'Present </span></p>';
+                                                      }
+                                                      else{
+                                                          $html .= $experience->end_date.'</span></p>';
+                                                      }
+
+                                                     $html .= '<p><span>Indore, Madhya Pradesh, India</span></p>
+                                                      <p class="pt-2">'.$experience->review.'</p>';
+
+                                            if(!empty($experience->rating)){
+                                                  $html .='<fieldset class="rating">';
+                                                      if($experience->rating == 5){
+
+                                                        $html .= '<input type="radio"  name="textiles-rating'.$experience->id.'" value="5" checked=""/>
+                                                          <label class = "full" ></label>
+                                                          <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"/>
+                                                          <label class="half" ></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
+                                                          <label class = "full" ></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                          <label class="half" ></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                          <label class = "full" ></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                          <label class="half" ></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                          <label class = "full" ></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                          <label class="half" ></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                          <label class = "full" ></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                          <label class="half"></label>';
+                                                      }
+
+                                                      if($experience->rating == 4.5){
+                                                        $html .= '<input type="radio"  name="textiles-rating'.$experience->id.'" value="5"/>
+                                                        <label class = "full" ></label>
+                                                        <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5" checked=""/>
+                                                        <label class="half" ></label>
         
-                                                        <input type="radio" id="textiles-star41" name="textiles-rating1" value="4" checked=""/>
-                                                        <label class = "full" for="textiles-star41" ></label>
-                                                        <input type="radio" id="textiles-star3half1" name="textiles-rating1" value="3 and a half" />
-                                                        <label class="half" for="textiles-star3half1"></label>
+                                                        <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
+                                                        <label class = "full" ></label>
+                                                        <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                        <label class="half" ></label>
         
-                                                        <input type="radio" id="textiles-star31" name="textiles-rating1" value="3" />
-                                                        <label class = "full" for="textiles-star31"></label>
-                                                        <input type="radio" id="textiles-star2half1" name="textiles-rating1" value="2 and a half" />
-                                                        <label class="half" for="textiles-star2half1" ></label>
+                                                        <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                        <label class = "full" ></label>
+                                                        <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                        <label class="half" ></label>
         
-                                                        <input type="radio" id="textiles-star21" name="textiles-rating1" value="2" />
-                                                        <label class = "full" for="textiles-star21"></label>
-                                                        <input type="radio" id="textiles-star1half1" name="textiles-rating" value="1 and a half" />
-                                                        <label class="half" for="textiles-star1half1" ></label>
+                                                        <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                        <label class = "full" ></label>
+                                                        <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                        <label class="half" ></label>
         
-                                                        <input type="radio" id="textiles-star11" name="textiles-rating1" value="1" />
-                                                        <label class = "full" for="textiles-star11"></label>
-                                                        <input type="radio" id="textiles-starhalf1" name="textiles-rating1" value="half" />
-                                                        <label class="half" for="textiles-starhalf1"></label>
-        
-                                                      </fieldset>
-                                                    </div>
+                                                        <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                        <label class = "full" ></label>
+                                                        <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                        <label class="half" ></label>';
+                                                      }
+
+                                                      if($experience->rating == 4){
+                                                          $html .=' <input type="radio"  name="textiles-rating'.$experience->id.'" value="5"/>
+                                                          <label class = "full" ></label>
+                                                          <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"  />
+                                                          <label class="half" ></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="4" checked=""/>
+                                                          <label class = "full" ></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                          <label class="half" ></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                          <label class = "full" ></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                          <label class="half" ></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                          <label class = "full" ></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                          <label class="half" ></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                          <label class = "full" ></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                          <label class="half" ></label>';
+                                                      }
+
+                                                      if($experience->rating == 3.5){
+                                                          $html .='<input type="radio"  name="textiles-rating'.$experience->id.'" value="5"/>
+                                                          <label class = "full" ></label>
+                                                          <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"  />
+                                                          <label class="half" ></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
+                                                          <label class = "full" ></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" checked=""/>
+                                                          <label class="half" ></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                          <label class = "full" ></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                          <label class="half" ></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                          <label class = "full" ></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                          <label class="half" ></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                          <label class = "full" ></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                          <label class="half" ></label>';
+                                                      }
+
+                                                      if($experience->rating == 3){
+                                                          $html .='<input type="radio" name="textiles-rating'.$experience->id.'" value="5" />
+                                                          <label class = "full"></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="4.5"  />
+                                                          <label class="half"></label>
+          
+                                                          <input type="radio"  name="textiles-rating'.$experience->id.'" value="4"/>
+                                                          <label class = "full" ></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                          <label class="half"></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="3" checked=""/>
+                                                          <label class = "full"></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                          <label class="half"></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                          <label class = "full"></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                          <label class="half"></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                          <label class = "full"></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                          <label class="half"></label>';
+                                                      }
+
+                                                      if($experience->rating == 2.5){
+                                                          $html .='<input type="radio"  name="textiles-rating'.$experience->id.'" value="5"/>
+                                                          <label class = "full" ></label>
+                                                          <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"  />
+                                                          <label class="half" ></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
+                                                          <label class = "full" ></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                          <label class="half" ></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                          <label class = "full" ></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" checked=""/>
+                                                          <label class="half" ></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                          <label class = "full" ></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                          <label class="half" ></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                          <label class = "full" ></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                          <label class="half" ></label>';
+                                                      }
+
+                                                      if($experience->rating == 2){
+                                                          $html .='<input type="radio"  name="textiles-rating'.$experience->id.'" value="5"/>
+                                                          <label class = "full" ></label>
+                                                          <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"  />
+                                                          <label class="half" ></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
+                                                          <label class = "full" ></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                          <label class="half" ></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                          <label class = "full" ></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                          <label class="half" ></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="2" checked=""/>
+                                                          <label class = "full" ></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                          <label class="half" ></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                          <label class = "full" ></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                          <label class="half" ></label>';
+                                                      }
+
+                                                      if($experience->rating == 1.5){
+                                                          $html .='<input type="radio"  name="textiles-rating'.$experience->id.'" value="5"/>
+                                                          <label class = "full" ></label>
+                                                          <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"  />
+                                                          <label class="half" ></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
+                                                          <label class = "full" ></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                          <label class="half" ></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                          <label class = "full" ></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                          <label class="half" ></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                          <label class = "full" ></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" checked=""/>
+                                                          <label class="half" ></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                          <label class = "full" ></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                          <label class="half" ></label>';
+                                                      }
+
+                                                      if($experience->rating == 1){
+                                                          $html .='<input type="radio"  name="textiles-rating'.$experience->id.'" value="5"/>
+                                                          <label class ="full" ></label>
+                                                          <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"  />
+                                                          <label class="half" ></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
+                                                          <label class = "full" ></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                          <label class="half" ></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                          <label class = "full" ></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                          <label class="half" ></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                          <label class = "full" ></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                          <label class="half" ></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="1" checked="" />
+                                                          <label class = "full" ></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                          <label class="half" ></label>';
+                                                      }
+
+                                                      if($experience->rating == 0.5){
+                                                          $html .='<input type="radio"  name="textiles-rating'.$experience->id.'" value="5" />
+                                                          <label class = "full" ></label>
+                                                          <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"  />
+                                                          <label class="half" ></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
+                                                          <label class = "full" ></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                          <label class="half" ></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                          <label class = "full" ></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                          <label class="half"></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                          <label class = "full"></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                          <label class="half"></label>
+          
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                          <label class="full"></label>
+                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" checked=""/>
+                                                          <label class="half"></label></fieldset>';
+                                                      }
+                                                    }
+                                                      $html .='</div>
                                                     <img src="assets/admin/images/verified-icon.png" class="verified-img"></div><hr>';
                                                   }
                                           $html .= '</div>';
@@ -681,8 +1460,10 @@ class SearchController extends Controller
                                   $empPhoto = !empty($empDetails->profile) ? $empDetails->profile : asset('assets/admin/images/vijay-patil.png');
                                   $cmpName = !empty($empCurrentCmpDetails->org_name) ? $empCurrentCmpDetails->org_name : '';
                                   $interviewEmp = EmployeeInterview::where('employee_id', $employee->id)->first();
+                                  $joinDate = Empofficial::where('employee_id', $employee->id)->first();
+
                                   $empPosition = !empty($interviewEmp->position) ? $interviewEmp->position : '';
-                             $reviewEmp = CompanyEmployee::join('exit_employee','exit_employee.employee_id','=','company_employee.employee_id')
+                               $reviewEmp = CompanyEmployee::join('exit_employee','exit_employee.employee_id','=','company_employee.employee_id')
                                 ->where('exit_employee.employee_id', $employee->id)
                                 ->groupBy('company_employee.id' )
                                 ->select(DB::raw( 'AVG( exit_employee.rating) as rating'))
@@ -697,9 +1478,11 @@ class SearchController extends Controller
                                         </div>
                                         <h2> ' . $empDetails->first_name . ' ' . $empDetails->middle_name . ' ' . $empDetails->last_name . '
                                         <span>'.$empPosition.'  at ' . $cmpName . '.</span>
-                                        <small>' . $empDetails->current_address. '</small>
-                                        <small>'. number_format($reviewEmp->rating, 1, '.', ',') .'  <span>reviews</span></small>
-                                        <span class="d-flex">
+                                        <small>' . $empDetails->current_address. '</small>';
+                                   if($reviewEmp){
+                                         $html .='<small>'. number_format($reviewEmp->rating, 1, '.', ',') .' <span>reviews</span></small>';
+                                       }
+                                        $html .='<span class="d-flex">
                                           <button onclick="myFunction(' . $empDetails->id . ')" class="full-bg">View Full Profile</button>
                                           <button class="only-border-btn" onclick="getInterview(' . $empDetails->id . ')" id="scheduleInterview">Add Candidate</button>
                                           </span>
@@ -743,7 +1526,7 @@ class SearchController extends Controller
                                                       </div>
                                                       <div class="coneant">
                                                         <h4>Phone</h4>
-                                                        <p>' . $empDetails->phone . ' <span>(mobile)</span></p>
+                                                        <p>' . $empDetails->phone . ' </p>
                                                       </div>
                                                     </div>
                                                   </div>
@@ -766,7 +1549,7 @@ class SearchController extends Controller
                                                       </div>
                                                       <div class="coneant">
                                                         <h4>Join </h4>
-                                                        <p>' . $empDetails->created_at->format('F Y') . '</p>
+                                                        <p>' . $joinDate->date_of_joining . '</p>
                                                       </div>
                                                     </div>
                                                   </div>
@@ -802,40 +1585,295 @@ class SearchController extends Controller
                                                     </div>
                                                     <div class="searc-icon-bx-text">
                                                       <h2>'.$experience->designation.'</h2>
-                                                      <h4>'.$experience->org_name.' · '.$experience->emp_type.'</h4>
-                                                      <p class="pt-2"><span> '.$experience->start_date.'· ' .$experience->end_date.' </span></p>
-                                                      <p><span>Indore, Madhya Pradesh, India</span></p>
-                                                      <p class="pt-2">"Raw denim you probably have not heard of them jean shorts Austin."</p>
-                                                      <fieldset class="rating">
-                                                        <input type="radio" id="textiles-star51" name="textiles-rating1" value="5" />
-                                                        <label class = "full" for="textiles-star51"></label>
-                                                        <input type="radio" id="textiles-star4half1" name="textiles-rating1" value="4 and a half"  />
-                                                        <label class="half" for="textiles-star4half1"></label>
-        
-                                                        <input type="radio" id="textiles-star41" name="textiles-rating1" value="4" checked=""/>
-                                                        <label class = "full" for="textiles-star41" ></label>
-                                                        <input type="radio" id="textiles-star3half1" name="textiles-rating1" value="3 and a half" />
-                                                        <label class="half" for="textiles-star3half1"></label>
-        
-                                                        <input type="radio" id="textiles-star31" name="textiles-rating1" value="3" />
-                                                        <label class = "full" for="textiles-star31"></label>
-                                                        <input type="radio" id="textiles-star2half1" name="textiles-rating1" value="2 and a half" />
-                                                        <label class="half" for="textiles-star2half1" ></label>
-        
-                                                        <input type="radio" id="textiles-star21" name="textiles-rating1" value="2" />
-                                                        <label class = "full" for="textiles-star21"></label>
-                                                        <input type="radio" id="textiles-star1half1" name="textiles-rating" value="1 and a half" />
-                                                        <label class="half" for="textiles-star1half1" ></label>
-        
-                                                        <input type="radio" id="textiles-star11" name="textiles-rating1" value="1" />
-                                                        <label class = "full" for="textiles-star11"></label>
-                                                        <input type="radio" id="textiles-starhalf1" name="textiles-rating1" value="half" />
-                                                        <label class="half" for="textiles-starhalf1"></label>
-        
-                                                      </fieldset>
-                                                    </div>
-                                                    <img src="assets/admin/images/verified-icon.png" class="verified-img"></div><hr>';
-                                                  }
+                                                      <h4>'.$experience->org_name.'  '.$experience->emp_type.'</h4>
+                                                      <p class="pt-2"><span> '.$experience->start_date.' - '; 
+                                                      
+                                                      if(empty($experience->end_date)){
+                                                        $html .= 'Present </span></p>';
+                                                      }
+                                                      else{
+                                                          $html .= $experience->end_date.'</span></p>';
+                                                      }
+
+                                                    $html .='<p><span>Indore, Madhya Pradesh, India</span></p>
+                                                      <p class="pt-2">'.$experience->review.'</p>';
+
+                                               if(!empty($experience->rating)){
+                                                        $html .='<fieldset class="rating">';
+                                                            if($experience->rating == 5){
+      
+                                                              $html .= '<input type="radio"  name="textiles-rating'.$experience->id.'" value="5" checked=""/>
+                                                                <label class = "full" ></label>
+                                                                <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"/>
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                                <label class="half"></label>';
+                                                            }
+      
+                                                            if($experience->rating == 4.5){
+                                                              $html .= '<input type="radio"  name="textiles-rating'.$experience->id.'" value="5"/>
+                                                              <label class = "full" ></label>
+                                                              <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5" checked=""/>
+                                                              <label class="half" ></label>
+              
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
+                                                              <label class = "full" ></label>
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                              <label class="half" ></label>
+              
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                              <label class = "full" ></label>
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                              <label class="half" ></label>
+              
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                              <label class = "full" ></label>
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                              <label class="half" ></label>
+              
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                              <label class = "full" ></label>
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                              <label class="half" ></label>';
+                                                            }
+      
+                                                            if($experience->rating == 4){
+                                                                $html .=' <input type="radio"  name="textiles-rating'.$experience->id.'" value="5"/>
+                                                                <label class = "full" ></label>
+                                                                <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"  />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="4" checked=""/>
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                                <label class="half" ></label>';
+                                                            }
+      
+                                                            if($experience->rating == 3.5){
+                                                                $html .='<input type="radio"  name="textiles-rating'.$experience->id.'" value="5"/>
+                                                                <label class = "full" ></label>
+                                                                <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"  />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" checked=""/>
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                                <label class="half" ></label>';
+                                                            }
+      
+                                                            if($experience->rating == 3){
+                                                                $html .='<input type="radio" name="textiles-rating'.$experience->id.'" value="5" />
+                                                                <label class = "full"></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="4.5"  />
+                                                                <label class="half"></label>
+                
+                                                                <input type="radio"  name="textiles-rating'.$experience->id.'" value="4"/>
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                                <label class="half"></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3" checked=""/>
+                                                                <label class = "full"></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                                <label class="half"></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                                <label class = "full"></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                                <label class="half"></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                                <label class = "full"></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                                <label class="half"></label>';
+                                                            }
+      
+                                                            if($experience->rating == 2.5){
+                                                                $html .='<input type="radio"  name="textiles-rating'.$experience->id.'" value="5"/>
+                                                                <label class = "full" ></label>
+                                                                <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"  />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" checked=""/>
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                                <label class="half" ></label>';
+                                                            }
+      
+                                                            if($experience->rating == 2){
+                                                                $html .='<input type="radio"  name="textiles-rating'.$experience->id.'" value="5"/>
+                                                                <label class = "full" ></label>
+                                                                <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"  />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2" checked=""/>
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                                <label class="half" ></label>';
+                                                            }
+      
+                                                            if($experience->rating == 1.5){
+                                                                $html .='<input type="radio"  name="textiles-rating'.$experience->id.'" value="5"/>
+                                                                <label class = "full" ></label>
+                                                                <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"  />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" checked=""/>
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                                <label class="half" ></label>';
+                                                            }
+      
+                                                            if($experience->rating == 1){
+                                                                $html .='<input type="radio"  name="textiles-rating'.$experience->id.'" value="5"/>
+                                                                <label class ="full" ></label>
+                                                                <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"  />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1" checked="" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                                <label class="half" ></label>';
+                                                            }
+      
+                                                            if($experience->rating == 0.5){
+                                                                $html .='<input type="radio"  name="textiles-rating'.$experience->id.'" value="5" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"  />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                                <label class="half"></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                                <label class = "full"></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                                <label class="half"></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                                <label class="full"></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" checked=""/>
+                                                                <label class="half"></label></fieldset>';
+                                                            }
+                                                          }
+                                                            $html .='</div>
+                                                          <img src="assets/admin/images/verified-icon.png" class="verified-img"></div><hr>';
+                                                        }
                                           $html .= '</div>';
   
                                        }
@@ -892,8 +1930,10 @@ class SearchController extends Controller
                                   $empPhoto = !empty($empDetails->profile) ? $empDetails->profile : asset('assets/admin/images/vijay-patil.png');
                                   $cmpName = !empty($empCurrentCmpDetails->org_name) ? $empCurrentCmpDetails->org_name : '';
                                   $interviewEmp = EmployeeInterview::where('employee_id', $employee->id)->first();
-                                  $empPosition = !empty($interviewEmp->position) ? $interviewEmp->position : '';
-                         $reviewEmp = CompanyEmployee::join('exit_employee','exit_employee.employee_id','=','company_employee.employee_id')
+                                  $joinDate = Empofficial::where('employee_id', $employee->id)->first();
+
+                                 $empPosition = !empty($interviewEmp->position) ? $interviewEmp->position : '';
+                           $reviewEmp = CompanyEmployee::join('exit_employee','exit_employee.employee_id','=','company_employee.employee_id')
                                 ->where('exit_employee.employee_id', $employee->id)
                                 ->groupBy('company_employee.id' )
                                 ->select(DB::raw( 'AVG( exit_employee.rating) as rating'))
@@ -908,9 +1948,11 @@ class SearchController extends Controller
                                         </div>
                                         <h2> ' . $empDetails->first_name . ' ' . $empDetails->middle_name . ' ' . $empDetails->last_name . '
                                         <span>'.$empPosition.'  at ' . $cmpName . '.</span>
-                                        <small>' . $empDetails->current_address. '</small>
-                                        <small>'. number_format($reviewEmp->rating, 1, '.', ',') .'  <span>reviews</span></small>
-                                        <span class="d-flex">
+                                        <small>' . $empDetails->current_address. '</small>';
+                                  if($reviewEmp){
+                                          $html .='<small>'. number_format($reviewEmp->rating, 1, '.', ',') .' <span>reviews</span></small>';
+                                   }
+                                       $html .=' <span class="d-flex">
                                           <button onclick="myFunction(' . $empDetails->id . ')" class="full-bg">View Full Profile</button>
                                           <button class="only-border-btn" onclick="getInterview(' . $empDetails->id . ')" id="scheduleInterview">Add Candidate</button>
                                           </span>
@@ -954,7 +1996,7 @@ class SearchController extends Controller
                                                       </div>
                                                       <div class="coneant">
                                                         <h4>Phone</h4>
-                                                        <p>' . $empDetails->phone . ' <span>(mobile)</span></p>
+                                                        <p>' . $empDetails->phone . ' </p>
                                                       </div>
                                                     </div>
                                                   </div>
@@ -977,7 +2019,7 @@ class SearchController extends Controller
                                                       </div>
                                                       <div class="coneant">
                                                         <h4>Join </h4>
-                                                        <p>' . $empDetails->created_at->format('F Y') . '</p>
+                                                        <p>' . $joinDate->date_of_joining . '</p>
                                                       </div>
                                                     </div>
                                                   </div>
@@ -1013,40 +2055,295 @@ class SearchController extends Controller
                                                     </div>
                                                     <div class="searc-icon-bx-text">
                                                       <h2>'.$experience->designation.'</h2>
-                                                      <h4>'.$experience->org_name.' · '.$experience->emp_type.'</h4>
-                                                      <p class="pt-2"><span> '.$experience->start_date.'· ' .$experience->end_date.' </span></p>
-                                                      <p><span>Indore, Madhya Pradesh, India</span></p>
-                                                      <p class="pt-2">"Raw denim you probably have not heard of them jean shorts Austin."</p>
-                                                      <fieldset class="rating">
-                                                        <input type="radio" id="textiles-star51" name="textiles-rating1" value="5" />
-                                                        <label class = "full" for="textiles-star51"></label>
-                                                        <input type="radio" id="textiles-star4half1" name="textiles-rating1" value="4 and a half"  />
-                                                        <label class="half" for="textiles-star4half1"></label>
-        
-                                                        <input type="radio" id="textiles-star41" name="textiles-rating1" value="4" checked=""/>
-                                                        <label class = "full" for="textiles-star41" ></label>
-                                                        <input type="radio" id="textiles-star3half1" name="textiles-rating1" value="3 and a half" />
-                                                        <label class="half" for="textiles-star3half1"></label>
-        
-                                                        <input type="radio" id="textiles-star31" name="textiles-rating1" value="3" />
-                                                        <label class = "full" for="textiles-star31"></label>
-                                                        <input type="radio" id="textiles-star2half1" name="textiles-rating1" value="2 and a half" />
-                                                        <label class="half" for="textiles-star2half1" ></label>
-        
-                                                        <input type="radio" id="textiles-star21" name="textiles-rating1" value="2" />
-                                                        <label class = "full" for="textiles-star21"></label>
-                                                        <input type="radio" id="textiles-star1half1" name="textiles-rating" value="1 and a half" />
-                                                        <label class="half" for="textiles-star1half1" ></label>
-        
-                                                        <input type="radio" id="textiles-star11" name="textiles-rating1" value="1" />
-                                                        <label class = "full" for="textiles-star11"></label>
-                                                        <input type="radio" id="textiles-starhalf1" name="textiles-rating1" value="half" />
-                                                        <label class="half" for="textiles-starhalf1"></label>
-        
-                                                      </fieldset>
-                                                    </div>
-                                                    <img src="assets/admin/images/verified-icon.png" class="verified-img"></div><hr>';
-                                                  }
+                                                      <h4>'.$experience->org_name.'  '.$experience->emp_type.'</h4>
+                                                      <p class="pt-2"><span> '.$experience->start_date.' - ';
+                                                      
+                                                      if(empty($experience->end_date)){
+                                                        $html .= 'Present </span></p>';
+                                                      }
+                                                      else{
+                                                          $html .= $experience->end_date.'</span></p>';
+                                                      }
+
+                                                     $html .= '<p><span>Indore, Madhya Pradesh, India</span></p>
+                                                      <p class="pt-2">'.$experience->review.'</p>';
+
+                                             if(!empty($experience->rating)){
+                                                        $html .='<fieldset class="rating">';
+                                                            if($experience->rating == 5){
+      
+                                                              $html .= '<input type="radio"  name="textiles-rating'.$experience->id.'" value="5" checked=""/>
+                                                                <label class = "full" ></label>
+                                                                <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"/>
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                                <label class="half"></label>';
+                                                            }
+      
+                                                            if($experience->rating == 4.5){
+                                                              $html .= '<input type="radio"  name="textiles-rating'.$experience->id.'" value="5"/>
+                                                              <label class = "full" ></label>
+                                                              <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5" checked=""/>
+                                                              <label class="half" ></label>
+              
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
+                                                              <label class = "full" ></label>
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                              <label class="half" ></label>
+              
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                              <label class = "full" ></label>
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                              <label class="half" ></label>
+              
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                              <label class = "full" ></label>
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                              <label class="half" ></label>
+              
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                              <label class = "full" ></label>
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                              <label class="half" ></label>';
+                                                            }
+      
+                                                            if($experience->rating == 4){
+                                                                $html .=' <input type="radio"  name="textiles-rating'.$experience->id.'" value="5"/>
+                                                                <label class = "full" ></label>
+                                                                <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"  />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="4" checked=""/>
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                                <label class="half" ></label>';
+                                                            }
+      
+                                                            if($experience->rating == 3.5){
+                                                                $html .='<input type="radio"  name="textiles-rating'.$experience->id.'" value="5"/>
+                                                                <label class = "full" ></label>
+                                                                <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"  />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" checked=""/>
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                                <label class="half" ></label>';
+                                                            }
+      
+                                                            if($experience->rating == 3){
+                                                                $html .='<input type="radio" name="textiles-rating'.$experience->id.'" value="5" />
+                                                                <label class = "full"></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="4.5"  />
+                                                                <label class="half"></label>
+                
+                                                                <input type="radio"  name="textiles-rating'.$experience->id.'" value="4"/>
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                                <label class="half"></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3" checked=""/>
+                                                                <label class = "full"></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                                <label class="half"></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                                <label class = "full"></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                                <label class="half"></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                                <label class = "full"></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                                <label class="half"></label>';
+                                                            }
+      
+                                                            if($experience->rating == 2.5){
+                                                                $html .='<input type="radio"  name="textiles-rating'.$experience->id.'" value="5"/>
+                                                                <label class = "full" ></label>
+                                                                <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"  />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" checked=""/>
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                                <label class="half" ></label>';
+                                                            }
+      
+                                                            if($experience->rating == 2){
+                                                                $html .='<input type="radio"  name="textiles-rating'.$experience->id.'" value="5"/>
+                                                                <label class = "full" ></label>
+                                                                <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"  />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2" checked=""/>
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                                <label class="half" ></label>';
+                                                            }
+      
+                                                            if($experience->rating == 1.5){
+                                                                $html .='<input type="radio"  name="textiles-rating'.$experience->id.'" value="5"/>
+                                                                <label class = "full" ></label>
+                                                                <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"  />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" checked=""/>
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                                <label class="half" ></label>';
+                                                            }
+      
+                                                            if($experience->rating == 1){
+                                                                $html .='<input type="radio"  name="textiles-rating'.$experience->id.'" value="5"/>
+                                                                <label class ="full" ></label>
+                                                                <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"  />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1" checked="" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                                <label class="half" ></label>';
+                                                            }
+      
+                                                            if($experience->rating == 0.5){
+                                                                $html .='<input type="radio"  name="textiles-rating'.$experience->id.'" value="5" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"  />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                                <label class="half"></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                                <label class = "full"></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                                <label class="half"></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                                <label class="full"></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" checked=""/>
+                                                                <label class="half"></label></fieldset>';
+                                                            }
+                                                          }
+                                                            $html .='</div>
+                                                          <img src="assets/admin/images/verified-icon.png" class="verified-img"></div><hr>';
+                                                        }
                                           $html .= '</div>';
   
                                        }
@@ -1103,6 +2400,8 @@ class SearchController extends Controller
                                   $empPhoto = !empty($empDetails->profile) ? $empDetails->profile : asset('assets/admin/images/vijay-patil.png');
                                   $cmpName = !empty($empCurrentCmpDetails->org_name) ? $empCurrentCmpDetails->org_name : '';
                                   $interviewEmp = EmployeeInterview::where('employee_id', $employee->id)->first();
+                                  $joinDate = Empofficial::where('employee_id', $employee->id)->first();
+
                                   $empPosition = !empty($interviewEmp->position) ? $interviewEmp->position : '';
                             $reviewEmp = CompanyEmployee::join('exit_employee','exit_employee.employee_id','=','company_employee.employee_id')
                                 ->where('exit_employee.employee_id', $employee->id)
@@ -1119,9 +2418,12 @@ class SearchController extends Controller
                                         </div>
                                         <h2> ' . $empDetails->first_name . ' ' . $empDetails->middle_name . ' ' . $empDetails->last_name . '
                                         <span>'.$empPosition.'  at ' . $cmpName . '.</span>
-                                        <small>' . $empDetails->current_address. '</small>
-                                        <small>'. number_format($reviewEmp->rating, 1, '.', ',') .'  <span>reviews</span></small>
-                                        <span class="d-flex">
+                                        <small>' . $empDetails->current_address. '</small>';
+
+                                        if($reviewEmp){
+                                          $html .='<small>'. number_format($reviewEmp->rating, 1, '.', ',') .' <span>reviews</span></small>';
+                                          }
+                                      $html .= '<span class="d-flex">
                                           <button onclick="myFunction(' . $empDetails->id . ')" class="full-bg">View Full Profile</button>
                                           <button class="only-border-btn" onclick="getInterview(' . $empDetails->id . ')" id="scheduleInterview">Add Candidate</button>
                                           </span>
@@ -1165,7 +2467,7 @@ class SearchController extends Controller
                                                       </div>
                                                       <div class="coneant">
                                                         <h4>Phone</h4>
-                                                        <p>' . $empDetails->phone . ' <span>(mobile)</span></p>
+                                                        <p>' . $empDetails->phone . ' </p>
                                                       </div>
                                                     </div>
                                                   </div>
@@ -1188,7 +2490,7 @@ class SearchController extends Controller
                                                       </div>
                                                       <div class="coneant">
                                                         <h4>Join </h4>
-                                                        <p>' . $empDetails->created_at->format('F Y') . '</p>
+                                                        <p>' . $joinDate->date_of_joining . '</p>
                                                       </div>
                                                     </div>
                                                   </div>
@@ -1223,40 +2525,295 @@ class SearchController extends Controller
                                                     </div>
                                                     <div class="searc-icon-bx-text">
                                                       <h2>'.$experience->designation.'</h2>
-                                                      <h4>'.$experience->org_name.' · '.$experience->emp_type.'</h4>
-                                                      <p class="pt-2"><span> '.$experience->start_date.'· ' .$experience->end_date.' </span></p>
-                                                      <p><span>Indore, Madhya Pradesh, India</span></p>
-                                                      <p class="pt-2">"Raw denim you probably have not heard of them jean shorts Austin."</p>
-                                                      <fieldset class="rating">
-                                                        <input type="radio" id="textiles-star51" name="textiles-rating1" value="5" />
-                                                        <label class = "full" for="textiles-star51"></label>
-                                                        <input type="radio" id="textiles-star4half1" name="textiles-rating1" value="4 and a half"  />
-                                                        <label class="half" for="textiles-star4half1"></label>
-        
-                                                        <input type="radio" id="textiles-star41" name="textiles-rating1" value="4" checked=""/>
-                                                        <label class = "full" for="textiles-star41" ></label>
-                                                        <input type="radio" id="textiles-star3half1" name="textiles-rating1" value="3 and a half" />
-                                                        <label class="half" for="textiles-star3half1"></label>
-        
-                                                        <input type="radio" id="textiles-star31" name="textiles-rating1" value="3" />
-                                                        <label class = "full" for="textiles-star31"></label>
-                                                        <input type="radio" id="textiles-star2half1" name="textiles-rating1" value="2 and a half" />
-                                                        <label class="half" for="textiles-star2half1" ></label>
-        
-                                                        <input type="radio" id="textiles-star21" name="textiles-rating1" value="2" />
-                                                        <label class = "full" for="textiles-star21"></label>
-                                                        <input type="radio" id="textiles-star1half1" name="textiles-rating" value="1 and a half" />
-                                                        <label class="half" for="textiles-star1half1" ></label>
-        
-                                                        <input type="radio" id="textiles-star11" name="textiles-rating1" value="1" />
-                                                        <label class = "full" for="textiles-star11"></label>
-                                                        <input type="radio" id="textiles-starhalf1" name="textiles-rating1" value="half" />
-                                                        <label class="half" for="textiles-starhalf1"></label>
-        
-                                                      </fieldset>
-                                                    </div>
-                                                    <img src="assets/admin/images/verified-icon.png" class="verified-img"></div><hr>';
-                                                  }
+                                                      <h4>'.$experience->org_name.'  '.$experience->emp_type.'</h4>
+                                                      <p class="pt-2"><span> '.$experience->start_date.' - ';
+                                                      
+                                                      if(empty($experience->end_date)){
+                                                        $html .= 'Present </span></p>';
+                                                      }
+                                                      else{
+                                                          $html .= $experience->end_date.'</span></p>';
+                                                      }
+
+                                                     $html .= '<p><span>Indore, Madhya Pradesh, India</span></p>
+                                                      <p class="pt-2">'.$experience->review.'</p>';
+
+                                              if(!empty($experience->rating)){
+                                                        $html .='<fieldset class="rating">';
+                                                            if($experience->rating == 5){
+      
+                                                              $html .= '<input type="radio"  name="textiles-rating'.$experience->id.'" value="5" checked=""/>
+                                                                <label class = "full" ></label>
+                                                                <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"/>
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                                <label class="half"></label>';
+                                                            }
+      
+                                                            if($experience->rating == 4.5){
+                                                              $html .= '<input type="radio"  name="textiles-rating'.$experience->id.'" value="5"/>
+                                                              <label class = "full" ></label>
+                                                              <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5" checked=""/>
+                                                              <label class="half" ></label>
+              
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
+                                                              <label class = "full" ></label>
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                              <label class="half" ></label>
+              
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                              <label class = "full" ></label>
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                              <label class="half" ></label>
+              
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                              <label class = "full" ></label>
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                              <label class="half" ></label>
+              
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                              <label class = "full" ></label>
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                              <label class="half" ></label>';
+                                                            }
+      
+                                                            if($experience->rating == 4){
+                                                                $html .=' <input type="radio"  name="textiles-rating'.$experience->id.'" value="5"/>
+                                                                <label class = "full" ></label>
+                                                                <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"  />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="4" checked=""/>
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                                <label class="half" ></label>';
+                                                            }
+      
+                                                            if($experience->rating == 3.5){
+                                                                $html .='<input type="radio"  name="textiles-rating'.$experience->id.'" value="5"/>
+                                                                <label class = "full" ></label>
+                                                                <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"  />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" checked=""/>
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                                <label class="half" ></label>';
+                                                            }
+      
+                                                            if($experience->rating == 3){
+                                                                $html .='<input type="radio" name="textiles-rating'.$experience->id.'" value="5" />
+                                                                <label class = "full"></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="4.5"  />
+                                                                <label class="half"></label>
+                
+                                                                <input type="radio"  name="textiles-rating'.$experience->id.'" value="4"/>
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                                <label class="half"></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3" checked=""/>
+                                                                <label class = "full"></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                                <label class="half"></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                                <label class = "full"></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                                <label class="half"></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                                <label class = "full"></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                                <label class="half"></label>';
+                                                            }
+      
+                                                            if($experience->rating == 2.5){
+                                                                $html .='<input type="radio"  name="textiles-rating'.$experience->id.'" value="5"/>
+                                                                <label class = "full" ></label>
+                                                                <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"  />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" checked=""/>
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                                <label class="half" ></label>';
+                                                            }
+      
+                                                            if($experience->rating == 2){
+                                                                $html .='<input type="radio"  name="textiles-rating'.$experience->id.'" value="5"/>
+                                                                <label class = "full" ></label>
+                                                                <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"  />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2" checked=""/>
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                                <label class="half" ></label>';
+                                                            }
+      
+                                                            if($experience->rating == 1.5){
+                                                                $html .='<input type="radio"  name="textiles-rating'.$experience->id.'" value="5"/>
+                                                                <label class = "full" ></label>
+                                                                <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"  />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" checked=""/>
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                                <label class="half" ></label>';
+                                                            }
+      
+                                                            if($experience->rating == 1){
+                                                                $html .='<input type="radio"  name="textiles-rating'.$experience->id.'" value="5"/>
+                                                                <label class ="full" ></label>
+                                                                <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"  />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1" checked="" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                                <label class="half" ></label>';
+                                                            }
+      
+                                                            if($experience->rating == 0.5){
+                                                                $html .='<input type="radio"  name="textiles-rating'.$experience->id.'" value="5" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"  />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                                <label class="half"></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                                <label class = "full"></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                                <label class="half"></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                                <label class="full"></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" checked=""/>
+                                                                <label class="half"></label></fieldset>';
+                                                            }
+                                                          }
+                                                            $html .='</div>
+                                                          <img src="assets/admin/images/verified-icon.png" class="verified-img"></div><hr>';
+                                                        }
                                           $html .= '</div>';
   
                                        }
@@ -1312,6 +2869,8 @@ class SearchController extends Controller
                                   $empPhoto = !empty($empDetails->profile) ? $empDetails->profile : asset('assets/admin/images/vijay-patil.png');
                                   $cmpName = !empty($empCurrentCmpDetails->org_name) ? $empCurrentCmpDetails->org_name : '';
                                   $interviewEmp = EmployeeInterview::where('employee_id', $employee->id)->first();
+                                  $joinDate = Empofficial::where('employee_id', $employee->id)->first();
+
                                   $empPosition = !empty($interviewEmp->position) ? $interviewEmp->position : '';
                                 $reviewEmp = CompanyEmployee::join('exit_employee','exit_employee.employee_id','=','company_employee.employee_id')
                                 ->where('exit_employee.employee_id', $employee->id)
@@ -1327,9 +2886,11 @@ class SearchController extends Controller
                                         </div>
                                         <h2> ' . $empDetails->first_name . ' ' . $empDetails->middle_name . ' ' . $empDetails->last_name . '
                                         <span>'.$empPosition.'  at ' . $cmpName . '.</span>
-                                        <small>' . $empDetails->current_address. '</small>
-                                        <small>'. number_format($reviewEmp->rating, 1, '.', ',') .'  <span>reviews</span></small>
-                                        <span class="d-flex">
+                                        <small>' . $empDetails->current_address. '</small>';
+                                      if($reviewEmp){
+                                           $html .='<small>'. number_format($reviewEmp->rating, 1, '.', ',') .' <span>reviews</span></small>';
+                                           }
+                                       $html .= '<span class="d-flex">
                                           <button onclick="myFunction(' . $empDetails->id . ')" class="full-bg">View Full Profile</button>
                                           <button class="only-border-btn" onclick="getInterview(' . $empDetails->id . ')" id="scheduleInterview">Add Candidate</button>
                                           </span>
@@ -1373,7 +2934,7 @@ class SearchController extends Controller
                                                       </div>
                                                       <div class="coneant">
                                                         <h4>Phone</h4>
-                                                        <p>' . $empDetails->phone . ' <span>(mobile)</span></p>
+                                                        <p>' . $empDetails->phone . ' </p>
                                                       </div>
                                                     </div>
                                                   </div>
@@ -1396,7 +2957,7 @@ class SearchController extends Controller
                                                       </div>
                                                       <div class="coneant">
                                                         <h4>Join </h4>
-                                                        <p>' .$empDetails->created_at->format('F Y') . '</p>
+                                                        <p>' .$joinDate->date_of_joining . '</p>
                                                       </div>
                                                     </div>
                                                   </div>
@@ -1431,40 +2992,295 @@ class SearchController extends Controller
                                                     </div>
                                                     <div class="searc-icon-bx-text">
                                                       <h2>'.$experience->designation.'</h2>
-                                                      <h4>'.$experience->org_name.' · '.$experience->emp_type.'</h4>
-                                                      <p class="pt-2"><span> '.$experience->start_date.'· ' .$experience->end_date.' </span></p>
-                                                      <p><span>Indore, Madhya Pradesh, India</span></p>
-                                                      <p class="pt-2">"Raw denim you probably have not heard of them jean shorts Austin."</p>
-                                                      <fieldset class="rating">
-                                                        <input type="radio" id="textiles-star51" name="textiles-rating1" value="5" />
-                                                        <label class = "full" for="textiles-star51"></label>
-                                                        <input type="radio" id="textiles-star4half1" name="textiles-rating1" value="4 and a half"  />
-                                                        <label class="half" for="textiles-star4half1"></label>
-        
-                                                        <input type="radio" id="textiles-star41" name="textiles-rating1" value="4" checked=""/>
-                                                        <label class = "full" for="textiles-star41" ></label>
-                                                        <input type="radio" id="textiles-star3half1" name="textiles-rating1" value="3 and a half" />
-                                                        <label class="half" for="textiles-star3half1"></label>
-        
-                                                        <input type="radio" id="textiles-star31" name="textiles-rating1" value="3" />
-                                                        <label class = "full" for="textiles-star31"></label>
-                                                        <input type="radio" id="textiles-star2half1" name="textiles-rating1" value="2 and a half" />
-                                                        <label class="half" for="textiles-star2half1" ></label>
-        
-                                                        <input type="radio" id="textiles-star21" name="textiles-rating1" value="2" />
-                                                        <label class = "full" for="textiles-star21"></label>
-                                                        <input type="radio" id="textiles-star1half1" name="textiles-rating" value="1 and a half" />
-                                                        <label class="half" for="textiles-star1half1" ></label>
-        
-                                                        <input type="radio" id="textiles-star11" name="textiles-rating1" value="1" />
-                                                        <label class = "full" for="textiles-star11"></label>
-                                                        <input type="radio" id="textiles-starhalf1" name="textiles-rating1" value="half" />
-                                                        <label class="half" for="textiles-starhalf1"></label>
-        
-                                                      </fieldset>
-                                                    </div>
-                                                    <img src="assets/admin/images/verified-icon.png" class="verified-img"></div><hr>';
-                                                  }
+                                                      <h4>'.$experience->org_name.'  '.$experience->emp_type.'</h4>
+                                                      <p class="pt-2"><span> '.$experience->start_date.' - '; 
+
+                                                      if(empty($experience->end_date)){
+                                                        $html .= 'Present </span></p>';
+                                                      }
+                                                      else{
+                                                          $html .= $experience->end_date.'</span></p>';
+                                                      }
+
+                                                     $html .= '<p><span>Indore, Madhya Pradesh, India</span></p>
+                                                      <p class="pt-2">'.$experience->review.'</p>';
+
+                                                if(!empty($experience->rating)){
+                                                        $html .='<fieldset class="rating">';
+                                                            if($experience->rating == 5){
+      
+                                                              $html .= '<input type="radio"  name="textiles-rating'.$experience->id.'" value="5" checked=""/>
+                                                                <label class = "full" ></label>
+                                                                <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"/>
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                                <label class="half"></label>';
+                                                            }
+      
+                                                            if($experience->rating == 4.5){
+                                                              $html .= '<input type="radio"  name="textiles-rating'.$experience->id.'" value="5"/>
+                                                              <label class = "full" ></label>
+                                                              <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5" checked=""/>
+                                                              <label class="half" ></label>
+              
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
+                                                              <label class = "full" ></label>
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                              <label class="half" ></label>
+              
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                              <label class = "full" ></label>
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                              <label class="half" ></label>
+              
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                              <label class = "full" ></label>
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                              <label class="half" ></label>
+              
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                              <label class = "full" ></label>
+                                                              <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                              <label class="half" ></label>';
+                                                            }
+      
+                                                            if($experience->rating == 4){
+                                                                $html .=' <input type="radio"  name="textiles-rating'.$experience->id.'" value="5"/>
+                                                                <label class = "full" ></label>
+                                                                <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"  />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="4" checked=""/>
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                                <label class="half" ></label>';
+                                                            }
+      
+                                                            if($experience->rating == 3.5){
+                                                                $html .='<input type="radio"  name="textiles-rating'.$experience->id.'" value="5"/>
+                                                                <label class = "full" ></label>
+                                                                <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"  />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" checked=""/>
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                                <label class="half" ></label>';
+                                                            }
+      
+                                                            if($experience->rating == 3){
+                                                                $html .='<input type="radio" name="textiles-rating'.$experience->id.'" value="5" />
+                                                                <label class = "full"></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="4.5"  />
+                                                                <label class="half"></label>
+                
+                                                                <input type="radio"  name="textiles-rating'.$experience->id.'" value="4"/>
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                                <label class="half"></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3" checked=""/>
+                                                                <label class = "full"></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                                <label class="half"></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                                <label class = "full"></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                                <label class="half"></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                                <label class = "full"></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                                <label class="half"></label>';
+                                                            }
+      
+                                                            if($experience->rating == 2.5){
+                                                                $html .='<input type="radio"  name="textiles-rating'.$experience->id.'" value="5"/>
+                                                                <label class = "full" ></label>
+                                                                <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"  />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" checked=""/>
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                                <label class="half" ></label>';
+                                                            }
+      
+                                                            if($experience->rating == 2){
+                                                                $html .='<input type="radio"  name="textiles-rating'.$experience->id.'" value="5"/>
+                                                                <label class = "full" ></label>
+                                                                <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"  />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2" checked=""/>
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                                <label class="half" ></label>';
+                                                            }
+      
+                                                            if($experience->rating == 1.5){
+                                                                $html .='<input type="radio"  name="textiles-rating'.$experience->id.'" value="5"/>
+                                                                <label class = "full" ></label>
+                                                                <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"  />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" checked=""/>
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                                <label class="half" ></label>';
+                                                            }
+      
+                                                            if($experience->rating == 1){
+                                                                $html .='<input type="radio"  name="textiles-rating'.$experience->id.'" value="5"/>
+                                                                <label class ="full" ></label>
+                                                                <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"  />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1" checked="" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                                <label class="half" ></label>';
+                                                            }
+      
+                                                            if($experience->rating == 0.5){
+                                                                $html .='<input type="radio"  name="textiles-rating'.$experience->id.'" value="5" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"  />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                                <label class="half"></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                                <label class = "full"></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                                <label class="half"></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                                <label class="full"></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" checked=""/>
+                                                                <label class="half"></label></fieldset>';
+                                                            }
+                                                          }
+                                                            $html .='</div>
+                                                          <img src="assets/admin/images/verified-icon.png" class="verified-img"></div><hr>';
+                                                        }
                                           $html .= '</div>';
   
                                        }

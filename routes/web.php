@@ -21,28 +21,12 @@ use Illuminate\Support\Facades\Route;
 |
  */
 
-Route::get('/welcome', function () {
-    return view('welcome');
-});
-
-Route::get('/', function () {
-    return view('web/index');
-});
-
 Route::get('/success', function () {
     return view('web/success');
 });
 
 Route::get('/response_submited', function () {
     return view('web/response_already_submitted');
-});
-
-Route::get('/table', function () {
-    return view('admin/datatable');
-});
-
-Route::get('/current-employee', function () {
-    return view('admin/current-employee');
 });
 
 Route::get('/confirmation', function () {

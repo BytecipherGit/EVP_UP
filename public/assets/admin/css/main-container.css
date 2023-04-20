@@ -19,6 +19,21 @@ body{
   width: 20px;
   height: 17px;
 }
+.filesample{
+  display:contents;
+}
+.exportlab {
+  display: inline-block;
+  max-width: 100%;
+  margin-bottom: 15px;
+  font-weight: 700;
+  font-size: 21px;
+  line-height: 30px;
+}
+input.export {
+  padding: 10px 12px;
+  height: auto;
+}
 
 .link-href:hover{
   color: #fff;
