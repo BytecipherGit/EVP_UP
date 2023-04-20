@@ -14,17 +14,17 @@
     <link rel="stylesheet" href="{{ asset('assets') }}/admin/css/main-container.css">
     <link rel="stylesheet" href="{{ asset('assets') }}/admin/css/jquery-ui.min.css" />
     <link rel="stylesheet" href="{{ asset('assets') }}/admin/css/select2.min.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-
-    <script src="//cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
-
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/bootstrap.min.css">
+    {{-- <link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/bootstrap.min.css"> --}}
     <link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/datatables.bootstrap.min.css">
     <link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/fixedheader.bootstrap.min.css">
     <link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/responsive.bootstrap.min.css">
     <link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/jquery-ui.min.css" />
+    {{-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"> --}}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/2.5.3/css/bootstrap-colorpicker.min.css"
+        rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('assets') }}/admin/css/bootstrap-colorpicker.min.css" rel="stylesheet">
 
 
     <style>
@@ -32,16 +32,35 @@
             display: none;
             content: url('{{ asset('ajaxLoading.gif') }}') !important;
         }
+
         #loadingImgs {
             display: none;
             content: url('{{ asset('ajaxLoading.gif') }}') !important;
         }
-        .fa{
+
+        .fa {
             font-size: 18px;
         }
-    </style>
 
-    <script src="{{ asset('assets') }}/admin/js/jquery.min.js"></script>
+        .colorpicker-alpha.colorpicker-visible,
+        .colorpicker-hue.colorpicker-visible,
+        .colorpicker-saturation.colorpicker-visible,
+        .colorpicker-selectors.colorpicker-visible,
+        .colorpicker.colorpicker-visible {
+            display: block;
+            z-index: 99999 !important;
+            position: absolute;
+            top: 0;
+            left: 50%;
+        }
+
+        .primacyBackgrondColor {
+            background: <?php if(!empty(session('primary_color'))){ echo session('primary_color'); } else { echo '#5533ff';}  ?> !important;
+        }
+        .fontPrimaryColor{
+            color: <?php if(!empty(session('secondry_color'))){ echo session('secondry_color'); } else { echo '#5533ff';}  ?> !important;
+        }
+    </style>
 
 
 </head>
@@ -52,7 +71,13 @@
     <header>
         <div class="container-fluid">
             <nav class="navbar navbar-expand-md navbar-dark">
-                <a class="navbar-brand" href="admin-index"><img src="{{ asset('assets') }}/admin/images/logo.png"></a>
+                <a class="navbar-brand" href="admin-index">
+                    @if (session('logo'))
+                    <img src="{{ session('logo') }}"></a>    
+                    @else
+                    <img src="{{ asset('assets') }}/admin/images/logo.png"></a>    
+                    @endif
+                    
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
                     aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -149,23 +174,23 @@
                             <a class="nav-link profile-droup dropdown-toggle" href="#" id="navbarDropdownMenuLink"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <img src="{{ asset('assets') }}/admin/images/marvin-kinney-profile.png">
-                                <span>
+                                <span class="fontPrimaryColor">
                                     {{ Auth::user()->name }}
                                 </span>
                                 <img src="{{ asset('assets') }}/admin/images/droup-down-gray.png" class="right-doun">
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item" href="/company_profile">
+                                <a class="dropdown-item fontPrimaryColor" href="/company_profile">
                                     Profile
                                 </a>
-                                <a class="dropdown-item" href="/change_password">
+                                <a class="dropdown-item fontPrimaryColor" href="/change_password">
                                     Change Password
                                 </a>
                                 <hr>
                                 {{-- <a class="dropdown-item dropdown-item-no" href="{{ route('logout') }}">     --}}
 
 
-                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                <a class="dropdown-item fontPrimaryColor" href="{{ route('logout') }}"
                                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                     Sign out
                                     <img src="{{ asset('assets') }}/admin/images/logout-icon.png" class="ml-auto">
@@ -202,7 +227,7 @@
                 </li>
 
                 <li class="active">
-                    <a href="/admin">
+                    <a href="/admin" class="fontPrimaryColor">
                         <img src="{{ asset('assets') }}/admin/images/overview-icon.png">
                         Overview
                     </a>
@@ -225,24 +250,11 @@
                                 <div id="accordion-1">
                                     <ul>
                                         <li>
-                                            <a href="/employee">
+                                            <a href="/employee" class="fontPrimaryColor">
                                                 <img src="{{ asset('assets') }}/admin/images/employees-view.png">
                                                 All Employees
                                             </a>
                                         </li>
-                                        
-                                        {{-- <li>
-                                                <a href="/current-employee">
-                                                    <img src="{{ asset('assets') }}/admin/images/current-user.png">
-                                                    Current Employee
-                                                </a>
-                                                </li>                     --}}
-                                        {{-- <li>
-                                                <a href="/post-employee">
-                                                    <img src="{{ asset('assets') }}/admin/images/employees-icon.png"> Past Employee
-                                                </a>
-                                           </li> --}}
-
                                     </ul>
                                 </div>
 
@@ -252,14 +264,14 @@
                 </div>
 
                 <li>
-                    <a href="/invite-employee">
+                    <a href="/invite-employee" class="fontPrimaryColor">
                         <img src="{{ asset('assets') }}/admin/images/invite-icon.png">
                         Invite Employees
                     </a>
                 </li>
 
                 <li>
-                    <a href="/schedule-interview">
+                    <a href="/schedule-interview" class="fontPrimaryColor">
                         <img src="{{ asset('assets') }}/admin/images/schedule-icon.png">
                         Schedule for Interview
                     </a>
@@ -272,7 +284,7 @@
                         <div class="card-header" id="heading-2">
                             <h5 class="mb-0">
                                 <a role="button" data-toggle="collapse" href="#collapse-2" aria-expanded="true"
-                                    aria-controls="collapse-2" class="">
+                                    aria-controls="collapse-2" class="fontPrimaryColor">
                                     Settings
                                 </a>
                             </h5>
@@ -283,39 +295,44 @@
 
                                 <div id="accordion-1">
                                     <ul>
-
                                         <li>
-                                            <a href="/interview_process">
+                                            <a href="/theme_setting" class="fontPrimaryColor">
+                                                <img src="" class="fa fa-question-circle">
+                                                Theme Setting
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="/interview_process" class="fontPrimaryColor">
                                                 <img src="" class="fa fa-question-circle">
                                                 Interview Process
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="/exit_employee_process">
+                                            <a href="/exit_employee_process" class="fontPrimaryColor">
                                                 <img src="{{ asset('assets') }}/admin/images/employees-view.png">
-                                                Exit Employees Process 
+                                                Exit Employees Process
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="/onboarding_process">
+                                            <a href="/onboarding_process" class="fontPrimaryColor">
                                                 <img src="" class="fa fa-handshake-o">
-                                                Onboarding Process 
+                                                Onboarding Process
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="/position">
+                                            <a href="/position" class="fontPrimaryColor">
                                                 <img src="" class="fa fa-user-plus">
                                                 Open Job Positions
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="/feedback">
+                                            <a href="/feedback" class="fontPrimaryColor">
                                                 <img src="" class="fa fa-comments">
                                                 Interview Feedback Points
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="/company_profile" >
+                                            <a href="/company_profile" class="fontPrimaryColor">
                                                 <img src="{{ asset('assets') }}/admin/images/company-icon.png">
                                                 Company Profile
                                             </a>
@@ -334,7 +351,7 @@
                         <div class="card-header" id="heading-3">
                             <h5 class="mb-0">
                                 <a role="button" data-toggle="collapse" href="#collapse-3" aria-expanded="true"
-                                    aria-controls="collapse-3" class="">
+                                    aria-controls="collapse-3" class="fontPrimaryColor">
                                     Interview Email Template
                                 </a>
                             </h5>
@@ -346,15 +363,15 @@
                                 <div id="accordion-1">
                                     <ul>
                                         <li>
-                                            <a href="/qualified-email-template">
+                                            <a href="/qualified-email-template" class="fontPrimaryColor">
                                                 <img src="" class="fa fa-user-plus">
-                                               For Qualified
+                                                For Qualified
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="/not-qualified-template">
+                                            <a href="/not-qualified-template" class="fontPrimaryColor">
                                                 <img src="" class="fa fa-users">
-                                               For Not Qualified 
+                                                For Not Qualified
                                             </a>
                                         </li>
                                     </ul>
@@ -381,6 +398,8 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="{{ asset('assets') }}/admin/js/jquery.min.js"></script>
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> --}}
+    <script src="{{ asset('assets') }}/admin/js/bootstrap-colorpicker.min.js"></script>
     <script src="{{ asset('assets') }}/admin/js/jquery-ui.min.js"></script>
     <script src="{{ asset('assets') }}/admin/js/bootstrap.min.js"></script>
     <script src="{{ asset('assets') }}/admin/js/select2.min.js"></script>
@@ -391,6 +410,9 @@
     <script src="{{ asset('assets') }}/datatable/js/dataTables.fixedHeader.min.js"></script>
     <script src="{{ asset('assets') }}/datatable/js/dataTables.responsive.min.js"></script>
     <script src="{{ asset('assets') }}/datatable/js/responsive.bootstrap.min.js"></script>
+    <script src="//cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
+
+
     @yield('pagescript')
 
 </body>

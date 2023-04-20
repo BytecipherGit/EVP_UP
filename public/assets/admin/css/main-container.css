@@ -143,7 +143,7 @@ button.btn-secondary-custexport {
   color: #fff;
   padding: 12px 28px;
   text-decoration: none;
-  background: #5533FF;
+  /* background: #5533FF; */
   border-radius: 6px;
   margin-top: 8px;
   font-weight: bold;
@@ -856,7 +856,7 @@ button.btn-secondary-custexport {
 }
 
 .employee-view-page .table thead {
-  background:#5533ff;
+  /* background:#5533ff; */
   border-radius: 4px;
 }
 .employee-view-page .table td, .table th{  

@@ -29,7 +29,7 @@
           </div>
           <div class="col-lg-2">
             <div class="form-group">
-              <button type="button" class="search-btnkey" onclick="searchEmployee()">Search</button>
+              <button type="button" class="search-btnkey primacyBackgrondColor" onclick="searchEmployee()">Search</button>
             </div>
         </div>
       </div>

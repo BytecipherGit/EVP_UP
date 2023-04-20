@@ -3,27 +3,25 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
-use App\Models\Country;
-use App\Models\State;
-use App\Models\City;
-use App\Models\CompanyTemplate;
-use App\Models\CompanyEmailTemplate;
-use App\Rules\EmailDomain;
-use Illuminate\View\View;
-use Response;
 use App\Mail\CompanyRegisterationMail;
 use App\Mail\CompanyResetVerifyMail;
 use App\Mail\CompanyVerificationMail;
-use App\Mail\CompanyVerificationMessage;
+use App\Models\City;
+use App\Models\CompanyEmailTemplate;
+use App\Models\CompanyTemplate;
+use App\Models\Country;
+use App\Models\State;
+use App\Models\ThemeSetting;
+use App\Models\User;
+use App\Rules\EmailDomain;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail as FacadesMail;
+use Illuminate\View\View;
+use Response;
+use Illuminate\Validation\Rules;
 
 class RegisteredUserController extends Controller
 {
@@ -32,30 +30,29 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        $data['countries'] = Country::get(["name","id"]);
-        return view('auth.register',$data);
+        $data['countries'] = Country::get(["name", "id"]);
+        return view('auth.register', $data);
     }
-
 
     public function getState(Request $request)
     {
-        $data['states'] = State::where("country_id",$request->country_id)
-                    ->get(["name","id"]);
+        $data['states'] = State::where("country_id", $request->country_id)
+            ->get(["name", "id"]);
         return response()->json($data);
     }
     public function getCity(Request $request)
     {
-        $data['cities'] = City::where("state_id",$request->state_id)
-                    ->get(["name","id"]);
+        $data['cities'] = City::where("state_id", $request->state_id)
+            ->get(["name", "id"]);
         return response()->json($data);
     }
-    
+
     public function autocomplete(Request $request)
     {
         $data = User::select("name as value", "id")
-                    ->where('name', 'LIKE', '%'. $request->get('search'). '%')
-                    ->get();
-    
+            ->where('name', 'LIKE', '%' . $request->get('search') . '%')
+            ->get();
+
         return response()->json($data);
     }
 
@@ -68,7 +65,7 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class, new EmailDomain],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:' . User::class, new EmailDomain],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'org_name' => ['required', 'string', 'max:255'],
             'org_web' => ['required', 'string', 'max:255'],
@@ -78,8 +75,8 @@ class RegisteredUserController extends Controller
             'country' => ['required', 'string', 'max:255'],
             'city' => ['required', 'string', 'max:255'],
             'state' => ['required', 'string', 'max:255'],
-            'pin' => ['required', 'string','max:255'],
-            'captcha' => ['required','captcha'],
+            'pin' => ['required', 'string', 'max:255'],
+            'captcha' => ['required', 'captcha'],
             // 'g-recaptcha-response' => ['required','captcha']
 
         ]);
@@ -89,50 +86,61 @@ class RegisteredUserController extends Controller
             'email' => $request->email,
             'role' => 'admin',
             'org_name' => $request->org_name,
-            'org_web' =>$request->org_web,
-            'designation' =>$request->designation,
-            'department' =>$request->department,
-            'address' =>$request->address,
-            'country' =>$request->country,
-            'state' =>$request->state,
-            'city' =>$request->city,
-            'pin' =>$request->pin,
+            'org_web' => $request->org_web,
+            'designation' => $request->designation,
+            'department' => $request->department,
+            'address' => $request->address,
+            'country' => $request->country,
+            'state' => $request->state,
+            'city' => $request->city,
+            'pin' => $request->pin,
             'password' => Hash::make($request->password),
             'status' => '0',
         ]);
 
-        
-
         event(new Registered($user));
 
-        // Condition for template add
-        if($user){
-            $emailtemplate= CompanyTemplate::all();
-
-          foreach($emailtemplate as $emailtemp){
-            $insertTemplatesRecords = array(
-                'company_id' => $user->id,
-                'template_id' => $emailtemp->id,
-                'email_type' => $emailtemp->email_type,
-                'content' => $emailtemp->content,
-                'status' => 'True',
-            );
-
-            CompanyEmailTemplate::create($insertTemplatesRecords);
+        
+        if ($user) {
+            //Insert default theme setting record in Theme_setting table like company logo, primary_color & secondry_color
+            $getThemeSettingRecords = ThemeSetting::where('company_id',0)->get();
+            if(count($getThemeSettingRecords) > 0){
+                foreach ($getThemeSettingRecords as $getThemeSettingRecord) {
+                    $insertThemeRecord = array(
+                        'company_id' => $user->id,
+                        'key' => $getThemeSettingRecord->key,
+                        'value' => $getThemeSettingRecord->value,
+                    );
+                    ThemeSetting::create($insertThemeRecord);
+                }
             }
-          }
 
-    // for email send
-        if($user){
+            // Condition for template add
+            $emailtemplate = CompanyTemplate::all();
+            foreach ($emailtemplate as $emailtemp) {
+                $insertTemplatesRecords = array(
+                    'company_id' => $user->id,
+                    'template_id' => $emailtemp->id,
+                    'email_type' => $emailtemp->email_type,
+                    'content' => $emailtemp->content,
+                    'status' => 'True',
+                );
+
+                CompanyEmailTemplate::create($insertTemplatesRecords);
+            }
+        }
+
+        // for email send
+        if ($user) {
             $mailData = [
                 'name' => !empty($request->name) ? $request->name : '',
             ];
             FacadesMail::to($request->email)->send(new CompanyRegisterationMail($mailData));
-       
+
             $verifyMailData = [
                 'name' => !empty($request->name) ? $request->name : '',
                 'id' => encrypt($user->id),
-                'status' => $user->status
+                'status' => $user->status,
             ];
             FacadesMail::to($request->email)->send(new CompanyVerificationMail($verifyMailData));
         }
@@ -140,23 +148,23 @@ class RegisteredUserController extends Controller
         // Auth::login($user);
 
         // return redirect(RouteServiceProvider::ADMIN);
-       if($user->status == '1'){
-        return redirect('login')->with('message','Thanks for your registration.');
-       }
-       else{
-    
-        return redirect('account_verify')->with('message','Thanks for your registration.');
-       }
-     
+        if ($user->status == '1') {
+            return redirect('login')->with('message', 'Thanks for your registration.');
+        } else {
+
+            return redirect('account_verify')->with('message', 'Thanks for your registration.');
+        }
+
     }
 
     public function reloadCaptcha()
     {
         // dd('hello');
-        return response()->json(['captcha'=> captcha_img()]);
+        return response()->json(['captcha' => captcha_img()]);
     }
 
-    public function resetMailSend(request $request){
+    public function resetMailSend(request $request)
+    {
 
         if (!empty($request->id)) {
             $user = User::find($request->id);
@@ -168,7 +176,7 @@ class RegisteredUserController extends Controller
                 ];
                 FacadesMail::to($user->email)->send(new CompanyResetVerifyMail($verifyMailData));
 
-               return redirect()->back()->with('message','Reset verification link has been sent to your email address.');
+                return redirect()->back()->with('message', 'Reset verification link has been sent to your email address.');
             } else {
                 return Response::json(['success' => '0']);
             }
@@ -176,6 +184,5 @@ class RegisteredUserController extends Controller
             return Response::json(['success' => '0']);
         }
     }
-
 
 }

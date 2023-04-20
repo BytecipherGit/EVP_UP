@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Models\Documents;
+use App\Models\ThemeSetting;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\RedirectResponse;
@@ -33,6 +34,20 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
         if (Auth::check()) {
             if (Auth::user()->role == 'admin' && Auth::user()->status == '1') {
+                //Set Then variable in session
+                $themes = ThemeSetting::where('company_id',Auth::id())->get();
+                if(count($themes) > 0){
+                    foreach ($themes as $theme) {
+                        // Store a value in the session
+                        if(!empty($theme->key) && $theme->key == 'logo'){
+                            session(['logo' => $theme->value]);
+                        } else if (!empty($theme->key) && $theme->key == 'primary_color'){
+                            session(['primary_color' => $theme->value]);
+                        } else if (!empty($theme->key) && $theme->key == 'secondry_color'){
+                            session(['secondry_color' => $theme->value]);
+                        }
+                    }
+                }
                 $checkDocuments = Documents::where('user_id', Auth::id())->get();
                 if (count($checkDocuments) > 0) {
                     $flagStatus = true;

@@ -5,6 +5,7 @@ use App\Http\Controllers\InterviewEmployee;
 use App\Http\Controllers\InterviewProcess;
 use App\Http\Controllers\PositionController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ThemeSettingController;
 use App\Http\Middleware\Admin;
 use App\Http\Middleware\Superadmin;
 use Illuminate\Support\Facades\Route;
@@ -134,6 +135,13 @@ Route::middleware([Admin::class])->group(function () {
     Route::post('interview_process/update', [InterviewProcess::class, 'updateInterviewProcess'])->middleware('documents');
     Route::post('interview_process/destroy', [InterviewProcess::class, 'deleteInterviewProcess'])->middleware('documents');
 
+
+    Route::get('theme_setting', [ThemeSettingController::class, 'index'])->name('theme.setting.index')->middleware('documents');
+    Route::any('theme_setting/form/{id?}', [ThemeSettingController::class, 'getThemeSettingForm'])->middleware('documents');
+    Route::post('theme_setting/update', [ThemeSettingController::class, 'updateThemeSetting'])->middleware('documents');
+
+    
+
     Route::get('exit_employee_process', [App\Http\Controllers\ExitEmployeeProcess::class, 'index'])->name('exitemployee.process.index')->middleware('documents');
     Route::any('exit_employee_process/form/{id?}', [App\Http\Controllers\ExitEmployeeProcess::class, 'exitEmployeeForm'])->middleware('documents');
     Route::post('exit_employee_process/submit', [App\Http\Controllers\ExitEmployeeProcess::class, 'createExitEmployeeProcess'])->middleware('documents');
@@ -215,5 +223,8 @@ Route::get('/export-csv', [App\Http\Controllers\EmployeeController::class, 'expo
 Route::get('/export-csv-invite', [App\Http\Controllers\InviteempController::class, 'exportsCSVInvite']);
 
 require __DIR__ . '/auth.php';
+
+
+Route::get('color_picker', [App\Http\Controllers\CsvController::class, 'colorPicker']);
 
 
