@@ -22,7 +22,7 @@
         
            <form method="POST" action="{{ route('login') }}">
               @csrf
-              <img src="assets/superadmin/images/logo.png"class="login-logo">
+              <img src="{{ asset('assets') }}/superadmin/images/logo.png"class="login-logo">
               <h1>Log in to your account</h1>  
               
               <div class="form-group">                

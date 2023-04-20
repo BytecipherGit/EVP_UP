@@ -15,14 +15,15 @@
     <link rel="stylesheet" href="{{ asset('assets') }}/admin/css/jquery-ui.min.css" />
     <link rel="stylesheet" href="{{ asset('assets') }}/admin/css/select2.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
-    rel="stylesheet">
+        rel="stylesheet">
     {{-- <link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/bootstrap.min.css"> --}}
     <link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/datatables.bootstrap.min.css">
     <link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/fixedheader.bootstrap.min.css">
     <link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/responsive.bootstrap.min.css">
     <link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/jquery-ui.min.css" />
     {{-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"> --}}
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/2.5.3/css/bootstrap-colorpicker.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/2.5.3/css/bootstrap-colorpicker.min.css"
+        rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('assets') }}/admin/css/bootstrap-colorpicker.min.css" rel="stylesheet">
 
 
@@ -32,16 +33,26 @@
             content: url('{{ asset('ajaxLoading.gif') }}') !important;
         }
 
+        #loadingImgs {
+            display: none;
+            content: url('{{ asset('ajaxLoading.gif') }}') !important;
+        }
+
         .fa {
             font-size: 18px;
         }
-        .colorpicker-alpha.colorpicker-visible, .colorpicker-hue.colorpicker-visible, .colorpicker-saturation.colorpicker-visible, .colorpicker-selectors.colorpicker-visible, .colorpicker.colorpicker-visible {
-    display: block;
-    z-index: 99999 !important;
-    position: absolute;
-    top: 0;
-    left: 50%;
-}
+
+        .colorpicker-alpha.colorpicker-visible,
+        .colorpicker-hue.colorpicker-visible,
+        .colorpicker-saturation.colorpicker-visible,
+        .colorpicker-selectors.colorpicker-visible,
+        .colorpicker.colorpicker-visible {
+            display: block;
+            z-index: 99999 !important;
+            position: absolute;
+            top: 0;
+            left: 50%;
+        }
     </style>
 
 
@@ -299,13 +310,13 @@
                                         <li>
                                             <a href="/exit_employee_process">
                                                 <img src="{{ asset('assets') }}/admin/images/employees-view.png">
-                                                Exit Employees Process 
+                                                Exit Employees Process
                                             </a>
                                         </li>
                                         <li>
                                             <a href="/onboarding_process">
                                                 <img src="" class="fa fa-handshake-o">
-                                                Onboarding Process 
+                                                Onboarding Process
                                             </a>
                                         </li>
                                         <li>
@@ -400,8 +411,8 @@
     <script src="{{ asset('assets') }}/datatable/js/dataTables.responsive.min.js"></script>
     <script src="{{ asset('assets') }}/datatable/js/responsive.bootstrap.min.js"></script>
     <script src="//cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
-    
-    
+
+
     @yield('pagescript')
 
 </body>

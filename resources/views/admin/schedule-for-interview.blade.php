@@ -101,7 +101,7 @@
                         <tbody>
                             @foreach ($interviewEmployees as $employee)
                                 <tr>
-                                    <td># {{ $employee->empCode }}</td>
+                                    <td>#{{ $employee->empCode }}</td>
                                     <td>{{ $employee->first_name . ' ' . $employee->last_name }}</td>
                                     {{-- <td>{{ $employee->email }}</td> --}}
                                     <td>{{ $employee->position }}</td>
@@ -200,6 +200,34 @@
     </div>
 </div>
 
+<!-- The Modal Onboarding  -->
+<div class="modal fade custu-modal-popup" id="onboardingModel" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form id="onboarding_form" method="post" autocomplete="off" enctype="multipart/form-data">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title" id="Heading">Onboarding form</h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <img src="assets/admin/images/close-btn-icon.png">
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="comman-body">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="loadingImg"></div>
+                    <div style="font-size: 16px; display:none;" class="text-success" id="success">Onboarding successfully done.</div>
+                        <div style="font-size: 16px; display:none;" class="text-danger" id="failed">Onboarding already done.</div>
+                    <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn-primary-cust">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
 <!-- The Modal Remaider Notification -->
 <div class="modal fade schedu-modal" id="rejectbtninfo" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
@@ -278,35 +306,6 @@
     </div>
 </div>
 
-<!-- The Modal Onboarding  -->
-<div class="modal fade custu-modal-popup" id="onboardingModel" role="dialog"
-    aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <form id="onboarding_form" method="post" autocomplete="off" enctype="multipart/form-data">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 class="modal-title" id="Heading">Onboarding form</h2>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <img src="assets/admin/images/close-btn-icon.png">
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="comman-body">
-
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <div id="loadingImg"></div>
-                    <div style="font-size: 16px; display:none;" class="text-success" id="success">Onboarding successfully done.</div>
-                        <div style="font-size: 16px; display:none;" class="text-danger" id="failed">Onboarding already done.</div>
-                    <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn-primary-cust">Submit</button>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
-
 @endsection
 
 @section('pagescript')
@@ -358,10 +357,8 @@
 
         $(document).on('submit', '#onboarding_form', function(event) {
             event.preventDefault();
-            var url = '{{ url('onboarding/submit') }}';
-            
-            $('#loadingImg').show();        
-
+            var url = '{{ url('onboarding/submit') }}'; 
+            $('.loadingImg').show();        
             var formData = new FormData(this);
             $.ajax({
                 url: url,
@@ -374,11 +371,11 @@
                 processData: false,
                 success: function(data) {
                     if (data.errors) {
-                        $('#loadingImg').hide();
+                        $('.loadingImg').hide();
                     } else {
 
                         if (data.success) {
-                            $('#loadingImg').hide();
+                            $('.loadingImg').hide();
                             $('#success').css('display', 'block');
                             setInterval(function() {
                                 location.reload();

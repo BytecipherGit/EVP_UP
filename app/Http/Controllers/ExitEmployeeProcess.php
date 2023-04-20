@@ -121,11 +121,11 @@ class ExitEmployeeProcess extends Controller
 
     public function getExitEmployee($id = '')
     {
-
+        $exitproces = ExitEmployee::where('company_id', Auth::id())->first();
         $exitprocess = ExitEmployee::where('company_id', Auth::id())->get();
         $employee = (!empty($id)) ? Employee::find($id) : false;
         // dd($employee);
-        return view('admin.exit_employee_form', compact('employee', 'exitprocess'));
+        return view('admin.exit_employee_form', compact('employee', 'exitprocess','exitproces'));
     }
 
     public function createExitEmployee(request $request)
@@ -139,7 +139,9 @@ class ExitEmployeeProcess extends Controller
 
         ]);
 
-        $checkRecordExist = Exitemp::where('employee_id', $request->emp_id)->first();
+    $checkRecordExist = Exitemp::join('company_employee','company_employee.company_id','=','exit_employee.company_id')->where('exit_employee.company_id',Auth::id())
+                        ->where('exit_employee.employee_id', $request->emp_id)->first();
+                        // dd($checkRecordExist);
         if (empty($checkRecordExist)) {
             if ($validator->passes()) {
                 for ($i = 0; $i < count($request->exit_process_id); $i++) {
@@ -204,11 +206,12 @@ class ExitEmployeeProcess extends Controller
 
                  CompanyEmployee::where('employee_id',$employeeData->employee_id)->update([
                     'end_date'  => $employeeData->date_of_exit,
-                  ]);
-             
-                  Employee::where('id',$employeeData->employee_id)->update([
                     'status'  => '0'
                   ]);
+             
+                //   Employee::where('id',$employeeData->employee_id)->update([
+                //     'status'  => '0'
+                //   ]);
           
                   return redirect('employee')->with('message','Employee exit successfully');
                 }

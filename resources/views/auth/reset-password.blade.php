@@ -18,7 +18,7 @@
                 @csrf
 
                 <input type="hidden" name="token" value="{{ $request->token }}">
-              <img src="/assets/company/images/logo.png" class="login-logo">
+              <img src="{{ asset('assets') }}/company/images/logo.png" class="login-logo">
               <h1>Reset Your Password</h1>  
               
               <div class="form-group">     
@@ -76,7 +76,7 @@
             <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-body">
-                <img src="/assets/company/images/logo.png">
+                <img src="{{ asset('assets') }}/company/images/logo.png">
                 <h2>Successful password reset!</h2>
                 <p>You can now use your new password to log in to your account</p>
                 <a href="/superlogin">Login</a>
