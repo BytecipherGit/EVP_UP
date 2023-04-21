@@ -107,7 +107,7 @@ class EmployeeController extends Controller
           $insertCompanyEmployee = [
             'employee_id' => $employeeData->id,
             'company_id' => Auth::id(),
-            'status' => '0',
+            'status' => '1',
         ];
          $companyemployeeData = CompanyEmployee::create($insertCompanyEmployee);
          }
@@ -625,7 +625,7 @@ class EmployeeController extends Controller
         if(isset($_POST['official-edit'])){
           $employeeId = Employee::where('id',$request->id)->first();
           $dataExist =  Empofficial::where('employee_id', $request->id)->first();
-
+// dd($employeeId);
             if(empty($dataExist)){
 
                 $insertOfficialEmployeeData = [
@@ -691,7 +691,7 @@ class EmployeeController extends Controller
                            ->select('company_employee.*','users.id','employee.*')
                            ->where('company_employee.company_id',Auth::user()->id)->get();
                           //  dd($employeeDetails);
-         return view('admin/employee-view',compact('employeeDetails'));
+         return view('admin.datatable',compact('employeeDetails'));
       }
 
 
@@ -892,11 +892,12 @@ class EmployeeController extends Controller
 
         CompanyEmployee::where('employee_id',$exitemp->employee_id)->update([
           'end_date'  => $exitemp->date_of_exit,
+          'status'  => '0',
         ]);
    
-        Employee::where('id',$exitemp->employee_id)->update([
-          'status'  => '0'
-        ]);
+        // Employee::where('id',$exitemp->employee_id)->update([
+        //   'status'  => '0'
+        // ]);
 
         return redirect('employee')->with('message','Employee exit successfully');
      }

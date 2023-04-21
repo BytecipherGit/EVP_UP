@@ -44,11 +44,18 @@ class ThemeSettingController extends Controller
             return view('admin.theme_setting_primary_color_form', compact('theme'));
         } else if (!empty($theme) && $theme->key == 'secondry_color'){
             return view('admin.theme_setting_secondry_color_form', compact('theme'));
+        }else if (!empty($theme) && $theme->key == 'button_text_color'){
+            return view('admin.theme_setting_button_text_color_form', compact('theme'));
+        }else if (!empty($theme) && $theme->key == 'button_background_color'){
+            return view('admin.theme_setting_button_background_color_form', compact('theme'));
+        }else if (!empty($theme) && $theme->key == 'link_color'){
+            return view('admin.theme_setting_link_color_form', compact('theme'));
         }
     }
 
     public function updateThemeSetting(request $request)
     {
+
         if (Auth::check()) {
             if($request->theme_id && ($request->theme_type == 'logo') && $request->hasFile('logo')){
                 $logo = $request->file('logo');
@@ -87,7 +94,41 @@ class ThemeSettingController extends Controller
                     $request->session()->put('secondry_color', !empty($request->secondry_color) ? $request->secondry_color : null);
                     return redirect('theme_setting');            
                 }
-            }
+            } else if ($request->theme_id && ($request->theme_type == 'button_text_color') && $request->button_text_color){
+                $insertNewCompanyRecords = [
+                    'company_id' => Auth::id(),
+                    'key' => 'button_text_color',
+                    'value' => !empty($request->button_text_color) ? $request->button_text_color : null,
+                ];
+                $success = ThemeSetting::where('id',$request->theme_id)->update($insertNewCompanyRecords);
+                if($success){
+                    $request->session()->put('button_text_color', !empty($request->button_text_color) ? $request->button_text_color : null);
+                    return redirect('theme_setting');            
+                }
+            } else if ($request->theme_id && ($request->theme_type == 'button_background_color') && $request->button_background_color){
+                $insertNewCompanyRecords = [
+                    'company_id' => Auth::id(),
+                    'key' => 'button_background_color',
+                    'value' => !empty($request->button_background_color) ? $request->button_background_color : null,
+                ];
+                $success = ThemeSetting::where('id',$request->theme_id)->update($insertNewCompanyRecords);
+                if($success){
+                    $request->session()->put('button_background_color', !empty($request->button_background_color) ? $request->button_background_color : null);
+                    return redirect('theme_setting');            
+                }
+            } else if ($request->theme_id && ($request->theme_type == 'link_color') && $request->link_color){
+                $insertNewCompanyRecords = [
+                    'company_id' => Auth::id(),
+                    'key' => 'link_color',
+                    'value' => !empty($request->link_color) ? $request->link_color : null,
+                ];
+                $success = ThemeSetting::where('id',$request->theme_id)->update($insertNewCompanyRecords);
+                if($success){
+                    $request->session()->put('link_color', !empty($request->link_color) ? $request->link_color : null);
+                    return redirect('theme_setting');            
+                }
+            } 
+
         }
         return redirect('theme_setting');
 

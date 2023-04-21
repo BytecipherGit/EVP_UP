@@ -158,7 +158,7 @@
                        {{-- <p>You can drag or drop <span>your file logo here.</span> </p> --}}
                        <p><b>File type:</b>.jpeg, .pdf, .docs, or .doc</br><b>File Size:</b> Max:10MB</p></label></p>
                        <div class="p-image ml-auto">
-                         <span class="upload-button" id="upload-button">Choose File</span>
+                         <span class="upload-button link_color" id="upload-button">Choose File</span>
                           <input class="file-upload"  name="company_logo" id="file-upload" type="file" accept="image/jpg,image/doc,image/pdf"/>
                        </div>
                       </div>
@@ -178,7 +178,7 @@
                 </div>  
                 <div class="tab-button-bx">
                    {{-- <button type="button" class="btn-secondary-cust" href="{{ route('settings') }}">Cancel</button>  --}}
-                   <button type="submit" name="profile" class="btn-primary-cust">Save Changes</button>
+                   <button type="submit" name="profile" class="btn-primary-cust button_background_color">Save Changes</button>
                 </div>           
               </div>
             </form>
@@ -208,7 +208,7 @@
                   </div>
                    <div class="tab-button-bx">
                    {{-- <button class="btn-secondary-cust">Cancel</button>  --}}
-                   <button type="submit" name="add_address" class="btn-primary-cust">Change Save</button>
+                   <button type="submit" name="add_address" class="btn-primary-cust button_background_color">Change Save</button>
                  </div> 
                 </div>   
             </form>
@@ -248,7 +248,7 @@
                 </div>
                 {{-- <div class="tab-button-bx">
                    <button class="btn-secondary-cust">Cancel</button> 
-                   <button class="btn-primary-cust">Change Save</button>
+                   <button class="btn-primary-cust button_background_color">Change Save</button>
                 </div>  --}}
 
               </div> 
@@ -285,7 +285,7 @@
                 </div>
                 {{-- <div class="tab-button-bx">
                    <button class="btn-secondary-cust">Cancel</button> 
-                   <button class="btn-primary-cust">Change Save</button>
+                   <button class="btn-primary-cust button_background_color">Change Save</button>
                 </div>  --}}
 
               </div> 
@@ -311,7 +311,7 @@
 
                 </div>
                 <!-- <div class="tab-button-bx">
-                   <button class="btn-secondary-cust">Cancel</button> <button class="btn-primary-cust">Save</button>
+                   <button class="btn-secondary-cust">Cancel</button> <button class="btn-primary-cust button_background_color">Save</button>
                 </div>  -->
 
               </div> 
@@ -361,7 +361,7 @@
                 </div>   
                 <div class="tab-button-bx">
                    {{-- <button class="btn-secondary-cust">Cancel</button>  --}}
-                   <button type="submit" name="plan" class="btn-primary-cust">Save Changes</button>
+                   <button type="submit" name="plan" class="btn-primary-cust button_background_color">Save Changes</button>
                 </div>   
               </form>        
               </div>         
@@ -404,7 +404,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
-          <button type="submit" name="dept" class="btn-primary-cust">Save Changes</button>
+          <button type="submit" name="dept" class="btn-primary-cust button_background_color">Save Changes</button>
         </div>
       </div>
     </div>
@@ -443,7 +443,7 @@
         </div>
         <div class="modal-footer">
           {{-- <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button> --}}
-          <button type="submit" name="department_edit" class="btn-primary-cust">Save Changes</button>
+          <button type="submit" name="department_edit" class="btn-primary-cust button_background_color">Save Changes</button>
         </div>
       </div>
     </div>
@@ -476,7 +476,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
-          <button type="submit" name="designation" class="btn-primary-cust">Save Changes</button>
+          <button type="submit" name="designation" class="btn-primary-cust button_background_color">Save Changes</button>
         </div>
       </div>
     </div>
@@ -516,7 +516,7 @@
         
         <div class="modal-footer">
           <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
-          <button type="submit" name="desig_edit" class="btn-primary-cust">Save Changes</button>
+          <button type="submit" name="desig_edit" class="btn-primary-cust button_background_color">Save Changes</button>
         </div>
       </div>
     </div>

@@ -373,6 +373,8 @@ aside {
     padding:36px 32px 100px 30px;
     z-index: 999;
     top: 84px;
+    overflow: hidden;
+    overflow-y: auto;
 }
 
 .aside-logo{

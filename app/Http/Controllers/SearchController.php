@@ -71,8 +71,8 @@ class SearchController extends Controller
                                            $html .='<small>'. number_format($reviewEmp->rating, 1, '.', ',') .' <span>reviews</span></small>';
                                            }
                                         $html .= '<span class="d-flex">
-                                          <button onclick="myFunction(' . $empDetails->id . ')" class="full-bg">View Full Profile</button>
-                                          <button class="only-border-btn" onclick="getInterview(' . $empDetails->id . ')" id="scheduleInterview">Add Candidate</button>
+                                          <button onclick="myFunction(' . $empDetails->id . ')" class="full-bg button_background_color">View Full Profile</button>
+                                          <button class="full-bg button_background_color" onclick="getInterview(' . $empDetails->id . ')" id="scheduleInterview" style="margin-left: 15px;">Add Candidate</button>
                                           </span>
                                         </h2>
                                       </div>
@@ -127,9 +127,10 @@ class SearchController extends Controller
                                                         <p>' . $empDetails->email . '</p>
                                                       </div>
                                                     </div>
-                                                  </div>
-                                               
-                                                  <div class="col-lg-4 col-md-6">
+                                                  </div>';
+                                               if(!empty($joinDate)){
+                                                        
+                                                    $html .='<div class="col-lg-4 col-md-6">
                                                     <div class="d-flex mt-3">
                                                       <div class="icon-part">
                                                         <i class="fa fa-users"></i>
@@ -137,8 +138,9 @@ class SearchController extends Controller
                                                       <div class="coneant">
                                                         <h4>Join </h4>
                                                         <p>' . $joinDate->date_of_joining . '</p>
-                                                      </div>
-                                                    </div>
+                                                       </div>';
+                                                }
+                                                    $html .='</div>
                                                   </div>
                                                 </div>
                                               </div>
@@ -544,7 +546,7 @@ class SearchController extends Controller
                                         $html .='<small>'. number_format($reviewEmp->rating, 1, '.', ',') .' <span>reviews</span></small>';
                                         }
                                       $html .='<span class="d-flex">
-                                        <button onclick="myFunction(' . $empDetails->id . ')" class="full-bg">View Full Profile</button>
+                                        <button onclick="myFunction(' . $empDetails->id . ')" class="full-bg button_background_color">View Full Profile</button>
                                         <button class="only-border-btn" onclick="getInterview(' . $empDetails->id . ')" id="scheduleInterview">Add Candidate</button>
                                         </span>
                                       </h2>
@@ -1015,7 +1017,7 @@ class SearchController extends Controller
                                        }
 
                                         $html .='<span class="d-flex">
-                                          <button onclick="myFunction(' . $empDetails->id . ')" class="full-bg">View Full Profile</button>
+                                          <button onclick="myFunction(' . $empDetails->id . ')" class="full-bg button_background_color">View Full Profile</button>
                                           <button class="only-border-btn" onclick="getInterview(' . $empDetails->id . ')" id="scheduleInterview">Add Candidate</button>
                                           </span>
                                         </h2>
@@ -1483,7 +1485,7 @@ class SearchController extends Controller
                                          $html .='<small>'. number_format($reviewEmp->rating, 1, '.', ',') .' <span>reviews</span></small>';
                                        }
                                         $html .='<span class="d-flex">
-                                          <button onclick="myFunction(' . $empDetails->id . ')" class="full-bg">View Full Profile</button>
+                                          <button onclick="myFunction(' . $empDetails->id . ')" class="full-bg button_background_color">View Full Profile</button>
                                           <button class="only-border-btn" onclick="getInterview(' . $empDetails->id . ')" id="scheduleInterview">Add Candidate</button>
                                           </span>
                                         </h2>
@@ -1953,7 +1955,7 @@ class SearchController extends Controller
                                           $html .='<small>'. number_format($reviewEmp->rating, 1, '.', ',') .' <span>reviews</span></small>';
                                    }
                                        $html .=' <span class="d-flex">
-                                          <button onclick="myFunction(' . $empDetails->id . ')" class="full-bg">View Full Profile</button>
+                                          <button onclick="myFunction(' . $empDetails->id . ')" class="full-bg button_background_color">View Full Profile</button>
                                           <button class="only-border-btn" onclick="getInterview(' . $empDetails->id . ')" id="scheduleInterview">Add Candidate</button>
                                           </span>
                                         </h2>
@@ -2424,7 +2426,7 @@ class SearchController extends Controller
                                           $html .='<small>'. number_format($reviewEmp->rating, 1, '.', ',') .' <span>reviews</span></small>';
                                           }
                                       $html .= '<span class="d-flex">
-                                          <button onclick="myFunction(' . $empDetails->id . ')" class="full-bg">View Full Profile</button>
+                                          <button onclick="myFunction(' . $empDetails->id . ')" class="full-bg button_background_color">View Full Profile</button>
                                           <button class="only-border-btn" onclick="getInterview(' . $empDetails->id . ')" id="scheduleInterview">Add Candidate</button>
                                           </span>
                                         </h2>
@@ -2891,7 +2893,7 @@ class SearchController extends Controller
                                            $html .='<small>'. number_format($reviewEmp->rating, 1, '.', ',') .' <span>reviews</span></small>';
                                            }
                                        $html .= '<span class="d-flex">
-                                          <button onclick="myFunction(' . $empDetails->id . ')" class="full-bg">View Full Profile</button>
+                                          <button onclick="myFunction(' . $empDetails->id . ')" class="full-bg button_background_color">View Full Profile</button>
                                           <button class="only-border-btn" onclick="getInterview(' . $empDetails->id . ')" id="scheduleInterview">Add Candidate</button>
                                           </span>
                                         </h2>

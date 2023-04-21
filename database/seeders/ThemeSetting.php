@@ -19,9 +19,15 @@ class ThemeSetting extends Seeder
             array('company_id' => 0,'key' => 'logo', 'value' => "assets/admin/images/logo.png"),
             array('company_id' => 0,'key' => 'primary_color', 'value' => "#5533FF"),
             array('company_id' => 0,'key' => 'secondry_color', 'value' => "#FFFFFF"),
+            array('company_id' => 0,'key' => 'button_text_color', 'value' => "#FFFFFF"),
+            array('company_id' => 0,'key' => 'button_background_color', 'value' => "#5533FF"),
+            array('company_id' => 0,'key' => 'link_color', 'value' => "#5533FF"),
             array('company_id' => 2,'key' => 'logo', 'value' => "assets/admin/images/logo.png"),
             array('company_id' => 2,'key' => 'primary_color', 'value' => "#5533FF"),
             array('company_id' => 2,'key' => 'secondry_color', 'value' => "#FFFFFF"),
+            array('company_id' => 2,'key' => 'button_text_color', 'value' => "#FFFFFF"),
+            array('company_id' => 2,'key' => 'button_background_color', 'value' => "#5533FF"),
+            array('company_id' => 2,'key' => 'link_color', 'value' => "#5533FF"),
         );
         ModelsThemeSetting::insert($themeSetting);
     }

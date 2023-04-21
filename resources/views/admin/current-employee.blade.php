@@ -16,9 +16,9 @@
             <p></p>
           </div>
           <div class="col-md-4">
-            <div class="main-right-button-box">
+            <div class="main-right-button-box ">
               {{-- <a href="add-employee"><img src="assets/admin/images/button-plus.png">Add New</a>  --}}
-                  <a href="/employee"><img src="{{ asset('assets') }}/admin/images/back-icon.png"> Back</a>
+                  <a href="/employee" class="button_background_color"><img src="{{ asset('assets') }}/admin/images/back-icon.png"> Back</a>
             </div>
           </div>
         </div>
@@ -39,7 +39,7 @@
           </div>      
          
           <table id="example" class="table-bordered nowrap table table-striped" style="width:100%">
-            <thead>
+            <thead class="primary_color">
               <tr>
                 {{-- <th><input type="checkbox" id="customcheck" name="customcheck"></th> --}}
                 <th>Employee Code</th>

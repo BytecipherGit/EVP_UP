@@ -39,7 +39,7 @@
             </div>
             <div class="col-md-4">
                 <div class="main-right-button-box">
-                    <a style="text-decoration:none" href="#" id="scheduleInterview" class="mr-2"><img
+                    <a style="text-decoration:none" href="#" id="scheduleInterview" class="mr-2 button_background_color"><img
                             src="{{ asset('assets') }}/admin/images/button-plus.png">Interview</a>
                     {{-- <a href="#" data-toggle="modal" data-target="#rejectbtninfo">Reject</a> --}}
                 </div>
@@ -83,7 +83,7 @@
             <div class="row" style="margin-top: 20px;">
                 <div class="col-xs-12">
                     <table id="example" class="table-bordered table">
-                        <thead class="primacyBackgrondColor">
+                        <thead class="primary_color">
                             <tr>
                                 <th>EVP Id</th>
                                 <th>Name</th>
@@ -193,7 +193,7 @@
                 <p class="sheddpare">Your invitation or last reminder was sent 4 days ago</p>
                 <div class="bottom-part">
                     <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn-primary-cust">Send remainder</button>
+                    <button type="button" class="btn-primary-cust button_background_color">Send remainder</button>
                 </div>
             </div>
         </div>
@@ -221,7 +221,7 @@
                     <div style="font-size: 16px; display:none;" class="text-success" id="success">Onboarding successfully done.</div>
                         <div style="font-size: 16px; display:none;" class="text-danger" id="failed">Onboarding already done.</div>
                     <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn-primary-cust">Submit</button>
+                    <button type="submit" class="btn-primary-cust button_background_color">Submit</button>
                 </div>
             </div>
         </form>
@@ -239,7 +239,7 @@
                 <div class="bottom-part">
                     <button type="button" class="btn-secondary-cust" data-dismiss="modal">No</button>
                     <a href="rejected-email" class="link-href" target="_black"><button type="button"
-                            class="btn-primary-cust">Yes</button></a>
+                            class="btn-primary-cust primary_color">Yes</button></a>
                 </div>
             </div>
         </div>
@@ -269,7 +269,7 @@
                         interview successfully done.</div>
                     <div style="font-size: 16px; display:none;" class="text-danger" id="failed">Interview already has been schedule for this employee.</div>
                     <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
-                    <button type="submit" id="scheduleInterviewSubmit" class="btn-primary-cust">Submit</button>
+                    <button type="submit" id="scheduleInterviewSubmit" class="btn-primary-cust button_background_color">Submit</button>
                 </div>
             </div>
         </form>
@@ -299,7 +299,7 @@
                         round successfully done.</div>
                         <div style="font-size: 16px; display:none;" class="text-danger" id="failed">Interview already has been schedule for this employee.</div>
                     <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
-                    <button type="submit" id="nextRoundOfInterviewSubmit" class="btn-primary-cust">Submit</button>
+                    <button type="submit" id="nextRoundOfInterviewSubmit" class="btn-primary-cust button_background_color">Submit</button>
                 </div>
             </div>
         </form>

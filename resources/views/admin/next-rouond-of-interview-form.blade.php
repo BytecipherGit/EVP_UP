@@ -74,23 +74,23 @@
     <h1 class="schudh1">Interview Type</h1>
     <ul class="nav nav-tabs" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active" id="InterviewTypeVideo" data-id="Video" data-toggle="tab" href="#tabs-1"
+            <a class="nav-linkSchedule active" id="InterviewTypeVideo" data-id="Video" data-toggle="tab" href="#tabs-1"
                 role="tab">
                 {{-- <img src="assets/admin/images/video-call.png"> --}}
                  Video</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="InterviewTypePhone" data-toggle="tab" data-id="Telephonic" href="#tabs-2"
+            <a class="nav-linkSchedule" id="InterviewTypePhone" data-toggle="tab" data-id="Telephonic" href="#tabs-2"
                 role="tab">
                 {{-- <img src="assets/admin/images/phone-call.png"> --}}
                 Phone</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="InterviewTypeOffice" data-toggle="tab" data-id="At Office" href="#tabs-3"
+            <a class="nav-linkSchedule" id="InterviewTypeOffice" data-toggle="tab" data-id="At Office" href="#tabs-3"
                 role="tab">At Office</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="InterviewTypeHome" data-toggle="tab" data-id="At Home" href="#tabs-4"
+            <a class="nav-linkSchedule" id="InterviewTypeHome" data-toggle="tab" data-id="At Home" href="#tabs-4"
                 role="tab">At Home</a>
         </li>
     </ul> 

@@ -70,7 +70,7 @@
 
           <div class="col-lg-12 order-lg-3 order-md-3">
             <div class="form-group">
-              <button type="submit">Update Password</button>
+              <button type="submit" class="button_background_color">Update Password</button>
             </div>
           </div>
         </div>

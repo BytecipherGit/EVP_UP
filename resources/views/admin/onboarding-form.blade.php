@@ -15,7 +15,7 @@
 <input type="hidden" id="is_add" value="{{ $onboardProcess ? '' : 1 }}" />
 <input type="hidden" id="employee_id" name="employee_id" value="{{ $employee->id }}" />
      @if(empty($employeeonboarding))
-            @if($onboardProcess)
+         @if($onboardProcess)
             @php $a = 0 @endphp
             @foreach($onboardProcess as $process)
                 <div class="col-md-12">
@@ -26,6 +26,7 @@
                 </div>  
                 @php $a++ @endphp
             @endforeach
+         @endif
      @else
         <p>Onboarding already submited.</p>
      @endif

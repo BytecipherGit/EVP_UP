@@ -44,12 +44,12 @@
             </div>
             <div class="col-md-4">
                 <div class="main-right-button-box">
-                    {{-- <a style="text-decoration:none" href="#" id="createProcess" class="mr-2"><img src="{{ asset('assets') }}/admin/images/button-plus.png">Interview Process</a> --}}
-                    {{-- <a href="#" data-toggle="modal" data-target="#rejectbtninfo">Reject</a> --}}
+                       <a href="/admin" class="button_background_color"><img src="{{ asset('assets') }}/admin/images/back-icon.png"> Back</a>  
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    
     <!--- Main Heading ----->
 
     <div class="employee-view-page">
@@ -57,7 +57,7 @@
             <div class="row" style="margin-top: 20px;">
                 <div class="col-xs-12">
                     <table class="table table-bordered theme_setting_datatable">
-                        <thead class="primacyBackgrondColor">
+                        <thead class="primary_color">
                             <tr>
                                 <th>Key</th>
                                 <th>Value</th>
@@ -99,7 +99,7 @@
                     <div style="font-size: 16px; display:none;" class="text-success" id="success">Interview process
                         successfully done.</div>
                     <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
-                    <button type="submit" id="interviewProcessSubmit" class="btn-primary-cust primacyBackgrondColor">Submit</button>
+                    <button type="submit" id="interviewProcessSubmit" class="btn-primary-cust button_background_color">Submit</button>
                 </div>
             </div>
         </form>

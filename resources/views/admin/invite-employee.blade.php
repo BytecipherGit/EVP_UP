@@ -23,8 +23,8 @@
             </div>
             <div class="col-md-4">
                 <div class="main-right-button-box">
-                    <a href="#" name="bulk_mail_invite" id="bulk_mail_invite" class="disabled-btn">Invite</a>
-                    <a href="add-invite-employee"><img src="assets/admin/images/button-plus.png">Add New</a>
+                    <a href="#" name="bulk_mail_invite" id="bulk_mail_invite" class="button_background_color" style="margin-right: 15px">Invite</a>
+                    <a href="add-invite-employee" class="button_background_color"><img src="assets/admin/images/button-plus.png">Add New</a>
                 </div>
             </div>
         </div>
@@ -40,7 +40,7 @@
                 <span class="ml-auto d-flex">
                     <button><span class="bg-red"><img src="assets/admin/images/import.png" data-toggle="modal" data-target="#btninfo"></span> <a
                             data-toggle="modal" data-target="#btninfo">Import</a></button>
-                    <button><span class="primacyBackgrondColor"><img src="assets/admin/images/export.png" data-href="/export-csv-invite" onclick="exportTasks (event.target);"></span><a data-href="/export-csv-invite"
+                    <button><span class="button_background_color"><img src="assets/admin/images/export.png" data-href="/export-csv-invite" onclick="exportTasks (event.target);"></span><a data-href="/export-csv-invite"
                             id="export" onclick="exportTasks (event.target);">Export</a></button>
                     {{-- <button><span data-toggle="modal" data-target="#exporteditbtn"><img src="assets/admin/images/export.png"></span> <a data-toggle="modal" data-target="#btninfo">Export</a> --}}
                     </button>
@@ -48,7 +48,7 @@
             </div>
             {{-- <table class="table table-striped invite-table-cust" style="width:100%"> --}}
             <table id="example" class="table-bordered nowrap table table-striped" style="width:100%">
-                <thead class="primacyBackgrondColor">
+                <thead class="primary_color">
                     <tr>
                         <th><input type="checkbox" id="selectAll" class=""></th>
                         <th>Employee Code</th>
@@ -258,32 +258,25 @@
 </div>
 
 <!-- The Modal No INFO -->
-<div class="modal fade custu-no-select" id="btninfo" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
+<div class="modal fade custu-no-select" id="btninfo" role="dialog" aria-labelledby="exampleModalLabel"  aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-body">
-
-                <a href="/download_invitecsv" class="sample">Download Sample File </a>
-                <img src="assets/admin/images/info.png" class="img-size-wth">
-                <form action="" method="post" enctype="multipart/form-data">
-                    {{ csrf_field() }}
-                    <div class="form-group">
-                        <label for="upload-file">Import Employee Records</label>
-                        <input type="file" name="upload-file" class="form-control">
-                        {{-- @error('upload-file')
-                    <p class="velidation">{{ $message }}</p>
-                @enderror --}}
-                    </div>
-                    <input class="btn-primary-cust" type="submit" value="Import" name="submit">
-                    <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
-                </form>
-            </div>
+      <div class="modal-content">
+        <div class="modal-body">
+          {{-- <img src="{{ asset('assets') }}/admin/images/info.png" class="img-size-wth"> --}}
+          <form action="" method="post" enctype="multipart/form-data">
+             {{csrf_field()}}
+                <div class="form-group">
+                    <label for="upload-file" class="exportlab">Import Employee Records</label>
+                    <input type="file" name="upload-file" class="form-control export">
+                </div>
+                <input class="btn-primary-custexport button_background_color " type="submit" value="Import" name="submit">
+                <button type="button" class="btn-secondary-custexport" data-dismiss="modal">Cancel</button>
+            </form>
+            <a href="/download_invitecsv" class="sample btn btn-primary">Download sample file here </a>
         </div>
+      </div>
     </div>
-</div>
-
-
+  </div>  
 
 <!-- The Modal Remaider Notification -->
 <div class="modal fade custu-no-select" id="remaiderbtninfo" role="dialog" aria-labelledby="exampleModalLabel"
@@ -312,7 +305,7 @@
                     <img src="{{ asset('assets') }}/admin/images/deactivate-popup-icon.png" class="img-size-wth">
                     <h1 class="h1-delete">Are you sure?</h1>
                     <p>You want to delete this account.</p>
-                    <a href="delete-invite/{{ $invite->id }}">Delete</a>
+                    <a href="delete-invite/{{ $invite->id }}" class="button_background_color">Delete</a>
                 </div>
             </div>
         </div>

@@ -13,14 +13,14 @@
           </div>
           <div class="col-md-4">
             <div class="main-right-button-box">
-              <a href="/invite-employee"><img src="{{ asset('assets') }}/admin/images/back-icon.png"> Back</a>
+              <a href="/invite-employee" class="button_background_color"><img src="{{ asset('assets') }}/admin/images/back-icon.png"> Back</a>
             </div>
           </div>  
         </div>
       </div><!--- Main Heading ----->
 
       <div class="employee-tab-bar"> 
-        <ul class="nav nav-tabs table-responsive-width" role="tablist">
+        <ul class="nav nav-tabs table-responsive-width primary_color" role="tablist">
           <li class="nav-item">
             <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab">Basic Info</a>
           </li>
@@ -93,7 +93,7 @@
                                
                       <div class="add-btn-part">
                         {{-- <button type="button" class="btn-secondary-cust">Back</button> --}}
-                        <button type="submit" class="btn-primary-cust">Save Changes</button>
+                        <button type="submit" class="btn-primary-cust button_background_color">Save Changes</button>
                       </div>
                                                    
                     </form>      

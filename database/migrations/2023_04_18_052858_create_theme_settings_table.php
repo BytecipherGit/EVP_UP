@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('theme_settings', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('company_id')->default(0)->comment('company id default 0 that means it is for default super admin company');
-            $table->enum('key',['logo','primary_color','secondry_color'])->comment('Logo / Primary Color / Secondry Color');
+            $table->enum('key',['logo','primary_color','secondry_color','button_text_color','button_background_color','link_color'])->comment('Logo / Primary Color / Secondry Color / Button Text Color / Button Background Color / Link Color');
             $table->string('value')->nullable();
             $table->timestamps();
         });
