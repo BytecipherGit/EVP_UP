@@ -305,7 +305,7 @@
                     <img src="{{ asset('assets') }}/admin/images/deactivate-popup-icon.png" class="img-size-wth">
                     <h1 class="h1-delete">Are you sure?</h1>
                     <p>You want to delete this account.</p>
-                    <a href="delete-invite/{{ $invite->id }}">Delete</a>
+                    <a href="delete-invite/{{ $invite->id }}" class="button_background_color">Delete</a>
                 </div>
             </div>
         </div>
