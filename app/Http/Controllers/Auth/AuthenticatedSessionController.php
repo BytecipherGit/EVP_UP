@@ -45,6 +45,12 @@ class AuthenticatedSessionController extends Controller
                             session(['primary_color' => $theme->value]);
                         } else if (!empty($theme->key) && $theme->key == 'secondry_color'){
                             session(['secondry_color' => $theme->value]);
+                        } else if (!empty($theme->key) && $theme->key == 'button_text_color'){
+                            session(['button_text_color' => $theme->value]);
+                        } else if (!empty($theme->key) && $theme->key == 'button_background_color'){
+                            session(['button_background_color' => $theme->value]);
+                        } else if (!empty($theme->key) && $theme->key == 'link_color'){
+                            session(['link_color' => $theme->value]);
                         }
                     }
                 }

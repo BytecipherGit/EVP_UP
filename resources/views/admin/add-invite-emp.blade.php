@@ -16,7 +16,7 @@
 
       <div class="employee-tab-bar"> 
 
-        <ul class="nav nav-tabs table-responsive-width" role="tablist">
+        <ul class="nav nav-tabs table-responsive-width primary_color" role="tablist">
           <li class="nav-item">
             <a class="nav-link active"  data-toggle="tab" href="#tabs-1" role="tab">Basic Info</a>
           </li> 
@@ -38,7 +38,7 @@
                   <div class="row">                     
                     <div class="col-lg-12">                    
                       <div class="row">
-                        <div class="col-xl-4 col-lg-6 col-md-12">
+                        <div class="col-xl-4 col-lg-6 col-md-12 ">
                           <div class="form-group">
                             <label for="first_name">First Name<span style="color:red">*</span></label>
                             <input type="text" name="first_name" class="form-control"  value="{{old('first_name')}}" placeholder="Enter Your First Name">
@@ -89,7 +89,7 @@
                                
                       <div class="add-btn-part">
                         {{-- <button type="button" class="btn-secondary-cust">Back</button> --}}
-                        <button type="submit" class="btn-primary-cust">Save</button>
+                        <button type="submit" class="btn-primary-cust button_background_color">Save</button>
                       </div>
                                                    
                     </form>      

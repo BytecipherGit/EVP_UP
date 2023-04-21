@@ -1,7 +1,7 @@
 
 @extends('company/layouts.app')
 @section('content')
-@section('title','EVP - New Admin')
+@section('title','EVP - Employee')
 
 <style>
   .filesample{
@@ -26,6 +26,7 @@ input.export {
 
 
 </style>
+
 <link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/bootstrap.min.css">
 <link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/datatables.bootstrap.min.css">
 <link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/fixedheader.bootstrap.min.css">
@@ -45,9 +46,9 @@ input.export {
           </div>
           <div class="col-md-8">
             <div class="main-right-button-box"> 
-               <a href="/current-employee" class="emp primacyBackgrondColor">Current Employees</a>
-               <a href="/post-employee" class="emp primacyBackgrondColor">Old Employees</a>     
-               <a href="/add-employee" class="emp primacyBackgrondColor"><img src="{{ asset('assets') }}/admin/images/button-plus.png">Add New</a>                     
+               <a href="/current-employee" class="emp button_background_color">Current Employees</a>
+               <a href="/post-employee" class="emp button_background_color">Old Employees</a>     
+               <a href="/add-employee" class="emp button_background_color"><img src="{{ asset('assets') }}/admin/images/button-plus.png">Add New</a>                     
               </div>
           </div>
         </div>
@@ -60,7 +61,7 @@ input.export {
             {{-- <button><span><a href="https://mail.google.com/mail/u/0/" target="_black"><img src="assets/admin/images/email-icon.png"></a></span> <a data-toggle="modal" data-target="#btninfo">Mail</a></button> --}}
               <span class="ml-auto d-flex">
                 <button><span class="bg-red"><img src="assets/admin/images/import.png" data-toggle="modal" data-target="#btninfo"></span> <a data-toggle="modal" data-target="#btninfo">Import</a></button>
-                <button><span class="primacyBackgrondColor"><img src="{{ asset('assets') }}/admin/images/export.png" data-href="/export-csv" onclick ="exportTasks (event.target);"></span><a data-href="/export-csv" id="export" onclick ="exportTasks (event.target);">Export</a></button>
+                <button><span class="button_background_color"><img src="{{ asset('assets') }}/admin/images/export.png" data-href="/export-csv" onclick ="exportTasks (event.target);"></span><a data-href="/export-csv" id="export" onclick ="exportTasks (event.target);">Export</a></button>
               </span>
               {{-- <button><span data-toggle="modal" data-target="#exporteditbtn"><img src="assets/admin/images/export.png"></span> <a data-toggle="modal" data-target="#btninfo">Export</a> --}}
                 {{-- <span><a href="{{ url('/') }}/export/xlsx" class="btn btn-success">Export to .xlsx</a></span>
@@ -71,7 +72,7 @@ input.export {
           </div>    
           
           <table id="example" class="table-bordered nowrap table table-striped" style="width:100%">
-            <thead class="primacyBackgrondColor">
+            <thead class="primary_color">
         <tr>
             <th>Employee Code</th>
             <th>Employee Name</th>
@@ -86,7 +87,7 @@ input.export {
     </thead>
  
     <tbody>           
-        @foreach($allemp as $emp)  
+        @foreach($employeeDetails as $emp)  
       <tr>
         <td>#{{ $emp->empCode }}</td>
         <td>{{ $emp->first_name .' '. $emp->last_name }}</td>
@@ -124,7 +125,7 @@ input.export {
                     <label for="upload-file" class="exportlab">Import Employee Records</label>
                     <input type="file" name="upload-file" class="form-control export">
                 </div>
-                <input class="btn-primary-custexport" type="submit" value="Import" name="submit">
+                <input class="btn-primary-custexport button_background_color " type="submit" value="Import" name="submit">
                 <button type="button" class="btn-secondary-custexport" data-dismiss="modal">Cancel</button>
             </form>
             <a href="/downloadcsv" class="sample btn btn-primary">Download sample file here </a>
@@ -181,6 +182,13 @@ input.export {
 
       });
     </script>
+    <script src="{{ asset('assets') }}/datatable/js/jquery-3.5.1.js"></script>
+    <script src="{{ asset('assets') }}/datatable/js/jquery.dataTables.min.js"></script>
+    <script src="{{ asset('assets') }}/datatable/js/dataTables.bootstrap.min.js"></script>
+      
+    <script src="{{ asset('assets') }}/datatable/js/dataTables.fixedHeader.min.js"></script>
+    <script src="{{ asset('assets') }}/datatable/js/dataTables.responsive.min.js"></script>
+    <script src="{{ asset('assets') }}/datatable/js/responsive.bootstrap.min.js"></script>
 <script>
     $(document).ready(function() {
       var table = $('#example').DataTable( {
@@ -191,15 +199,6 @@ input.export {
       new $.fn.dataTable.FixedHeader( table );
   } );
 </script>
-
-<script src="{{ asset('assets') }}/datatable/js/jquery-3.5.1.js"></script>
-<script src="{{ asset('assets') }}/datatable/js/jquery.dataTables.min.js"></script>
-<script src="{{ asset('assets') }}/datatable/js/dataTables.bootstrap.min.js"></script>
-  
-<script src="{{ asset('assets') }}/datatable/js/dataTables.fixedHeader.min.js"></script>
-<script src="{{ asset('assets') }}/datatable/js/dataTables.responsive.min.js"></script>
-<script src="{{ asset('assets') }}/datatable/js/responsive.bootstrap.min.js"></script>
-
 <script>
   function exportTasks(_this) {
      let _url = $(_this).data('href');

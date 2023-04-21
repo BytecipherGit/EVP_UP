@@ -34,7 +34,7 @@
             </div>
             <div class="col-md-4">
                 <div class="main-right-button-box">
-                    <a style="text-decoration:none" href="#" id="createFeedback" class="mr-2"><img src="{{ asset('assets') }}/admin/images/button-plus.png">Feedback</a>
+                    <a style="text-decoration:none" href="#" id="createFeedback" class="mr-2 button_background_color"><img src="{{ asset('assets') }}/admin/images/button-plus.png">Feedback</a>
                     {{-- <a href="#" data-toggle="modal" data-target="#rejectbtninfo">Reject</a> --}}
                 </div>
             </div>
@@ -47,7 +47,7 @@
             <div class="row" style="margin-top: 20px;">
                 <div class="col-xs-12">
                     <table class="table table-bordered feedback_datatable">
-                        <thead>
+                        <thead class="primary_color">
                             <tr>
                                 <th>Title</th>
                                 <th width="100px">Action</th>
@@ -87,7 +87,7 @@
                     <div style="font-size: 16px; display:none;" class="text-success" id="success">Feedback
                         successfully created.</div>
                     <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
-                    <button type="submit" id="interviewProcessSubmit" class="btn-primary-cust">Submit</button>
+                    <button type="submit" id="interviewProcessSubmit" class="btn-primary-cust button_background_color">Submit</button>
                 </div>
             </div>
         </form>

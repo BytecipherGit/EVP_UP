@@ -1,6 +1,4 @@
-
-
-  <!--- Main Container Start ----->
+ <!--- Main Container Start ----->
   
       @if (session()->has('msg'))
       <div class="alert alert-success">

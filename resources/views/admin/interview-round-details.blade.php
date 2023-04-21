@@ -34,7 +34,7 @@
             </div>
             <div class="col-md-4">
                 <div class="main-right-button-box">
-                    <a href="/schedule-interview"><img src="{{ asset('assets') }}/admin/images/back-icon.png"> Back</a>
+                    <a href="/schedule-interview" class="button_background_color"><img src="{{ asset('assets') }}/admin/images/back-icon.png"> Back</a>
               </div>
             </div>
         </div>
@@ -48,7 +48,7 @@
             <div class="row" style="margin-top: 20px;">
                 <div class="col-xs-12">
                     <table id="example" class="table-bordered table">
-                        <thead>
+                        <thead class="primary_color">
                             <tr>
                                 <th>Round</th>
                                 <th>Interview Type</th>

@@ -27,9 +27,9 @@
             </div>
             <div class="col-md-8">
                 <div class="main-right-button-box">
-                    <a href="/current-employee" class="emp">Current Employees</a>
-                    <a href="/post-employee" class="emp">Old Employees</a>
-                    <a href="/add-employee" class="emp"><img
+                    <a href="/current-employee" class="emp primacyBackgrondColor">Current Employees</a>
+                    <a href="/post-employee" class="emp primacyBackgrondColor">Old Employees</a>
+                    <a href="/add-employee" class="emp primacyBackgrondColor"><img
                             src="{{ asset('assets') }}/admin/images/button-plus.png">Add New</a>
                 </div>
             </div>
@@ -46,7 +46,7 @@
                     <button><span class="bg-red"><img src="assets/admin/images/import.png" data-toggle="modal"
                                 data-target="#btninfo"></span> <a data-toggle="modal"
                             data-target="#btninfo">Import</a></button>
-                    <button><span><img src="{{ asset('assets') }}/admin/images/export.png" data-href="/export-csv"
+                    <button><span class="primacyBackgrondColor"><img src="{{ asset('assets') }}/admin/images/export.png" data-href="/export-csv"
                                 onclick="exportTasks (event.target);"></span><a data-href="/export-csv" id="export"
                             onclick="exportTasks (event.target);">Export</a></button>
                 </span>
@@ -58,7 +58,7 @@
 
             </div>
 
-            <table id="example" class="table-bordered nowrap table table-striped" style="width:100%">
+            <table id="example" class="table-bordered nowrap table table-striped primacyBackgrondColor" style="width:100%">
                 <thead>
                     <tr>
                         <th>Employee Code</th>
@@ -113,7 +113,7 @@
                         <label for="upload-file" class="exportlab">Import Employee Records</label>
                         <input type="file" name="upload-file" class="form-control export">
                     </div>
-                    <input class="btn-primary-custexport" type="submit" value="Import" name="submit">
+                    <input class="btn-primary-custexport primacyBackgrondColor" type="submit" value="Import" name="submit">
                     <button type="button" class="btn-secondary-custexport" data-dismiss="modal">Cancel</button>
                 </form>
                 <a href="/downloadcsv" class="sample btn btn-primary">Download sample file here </a>

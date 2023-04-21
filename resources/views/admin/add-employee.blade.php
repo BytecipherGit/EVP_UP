@@ -21,7 +21,7 @@
 
       <div class="employee-tab-bar"> 
 
-        <ul class="nav nav-tabs table-responsive-width" role="tablist">
+        <ul class="nav nav-tabs table-responsive-width primary_color" role="tablist">
        
           <li class="nav-item">
             <a @if ($basic) class="nav-link" @else class="nav-link active" @endif data-toggle="tab" href="#tabs-1" role="tab">Basic Info</a>
@@ -289,7 +289,7 @@
                   </div>                   
                       <div class="add-btn-part">
                         {{-- <button type="button" class="btn-secondary-cust">Back</button> --}}
-                        <button type="submit" name="basic" class="btn-primary-cust">Next</button>
+                        <button type="submit" name="basic" class="btn-primary-cust button_background_color">Next</button>
                       </div>                                 
                     </form>      
               </div>
@@ -494,7 +494,7 @@
                   </div>                   
                       <div class="add-btn-part">
                         {{-- <button type="button" class="btn-secondary-cust">Back</button> --}}
-                        <button type="submit" name="basic-edit" class="btn-primary-cust">Next</button>
+                        <button type="submit" name="basic-edit" class="btn-primary-cust button_background_color">Next</button>
                       </div>
                                                    
                     </form>         
@@ -565,7 +565,7 @@
                           <div class="form-group">
                             <div class="add-btn-part">
                               {{-- <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button> --}}
-                              {{-- <button type="button" class="btn-primary-cust" data-dismiss="modal">Save</button> --}}
+                              {{-- <button type="button" class="btn-primary-cust button_background_color" data-dismiss="modal">Save</button> --}}
                             </div>
                           </div>
                         </div>
@@ -638,7 +638,7 @@
                           <div class="form-group">
                             <div class="add-btn-part">
                               {{-- <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button> --}}
-                              {{-- <button type="button" class="btn-primary-cust" data-dismiss="modal">Save</button> --}}
+                              {{-- <button type="button" class="btn-primary-cust button_background_color" data-dismiss="modal">Save</button> --}}
                             </div>
                           </div>
                         </div>
@@ -715,7 +715,7 @@
                           <div class="form-group">
                             <div class="add-btn-part">
                               {{-- <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button> --}}
-                              {{-- <button type="button" class="btn-primary-cust" data-dismiss="modal">Save</button> --}}
+                              {{-- <button type="button" class="btn-primary-cust button_background_color" data-dismiss="modal">Save</button> --}}
                             </div>
                           </div>
                         </div>
@@ -752,7 +752,7 @@
                               <span><input type="radio" id="customRadioInline3" name="skill_type[]" class="" value="Expert">  <label class="" for="customRadioInline3">Expert</label></span>
                               </h6> 
                             </td> 
-                            <td><a name="add" id="dynamic-ar" class="add-plus extra-fields-customer"><span><img src="{{ asset('assets') }}/admin/images/button-plus.png"></span></td>
+                            <td><a name="add" id="dynamic-ar" class="add-plus extra-fields-customer"><span class="button_background_color"><img src="{{ asset('assets') }}/admin/images/button-plus.png"></span></td>
                         </tr>     
                     </table>
                  
@@ -776,7 +776,7 @@
                             <span><input type="radio" id="customRadioInline6" name="lang_type[]" class="" value="Expert">  <label class="" for="customRadioInline6">Expert</label></span>
                             </h6> 
                           </td> 
-                          <td><a name="add" id="dynamic-ar1" class="add-plus extra-fields-customer"><span><img src="{{ asset('assets') }}/admin/images/button-plus.png"></span></td>
+                          <td><a name="add" id="dynamic-ar1" class="add-plus extra-fields-customer"><span class="button_background_color"><img src="{{ asset('assets') }}/admin/images/button-plus.png"></span></td>
                       </tr>
 
                       
@@ -786,7 +786,7 @@
                         <div class="form-group">
                           <div class="add-btn-part">
                             {{-- <button type="" class="btn-secondary-cust">Back</button> --}}
-                            <button type="submit" name="workskill" class="btn-primary-cust">Next</button>
+                            <button type="submit" name="workskill" class="btn-primary-cust button_background_color">Next</button>
                           </div>
                         </div>
                       </div>
@@ -872,7 +872,7 @@
                         <div class="form-group">
                           <div class="add-btn-part">
                             {{-- <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button> --}}
-                            {{-- <button type="button" class="btn-primary-cust" data-dismiss="modal">Save</button> --}}
+                            {{-- <button type="button" class="btn-primary-cust button_background_color" data-dismiss="modal">Save</button> --}}
                           </div>
                         </div>
                       </div>
@@ -978,8 +978,8 @@
                         <div class="col-md-12">
                           <div class="form-group">
                             <div class="add-btn-part">
-                              <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
-                              <button type="submit" name="official" class="btn-primary-cust">Save</button>
+                              <button type="reset" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
+                              <button type="submit" name="official" class="btn-primary-cust button_background_color">Save</button>
                             </div>
                           </div>
                         </div>
@@ -1063,7 +1063,7 @@
         </div>
         <div class="modal-footer">
           {{-- <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button> --}}
-          <button type="submit" name="identity" class="btn-primary-cust">Save</button>
+          <button type="submit" name="identity" class="btn-primary-cust button_background_color">Save</button>
         </div>
       </div>
     </div>
@@ -1141,7 +1141,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
-          <button type="button" class="btn-primary-cust" data-dismiss="modal">Save Changes</button>
+          <button type="button" class="btn-primary-cust button_background_color" data-dismiss="modal">Save Changes</button>
         </div>
       </div>
     </div>
@@ -1247,7 +1247,7 @@
         </div>
         <div class="modal-footer">
           <button type="cancel" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
-          <button type="submit" name="qulification" class="btn-primary-cust">Save</button>
+          <button type="submit" name="qulification" class="btn-primary-cust button_background_color">Save</button>
         </div>
       </div>
     </div>
@@ -1453,7 +1453,7 @@
         </div>
         <div class="modal-footer">
           <button type="cancel" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
-          <button type="submit" name="workhistory" class="btn-primary-cust">Save</button>
+          <button type="submit" name="workhistory" class="btn-primary-cust button_background_color">Save</button>
         </div>
       </div>
     </div>
@@ -1525,7 +1525,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
-          <button type="button" class="btn-primary-cust">Save</button>
+          <button type="button" class="btn-primary-cust button_background_color">Save</button>
         </div>
       </div>
     </div>
@@ -1569,7 +1569,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
-          <button type="submit" name="more-skill" class="btn-primary-cust">Save</button>
+          <button type="submit" name="more-skill" class="btn-primary-cust button_background_color">Save</button>
         </div>
       </form>
       </div>
@@ -1615,7 +1615,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
-            <button type="submit" name="more-lang" class="btn-primary-cust">Save</button>
+            <button type="submit" name="more-lang" class="btn-primary-cust button_background_color">Save</button>
           </div>
         </form>
         </div>
@@ -1774,7 +1774,7 @@
                   $("#dynamic-ar").click(function () {
                       ++i;
                       $("#dynamicAddRemove").append('<tr><td><input type="text" name="skill[' + i +
-                          ']" placeholder="Enter subject" class="form-control" /></td><td><h6><span><input type="radio" id="customRadioInline1" name="skill_type['+ i +']" class=""  value="Beginner" checked="">  <label class="" for="customRadioInline1">Beginner</label></span> <span><input type="radio" id="customRadioInline2" name="skill_type['+ i +']" class="" value="Intermediate">  <label class="" for="customRadioInline2">Intermediate</label></span> <span><input type="radio" id="customRadioInline3" name="skill_type['+ i +']" class="" value="Expert">  <label class="" for="customRadioInline3">Expert</label></span></h6></td><td><a href=""class="remove-input-field remove-field btn-remove-customer add-plus minus-icon"><span><img src="{{ asset('assets') }}/admin/images/minus-icon.png"></span></td></tr>'
+                          ']" placeholder="Enter subject" class="form-control" /></td><td><h6><span><input type="radio" id="customRadioInline1" name="skill_type['+ i +']" class=""  value="Beginner" checked="">  <label class="" for="customRadioInline1">Beginner</label></span> <span><input type="radio" id="customRadioInline2" name="skill_type['+ i +']" class="" value="Intermediate">  <label class="" for="customRadioInline2">Intermediate</label></span> <span><input type="radio" id="customRadioInline3" name="skill_type['+ i +']" class="" value="Expert">  <label class="" for="customRadioInline3">Expert</label></span></h6></td><td><a href=""class="remove-input-field remove-field btn-remove-customer add-plus minus-icon"><span class="button_background_color"><img src="{{ asset('assets') }}/admin/images/minus-icon.png"></span></td></tr>'
                           );
                   });
                   $(document).on('click', '.remove-input-field', function () {
@@ -1788,7 +1788,7 @@
               $("#dynamic-ar1").click(function () {
                   ++j;
                   $("#dynamicAddRemove1").append('<tr><td><input type="text" name="lang['+ j +
-                      ']" placeholder="Enter subject" class="form-control" /></td><td><h6><span><input type="radio" id="customRadioInline4" name="lang_type['+ j +']" class=""  value="Beginner" checked="">  <label class="" for="customRadioInline4">Beginner</label></span>  <span><input type="radio" id="customRadioInline5" name="lang_type['+ j +']" class="" value="Intermediate">  <label class="" for="customRadioInline5">Intermediate</label></span> <span><input type="radio" id="customRadioInline6" name="lang_type['+ j +']" class="" value="Expert">  <label class="" for="customRadioInline6">Expert</label></span></h6></td><td><a href=""class="remove-input-field remove-field btn-remove-customer add-plus minus-icon"><span><img src="{{ asset('assets') }}/admin/images/minus-icon.png"></span></td></tr>'
+                      ']" placeholder="Enter subject" class="form-control" /></td><td><h6><span><input type="radio" id="customRadioInline4" name="lang_type['+ j +']" class=""  value="Beginner" checked="">  <label class="" for="customRadioInline4">Beginner</label></span>  <span><input type="radio" id="customRadioInline5" name="lang_type['+ j +']" class="" value="Intermediate">  <label class="" for="customRadioInline5">Intermediate</label></span> <span><input type="radio" id="customRadioInline6" name="lang_type['+ j +']" class="" value="Expert">  <label class="" for="customRadioInline6">Expert</label></span></h6></td><td><a href=""class="remove-input-field remove-field btn-remove-customer add-plus minus-icon"><span class="button_background_color"><img src="{{ asset('assets') }}/admin/images/minus-icon.png"></span></td></tr>'
                       );
               });
               $(document).on('click', '.remove-input-field1', function () {

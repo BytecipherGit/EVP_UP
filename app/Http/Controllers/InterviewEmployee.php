@@ -333,7 +333,7 @@ class InterviewEmployee extends Controller
                         $insertCompanyEmployee = [
                             'employee_id' => $employeeData->id,
                             'company_id' => Auth::id(),
-                            'status' => '0',
+                            'status' => '1',
                         ];
                         $companyemployeeData = CompanyEmployee::create($insertCompanyEmployee);
                     }

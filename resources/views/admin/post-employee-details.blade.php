@@ -36,7 +36,7 @@
       </div>
 
       <div class="employee-tab-bar"> 
-        <ul class="nav nav-tabs table-responsive-width" role="tablist">
+        <ul class="nav nav-tabs table-responsive-width primary_color" role="tablist">
           <li class="nav-item">
             <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab">Basic Info</a>
           </li>
