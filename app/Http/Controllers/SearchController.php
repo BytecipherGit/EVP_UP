@@ -49,7 +49,17 @@ class SearchController extends Controller
                                   $cmpAddress = !empty($empCurrentCmpDetails->address) ? $empCurrentCmpDetails->address : '';
                                   $interviewEmp = EmployeeInterview::where('employee_id', $employee->id)->first();
                                   $joinDate = Empofficial::where('employee_id', $employee->id)->first();
-                              
+                                  $interviews =  EmployeeInterview::where('employee_id', $employee->id)->count();
+
+                                  $address= User::Join('company_employee', 'users.id', '=', 'company_employee.company_id')
+                                             ->join('cities','cities.id','=','users.city')
+                                             ->join('states','states.id','=','cities.state_id')
+                                             ->join('countries','countries.id','=','states.country_id')
+                                             ->select('states.*','countries.name')
+                                             ->where('company_employee.employee_id', $employee->id)
+                                             ->first();
+                                            //  dd($address);
+
                                   $empPosition = !empty($interviewEmp->position) ? $interviewEmp->position : '';
                                   $reviewEmp = CompanyEmployee::join('exit_employee','exit_employee.employee_id','=','company_employee.employee_id')
                                               ->where('exit_employee.employee_id', $employee->id)
@@ -64,9 +74,9 @@ class SearchController extends Controller
                                                      <img class="profile-pic" src="' . $empPhoto . '">
                                                   </div>
                                                 </div>
-                                                <h2> ' . $empDetails->first_name . ' ' . $empDetails->middle_name . ' ' . $empDetails->last_name . '
+                                                <h2> ' . $empDetails->first_name . ' ' . $empDetails->middle_name . ' ' . $empDetails->last_name . '<small>('.$interviews.' Interviews going on)</small>
                                                 <span>'.$empPosition.'  at ' . $cmpName . '.</span>
-                                                <small>' . $empDetails->current_address. '</small>';
+                                                <small>' .$address->name.'</small>';
         
                                                if(!empty($reviewEmp)){     
                                                   $html .= '<small>'. number_format($reviewEmp->rating, 1, '.', ',') .' <span>reviews</span></small>';

@@ -945,19 +945,20 @@ class EmployeeController extends Controller
         return view('admin/current-employee',compact('current'));
       }
 
-        public function exportsCSV(Request $request)
+        public function exportsCSV()
         {
+      
           $fileName = 'employee.csv';
           // $employee = Employee::all();
-          $employee = Employee::leftjoin('employee_identity', 'employee_identity.employee_id', '=', 'employee.id')
-                    ->leftjoin('employee_officials', 'employee_officials.employee_id', '=', 'employee_identity.employee_id')
-                    ->leftjoin('employee_skills', 'employee_skills.employee_id', '=', 'employee_officials.employee_id')
-                    ->leftjoin('employee_workhistories', 'employee_workhistories.employee_id', '=', 'employee_skills.employee_id')
-                    ->leftjoin('employee_qualifications', 'employee_qualifications.employee_id', '=', 'employee_workhistories.employee_id')
-                    ->leftjoin('company_employee','company_employee.employee_id','=','employee.id')
+          $employee = Employee::leftJoin('company_employee','company_employee.employee_id','=','employee.id')
+                    ->leftJoin('employee_qualifications', 'employee_qualifications.employee_id', '=', 'company_employee.employee_id')
+                    ->leftJoin('employee_workhistories', 'employee_workhistories.employee_id', '=', 'employee_qualifications.employee_id')
+                    // ->join('employee_skills', 'employee_skills.employee_id', '=', 'employee_workhistories.employee_id')
+                    ->leftJoin('employee_officials', 'employee_officials.employee_id', '=', 'employee.id')
                     ->where('company_employee.company_id',Auth::user()->id)
-                    ->select('employee.*', 'employee_identity.*', 'employee_officials.*','employee_skills.*','employee_qualifications.*')
                     ->get();
+
+
     // dd($employee);
                   //   CompanyEmployee::join('users','users.id','=','company_employee.company_id')
                   //   ->join('employee','company_employee.employee_id','=','employee.id')->select('company_employee.*','users.id','employee.*')
