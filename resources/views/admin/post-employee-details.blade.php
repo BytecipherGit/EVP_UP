@@ -13,7 +13,7 @@
           </div>
           <div class="col-lg-4">
             <div class="main-right-button-box">
-              <a href="/post-employee"><img src="{{ asset('assets') }}/admin/images/back-icon.png"> Back</a>
+              <a href="/post-employee" class="button_background_color"><img src="{{ asset('assets') }}/admin/images/back-icon.png"><span class="button_text_color"> Back</span></a>
             </div>
           </div>
         </div>
@@ -38,19 +38,19 @@
       <div class="employee-tab-bar"> 
         <ul class="nav nav-tabs table-responsive-width primary_color" role="tablist">
           <li class="nav-item">
-            <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab">Basic Info</a>
+            <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab"><span class="secondary_color">Basic Info</span></a>
           </li>
           {{-- <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab">Identity</a>
           </li> --}}
           <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab">Qualification</a>
+            <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab"><span class="secondary_color">Qualification</span></a>
           </li>          
           <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#tabs-4" role="tab">Work History</a>
+            <a class="nav-link" data-toggle="tab" href="#tabs-4" role="tab"><span class="secondary_color">Work History</span></a>
           </li> 
           <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#tabs-5" role="tab">Feedback</a>
+            <a class="nav-link" data-toggle="tab" href="#tabs-5" role="tab"><span class="secondary_color">Feedback</span></a>
           </li> 
 
         </ul> 

@@ -40,7 +40,7 @@
             <div class="col-md-4">
                 <div class="main-right-button-box">
                     <a style="text-decoration:none" href="#" id="scheduleInterview" class="mr-2 button_background_color"><img
-                            src="{{ asset('assets') }}/admin/images/button-plus.png">Interview</a>
+                            src="{{ asset('assets') }}/admin/images/button-plus.png"><span class="button_text_color">Interview</span></a>
                     {{-- <a href="#" data-toggle="modal" data-target="#rejectbtninfo">Reject</a> --}}
                 </div>
             </div>
@@ -85,17 +85,17 @@
                     <table id="example" class="table-bordered table">
                         <thead class="primary_color">
                             <tr>
-                                <th>EVP Id</th>
-                                <th>Name</th>
+                                <th class="secondary_color">EVP Id</th>
+                                <th class="secondary_color">Name</th>
                                 {{-- <th>Email</th> --}}
-                                <th>Position</th>
-                                <th>Employee Interview Response</th>
-                                <th>Interview Type</th>
+                                <th class="secondary_color">Position</th>
+                                <th class="secondary_color">Employee Interview Response</th>
+                                <th class="secondary_color">Interview Type</th>
                                 {{-- <th>Hiring Status</th> --}}
                                 {{-- <th>Employee Status</th> --}}
                                 {{-- <th>Employee Comment</th> --}}
-                                <th>Send Remider</th>
-                                <th width="250px">Action</th>
+                                <th class="secondary_color">Send Remider</th>
+                                <th width="250px" class="secondary_color">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -221,7 +221,7 @@
                     <div style="font-size: 16px; display:none;" class="text-success" id="success">Onboarding successfully done.</div>
                         <div style="font-size: 16px; display:none;" class="text-danger" id="failed">Onboarding already done.</div>
                     <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn-primary-cust button_background_color">Submit</button>
+                    <button type="submit" class="btn-primary-cust button_background_color"><span class="button_text_color">Submit</span></button>
                 </div>
             </div>
         </form>
@@ -269,7 +269,7 @@
                         interview successfully done.</div>
                     <div style="font-size: 16px; display:none;" class="text-danger" id="failed">Interview already has been schedule for this employee.</div>
                     <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
-                    <button type="submit" id="scheduleInterviewSubmit" class="btn-primary-cust button_background_color">Submit</button>
+                    <button type="submit" id="scheduleInterviewSubmit" class="btn-primary-cust button_background_color"><span class="button_text_color">Submit</span></button>
                 </div>
             </div>
         </form>
@@ -299,7 +299,7 @@
                         round successfully done.</div>
                         <div style="font-size: 16px; display:none;" class="text-danger" id="failed">Interview already has been schedule for this employee.</div>
                     <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
-                    <button type="submit" id="nextRoundOfInterviewSubmit" class="btn-primary-cust button_background_color">Submit</button>
+                    <button type="submit" id="nextRoundOfInterviewSubmit" class="btn-primary-cust button_background_color"><span class="button_text_color">Submit</span></button>
                 </div>
             </div>
         </form>

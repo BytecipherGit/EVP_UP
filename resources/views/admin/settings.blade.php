@@ -178,7 +178,7 @@
                 </div>  
                 <div class="tab-button-bx">
                    {{-- <button type="button" class="btn-secondary-cust" href="{{ route('settings') }}">Cancel</button>  --}}
-                   <button type="submit" name="profile" class="btn-primary-cust button_background_color">Save Changes</button>
+                   <button type="submit" name="profile" class="btn-primary-cust button_background_color"><span class="button_text_color">Save Changes</span></button>
                 </div>           
               </div>
             </form>
@@ -208,7 +208,7 @@
                   </div>
                    <div class="tab-button-bx">
                    {{-- <button class="btn-secondary-cust">Cancel</button>  --}}
-                   <button type="submit" name="add_address" class="btn-primary-cust button_background_color">Change Save</button>
+                   <button type="submit" name="add_address" class="btn-primary-cust button_background_color"><span class="button_text_color">Save Changes</span></button>
                  </div> 
                 </div>   
             </form>
@@ -361,7 +361,7 @@
                 </div>   
                 <div class="tab-button-bx">
                    {{-- <button class="btn-secondary-cust">Cancel</button>  --}}
-                   <button type="submit" name="plan" class="btn-primary-cust button_background_color">Save Changes</button>
+                   <button type="submit" name="plan" class="btn-primary-cust button_background_color"><span class="button_text_color">Save Changes</span></button>
                 </div>   
               </form>        
               </div>         
@@ -404,7 +404,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
-          <button type="submit" name="dept" class="btn-primary-cust button_background_color">Save Changes</button>
+          <button type="submit" name="dept" class="btn-primary-cust button_background_color"><span class="button_text_color">Save Changes</span></button>
         </div>
       </div>
     </div>
@@ -443,7 +443,7 @@
         </div>
         <div class="modal-footer">
           {{-- <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button> --}}
-          <button type="submit" name="department_edit" class="btn-primary-cust button_background_color">Save Changes</button>
+          <button type="submit" name="department_edit" class="btn-primary-cust button_background_color"><span class="button_text_color">Save Changes</span></button>
         </div>
       </div>
     </div>
@@ -476,7 +476,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
-          <button type="submit" name="designation" class="btn-primary-cust button_background_color">Save Changes</button>
+          <button type="submit" name="designation" class="btn-primary-cust button_background_color"><span class="button_text_color">Save Changes</span></button>
         </div>
       </div>
     </div>
@@ -516,7 +516,7 @@
         
         <div class="modal-footer">
           <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
-          <button type="submit" name="desig_edit" class="btn-primary-cust button_background_color">Save Changes</button>
+          <button type="submit" name="desig_edit" class="btn-primary-cust button_background_color"><span class="button_text_color">Save Changes</span></button>
         </div>
       </div>
     </div>

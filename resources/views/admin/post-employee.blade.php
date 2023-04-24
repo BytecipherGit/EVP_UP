@@ -16,7 +16,7 @@
           </div>
           <div class="col-md-4">
             <div class="main-right-button-box">
-                  <a href="/employee" class="button_background_color"><img src="{{ asset('assets') }}/admin/images/back-icon.png"> Back</a>
+                  <a href="/employee" class="button_background_color"><img src="{{ asset('assets') }}/admin/images/back-icon.png"><span class="button_text_color">Back</span></a>
             </div>
           </div>
         </div>
@@ -29,13 +29,13 @@
             <thead class="primary_color">
               <tr>
                 {{-- <th><input type="checkbox" id="customcheck" name="customcheck"></th> --}}
-                <th>Employee Code</th>
-                <th>Employee Name</th>
+                <th class="secondary_color">Employee Code</span></th>
+                <th class="secondary_color">Employee Name</span></th>
                 {{-- <th>Employee Designation</th> --}}
-                <th>Employee Email</th>
+                <th class="secondary_color">Employee Email</span></th>
                 {{-- <th>Reporting Manager</th> --}}
               
-                <th>Action</th>
+                <th class="secondary_color">Action</span></th>
               </tr>
             </thead>
         

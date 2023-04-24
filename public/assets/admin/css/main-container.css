@@ -17,8 +17,15 @@ body{
 
 .checkboxexitform {
   width: 20px;
-  height: 17px;
+  height: 20px;
+  margin: 0 5px 0 0 !important;
+ 
 }
+
+.exitonboard{
+display: flex !important;
+}
+
 .filesample{
   display:contents;
 }
@@ -2510,6 +2517,9 @@ button.btn-secondary-custexport {
     line-height: 18px;
     color: #5533FF;
     margin: 9px 0 0;
+}
+.btnspan{
+  display: contents !important;
 }
 .search-hist-page h2 b{
     font-weight: bolder;

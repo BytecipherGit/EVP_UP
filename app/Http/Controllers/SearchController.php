@@ -57,446 +57,444 @@ class SearchController extends Controller
                                               ->select(DB::raw( 'AVG( exit_employee.rating) as rating'))
                                               ->first();
 
-                                  $html .= '<div class="search-hist-page">
-                                      <div class="search-hist-pro">
-                                        <div class="pro-img">
-                                          <div class="circle">
-                                             <img class="profile-pic" src="' . $empPhoto . '">
-                                          </div>
-                                        </div>
-                                        <h2> ' . $empDetails->first_name . ' ' . $empDetails->middle_name . ' ' . $empDetails->last_name . '
-                                        <span>'. $empPosition.'  at ' . $cmpName . '.</span>
-                                        <small>' .$cmpAddress. '</small>';
-                                    if($reviewEmp){
-                                           $html .='<small>'. number_format($reviewEmp->rating, 1, '.', ',') .' <span>reviews</span></small>';
-                                           }
-                                        $html .= '<span class="d-flex">
-                                          <button onclick="myFunction(' . $empDetails->id . ')" class="full-bg button_background_color">View Full Profile</button>
-                                          <button class="full-bg button_background_color" onclick="getInterview(' . $empDetails->id . ')" id="scheduleInterview" style="margin-left: 15px;">Add Candidate</button>
-                                          </span>
-                                        </h2>
-                                      </div>
-                                    </div>
-  
-                                     <div id="' . $empDetails->id . '" style="display: none;">
-  
-                                      <div class="serch-main-box">
-                                        <h2 class="">Basic Info</h2>
-                                        <div class=" pt-1">
-                                          <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                            <li class="nav-item">
-                                              <a class="nav-link active" id="home' . $empDetails->id . '-tab" data-toggle="tab" href="#home' . $empDetails->id . '" role="tab" aria-controls="home' . $empDetails->id . '"
-                                                aria-selected="true">About</a>
-                                            </li>
-                                            <li class="nav-item">
-                                              <a class="nav-link" id="profile' . $empDetails->id . '-tab" data-toggle="tab" href="#profile' . $empDetails->id . '" role="tab" aria-controls="profile' . $empDetails->id . '"
-                                                aria-selected="false">Contact</a>
-                                            </li>
-                                          </ul>
-                                          <div class="tab-content" id="myTabContent">
-                                            <div class="tab-pane fade show active" id="home' . $empDetails->id . '" role="tabpanel" aria-labelledby="home' . $empDetails->id . '-tab">
-                                              <div class="search-tab-part">
-                                                <p>Raw denim you probably have not heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro
-                                                keffiyeh dream catcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip
-                                                placeat salvia cillum iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi
-                                                qui.</p>
+                                              $html .= '<div class="search-hist-page">
+                                              <div class="search-hist-pro">
+                                                <div class="pro-img">
+                                                  <div class="circle">
+                                                     <img class="profile-pic" src="' . $empPhoto . '">
+                                                  </div>
+                                                </div>
+                                                <h2> ' . $empDetails->first_name . ' ' . $empDetails->middle_name . ' ' . $empDetails->last_name . '
+                                                <span>'.$empPosition.'  at ' . $cmpName . '.</span>
+                                                <small>' . $empDetails->current_address. '</small>';
+        
+                                               if(!empty($reviewEmp)){     
+                                                  $html .= '<small>'. number_format($reviewEmp->rating, 1, '.', ',') .'<span>reviews</span></small>';
+                                               }
+        
+                                                $html .='<span class="d-flex">
+                                                  <button onclick="myFunction(' . $empDetails->id . ')" class="full-bg button_background_color"><span class="button_text_color btnspan">View Full Profile</span></button>
+                                                  <button class="full-bg button_background_color" onclick="getInterview(' . $empDetails->id . ')" id="scheduleInterview" style="margin-left: 15px;"><span class="button_text_color btnspan">Add Candidate</span></button>
+                                                  </span>
+                                                </h2>
                                               </div>
                                             </div>
-                                            <div class="tab-pane fade" id="profile' . $empDetails->id . '" role="tabpanel" aria-labelledby="profile' . $empDetails->id . '-tab">
-                                              <div class="search-tab-part">
-                                                <h1>Contact Info </h1>
-                                                <div class="row">
-                                                  <div class="col-lg-4 col-md-6">
-                                                    <div class="d-flex mt-3">
-                                                      <div class="icon-part">
-                                                        <i class="fa fa-phone"></i>
+          
+          
+                                             <div id="' . $empDetails->id . '" style="display: none;">
+          
+                                              <div class="serch-main-box">
+                                                <h2 class="">Basic Info</h2>
+                                                <div class=" pt-1">
+                                                  <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                                    <li class="nav-item">
+                                                      <a class="nav-link active" id="home' . $empDetails->id . '-tab" data-toggle="tab" href="#home' . $empDetails->id . '" role="tab" aria-controls="home' . $empDetails->id . '"
+                                                        aria-selected="true">About</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                      <a class="nav-link" id="profile' . $empDetails->id . '-tab" data-toggle="tab" href="#profile' . $empDetails->id . '" role="tab" aria-controls="profile' . $empDetails->id . '"
+                                                        aria-selected="false">Contact</a>
+                                                    </li>
+                                                  </ul>
+                                                  <div class="tab-content" id="myTabContent">
+                                                    <div class="tab-pane fade show active" id="home' . $empDetails->id . '" role="tabpanel" aria-labelledby="home' . $empDetails->id . '-tab">
+                                                      <div class="search-tab-part">
+                                                        <p>Raw denim you probably have not heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro
+                                                        keffiyeh dream catcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip
+                                                        placeat salvia cillum iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi
+                                                        qui.</p>
                                                       </div>
-                                                      <div class="coneant">
-                                                        <h4>Phone</h4>
-                                                        <p>' . $empDetails->phone . ' </p>
+                                                    </div>
+                                                    <div class="tab-pane fade" id="profile' . $empDetails->id . '" role="tabpanel" aria-labelledby="profile' . $empDetails->id . '-tab">
+                                                      <div class="search-tab-part">
+                                                        <h1>Contact Info </h1>
+                                                        <div class="row">
+                                                          <div class="col-lg-4 col-md-6">
+                                                            <div class="d-flex mt-3">
+                                                              <div class="icon-part">
+                                                                <i class="fa fa-phone"></i>
+                                                              </div>
+                                                              <div class="coneant">
+                                                                <h4>Phone</h4>
+                                                                <p>' . $empDetails->phone . ' </p>
+                                                              </div>
+                                                            </div>
+                                                          </div>
+                                                          <div class="col-lg-4 col-md-6">
+                                                            <div class="d-flex mt-3">
+                                                              <div class="icon-part">
+                                                                <i class="fa fa-envelope-o"></i>
+                                                              </div>
+                                                              <div class="coneant">
+                                                                <h4>Email</h4>
+                                                                <p>' . $empDetails->email . '</p>
+                                                              </div>
+                                                            </div>
+                                                            </div>';
+                                                            if(!empty($joinDate)){
+                                                                     
+                                                                 $html .='<div class="col-lg-4 col-md-6">
+                                                                 <div class="d-flex mt-3">
+                                                                   <div class="icon-part">
+                                                                     <i class="fa fa-users"></i>
+                                                                   </div>
+                                                                   <div class="coneant">
+                                                                     <h4>Join </h4>
+                                                                     <p>' . $joinDate->date_of_joining . '</p>
+                                                                    </div>';
+                                                             }
+                                                                 $html .='</div>
+                                                          </div>
+                                                        </div>
                                                       </div>
                                                     </div>
                                                   </div>
-                                                  <div class="col-lg-4 col-md-6">
-                                                    <div class="d-flex mt-3">
-                                                      <div class="icon-part">
-                                                        <i class="fa fa-envelope-o"></i>
-                                                      </div>
-                                                      <div class="coneant">
-                                                        <h4>Email</h4>
-                                                        <p>' . $empDetails->email . '</p>
-                                                      </div>
-                                                    </div>
-                                                  </div>';
-                                               if(!empty($joinDate)){
-                                                        
-                                                    $html .='<div class="col-lg-4 col-md-6">
-                                                    <div class="d-flex mt-3">
-                                                      <div class="icon-part">
-                                                        <i class="fa fa-users"></i>
-                                                      </div>
-                                                      <div class="coneant">
-                                                        <h4>Join </h4>
-                                                        <p>' . $joinDate->date_of_joining . '</p>
-                                                       </div>';
-                                                }
-                                                    $html .='</div>
-                                                  </div>
+          
                                                 </div>
-                                              </div>
-                                            </div>
-                                          </div>
-  
-                                        </div>
-                                      </div>';
-
-                                      // $experiences = Employee::leftJoin('employee_workhistories', 'employee_workhistories.employee_id', '=', 'employee.id')
-                                      //           ->leftJoin('employee_officials', 'employee_officials.employee_id', '=', 'employee.id')
-                                      //           ->where('employee_workhistories.employee_id',$empDetails->id)
-                                      //           ->select('employee_workhistories.*','employee_officials.*')
-                                      //           ->get();
-                                  $experiences = Employee::join('company_employee', 'company_employee.employee_id', '=', 'employee.id')
-                                                ->join('exit_employee','exit_employee.employee_id','=','employee.id')
-                                                ->join('users', 'users.id', '=', 'company_employee.company_id')
-                                                ->where('employee.id',$empDetails->id)
-                                                ->select('users.org_name','company_employee.*','users.address')
-                                                ->get();
-
-                                    //  dd($experiences);
-                                      if(count($experiences) > 0){
-                                        // foreach($experiences as $key => $experience){
-                                        
-                                          $html .= '<div class="serch-main-box">
-                                                   <h2 class="">Experience</h2>
-                                                  ';
-  
-                                              foreach($experiences as $key => $experience){
-                                                    $html .='<div class="d-flex pt-3">
-                                                    <div class="searc-icon-bx">
-                                                      <img src="assets/admin/images/bytecipher.png">
-                                                    </div>
-                                                    <div class="searc-icon-bx-text">
-                                                      <h2>'.$experience->designation.'</h2>
-                                                      <h4>'.$experience->org_name.' ' .$experience->emp_type.' </h4>
-                                                      <p class="pt-2"><span> '.$experience->start_date.' - ';
-
-                                                     if(empty($experience->end_date)){
-                                                      $html .= 'Present </span></p>';
-                                                      }
-                                                      else{
-                                                        $html .= $experience->end_date.'</span></p>';
-                                                      }
-
-                                                      $html .='<p><span>'.$experience->address.'</span></p>
-                                                      <p class="pt-2">'.$experience->review.'</p>';
-
-                                         if(!empty($experience->rating)){
-                                                  $html .='<fieldset class="rating">';
-                                                      if($experience->rating == 5){
-
-                                                        $html .= '<input type="radio"  name="textiles-rating'.$experience->id.'" value="5" checked=""/>
-                                                          <label class = "full" ></label>
-                                                          <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"/>
-                                                          <label class="half" ></label>
+                                              </div>';
+                                              // $experiences = Employee::leftJoin('employee_workhistories', 'employee_workhistories.employee_id', '=', 'employee.id')
+                                              //           ->leftJoin('employee_officials', 'employee_officials.employee_id', '=', 'employee.id')
+                                              //           ->where('employee_workhistories.employee_id',$empDetails->id)
+                                              //           ->select('employee_workhistories.*','employee_officials.*')
+                                              //           ->get();
+                                            $experiences = Employee::join('company_employee', 'company_employee.employee_id', '=', 'employee.id')
+                                                        ->join('users', 'users.id', '=', 'company_employee.company_id')
+                                                        ->where('employee.id',$empDetails->id)
+                                                        ->select('users.org_name','company_employee.*','users.address')
+                                                        ->get();
+                                              if(count($experiences) > 0){
+                                                // foreach($experiences as $key => $experience){
+                                                
+                                                  $html .= '<div class="serch-main-box">
+                                                           <h2 class="">Experience</h2>
+                                                          ';
           
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
-                                                          <label class = "full" ></label>
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
-                                                          <label class="half" ></label>
-          
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
-                                                          <label class = "full" ></label>
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
-                                                          <label class="half" ></label>
-          
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
-                                                          <label class = "full" ></label>
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
-                                                          <label class="half" ></label>
-          
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
-                                                          <label class = "full" ></label>
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
-                                                          <label class="half"></label>';
-                                                      }
-
-                                                      if($experience->rating == 4.5){
-                                                        $html .= '<input type="radio"  name="textiles-rating'.$experience->id.'" value="5"/>
-                                                        <label class = "full" ></label>
-                                                        <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5" checked=""/>
-                                                        <label class="half" ></label>
+                                                          foreach($experiences as $key => $experience){
+                                                            $html .='<div class="d-flex pt-3">
+                                                            <div class="searc-icon-bx">
+                                                              <img src="assets/admin/images/bytecipher.png">
+                                                            </div>
+                                                            <div class="searc-icon-bx-text">
+                                                              <h2>'.$experience->designation.'</h2>
+                                                              <h4>'.$experience->org_name.'  '.$experience->emp_type.'</h4>
+                                                              <p class="pt-2"><span> '.$experience->start_date.' - ' ;
+                                                              
+                                                              if(empty($experience->end_date)){
+                                                                $html .= 'Present </span></p>';
+                                                              }
+                                                              else{
+                                                                  $html .= $experience->end_date.'</span></p>';
+                                                              }
         
-                                                        <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
-                                                        <label class = "full" ></label>
-                                                        <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
-                                                        <label class="half" ></label>
+                                                             $html .= '<p><span>Indore, Madhya Pradesh, India</span></p>
+                                                              <p class="pt-2">'.$experience->review.'</p>';
         
-                                                        <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
-                                                        <label class = "full" ></label>
-                                                        <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
-                                                        <label class="half" ></label>
+                                                    if(!empty($experience->rating)){
+                                                          $html .='<fieldset class="rating">';
+                                                              if($experience->rating == 5){
         
-                                                        <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
-                                                        <label class = "full" ></label>
-                                                        <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
-                                                        <label class="half" ></label>
+                                                                $html .= '<input type="radio"  name="textiles-rating'.$experience->id.'" value="5" checked=""/>
+                                                                  <label class = "full" ></label>
+                                                                  <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"/>
+                                                                  <label class="half" ></label>
+                  
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
+                                                                  <label class = "full" ></label>
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                                  <label class="half" ></label>
+                  
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                                  <label class = "full" ></label>
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                                  <label class="half" ></label>
+                  
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                                  <label class = "full" ></label>
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                                  <label class="half" ></label>
+                  
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                                  <label class = "full" ></label>
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                                  <label class="half"></label>';
+                                                              }
         
-                                                        <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
-                                                        <label class = "full" ></label>
-                                                        <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
-                                                        <label class="half" ></label>';
+                                                              if($experience->rating == 4.5){
+                                                                $html .= '<input type="radio"  name="textiles-rating'.$experience->id.'" value="5"/>
+                                                                <label class = "full" ></label>
+                                                                <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5" checked=""/>
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                                <label class="half" ></label>
+                
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                                <label class = "full" ></label>
+                                                                <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                                <label class="half" ></label>';
+                                                              }
+        
+                                                              if($experience->rating == 4){
+                                                                  $html .=' <input type="radio"  name="textiles-rating'.$experience->id.'" value="5"/>
+                                                                  <label class = "full" ></label>
+                                                                  <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"  />
+                                                                  <label class="half" ></label>
+                  
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="4" checked=""/>
+                                                                  <label class = "full" ></label>
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                                  <label class="half" ></label>
+                  
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                                  <label class = "full" ></label>
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                                  <label class="half" ></label>
+                  
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                                  <label class = "full" ></label>
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                                  <label class="half" ></label>
+                  
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                                  <label class = "full" ></label>
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                                  <label class="half" ></label>';
+                                                              }
+        
+                                                              if($experience->rating == 3.5){
+                                                                  $html .='<input type="radio"  name="textiles-rating'.$experience->id.'" value="5"/>
+                                                                  <label class = "full" ></label>
+                                                                  <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"  />
+                                                                  <label class="half" ></label>
+                  
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
+                                                                  <label class = "full" ></label>
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" checked=""/>
+                                                                  <label class="half" ></label>
+                  
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                                  <label class = "full" ></label>
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                                  <label class="half" ></label>
+                  
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                                  <label class = "full" ></label>
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                                  <label class="half" ></label>
+                  
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                                  <label class = "full" ></label>
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                                  <label class="half" ></label>';
+                                                              }
+        
+                                                              if($experience->rating == 3){
+                                                                  $html .='<input type="radio" name="textiles-rating'.$experience->id.'" value="5" />
+                                                                  <label class = "full"></label>
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="4.5"  />
+                                                                  <label class="half"></label>
+                  
+                                                                  <input type="radio"  name="textiles-rating'.$experience->id.'" value="4"/>
+                                                                  <label class = "full" ></label>
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                                  <label class="half"></label>
+                  
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="3" checked=""/>
+                                                                  <label class = "full"></label>
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                                  <label class="half"></label>
+                  
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                                  <label class = "full"></label>
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                                  <label class="half"></label>
+                  
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                                  <label class = "full"></label>
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                                  <label class="half"></label>';
+                                                              }
+        
+                                                              if($experience->rating == 2.5){
+                                                                  $html .='<input type="radio"  name="textiles-rating'.$experience->id.'" value="5"/>
+                                                                  <label class = "full" ></label>
+                                                                  <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"  />
+                                                                  <label class="half" ></label>
+                  
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
+                                                                  <label class = "full" ></label>
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                                  <label class="half" ></label>
+                  
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                                  <label class = "full" ></label>
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" checked=""/>
+                                                                  <label class="half" ></label>
+                  
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                                  <label class = "full" ></label>
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                                  <label class="half" ></label>
+                  
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                                  <label class = "full" ></label>
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                                  <label class="half" ></label>';
+                                                              }
+        
+                                                              if($experience->rating == 2){
+                                                                  $html .='<input type="radio"  name="textiles-rating'.$experience->id.'" value="5"/>
+                                                                  <label class = "full" ></label>
+                                                                  <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"  />
+                                                                  <label class="half" ></label>
+                  
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
+                                                                  <label class = "full" ></label>
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                                  <label class="half" ></label>
+                  
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                                  <label class = "full" ></label>
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                                  <label class="half" ></label>
+                  
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="2" checked=""/>
+                                                                  <label class = "full" ></label>
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                                  <label class="half" ></label>
+                  
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                                  <label class = "full" ></label>
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                                  <label class="half" ></label>';
+                                                              }
+        
+                                                              if($experience->rating == 1.5){
+                                                                  $html .='<input type="radio"  name="textiles-rating'.$experience->id.'" value="5"/>
+                                                                  <label class = "full" ></label>
+                                                                  <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"  />
+                                                                  <label class="half" ></label>
+                  
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
+                                                                  <label class = "full" ></label>
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                                  <label class="half" ></label>
+                  
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                                  <label class = "full" ></label>
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                                  <label class="half" ></label>
+                  
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                                  <label class = "full" ></label>
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" checked=""/>
+                                                                  <label class="half" ></label>
+                  
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                                  <label class = "full" ></label>
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                                  <label class="half" ></label>';
+                                                              }
+        
+                                                              if($experience->rating == 1){
+                                                                  $html .='<input type="radio"  name="textiles-rating'.$experience->id.'" value="5"/>
+                                                                  <label class ="full" ></label>
+                                                                  <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"  />
+                                                                  <label class="half" ></label>
+                  
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
+                                                                  <label class = "full" ></label>
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                                  <label class="half" ></label>
+                  
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                                  <label class = "full" ></label>
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                                  <label class="half" ></label>
+                  
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                                  <label class = "full" ></label>
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                                  <label class="half" ></label>
+                  
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="1" checked="" />
+                                                                  <label class = "full" ></label>
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
+                                                                  <label class="half" ></label>';
+                                                              }
+        
+                                                              if($experience->rating == 0.5){
+                                                                  $html .='<input type="radio"  name="textiles-rating'.$experience->id.'" value="5" />
+                                                                  <label class = "full" ></label>
+                                                                  <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"  />
+                                                                  <label class="half" ></label>
+                  
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
+                                                                  <label class = "full" ></label>
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
+                                                                  <label class="half" ></label>
+                  
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
+                                                                  <label class = "full" ></label>
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
+                                                                  <label class="half"></label>
+                  
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
+                                                                  <label class = "full"></label>
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
+                                                                  <label class="half"></label>
+                  
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
+                                                                  <label class="full"></label>
+                                                                  <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" checked=""/>
+                                                                  <label class="half"></label></fieldset>';
+                                                              }
+                                                            }
+                                                              $html .='</div>
+                                                            <img src="assets/admin/images/verified-icon.png" class="verified-img"></div><hr>';
+                                                          }
+                                                  $html .= '</div>';
+          
+                                               }
+                                         $educations = Employee::leftJoin('employee_qualifications', 'employee_qualifications.employee_id', '=', 'employee.id')
+                                                  ->where('employee_qualifications.employee_id',$empDetails->id)
+                                                  ->select('employee_qualifications.*')
+                                                  ->get();
+                                            if(count($educations)>0){
+                                                  $html .= '<div class="serch-main-box"> 
+                                                      <h2 class="">Education Details</h2>';
+                                              foreach($educations as $education){
+                                                      $html .='<div class="d-flex pt-3">
+                                                        <div class="searc-icon-bx">
+                                                          <img src="assets/admin/images/Sage_University_logo.png">
+                                                        </div>
+                                                        <div class="searc-icon-bx-text">
+                                                          <h2>'.$education->inst_name.'</h2>
+                                                          <h4>'.$education->degree.' , '.$education->subject.'</h4>
+                                                          <p class="pt-2"><span>'.$education->duration_from.' - '.$education->duration_to.'</span></p>
+                                                        </div>
+                                                        <img src="assets/admin/images/verified-icon.png" class="verified-img">
+                                                      </div><hr>';
                                                       }
-
-                                                      if($experience->rating == 4){
-                                                          $html .=' <input type="radio"  name="textiles-rating'.$experience->id.'" value="5"/>
-                                                          <label class = "full" ></label>
-                                                          <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"  />
-                                                          <label class="half" ></label>
-          
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="4" checked=""/>
-                                                          <label class = "full" ></label>
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
-                                                          <label class="half" ></label>
-          
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
-                                                          <label class = "full" ></label>
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
-                                                          <label class="half" ></label>
-          
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
-                                                          <label class = "full" ></label>
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
-                                                          <label class="half" ></label>
-          
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
-                                                          <label class = "full" ></label>
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
-                                                          <label class="half" ></label>';
-                                                      }
-
-                                                      if($experience->rating == 3.5){
-                                                          $html .='<input type="radio"  name="textiles-rating'.$experience->id.'" value="5"/>
-                                                          <label class = "full" ></label>
-                                                          <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"  />
-                                                          <label class="half" ></label>
-          
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
-                                                          <label class = "full" ></label>
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" checked=""/>
-                                                          <label class="half" ></label>
-          
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
-                                                          <label class = "full" ></label>
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
-                                                          <label class="half" ></label>
-          
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
-                                                          <label class = "full" ></label>
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
-                                                          <label class="half" ></label>
-          
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
-                                                          <label class = "full" ></label>
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
-                                                          <label class="half" ></label>';
-                                                      }
-
-                                                      if($experience->rating == 3){
-                                                          $html .='<input type="radio" name="textiles-rating'.$experience->id.'" value="5" />
-                                                          <label class = "full"></label>
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="4.5"  />
-                                                          <label class="half"></label>
-          
-                                                          <input type="radio"  name="textiles-rating'.$experience->id.'" value="4"/>
-                                                          <label class = "full" ></label>
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
-                                                          <label class="half"></label>
-          
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="3" checked=""/>
-                                                          <label class = "full"></label>
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
-                                                          <label class="half"></label>
-          
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
-                                                          <label class = "full"></label>
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
-                                                          <label class="half"></label>
-          
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
-                                                          <label class = "full"></label>
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
-                                                          <label class="half"></label>';
-                                                      }
-
-                                                      if($experience->rating == 2.5){
-                                                          $html .='<input type="radio"  name="textiles-rating'.$experience->id.'" value="5"/>
-                                                          <label class = "full" ></label>
-                                                          <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"  />
-                                                          <label class="half" ></label>
-          
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
-                                                          <label class = "full" ></label>
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
-                                                          <label class="half" ></label>
-          
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
-                                                          <label class = "full" ></label>
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" checked=""/>
-                                                          <label class="half" ></label>
-          
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
-                                                          <label class = "full" ></label>
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
-                                                          <label class="half" ></label>
-          
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
-                                                          <label class = "full" ></label>
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
-                                                          <label class="half" ></label>';
-                                                      }
-
-                                                      if($experience->rating == 2){
-                                                          $html .='<input type="radio"  name="textiles-rating'.$experience->id.'" value="5"/>
-                                                          <label class = "full" ></label>
-                                                          <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"  />
-                                                          <label class="half" ></label>
-          
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
-                                                          <label class = "full" ></label>
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
-                                                          <label class="half" ></label>
-          
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
-                                                          <label class = "full" ></label>
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
-                                                          <label class="half" ></label>
-          
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="2" checked=""/>
-                                                          <label class = "full" ></label>
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
-                                                          <label class="half" ></label>
-          
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
-                                                          <label class = "full" ></label>
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
-                                                          <label class="half" ></label>';
-                                                      }
-
-                                                      if($experience->rating == 1.5){
-                                                          $html .='<input type="radio"  name="textiles-rating'.$experience->id.'" value="5"/>
-                                                          <label class = "full" ></label>
-                                                          <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"  />
-                                                          <label class="half" ></label>
-          
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
-                                                          <label class = "full" ></label>
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
-                                                          <label class="half" ></label>
-          
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
-                                                          <label class = "full" ></label>
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
-                                                          <label class="half" ></label>
-          
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
-                                                          <label class = "full" ></label>
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" checked=""/>
-                                                          <label class="half" ></label>
-          
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
-                                                          <label class = "full" ></label>
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
-                                                          <label class="half" ></label>';
-                                                      }
-
-                                                      if($experience->rating == 1){
-                                                          $html .='<input type="radio"  name="textiles-rating'.$experience->id.'" value="5"/>
-                                                          <label class ="full" ></label>
-                                                          <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"  />
-                                                          <label class="half" ></label>
-          
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
-                                                          <label class = "full" ></label>
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
-                                                          <label class="half" ></label>
-          
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
-                                                          <label class = "full" ></label>
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
-                                                          <label class="half" ></label>
-          
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
-                                                          <label class = "full" ></label>
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
-                                                          <label class="half" ></label>
-          
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="1" checked="" />
-                                                          <label class = "full" ></label>
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" />
-                                                          <label class="half" ></label>';
-                                                      }
-
-                                                      if($experience->rating == 0.5){
-                                                          $html .='<input type="radio"  name="textiles-rating'.$experience->id.'" value="5" />
-                                                          <label class = "full" ></label>
-                                                          <input type="radio"  name="textiles-rating'.$experience->id.'" value="4.5"  />
-                                                          <label class="half" ></label>
-          
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="4"/>
-                                                          <label class = "full" ></label>
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="3.5" />
-                                                          <label class="half" ></label>
-          
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="3" />
-                                                          <label class = "full" ></label>
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="2.5" />
-                                                          <label class="half"></label>
-          
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="2" />
-                                                          <label class = "full"></label>
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="1.5" />
-                                                          <label class="half"></label>
-          
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="1" />
-                                                          <label class="full"></label>
-                                                          <input type="radio" name="textiles-rating'.$experience->id.'" value="0.5" checked=""/>
-                                                          <label class="half"></label></fieldset>';
-                                                      }
-                                                    }
-                                                      $html .='</div>
-                                                    <img src="assets/admin/images/verified-icon.png" class="verified-img"></div><hr>';
-                                                  }
-
-                                          $html .= '</div>';
-  
-                                       }
-                                 $educations = Employee::leftJoin('employee_qualifications', 'employee_qualifications.employee_id', '=', 'employee.id')
-                                          ->where('employee_qualifications.employee_id',$empDetails->id)
-                                          ->select('employee_qualifications.*')
-                                          ->get();
-                                    if(count($educations)>0){
-                                          $html .= '<div class="serch-main-box"> 
-                                              <h2 class="">Education Details</h2>';
-                                      foreach($educations as $education){
-                                              $html .='<div class="d-flex pt-3">
-                                                <div class="searc-icon-bx">
-                                                  <img src="assets/admin/images/Sage_University_logo.png">
-                                                </div>
-                                                <div class="searc-icon-bx-text">
-                                                  <h2>'.$education->inst_name.'</h2>
-                                                  <h4>'.$education->degree.' , '.$education->subject.'</h4>
-                                                  <p class="pt-2"><span>'.$education->duration_from.' - '.$education->duration_to.'</span></p>
-                                                </div>
-                                                <img src="assets/admin/images/verified-icon.png" class="verified-img">
-                                              </div><hr>';
-                                              }
-                                            $html .='</div>';  
-                                     }
-                                          
-                                    $html .= '</div>
-                                  </div>';
-                              }
-                          }
+                                                    $html .='</div>';  
+                                             }
+                                                  
+                                            $html .= '</div>
+                                          </div>';
+                                      }
+                                  }
                           return FacadesResponse::json(['success' => true, 'value' => $html]);
                       }
 
@@ -543,11 +541,11 @@ class SearchController extends Controller
                                       <span>'.$empPosition.'  at ' . $cmpName . '.</span>
                                       <small>' . $empDetails->current_address. '</small>';
                                       if($reviewEmp){
-                                        $html .='<small>'. number_format($reviewEmp->rating, 1, '.', ',') .' <span>reviews</span></small>';
+                                        $html .='<small>'. number_format($reviewEmp->rating, 1, '.', ',') .'  <span> reviews</span></small>';
                                         }
                                       $html .='<span class="d-flex">
-                                        <button onclick="myFunction(' . $empDetails->id . ')" class="full-bg button_background_color">View Full Profile</button>
-                                        <button class="only-border-btn" onclick="getInterview(' . $empDetails->id . ')" id="scheduleInterview">Add Candidate</button>
+                                        <button onclick="myFunction(' . $empDetails->id . ')" class="full-bg button_background_color"><span class="button_text_color btnspan">View Full Profile</span></button>
+                                        <button class="full-bg button_background_color" onclick="getInterview(' . $empDetails->id . ')" id="scheduleInterview" style="margin-left: 15px;"><span class="button_text_color btnspan">Add Candidate</span></button>
                                         </span>
                                       </h2>
                                     </div>
@@ -603,18 +601,20 @@ class SearchController extends Controller
                                                       <p>' . $empDetails->email . '</p>
                                                     </div>
                                                   </div>
-                                                </div>
-                                             
-                                                <div class="col-lg-4 col-md-6">
-                                                  <div class="d-flex mt-3">
-                                                    <div class="icon-part">
-                                                      <i class="fa fa-users"></i>
-                                                    </div>
-                                                    <div class="coneant">
-                                                      <h4>Join </h4>
-                                                      <p>'. $joinDate->date_of_joining . '</p>
-                                                    </div>
-                                                  </div>
+                                                  </div>';
+                                                  if(!empty($joinDate)){
+                                                           
+                                                       $html .='<div class="col-lg-4 col-md-6">
+                                                       <div class="d-flex mt-3">
+                                                         <div class="icon-part">
+                                                           <i class="fa fa-users"></i>
+                                                         </div>
+                                                         <div class="coneant">
+                                                           <h4>Join </h4>
+                                                           <p>' . $joinDate->date_of_joining . '</p>
+                                                          </div>';
+                                                   }
+                                                       $html .='</div>
                                                 </div>
                                               </div>
                                             </div>
@@ -1017,8 +1017,8 @@ class SearchController extends Controller
                                        }
 
                                         $html .='<span class="d-flex">
-                                          <button onclick="myFunction(' . $empDetails->id . ')" class="full-bg button_background_color">View Full Profile</button>
-                                          <button class="only-border-btn" onclick="getInterview(' . $empDetails->id . ')" id="scheduleInterview">Add Candidate</button>
+                                          <button onclick="myFunction(' . $empDetails->id . ')" class="full-bg button_background_color"><span class="button_text_color btnspan">View Full Profile</span></button>
+                                          <button class="full-bg button_background_color" onclick="getInterview(' . $empDetails->id . ')" id="scheduleInterview" style="margin-left: 15px;"><span class="button_text_color btnspan">Add Candidate</span></button>
                                           </span>
                                         </h2>
                                       </div>
@@ -1074,18 +1074,20 @@ class SearchController extends Controller
                                                         <p>' . $empDetails->email . '</p>
                                                       </div>
                                                     </div>
-                                                  </div>
-                                               
-                                                  <div class="col-lg-4 col-md-6">
-                                                    <div class="d-flex mt-3">
-                                                      <div class="icon-part">
-                                                        <i class="fa fa-users"></i>
-                                                      </div>
-                                                      <div class="coneant">
-                                                        <h4>Join </h4>
-                                                        <p>' . $joinDate->date_of_joining . '</p>
-                                                      </div>
-                                                    </div>
+                                                    </div>';
+                                                    if(!empty($joinDate)){
+                                                             
+                                                         $html .='<div class="col-lg-4 col-md-6">
+                                                         <div class="d-flex mt-3">
+                                                           <div class="icon-part">
+                                                             <i class="fa fa-users"></i>
+                                                           </div>
+                                                           <div class="coneant">
+                                                             <h4>Join </h4>
+                                                             <p>' . $joinDate->date_of_joining . '</p>
+                                                            </div>';
+                                                     }
+                                                         $html .='</div>
                                                   </div>
                                                 </div>
                                               </div>
@@ -1478,15 +1480,15 @@ class SearchController extends Controller
                                              <img class="profile-pic" src="' . $empPhoto . '">
                                           </div>
                                         </div>
-                                        <h2> ' . $empDetails->first_name . ' ' . $empDetails->middle_name . ' ' . $empDetails->last_name . '
-                                        <span>'.$empPosition.'  at ' . $cmpName . '.</span>
+                                        <h2> ' . $empDetails->first_name . ' ' . $empDetails->middle_name . ' ' . $empDetails->last_name . '<b></b>
+                                        <span>' . $empPosition.'  at ' . $cmpName . '.</span>
                                         <small>' . $empDetails->current_address. '</small>';
                                    if($reviewEmp){
                                          $html .='<small>'. number_format($reviewEmp->rating, 1, '.', ',') .' <span>reviews</span></small>';
                                        }
                                         $html .='<span class="d-flex">
-                                          <button onclick="myFunction(' . $empDetails->id . ')" class="full-bg button_background_color">View Full Profile</button>
-                                          <button class="only-border-btn" onclick="getInterview(' . $empDetails->id . ')" id="scheduleInterview">Add Candidate</button>
+                                          <button onclick="myFunction(' . $empDetails->id . ')" class="full-bg button_background_color"><span class="button_text_color btnspan">View Full Profile</span></button>
+                                          <button class="full-bg button_background_color" onclick="getInterview(' . $empDetails->id . ')" id="scheduleInterview" style="margin-left: 15px;"><span class="button_text_color btnspan">Add Candidate</span></button>
                                           </span>
                                         </h2>
                                       </div>
@@ -1542,18 +1544,20 @@ class SearchController extends Controller
                                                         <p>' . $empDetails->email . '</p>
                                                       </div>
                                                     </div>
-                                                  </div>
-                                               
-                                                  <div class="col-lg-4 col-md-6">
-                                                    <div class="d-flex mt-3">
-                                                      <div class="icon-part">
-                                                        <i class="fa fa-users"></i>
-                                                      </div>
-                                                      <div class="coneant">
-                                                        <h4>Join </h4>
-                                                        <p>' . $joinDate->date_of_joining . '</p>
-                                                      </div>
-                                                    </div>
+                                                    </div>';
+                                                    if(!empty($joinDate)){
+                                                             
+                                                         $html .='<div class="col-lg-4 col-md-6">
+                                                         <div class="d-flex mt-3">
+                                                           <div class="icon-part">
+                                                             <i class="fa fa-users"></i>
+                                                           </div>
+                                                           <div class="coneant">
+                                                             <h4>Join </h4>
+                                                             <p>' . $joinDate->date_of_joining . '</p>
+                                                            </div>';
+                                                     }
+                                                         $html .='</div>
                                                   </div>
                                                 </div>
                                               </div>
@@ -1955,8 +1959,8 @@ class SearchController extends Controller
                                           $html .='<small>'. number_format($reviewEmp->rating, 1, '.', ',') .' <span>reviews</span></small>';
                                    }
                                        $html .=' <span class="d-flex">
-                                          <button onclick="myFunction(' . $empDetails->id . ')" class="full-bg button_background_color">View Full Profile</button>
-                                          <button class="only-border-btn" onclick="getInterview(' . $empDetails->id . ')" id="scheduleInterview">Add Candidate</button>
+                                          <button onclick="myFunction(' . $empDetails->id . ')" class="full-bg button_background_color"><span class="button_text_color btnspan">View Full Profile</span></button>
+                                          <button class="full-bg button_background_color" onclick="getInterview(' . $empDetails->id . ')" id="scheduleInterview" style="margin-left: 15px;"><span class="button_text_color btnspan">Add Candidate</span></button>
                                           </span>
                                         </h2>
                                       </div>
@@ -2012,18 +2016,20 @@ class SearchController extends Controller
                                                         <p>' . $empDetails->email . '</p>
                                                       </div>
                                                     </div>
-                                                  </div>
-                                               
-                                                  <div class="col-lg-4 col-md-6">
-                                                    <div class="d-flex mt-3">
-                                                      <div class="icon-part">
-                                                        <i class="fa fa-users"></i>
-                                                      </div>
-                                                      <div class="coneant">
-                                                        <h4>Join </h4>
-                                                        <p>' . $joinDate->date_of_joining . '</p>
-                                                      </div>
-                                                    </div>
+                                                    </div>';
+                                                    if(!empty($joinDate)){
+                                                             
+                                                         $html .='<div class="col-lg-4 col-md-6">
+                                                         <div class="d-flex mt-3">
+                                                           <div class="icon-part">
+                                                             <i class="fa fa-users"></i>
+                                                           </div>
+                                                           <div class="coneant">
+                                                             <h4>Join </h4>
+                                                             <p>' . $joinDate->date_of_joining . '</p>
+                                                            </div>';
+                                                     }
+                                                         $html .='</div>
                                                   </div>
                                                 </div>
                                               </div>
@@ -2426,8 +2432,8 @@ class SearchController extends Controller
                                           $html .='<small>'. number_format($reviewEmp->rating, 1, '.', ',') .' <span>reviews</span></small>';
                                           }
                                       $html .= '<span class="d-flex">
-                                          <button onclick="myFunction(' . $empDetails->id . ')" class="full-bg button_background_color">View Full Profile</button>
-                                          <button class="only-border-btn" onclick="getInterview(' . $empDetails->id . ')" id="scheduleInterview">Add Candidate</button>
+                                          <button onclick="myFunction(' . $empDetails->id . ')" class="full-bg button_background_color"><span class="button_text_color btnspan">View Full Profile</span></button>
+                                          <button class="full-bg button_background_color" onclick="getInterview(' . $empDetails->id . ')" id="scheduleInterview" style="margin-left: 15px;"><span class="button_text_color btnspan">Add Candidate</span></button>
                                           </span>
                                         </h2>
                                       </div>
@@ -2483,18 +2489,20 @@ class SearchController extends Controller
                                                         <p>' . $empDetails->email . '</p>
                                                       </div>
                                                     </div>
-                                                  </div>
-                                               
-                                                  <div class="col-lg-4 col-md-6">
-                                                    <div class="d-flex mt-3">
-                                                      <div class="icon-part">
-                                                        <i class="fa fa-users"></i>
-                                                      </div>
-                                                      <div class="coneant">
-                                                        <h4>Join </h4>
-                                                        <p>' . $joinDate->date_of_joining . '</p>
-                                                      </div>
-                                                    </div>
+                                                    </div>';
+                                                    if(!empty($joinDate)){
+                                                             
+                                                         $html .='<div class="col-lg-4 col-md-6">
+                                                         <div class="d-flex mt-3">
+                                                           <div class="icon-part">
+                                                             <i class="fa fa-users"></i>
+                                                           </div>
+                                                           <div class="coneant">
+                                                             <h4>Join </h4>
+                                                             <p>' . $joinDate->date_of_joining . '</p>
+                                                            </div>';
+                                                     }
+                                                         $html .='</div>
                                                   </div>
                                                 </div>
                                               </div>
@@ -2893,8 +2901,8 @@ class SearchController extends Controller
                                            $html .='<small>'. number_format($reviewEmp->rating, 1, '.', ',') .' <span>reviews</span></small>';
                                            }
                                        $html .= '<span class="d-flex">
-                                          <button onclick="myFunction(' . $empDetails->id . ')" class="full-bg button_background_color">View Full Profile</button>
-                                          <button class="only-border-btn" onclick="getInterview(' . $empDetails->id . ')" id="scheduleInterview">Add Candidate</button>
+                                          <button onclick="myFunction(' . $empDetails->id . ')" class="full-bg button_background_color"><span class="button_text_color btnspan">View Full Profile</span></button>
+                                          <button class="full-bg button_background_color" onclick="getInterview(' . $empDetails->id . ')" id="scheduleInterview" style="margin-left: 15px;"><span class="button_text_color btnspan">Add Candidate</span></button>
                                           </span>
                                         </h2>
                                       </div>
@@ -2950,18 +2958,20 @@ class SearchController extends Controller
                                                         <p>' . $empDetails->email . '</p>
                                                       </div>
                                                     </div>
-                                                  </div>
-                                               
-                                                  <div class="col-lg-4 col-md-6">
-                                                    <div class="d-flex mt-3">
-                                                      <div class="icon-part">
-                                                        <i class="fa fa-users"></i>
-                                                      </div>
-                                                      <div class="coneant">
-                                                        <h4>Join </h4>
-                                                        <p>' .$joinDate->date_of_joining . '</p>
-                                                      </div>
-                                                    </div>
+                                                    </div>';
+                                                    if(!empty($joinDate)){
+                                                             
+                                                         $html .='<div class="col-lg-4 col-md-6">
+                                                         <div class="d-flex mt-3">
+                                                           <div class="icon-part">
+                                                             <i class="fa fa-users"></i>
+                                                           </div>
+                                                           <div class="coneant">
+                                                             <h4>Join </h4>
+                                                             <p>' . $joinDate->date_of_joining . '</p>
+                                                            </div>';
+                                                     }
+                                                         $html .='</div>
                                                   </div>
                                                 </div>
                                               </div>

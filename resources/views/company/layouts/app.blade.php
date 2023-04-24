@@ -132,7 +132,10 @@
         }
 
         .schudinter-tab .nav-tabs .nav-item.show .nav-linkSchedule, .nav-tabs .nav-linkSchedule.active {
-            color: #fff;
+            color: <?php if (!empty(session('button_text_color'))) {echo session('button_text_color');
+            } else {
+                echo '#5533ff';
+            } ?> !important;
             background: <?php if (!empty(session('button_background_color'))) {echo session('button_background_color');
             } else {
                 echo '#5533ff';
@@ -143,7 +146,10 @@
 
         .pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {
             z-index: 3;
-            color: #fff;
+            color: <?php if (!empty(session('button_text_color'))) {echo session('button_text_color');
+            } else {
+                echo '#5533ff';
+            } ?> !important;
             cursor: default;
             background: <?php if (!empty(session('button_background_color'))) {echo session('button_background_color');
             } else {
@@ -200,7 +206,7 @@
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle dropdown-toggle1 button_background_color" href="#"
+                            <a class="nav-link dropdown-toggle dropdown-toggle1" href="#"
                                 id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false">
                                 <img src="{{ asset('assets') }}/admin/images/notifications-icon.png">
@@ -281,7 +287,7 @@
                                         </div>
                                     </a>
                                 </div>
-                                <div class="all-noti-btn"><a href="/notification" class="button_background_color">See All Notifications</a></div>
+                                <div class="all-noti-btn"><a href="/notification" class="button_background_color"><span class="button_text_color">See All Notifications</span></a></div>
                             </div>
                         </li>
 
@@ -480,11 +486,11 @@
                                         <li>
                                             <a href="/exit_employee_process" class="secondary_color">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="180" height="181" viewBox="0 0 180 181" fill="none">
-                                                <circle cx="82.5" cy="48.5" r="43.5" stroke="black" stroke-width="10" class="iconstroke"/>
-                                                    <path d="M63.5 108.5C48.1809 110.596 15.9807 118.465 5.93521 133.465C5.27888 134.445 5 135.618 5 136.798V175.5H63.5" stroke="black" stroke-width="10" class="iconstroke"/>
-                                                    <path d="M173.653 143.791C132.167 85.2593 85.9363 118.521 66.9371 143.732C66.3759 144.476 66.4564 145.524 67.0779 146.219C112.706 197.241 156.458 168.183 173.638 146.129C174.166 145.451 174.15 144.492 173.653 143.791Z" stroke="black" stroke-width="10" class="iconstroke"/>
+                                                <circle cx="82.5" cy="48.5" r="43.5" stroke="black" stroke-width="10" class="iconstroke" />
+                                                <path d="M63.5 108.5C48.1809 110.596 15.9807 118.465 5.93521 133.465C5.27888 134.445 5 135.618 5 136.798V175.5H63.5"stroke="black" stroke-width="10" class="iconstroke" />
+                                                <path d="M173.653 143.791C132.167 85.2593 85.9363 118.521 66.9371 143.732C66.3759 144.476 66.4564 145.524 67.0779 146.219C112.706 197.241 156.458 168.183 173.638 146.129C174.166 145.451 174.15 144.492 173.653 143.791Z" stroke="black" stroke-width="10" class="iconstroke" />
                                                 <circle cx="120" cy="143" r="15" fill="black" class="iconFill" />
-                                                </svg>
+                                            </svg>
                                                 Exit Employees Process
                                             </a>
                                         </li>

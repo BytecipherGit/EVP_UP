@@ -46,9 +46,9 @@ input.export {
           </div>
           <div class="col-md-8">
             <div class="main-right-button-box"> 
-               <a href="/current-employee" class="emp button_background_color">Current Employees</a>
-               <a href="/post-employee" class="emp button_background_color">Old Employees</a>     
-               <a href="/add-employee" class="emp button_background_color"><img src="{{ asset('assets') }}/admin/images/button-plus.png">Add New</a>                     
+               <a href="/current-employee" class="emp button_background_color"><span class="button_text_color">Current Employees</span></a>
+               <a href="/post-employee" class="emp button_background_color"><span class="button_text_color">Old Employees</span></a>     
+               <a href="/add-employee" class="emp button_background_color"><img src="{{ asset('assets') }}/admin/images/button-plus.png"><span class="button_text_color">Add New</span></a>                     
               </div>
           </div>
         </div>
@@ -74,14 +74,14 @@ input.export {
           <table id="example" class="table-bordered nowrap table table-striped" style="width:100%">
             <thead class="primary_color">
         <tr>
-            <th>Employee Code</th>
-            <th>Employee Name</th>
+            <th class="secondary_color">Employee Code</th>
+            <th class="secondary_color">Employee Name</th>
             {{-- <th>Employee Designation</th> --}}
-            <th>Employee Email</th>
+            <th class="secondary_color">Employee Email</th>
             {{-- <th>Reporting Manager</th> --}}
-            <th>Employee Status</th>
+            <th class="secondary_color">Employee Status</th>
        
-            <th>Action</th>
+            <th class="secondary_color">Action</th>
            
         </tr>
     </thead>

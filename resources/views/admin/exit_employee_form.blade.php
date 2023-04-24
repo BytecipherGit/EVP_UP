@@ -94,7 +94,7 @@
                                       {{-- <input type="hidden" name="status" value="0" /> --}}
                                     {{-- <input type="checkbox" name="status[{{ $a }}]"/>
                                     </label> --}}
-                                    <label> <input type="checkbox" name="status[{{ $a }}]" class="checkboxexitform"/>   {{$process->title}} </label>
+                                    <label class="exitonboard"> <input type="checkbox" name="status[{{ $a }}]" class="checkboxexitform"/>   {{$process->title}} </label>
                                     {{-- <label>Document</label> --}}
                                     {{-- <div class="upload-img-file"> --}}
                                         <input type="file" id="document" name="document[]" class="form-control" accept="image/jpeg,image/doc,image/pdf" />

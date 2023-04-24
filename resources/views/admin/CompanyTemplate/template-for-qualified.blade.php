@@ -15,7 +15,7 @@
             <div class="row">
               <div class="col-md-12">
                 <div class="main-right-button-box backhover">
-                  <a href="/admin" class="button_background_color"><img src="{{ asset('assets') }}/admin/images/back-icon.png" class="back"> Back</a>
+                  <a href="/admin" class="button_background_color"><img src="{{ asset('assets') }}/admin/images/back-icon.png" class="back"> <span class="button_text_color">Back</span></a>
                 </div>
               </div>  
             </div>
@@ -48,7 +48,7 @@
                               </div>
                               
                               <div class="card-footer">
-                                <button type="submit" class="btn btn-primary button_background_color"> Save </button>
+                                <button type="submit" class="btn btn-primary button_background_color"><span class="button_text_color">Save Changes</span></button>
                             </div>
                           </div>
                        

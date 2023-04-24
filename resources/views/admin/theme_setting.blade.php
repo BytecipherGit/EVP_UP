@@ -44,7 +44,8 @@
             </div>
             <div class="col-md-4">
                 <div class="main-right-button-box">
-                       <a href="/admin" class="button_background_color"><img src="{{ asset('assets') }}/admin/images/back-icon.png"> Back</a>  
+                       <a href="/admin" class="button_background_color"><img src="{{ asset('assets') }}/admin/images/back-icon.png"><span class="button_text_color"> Back</span>
+                    </a>  
                     </div>
                 </div>
             </div>
@@ -59,9 +60,9 @@
                     <table class="table table-bordered theme_setting_datatable">
                         <thead class="primary_color">
                             <tr>
-                                <th>Key</th>
-                                <th>Value</th>
-                                <th width="100px">Action</th>
+                                <th class="secondary_color">Key</th>
+                                <th class="secondary_color">Value</th>
+                                <th width="100px" class="secondary_color">Action</th>
                             </tr>
                         </thead>
                         <tbody></tbody>
@@ -99,7 +100,7 @@
                     <div style="font-size: 16px; display:none;" class="text-success" id="success">Interview process
                         successfully done.</div>
                     <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
-                    <button type="submit" id="interviewProcessSubmit" class="btn-primary-cust button_background_color">Submit</button>
+                    <button type="submit" id="interviewProcessSubmit" class="btn-primary-cust button_background_color"><span class="button_text_color">Submit</span></button>
                 </div>
             </div>
         </form>
