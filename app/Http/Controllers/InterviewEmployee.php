@@ -334,6 +334,7 @@ class InterviewEmployee extends Controller
                         $insertCompanyEmployee = [
                             'employee_id' => $employeeData->id,
                             'company_id' => Auth::id(),
+                            // 'start_date' => $employeeData->created_at->format('Y-m-d'),
                             'status' => '1',
                         ];
                         $companyemployeeData = CompanyEmployee::create($insertCompanyEmployee);
@@ -646,7 +647,7 @@ class InterviewEmployee extends Controller
                         $insertCompanyEmployee = [
                             'employee_id' => $employeeData->id,
                             'company_id' => Auth::id(),
-                            'status' => '0',
+                            'status' => '1',
                         ];
                         $companyemployeeData = CompanyEmployee::create($insertCompanyEmployee);
                     }

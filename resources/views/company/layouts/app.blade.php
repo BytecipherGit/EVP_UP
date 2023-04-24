@@ -161,6 +161,13 @@
             } ?> !important;
         }
 
+        .seachMain{
+            background: <?php if (!empty(session('primary_color'))) {echo session('primary_color');
+            } else {
+                echo '#5533ff';
+            } ?> !important;
+        }
+
         .ser-part .ser-box .head-sec .img-bg svg{
             width:24px;
             height:24px
