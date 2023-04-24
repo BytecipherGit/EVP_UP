@@ -10,6 +10,7 @@ use App\Mail\SendInterviewScheduleMailToInterviewer;
 use App\Mail\SendInterviewScheduleOfficeMail;
 use App\Mail\SendInterviewScheduleOfficeMailToInterviewer;
 use App\Mail\SendInterviewSchedulePhoneMail;
+use App\Mail\SendInterviewScheduleHomeMail;
 use App\Mail\SendInterviewSchedulePhoneMailToInterviewer;
 use App\Mail\QualifiedEmailTemplate;
 use App\Mail\NotQualifiedEmailTemplate;
@@ -40,9 +41,9 @@ class InterviewEmployee extends Controller
     {
         if (Auth::check()) {
             // $interviewEmployees = EmployeeInterview::all();
-            $interviewEmployees = EmployeeInterview::join('users','users.id','=','interview_employees.company_id')
-                                ->join('company_employee','company_employee.employee_id','=','interview_employees.employee_id')
-                                ->join('employee','company_employee.employee_id','=','employee.id')
+
+            $interviewEmployees = EmployeeInterview::join('users','users.id','=','interview_employees.company_id')        
+                                ->join('employee','interview_employees.employee_id','=','employee.id')
                                 ->select('users.id','interview_employees.*','employee.empCode','employee.first_name','employee.last_name')
                                 ->where('interview_employees.company_id',Auth::id())->get();
                                 

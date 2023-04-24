@@ -128,11 +128,11 @@ class OnboardingController extends Controller
                                          ->where('onboarding_employee.employee_id', $id)
                                          ->select('onboarding_employee.*')
                                          ->first();
-
+            $onboardProcessExist = OnboardingProcess::where('company_id', Auth::id())->orderby('id', 'asc')->first();
             $employee = Employee::where('id',$id)->first();
             $onboardProcess = OnboardingProcess::where('company_id', Auth::id())->orderby('id', 'asc')->get();
 
-            return view('admin.onboarding-form', compact('onboardProcess','employee','employeeonboarding'));
+            return view('admin.onboarding-form', compact('onboardProcess','employee','employeeonboarding','onboardProcessExist'));
         }
      }
 

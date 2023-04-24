@@ -20,22 +20,22 @@
       </div><!--- Main Heading ----->
 
       <div class="employee-tab-bar"> 
-
+        
         <ul class="nav nav-tabs table-responsive-width primary_color" role="tablist">
        
           <li class="nav-item">
-            <a @if ($basic) class="nav-link" @else class="nav-link active" @endif data-toggle="tab" href="#tabs-1" role="tab">Basic Info</a>
+            <a @if ($basic) class="nav-link secondary_color" @else class="nav-link active secondary_color" @endif data-toggle="tab" href="#tabs-1" role="tab">Basic Info</a>
           </li>
        
           <li class="nav-item">
-            <a  class="nav-link {{ session('tabs-3_active') ? 'active': '' }}" data-toggle="tab" href="#tabs-3" role="tab">Qualification</a>
+            <a  class="nav-link {{ session('tabs-3_active') ? 'active': '' }} secondary_color" data-toggle="tab" href="#tabs-3" role="tab">Qualification</a>
           </li>     
       
           <li class="nav-item">
-            <a class="nav-link {{ session('tabs-4_active') ? 'active': '' }}" data-toggle="tab" href="#tabs-4" role="tab">Work History</a>
+            <a class="nav-link {{ session('tabs-4_active') ? 'active': '' }} secondary_color" data-toggle="tab" href="#tabs-4" role="tab">Work History</a>
           </li>
           <li class="nav-item">
-            <a  class="nav-link {{ session('tabs-5_active') ? 'active': '' }}" data-toggle="tab" href="#tabs-5" role="tab">Skills</a>
+            <a  class="nav-link {{ session('tabs-5_active') ? 'active': '' }} secondary_color" data-toggle="tab" href="#tabs-5" role="tab">Skills</a>
           </li>                 
           {{-- <li class="nav-item">
             <a class="nav-link {{ session('tabs-2_active') ? 'active': '' }}"  data-toggle="tab" href="#tabs-2" role="tab">Identity</a>
@@ -44,7 +44,7 @@
             <a class="nav-link {{ session('tabs-6_active') ? 'active': '' }}"  data-toggle="tab" href="#tabs-6" role="tab">Official Use</a>
           </li>   --}}
           <li class="nav-item"> 
-            <a class="nav-link {{ session('tabs-2_active') ? 'active': '' }}"  data-toggle="tab" href="#tabs-2" role="tab">Official Use</a>
+            <a class="nav-link {{ session('tabs-2_active') ? 'active': '' }} secondary_color"  data-toggle="tab" href="#tabs-2" role="tab">Official Use</a>
           </li>
 
         </ul> 
@@ -289,7 +289,7 @@
                   </div>                   
                       <div class="add-btn-part">
                         {{-- <button type="button" class="btn-secondary-cust">Back</button> --}}
-                        <button type="submit" name="basic" class="btn-primary-cust button_background_color">Next</button>
+                        <button type="submit" name="basic" class="btn-primary-cust button_background_color"><span class="button_text_color">Next</span></button>
                       </div>                                 
                     </form>      
               </div>
@@ -494,7 +494,7 @@
                   </div>                   
                       <div class="add-btn-part">
                         {{-- <button type="button" class="btn-secondary-cust">Back</button> --}}
-                        <button type="submit" name="basic-edit" class="btn-primary-cust button_background_color">Next</button>
+                        <button type="submit" name="basic-edit" class="btn-primary-cust button_background_color"><span class="button_text_color">Next</span></button>
                       </div>
                                                    
                     </form>         
@@ -786,7 +786,7 @@
                         <div class="form-group">
                           <div class="add-btn-part">
                             {{-- <button type="" class="btn-secondary-cust">Back</button> --}}
-                            <button type="submit" name="workskill" class="btn-primary-cust button_background_color">Next</button>
+                            <button type="submit" name="workskill" class="btn-primary-cust button_background_color"><span class="button_text_color">Next</span></button>
                           </div>
                         </div>
                       </div>
@@ -979,7 +979,7 @@
                           <div class="form-group">
                             <div class="add-btn-part">
                               <button type="reset" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
-                              <button type="submit" name="official" class="btn-primary-cust button_background_color">Save</button>
+                              <button type="submit" name="official" class="btn-primary-cust button_background_color"><span class="button_text_color">Save</span></button>
                             </div>
                           </div>
                         </div>
@@ -1063,7 +1063,7 @@
         </div>
         <div class="modal-footer">
           {{-- <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button> --}}
-          <button type="submit" name="identity" class="btn-primary-cust button_background_color">Save</button>
+          <button type="submit" name="identity" class="btn-primary-cust button_background_color"><span class="button_text_color">Save</span></button>
         </div>
       </div>
     </div>
@@ -1141,7 +1141,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
-          <button type="button" class="btn-primary-cust button_background_color" data-dismiss="modal">Save Changes</button>
+          <button type="button" class="btn-primary-cust button_background_color" data-dismiss="modal"><span class="button_text_color">Save Changes</span></button>
         </div>
       </div>
     </div>
@@ -1247,7 +1247,7 @@
         </div>
         <div class="modal-footer">
           <button type="cancel" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
-          <button type="submit" name="qulification" class="btn-primary-cust button_background_color">Save</button>
+          <button type="submit" name="qulification" class="btn-primary-cust button_background_color"><span class="button_text_color">Save</span></button>
         </div>
       </div>
     </div>
@@ -1453,7 +1453,7 @@
         </div>
         <div class="modal-footer">
           <button type="cancel" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
-          <button type="submit" name="workhistory" class="btn-primary-cust button_background_color">Save</button>
+          <button type="submit" name="workhistory" class="btn-primary-cust button_background_color"><span class="button_text_color">Save</span></button>
         </div>
       </div>
     </div>
@@ -1525,7 +1525,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
-          <button type="button" class="btn-primary-cust button_background_color">Save</button>
+          <button type="button" class="btn-primary-cust button_background_color"><span class="button_text_color">Save</span></button>
         </div>
       </div>
     </div>
@@ -1569,7 +1569,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
-          <button type="submit" name="more-skill" class="btn-primary-cust button_background_color">Save</button>
+          <button type="submit" name="more-skill" class="btn-primary-cust button_background_color"><span class="button_text_color">Save</span></button>
         </div>
       </form>
       </div>
@@ -1615,7 +1615,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
-            <button type="submit" name="more-lang" class="btn-primary-cust button_background_color">Save</button>
+            <button type="submit" name="more-lang" class="btn-primary-cust button_background_color"><span class="button_text_color">Save</span></button>
           </div>
         </form>
         </div>

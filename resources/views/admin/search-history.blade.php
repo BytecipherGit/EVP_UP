@@ -29,7 +29,7 @@
           </div>
           <div class="col-lg-2">
             <div class="form-group">
-              <button type="button" class="search-btnkey button_background_color" onclick="searchEmployee()">Search</button>
+              <button type="button" class="search-btnkey button_background_color" onclick="searchEmployee()"><span class="button_text_color">Search</span></button>
             </div>
         </div>
       </div>
@@ -70,7 +70,7 @@
                         interview successfully done.</div>
                     <div style="font-size: 16px; display:none;" class="text-danger" id="failed">Interview already has been schedule for this employee.</div>
                     <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
-                    <button type="submit" id="scheduleInterviewSubmit" class="btn-primary-cust button_background_color">Submit</button>
+                    <button type="submit" id="scheduleInterviewSubmit" class="btn-primary-cust button_background_color"><span class="button_text_color">Submit</span></button>
                 </div>
             </div>
         </form>

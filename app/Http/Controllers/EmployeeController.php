@@ -639,10 +639,16 @@ class EmployeeController extends Controller
               
                 ];
                 $employeeData = Empofficial::create($insertOfficialEmployeeData);
-                // dd( $employeeData);
-            }else{
+                // dd($employeeData);
+                CompanyEmployee::where('employee_id',$employeeData->employee_id)->where('company_id',Auth::id())->update([
+                  'start_date'  => $employeeData->date_of_joining,
+                  'status' => $employeeData->emp_status
+                ]);
 
-            DB::table('employee_officials')->where('employee_id',$request->id)
+            }
+            else{
+
+            $employeeData = DB::table('employee_officials')->where('employee_id',$request->id)
               ->update([
                       'date_of_joining'=>$request->input('date_of_joining'),
                       'emp_type'=>$request->input('emp_type'),
@@ -652,13 +658,14 @@ class EmployeeController extends Controller
                       'designation'=>$request->input('designation'),
                   
                 ]);
-            }
-        
-             CompanyEmployee::where('employee_id',$dataExist->employee_id)->where('company_id',Auth::id())->update([
-              'start_date'  => $dataExist->date_of_joining,
-              'status' => $dataExist->emp_status
-            ]);
 
+                CompanyEmployee::where('employee_id',$request->id)->where('company_id',Auth::id())->update([
+                  'start_date'  => $request->input('date_of_joining'),
+                  'status' => $request->input('emp_status')
+                ]);
+
+          }
+          
           return redirect('employee');
         }
 
@@ -689,8 +696,8 @@ class EmployeeController extends Controller
        $employeeDetails= CompanyEmployee::join('users','users.id','=','company_employee.company_id')
                            ->join('employee','company_employee.employee_id','=','employee.id')
                            ->select('company_employee.*','users.id','employee.*')
-                           ->where('company_employee.company_id',Auth::user()->id)->get();
-                          //  dd($employeeDetails);
+                           ->where('company_employee.company_id',Auth::id())->get();
+    
          return view('admin.datatable',compact('employeeDetails'));
       }
 

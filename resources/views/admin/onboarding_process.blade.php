@@ -35,7 +35,7 @@
             </div>
             <div class="col-md-4">
                 <div class="main-right-button-box">
-                    <a style="text-decoration:none" href="#" id="createProcess" class="mr-2 button_background_color"><img src="{{ asset('assets') }}/admin/images/button-plus.png">Onboarding Process</a>
+                    <a style="text-decoration:none" href="#" id="createProcess" class="mr-2 button_background_color"><img src="{{ asset('assets') }}/admin/images/button-plus.png"><span class="button_text_color">Onboarding Process</span></a>
                     {{-- <a href="#" data-toggle="modal" data-target="#rejectbtninfo">Reject</a> --}}
                 </div>
             </div>
@@ -50,9 +50,9 @@
                     <table class="table table-bordered onboarding_process_datatable">
                         <thead class="primary_color">
                             <tr>
-                                <th>Title</th>
-                                <th>Descriptions</th>
-                                <th width="100px">Action</th>
+                                <th class="secondary_color">Title</th>
+                                <th class="secondary_color">Descriptions</th>
+                                <th width="100px" class="secondary_color">Action</th>
                             </tr>
                         </thead>
                         <tbody></tbody>
@@ -89,7 +89,7 @@
                     <div style="font-size: 16px; display:none;" class="text-success" id="success">Onboarding process
                         successfully done.</div>
                     <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
-                    <button type="submit" id="ProcessSubmit" class="btn-primary-cust button_background_color">Submit</button>
+                    <button type="submit" id="ProcessSubmit" class="btn-primary-cust button_background_color"><span class="button_text_color">Submit</span></button>
                 </div>
             </div>
         </form>

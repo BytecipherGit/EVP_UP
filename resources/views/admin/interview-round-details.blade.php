@@ -34,7 +34,7 @@
             </div>
             <div class="col-md-4">
                 <div class="main-right-button-box">
-                    <a href="/schedule-interview" class="button_background_color"><img src="{{ asset('assets') }}/admin/images/back-icon.png"> Back</a>
+                    <a href="/schedule-interview" class="button_background_color"><img src="{{ asset('assets') }}/admin/images/back-icon.png"><span class="button_text_color"> Back</span></a>
               </div>
             </div>
         </div>
@@ -50,14 +50,14 @@
                     <table id="example" class="table-bordered table">
                         <thead class="primary_color">
                             <tr>
-                                <th>Round</th>
-                                <th>Interview Type</th>
-                                <th>Interview Date</th>
-                                <th>Interview Time</th>
-                                <th>Duration</th>
+                                <th class="secondary_color">Round</th>
+                                <th class="secondary_color">Interview Type</th>
+                                <th class="secondary_color">Interview Date</th>
+                                <th class="secondary_color">Interview Time</th>
+                                <th class="secondary_color">Duration</th>
                                 {{-- <th>Description</th> --}}
-                                <th>Status</th>
-                                <th width="250px">Feedback Details</th>
+                                <th class="secondary_color">Status</th>
+                                <th width="250px" class="secondary_color">Feedback Details</th>
                             </tr>
                         </thead>
                         @if ($interviewEmpoloyeeRounds)
@@ -130,7 +130,7 @@ aria-hidden="true">
                 <div class="loadingImg"></div>
                 <div style="font-size: 16px; display:none;" class="text-success" id="success">Status update successfully</div>
                 <button type="button" class="btn-secondary-cust" onclick="refreshPage();" data-dismiss="modal">Cancel</button>
-                <button type="submit" id="Submit" class="btn-primary-cust button_background_color">Submit</button>
+                <button type="submit" id="Submit" class="btn-primary-cust button_background_color"><span class="button_text_color">Submit</span></button>
             </div>
         </div>
     </form>

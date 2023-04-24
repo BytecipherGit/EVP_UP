@@ -24,19 +24,19 @@
     <div class="employee-tab-bar">
         <ul class="nav nav-tabs table-responsive-width primary_color" role="tablist">
             <li class="nav-item">
-                <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab">Basic Info</a>
+                <a class="nav-link active secondary_color" data-toggle="tab" href="#tabs-1" role="tab">Basic Info</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab">Qualification</a>
+                <a class="nav-link secondary_color" data-toggle="tab" href="#tabs-3" role="tab">Qualification</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#tabs-4" role="tab">Work History</a>
+                <a class="nav-link secondary_color" data-toggle="tab" href="#tabs-4" role="tab">Work History</a>
+            </li>
+            <li class="nav-item"> 
+                <a class="nav-link secondary_color" data-toggle="tab" href="#tabs-5" role="tab">Skills</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#tabs-5" role="tab">Skills</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab">Official Use</a>
+                <a class="nav-link secondary_color" data-toggle="tab" href="#tabs-2" role="tab">Official Use</a>
             </li> 
             {{-- <li class="nav-item">
                 <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab" aria-controls="tab">Identity</a>
@@ -297,8 +297,7 @@
                             </div>
                             <div class="add-btn-part">
                                 {{-- <button type="button" class="btn-secondary-cust">Back</button> --}}
-                                <button type="submit" name="basic-edit" class="btn-primary-cust button_background_color">Save
-                                    Changes</button>
+                                <button type="submit" name="basic-edit" class="btn-primary-cust button_background_color"><span class="button_text_color">Save Changes</span></button>
                             </div>
 
                         </form>
@@ -780,7 +779,7 @@
                                         <div class="col-xl-3 col-lg-6 col-md-12">
                                         <div class="form-group">
                                             <div class="add-btn-part">
-                                                <button type="button" id="exitemployee" class="btn-primary-cust button_background_color" style="color:white;background:red;">Employee Exit</button>     
+                                                <button type="button" id="exitemployee" class="btn-primary-cust button_background_color" style="color:white;background:red;"><span class="button_text_color">Employee Exit</span></button>     
                                             </div>
                                         </div>
                                     </div>
@@ -788,7 +787,7 @@
                                             <div class="form-group">
                                                 <div class="add-btn-part">
                                                     {{-- <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button> --}}
-                                                    <button type="submit" name="official-edit" class="btn-primary-cust button_background_color">Save Changes</button>
+                                                    <button type="submit" name="official-edit" class="btn-primary-cust button_background_color"><span class="button_text_color">Save Changes</span></button>
                                                 </div>
                                             </div>
                                         </div>
@@ -860,8 +859,7 @@
                             <div class="modal-footer">
                                 {{-- <button type="cancel" class="btn-secondary-cust" data-dismiss="modal">Cancel</button> --}}
                                 {{-- <button type="Submit" name="identity-edit" class="btn-primary-cust button_background_color" data-dismiss="modal">Save Changes</button> --}}
-                                <button type="submit" name="skill-edit" class="btn-primary-cust button_background_color">Save
-                                    Changes</button>
+                                <button type="submit" name="skill-edit" class="btn-primary-cust button_background_color"><span class="button_text_color">Save Changes</span></button>
                             </div>
                         </div>
                         
@@ -925,8 +923,7 @@
                             <div class="modal-footer">
                                 {{-- <button type="cancel" class="btn-secondary-cust" data-dismiss="modal">Cancel</button> --}}
                                 {{-- <button type="Submit" name="identity-edit" class="btn-primary-cust button_background_color" data-dismiss="modal">Save Changes</button> --}}
-                                <button type="submit" name="skilllang-edit" class="btn-primary-cust button_background_color">Save
-                                    Changes</button>
+                                <button type="submit" name="skilllang-edit" class="btn-primary-cust button_background_color"><span class="button_text_color">Save Changes</span></button>
                             </div>
                         </div>
                         
@@ -1111,8 +1108,7 @@
                             <div class="modal-footer">
                                 {{-- <button type="cancel" class="btn-secondary-cust" data-dismiss="modal">Cancel</button> --}}
                                 {{-- <button type="Submit" name="identity-edit" class="btn-primary-cust button_background_color" data-dismiss="modal">Save Changes</button> --}}
-                                <button type="submit" name="identity-edit" class="btn-primary-cust button_background_color">Save
-                                    Changes</button>
+                                <button type="submit" name="identity-edit" class="btn-primary-cust button_background_color"><span class="button_text_color">Save Changes</span></button>
                             </div>
                       </div>
                   </div>
@@ -1332,8 +1328,7 @@
                             <div class="modal-footer">
                                 {{-- <button type="cancel" class="btn-secondary-cust" data-dismiss="modal">Cancel</button> --}}
                                 {{-- <button type="Submit" name="identity-edit" class="btn-primary-cust button_background_color" data-dismiss="modal">Save Changes</button> --}}
-                                <button type="submit" name="qualification-edit" class="btn-primary-cust button_background_color">Save
-                                    Changes</button>
+                                <button type="submit" name="qualification-edit" class="btn-primary-cust button_background_color"><span class="button_text_color">Save Changes</span></button>
                             </div>
                     </div>
                 </div>
@@ -1477,7 +1472,7 @@
                     <div style="font-size: 16px; display:none;" class="text-success" id="success">Employee successfully exit.</div>
                     <div style="font-size: 16px; display:none;" class="text-danger" id="failed">Employee already exit</div>
                     <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
-                    <button type="submit" id="scheduleInterviewSubmit" class="btn-primary-cust button_background_color">Submit</button>
+                    <button type="submit" id="scheduleInterviewSubmit" class="btn-primary-cust button_background_color"><span class="button_text_color">Submit</span></button>
                 </div>
             </div>
         </form>
@@ -1669,8 +1664,7 @@
                             <div class="modal-footer">
                                 {{-- <button type="cancel" class="btn-secondary-cust" data-dismiss="modal">Cancel</button> --}}
                                 {{-- <button type="Submit" name="identity-edit" class="btn-primary-cust button_background_color" data-dismiss="modal">Save Changes</button> --}}
-                                <button type="submit" name="workhistory-edit" class="btn-primary-cust button_background_color">Save
-                                    Changes</button>
+                                <button type="submit" name="workhistory-edit" class="btn-primary-cust button_background_color"><span class="button_text_color">Save Changes</span></button>
                             </div>
                     </div>
                 </form>
