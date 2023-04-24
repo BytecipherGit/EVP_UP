@@ -69,7 +69,7 @@ class SearchController extends Controller
                                                 <small>' . $empDetails->current_address. '</small>';
         
                                                if(!empty($reviewEmp)){     
-                                                  $html .= '<small>'. number_format($reviewEmp->rating, 1, '.', ',') .'<span>reviews</span></small>';
+                                                  $html .= '<small>'. number_format($reviewEmp->rating, 1, '.', ',') .' <span>reviews</span></small>';
                                                }
         
                                                 $html .='<span class="d-flex">
@@ -1013,7 +1013,7 @@ class SearchController extends Controller
                                         <small>' . $empDetails->current_address. '</small>';
 
                                        if(!empty($reviewEmp)){     
-                                          $html .= '<small>'. number_format($reviewEmp->rating, 1, '.', ',') .'<span>reviews</span></small>';
+                                          $html .= '<small>'. number_format($reviewEmp->rating, 1, '.', ',') .' <span>reviews</span></small>';
                                        }
 
                                         $html .='<span class="d-flex">
