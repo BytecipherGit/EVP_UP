@@ -18,7 +18,8 @@
         color: #dc3545 !important;
         font-size: 14px;
     }
-    .fa{
+
+    .fa {
         font-size: 17px;
     }
 </style>
@@ -39,8 +40,10 @@
             </div>
             <div class="col-md-4">
                 <div class="main-right-button-box">
-                    <a style="text-decoration:none" href="#" id="scheduleInterview" class="mr-2 button_background_color"><img
-                            src="{{ asset('assets') }}/admin/images/button-plus.png"><span class="button_text_color">Interview</span></a>
+                    <a style="text-decoration:none" href="#" id="scheduleInterview"
+                        class="mr-2 button_background_color"><img
+                            src="{{ asset('assets') }}/admin/images/button-plus.png"><span
+                            class="button_text_color">Interview</span></a>
                     {{-- <a href="#" data-toggle="modal" data-target="#rejectbtninfo">Reject</a> --}}
                 </div>
             </div>
@@ -143,14 +146,15 @@
                                         {{-- <span class="notifi-td" data-toggle="modal" data-target="#remaiderbtninfo"><img
                                                 src="assets/admin/images/bell-icon.png" width="30px;"
                                                 height="30px"></span> --}}
-                                        <a href="{{route('interview.round.details')}}/{{ $employee->id }}" class="edit-btn fa fa-eye"
-                                        data-id="{{ $employee->id }}" data-title="Details"></a>
+                                        <a href="{{ route('interview.round.details') }}/{{ $employee->id }}"
+                                            class="edit-btn fa fa-eye" data-id="{{ $employee->id }}"
+                                            data-title="Details"></a>
                                         <a href="#" class="edit-btn fa fa-arrow-circle-right" id="updateInterview"
                                             data-id="{{ $employee->id }}" data-title="Next Round"></a>
                                         <a href="#" class="edit-btn fa fa-trash " id="delete_interview"
                                             data-id="{{ $employee->id }}" data-title="Delete"></a>
-                                        <a href="#" class="edit-btn fa fa-handshake-o" id="onboarding"
-                                            data-id="{{ $employee->employee_id }}" data-title="Delete"></a>
+                                        <a href="#" class="edit-btn fa fa-gift" id="offer_send"
+                                            data-id="{{ $employee->employee_id }}" data-title="offer_send"></a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -200,14 +204,14 @@
     </div>
 </div>
 
-<!-- The Modal Onboarding  -->
-<div class="modal fade custu-modal-popup" id="onboardingModel" role="dialog"
-    aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- The Modal Offer Send  -->
+<div class="modal fade custu-modal-popup" id="offerModel" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <form id="onboarding_form" method="post" autocomplete="off" enctype="multipart/form-data">
+        <form id="offer_send_form" method="post" autocomplete="off" enctype="multipart/form-data">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h2 class="modal-title" id="Heading">Onboarding form</h2>
+                    <h2 class="modal-title textColor" id="Heading">Offer send</h2>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <img src="assets/admin/images/close-btn-icon.png">
                     </button>
@@ -218,15 +222,19 @@
                 </div>
                 <div class="modal-footer">
                     <div class="loadingImg"></div>
-                    <div style="font-size: 16px; display:none;" class="text-success" id="success">Onboarding successfully done.</div>
-                        <div style="font-size: 16px; display:none;" class="text-danger" id="failed">Onboarding already done.</div>
+                    <div style="font-size: 16px; display:none;" class="text-success" id="success">Offer
+                        successfully send.</div>
+                    <div style="font-size: 16px; display:none;" class="text-danger" id="failed">Offer already
+                        send.</div>
                     <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn-primary-cust button_background_color"><span class="button_text_color">Submit</span></button>
+                    <button type="submit" class="btn-primary-cust button_background_color"><span
+                            class="button_text_color">Submit</span></button>
                 </div>
             </div>
         </form>
     </div>
 </div>
+
 
 <!-- The Modal Remaider Notification -->
 <div class="modal fade schedu-modal" id="rejectbtninfo" role="dialog" aria-labelledby="exampleModalLabel"
@@ -267,9 +275,12 @@
                     <div class="loadingImg"></div>
                     <div style="font-size: 16px; display:none;" class="text-success" id="success">Schedule
                         interview successfully done.</div>
-                    <div style="font-size: 16px; display:none;" class="text-danger" id="failed">Interview already has been schedule for this employee.</div>
+                    <div style="font-size: 16px; display:none;" class="text-danger" id="failed">Interview already
+                        has been schedule for this employee.</div>
                     <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
-                    <button type="submit" id="scheduleInterviewSubmit" class="btn-primary-cust button_background_color"><span class="button_text_color">Submit</span></button>
+                    <button type="submit" id="scheduleInterviewSubmit"
+                        class="btn-primary-cust button_background_color"><span
+                            class="button_text_color">Submit</span></button>
                 </div>
             </div>
         </form>
@@ -283,7 +294,7 @@
         <form id="next_round_of_interview_form" method="post" autocomplete="off" enctype="multipart/form-data">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h2 class="modal-title" id="Heading">Schedule Next Round Of Interview</h2>
+                    <h2 class="modal-title textColor" id="Heading">Schedule next round of interview</h2>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <img src="assets/admin/images/close-btn-icon.png">
                     </button>
@@ -297,9 +308,12 @@
                     <div class="loadingImg"></div>
                     <div style="font-size: 16px; display:none;" class="text-success" id="success">Next interview
                         round successfully done.</div>
-                        <div style="font-size: 16px; display:none;" class="text-danger" id="failed">Interview already has been schedule for this employee.</div>
+                    <div style="font-size: 16px; display:none;" class="text-danger" id="failed">Interview already
+                        has been schedule for this employee.</div>
                     <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
-                    <button type="submit" id="nextRoundOfInterviewSubmit" class="btn-primary-cust button_background_color"><span class="button_text_color">Submit</span></button>
+                    <button type="submit" id="nextRoundOfInterviewSubmit"
+                        class="btn-primary-cust button_background_color"><span
+                            class="button_text_color">Submit</span></button>
                 </div>
             </div>
         </form>
@@ -323,75 +337,78 @@
 </script>
 
 <script>
-    $(document).on('click', '#onboarding', function() {
-            var employeeId = $(this).data('id');
-            if (employeeId != '') {
-                getOnboardingForm(employeeId);
-            }
-        })
-
-        function getOnboardingForm(id = '') {
-            let getFormUrl = '{{ url('onboarding/form') }}';
-            if (id !== '') {
-                getFormUrl = getFormUrl + "/" + id;
-            }
-            $.ajax({
-                url: getFormUrl,
-                type: "get",
-                datatype: "html",
-            }).done(function(data) {
-                if (id === '') {
-                    $('#Heading').text("Create onboarding");
-                } else {
-                    $('#Heading').text("Create onboarding");
-                }
-                $('#onboardingModel').find('.modal-body').html(data);
-                $('#onboardingModel').modal({
-                    backdrop: 'static',
-                    keyboard: false
-                });
-            }).fail(function(jqXHR, ajaxOptions, thrownError) {
-                alert('No response from server');
-            });
+    $(document).on('click', '#offer_send', function() {
+        var employeeId = $(this).data('id');
+        if (employeeId != '') {
+            getOfferForm(employeeId);
         }
+    })
 
-        $(document).on('submit', '#onboarding_form', function(event) {
-            event.preventDefault();
-            var url = '{{ url('onboarding/submit') }}'; 
-            $('.loadingImg').show();        
-            var formData = new FormData(this);
-            $.ajax({
-                url: url,
-                type: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                data: formData,
-                contentType: false,
-                processData: false,
-                success: function(data) {
-                    if (data.errors) {
-                        $('.loadingImg').hide();
-                    } else {
-
-                        if (data.success) {
-                            $('.loadingImg').hide();
-                            $('#success').css('display', 'block');
-                            setInterval(function() {
-                                location.reload();
-                            }, 3000);
-
-                        }
-                    }
-
-                },
-                error: function(xhr, textStatus, errorThrown) {
-                    console.log(xhr.responseText);
-                }
+    function getOfferForm(id = '') {
+        let getFormUrl = '{{ url('offer_send/form') }}';
+        if (id !== '') {
+            getFormUrl = getFormUrl + "/" + id;
+        }
+        $.ajax({
+            url: getFormUrl,
+            type: "get",
+            datatype: "html",
+        }).done(function(data) {
+            if (id === '') {
+                $('#Heading').text("Create offer");
+            } else {
+                $('#Heading').text("Create offer");
+            }
+            $('#offerModel').find('.modal-body').html(data);
+            $('#offerModel').modal({
+                backdrop: 'static',
+                keyboard: false
             });
+        }).fail(function(jqXHR, ajaxOptions, thrownError) {
+            alert('No response from server');
         });
+    }
 
-    </script>
+    $(document).on('submit', '#offer_send_form', function(event) {
+        event.preventDefault();
+        var url = '{{ url('offer_send/submit') }}';
+        $('.loadingImg').show();
+        var formData = new FormData(this);
+        $.ajax({
+            url: url,
+            type: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(data) {
+                if (data.errors) {
+                    $('.loadingImg').hide();
+                } else {
+                    if (data.success != 0) {
+                        $('.loadingImg').hide();
+                        $('#success').css('display', 'block');
+                        setInterval(function() {
+                            location.reload();
+                        }, 3000);
+
+                    } else {
+                        $('#failed').css('display', 'block');
+                        setInterval(function() {
+                            location.reload();
+                        }, 1000);
+                    }
+                }
+            },
+
+            error: function(xhr, textStatus, errorThrown) {
+                console.log(xhr.responseText);
+            }
+        });
+    });
+</script>
 
 
 <script>

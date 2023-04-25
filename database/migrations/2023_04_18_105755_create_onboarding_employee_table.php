@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('employee_id');
             $table->string('onboarding_process_id');
             $table->tinyInteger('status')->default('0')->comment('1=Active, 0=Inactive');
+            $table->longText('description')->nullable()->default('text');
+            $table->string('document')->nullable();
             $table->timestamps();
         });
     }

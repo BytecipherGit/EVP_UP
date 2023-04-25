@@ -21,21 +21,22 @@
             <div style="background: #fff; border-top:4px solid #5533FF; margin:0 30px; padding:0 0 30px">
 
                 <h2 style="font-weight: 600; font-size: 18px; line-height: 32px; color: #373E57; padding: 27px 20px 22px; margin:0; text-align: left;">
-                    Dear Jonathan,
+                    Dear {{$mailData['name']}},
                 </h2>
-                <p style="font-size: 18px; line-height: 28px; color: #373E57; padding: 0 20px 0px; margin:0; font-family: 'DM Sans', sans-serif; text-align: left;">Thank you for taking the time to interview for the marketing director position. We enjoyed getting to know you. We have completed all of our interviews.</p>
+                <p style="font-size: 18px; line-height: 28px; color: #373E57; padding: 0 20px 0px; margin:0; font-family: 'DM Sans', sans-serif; text-align: left;">We are pleased to offer you the {{ $mailData['name'] }} at Bytecipher Pvt.Ltd. with a start date of 12-April-2023. You will be reporting directly to Rahul Sharma at Indore MP. We believe your skills and experience are an excellent match for our company.</p>
 
-                <p style="font-size: 18px; line-height: 28px; color: #373E57; padding:20px 20px 0px; margin:0; font-family: 'DM Sans', sans-serif; text-align: left;">I am pleased to inform you that we would like to offer you the marketing director position. We believe your past experience and strong interpersonal skills will be an asset to Smith Consulting. Your starting salary will be $65,000 per year with an anticipated start date of June 1.</p>
-
-                <p style="font-size: 18px; line-height: 28px; color: #373E57; padding:20px 20px 0px; margin:0; font-family: 'DM Sans', sans-serif; text-align: left;">The next step in the process is to set up meetings with our CEO, Brandon Davis, and our CFO, Marilyn Jones.</p> 
-
-                <p style="font-size: 18px; line-height: 28px; color: #373E57; padding: 20px 20px 0px; margin:0; font-family: 'DM Sans', sans-serif; text-align: left;">Please respond to this email by May 25 to let us know if you would like to accept the marketing director position.</p>
-
-                <p style="font-size: 18px; line-height: 28px; color: #373E57; padding: 20px 20px 0px; margin:0; font-family: 'DM Sans', sans-serif; text-align: left;">I look forward to hearing from you.</p>
-
-                <p style="font-size: 18px; line-height: 28px; color: #373E57; padding: 20px 20px 20px; margin:0; font-family: 'DM Sans', sans-serif; text-align: left;">Sincerely,</p>
-
-                <div style="border-top: 1px solid #c3baba; margin:15px 20px;"></div>
+                <div style="border-top: 1px solid #c3baba; margin:15px 20px;">
+                    <a href="{{ route('offer.accepted', ['EmployeeOfferId' => $mailData['EmployeeOfferId']]) }}"
+                        style="margin-bottom:15px; font-size:20px; font-weight: 600; padding: 20px 0; background: #5533ff; float: left; width: 100%; border-radius: 5px; color: #fff; text-decoration: none;"
+                        target="_black">
+                        <sapn style="padding: 0 5px;">Accepted</sapn>
+                    </a>
+                    <a href=""
+                        style="margin-bottom:15px; font-size:20px; font-weight: 600; padding: 20px 0; background: #5533ff; float: left; width: 100%; border-radius: 5px; color: #fff; text-decoration: none;"
+                        target="_black">
+                        <sapn style="padding: 0 5px;">Declined</sapn>
+                    </a>
+                </div>
                 
 
                 <p style="margin-top:15px;margin-bottom:15px; margin-top: 30px; font-size:16px;line-height: 24px; color: #373E57;  text-align: left; padding: 0 20px 0px; font-family: 'DM Sans', sans-serif;">Kind regards,</br>

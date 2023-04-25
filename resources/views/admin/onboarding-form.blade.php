@@ -5,6 +5,7 @@
     }
 
 </style>
+
 <h2 class="modal-title" id=""></h2>
 <input type="hidden" id="is_add" value="{{ $onboardProcess ? '' : 1 }}" />
 <input type="hidden" id="employee_id" name="employee_id" value="{{ $employee->id }}" />
@@ -18,6 +19,18 @@
                         <label class="exitonboard"> <input type="checkbox" name="status[{{ $a }}]" class="checkboxexitform"/>  {{$process->title}}</label>   
                     </div>     
                 </div>  
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Description </label> 
+                        <textarea rows="3" name="description" class="form-control" placeholder="description"></textarea>
+                    </div>     
+                </div>  
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Document</label> 
+                        <input type="file" id="document" name="document" class="form-control" accept="image/jpeg,image/doc,image/pdf" />
+                    </div>     
+                </div> 
                 @php $a++ @endphp
             @endforeach
          @else

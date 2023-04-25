@@ -123,9 +123,32 @@
                 echo '#5533ff';
             } ?> !important;
         }
+
+        .setting-pages .tab-content-details h2 { 
+            color: <?php if (!empty(session('primary_color'))) {
+                echo session('primary_color');
+            } else {
+                echo '#5533ff';
+            } ?> !important;    
+        }
+
+        .setting-pages .nav-tabs .nav-item.show .nav-link img h2, .setting-pages .nav-tabs .nav-link.active h2{
+         color:  <?php if (!empty(session('primary_color'))) {echo session('primary_color');
+            } else {
+                echo '#5533ff';
+            } ?> !important;
+          }
+
         .ser-part .ser-box .head-sec .img-bg svg .iconFill {
             fill: <?php if (!empty(session('primary_color'))) {
                 echo session('primary_color');
+            } else {
+                echo '#5533ff';
+            } ?> !important;
+        }
+
+        .ser-part .ser-box:hover .head-sec .img-bg{
+            background: <?php if (!empty(session('primary_color'))) {echo session('primary_color');
             } else {
                 echo '#5533ff';
             } ?> !important;
@@ -200,7 +223,7 @@
             <nav class="navbar navbar-expand-md navbar-dark">
                 <a class="navbar-brand" href="admin-index">
                     @if (session('logo'))
-                        <img src="/{{ session('logo') }}">
+                        <img src="{{ session('logo') }}">
                 </a>
             @else
                 <img src="{{ asset('assets') }}/admin/images/logo.png"></a>
@@ -497,15 +520,29 @@
                                                 <path d="M63.5 108.5C48.1809 110.596 15.9807 118.465 5.93521 133.465C5.27888 134.445 5 135.618 5 136.798V175.5H63.5"stroke="black" stroke-width="10" class="iconstroke" />
                                                 <path d="M173.653 143.791C132.167 85.2593 85.9363 118.521 66.9371 143.732C66.3759 144.476 66.4564 145.524 67.0779 146.219C112.706 197.241 156.458 168.183 173.638 146.129C174.166 145.451 174.15 144.492 173.653 143.791Z" stroke="black" stroke-width="10" class="iconstroke" />
                                                 <circle cx="120" cy="143" r="15" fill="black" class="iconFill" />
+                                                
                                             </svg>
                                                 Exit Employees Process
                                             </a>
                                         </li>
+
+                                        <li>
+                                            <a href="/offer_send_details" class="secondary_color">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="147" height="181" viewBox="0 0 147 181" fill="none">
+                                                    <circle cx="82.5" cy="48.5" r="43.5" stroke="black" stroke-width="10" class="iconstroke" />
+                                                    <path d="M63.5 108.5C48.1809 110.596 15.9807 118.465 5.93521 133.465C5.27888 134.445 5 135.618 5 136.798V175.5H63.5" stroke="black"  class="iconstroke" stroke-width="10"/>
+                                                    <line x1="116" y1="110" x2="116" y2="174" stroke="black" class="iconstroke" stroke-width="10"/>
+                                                    <line x1="83" y1="143" x2="147" y2="143" stroke="black" class="iconstroke" stroke-width="10"/>
+                                                    </svg>
+                                                Offer Send
+                                            </a>
+                                        </li>
+
                                         <li>
                                             <a href="/onboarding_process" class="secondary_color">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="22" viewBox="0 0 24 22" fill="none">
                                                 <path d="M23.001 13.1524H22.334C22.084 13.1524 21.836 13.1714 21.589 13.2094L14.543 7.92537L16.231 6.30937C16.63 5.92737 16.644 5.29337 16.262 4.89537C15.879 4.49637 15.245 4.48337 14.848 4.86437L10.675 8.85937C10.467 9.06737 10.184 9.17437 9.887 9.14937C9.589 9.12537 9.327 8.97437 9.148 8.72437C8.874 8.34437 8.958 7.74937 9.316 7.39037L14.019 2.96137C14.91 2.12437 16.303 1.91937 17.393 2.46637L19.709 3.62437C20.399 3.96937 21.173 4.15137 21.944 4.15137H23C23.553 4.15137 24 3.70437 24 3.15137C24 2.59837 23.553 2.15137 23 2.15137H21.944C21.481 2.15137 21.016 2.04237 20.602 1.83537L18.288 0.677367C16.464 -0.235633 14.135 0.103367 12.647 1.50537L12.029 2.08737L11.329 1.44937C10.41 0.612367 9.22 0.151367 7.939 0.151367C7.168 0.151367 6.399 0.333367 5.712 0.676367L3.398 1.83437C2.983 2.04137 2.518 2.15037 2.055 2.15037H1.001C0.448 2.15037 0.001 2.59737 0.001 3.15037C0.001 3.70337 0.448 4.15037 1.001 4.15037H2.057C2.828 4.15037 3.602 3.96737 4.293 3.62337L6.609 2.46537C7.631 1.95137 9.067 2.09037 9.983 2.92737L10.57 3.46237L7.924 5.95437C6.851 7.02637 6.68 8.72137 7.526 9.89237C8.046 10.6154 9.079 11.1514 9.97 11.1514C10.763 11.1514 11.524 10.8394 12.074 10.2884L13.08 9.32537L19.426 14.0844C19.395 14.1064 13.228 18.7304 13.228 18.7304C12.505 19.2924 11.496 19.2924 10.758 18.7194L4.667 14.1514C3.808 13.5064 2.742 13.1514 1.667 13.1514H1C0.447 13.1514 0 13.5984 0 14.1514C0 14.7044 0.447 15.1514 1 15.1514H1.667C2.312 15.1514 2.951 15.3644 3.467 15.7514L9.544 20.3094C10.269 20.8734 11.138 21.1554 12.005 21.1554C12.867 21.1554 13.728 20.8764 14.442 20.3204L20.535 15.7524C21.05 15.3654 21.689 15.1524 22.334 15.1524H23.001C23.554 15.1524 24.001 14.7054 24.001 14.1524C24.001 13.5994 23.554 13.1524 23.001 13.1524Z" fill="black" class="iconFill" />
-                                                </svg>.
+                                                </svg>
                                                 Onboarding Process
                                             </a>
                                         </li>
