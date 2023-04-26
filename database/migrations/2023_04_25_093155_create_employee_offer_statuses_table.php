@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->longText('comment')->nullable()->default('text');
             $table->string('document')->nullable();
-            $table->enum('status',['withdrow','accepted','declined','not_joined','joined'])->comment('Withdrow / Accepted / Declined / Not Joined / Joined');
+            $table->enum('status',['Offer Sent','Withdraw','Accepted','Declined','Not Joined','Joined'])->comment('Offer Sent / Withdraw / Accepted / Declined / Not Joined / Joined');
             $table->timestamps();
         });
     }

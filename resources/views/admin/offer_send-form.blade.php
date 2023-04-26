@@ -45,15 +45,14 @@
 
                                 <div class="col-lg-12 col-md-12">
                                     <div class="form-group">
-                                        <label>Document</label>
+                                        <label>Document<span style="color:red">*</span></label>
                                         <input type="file" id="document" name="document" class="form-control" accept="image/jpeg,image/doc,image/pdf" />
+                                        <strong class="error" id="document-error"></strong>
                                     </div>
                                 </div>
 
                             </div>
                         </form>
-                     @else
-                        <p>Offer already sent</p>
                     @endif
                 </div>
             </div>

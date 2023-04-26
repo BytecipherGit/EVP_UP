@@ -146,15 +146,14 @@
                                         {{-- <span class="notifi-td" data-toggle="modal" data-target="#remaiderbtninfo"><img
                                                 src="assets/admin/images/bell-icon.png" width="30px;"
                                                 height="30px"></span> --}}
-                                        <a href="{{ route('interview.round.details') }}/{{ $employee->id }}"
-                                            class="edit-btn fa fa-eye" data-id="{{ $employee->id }}"
-                                            data-title="Details"></a>
-                                        <a href="#" class="edit-btn fa fa-arrow-circle-right" id="updateInterview"
-                                            data-id="{{ $employee->id }}" data-title="Next Round"></a>
-                                        <a href="#" class="edit-btn fa fa-trash " id="delete_interview"
-                                            data-id="{{ $employee->id }}" data-title="Delete"></a>
-                                        <a href="#" class="edit-btn fa fa-gift" id="offer_send"
-                                            data-id="{{ $employee->employee_id }}" data-title="offer_send"></a>
+                                        <a href="{{ route('interview.round.details') }}/{{ $employee->id }}" class="edit-btn fa fa-eye" data-id="{{ $employee->id }}" data-title="Details"></a>
+                                        <a href="#" class="edit-btn fa fa-arrow-circle-right" id="updateInterview" data-id="{{ $employee->id }}" data-title="Next Round"></a>
+                                        <a href="#" class="edit-btn fa fa-trash " id="delete_interview" data-id="{{ $employee->id }}" data-title="Delete"></a>
+                                      
+                                
+                                         <a href="#" class="edit-btn fa fa-gift" id="offer_send" data-id="{{ $employee->employee_id }}" data-title="offer_send"></a>
+                                
+                                   
                                     </td>
                                 </tr>
                             @endforeach
@@ -223,12 +222,11 @@
                 <div class="modal-footer">
                     <div class="loadingImg"></div>
                     <div style="font-size: 16px; display:none;" class="text-success" id="success">Offer
-                        successfully send.</div>
+                        successfully sent.</div>
                     <div style="font-size: 16px; display:none;" class="text-danger" id="failed">Offer already
-                        send.</div>
+                        sent.</div>
                     <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn-primary-cust button_background_color"><span
-                            class="button_text_color">Submit</span></button>
+                    <button type="submit" class="btn-primary-cust button_background_color"><span  class="button_text_color">Submit</span></button>
                 </div>
             </div>
         </form>
@@ -337,6 +335,26 @@
 </script>
 
 <script>
+     $(document).ready(function() {
+        $("#offer_send_form").validate({
+            rules: {
+                document: {
+                    required: true,
+                    extension: 'png|jpeg|jpg' // add allowed extensions here
+                }
+            },
+            messages: {
+                document: {
+                    required: 'Please select a file',
+                    extension: 'Please select a file with a valid extension (png, jpg, jpeg)'
+                }
+            },
+            submitHandler: function(form) {
+                // submit the form if validation passes
+                form.submit();
+            }
+        });
+
     $(document).on('click', '#offer_send', function() {
         var employeeId = $(this).data('id');
         if (employeeId != '') {
@@ -355,9 +373,9 @@
             datatype: "html",
         }).done(function(data) {
             if (id === '') {
-                $('#Heading').text("Create offer");
+                $('#Heading').text("Offer send");
             } else {
-                $('#Heading').text("Create offer");
+                $('#Heading').text("Offer send");
             }
             $('#offerModel').find('.modal-body').html(data);
             $('#offerModel').modal({
@@ -408,6 +426,7 @@
             }
         });
     });
+});
 </script>
 
 

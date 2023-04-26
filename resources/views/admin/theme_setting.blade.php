@@ -60,7 +60,7 @@
                     <table class="table table-bordered theme_setting_datatable">
                         <thead class="primary_color">
                             <tr>
-                                <th class="secondary_color">Key</th>
+                                <th class="secondary_color">Color</th>
                                 <th class="secondary_color">Value</th>
                                 <th width="100px" class="secondary_color">Action</th>
                             </tr>
@@ -120,19 +120,21 @@
             serverSide: true,
             ajax: "{{ route('theme.setting.index') }}",
             columns: [{
-                    data: 'key',
-                    name: 'key'
+                    data: 'title',
+                    name: 'title'
                 },
                 {
                     data: "value",
-                    render: function(data, type, row) {
-                        if (row['key'] == 'logo') {
-                            return '<img src="' + data + '" width="50"/>';
-                        } else {
-                            return data;
-                        }
-                    }
+                    name: 'value',
+                    // render: function(data, type, row) {
+                    //     if (row['key'] == 'logo') {
+                    //         return '<img src="' + data + '" width="50"/>';
+                    //     } else {
+                    //         return data;
+                    //     }
+                    // }
                 },
+
                 {
                     data: 'action',
                     name: 'action',

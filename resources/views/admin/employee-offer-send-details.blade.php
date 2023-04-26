@@ -1,6 +1,6 @@
 @extends('company/layouts.app')
 @section('content')
-@section('title', 'EVP - Exit employee process')
+@section('title', 'EVP - Employee Offer send')
 
 <link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/bootstrap.min.css">
 <link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/datatables.bootstrap.min.css">
@@ -27,7 +27,7 @@
         <div class="table-responsive-bg">
             <div class="row" style="margin-top: 20px;">
                 <div class="col-xs-12">
-                    <table class="table table-bordered employee_offer_send_datatable">
+                    <table id="example"  class="table table-bordered employee_offer_send_datatable">
                         <thead class="primary_color">
                             <tr>
                                 <th class="secondary_color">S.No.</th>
@@ -47,24 +47,26 @@
                                         <td>{{ $employee->email }}</td>
                                         <td>{{ $employee->phone }}</td>
                                         <td>
-                                                <select style="width: 150px;" class="form-control" name="status" id="offer_status" style="text-decoration:none" href="#"> 
+                                                <select style="width: 150px;" class="form-control" name="status" id="offer_send_status" style="text-decoration:none" href="#"> 
+                                                    <option value="Offer Sent" @if ($employee->status == 'Offer Sent') selected="selected" @endif data-id="{{ $employee->id }}">Offer Sent</option>
                                                     <option value="Withdraw" @if ($employee->status == 'Withdraw') selected="selected" @endif data-id="{{ $employee->id }}">Withdraw</option>
                                                     <option value="Accepted" @if ($employee->status == 'Accepted') selected="selected" @endif data-id="{{ $employee->id }}">Accepted</option>
                                                     <option value="Declined" @if ($employee->status == 'Declined') selected="selected" @endif data-id="{{ $employee->id }}">Declined</option>
                                                     <option value="Not Joined" @if ($employee->status == 'Not Joined') selected="selected" @endif data-id="{{ $employee->id }}">Not Joined</option>
                                                     <option value="Joined" @if ($employee->status == 'Joined') selected="selected" @endif data-id="{{ $employee->id }}">Joined</option>
-                                               </select>
+                                               </select>      
                                         </td> 
                                         <td>
-                                            <a href="#" class="edit-btn fa fa-handshake-o" id="onboarding"
-                                                data-id="{{ $employee->employee_id }}" data-title="onboarding"></a>
+                                            @if($employee->status === "Joined")
+                                        
+                                                <a href="#" class="edit-btn fa fa-handshake-o" id="onboarding" data-id="{{ $employee->employee_id }}" data-title="onboarding"></a>
+                                            
+                                            
+                                            @endif
                                         </td>
                                     </tr>
                                     @php $num++ @endphp
                                 @endforeach
-    
-    
-                    
                         </tbody>
                     </table>
                 </div>
@@ -197,6 +199,57 @@
         });
 
     });
+</script>
+
+<script>
+       $(document).on('change', '#offer_send_status', function() {
+            swal({
+                    title: "Are you sure?",
+                    text: "You want to change the status of this offer!",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true, 
+                })
+                .then((result) => {
+                    if (result) {
+                        // Handle the change event
+                        var offerStatus = $(this).val();
+                        var sendOfferId = $('option:selected', this).data('id');
+
+                        if (offerStatus != '' && sendOfferId != '') {
+                            var url = '{{ url('offer_send/changeOfferStatus') }}';
+                            var my_data = {
+                                offerStatus: offerStatus,
+                                sendOfferId: sendOfferId
+                            };
+                            $.ajax({
+                                url: url,
+                                type: 'POST',
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                        'content')
+                                },
+                                data: my_data,
+                                success: function(data) {
+                                    if (data.success) {
+                                        swal("Offer status has been updated.", {
+                                            icon: "success",
+                                        });
+                                        location.reload();
+                                    }
+                                },
+                                error: function(xhr, textStatus, errorThrown) {
+                                    console.log(xhr.responseText);
+                                }
+                            });
+                        }
+                    } else {
+                        swal("Your data is safe!");
+                        location.reload();
+                    }
+                });
+        });
+
 </script>
   <script>
 

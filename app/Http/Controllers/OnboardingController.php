@@ -138,10 +138,21 @@ class OnboardingController extends Controller
 
      public function createOnboardingForm(request $request)
      {
+
          $checkRecordExist = Onboarding::where('employee_id', $request->employee_id)->first();
          if (empty($checkRecordExist)) {
-                 for ($i = 0; $i < count($request->process_id); $i++) {
-                     $status = '';
+   
+          for ($i = 0; $i < count($request->process_id); $i++) {
+                $uploadDocumentPath = '';
+                    if (!empty($request->document[$i])) {
+                     if ($request->document[$i]->getClientOriginalName()) {
+                        $file = $request->file('document');
+                        $fileName = '';
+                        $fileName = time() . '_' . $file[$i]->getClientOriginalName();
+                        $file[$i]->storeAs('public/onboarding_documents', $fileName);
+                        $uploadDocumentPath = asset('storage/onboarding_documents/' . $fileName);
+                      }
+                      $status = '';
                          if (!empty($request->status[$i]) && $request->status[$i] == true) {
                              $status = 1;
                          } else {
@@ -151,24 +162,47 @@ class OnboardingController extends Controller
                              'company_id' => Auth::id(),
                              'employee_id' => $request->employee_id,
                              'onboarding_process_id' => $request->process_id[$i],
+                             'description' => $request->description[$i],
+                             'document' => !empty($uploadDocumentPath) ? $uploadDocumentPath : '',
                              'status' => $status,
                             
                          );
- 
+
                          $onboardData = Onboarding::create($insert);
-                         
+                    }  else { 
+
+                            $status = '';
+                            if (!empty($request->status[$i]) && $request->status[$i] == true) {
+                                $status = 1;
+                            } else {
+                                $status = 0;
+                            }
+
+                            $insert = array(
+                             'company_id' => Auth::id(),
+                             'employee_id' => $request->employee_id,
+                             'onboarding_process_id' => $request->process_id[$i],
+                             'description' => $request->description[$i],
+                             'document' => !empty($uploadDocumentPath) ? $uploadDocumentPath : '',
+                             'status' => $status,
+    
+                            );
+
+                            $onboardData = Onboarding::create($insert);
+                              
+                        }
+
                      } 
                
-        
                  if (!empty($onboardData)) {
                      return Response::json(['success' => '1']);
                  } else {
                      return Response::json(['success' => '0']);
                  }
         
-         }  else {
+           }  else {
              return Response::json(['success' => '0']);
-         }
+          }
         
         }
     }

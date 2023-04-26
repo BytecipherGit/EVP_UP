@@ -21,7 +21,13 @@ body{
   margin: 0 5px 0 0 !important;
  
 }
-
+.colorBox {
+  padding: 12px 30px;
+  border: solid 7px rgb(206 212 218 / 40%);
+  border-radius: 4px;
+  display: block;
+  width: fit-content;
+}
 .exitonboard{
 display: flex !important;
 }
@@ -201,7 +207,7 @@ button.btn-secondary-custexport {
 .custu-modal-popup .modal-content h2 {
     font-size: 22px;
     line-height: 24px;
-    color: #5533FF;
+    color: #081131;
     font-weight: 600;
     margin: 0 0 15px;
 }

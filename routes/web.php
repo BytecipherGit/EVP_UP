@@ -130,7 +130,7 @@ Route::middleware([Admin::class])->group(function () {
     // Route::post('schedule-interview/changeInterviewerStatus', [InterviewEmployee::class, 'update_interviewer_status'])->middleware('documents');
     
     Route::get('offer/accepted/{id?}', [App\Http\Controllers\EmployeeStatusController::class, 'offerSendAcceptStatus'])->name('offer.accepted')->middleware('documents');
-    Route::get('offer/decline/{id?}', [App\Http\Controllers\EmployeeStatusController::class, 'offerSendDeclineStatus'])->name('offer.decline')->middleware('documents');
+    Route::get('offer/declined/{id?}', [App\Http\Controllers\EmployeeStatusController::class, 'offerSendDeclineStatus'])->name('offer.declined')->middleware('documents');
 
     Route::get('interview/newtime/{id?}', [InterviewEmployee::class, 'interviewNewTime'])->name('interview.newtime')->middleware('documents');
     Route::get('interview/declined/{id?}', [InterviewEmployee::class, 'interviewDeclined'])->name('interview.declined')->middleware('documents');
@@ -166,6 +166,7 @@ Route::middleware([Admin::class])->group(function () {
     Route::get('offer_send_details', [App\Http\Controllers\EmployeeStatusController::class, 'index'])->name('employee.offer.send.index')->middleware('documents');
     Route::any('offer_send/form/{id?}', [App\Http\Controllers\EmployeeStatusController::class, 'getOfferSendForm'])->middleware('documents');
     Route::post('offer_send/submit', [App\Http\Controllers\EmployeeStatusController::class, 'createOfferSendForm'])->middleware('documents');
+    Route::post('offer_send/changeOfferStatus', [App\Http\Controllers\EmployeeStatusController::class, 'update_send_offer_status'])->middleware('documents');
 
     Route::any('next_round_of_interview/form/{id?}', [InterviewEmployee::class, 'getNextRoundOfInterviewForm'])->middleware('documents');
     Route::post('next_round_of_interview/submit', [InterviewEmployee::class, 'scheduleNextRoundOfInterview'])->middleware('documents');

@@ -1954,7 +1954,7 @@ class SearchController extends Controller
                                   $interviewEmp = EmployeeInterview::where('employee_id', $employee->id)->first();
                                   $joinDate = Empofficial::where('employee_id', $employee->id)->first();
 
-                                  $interviews =  EmployeeInterview::where('employee_id', $employee->id)->count();
+                                  $interviews =  Exitemp::where('employee_id', $employee->id)->count();
                                  $empPosition = !empty($interviewEmp->position) ? $interviewEmp->position : '';
                            $reviewEmp = CompanyEmployee::join('exit_employee','exit_employee.employee_id','=','company_employee.employee_id')
                                 ->where('exit_employee.employee_id', $employee->id)
@@ -1972,6 +1972,7 @@ class SearchController extends Controller
                                         <h2> ' . $empDetails->first_name . ' ' . $empDetails->middle_name . ' ' . $empDetails->last_name . ' <small>('.$interviews.' Interview going on)</small>
                                         <span>'.$empPosition.'  at ' . $cmpName . '.</span>
                                         <small>' . $empDetails->current_address. '</small>';
+                                        
                                   if($reviewEmp){
                                           $html .='<small>'. number_format($reviewEmp->rating, 1, '.', ',') .' <span>reviews</span></small>';
                                    }

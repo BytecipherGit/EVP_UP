@@ -31,7 +31,7 @@
                         target="_black">
                         <sapn style="padding: 0 5px;">Accepted</sapn>
                     </a>
-                    <a href=""
+                    <a href="{{ route('offer.declined', ['EmployeeOfferId' => $mailData['EmployeeOfferId']]) }}"
                         style="margin-bottom:15px; font-size:20px; font-weight: 600; padding: 20px 0; background: #5533ff; float: left; width: 100%; border-radius: 5px; color: #fff; text-decoration: none;"
                         target="_black">
                         <sapn style="padding: 0 5px;">Declined</sapn>

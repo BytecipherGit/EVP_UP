@@ -3,14 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Auth;
 use App\Models\User;
 use App\Models\Employee;
 use Illuminate\Support\Facades\Response;
 use App\Mail\SendOfferMailToEmployee;
 use App\Models\EmployeeInterview;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables as FacadesDataTables;
 use Illuminate\Support\Facades\Mail as FacadesMail;
+use Auth;
 use App\Models\EmployeeStatus;
 
 class EmployeeStatusController extends Controller
@@ -19,7 +20,8 @@ class EmployeeStatusController extends Controller
     public function index(request $request)
     { 
     
-        $employeeOfferData = EmployeeStatus::where('company_id',Auth::id())->select('employee_id','name','email','phone')->get();
+        $employeeOfferData = EmployeeStatus::where('company_id',Auth::id())->get();
+
         return view('admin.employee-offer-send-details',compact('employeeOfferData'));
     }
 
@@ -32,6 +34,26 @@ class EmployeeStatusController extends Controller
            return view('admin.offer_send-form',compact('employee','offerSendRecord'));
        }
     }
+
+
+    public function update_send_offer_status(request $request)
+    {
+        if (!empty($request->sendOfferId) && !empty($request->offerStatus)) {
+           
+            $offerSend = EmployeeStatus::find($request->sendOfferId);
+
+            $offerSend->status = $request->offerStatus;
+
+            if ($offerSend->save()) {
+                return Response::json(['success' => '1']);
+            } else {
+                return Response::json(['success' => '0']);
+            }
+        } else {
+            return Response::json(['success' => '0']);
+        }
+    }
+
 
     public function createOfferSendForm(request $request)
     {
@@ -79,6 +101,7 @@ class EmployeeStatusController extends Controller
                     'email' => !empty($request->email) ? $employeeExist->email : null,
                     'EmployeeOfferId' => encrypt($employeeOfferStatusData->id), 
                 ];
+                // dd($mailData);
                FacadesMail::to($employeeOfferStatusData->email)->send(new SendOfferMailToEmployee($mailData));
             }
          }
@@ -91,28 +114,50 @@ class EmployeeStatusController extends Controller
 
    }
 
-   public function offerSendStatusVerification(request $request)
 
+   public function offerSendAcceptStatus(request $request)
    {
-        dd($request->all());
-    if (!empty($request->id)) {
-        $id = decrypt($request->id);
-        // $companyData = User::where('id', $id)->first();
-        $employeeExist = EmployeeInterview::where('employee_id', $request->employee_id)->where('company_id',Auth::id())->first();
-        if ($companyData) {
-            if ($companyData->status == '0') {
-                $changeStatus = DB::table('users')->where('id', $id)
-                    ->update([
-                        'status' => '1',
-                    ]);
-                return view('admin/emails/candidate/verification-success', compact('companyData', 'id'));
-            } else {
-                return view('admin/emails/candidate/already-verify', compact('companyData', 'id'));
-            }
-        } else {
-            return Response::json(['success' => '0']);
-        }
-    }
- }
+// dd($request->EmployeeOfferId);
+       if (!empty($request->EmployeeOfferId)) {
+           $id = decrypt($request->EmployeeOfferId);
+           $offerData = EmployeeStatus::where('id', $id)->first();
+           if ($offerData) {
+               if (($offerData->status != 'accepted') && ($offerData->status == 'offer_sent')) {
+                   $changeStatus = DB::table('employee_offer_statuses')->where('id', $id)
+                       ->update([
+                           'status' => 'accepted',
+                       ]);
+                   return redirect('/success');
 
+               } else {
+                   return "Already updated";
+               }
+           } else {
+               return Response::json(['success' => '0']);
+           }
+       }
+   }
+
+   public function offerSendDeclineStatus(request $request)
+   {
+    // dd($request->all());
+       if (!empty($request->EmployeeOfferId)) {
+           $id = decrypt($request->EmployeeOfferId);
+           $offerData = EmployeeStatus::where('id', $id)->first();
+           if ($offerData) {
+               if (($offerData->status != 'declined') && ($offerData->status == 'offer_sent')) {
+                   $changeStatus = DB::table('employee_offer_statuses')->where('id', $id)
+                       ->update([
+                           'status' => 'declined',
+                       ]);
+                   return redirect('/success');
+
+               } else {
+                   return "Already updated";
+               }
+           } else {
+               return Response::json(['success' => '0']);
+           }
+       }
+   }
 }
