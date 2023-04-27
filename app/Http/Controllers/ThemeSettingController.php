@@ -36,6 +36,7 @@ class ThemeSettingController extends Controller
                     // $btn .= '<a href="javascript:void(0)" data-id="' . $row->id . '" class="edit-btn deleteProcess fa fa-trash" data-title="Delete"></a>';
                     return $btn;
                 })
+                
                 ->rawColumns(['action','value'])
                 ->make(true);
         }

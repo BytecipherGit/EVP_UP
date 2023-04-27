@@ -20,6 +20,7 @@ return new class extends Migration
             $table->foreign('employee_id')->references('id')->on('employee')->comment('Id form employee')->onDelete('cascade');
             $table->unsignedInteger('company_id');
             $table->foreign('company_id')->references('id')->on('users')->onDelete('cascade');
+            $table->string('employee_offer_id')->nullable()->comment('employee_offer_statuses Table id');
             $table->string('position')->nullable();
             $table->string('rating')->nullable();
             $table->string('resume')->nullable();

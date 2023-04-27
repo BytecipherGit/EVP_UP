@@ -44,8 +44,9 @@ class InterviewEmployee extends Controller
         if (Auth::check()) {
             // $interviewEmployees = EmployeeInterview::all();
 
-            $interviewEmployees = EmployeeInterview::join('users','users.id','=','interview_employees.company_id')        
-                                ->join('employee','interview_employees.employee_id','=','employee.id')
+            $interviewEmployees = EmployeeInterview::leftjoin('users','users.id','=','interview_employees.company_id')    
+                                ->leftjoin('employee_offer_statuses','employee_offer_statuses.id','=','interview_employees.employee_offer_id')    
+                                ->leftjoin('employee','interview_employees.employee_id','=','employee.id')
                                 ->select('users.id','interview_employees.*','employee.empCode','employee.first_name','employee.last_name')
                                 ->where('interview_employees.company_id',Auth::id())->get();
                                 
@@ -185,7 +186,7 @@ class InterviewEmployee extends Controller
             // dd($interviewEmployeess);
             $offerSendEmpExist = EmployeeStatus::join('employee','employee.id','=','employee_offer_statuses.employee_id')
                                   ->where('employee_offer_statuses.company_id',Auth::id())->get();
-                                // dd($offerSendEmpExist);  
+                            // dd($interviewEmployees);  
             $hiringStages = HiringStage::all();
             $employeeInterviewStatuses = EmployeeInterviewStatus::all();
 
@@ -1197,6 +1198,11 @@ class InterviewEmployee extends Controller
             $interviewStatus = $request->interview_status;
             return view('admin.email_template_confirmation',compact('interviewStatus'));
         }
+    }
+    
+    public function createNotAppearedForm(request $request){
+        dd();
+       return view('admin.not_appeared');
     }
 
     public function sendEmailTemplate(request $request)

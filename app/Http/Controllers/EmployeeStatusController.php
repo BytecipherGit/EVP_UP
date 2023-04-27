@@ -20,7 +20,7 @@ class EmployeeStatusController extends Controller
     public function index(request $request)
     { 
     
-        $employeeOfferData = EmployeeStatus::where('company_id',Auth::id())->get();
+        $employeeOfferData = EmployeeStatus::where('employee_offer_statuses.company_id',Auth::id())->get();
 
         return view('admin.employee-offer-send-details',compact('employeeOfferData'));
     }
@@ -87,6 +87,14 @@ class EmployeeStatusController extends Controller
             ];
          
             $employeeOfferStatusData = EmployeeStatus::create($createemployeeofferstatus);
+
+            if(!empty($employeeOfferStatusData)){
+                $updateInterviewEmp = DB::table('interview_employees')->where('employee_id', $employeeOfferStatusData->employee_id)->where('company_id',Auth::id())
+            ->update([
+                'employee_offer_id' => $employeeOfferStatusData->id,
+            ]);
+
+            }
 
             $employeeExist = EmployeeInterview::where('employee_id', $request->employee_id)->where('company_id',Auth::id())->first();
 

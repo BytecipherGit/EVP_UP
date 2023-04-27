@@ -57,11 +57,12 @@
                                                </select>      
                                         </td> 
                                         <td>
-                                            @if($employee->status === "Joined")
-                                        
+                                            @if(($employee->status === "Joined"))
+                                               @if(empty($employee->onboarding_employee_id))
                                                 <a href="#" class="edit-btn fa fa-handshake-o" id="onboarding" data-id="{{ $employee->employee_id }}" data-title="onboarding"></a>
-                                            
-                                            
+                                                @else
+                                                <a href="#" class="edit-btn fa fa-handshake-o offerBtn" id="onboarding" data-id="{{ $employee->employee_id }}" data-title="onboarding"></a>
+                                                @endif
                                             @endif
                                         </td>
                                     </tr>

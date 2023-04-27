@@ -34,7 +34,7 @@
             </div>
             <div class="col-md-4">
                 <div class="main-right-button-box">
-                    <a href="/schedule-interview" class="button_background_color"><img src="{{ asset('assets') }}/admin/images/back-icon.png"><span class="button_text_color"> Back</span></a>
+                    <a href="/schedule_interview" class="button_background_color"><img src="{{ asset('assets') }}/admin/images/back-icon.png"><span class="button_text_color"> Back</span></a>
               </div>
             </div>
         </div>
@@ -80,9 +80,9 @@
                                             <option value="Not Qualified"
                                                 @if ($interviewEmpoloyeeRound->interviewer_status == 'Not Qualified') selected="selected" @endif
                                                data-id="{{ $interviewEmpoloyeeRound->id }}">Not Qualified</option>
-                                            {{-- <option value="Not Appeared"
+                                            <option value="Not Appeared"
                                                  @if ($interviewEmpoloyeeRound->interviewer_status == 'Not Appeared') selected="selected" @endif
-                                                data-id="{{ $interviewEmpoloyeeRound->id }}">Not Appeared</option> --}}
+                                                data-id="{{ $interviewEmpoloyeeRound->id }}">Not Appeared</option>
 
                                     </select>
                                     {{-- <a href="" class="edit-btn fa fa-trash" data-toggle="modal"
@@ -136,6 +136,36 @@ aria-hidden="true">
     </form>
 </div>
 </div>
+
+ <!-- The Modal Interview  -->
+ <div class="modal fade custu-modal-popup" id="notAppeared" role="dialog" aria-labelledby="exampleModalLabel"
+ aria-hidden="true">
+ <div class="modal-dialog" role="document">
+     <form id="not_Appeared" method="post" autocomplete="off" enctype="multipart/form-data">
+         <input type="hidden" value="{{$interviewEmpoloyee->id}}" name="interview_id">
+         {{-- <input type="hidden" id="interview_status" value="{{ $interviewStatus }}"> --}}
+         {{-- <input type="hidden" value="{{$interviewEmpoloyee->interviewer_status}}" name="interviewer_status"> --}}
+         <div class="modal-content">
+             <div class="modal-header">
+                 <h2 class="modal-titles" id="Heading"></h2>
+                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                     <img src="{{ asset('assets') }}/admin/images/close-btn-icon.png">
+                 </button>
+             </div>
+             <div class="modal-body">
+                 <div class="comman-body">
+                 </div>
+             </div>
+             <div class="modal-footer">
+                 <div class="loadingImg"></div>
+                 <div style="font-size: 16px; display:none;" class="text-success" id="success">Status update successfully</div>
+                 <button type="button" class="btn-secondary-cust" onclick="refreshPage();" data-dismiss="modal">Cancel</button>
+                 <button type="submit" id="Submit" class="btn-primary-cust button_background_color"><span class="button_text_color">Submit</span></button>
+             </div>
+         </div>
+     </form>
+ </div>
+ </div>
 
 
 
@@ -197,20 +227,20 @@ aria-hidden="true">
         getEmployeeTemplateConfirmation(interviewerstatus);
     });
 
-
-    function getEmployeeTemplateConfirmation(interviewerstatus = '') {
-        
+    function getEmployeeTemplateConfirmation(interviewerstatus = '') { 
         let getFormUrl = '{{ url('email_template/form') }}';
         if (getFormUrl !== '') {
             getFormUrl = getFormUrl + "?interview_status=" + interviewerstatus;
         }
+     
         $.ajax({
             url: getFormUrl,
             type: "get",
             datatype: "html",
-        }).done(function(data) {
+        
+          }).done(function(data,appeared) {
             if (interviewerstatus === '') {
-                $('#Heading').text("Employee interview final status");
+                $('#Heading').text("Employee interview status");
             } else {
                 $('#Heading').text("Employee interview final status");
             }
@@ -219,16 +249,17 @@ aria-hidden="true">
                 backdrop: 'static',
                 keyboard: false
             });
+        
         }).fail(function(jqXHR, ajaxOptions, thrownError) {
             alert('No response from server');
         });
-    }
-
+     }
+    
         $('#send_email_to_employee').on('submit', function(event) {
                 event.preventDefault();
                 var isAdd = $('#is_add').val();
                 var url = '{{ url('send_email_template') }}';
-                $('.loadingImg').show();
+                // $('.loadingImg').show();
                 var formData = new FormData(this);              
                 $.ajax({
                     url: url,
