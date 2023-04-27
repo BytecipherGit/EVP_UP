@@ -1,6 +1,7 @@
-@extends('company/layouts.app')
+@extends('company.layouts.app')
 @section('content')
 @section('title', 'EVP - Schedule For Interview')
+
 <style>
     .disabled {
         pointer-events: none;
@@ -30,11 +31,6 @@
 }
 </style>
 
-
-<link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/bootstrap.min.css">
-<link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/datatables.bootstrap.min.css">
-<link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/fixedheader.bootstrap.min.css">
-<link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/responsive.bootstrap.min.css">
 <!--- Main Container Start ----->
 <div class="main-container">
     <div class="main-heading">
@@ -124,7 +120,7 @@
                     name: 'title'
                 },
                 {
-                    data: "value",
+                    data: 'value',
                     name: 'value',
                     // render: function(data, type, row) {
                     //     if (row['key'] == 'logo') {

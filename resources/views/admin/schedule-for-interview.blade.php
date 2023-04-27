@@ -150,10 +150,11 @@
                                         <a href="#" class="edit-btn fa fa-arrow-circle-right" id="updateInterview" data-id="{{ $employee->id }}" data-title="Next Round"></a>
                                         <a href="#" class="edit-btn fa fa-trash " id="delete_interview" data-id="{{ $employee->id }}" data-title="Delete"></a>
                                       
-                                
-                                         <a href="#" class="edit-btn fa fa-gift" id="offer_send" data-id="{{ $employee->employee_id }}" data-title="offer_send"></a>
-                                
-                                   
+                                @if(empty($employee->employee_offer_id))
+                                     <a href="#" class="edit-btn fa fa-gift" id="offer_send" data-id="{{ $employee->employee_id }}" data-title="offer_send"></a>
+                                    @else
+                                      <a href="#" class="edit-btn fa fa-gift offerBtn" id="offer_send" data-id="{{ $employee->employee_id }}" data-title="offer_send"></a>
+                                 @endif
                                     </td>
                                 </tr>
                             @endforeach

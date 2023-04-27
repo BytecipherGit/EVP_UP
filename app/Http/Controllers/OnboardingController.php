@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\OnboardingProcess;
 use App\Models\Onboarding;
 use App\Models\Employee;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables as FacadesDataTables;
@@ -169,6 +170,16 @@ class OnboardingController extends Controller
                          );
 
                          $onboardData = Onboarding::create($insert);
+
+                         if(!empty($onboardData)){
+                            $updateOfferEmp = DB::table('employee_offer_statuses')->where('employee_id', $onboardData->employee_id)->where('company_id',Auth::id())
+                        ->update([
+
+                            'onboarding_employee_id' => $onboardData->id,
+                        ]);
+                        
+                        }
+            
                     }  else { 
 
                             $status = '';
@@ -190,7 +201,15 @@ class OnboardingController extends Controller
 
                             $onboardData = Onboarding::create($insert);
                               
-                        }
+                            if(!empty($onboardData)){
+                                $updateOfferEmp = DB::table('employee_offer_statuses')->where('employee_id', $onboardData->employee_id)->where('company_id',Auth::id())
+                            ->update([
+                                
+                                'onboarding_employee_id' => $onboardData->id,
+                            ]);
+                            
+                            }
+                      }
 
                      } 
                

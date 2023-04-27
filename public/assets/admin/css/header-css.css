@@ -366,13 +366,13 @@ header {
 }
 aside {
     position: fixed;
-    background: #fff;
+    /* background: #fff; */
     display: block;
     width: 15%;
     height: 100%;
     padding:36px 32px 100px 30px;
     z-index: 999;
-    top: 84px;
+    top: 83px;
     overflow: hidden;
     overflow-y: auto;
 }
