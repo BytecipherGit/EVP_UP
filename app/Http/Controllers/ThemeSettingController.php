@@ -14,22 +14,29 @@ class ThemeSettingController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $getThemeSetting = ThemeSetting::where('company_id', Auth::id())->select('id', 'company_id', 'key', 'value')->get();
+            $getThemeSetting = ThemeSetting::where('company_id', Auth::id())->select('id', 'company_id','key','title','value')->get();
             if (count($getThemeSetting) > 0) {
                 $data = $getThemeSetting;
+
             } else {
-                $getThemeSetting = ThemeSetting::where('company_id', 0)->select('id', 'company_id', 'key', 'value')->get();
+
+                $getThemeSetting = ThemeSetting::where('company_id', 0)->select('id', 'company_id', 'key','title','value')->get();
                 if (count($getThemeSetting) > 0) {
                     $data = $getThemeSetting;
                 }
             }
             return DataTables::of($data)->addIndexColumn()
+            ->addColumn('value', function ($row) {
+                $btn = '<i class="colorBox" style="background: '. $row->value .'"></i>';
+                // $btn .= '<a href="javascript:void(0)" data-id="' . $row->id . '" class="edit-btn deleteProcess fa fa-trash" data-title="Delete"></a>';
+                return $btn;
+            })
                 ->addColumn('action', function ($row) {
                     $btn = '<a href="javascript:void(0)" data-id="' . $row->id . '" class="edit-btn updateThemeSetting fa fa-edit" data-title="Edit"></a>';
                     // $btn .= '<a href="javascript:void(0)" data-id="' . $row->id . '" class="edit-btn deleteProcess fa fa-trash" data-title="Delete"></a>';
                     return $btn;
                 })
-                ->rawColumns(['action'])
+                ->rawColumns(['action','value'])
                 ->make(true);
         }
         return view('admin.theme_setting');
@@ -65,6 +72,7 @@ class ThemeSettingController extends Controller
                 $insertNewCompanyRecords = [
                     'company_id' => Auth::id(),
                     'key' => 'logo',
+                    'title' => 'Company Logo',
                     'value' => !empty($uploadLogoFilePath) ? $uploadLogoFilePath : null,
                 ];
                 $success = ThemeSetting::where('id',$request->theme_id)->update($insertNewCompanyRecords);
@@ -76,6 +84,7 @@ class ThemeSettingController extends Controller
                 $insertNewCompanyRecords = [
                     'company_id' => Auth::id(),
                     'key' => 'primary_color',
+                    'title' => 'Primary Color',
                     'value' => !empty($request->primary_color) ? $request->primary_color : null,
                 ];
                 $success = ThemeSetting::where('id',$request->theme_id)->update($insertNewCompanyRecords);
@@ -87,6 +96,7 @@ class ThemeSettingController extends Controller
                 $insertNewCompanyRecords = [
                     'company_id' => Auth::id(),
                     'key' => 'secondry_color',
+                    'title' => 'Secondary Color',
                     'value' => !empty($request->secondry_color) ? $request->secondry_color : null,
                 ];
                 $success = ThemeSetting::where('id',$request->theme_id)->update($insertNewCompanyRecords);
@@ -98,6 +108,7 @@ class ThemeSettingController extends Controller
                 $insertNewCompanyRecords = [
                     'company_id' => Auth::id(),
                     'key' => 'button_text_color',
+                    'title' => 'Button Text Color',
                     'value' => !empty($request->button_text_color) ? $request->button_text_color : null,
                 ];
                 $success = ThemeSetting::where('id',$request->theme_id)->update($insertNewCompanyRecords);
@@ -109,6 +120,7 @@ class ThemeSettingController extends Controller
                 $insertNewCompanyRecords = [
                     'company_id' => Auth::id(),
                     'key' => 'button_background_color',
+                    'title' => 'Button Background Color',
                     'value' => !empty($request->button_background_color) ? $request->button_background_color : null,
                 ];
                 $success = ThemeSetting::where('id',$request->theme_id)->update($insertNewCompanyRecords);
@@ -120,6 +132,7 @@ class ThemeSettingController extends Controller
                 $insertNewCompanyRecords = [
                     'company_id' => Auth::id(),
                     'key' => 'link_color',
+                    'title' => 'Link Color',
                     'value' => !empty($request->link_color) ? $request->link_color : null,
                 ];
                 $success = ThemeSetting::where('id',$request->theme_id)->update($insertNewCompanyRecords);

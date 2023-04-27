@@ -21,7 +21,13 @@ body{
   margin: 0 5px 0 0 !important;
  
 }
-
+.colorBox {
+  padding: 12px 30px;
+  border: solid 7px rgb(206 212 218 / 40%);
+  border-radius: 4px;
+  display: block;
+  width: fit-content;
+}
 .exitonboard{
 display: flex !important;
 }
@@ -201,7 +207,7 @@ button.btn-secondary-custexport {
 .custu-modal-popup .modal-content h2 {
     font-size: 22px;
     line-height: 24px;
-    color: #5533FF;
+    color: #081131;
     font-weight: 600;
     margin: 0 0 15px;
 }
@@ -1993,6 +1999,9 @@ button.btn-secondary-custexport {
     margin: 0;
     line-height: 30px;
 }
+ .readonly{
+  cursor: no-drop;
+}
 .notifica-page h1 span .form-control {
     padding: 10px 12px;
     border: 2px solid #EAEFF3;
@@ -2188,11 +2197,15 @@ button.btn-secondary-custexport {
   display: block;
 }
 
-.setting-pages .nav-tabs .nav-item.show .nav-link img h2, .setting-pages .nav-tabs .nav-link.active h2{
-  color: #5533FF 
+.textColor{
+  color:#000 !important;
 }
+/* .setting-pages .nav-tabs .nav-item.show .nav-link img h2, .setting-pages .nav-tabs .nav-link.active h2{
+  color: #000 
+} */
+
 .setting-pages .nav-tabs .nav-link:focus h2, .setting-pages .nav-tabs .nav-link:hover h2{  
-  color: #5533FF 
+  color: #000
 }
 .setting-pages .nav-tabs .nav-item.show .nav-link, .setting-pages .nav-tabs .nav-link.active {
     background-color: transparent; 
@@ -2217,7 +2230,7 @@ button.btn-secondary-custexport {
     font-weight: bold;
     font-size: 24px;
     line-height: 24px;
-    color: #5533FF;
+    /* color: #5533FF; */
     border-bottom: 1px solid #EAEFF3;
     padding-bottom: 20px;
     margin: 0;
@@ -2461,6 +2474,7 @@ button.btn-secondary-custexport {
   font-size: 15px;
   padding: 10px 0;
 }
+
 .setting-pages .selectBox .dropdown-menu {
     top: 45px !important;
     border: 2px solid #EAEFF3;
@@ -2510,12 +2524,19 @@ button.btn-secondary-custexport {
     width: 130px;
     height: 130px;
 }
+
+.searchRating{
+  text-align: center;
+  margin: 13px;
+  
+}
+
 .search-hist-page h2 span {
     display: block;
     font-weight: normal;
     font-size: 16px;
     line-height: 18px;
-    color: #5533FF;
+    color: #1F2B6C;
     margin: 9px 0 0;
 }
 .btnspan{

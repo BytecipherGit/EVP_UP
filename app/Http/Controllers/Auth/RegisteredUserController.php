@@ -108,6 +108,7 @@ class RegisteredUserController extends Controller
                 foreach ($getThemeSettingRecords as $getThemeSettingRecord) {
                     $insertThemeRecord = array(
                         'company_id' => $user->id,
+                        'title' => $getThemeSettingRecord->title,
                         'key' => $getThemeSettingRecord->key,
                         'value' => $getThemeSettingRecord->value,
                     );

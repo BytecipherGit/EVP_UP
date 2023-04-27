@@ -123,6 +123,22 @@
                 echo '#5533ff';
             } ?> !important;
         }
+
+        .setting-pages .tab-content-details h2 { 
+            color: <?php if (!empty(session('primary_color'))) {
+                echo session('primary_color');
+            } else {
+                echo '#5533ff';
+            } ?> !important;    
+        }
+
+        .setting-pages .nav-tabs .nav-item.show .nav-link img h2, .setting-pages .nav-tabs .nav-link.active h2{
+         color:  <?php if (!empty(session('primary_color'))) {echo session('primary_color');
+            } else {
+                echo '#5533ff';
+            } ?> !important;
+          }
+
         .ser-part .ser-box .head-sec .img-bg svg .iconFill {
             fill: <?php if (!empty(session('primary_color'))) {
                 echo session('primary_color');
@@ -131,6 +147,15 @@
             } ?> !important;
         }
 
+        .ser-part .ser-box:hover .head-sec .img-bg{
+            background: <?php if (!empty(session('primary_color'))) {echo session('primary_color');
+            } else {
+                echo '#5533ff';
+            } ?> !important;
+        }
+        /* .colorBox {
+            background: 
+        } */
         .schudinter-tab .nav-tabs .nav-item.show .nav-linkSchedule, .nav-tabs .nav-linkSchedule.active {
             color: <?php if (!empty(session('button_text_color'))) {echo session('button_text_color');
             } else {
@@ -143,6 +168,18 @@
             border-color: #dee2e6 #dee2e6 #fff;
             border-radius: 0;
         }
+
+        .serch-main-box .nav-tabs .nav-item.show .nav-link, .serch-main-box .nav-tabs .nav-link.active {
+            color: <?php if (!empty(session('primary_color'))) {echo session('primary_color');
+            } else {
+                echo '#5533ff';
+            } ?> !important;
+
+            border-bottom: 2px solid <?php if (!empty(session('primary_color'))) {echo session('primary_color');
+            } else {
+                echo '#5533ff';
+            } ?> !important;;
+         }
 
         .pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {
             z-index: 3;
@@ -196,11 +233,11 @@
 
     <!--- Header Start ----->
     <header>
-        <div class="container-fluid">
+        <div class="container-fluid primary_color">
             <nav class="navbar navbar-expand-md navbar-dark">
                 <a class="navbar-brand" href="admin-index">
                     @if (session('logo'))
-                        <img src="/{{ session('logo') }}">
+                        <img src="{{ session('logo') }}">
                 </a>
             @else
                 <img src="{{ asset('assets') }}/admin/images/logo.png"></a>
@@ -345,16 +382,16 @@
             <div class="toggle-wrap">
                 <span class="toggle-bar"></span>
             </div>
-            <aside id="style-5">
+            <aside id="style-5" class="">
 
-                <li>
+                <li @if (Request::segment(1) == 'search') class="active" @endif >
                     <a href="/search" class="secondary_color">
                         <img src="{{ asset('assets') }}/admin/images/search-icon-gray.png">
                         Search
                     </a>
                 </li>
 
-                <li class="active">
+                <li  @if (Request::segment(1) == 'admin') class="active" @endif>
                     <a href="/admin" class="secondary_color">
                         {{-- <img src="{{ asset('assets') }}/admin/images/overview-icon.png"> --}}
                         <svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20"
@@ -390,7 +427,7 @@
 
                                 <div id="accordion-1">
                                     <ul>
-                                        <li>
+                                        <li @if (Request::segment(1) == 'employee') class="active" @endif>
                                             <a href="/employee" class="secondary_color">
 
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="180" height="181"
@@ -417,7 +454,7 @@
                     </div>
                 </div>
 
-                <li>
+                <li @if (Request::segment(1) == 'invite-employee') class="active" @endif>
                     <a href="/invite-employee" class="secondary_color">
                         <svg xmlns="http://www.w3.org/2000/svg" width="147" height="181" viewBox="0 0 147 181" fill="none">
                                                 <circle cx="82.5" cy="48.5" r="43.5" stroke="black" stroke-width="10" class="iconstroke" />
@@ -429,7 +466,7 @@
                     </a>
                 </li>
 
-                <li>
+                <li @if (Request::segment(1) == 'schedule-interview') class="active" @endif>
                     <a href="/schedule-interview" class="secondary_color">
                         <svg xmlns="http://www.w3.org/2000/svg" width="180" height="192" viewBox="0 0 180 192" fill="none">
                         <path d="M67.4768 75.3138H58.0923C58.126 72.0848 58.4119 69.4443 58.95 67.3925C59.5219 65.3071 60.4469 63.4066 61.725 61.6912C63.0032 59.9758 64.7018 58.0249 66.8209 55.8385C68.3681 54.2576 69.7809 52.7777 71.059 51.3986C72.3708 49.9859 73.4304 48.4722 74.2376 46.8577C75.0449 45.2095 75.4485 43.2418 75.4485 40.9546C75.4485 38.6337 75.0281 36.6323 74.1872 34.9505C73.3799 33.2687 72.169 31.9737 70.5545 31.0656C68.9736 30.1574 67.0059 29.7033 64.6514 29.7033C62.7005 29.7033 60.8505 30.0565 59.1014 30.7628C57.3523 31.4692 55.9396 32.5624 54.8633 34.0424C53.7869 35.4887 53.2319 37.3892 53.1983 39.7437H43.8643C43.9315 35.9428 44.8734 32.6801 46.6897 29.9556C48.5397 27.2311 51.0288 25.1456 54.1569 23.6993C57.2851 22.2529 60.7832 21.5297 64.6514 21.5297C68.9231 21.5297 72.5558 22.3034 75.5494 23.8506C78.5767 25.3979 80.8808 27.6179 82.4617 30.5106C84.0426 33.3696 84.833 36.7669 84.833 40.7023C84.833 43.7295 84.2107 46.5213 82.9662 49.0777C81.7553 51.6004 80.1912 53.9717 78.274 56.1917C76.3567 58.4117 74.3217 60.5308 72.169 62.5489C70.319 64.2644 69.0745 66.1984 68.4354 68.3512C67.7963 70.5039 67.4768 72.8247 67.4768 75.3138ZM57.6887 91.3078C57.6887 89.7941 58.1596 88.516 59.1014 87.4733C60.0432 86.4305 61.4055 85.9092 63.1882 85.9092C65.0045 85.9092 66.3836 86.4305 67.3254 87.4733C68.2672 88.516 68.7381 89.7941 68.7381 91.3078C68.7381 92.7541 68.2672 93.9987 67.3254 95.0414C66.3836 96.0841 65.0045 96.6054 63.1882 96.6054C61.4055 96.6054 60.0432 96.0841 59.1014 95.0414C58.1596 93.9987 57.6887 92.7541 57.6887 91.3078Z" fill="black" class="iconFill"/>
@@ -461,7 +498,7 @@
 
                                 <div id="accordion-1">
                                     <ul>
-                                        <li>
+                                        <li @if (Request::segment(1) == 'theme_setting') class="active" @endif>
                                             <a href="/theme_setting" class="secondary_color">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
                                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M9.58 21C9.58 22.6569 10.9231 24 12.58 24C13.376 24.0005 14.1396 23.6847 14.7026 23.122C15.2657 22.5594 15.582 21.796 15.582 21V20.827C15.5835 20.5695 15.738 20.3376 15.975 20.237C16.0612 20.1984 16.1545 20.1783 16.249 20.178C16.4185 20.1776 16.5813 20.244 16.702 20.363L16.754 20.415C17.3156 20.9796 18.0797 21.2961 18.876 21.294C20.5329 21.294 21.876 19.9509 21.876 18.294C21.878 17.4972 21.5611 16.7327 20.996 16.171L20.937 16.112C20.76 15.9198 20.7124 15.6416 20.8154 15.4015C20.9184 15.1615 21.1528 15.0042 21.414 15H21.5C23.1569 15 24.5 13.6569 24.5 12C24.5 10.3431 23.1569 9 21.5 9H21.33C21.1165 8.99859 20.9174 8.89196 20.798 8.715C20.7838 8.64625 20.7624 8.5792 20.734 8.515C20.626 8.27231 20.6776 7.98824 20.864 7.799L20.916 7.747C21.479 7.18434 21.7954 6.42098 21.7954 5.625C21.7954 4.82902 21.479 4.06566 20.916 3.503C20.3524 2.94202 19.5902 2.62613 18.795 2.624C17.9982 2.62202 17.2337 2.9389 16.672 3.504L16.613 3.563C16.4934 3.67782 16.3338 3.74165 16.168 3.741C15.8047 3.73948 15.5087 3.44916 15.5 3.086V3C15.5 1.34315 14.1569 0 12.5 0C10.8431 0 9.5 1.34315 9.5 3V3.17C9.49827 3.38314 9.39167 3.58175 9.215 3.701C9.14638 3.71565 9.07938 3.73709 9.015 3.765C8.77224 3.87242 8.48851 3.82091 8.299 3.635L8.247 3.583C7.07505 2.41022 5.17428 2.40955 4.0015 3.5815C2.82872 4.75345 2.82805 6.65422 4 7.827L4.064 7.891C4.24417 8.08098 4.29231 8.36072 4.186 8.6C4.08912 8.89459 3.80997 9.09032 3.5 9.081C1.84315 9.081 0.5 10.4241 0.5 12.081C0.5 13.7379 1.84315 15.081 3.5 15.081H3.666C3.9236 15.0829 4.15563 15.2372 4.257 15.474C4.36818 15.7192 4.31822 16.0075 4.131 16.201L4.079 16.253C3.51442 16.8146 3.19791 17.5787 3.2 18.375C3.20389 19.1708 3.52155 19.933 4.084 20.496C4.64666 21.059 5.41002 21.3754 6.206 21.3754C7.00198 21.3754 7.76534 21.059 8.328 20.496L8.387 20.437C8.50674 20.3224 8.66623 20.2586 8.832 20.259C8.92295 20.259 9.01288 20.2781 9.096 20.315C9.39141 20.4107 9.58846 20.6896 9.58 21ZM9.843 18.462C9.528 18.323 9.1873 18.2518 8.843 18.253C8.14793 18.2571 7.48155 18.5306 6.984 19.016L6.916 19.083C6.66323 19.3359 6.29473 19.4348 5.94929 19.3424C5.60385 19.25 5.33396 18.9803 5.24129 18.6349C5.14861 18.2895 5.24723 17.9209 5.5 17.668L5.558 17.607C6.30615 16.8437 6.52546 15.7071 6.11498 14.7202C5.70451 13.7334 4.74378 13.0875 3.675 13.08H3.5C2.94772 13.08 2.5 12.6323 2.5 12.08C2.5 11.5277 2.94772 11.08 3.5 11.08H3.59C4.68551 11.064 5.65831 10.3757 6.038 9.348C6.45144 8.36919 6.23302 7.23762 5.485 6.483L5.417 6.415C5.22922 6.22743 5.12371 5.97291 5.12371 5.7075C5.12371 5.44209 5.22922 5.18757 5.417 5C5.60313 4.80898 5.85829 4.70086 6.125 4.7C6.3912 4.70191 6.64566 4.80988 6.832 5L6.892 5.058C7.61236 5.76824 8.67404 6.0068 9.629 5.673C9.72035 5.66134 9.80957 5.63676 9.894 5.6C10.8653 5.18455 11.4965 4.23138 11.5 3.175V3C11.5 2.44772 11.9477 2 12.5 2C13.0523 2 13.5 2.44772 13.5 3V3.09C13.503 4.1472 14.1337 5.10162 15.105 5.519C15.4381 5.66665 15.7986 5.74263 16.163 5.742C16.8571 5.74326 17.5238 5.47133 18.019 4.985L18.086 4.917C18.3718 4.62881 18.8035 4.54198 19.1786 4.69726C19.5536 4.85253 19.7975 5.2191 19.796 5.625C19.7951 5.89002 19.6898 6.14401 19.503 6.332L19.443 6.392C18.7304 7.11105 18.4915 8.1742 18.828 9.129C18.8397 9.22022 18.8639 9.3094 18.9 9.394C19.316 10.3652 20.2694 10.9964 21.326 11H21.5C22.0523 11 22.5 11.4477 22.5 12C22.5 12.5523 22.0523 13 21.5 13H21.41C20.3429 13.0072 19.383 13.6505 18.9708 14.6348C18.5586 15.6192 18.7735 16.7545 19.517 17.52L19.584 17.587C19.7721 17.7746 19.8778 18.0293 19.8778 18.295C19.8778 18.5607 19.7721 18.8154 19.584 19.003C19.3964 19.1911 19.1417 19.2968 18.876 19.2968C18.6103 19.2968 18.3556 19.1911 18.168 19.003L18.107 18.943C17.3444 18.1929 16.2067 17.9723 15.219 18.3831C14.2313 18.794 13.5857 19.7563 13.58 20.826V21C13.58 21.5523 13.1323 22 12.58 22C12.0277 22 11.58 21.5523 11.58 21V20.91C11.5635 19.8131 10.8729 18.8398 9.843 18.462Z" fill="black"/>
@@ -475,7 +512,7 @@
                                                 Theme Setting
                                             </a>
                                         </li>
-                                        <li>
+                                        <li @if (Request::segment(1) == 'interview_process') class="active" @endif>
                                             <a href="/interview_process" class="secondary_color">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
                                                 <g clip-path="url(#clip0_724_15296)">
@@ -490,22 +527,36 @@
                                                 Interview Process
                                             </a>
                                         </li>
-                                        <li>
+                                        <li @if (Request::segment(1) == 'exit_employee_process') class="active" @endif>
                                             <a href="/exit_employee_process" class="secondary_color">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="180" height="181" viewBox="0 0 180 181" fill="none">
                                                 <circle cx="82.5" cy="48.5" r="43.5" stroke="black" stroke-width="10" class="iconstroke" />
                                                 <path d="M63.5 108.5C48.1809 110.596 15.9807 118.465 5.93521 133.465C5.27888 134.445 5 135.618 5 136.798V175.5H63.5"stroke="black" stroke-width="10" class="iconstroke" />
                                                 <path d="M173.653 143.791C132.167 85.2593 85.9363 118.521 66.9371 143.732C66.3759 144.476 66.4564 145.524 67.0779 146.219C112.706 197.241 156.458 168.183 173.638 146.129C174.166 145.451 174.15 144.492 173.653 143.791Z" stroke="black" stroke-width="10" class="iconstroke" />
                                                 <circle cx="120" cy="143" r="15" fill="black" class="iconFill" />
+                                                
                                             </svg>
                                                 Exit Employees Process
                                             </a>
                                         </li>
+
+                                        <li>
+                                            <a href="/offer_send_details" class="secondary_color">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="147" height="181" viewBox="0 0 147 181" fill="none">
+                                                    <circle cx="82.5" cy="48.5" r="43.5" stroke="black" stroke-width="10" class="iconstroke" />
+                                                    <path d="M63.5 108.5C48.1809 110.596 15.9807 118.465 5.93521 133.465C5.27888 134.445 5 135.618 5 136.798V175.5H63.5" stroke="black"  class="iconstroke" stroke-width="10"/>
+                                                    <line x1="116" y1="110" x2="116" y2="174" stroke="black" class="iconstroke" stroke-width="10"/>
+                                                    <line x1="83" y1="143" x2="147" y2="143" stroke="black" class="iconstroke" stroke-width="10"/>
+                                                    </svg>
+                                                Offer Send
+                                            </a>
+                                        </li>
+
                                         <li>
                                             <a href="/onboarding_process" class="secondary_color">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="22" viewBox="0 0 24 22" fill="none">
                                                 <path d="M23.001 13.1524H22.334C22.084 13.1524 21.836 13.1714 21.589 13.2094L14.543 7.92537L16.231 6.30937C16.63 5.92737 16.644 5.29337 16.262 4.89537C15.879 4.49637 15.245 4.48337 14.848 4.86437L10.675 8.85937C10.467 9.06737 10.184 9.17437 9.887 9.14937C9.589 9.12537 9.327 8.97437 9.148 8.72437C8.874 8.34437 8.958 7.74937 9.316 7.39037L14.019 2.96137C14.91 2.12437 16.303 1.91937 17.393 2.46637L19.709 3.62437C20.399 3.96937 21.173 4.15137 21.944 4.15137H23C23.553 4.15137 24 3.70437 24 3.15137C24 2.59837 23.553 2.15137 23 2.15137H21.944C21.481 2.15137 21.016 2.04237 20.602 1.83537L18.288 0.677367C16.464 -0.235633 14.135 0.103367 12.647 1.50537L12.029 2.08737L11.329 1.44937C10.41 0.612367 9.22 0.151367 7.939 0.151367C7.168 0.151367 6.399 0.333367 5.712 0.676367L3.398 1.83437C2.983 2.04137 2.518 2.15037 2.055 2.15037H1.001C0.448 2.15037 0.001 2.59737 0.001 3.15037C0.001 3.70337 0.448 4.15037 1.001 4.15037H2.057C2.828 4.15037 3.602 3.96737 4.293 3.62337L6.609 2.46537C7.631 1.95137 9.067 2.09037 9.983 2.92737L10.57 3.46237L7.924 5.95437C6.851 7.02637 6.68 8.72137 7.526 9.89237C8.046 10.6154 9.079 11.1514 9.97 11.1514C10.763 11.1514 11.524 10.8394 12.074 10.2884L13.08 9.32537L19.426 14.0844C19.395 14.1064 13.228 18.7304 13.228 18.7304C12.505 19.2924 11.496 19.2924 10.758 18.7194L4.667 14.1514C3.808 13.5064 2.742 13.1514 1.667 13.1514H1C0.447 13.1514 0 13.5984 0 14.1514C0 14.7044 0.447 15.1514 1 15.1514H1.667C2.312 15.1514 2.951 15.3644 3.467 15.7514L9.544 20.3094C10.269 20.8734 11.138 21.1554 12.005 21.1554C12.867 21.1554 13.728 20.8764 14.442 20.3204L20.535 15.7524C21.05 15.3654 21.689 15.1524 22.334 15.1524H23.001C23.554 15.1524 24.001 14.7054 24.001 14.1524C24.001 13.5994 23.554 13.1524 23.001 13.1524Z" fill="black" class="iconFill" />
-                                                </svg>.
+                                                </svg>
                                                 Onboarding Process
                                             </a>
                                         </li>
@@ -574,26 +625,21 @@
                                     <ul>
                                         <li>
                                             <a href="/qualified-email-template" class="secondary_color">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="147" height="181" viewBox="0 0 147 181" fill="none">
-                                                <circle cx="82.5" cy="48.5" r="43.5" stroke="black" stroke-width="10" class="iconstroke" />
-                                                <path d="M63.5 108.5C48.1809 110.596 15.9807 118.465 5.93521 133.465C5.27888 134.445 5 135.618 5 136.798V175.5H63.5" stroke="black"  class="iconstroke" stroke-width="10"/>
-                                                <line x1="116" y1="110" x2="116" y2="174" stroke="black" class="iconstroke" stroke-width="10"/>
-                                                <line x1="83" y1="143" x2="147" y2="143" stroke="black" class="iconstroke" stroke-width="10"/>
-                                                </svg>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="26" viewBox="0 0 24 26" fill="none">
+                                                    <path d="M10.3978 14.7676C7.71269 15.2151 2.07403 16.6471 1 18.7952V24.8366H10.3978" stroke="black"  class="iconstroke" stroke-width="1.34254"/>
+                                                    <circle cx="13.0805" cy="6.04142" r="5.37015" stroke="black" class="iconstroke" stroke-width="1.34254"/>
+                                                    <path d="M15.1617 23.6753L15.1619 23.6751L22.0706 16.0942C22.0707 16.0942 22.0707 16.0942 22.0707 16.0942L22.0708 16.0941L15.1617 23.6753ZM15.1617 23.6753C15.1241 23.7168 15.0799 23.7491 15.0319 23.771C14.9839 23.7929 14.9329 23.804 14.8816 23.804C14.8303 23.804 14.7792 23.7929 14.7313 23.771C14.6833 23.7491 14.639 23.7168 14.6014 23.6753L14.6013 23.6752L11.9296 20.7406L15.1617 23.6753Z" fill="black" stroke="black" class="iconstroke iconFill" stroke-width="0.9"/>
+                                                    </svg>
                                                 For Qualified
                                             </a>
                                         </li>
                                         <li>
                                             <a href="/not-qualified-template" class="secondary_color">
-                                            
-                                     <svg xmlns="http://www.w3.org/2000/svg" width="242" height="172" viewBox="0 0 242 172" fill="none">
-                          <circle cx="121.5" cy="66.5" r="33.5" stroke="black"class="iconstroke"  stroke-width="10"/>
-                          <path d="M123.5 105.002C86.6582 103.083 60.3713 142.126 50.6448 164.285C50.0752 165.583 51.0155 167.002 52.4327 167.002H191.5C192 167.002 171.5 107.502 123.5 105.002Z" stroke="black" class="iconstroke" stroke-width="10"/>
-                          <circle cx="188.499" cy="28.0728" r="23.0728" class="iconstroke" stroke="black" stroke-width="10"/>
-                          <path d="M190.067 60.0494C164.637 58.658 146.495 86.9765 139.786 103.04C139.392 103.984 140.079 105 141.102 105H236.994C237.339 105 223.192 61.862 190.067 60.0494Z" stroke="black" class="iconstroke" stroke-width="10"/>
-                          <circle cx="54.4986" cy="28.0728" r="23.0728" stroke="black"class="iconstroke"  stroke-width="10"/>
-                          <path d="M56.0672 60.0494C30.6375 58.658 12.4948 86.9765 5.78584 103.04C5.39163 103.984 6.07873 105 7.10166 105H102.994C103.339 105 89.1919 61.862 56.0672 60.0494Z" stroke="black" class="iconstroke" stroke-width="10"/>
-                        </svg>
+                                                   <svg xmlns="http://www.w3.org/2000/svg" width="22" height="26" viewBox="0 0 22 26" fill="none">
+                                                    <path d="M10.3978 14.7676C7.71269 15.2151 2.07403 16.6471 1 18.7952V24.8366H10.3978" stroke="black" class="iconstroke" stroke-width="1.34254"/>
+                                                    <circle cx="13.0805" cy="6.04142" r="5.37015" stroke="black" class="iconstroke" stroke-width="1.34254"/>
+                                                    <path d="M21.8372 17.1628C21.7329 17.0586 21.5914 17 21.4439 17C21.2964 17 21.155 17.0586 21.0507 17.1628L18.5 19.7135L15.9493 17.1628C15.845 17.0586 15.7036 17 15.5561 17C15.4086 17 15.2671 17.0586 15.1628 17.1628C15.0586 17.2671 15 17.4086 15 17.5561C15 17.7036 15.0586 17.845 15.1628 17.9493L17.7135 20.5L15.1628 23.0507C15.0586 23.155 15 23.2964 15 23.4439C15 23.5914 15.0586 23.7329 15.1628 23.8372C15.2671 23.9414 15.4086 24 15.5561 24C15.7036 24 15.845 23.9414 15.9493 23.8372L18.5 21.2865L21.0507 23.8372C21.155 23.9414 21.2964 24 21.4439 24C21.5914 24 21.7329 23.9414 21.8372 23.8372C21.9414 23.7329 22 23.5914 22 23.4439C22 23.2964 21.9414 23.155 21.8372 23.0507L19.2865 20.5L21.8372 17.9493C21.9414 17.845 22 17.7036 22 17.5561C22 17.4086 21.9414 17.2671 21.8372 17.1628Z" fill="black" class="iconFill" />
+                                                    </svg>
                                                 For Not Qualified
                                             </a>
                                         </li>

@@ -51,7 +51,7 @@ class SearchController extends Controller
                                   $joinDate = Empofficial::where('employee_id', $employee->id)->first();
                                   $interviews =  EmployeeInterview::where('employee_id', $employee->id)->count();
 
-                                  $address= User::Join('company_employee', 'users.id', '=', 'company_employee.company_id')
+                                  $address= User::join('company_employee', 'users.id', '=', 'company_employee.company_id')
                                              ->join('cities','cities.id','=','users.city')
                                              ->join('states','states.id','=','cities.state_id')
                                              ->join('countries','countries.id','=','states.country_id')
@@ -59,7 +59,8 @@ class SearchController extends Controller
                                              ->where('company_employee.employee_id', $employee->id)
                                              ->first();
                                             //  dd($address);
-
+                                   $country = !empty($address->name) ? $address->name : '';
+                                  
                                   $empPosition = !empty($interviewEmp->position) ? $interviewEmp->position : '';
                                   $reviewEmp = CompanyEmployee::join('exit_employee','exit_employee.employee_id','=','company_employee.employee_id')
                                               ->where('exit_employee.employee_id', $employee->id)
@@ -67,22 +68,23 @@ class SearchController extends Controller
                                               ->select(DB::raw( 'AVG( exit_employee.rating) as rating'))
                                               ->first();
 
-                                              $html .= '<div class="search-hist-page">
+                                  $ratingCount =  CompanyEmployee::where('employee_id', $employee->id)->count();
+
+                                      $html .= '<div class="search-hist-page">
                                               <div class="search-hist-pro">
                                                 <div class="pro-img">
                                                   <div class="circle">
                                                      <img class="profile-pic" src="' . $empPhoto . '">
-                                                  </div>
-                                                </div>
-                                                <h2> ' . $empDetails->first_name . ' ' . $empDetails->middle_name . ' ' . $empDetails->last_name . '<small>('.$interviews.' Interviews going on)</small>
+                                                  </div>';
+
+                                                  if(!empty($reviewEmp)){     
+                                                    $html .= '<div class="searchRating"><small>'. number_format($reviewEmp->rating, 1, '.', ',') .' <span>('.$ratingCount.')</span></small></div>';
+                                                 }
+    
+                                               $html .=' </div> <h2> ' . $empDetails->first_name . ' ' . $empDetails->middle_name . ' ' . $empDetails->last_name . '<small>('.$interviews.' Interview going on)</small>
                                                 <span>'.$empPosition.'  at ' . $cmpName . '.</span>
-                                                <small>' .$address->name.'</small>';
-        
-                                               if(!empty($reviewEmp)){     
-                                                  $html .= '<small>'. number_format($reviewEmp->rating, 1, '.', ',') .' <span>reviews</span></small>';
-                                               }
-        
-                                                $html .='<span class="d-flex">
+                                                <small>' .$address->name.'</small>
+                                                <span class="d-flex">
                                                   <button onclick="myFunction(' . $empDetails->id . ')" class="full-bg button_background_color"><span class="button_text_color btnspan">View Full Profile</span></button>
                                                   <button class="full-bg button_background_color" onclick="getInterview(' . $empDetails->id . ')" id="scheduleInterview" style="margin-left: 15px;"><span class="button_text_color btnspan">Add Candidate</span></button>
                                                   </span>
@@ -533,6 +535,7 @@ class SearchController extends Controller
                                 $interviewEmp = EmployeeInterview::where('employee_id', $employee->id)->first();
                                 $joinDate = Empofficial::where('employee_id', $employee->id)->first();
 
+                                $interviews =  EmployeeInterview::where('employee_id', $employee->id)->count();
                                 $empPosition = !empty($interviewEmp->position) ? $interviewEmp->position : '';
                                 $reviewEmp = CompanyEmployee::join('exit_employee','exit_employee.employee_id','=','company_employee.employee_id')
                                 ->where('exit_employee.employee_id', $employee->id)
@@ -547,7 +550,7 @@ class SearchController extends Controller
                                            <img class="profile-pic" src="' . $empPhoto . '">
                                         </div>
                                       </div>
-                                      <h2> ' . $empDetails->first_name . ' ' . $empDetails->middle_name . ' ' . $empDetails->last_name . '
+                                      <h2> ' . $empDetails->first_name . ' ' . $empDetails->middle_name . ' ' . $empDetails->last_name . ' <small>('.$interviews.' Interview going on)</small>
                                       <span>'.$empPosition.'  at ' . $cmpName . '.</span>
                                       <small>' . $empDetails->current_address. '</small>';
                                       if($reviewEmp){
@@ -1004,7 +1007,9 @@ class SearchController extends Controller
                                   $interviewEmp = EmployeeInterview::where('employee_id', $employee->id)->first();
                                   $joinDate = Empofficial::where('employee_id', $employee->id)->first();
 
+                                  $interviews =  EmployeeInterview::where('employee_id', $employee->id)->count();
                                   $empPosition = !empty($interviewEmp->position) ? $interviewEmp->position : '';
+
                                 $reviewEmp = CompanyEmployee::join('exit_employee','exit_employee.employee_id','=','company_employee.employee_id')
                                 ->where('exit_employee.employee_id', $employee->id)
                                 ->groupBy('company_employee.id' )
@@ -1018,7 +1023,7 @@ class SearchController extends Controller
                                              <img class="profile-pic" src="' . $empPhoto . '">
                                           </div>
                                         </div>
-                                        <h2> ' . $empDetails->first_name . ' ' . $empDetails->middle_name . ' ' . $empDetails->last_name . '
+                                        <h2> ' . $empDetails->first_name . ' ' . $empDetails->middle_name . ' ' . $empDetails->last_name . ' <small>('.$interviews.' Interview going on)</small>
                                         <span>'.$empPosition.'  at ' . $cmpName . '.</span>
                                         <small>' . $empDetails->current_address. '</small>';
 
@@ -1475,6 +1480,7 @@ class SearchController extends Controller
                                   $cmpName = !empty($empCurrentCmpDetails->org_name) ? $empCurrentCmpDetails->org_name : '';
                                   $interviewEmp = EmployeeInterview::where('employee_id', $employee->id)->first();
                                   $joinDate = Empofficial::where('employee_id', $employee->id)->first();
+                                  $interviews =  EmployeeInterview::where('employee_id', $employee->id)->count();
 
                                   $empPosition = !empty($interviewEmp->position) ? $interviewEmp->position : '';
                                $reviewEmp = CompanyEmployee::join('exit_employee','exit_employee.employee_id','=','company_employee.employee_id')
@@ -1490,7 +1496,7 @@ class SearchController extends Controller
                                              <img class="profile-pic" src="' . $empPhoto . '">
                                           </div>
                                         </div>
-                                        <h2> ' . $empDetails->first_name . ' ' . $empDetails->middle_name . ' ' . $empDetails->last_name . '<b></b>
+                                        <h2> ' . $empDetails->first_name . ' ' . $empDetails->middle_name . ' ' . $empDetails->last_name . '<b><small>('.$interviews.' Interview going on)</small></b>
                                         <span>' . $empPosition.'  at ' . $cmpName . '.</span>
                                         <small>' . $empDetails->current_address. '</small>';
                                    if($reviewEmp){
@@ -1575,7 +1581,7 @@ class SearchController extends Controller
                                           </div>
   
                                         </div>
-                                      // </div>';
+                                       </div>';
                                       // $experiences = Employee::leftJoin('employee_workhistories', 'employee_workhistories.employee_id', '=', 'employee.id')
                                       //           ->leftJoin('employee_officials', 'employee_officials.employee_id', '=', 'employee.id')
                                       //           ->where('employee_workhistories.employee_id',$empDetails->id)
@@ -1948,6 +1954,7 @@ class SearchController extends Controller
                                   $interviewEmp = EmployeeInterview::where('employee_id', $employee->id)->first();
                                   $joinDate = Empofficial::where('employee_id', $employee->id)->first();
 
+                                  $interviews =  Exitemp::where('employee_id', $employee->id)->count();
                                  $empPosition = !empty($interviewEmp->position) ? $interviewEmp->position : '';
                            $reviewEmp = CompanyEmployee::join('exit_employee','exit_employee.employee_id','=','company_employee.employee_id')
                                 ->where('exit_employee.employee_id', $employee->id)
@@ -1962,9 +1969,10 @@ class SearchController extends Controller
                                              <img class="profile-pic" src="' . $empPhoto . '">
                                           </div>
                                         </div>
-                                        <h2> ' . $empDetails->first_name . ' ' . $empDetails->middle_name . ' ' . $empDetails->last_name . '
+                                        <h2> ' . $empDetails->first_name . ' ' . $empDetails->middle_name . ' ' . $empDetails->last_name . ' <small>('.$interviews.' Interview going on)</small>
                                         <span>'.$empPosition.'  at ' . $cmpName . '.</span>
                                         <small>' . $empDetails->current_address. '</small>';
+                                        
                                   if($reviewEmp){
                                           $html .='<small>'. number_format($reviewEmp->rating, 1, '.', ',') .' <span>reviews</span></small>';
                                    }
@@ -2420,6 +2428,7 @@ class SearchController extends Controller
                                   $interviewEmp = EmployeeInterview::where('employee_id', $employee->id)->first();
                                   $joinDate = Empofficial::where('employee_id', $employee->id)->first();
 
+                                  $interviews =  EmployeeInterview::where('employee_id', $employee->id)->count();
                                   $empPosition = !empty($interviewEmp->position) ? $interviewEmp->position : '';
                             $reviewEmp = CompanyEmployee::join('exit_employee','exit_employee.employee_id','=','company_employee.employee_id')
                                 ->where('exit_employee.employee_id', $employee->id)
@@ -2434,7 +2443,7 @@ class SearchController extends Controller
                                              <img class="profile-pic" src="' . $empPhoto . '">
                                           </div>
                                         </div>
-                                        <h2> ' . $empDetails->first_name . ' ' . $empDetails->middle_name . ' ' . $empDetails->last_name . '
+                                        <h2> ' . $empDetails->first_name . ' ' . $empDetails->middle_name . ' ' . $empDetails->last_name . ' <small>('.$interviews.' Interview going on)</small>
                                         <span>'.$empPosition.'  at ' . $cmpName . '.</span>
                                         <small>' . $empDetails->current_address. '</small>';
 
@@ -2891,6 +2900,7 @@ class SearchController extends Controller
                                   $interviewEmp = EmployeeInterview::where('employee_id', $employee->id)->first();
                                   $joinDate = Empofficial::where('employee_id', $employee->id)->first();
 
+                                  $interviews =  EmployeeInterview::where('employee_id', $employee->id)->count();
                                   $empPosition = !empty($interviewEmp->position) ? $interviewEmp->position : '';
                                 $reviewEmp = CompanyEmployee::join('exit_employee','exit_employee.employee_id','=','company_employee.employee_id')
                                 ->where('exit_employee.employee_id', $employee->id)
@@ -2904,7 +2914,7 @@ class SearchController extends Controller
                                              <img class="profile-pic" src="' . $empPhoto . '">
                                           </div>
                                         </div>
-                                        <h2> ' . $empDetails->first_name . ' ' . $empDetails->middle_name . ' ' . $empDetails->last_name . '
+                                        <h2> ' . $empDetails->first_name . ' ' . $empDetails->middle_name . ' ' . $empDetails->last_name . ' <small>('.$interviews.' Interview going on)</small>
                                         <span>'.$empPosition.'  at ' . $cmpName . '.</span>
                                         <small>' . $empDetails->current_address. '</small>';
                                       if($reviewEmp){

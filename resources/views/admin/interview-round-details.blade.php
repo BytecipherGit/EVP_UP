@@ -147,7 +147,7 @@ aria-hidden="true">
         <form  method="post" autocomplete="off" enctype="multipart/form-data">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h2 class="modal-title" id="Heading">Employee interview feedback details</h2>
+                    <h2 class="modal-title textColor" id="Heading">Employee interview feedback details</h2>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <img src="{{ asset('assets') }}/admin/images/close-btn-icon.png">
                     </button>
@@ -189,6 +189,7 @@ aria-hidden="true">
             window.location.reload();
         } 
 </script>
+
     <script>
     
     $(document).on('change', '#interviewer_status', function() {

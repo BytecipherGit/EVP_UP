@@ -19,6 +19,7 @@ use App\Models\EmployeeFeedback;
 use App\Models\EmployeeInterview;
 use App\Models\EmployeeInterviewStatus;
 use App\Models\HiringStage;
+use App\Models\EmployeeStatus;
 use App\Models\InterviewEmployeeRounds;
 use App\Models\InterviewProcess;
 use App\Models\Position;
@@ -39,6 +40,7 @@ class InterviewEmployee extends Controller
 {
     public function index(Request $request)
     {
+
         if (Auth::check()) {
             // $interviewEmployees = EmployeeInterview::all();
 
@@ -181,11 +183,13 @@ class InterviewEmployee extends Controller
             }])->get();
             }*/
             // dd($interviewEmployeess);
-
+            $offerSendEmpExist = EmployeeStatus::join('employee','employee.id','=','employee_offer_statuses.employee_id')
+                                  ->where('employee_offer_statuses.company_id',Auth::id())->get();
+                                // dd($offerSendEmpExist);  
             $hiringStages = HiringStage::all();
             $employeeInterviewStatuses = EmployeeInterviewStatus::all();
-            // dd($interviewEmployees);
-            return view('admin.schedule-for-interview', compact('interviewEmployees', 'hiringStages', 'employeeInterviewStatuses'));
+
+            return view('admin.schedule-for-interview', compact('interviewEmployees', 'offerSendEmpExist', 'hiringStages', 'employeeInterviewStatuses'));
         }
 
     }
@@ -1172,7 +1176,7 @@ class InterviewEmployee extends Controller
 
     public function update_interviewer_status(request $request)
     {
-//   dd($request->all());
+
         if (!empty($request->interviewId) && !empty($request->status)) {
             $interview = InterviewEmployeeRounds::find($request->interviewId);
             $interview->interviewer_status = $request->status;
