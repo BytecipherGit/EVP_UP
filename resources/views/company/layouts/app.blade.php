@@ -16,13 +16,13 @@
     <link rel="stylesheet" href="{{ asset('assets') }}/admin/css/select2.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
-
-    {{-- <link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/bootstrap.min.css"> --}}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/datatables.bootstrap.min.css">
     <link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/fixedheader.bootstrap.min.css">
     <link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/responsive.bootstrap.min.css">
     <link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/jquery-ui.min.css" />
-    {{-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"> --}}
+
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/2.5.3/css/bootstrap-colorpicker.min.css"
         rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('assets') }}/admin/css/bootstrap-colorpicker.min.css" rel="stylesheet">
@@ -183,7 +183,28 @@
             
         }
 
-        aside li a {
+        aside li:hover {
+          background: <?php if (!empty(session('secondry_color'))) {echo session('secondry_color');
+            } else {
+                echo '#5533ff';
+            } ?> !important;
+
+            border-radius: 8px;
+         }
+            .schudinter-tab a:hover{
+                /* background-color: #5533FF !important;
+                color: #fff; */
+                color: <?php if (!empty(session('button_text_color'))) {echo session('button_text_color');
+            } else {
+                echo '#5533ff';
+            } ?> !important;
+            background: <?php if (!empty(session('button_background_color'))) {echo session('button_background_color');
+            } else {
+                echo '#5533ff';
+            } ?> !important;
+
+            }
+           aside li a {
             color: <?php if (!empty(session('secondry_color'))) {echo session('secondry_color');
             } else {
                 echo '#5533ff';
@@ -259,8 +280,8 @@
 <body>
 
     <!--- Header Start ----->
-    <header>
-        <div class="container-fluid primary_color">
+    <header class="primary_color">
+        <div class="container-fluid">
             <nav class="navbar navbar-expand-md navbar-dark">
                 <a class="navbar-brand" href="admin-index">
                     @if (session('logo'))
@@ -372,17 +393,17 @@
                                 <img src="{{ asset('assets') }}/admin/images/droup-down-gray.png" class="right-doun">
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item secondary_color" href="/company_profile">
+                                <a class="dropdown-item" href="/company_profile">
                                     Profile
                                 </a>
-                                <a class="dropdown-item secondary_color" href="/change_password">
+                                <a class="dropdown-item" href="/change_password">
                                     Change Password
                                 </a>
                                 <hr>
                                 {{-- <a class="dropdown-item dropdown-item-no" href="{{ route('logout') }}">     --}}
 
 
-                                <a class="dropdown-item secondary_color" href="{{ route('logout') }}"
+                                <a class="dropdown-item d-flex" href="{{ route('logout') }}"
                                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                     Sign out
                                     <img src="{{ asset('assets') }}/admin/images/logout-icon.png" class="ml-auto">

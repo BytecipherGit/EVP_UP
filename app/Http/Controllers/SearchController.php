@@ -81,13 +81,17 @@ class SearchController extends Controller
                                                     $html .= '<div class="searchRating"><small>'. number_format($reviewEmp->rating, 1, '.', ',') .' <span>('.$ratingCount.')</span></small></div>';
                                                  }
     
-                                               $html .=' </div> <h2> ' . $empDetails->first_name . ' ' . $empDetails->middle_name . ' ' . $empDetails->last_name . '<small>('.$interviews.' Interview going on)</small>
+                                               $html .=' </div> <h2> ' . $empDetails->first_name . ' ' . $empDetails->middle_name . ' ' . $empDetails->last_name . '
                                                 <span>'.$empPosition.'  at ' . $cmpName . '.</span>
                                                 <small>' .$address->name.'</small>
                                                 <span class="d-flex">
+                                                <h6>
                                                   <button onclick="myFunction(' . $empDetails->id . ')" class="full-bg button_background_color"><span class="button_text_color btnspan">View Full Profile</span></button>
                                                   <button class="full-bg button_background_color" onclick="getInterview(' . $empDetails->id . ')" id="scheduleInterview" style="margin-left: 15px;"><span class="button_text_color btnspan">Add Candidate</span></button>
+                                                  
+                                                  <small class="ml-auto">('.$interviews.' Interview going on)</small>
                                                   </span>
+
                                                 </h2>
                                               </div>
                                             </div>

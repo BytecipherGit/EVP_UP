@@ -356,12 +356,12 @@
 
               </div> 
 
-              <div class="tab-pane fade" id="applicants-Tab6" role="tabpanel" aria-labelledby="applicants-Tab6-tab">
-                <div class="tab-content-details">
+            <div class="tab-pane fade" id="applicants-Tab6" role="tabpanel" aria-labelledby="applicants-Tab6-tab">
+              <div class="tab-content-details">
                   <h2>My Plan</h2>
-                  <form method="POST" action="{{ route('update_company_profile') }}" enctype="multipart/form-data">
+                 <form method="POST" action="{{ route('update_company_profile') }}" enctype="multipart/form-data">
                     @csrf
-                    <div class="form-group">
+                  <div class="form-group">
                       <div class="row">
                         <div class="col-xl-6">
                           <label>Plan Name</label>
@@ -382,30 +382,31 @@
                             </select>
                         {{-- </div>  --}}
                       </div>
-                    </div>
-                    <div class="form-group">
-                      <div class="row">
-                        <div class="col-xl-12">
-                          <label>Change My Plan</label>
-                          <select name="plan_type" @if ($plans) value="{{ old('plan_type' , $plans->plan_type) }}" @endif class="form-control" required>
-                            <option @if ($plans) value="{{ old('plan_type' , $plans->plan_type) }}" @else value="" @endif>@if ($plans) {{ old('plan_type', $plans->plan_type) }} @else Select Type @endif</option>
-                              <option value="Gold">Gold 01</option>
-                              <option value="Silver">Silver 02</option>
-                              <option value="Bronze">Bronze 03</option>
-                        
-                          </select>
-                        </div> 
-                      </div>
-                    </div>
+                        </div>
+                        <div class="form-group">
+                          <div class="row">
+                            <div class="col-xl-12">
+                              <label>Change My Plan</label>
+                              <select name="plan_type" @if ($plans) value="{{ old('plan_type' , $plans->plan_type) }}" @endif class="form-control" required>
+                                <option @if ($plans) value="{{ old('plan_type' , $plans->plan_type) }}" @else value="" @endif>@if ($plans) {{ old('plan_type', $plans->plan_type) }} @else Select Type @endif</option>
+                                  <option value="Gold">Gold 01</option>
+                                  <option value="Silver">Silver 02</option>
+                                  <option value="Bronze">Bronze 03</option>
+                            
+                              </select>
+                            </div> 
+                          </div>
+                        </div>
            
-                </div>   
-                <div class="tab-button-bx">
+                   </div>   
+                 <div class="tab-button-bx">
                    {{-- <button class="btn-secondary-cust">Cancel</button>  --}}
                    <button type="submit" name="plan" class="btn-primary-cust button_background_color"><span class="button_text_color">Save Changes</span></button>
                 </div>   
-              </form>        
-              </div>         
+                 
+              </div>       
             </div>
+          </form>    
           </div>
         </div>
       </div>  
