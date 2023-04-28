@@ -40,6 +40,16 @@
             @php $a++ @endphp
             
         @endforeach
+        <div class="modal-footer">
+            <div class="loadingImg"></div>
+            <div style="font-size: 16px; display:none;" class="text-success" id="success">Onboarding
+                successfully done.</div>
+            <div style="font-size: 16px; display:none;" class="text-danger" id="failed">Onboarding already
+                done.</div>
+            <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn-primary-cust button_background_color"><span
+                    class="button_text_color">Submit</span></button>
+        </div>
     @else
         <p>Onboarding process not created</p>
     @endif

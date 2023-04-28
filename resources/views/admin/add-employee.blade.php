@@ -9,7 +9,7 @@
             <div class="col-md-12">
                 <h1>Onboarding</h1>
                 <div class="main-right-button-box backhover">
-                    <a href="/employee" class="button_background_color"><img src="{{ asset('assets') }}/admin/images/back-icon.png" class="back"><spanclass="button_text_color">Back</span></a>
+                    <a href="/employee" class="button_background_color"><img src="{{ asset('assets') }}/admin/images/back-icon.png" class="back"><span class="button_text_color">Back</span></a>
                 </div>
             </div>
         </div>

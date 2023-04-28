@@ -62,7 +62,7 @@
                         </thead>
                         @if ($interviewEmpoloyeeRounds)
                         @php $counter = 1 @endphp
-                            @foreach ($interviewEmpoloyeeRounds as $interviewEmpoloyeeRound)
+                        @foreach ($interviewEmpoloyeeRounds as $interviewEmpoloyeeRound)
                             <input type="hidden" name="id" value="{{$interviewEmpoloyeeRound->id}}">
                                 <tr>
                                     <th scope="row">{{ $counter }}</th>
@@ -141,24 +141,23 @@ aria-hidden="true">
  <div class="modal fade custu-modal-popup" id="notAppeared" role="dialog" aria-labelledby="exampleModalLabel"
  aria-hidden="true">
  <div class="modal-dialog" role="document">
-     <form id="not_Appeared" method="post" autocomplete="off" enctype="multipart/form-data">
-         <input type="hidden" value="{{$interviewEmpoloyee->id}}" name="interview_id">
-         {{-- <input type="hidden" id="interview_status" value="{{ $interviewStatus }}"> --}}
-         {{-- <input type="hidden" value="{{$interviewEmpoloyee->interviewer_status}}" name="interviewer_status"> --}}
+     <form id="add_not_appeared" method="post" autocomplete="off" enctype="multipart/form-data">
+         <input type="hidden" value="{{$interviewEmpoloyee->id}}" name="interview_round_id">
          <div class="modal-content">
              <div class="modal-header">
-                 <h2 class="modal-titles" id="Heading"></h2>
+                 <h2 class="modal-titles" id="Heading">Create not appeared</h2>
                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                      <img src="{{ asset('assets') }}/admin/images/close-btn-icon.png">
                  </button>
              </div>
              <div class="modal-body">
                  <div class="comman-body">
+   
                  </div>
              </div>
              <div class="modal-footer">
                  <div class="loadingImg"></div>
-                 <div style="font-size: 16px; display:none;" class="text-success" id="success">Status update successfully</div>
+                 <div style="font-size: 16px; display:none;" class="text-success" id="successs">Status update successfully</div>
                  <button type="button" class="btn-secondary-cust" onclick="refreshPage();" data-dismiss="modal">Cancel</button>
                  <button type="submit" id="Submit" class="btn-primary-cust button_background_color"><span class="button_text_color">Submit</span></button>
              </div>
@@ -227,7 +226,72 @@ aria-hidden="true">
         getEmployeeTemplateConfirmation(interviewerstatus);
     });
 
+  
     function getEmployeeTemplateConfirmation(interviewerstatus = '') { 
+        if (interviewerstatus === 'Not Appeared') {
+                let getFormUrl = '{{ url('not_appeared/form') }}';
+                    if (getFormUrl !== '') {
+                    getFormUrl = getFormUrl + "?interview_status=" + interviewerstatus;
+                    }
+
+                $.ajax({
+                url: getFormUrl,
+                type: "get",
+                datatype: "html",
+            
+            }).done(function(data) {
+                if (interviewerstatus === '') {
+                    $('#Heading').text("Not appeared");
+                } else {
+                    $('#Heading').text("Not appeared");
+                }
+                $('#notAppeared').find('.modal-body').html(data);
+                $('#notAppeared').modal({
+                    backdrop: 'static',
+                    keyboard: false
+                });
+            
+            }).fail(function(jqXHR, ajaxOptions, thrownError) {
+                alert('No response from server');
+            });
+
+            $('#add_not_appeared').on('submit', function(event) {
+                event.preventDefault();
+                var isAdd = $('#is_add').val();
+                var url = '{{ url('send_not_appeared') }}';
+                $('.loadingImg').show();
+                var formData = new FormData(this);              
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function(data) {
+                            if (data.success) {
+                                $('.loadingImg').hide();
+                                $('#successs').css('display', 'block');
+                                setInterval(function() {
+                                    location.reload();
+                                }, 3000);
+
+                            }
+
+                    },
+                    error: function(xhr, textStatus, errorThrown) {
+                        console.log(xhr.responseText);
+                    }
+                
+                });
+            
+            });
+
+        }
+        else{
+
         let getFormUrl = '{{ url('email_template/form') }}';
         if (getFormUrl !== '') {
             getFormUrl = getFormUrl + "?interview_status=" + interviewerstatus;
@@ -254,7 +318,7 @@ aria-hidden="true">
             alert('No response from server');
         });
      }
-    
+    }
         $('#send_email_to_employee').on('submit', function(event) {
                 event.preventDefault();
                 var isAdd = $('#is_add').val();

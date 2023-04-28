@@ -16,13 +16,13 @@
     <link rel="stylesheet" href="{{ asset('assets') }}/admin/css/select2.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
-
-    {{-- <link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/bootstrap.min.css"> --}}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/datatables.bootstrap.min.css">
     <link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/fixedheader.bootstrap.min.css">
     <link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/responsive.bootstrap.min.css">
     <link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/jquery-ui.min.css" />
-    {{-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"> --}}
+
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-colorpicker/2.5.3/css/bootstrap-colorpicker.min.css"
         rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('assets') }}/admin/css/bootstrap-colorpicker.min.css" rel="stylesheet">
@@ -183,7 +183,28 @@
             
         }
 
-        aside li a {
+        aside li:hover {
+          background: <?php if (!empty(session('secondry_color'))) {echo session('secondry_color');
+            } else {
+                echo '#5533ff';
+            } ?> !important;
+
+            border-radius: 8px;
+         }
+            .schudinter-tab a:hover{
+                /* background-color: #5533FF !important;
+                color: #fff; */
+                color: <?php if (!empty(session('button_text_color'))) {echo session('button_text_color');
+            } else {
+                echo '#5533ff';
+            } ?> !important;
+            background: <?php if (!empty(session('button_background_color'))) {echo session('button_background_color');
+            } else {
+                echo '#5533ff';
+            } ?> !important;
+
+            }
+           aside li a {
             color: <?php if (!empty(session('secondry_color'))) {echo session('secondry_color');
             } else {
                 echo '#5533ff';
@@ -259,8 +280,8 @@
 <body>
 
     <!--- Header Start ----->
-    <header>
-        <div class="container-fluid primary_color">
+    <header class="primary_color">
+        <div class="container-fluid">
             <nav class="navbar navbar-expand-md navbar-dark">
                 <a class="navbar-brand" href="admin-index">
                     @if (session('logo'))
@@ -280,7 +301,11 @@
                             <a class="nav-link dropdown-toggle dropdown-toggle1" href="#"
                                 id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false">
-                                <img src="{{ asset('assets') }}/admin/images/notifications-icon.png">
+                                {{-- <img src="{{ asset('assets') }}/admin/images/notifications-icon.png"> --}}
+                                <?xml version="1.0" encoding="UTF-8"?>
+                                <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24" width="19" height="25">
+                                    <path d="M4.068,18H19.724a3,3,0,0,0,2.821-4.021L19.693,6.094A8.323,8.323,0,0,0,11.675,0h0A8.321,8.321,0,0,0,3.552,6.516l-2.35,7.6A3,3,0,0,0,4.068,18Z" fill="white" class="iconFill"/><path d="M7.1,20a5,5,0,0,0,9.8,0Z" fill="white" class="iconFill"/></svg>
+
                             </a>
                             <div class="dropdown-menu dropdown-notifications" aria-labelledby="navbarDropdownMenuLink">
                                 <h2>Recent <span>Notifications</span></h2>
@@ -369,20 +394,24 @@
                                 <span class="secondary_color">
                                     {{ Auth::user()->name }}
                                 </span>
-                                <img src="{{ asset('assets') }}/admin/images/droup-down-gray.png" class="right-doun">
+                                {{-- <img src="{{ asset('assets') }}/admin/images/white-down.png" class="right-doun"> --}}
+                                <?xml version="1.0" encoding="UTF-8"?>
+                                <svg xmlns="http://www.w3.org/2000/svg" id="Isolation_Mode" data-name="Isolation Mode" viewBox="0 0 24 24" width="45" height="14"  class="right-doun secondary_color">
+                                    <path d="M0,8.057l9.52,9.507a3.507,3.507,0,0,0,4.948,0L24,8.046,21.879,5.929l-9.531,9.517a.5.5,0,0,1-.707,0L2.121,5.94Z" fill="white" class="iconFill"/></svg>
+
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item secondary_color" href="/company_profile">
+                                <a class="dropdown-item" href="/company_profile">
                                     Profile
                                 </a>
-                                <a class="dropdown-item secondary_color" href="/change_password">
+                                <a class="dropdown-item" href="/change_password">
                                     Change Password
                                 </a>
                                 <hr>
                                 {{-- <a class="dropdown-item dropdown-item-no" href="{{ route('logout') }}">     --}}
 
 
-                                <a class="dropdown-item secondary_color" href="{{ route('logout') }}"
+                                <a class="dropdown-item d-flex" href="{{ route('logout') }}"
                                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                     Sign out
                                     <img src="{{ asset('assets') }}/admin/images/logout-icon.png" class="ml-auto">
@@ -413,7 +442,10 @@
 
                 <li @if (Request::segment(1) == 'search') class="active" @endif >
                     <a href="/search">
-                        <img src="{{ asset('assets') }}/admin/images/search-icon-gray.png">
+                        <?xml version="1.0" encoding="UTF-8"?>
+                        <svg xmlns="http://www.w3.org/2000/svg" id="Outline" viewBox="0 0 24 24" width="512" height="512">
+                            <path d="M23.707,22.293l-5.969-5.969a10.016,10.016,0,1,0-1.414,1.414l5.969,5.969a1,1,0,0,0,1.414-1.414ZM10,18a8,8,0,1,1,8-8A8.009,8.009,0,0,1,10,18Z" fill="white" class="iconFill"/></svg>
+                        
                         Search
                     </a>
                 </li>
@@ -444,7 +476,10 @@
                             <h5 class="mb-0">
                                 <a role="button" data-toggle="collapse" href="#collapse-1" aria-expanded="true"
                                     aria-controls="collapse-1" class="secondary_color">
-                                    Employees
+                                    Employees 
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="17" height="9" viewBox="0 0 17 9" fill="none">
+                                        <path d="M8.54692 9C8.23185 9.00055 7.91977 8.93882 7.62863 8.81837C7.33749 8.69792 7.07303 8.52112 6.85044 8.29813L0.5 1.94649L2.19649 0.25L8.54692 6.60044L14.8974 0.25L16.5938 1.94649L10.2434 8.29692C10.0209 8.52013 9.7565 8.69716 9.46535 8.81781C9.17421 8.93847 8.86208 9.00039 8.54692 9Z"  fill="white" class="iconFill"/>
+                                        </svg>
                                 </a>
                             </h5>
                         </div>
@@ -515,7 +550,9 @@
                             <h5 class="mb-0">
                                 <a role="button" data-toggle="collapse" href="#collapse-2" aria-expanded="true"
                                     aria-controls="collapse-2" class="secondary_color">
-                                    Settings
+                                    Settings <svg xmlns="http://www.w3.org/2000/svg" width="17" height="9" viewBox="0 0 17 9" fill="none">
+                                        <path d="M8.54692 9C8.23185 9.00055 7.91977 8.93882 7.62863 8.81837C7.33749 8.69792 7.07303 8.52112 6.85044 8.29813L0.5 1.94649L2.19649 0.25L8.54692 6.60044L14.8974 0.25L16.5938 1.94649L10.2434 8.29692C10.0209 8.52013 9.7565 8.69716 9.46535 8.81781C9.17421 8.93847 8.86208 9.00039 8.54692 9Z"  fill="white" class="iconFill" />
+                                        </svg>
                                 </a>
                             </h5>
                         </div>
@@ -641,6 +678,9 @@
                                 <a role="button" data-toggle="collapse" href="#collapse-3" aria-expanded="true"
                                     aria-controls="collapse-3" class="secondary_color">
                                     Interview Email Template
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="17" height="9" viewBox="0 0 17 9" fill="none">
+                                        <path d="M8.54692 9C8.23185 9.00055 7.91977 8.93882 7.62863 8.81837C7.33749 8.69792 7.07303 8.52112 6.85044 8.29813L0.5 1.94649L2.19649 0.25L8.54692 6.60044L14.8974 0.25L16.5938 1.94649L10.2434 8.29692C10.0209 8.52013 9.7565 8.69716 9.46535 8.81781C9.17421 8.93847 8.86208 9.00039 8.54692 9Z"  fill="white" class="iconFill" />
+                                        </svg>
                                 </a>
                             </h5>
                         </div>

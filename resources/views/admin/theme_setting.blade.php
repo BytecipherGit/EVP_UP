@@ -122,13 +122,6 @@
                 {
                     data: 'value',
                     name: 'value',
-                    // render: function(data, type, row) {
-                    //     if (row['key'] == 'logo') {
-                    //         return '<img src="' + data + '" width="50"/>';
-                    //     } else {
-                    //         return data;
-                    //     }
-                    // }
                 },
 
                 {

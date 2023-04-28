@@ -47,8 +47,11 @@ header {
     align-items: center;
     -ms-flex-pack: justify;
     justify-content:normal;
-    padding: 10px 16px;
+    padding: 17px 0!important;
+    min-height: auto !important;
+    margin-bottom: 0 !important;
 }
+
 .navbar-dark .navbar-brand {
     color: #253858;
     font-size: 26px;
@@ -61,11 +64,16 @@ header {
 }
 .navbar-dark .navbar-brand img {
   width: 240px;
-  height: 63px;
+  height: -webkit-fill-available;
 }
 .navbar-dark .navbar-nav .nav-item {
     height: 24px;
     padding: 0 0 0 25px;
+}
+.navbar-dark .navbar-nav .nav-item.dropdown.show .dropdown-toggle svg {
+  transform: rotate(180deg);
+  padding-right: 18px;
+  padding-left: 0;
 }
 .navbar-dark .navbar-nav .nav-link {
     color: #253858;
@@ -109,13 +117,13 @@ header {
     margin-left: .255em;
     vertical-align: .255em;
     content: "";
-    border-top: .3em solid;
+    border-top: .3em solid transparent !important ;
     border-right: 0 solid transparent;
     border-bottom: 0;
     border-left: 0 solid transparent;
 }
 .dropdown-toggle1 {
-  background: #fff;
+  background: transparent;
   width: 35px;
   height: 35px;
   border-radius: 50%;
@@ -123,7 +131,7 @@ header {
   margin-top: -3px;
 }
 .dropdown-toggle1:focus{
-  background: #5533FF;
+  background: transparent;
 }
 .dropdown-toggle1:focus img {
     filter: brightness(0) invert(2);
@@ -178,6 +186,7 @@ header {
     box-shadow: 0px 16px 48px -4px rgba(18, 31, 62, 0.1) !important;
     border-radius: 24px !important;
 }
+
 .dropdown-item {
   display: block;
   width: 100%;
@@ -195,10 +204,12 @@ header {
 .dropdown-item .clr-pull-icon{
   display: none;
 }
-.dropdown-item:hover{
-  background: #F7F5FF;
+.dropdown-item:focus, .dropdown-item:hover {
+  background: transparent !important;
   color: #5533FF;
 }
+
+
 .dropdown-item:hover .clr-icon{
   display: none;
 }
@@ -405,6 +416,8 @@ aside .active{
 }
 aside .active a{
   color: #5533FF;
+  border-radius: 8px;
+  background: #F7F5FF;
 }
 aside li a {
     display: flex;
@@ -511,13 +524,13 @@ aside .active img{
   position: relative;
 }
 #accordion .mb-0 > a:after {
-  content: url(../images/accordion-icon.png);
+  /* content: url(../images/accordion-icon.png); */
   font-family: 'FontAwesome';
   position: absolute;
   right: 0;
 }
 #accordion .mb-0 > a[aria-expanded="true"]:after {
-  content: url(../images/droup-down-gray.png); 
+  /* content: url(../images/white-down.png);  */
 }
 #accordion .card-body {
     -ms-flex: 1 1 auto;
@@ -545,13 +558,23 @@ aside .active img{
     border-bottom: 0 solid rgba(0,0,0,.125);
     
 }
-#accordion .card-header a{
-    display: block;
-    text-decoration: none;
-    color: #28293D;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 24px;
+#accordion .card-header a {
+  display: block;
+  text-decoration: none;
+  color: #28293D;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 24px;
+  DISPLAY: flex;
+}
+#accordion .card-header a svg {
+  margin: 0 0 0 auto;
+  float: right;
+  transform: rotate(180deg);
+}
+#accordion .card-header a.collapsed svg {
+  transform: rotate(0) !important;
 }
 #accordion-1 ul{
   margin: 0;
