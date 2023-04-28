@@ -27,7 +27,12 @@ class ThemeSettingController extends Controller
             }
             return DataTables::of($data)->addIndexColumn()
             ->addColumn('value', function ($row) {
-                $btn = '<i class="colorBox" style="background: '. $row->value .'"></i>';
+                if($row->key != 'logo'){
+
+                    $btn = '<i class="colorBox" style="background: '. $row->value .'"></i>';
+                } else {
+                    $btn = '<img src="'.$row->value.'" style="width:80px; height:40px;">';
+                }
                 // $btn .= '<a href="javascript:void(0)" data-id="' . $row->id . '" class="edit-btn deleteProcess fa fa-trash" data-title="Delete"></a>';
                 return $btn;
             })
