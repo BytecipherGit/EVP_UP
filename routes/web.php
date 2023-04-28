@@ -197,6 +197,7 @@ Route::middleware([Admin::class])->group(function () {
     Route::get("email_template/form/{id?}", [InterviewEmployee::class, 'getEmailTemplate'])->middleware('documents');
     Route::any("send_email_template/{id?}", [InterviewEmployee::class, 'sendEmailTemplate'])->name('send-email-template')->middleware('documents');
     Route::get("not_appeared/form/{id?}", [InterviewEmployee::class, 'createNotAppearedForm'])->middleware('documents');
+    Route::any("send_not_appeared/{id?}", [InterviewEmployee::class, 'sendNotAppearedStatus'])->name('send.not.appeared')->middleware('documents');
 
     Route::get("exit-employee/form/{id?}", [App\Http\Controllers\ExitEmployeeProcess::class, 'getExitEmployee'])->middleware('documents');
     Route::any("exit-employee/submit/{id?}", [App\Http\Controllers\ExitEmployeeProcess::class, 'createExitEmployee'])->name('exit.employee.create')->middleware('documents');

@@ -1752,6 +1752,8 @@ button.btn-secondary-custexport {
 .rating > label:hover ~ input:checked ~ label, /* lighten current selection */
 .rating > input:checked ~ label:hover ~ label { color: #5533FF;  }
 /****** Star Rating Css Close *****/
+
+
 @media (max-width: 991px){
 .exit-custom-page .add-plus span{margin-right: 0px !important;}
 }
@@ -2510,6 +2512,7 @@ button.btn-secondary-custexport {
   margin: 34px 0;
   padding: 29px 34px;
   /* display: flex; */
+
 }
 .search-hist-pro {
     display: flex;
@@ -2517,12 +2520,25 @@ button.btn-secondary-custexport {
     align-items: flex-start;
     width: 100%;
 }
+center{
+    width: 89%;
+}
 .search-hist-pro .pro-img {
-    width: 130px;
-    height: 130px;
+    /* width: 130px;
+    height: 130px; */
     border-radius: 50%;
     margin-right: 29px;
     position: relative;
+}
+.search-hist-pro .pro-img fieldset.rating {
+  width: 100%;
+}
+.search-hist-pro .pro-img .rating > label:before {
+  margin: 3px;
+  font-size: 15px;
+  font-family: FontAwesome;
+  display: inline-block;
+  content: "\f005";
 }
 .search-hist-pro .pro-img .circle {
     border-radius: 50% !important;
@@ -2861,7 +2877,7 @@ button.btn-secondary-custexport {
 }
 .search-bg-round .input-search-box {
     padding-left: 38px !important;
-    background: url(../images/search-icon.png) 6px 16px no-repeat !important;
+    background: url(../images/search-icon-gray.png) 6px 16px no-repeat !important;
     cursor: pointer;
     height: auto;
 }
@@ -3159,7 +3175,7 @@ button.btn-secondary-custexport {
 }
 .schudinter-tab .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
   color: #fff;
-  background-color: #5533FF !important;
+  background-color: #5533FF ;
   border-color: #dee2e6 #dee2e6 #fff;    
   border-radius: 0;
 }

@@ -70,6 +70,11 @@ header {
     height: 24px;
     padding: 0 0 0 25px;
 }
+.navbar-dark .navbar-nav .nav-item.dropdown.show .dropdown-toggle svg {
+  transform: rotate(180deg);
+  padding-right: 18px;
+  padding-left: 0;
+}
 .navbar-dark .navbar-nav .nav-link {
     color: #253858;
     display: block;
@@ -519,13 +524,13 @@ aside .active img{
   position: relative;
 }
 #accordion .mb-0 > a:after {
-  content: url(../images/accordion-icon.png);
+  /* content: url(../images/accordion-icon.png); */
   font-family: 'FontAwesome';
   position: absolute;
   right: 0;
 }
 #accordion .mb-0 > a[aria-expanded="true"]:after {
-  content: url(../images/droup-down-gray.png); 
+  /* content: url(../images/white-down.png);  */
 }
 #accordion .card-body {
     -ms-flex: 1 1 auto;
@@ -553,13 +558,23 @@ aside .active img{
     border-bottom: 0 solid rgba(0,0,0,.125);
     
 }
-#accordion .card-header a{
-    display: block;
-    text-decoration: none;
-    color: #28293D;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 24px;
+#accordion .card-header a {
+  display: block;
+  text-decoration: none;
+  color: #28293D;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 24px;
+  DISPLAY: flex;
+}
+#accordion .card-header a svg {
+  margin: 0 0 0 auto;
+  float: right;
+  transform: rotate(180deg);
+}
+#accordion .card-header a.collapsed svg {
+  transform: rotate(0) !important;
 }
 #accordion-1 ul{
   margin: 0;

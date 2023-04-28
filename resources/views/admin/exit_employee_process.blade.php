@@ -35,10 +35,11 @@
             </div>
             <div class="col-md-4">
                 <div class="main-right-button-box">
-                    <a style="text-decoration:none" href="#" id="createProcess" class="mr-2 button_background_color"><img src="{{ asset('assets') }}/admin/images/button-plus.png">Exit Employee Process</a>
+                    <a style="text-decoration:none" href="#" id="createProcess" class="button_background_color"><img src="{{ asset('assets') }}/admin/images/button-plus.png"><span class="button_text_color">Exit Employee Process</span></a>
                     {{-- <a href="#" data-toggle="modal" data-target="#rejectbtninfo">Reject</a> --}}
                 </div>
             </div>
+           
         </div>
     </div>
     <!--- Main Heading ----->

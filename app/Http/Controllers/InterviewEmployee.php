@@ -207,6 +207,7 @@ class InterviewEmployee extends Controller
                 ->select('interview_employee_rounds.*', 'interview_processes.title')
                 ->where('interview_employee_rounds.interview_employees_id', $request->id)
                 ->first();
+                // dd($interviewEmpoloyee);
             return view('admin.interview-round-details', compact('interviewEmpoloyeeRounds', 'hiringStages','interviewEmpoloyee'));
         }
     }
@@ -1200,9 +1201,13 @@ class InterviewEmployee extends Controller
         }
     }
     
-    public function createNotAppearedForm(request $request){
-        dd();
-       return view('admin.not_appeared');
+    public function createNotAppearedForm(request $request)
+     {
+
+        if($request->interview_status){
+            $interviewStatus = $request->interview_status;
+            return view('admin.not_appeared',compact('interviewStatus'));
+        }
     }
 
     public function sendEmailTemplate(request $request)
@@ -1250,6 +1255,33 @@ class InterviewEmployee extends Controller
             return Response::json(['success' => '0']);
         }
      
+    }
+
+    public function sendNotAppearedStatus(request $request)
+    {
+        // dd($request->all()); die();
+   if(!empty($request->interview_round_id) && !empty($request->interview_status)){
+        $interview = InterviewEmployeeRounds::find($request->interview_round_id);
+        $interview->interviewer_status = $request->interview_status;
+
+        if(empty($interview->not_appeared_comment)){
+            $empNotAppeared = DB::table('interview_employee_rounds')->where('id', $request->interview_round_id)
+                ->update([
+                    'not_appeared_comment' => $request->input('comment'),
+                ]);
+            }
+
+            if ($interview->save()) {
+                return Response::json(['success' => '1']);
+            } else {
+                return Response::json(['success' => '0']);
+            }
+        }
+        else {
+            return Response::json(['success' => '0']);
+        }
+       return Response::json(['success' => '1']);
+
     }
 
     public function deleteInterview(request $request)

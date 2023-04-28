@@ -33,7 +33,14 @@
                 </div>
                 <h6>
                   <div class="bg-section">
-                    {{$allemployee}}<img src="{{ asset('assets') }}/admin/images/button-plus-clr.png"> 
+                    {{$allemployee}}<?xml version="1.0" encoding="UTF-8"?>
+                    <!-- Generator: Adobe Illustrator 25.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve" width="30" height="15">
+                    <g>
+                      <path d="M490.667,234.667H277.333V21.333C277.333,9.551,267.782,0,256,0c-11.782,0-21.333,9.551-21.333,21.333v213.333H21.333   C9.551,234.667,0,244.218,0,256c0,11.782,9.551,21.333,21.333,21.333h213.333v213.333c0,11.782,9.551,21.333,21.333,21.333   c11.782,0,21.333-9.551,21.333-21.333V277.333h213.333c11.782,0,21.333-9.551,21.333-21.333   C512,244.218,502.449,234.667,490.667,234.667z" class="iconFill"/>
+                    </g>
+                    </svg>
+
                   </div>  
                   <a href="/employee" class="link_color">View</a>              
                 </h6>
@@ -54,7 +61,11 @@
                 </div>
                 <h6>
                   <div class="bg-section">
-                    {{$current}} <img src="{{ asset('assets') }}/admin/images/button-plus-clr.png"> 
+                    {{$current}}<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve" width="30" height="15">
+                      <g>
+                        <path d="M490.667,234.667H277.333V21.333C277.333,9.551,267.782,0,256,0c-11.782,0-21.333,9.551-21.333,21.333v213.333H21.333   C9.551,234.667,0,244.218,0,256c0,11.782,9.551,21.333,21.333,21.333h213.333v213.333c0,11.782,9.551,21.333,21.333,21.333   c11.782,0,21.333-9.551,21.333-21.333V277.333h213.333c11.782,0,21.333-9.551,21.333-21.333   C512,244.218,502.449,234.667,490.667,234.667z" class="iconFill"/>
+                      </g>
+                      </svg>
                   </div>  
                   <a href="/current-employee" class="link_color">View</a>              
                 </h6>
@@ -76,7 +87,11 @@
                 </div>
                 <h6>
                   <div class="bg-section">
-                    {{$empinvite}} <img src="{{ asset('assets') }}/admin/images/button-plus-clr.png"> 
+                    {{$empinvite}}<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve" width="30" height="15">
+                      <g>
+                        <path d="M490.667,234.667H277.333V21.333C277.333,9.551,267.782,0,256,0c-11.782,0-21.333,9.551-21.333,21.333v213.333H21.333   C9.551,234.667,0,244.218,0,256c0,11.782,9.551,21.333,21.333,21.333h213.333v213.333c0,11.782,9.551,21.333,21.333,21.333   c11.782,0,21.333-9.551,21.333-21.333V277.333h213.333c11.782,0,21.333-9.551,21.333-21.333   C512,244.218,502.449,234.667,490.667,234.667z" class="iconFill"/>
+                      </g>
+                      </svg>
                   </div>  
                   <a href="/invite-employee" class="link_color">View</a>              
                 </h6>

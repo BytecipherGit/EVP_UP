@@ -39,6 +39,7 @@ return new class extends Migration
             $table->string('video_link')->nullable();
             $table->longText('interview_instructions')->nullable();
             $table->longText('interviewee_comment')->nullable();
+            $table->longText('not_appeared_comment')->nullable();
             $table->date('interviewee_comment_date')->nullable();
             $table->longText('interview_feedback')->nullable();
             $table->enum('interviewer_status',['Qualified','Not Qualified','Not Appeared'])->comment('Qualified / Not Qualified / Not Appeared')->default('Not Qualified');
