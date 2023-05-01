@@ -684,7 +684,7 @@ class EmployeeController extends Controller
         $lang_item=Emplang:: where('employee_id',$request->id)->get();
         $ident_item=Employeeidentity::where('employee_id',$request->id)->get();
         $work_item=Empworkhistory::where('employee_id',$request->id)->get();
-        $official= Empofficial::where('employee_id',$request->id)->first();
+        $official= Empofficial::join('company_employee','company_employee.employee_id','=','employee_officials.employee_id')->where('employee_officials.employee_id',$request->id)->where('company_employee.company_id',Auth::id())->first();
 
         return view('admin/edit-employee',compact('basic','identity','qualification','workhistory','skills','official','skill_item','lang_item','qual_item','ident_item','work_item'));
       }

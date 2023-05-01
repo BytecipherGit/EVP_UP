@@ -23,7 +23,7 @@
                 <h2 style="font-weight: 600; font-size: 18px; line-height: 32px; color: #373E57; padding: 27px 20px 22px; margin:0; text-align: left;">
                     Dear {{$mailData['name']}},
                 </h2>
-                <p style="font-size: 18px; line-height: 28px; color: #373E57; padding: 0 20px 0px; margin:0; font-family: 'DM Sans', sans-serif; text-align: left;">We are pleased to offer you the {{ $mailData['name'] }} at Bytecipher Pvt.Ltd. with a start date of 12-April-2023. You will be reporting directly to Rahul Sharma at Indore MP. We believe your skills and experience are an excellent match for our company.</p>
+                <p style="font-size: 18px; line-height: 30px; color: #373E57; padding: 0 20px 0px; margin:0; font-family: 'DM Sans', sans-serif; text-align: left;">We are pleased to offer you the {{ $mailData['name'] }} at Bytecipher Pvt.Ltd. with a start date of 12-April-2023. You will be reporting directly to Rahul Sharma at Indore MP. We believe your skills and experience are an excellent match for our company.</p>
 
                 <div style="border-top: 1px solid #c3baba; margin:15px 20px;">
                     <a href="{{ route('offer.accepted', ['EmployeeOfferId' => $mailData['EmployeeOfferId']]) }}"
@@ -37,12 +37,9 @@
                         <sapn style="padding: 0 5px;">Declined</sapn>
                     </a>
                 </div>
-                
-
-                <p style="margin-top:15px;margin-bottom:15px; margin-top: 30px; font-size:16px;line-height: 24px; color: #373E57;  text-align: left; padding: 0 20px 0px; font-family: 'DM Sans', sans-serif;">Kind regards,</br>
-                    ByteCipher Pvt Ltd</p>
+            
             </div> 
-
+        <br>
             <footer style="padding:20px;">
                 <p style="font-weight:300;font-size: 16px; line-height: 32px; color: #373E57; font-family: 'DM Sans', sans-serif; margin: 0;">Copyright 2023 <span style="color: #5533FF;">ByteCipher</span>. All Right Reserved.</p>
                 <ul style="margin:15px 0 0; padding:0">

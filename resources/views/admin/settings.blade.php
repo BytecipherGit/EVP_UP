@@ -399,7 +399,7 @@
                         </div>
            
                    </div>   
-                 <div class="tab-button-bx">
+                 <div class="tab-button-bx" style="padding-top: 30px;">
                    {{-- <button class="btn-secondary-cust">Cancel</button>  --}}
                    <button type="submit" name="plan" class="btn-primary-cust button_background_color"><span class="button_text_color">Save Changes</span></button>
                 </div>   

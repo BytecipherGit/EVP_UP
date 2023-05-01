@@ -49,10 +49,10 @@ class SearchController extends Controller
                                   $cmpAddress = !empty($empCurrentCmpDetails->address) ? $empCurrentCmpDetails->address : '';
                                   $interviewEmp = EmployeeInterview::where('employee_id', $employee->id)->first();
                                   $joinDate = Empofficial::where('employee_id', $employee->id)->first();
-                                  $interviews = EmployeeInterview::where('employee_id', $employee->id)->whereBetween('created_at', [Carbon::now(), Carbon::now()->addMonths(3)])->count();
+                                  $interviews = EmployeeInterview::where('employee_id', $employee->id)->where('created_at','>', Carbon::now()->subMonths(3))->count();
                                   $offers = EmployeeInterview::where('employee_id', $employee->id)->whereNotNull('employee_offer_id')
-                                           ->whereBetween('created_at', [Carbon::now(), Carbon::now()->addMonths(3)])->count();
-
+                                           ->where('created_at','>', Carbon::now()->subMonths(3))->count();
+// dd(Carbon::now()->subMonths(3));
                                   $address= User::join('company_employee', 'users.id', '=', 'company_employee.company_id')
                                              ->join('cities','cities.id','=','users.city')
                                              ->join('states','states.id','=','cities.state_id')
@@ -366,8 +366,8 @@ class SearchController extends Controller
                                                   <button onclick="myFunction(' . $empDetails->id . ')" class="full-bg button_background_color"><span class="button_text_color btnspan">View Full Profile</span></button>
                                                   <button class="full-bg button_background_color" onclick="getInterview(' . $empDetails->id . ')" id="scheduleInterview" style="margin-left: 15px;"><span class="button_text_color btnspan">Add Candidate</span></button>
                                                   
-                                                  <small class="ml-auto"><p>('.$interviews.' Running interviews)</p>
-                                                  <p>('.$offers.' Offer held on)</p></small>
+                                                  <small class="ml-auto"><p>( '.$interviews.' Running interviews )</p>
+                                                  <p>( '.$offers.' Offer held on )</p></small>
                                                   </span>
 
                                                 </h2>
@@ -441,10 +441,8 @@ class SearchController extends Controller
                                                           </div>
                                                         </div>
                                                       </div>
-                                                  </div>
-                                                  </div>
-                                                </div>
-                                              </div>';
+                                                    </div>
+                                                  </div>';
 
                                               // $experiences = Employee::leftJoin('employee_workhistories', 'employee_workhistories.employee_id', '=', 'employee.id')
                                               //           ->leftJoin('employee_officials', 'employee_officials.employee_id', '=', 'employee.id')
@@ -453,18 +451,25 @@ class SearchController extends Controller
                                               //           ->get();
                                             $experiences = Employee::join('company_employee', 'company_employee.employee_id', '=', 'employee.id')
                                                         ->join('users', 'users.id', '=', 'company_employee.company_id')
+                                                        ->join('cities','cities.id','=','users.city')
+                                                        ->join('states','states.id','=','cities.state_id')
+                                                        ->join('countries','countries.id','=','states.country_id')
                                                         ->where('employee.id',$empDetails->id)->whereNotNull('company_employee.start_date')
-                                                        ->select('users.org_name','company_employee.*','users.address')
+                                                        ->select('users.org_name','company_employee.*','users.address',('states.name as stateName'),('countries.name as countryName'),('cities.name as cityName'))
                                                         ->get();
+
                                            if(count($experiences) > 0){
                                                 // foreach($experiences as $key => $experience){
                                                 
-                                                  $html .= '<div class="serch-main-box">
+                                                $html .= '<div class="serch-main-box">
                                                            <h2 class="">Experience</h2>
                                                           ';
           
-                                                          foreach($experiences as $key => $experience){
-                                                            $html .='<div class="d-flex pt-3">
+                                                      foreach($experiences as $key => $experience){
+
+                                                        $companyAddress = !empty($experience->countryName) ? $experience->cityName . ', ' . $experience->stateName . ', ' . $experience->countryName : '';
+
+                                                        $html .='<div class="d-flex pt-3">
                                                             <div class="searc-icon-bx">
                                                               <img src="assets/admin/images/bytecipher.png">
                                                             </div>
@@ -480,7 +485,7 @@ class SearchController extends Controller
                                                                   $html .= $experience->end_date.'</span></p>';
                                                               }
         
-                                                             $html .= '<p><span>Indore, Madhya Pradesh, India</span></p>
+                                                             $html .= '<p><span>'. $companyAddress.'</span></p>
                                                               <p class="pt-2">'.$experience->review.'</p>';
         
                                                     if(!empty($experience->rating)){
@@ -759,7 +764,7 @@ class SearchController extends Controller
                                                               $html .='</div>
                                                             <img src="assets/admin/images/verified-icon.png" class="verified-img"></div><hr>';
                                                           }
-                                                  $html .= '</div>';
+                                                  $html .= '</div></div>';
           
                                                }
                                          $educations = Employee::leftJoin('employee_qualifications', 'employee_qualifications.employee_id', '=', 'employee.id')
@@ -786,7 +791,9 @@ class SearchController extends Controller
                                              }
                                                   
                                             $html .= '</div>
-                                          </div>';
+                                               </div>
+                                           </div>
+                                         </div>';
                                       }
                                   }
                           return FacadesResponse::json(['success' => true, 'value' => $html]);
@@ -816,9 +823,9 @@ class SearchController extends Controller
                                   $cmpAddress = !empty($empCurrentCmpDetails->address) ? $empCurrentCmpDetails->address : '';
                                   $interviewEmp = EmployeeInterview::where('employee_id', $employee->id)->first();
                                   $joinDate = Empofficial::where('employee_id', $employee->id)->first();
-                                  $interviews = EmployeeInterview::where('employee_id', $employee->id)->whereBetween('created_at', [Carbon::now(), Carbon::now()->addMonths(3)])->count();
+                                  $interviews = EmployeeInterview::where('employee_id', $employee->id)->where('created_at','>', Carbon::now()->subMonths(3))->count();
                                   $offers = EmployeeInterview::where('employee_id', $employee->id)->whereNotNull('employee_offer_id')
-                                           ->whereBetween('created_at', [Carbon::now(), Carbon::now()->addMonths(3)])->count();
+                                           ->where('created_at','>', Carbon::now()->subMonths(3))->count();
 
                                   $address= User::join('company_employee', 'users.id', '=', 'company_employee.company_id')
                                              ->join('cities','cities.id','=','users.city')
@@ -1133,8 +1140,8 @@ class SearchController extends Controller
                                                   <button onclick="myFunction(' . $empDetails->id . ')" class="full-bg button_background_color"><span class="button_text_color btnspan">View Full Profile</span></button>
                                                   <button class="full-bg button_background_color" onclick="getInterview(' . $empDetails->id . ')" id="scheduleInterview" style="margin-left: 15px;"><span class="button_text_color btnspan">Add Candidate</span></button>
                                                   
-                                                  <small class="ml-auto"><p>('.$interviews.' Interview going on)</p>
-                                                  <p>('.$offers.' Offers going on)</p></small>
+                                                  <small class="ml-auto"><p>( '.$interviews.' Running Interviews )</p>
+                                                  <p>( '.$offers.' Offers held on )</p></small>
                                                   </span>
 
                                                 </h2>
@@ -1208,30 +1215,34 @@ class SearchController extends Controller
                                                           </div>
                                                         </div>
                                                       </div>
-                                                  </div>
-                                                  </div>
-                                                </div>
-                                              </div>';
+                                                   </div>
+                                                  </div>';
 
                                               // $experiences = Employee::leftJoin('employee_workhistories', 'employee_workhistories.employee_id', '=', 'employee.id')
                                               //           ->leftJoin('employee_officials', 'employee_officials.employee_id', '=', 'employee.id')
                                               //           ->where('employee_workhistories.employee_id',$empDetails->id)
                                               //           ->select('employee_workhistories.*','employee_officials.*')
                                               //           ->get();
-                                            $experiences = Employee::join('company_employee', 'company_employee.employee_id', '=', 'employee.id')
-                                                        ->join('users', 'users.id', '=', 'company_employee.company_id')
-                                                        ->where('employee.id',$empDetails->id)->whereNotNull('company_employee.start_date')
-                                                        ->select('users.org_name','company_employee.*','users.address')
-                                                        ->get();
-                                           if(count($experiences) > 0){
-                                                // foreach($experiences as $key => $experience){
-                                                
-                                                  $html .= '<div class="serch-main-box">
-                                                           <h2 class="">Experience</h2>
-                                                          ';
-          
-                                                          foreach($experiences as $key => $experience){
-                                                            $html .='<div class="d-flex pt-3">
+                                    $experiences = Employee::join('company_employee', 'company_employee.employee_id', '=', 'employee.id')
+                                              ->join('users', 'users.id', '=', 'company_employee.company_id')
+                                              ->join('cities','cities.id','=','users.city')
+                                              ->join('states','states.id','=','cities.state_id')
+                                              ->join('countries','countries.id','=','states.country_id')
+                                              ->where('employee.id',$empDetails->id)->whereNotNull('company_employee.start_date')
+                                              ->select('users.org_name','company_employee.*','users.address',('states.name as stateName'),('countries.name as countryName'),('cities.name as cityName'))
+                                              ->get();
+
+                                 if(count($experiences) > 0){
+                                      // foreach($experiences as $key => $experience){
+                                      
+                                      $html .= '<div class="serch-main-box">
+                                                 <h2 class="">Experience</h2>
+                                                ';
+
+                                            foreach($experiences as $key => $experience){
+
+                                              $companyAddress = !empty($experience->countryName) ? $experience->cityName . ', ' . $experience->stateName . ', ' . $experience->countryName : '';
+                                                    $html .='<div class="d-flex pt-3">
                                                             <div class="searc-icon-bx">
                                                               <img src="assets/admin/images/bytecipher.png">
                                                             </div>
@@ -1247,7 +1258,7 @@ class SearchController extends Controller
                                                                   $html .= $experience->end_date.'</span></p>';
                                                               }
         
-                                                             $html .= '<p><span>Indore, Madhya Pradesh, India</span></p>
+                                                             $html .= '<p><span>'. $companyAddress .'</span></p>
                                                               <p class="pt-2">'.$experience->review.'</p>';
         
                                                     if(!empty($experience->rating)){
@@ -1526,7 +1537,8 @@ class SearchController extends Controller
                                                               $html .='</div>
                                                             <img src="assets/admin/images/verified-icon.png" class="verified-img"></div><hr>';
                                                           }
-                                                  $html .= '</div>';
+                                                  $html .= '</div>
+                                                       </div>';
           
                                                }
                                          $educations = Employee::leftJoin('employee_qualifications', 'employee_qualifications.employee_id', '=', 'employee.id')
@@ -1582,9 +1594,9 @@ class SearchController extends Controller
                                   $cmpAddress = !empty($empCurrentCmpDetails->address) ? $empCurrentCmpDetails->address : '';
                                   $interviewEmp = EmployeeInterview::where('employee_id', $employee->id)->first();
                                   $joinDate = Empofficial::where('employee_id', $employee->id)->first();
-                                  $interviews = EmployeeInterview::where('employee_id', $employee->id)->whereBetween('created_at', [Carbon::now(), Carbon::now()->addMonths(3)])->count();
+                                  $interviews = EmployeeInterview::where('employee_id', $employee->id)->where('created_at', '>' , Carbon::now()->subMonths(3))->count();
                                   $offers = EmployeeInterview::where('employee_id', $employee->id)->whereNotNull('employee_offer_id')
-                                           ->whereBetween('created_at', [Carbon::now(), Carbon::now()->addMonths(3)])->count();
+                                           ->where('created_at','>', Carbon::now()->subMonths(3))->count();
 
                                   $address= User::join('company_employee', 'users.id', '=', 'company_employee.company_id')
                                              ->join('cities','cities.id','=','users.city')
@@ -1899,8 +1911,8 @@ class SearchController extends Controller
                                                   <button onclick="myFunction(' . $empDetails->id . ')" class="full-bg button_background_color"><span class="button_text_color btnspan">View Full Profile</span></button>
                                                   <button class="full-bg button_background_color" onclick="getInterview(' . $empDetails->id . ')" id="scheduleInterview" style="margin-left: 15px;"><span class="button_text_color btnspan">Add Candidate</span></button>
                                                   
-                                                  <small class="ml-auto"><p>('.$interviews.' Interview going on)</p>
-                                                  <p>('.$offers.' Offers going on)</p></small>
+                                                  <small class="ml-auto"><p>( '.$interviews.' Running Interviews )</p>
+                                                  <p>( '.$offers.' Offers held on )</p></small>
                                                   </span>
 
                                                 </h2>
@@ -1975,29 +1987,33 @@ class SearchController extends Controller
                                                         </div>
                                                       </div>
                                                   </div>
-                                                  </div>
-                                                </div>
-                                              </div>';
+                                                  </div>';
 
                                               // $experiences = Employee::leftJoin('employee_workhistories', 'employee_workhistories.employee_id', '=', 'employee.id')
                                               //           ->leftJoin('employee_officials', 'employee_officials.employee_id', '=', 'employee.id')
                                               //           ->where('employee_workhistories.employee_id',$empDetails->id)
                                               //           ->select('employee_workhistories.*','employee_officials.*')
                                               //           ->get();
-                                            $experiences = Employee::join('company_employee', 'company_employee.employee_id', '=', 'employee.id')
-                                                        ->join('users', 'users.id', '=', 'company_employee.company_id')
-                                                        ->where('employee.id',$empDetails->id)->whereNotNull('company_employee.start_date')
-                                                        ->select('users.org_name','company_employee.*','users.address')
-                                                        ->get();
-                                           if(count($experiences) > 0){
-                                                // foreach($experiences as $key => $experience){
-                                                
-                                                  $html .= '<div class="serch-main-box">
-                                                           <h2 class="">Experience</h2>
-                                                          ';
-          
-                                                          foreach($experiences as $key => $experience){
-                                                            $html .='<div class="d-flex pt-3">
+                                     $experiences = Employee::join('company_employee', 'company_employee.employee_id', '=', 'employee.id')
+                                              ->join('users', 'users.id', '=', 'company_employee.company_id')
+                                              ->join('cities','cities.id','=','users.city')
+                                              ->join('states','states.id','=','cities.state_id')
+                                              ->join('countries','countries.id','=','states.country_id')
+                                              ->where('employee.id',$empDetails->id)->whereNotNull('company_employee.start_date')
+                                              ->select('users.org_name','company_employee.*','users.address',('states.name as stateName'),('countries.name as countryName'),('cities.name as cityName'))
+                                              ->get();
+
+                                 if(count($experiences) > 0){
+                                      // foreach($experiences as $key => $experience){
+                                      
+                                      $html .= '<div class="serch-main-box">
+                                                 <h2 class="">Experience</h2>
+                                                ';
+
+                                            foreach($experiences as $key => $experience){
+
+                                              $companyAddress = !empty($experience->countryName) ? $experience->cityName . ', ' . $experience->stateName . ', ' . $experience->countryName : '';
+                                                      $html .='<div class="d-flex pt-3">
                                                             <div class="searc-icon-bx">
                                                               <img src="assets/admin/images/bytecipher.png">
                                                             </div>
@@ -2013,7 +2029,7 @@ class SearchController extends Controller
                                                                   $html .= $experience->end_date.'</span></p>';
                                                               }
         
-                                                             $html .= '<p><span>Indore, Madhya Pradesh, India</span></p>
+                                                             $html .= '<p><span>'. $companyAddress .'</span></p>
                                                               <p class="pt-2">'.$experience->review.'</p>';
         
                                                     if(!empty($experience->rating)){
@@ -2292,7 +2308,8 @@ class SearchController extends Controller
                                                               $html .='</div>
                                                             <img src="assets/admin/images/verified-icon.png" class="verified-img"></div><hr>';
                                                           }
-                                                  $html .= '</div>';
+                                                  $html .= '</div>
+                                                  </div>';
           
                                                }
                                          $educations = Employee::leftJoin('employee_qualifications', 'employee_qualifications.employee_id', '=', 'employee.id')
@@ -2348,9 +2365,9 @@ class SearchController extends Controller
                                   $cmpAddress = !empty($empCurrentCmpDetails->address) ? $empCurrentCmpDetails->address : '';
                                   $interviewEmp = EmployeeInterview::where('employee_id', $employee->id)->first();
                                   $joinDate = Empofficial::where('employee_id', $employee->id)->first();
-                                  $interviews = EmployeeInterview::where('employee_id', $employee->id)->whereBetween('created_at', [Carbon::now(), Carbon::now()->addMonths(3)])->count();
+                                  $interviews = EmployeeInterview::where('employee_id', $employee->id)->where('created_at', '>' , Carbon::now()->subMonths(3))->count();
                                   $offers = EmployeeInterview::where('employee_id', $employee->id)->whereNotNull('employee_offer_id')
-                                           ->whereBetween('created_at', [Carbon::now(), Carbon::now()->addMonths(3)])->count();
+                                           ->where('created_at', '>' , Carbon::now()->subMonths(3))->count();
 
                                   $address= User::join('company_employee', 'users.id', '=', 'company_employee.company_id')
                                              ->join('cities','cities.id','=','users.city')
@@ -2664,9 +2681,9 @@ class SearchController extends Controller
                                                 <h6>
                                                   <button onclick="myFunction(' . $empDetails->id . ')" class="full-bg button_background_color"><span class="button_text_color btnspan">View Full Profile</span></button>
                                                   <button class="full-bg button_background_color" onclick="getInterview(' . $empDetails->id . ')" id="scheduleInterview" style="margin-left: 15px;"><span class="button_text_color btnspan">Add Candidate</span></button>
-                                                  
-                                                  <small class="ml-auto"><p>('.$interviews.' Interview going on)</p>
-                                                  <p>('.$offers.' Offers going on)</p></small>
+                                                   
+                                                  <small class="ml-auto"><p>( '.$interviews.' Running Interviews )</p>
+                                                  <p>( '.$offers.' Offers held on )</p></small>
                                                   </span>
 
                                                 </h2>
@@ -2741,28 +2758,32 @@ class SearchController extends Controller
                                                         </div>
                                                       </div>
                                                   </div>
-                                                  </div>
-                                                </div>
-                                              </div>';
+                                                  </div>';
 
                                               // $experiences = Employee::leftJoin('employee_workhistories', 'employee_workhistories.employee_id', '=', 'employee.id')
                                               //           ->leftJoin('employee_officials', 'employee_officials.employee_id', '=', 'employee.id')
                                               //           ->where('employee_workhistories.employee_id',$empDetails->id)
                                               //           ->select('employee_workhistories.*','employee_officials.*')
                                               //           ->get();
-                                            $experiences = Employee::join('company_employee', 'company_employee.employee_id', '=', 'employee.id')
-                                                        ->join('users', 'users.id', '=', 'company_employee.company_id')
-                                                        ->where('employee.id',$empDetails->id)->whereNotNull('company_employee.start_date')
-                                                        ->select('users.org_name','company_employee.*','users.address')
-                                                        ->get();
-                                           if(count($experiences) > 0){
-                                                // foreach($experiences as $key => $experience){
-                                                
-                                                  $html .= '<div class="serch-main-box">
-                                                           <h2 class="">Experience</h2>
-                                                          ';
-          
-                                                          foreach($experiences as $key => $experience){
+                                 $experiences = Employee::join('company_employee', 'company_employee.employee_id', '=', 'employee.id')
+                                              ->join('users', 'users.id', '=', 'company_employee.company_id')
+                                              ->join('cities','cities.id','=','users.city')
+                                              ->join('states','states.id','=','cities.state_id')
+                                              ->join('countries','countries.id','=','states.country_id')
+                                              ->where('employee.id',$empDetails->id)->whereNotNull('company_employee.start_date')
+                                              ->select('users.org_name','company_employee.*','users.address',('states.name as stateName'),('countries.name as countryName'),('cities.name as cityName'))
+                                              ->get();
+
+                                 if(count($experiences) > 0){
+                                      // foreach($experiences as $key => $experience){
+                                      
+                                      $html .= '<div class="serch-main-box">
+                                                 <h2 class="">Experience</h2>
+                                                ';
+
+                                            foreach($experiences as $key => $experience){
+
+                                              $companyAddress = !empty($experience->countryName) ? $experience->cityName . ', ' . $experience->stateName . ', ' . $experience->countryName : '';
                                                             $html .='<div class="d-flex pt-3">
                                                             <div class="searc-icon-bx">
                                                               <img src="assets/admin/images/bytecipher.png">
@@ -2779,7 +2800,7 @@ class SearchController extends Controller
                                                                   $html .= $experience->end_date.'</span></p>';
                                                               }
         
-                                                             $html .= '<p><span>Indore, Madhya Pradesh, India</span></p>
+                                                             $html .= '<p><span>'. $companyAddress .'</span></p>
                                                               <p class="pt-2">'.$experience->review.'</p>';
         
                                                     if(!empty($experience->rating)){
@@ -3058,7 +3079,8 @@ class SearchController extends Controller
                                                               $html .='</div>
                                                             <img src="assets/admin/images/verified-icon.png" class="verified-img"></div><hr>';
                                                           }
-                                                  $html .= '</div>';
+                                                  $html .= '</div>                                
+                                                  </div>';
           
                                                }
                                          $educations = Employee::leftJoin('employee_qualifications', 'employee_qualifications.employee_id', '=', 'employee.id')
@@ -3115,9 +3137,9 @@ class SearchController extends Controller
                                   $cmpAddress = !empty($empCurrentCmpDetails->address) ? $empCurrentCmpDetails->address : '';
                                   $interviewEmp = EmployeeInterview::where('employee_id', $employee->id)->first();
                                   $joinDate = Empofficial::where('employee_id', $employee->id)->first();
-                                  $interviews = EmployeeInterview::where('employee_id', $employee->id)->whereBetween('created_at', [Carbon::now(), Carbon::now()->addMonths(3)])->count();
+                                  $interviews = EmployeeInterview::where('employee_id', $employee->id)->where('created_at', '>' , Carbon::now()->subMonths(3))->count();
                                   $offers = EmployeeInterview::where('employee_id', $employee->id)->whereNotNull('employee_offer_id')
-                                           ->whereBetween('created_at', [Carbon::now(), Carbon::now()->addMonths(3)])->count();
+                                           ->where('created_at','>' , Carbon::now()->subMonths(3))->count();
 
                                   $address= User::join('company_employee', 'users.id', '=', 'company_employee.company_id')
                                              ->join('cities','cities.id','=','users.city')
@@ -3432,8 +3454,8 @@ class SearchController extends Controller
                                                   <button onclick="myFunction(' . $empDetails->id . ')" class="full-bg button_background_color"><span class="button_text_color btnspan">View Full Profile</span></button>
                                                   <button class="full-bg button_background_color" onclick="getInterview(' . $empDetails->id . ')" id="scheduleInterview" style="margin-left: 15px;"><span class="button_text_color btnspan">Add Candidate</span></button>
                                                   
-                                                  <small class="ml-auto"><p>('.$interviews.' Interview going on)</p>
-                                                  <p>('.$offers.' Offers going on)</p></small>
+                                                  <small class="ml-auto"><p>( '.$interviews.' Running Interview )</p>
+                                                  <p>( '.$offers.' Offers held on )</p></small>
                                                   </span>
 
                                                 </h2>
@@ -3508,28 +3530,33 @@ class SearchController extends Controller
                                                         </div>
                                                       </div>
                                                   </div>
-                                                  </div>
-                                                </div>
-                                              </div>';
+                                                  </div>';
 
                                               // $experiences = Employee::leftJoin('employee_workhistories', 'employee_workhistories.employee_id', '=', 'employee.id')
                                               //           ->leftJoin('employee_officials', 'employee_officials.employee_id', '=', 'employee.id')
                                               //           ->where('employee_workhistories.employee_id',$empDetails->id)
                                               //           ->select('employee_workhistories.*','employee_officials.*')
                                               //           ->get();
-                                            $experiences = Employee::join('company_employee', 'company_employee.employee_id', '=', 'employee.id')
-                                                        ->join('users', 'users.id', '=', 'company_employee.company_id')
-                                                        ->where('employee.id',$empDetails->id)->whereNotNull('company_employee.start_date')
-                                                        ->select('users.org_name','company_employee.*','users.address')
-                                                        ->get();
-                                           if(count($experiences) > 0){
-                                                // foreach($experiences as $key => $experience){
-                                                
-                                                  $html .= '<div class="serch-main-box">
-                                                           <h2 class="">Experience</h2>
-                                                          ';
-          
-                                                          foreach($experiences as $key => $experience){
+                                 $experiences = Employee::join('company_employee', 'company_employee.employee_id', '=', 'employee.id')
+                                              ->join('users', 'users.id', '=', 'company_employee.company_id')
+                                              ->join('cities','cities.id','=','users.city')
+                                              ->join('states','states.id','=','cities.state_id')
+                                              ->join('countries','countries.id','=','states.country_id')
+                                              ->where('employee.id',$empDetails->id)->whereNotNull('company_employee.start_date')
+                                              ->select('users.org_name','company_employee.*','users.address',('states.name as stateName'),('countries.name as countryName'),('cities.name as cityName'))
+                                              ->get();
+
+                                 if(count($experiences) > 0){
+                                      // foreach($experiences as $key => $experience){
+                                      
+                                      $html .= '<div class="serch-main-box">
+                                                 <h2 class="">Experience</h2>
+                                                ';
+
+                                            foreach($experiences as $key => $experience){
+
+                                              $companyAddress = !empty($experience->countryName) ? $experience->cityName . ', ' . $experience->stateName . ', ' . $experience->countryName : '';
+
                                                             $html .='<div class="d-flex pt-3">
                                                             <div class="searc-icon-bx">
                                                               <img src="assets/admin/images/bytecipher.png">
@@ -3546,7 +3573,7 @@ class SearchController extends Controller
                                                                   $html .= $experience->end_date.'</span></p>';
                                                               }
         
-                                                             $html .= '<p><span>Indore, Madhya Pradesh, India</span></p>
+                                                             $html .= '<p><span>'. $companyAddress .'</span></p>
                                                               <p class="pt-2">'.$experience->review.'</p>';
         
                                                     if(!empty($experience->rating)){
@@ -3825,7 +3852,8 @@ class SearchController extends Controller
                                                               $html .='</div>
                                                             <img src="assets/admin/images/verified-icon.png" class="verified-img"></div><hr>';
                                                           }
-                                                  $html .= '</div>';
+                                                  $html .= '</div>
+                                                  </div>';
           
                                                }
                                          $educations = Employee::leftJoin('employee_qualifications', 'employee_qualifications.employee_id', '=', 'employee.id')
@@ -3882,9 +3910,9 @@ class SearchController extends Controller
                                   $cmpAddress = !empty($empCurrentCmpDetails->address) ? $empCurrentCmpDetails->address : '';
                                   $interviewEmp = EmployeeInterview::where('employee_id', $employee->id)->first();
                                   $joinDate = Empofficial::where('employee_id', $employee->id)->first();
-                                  $interviews = EmployeeInterview::where('employee_id', $employee->id)->whereBetween('created_at', [Carbon::now(), Carbon::now()->addMonths(3)])->count();
+                                  $interviews = EmployeeInterview::where('employee_id', $employee->id)->where('created_at', ['created_at', Carbon::now()->subMonths(3)])->count();
                                   $offers = EmployeeInterview::where('employee_id', $employee->id)->whereNotNull('employee_offer_id')
-                                           ->whereBetween('created_at', [Carbon::now(), Carbon::now()->addMonths(3)])->count();
+                                           ->where('created_at', ['created_at', Carbon::now()->subMonths(3)])->count();
 
                                   $address= User::join('company_employee', 'users.id', '=', 'company_employee.company_id')
                                              ->join('cities','cities.id','=','users.city')
@@ -4199,8 +4227,8 @@ class SearchController extends Controller
                                                   <button onclick="myFunction(' . $empDetails->id . ')" class="full-bg button_background_color"><span class="button_text_color btnspan">View Full Profile</span></button>
                                                   <button class="full-bg button_background_color" onclick="getInterview(' . $empDetails->id . ')" id="scheduleInterview" style="margin-left: 15px;"><span class="button_text_color btnspan">Add Candidate</span></button>
                                                   
-                                                  <small class="ml-auto"><p>('.$interviews.' Interview going on)</p>
-                                                  <p>('.$offers.' Offers going on)</p></small>
+                                                  <small class="ml-auto"><p>( '.$interviews.' Running Interviews )</p>
+                                                  <p>( '.$offers.' Offers held on )</p></small>
                                                   </span>
 
                                                 </h2>
@@ -4275,29 +4303,33 @@ class SearchController extends Controller
                                                         </div>
                                                       </div>
                                                   </div>
-                                                  </div>
-                                                </div>
-                                              </div>';
+                                                  </div>';
 
                                               // $experiences = Employee::leftJoin('employee_workhistories', 'employee_workhistories.employee_id', '=', 'employee.id')
                                               //           ->leftJoin('employee_officials', 'employee_officials.employee_id', '=', 'employee.id')
                                               //           ->where('employee_workhistories.employee_id',$empDetails->id)
                                               //           ->select('employee_workhistories.*','employee_officials.*')
                                               //           ->get();
-                                            $experiences = Employee::join('company_employee', 'company_employee.employee_id', '=', 'employee.id')
-                                                        ->join('users', 'users.id', '=', 'company_employee.company_id')
-                                                        ->where('employee.id',$empDetails->id)->whereNotNull('company_employee.start_date')
-                                                        ->select('users.org_name','company_employee.*','users.address')
-                                                        ->get();
-                                           if(count($experiences) > 0){
-                                                // foreach($experiences as $key => $experience){
-                                                
-                                                  $html .= '<div class="serch-main-box">
-                                                           <h2 class="">Experience</h2>
-                                                          ';
-          
-                                                          foreach($experiences as $key => $experience){
-                                                            $html .='<div class="d-flex pt-3">
+                                 $experiences = Employee::join('company_employee', 'company_employee.employee_id', '=', 'employee.id')
+                                              ->join('users', 'users.id', '=', 'company_employee.company_id')
+                                              ->join('cities','cities.id','=','users.city')
+                                              ->join('states','states.id','=','cities.state_id')
+                                              ->join('countries','countries.id','=','states.country_id')
+                                              ->where('employee.id',$empDetails->id)->whereNotNull('company_employee.start_date')
+                                              ->select('users.org_name','company_employee.*','users.address',('states.name as stateName'),('countries.name as countryName'),('cities.name as cityName'))
+                                              ->get();
+
+                                 if(count($experiences) > 0){
+                                      // foreach($experiences as $key => $experience){
+                                      
+                                      $html .= '<div class="serch-main-box">
+                                                 <h2 class="">Experience</h2>
+                                                ';
+
+                                            foreach($experiences as $key => $experience){
+
+                                              $companyAddress = !empty($experience->countryName) ? $experience->cityName . ', ' . $experience->stateName . ', ' . $experience->countryName : '';
+                                                  $html .='<div class="d-flex pt-3">
                                                             <div class="searc-icon-bx">
                                                               <img src="assets/admin/images/bytecipher.png">
                                                             </div>
@@ -4313,7 +4345,7 @@ class SearchController extends Controller
                                                                   $html .= $experience->end_date.'</span></p>';
                                                               }
         
-                                                             $html .= '<p><span>Indore, Madhya Pradesh, India</span></p>
+                                                             $html .= '<p><span>'.$companyAddress.'</span></p>
                                                               <p class="pt-2">'.$experience->review.'</p>';
         
                                                     if(!empty($experience->rating)){
@@ -4592,7 +4624,8 @@ class SearchController extends Controller
                                                               $html .='</div>
                                                             <img src="assets/admin/images/verified-icon.png" class="verified-img"></div><hr>';
                                                           }
-                                                  $html .= '</div>';
+                                                  $html .= '</div>
+                                                  </div>';
           
                                                }
                                          $educations = Employee::leftJoin('employee_qualifications', 'employee_qualifications.employee_id', '=', 'employee.id')
@@ -4648,9 +4681,9 @@ class SearchController extends Controller
                                   $cmpAddress = !empty($empCurrentCmpDetails->address) ? $empCurrentCmpDetails->address : '';
                                   $interviewEmp = EmployeeInterview::where('employee_id', $employee->id)->first();
                                   $joinDate = Empofficial::where('employee_id', $employee->id)->first();
-                                  $interviews = EmployeeInterview::where('employee_id', $employee->id)->whereBetween('created_at', [Carbon::now(), Carbon::now()->addMonths(3)])->count();
+                                  $interviews = EmployeeInterview::where('employee_id', $employee->id)->where('created_at','>', Carbon::now()->subMonths(3))->count();
                                   $offers = EmployeeInterview::where('employee_id', $employee->id)->whereNotNull('employee_offer_id')
-                                           ->whereBetween('created_at', [Carbon::now(), Carbon::now()->addMonths(3)])->count();
+                                           ->where('created_at','>', Carbon::now()->subMonths(3))->count();
 
                                   $address= User::join('company_employee', 'users.id', '=', 'company_employee.company_id')
                                              ->join('cities','cities.id','=','users.city')
@@ -4965,8 +4998,8 @@ class SearchController extends Controller
                                                   <button onclick="myFunction(' . $empDetails->id . ')" class="full-bg button_background_color"><span class="button_text_color btnspan">View Full Profile</span></button>
                                                   <button class="full-bg button_background_color" onclick="getInterview(' . $empDetails->id . ')" id="scheduleInterview" style="margin-left: 15px;"><span class="button_text_color btnspan">Add Candidate</span></button>
                                                   
-                                                  <small class="ml-auto"><p>('.$interviews.' Interview going on)</p>
-                                                  <p>('.$offers.' Offers going on)</p></small>
+                                                  <small class="ml-auto"><p>( '.$interviews.' Running Interviews )</p>
+                                                  <p>( '.$offers.' Offers held on )</p></small>
                                                   </span>
 
                                                 </h2>
@@ -5041,29 +5074,33 @@ class SearchController extends Controller
                                                         </div>
                                                       </div>
                                                   </div>
-                                                  </div>
-                                                </div>
-                                              </div>';
+                                                  </div>';
 
                                               // $experiences = Employee::leftJoin('employee_workhistories', 'employee_workhistories.employee_id', '=', 'employee.id')
                                               //           ->leftJoin('employee_officials', 'employee_officials.employee_id', '=', 'employee.id')
                                               //           ->where('employee_workhistories.employee_id',$empDetails->id)
                                               //           ->select('employee_workhistories.*','employee_officials.*')
                                               //           ->get();
-                                            $experiences = Employee::join('company_employee', 'company_employee.employee_id', '=', 'employee.id')
-                                                        ->join('users', 'users.id', '=', 'company_employee.company_id')
-                                                        ->where('employee.id',$empDetails->id)->whereNotNull('company_employee.start_date')
-                                                        ->select('users.org_name','company_employee.*','users.address')
-                                                        ->get();
-                                           if(count($experiences) > 0){
-                                                // foreach($experiences as $key => $experience){
-                                                
-                                                  $html .= '<div class="serch-main-box">
-                                                           <h2 class="">Experience</h2>
-                                                          ';
-          
-                                                          foreach($experiences as $key => $experience){
-                                                            $html .='<div class="d-flex pt-3">
+                                 $experiences = Employee::join('company_employee', 'company_employee.employee_id', '=', 'employee.id')
+                                              ->join('users', 'users.id', '=', 'company_employee.company_id')
+                                              ->join('cities','cities.id','=','users.city')
+                                              ->join('states','states.id','=','cities.state_id')
+                                              ->join('countries','countries.id','=','states.country_id')
+                                              ->where('employee.id',$empDetails->id)->whereNotNull('company_employee.start_date')
+                                              ->select('users.org_name','company_employee.*','users.address',('states.name as stateName'),('countries.name as countryName'),('cities.name as cityName'))
+                                              ->get();
+
+                                 if(count($experiences) > 0){
+                                      // foreach($experiences as $key => $experience){
+                                      
+                                      $html .= '<div class="serch-main-box">
+                                                 <h2 class="">Experience</h2>
+                                                ';
+
+                                            foreach($experiences as $key => $experience){
+
+                                              $companyAddress = !empty($experience->countryName) ? $experience->cityName . ', ' . $experience->stateName . ', ' . $experience->countryName : '';
+                                                 $html .='<div class="d-flex pt-3">
                                                             <div class="searc-icon-bx">
                                                               <img src="assets/admin/images/bytecipher.png">
                                                             </div>
@@ -5079,7 +5116,7 @@ class SearchController extends Controller
                                                                   $html .= $experience->end_date.'</span></p>';
                                                               }
         
-                                                             $html .= '<p><span>Indore, Madhya Pradesh, India</span></p>
+                                                             $html .= '<p><span>'.$companyAddress.'</span></p>
                                                               <p class="pt-2">'.$experience->review.'</p>';
         
                                                     if(!empty($experience->rating)){
@@ -5358,7 +5395,8 @@ class SearchController extends Controller
                                                               $html .='</div>
                                                             <img src="assets/admin/images/verified-icon.png" class="verified-img"></div><hr>';
                                                           }
-                                                  $html .= '</div>';
+                                                  $html .= '</div>
+                                                  </div>';
           
                                                }
                                          $educations = Employee::leftJoin('employee_qualifications', 'employee_qualifications.employee_id', '=', 'employee.id')
