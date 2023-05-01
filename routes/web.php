@@ -131,6 +131,7 @@ Route::middleware([Admin::class])->group(function () {
     
     Route::get('offer/accepted/{id?}', [App\Http\Controllers\EmployeeStatusController::class, 'offerSendAcceptStatus'])->name('offer.accepted')->middleware('documents');
     Route::get('offer/declined/{id?}', [App\Http\Controllers\EmployeeStatusController::class, 'offerSendDeclineStatus'])->name('offer.declined')->middleware('documents');
+    Route::post('offer_send/declined', [App\Http\Controllers\EmployeeStatusController::class, 'createOfferDeclinedFromMail'])->name('offer.declined_form')->middleware('documents');
 
     Route::get('interview/newtime/{id?}', [InterviewEmployee::class, 'interviewNewTime'])->name('interview.newtime')->middleware('documents');
     Route::get('interview/declined/{id?}', [InterviewEmployee::class, 'interviewDeclined'])->name('interview.declined')->middleware('documents');

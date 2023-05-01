@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
             $table->longText('comment')->nullable()->default('text');
+            $table->longText('declined_comment')->nullable()->default('text');
             $table->string('onboarding_employee_id')->nullable()->comment('onboarding_employee Table id');
             $table->string('document')->nullable();
             $table->enum('status',['Offer Sent','Withdraw','Accepted','Declined','Not Joined','Joined'])->comment('Offer Sent / Withdraw / Accepted / Declined / Not Joined / Joined');

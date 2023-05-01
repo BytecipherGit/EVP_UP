@@ -118,8 +118,7 @@
         }
         
         .ser-part .ser-box .head-sec .img-bg svg .iconstroke {
-            stroke: <?php if (!empty(session('primary_color'))) {
-                echo session('primary_color');
+            stroke: <?php if (!empty(session('secondry_color'))) {echo session('secondry_color');
             } else {
                 echo '#5533ff';
             } ?> !important;
@@ -141,8 +140,8 @@
           }
 
         .ser-part .ser-box .head-sec .img-bg svg .iconFill {
-            fill: <?php if (!empty(session('primary_color'))) {
-                echo session('primary_color');
+            fill: <?php if (!empty(session('secondry_color'))) {
+                echo session('secondry_color');
             } else {
                 echo '#5533ff';
             } ?> !important;
@@ -181,6 +180,20 @@
                 echo '#5533ff';
             } ?> !important;
             
+        }
+
+        .navbar-dark .navbar-nav .nav-item.dropdown.show .dropdown-toggle svg {
+            color: <?php if (!empty(session('secondry_color'))) {echo session('secondry_color');
+            } else {
+                echo '#5533ff';
+            } ?> !important;
+
+        }
+        .ser-part .ser-box .head-sec .img-bg{
+             background: <?php if (!empty(session('primary_color'))) {echo session('primary_color');
+            } else {
+                echo '#5533ff';
+            } ?> !important;
         }
 
         aside li:hover {
@@ -246,6 +259,28 @@
                 echo '#5533ff';
             } ?> !important;
         }
+        
+
+        #accordion .card-header a svg .iconFill{
+            fill: <?php if (!empty(session('secondry_color'))) {echo session('secondry_color');
+            } else {
+                echo '#5533ff';
+            } ?> !important;
+        }
+
+        .navbar-dark .navbar-nav .nav-link .iconFill{
+            fill: <?php if (!empty(session('secondry_color'))) {echo session('secondry_color');
+            } else {
+                echo '#5533ff';
+            } ?> !important;
+        }
+
+        .profile-droup .right-doun .iconFill{
+            fill: <?php if (!empty(session('secondry_color'))) {echo session('secondry_color');
+            } else {
+                echo '#5533ff';
+            } ?> !important;
+        }
 
         aside li a svg .iconFill {
             fill: <?php if (!empty(session('secondry_color'))) {echo session('secondry_color');
@@ -298,13 +333,15 @@
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle dropdown-toggle1" href="#"
+                            <a class="nav-link dropdown-toggle" href="#"
                                 id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false">
                                 {{-- <img src="{{ asset('assets') }}/admin/images/notifications-icon.png"> --}}
                                 <?xml version="1.0" encoding="UTF-8"?>
                                 <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24" width="19" height="25">
-                                    <path d="M4.068,18H19.724a3,3,0,0,0,2.821-4.021L19.693,6.094A8.323,8.323,0,0,0,11.675,0h0A8.321,8.321,0,0,0,3.552,6.516l-2.35,7.6A3,3,0,0,0,4.068,18Z" fill="white" class="iconFill"/><path d="M7.1,20a5,5,0,0,0,9.8,0Z" fill="white" class="iconFill"/></svg>
+                                    <path d="M4.068,18H19.724a3,3,0,0,0,2.821-4.021L19.693,6.094A8.323,8.323,0,0,0,11.675,0h0A8.321,8.321,0,0,0,3.552,6.516l-2.35,7.6A3,3,0,0,0,4.068,18Z" 
+                                    fill="white" class="iconFill"/>
+                                    <path d="M7.1,20a5,5,0,0,0,9.8,0Z" fill="white" class="iconFill"/></svg>
 
                             </a>
                             <div class="dropdown-menu dropdown-notifications" aria-labelledby="navbarDropdownMenuLink">

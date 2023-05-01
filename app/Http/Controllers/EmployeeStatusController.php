@@ -130,7 +130,7 @@ class EmployeeStatusController extends Controller
            $id = decrypt($request->EmployeeOfferId);
            $offerData = EmployeeStatus::where('id', $id)->first();
            if ($offerData) {
-               if (($offerData->status != 'accepted') && ($offerData->status == 'offer_sent')) {
+               if (($offerData->status != 'Accepted') && ($offerData->status == 'Offer Sent')) {
                    $changeStatus = DB::table('employee_offer_statuses')->where('id', $id)
                        ->update([
                            'status' => 'accepted',
@@ -146,26 +146,51 @@ class EmployeeStatusController extends Controller
        }
    }
 
-   public function offerSendDeclineStatus(request $request)
+   public function  createOfferDeclinedFromMail(request $request)
    {
     // dd($request->all());
-       if (!empty($request->EmployeeOfferId)) {
-           $id = decrypt($request->EmployeeOfferId);
-           $offerData = EmployeeStatus::where('id', $id)->first();
-           if ($offerData) {
-               if (($offerData->status != 'declined') && ($offerData->status == 'offer_sent')) {
-                   $changeStatus = DB::table('employee_offer_statuses')->where('id', $id)
+       if (!empty($request->employeeOfferId)) {
+        //    $id = decrypt($request->employeeOfferId);
+           $offerData = EmployeeStatus::where('id', $request->employeeOfferId)->first();
+        //    dd($offerData->status);
+           if (!empty($offerData)) {
+               if (($offerData->status != 'Declined') && ($offerData->status == 'Offer Sent')) {
+                   $changeStatus = DB::table('employee_offer_statuses')->where('id', $request->employeeOfferId)
                        ->update([
+                          'declined_comment' => $request->input('declined_comment'),
                            'status' => 'declined',
                        ]);
-                   return redirect('/success');
-
+                    if ($changeStatus) {
+                        return redirect('/success');
+                    }
                } else {
-                   return "Already updated";
+                  return redirect('/response_submited');
                }
+
            } else {
                return Response::json(['success' => '0']);
            }
        }
    }
+
+   public function offerSendDeclineStatus(request $request)
+     {
+        if (!empty($request->EmployeeOfferId)) {
+            $employeeOfferId = decrypt($request->EmployeeOfferId);
+            $employeofferdecline = DB::table('employee_offer_statuses')
+                ->join('interview_employees', 'interview_employees.employee_id', '=', 'employee_offer_statuses.employee_id')
+                ->join('users', 'interview_employees.company_id', '=', 'users.id')
+                ->select('employee_offer_statuses.*','users.org_name', 'interview_employees.position')
+                ->where('employee_offer_statuses.id', $employeeOfferId)
+                ->first();
+                // dd($employeofferdecline);
+            if ($employeofferdecline) {
+                return view('admin/emails/candidate/employee_offer_declined', compact('employeofferdecline', 'employeeOfferId'));
+            } else {
+                return Response::json(['success' => '0']);
+            }
+        }
+
+    }
+   
 }

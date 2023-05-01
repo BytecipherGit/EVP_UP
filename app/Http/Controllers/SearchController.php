@@ -366,8 +366,8 @@ class SearchController extends Controller
                                                   <button onclick="myFunction(' . $empDetails->id . ')" class="full-bg button_background_color"><span class="button_text_color btnspan">View Full Profile</span></button>
                                                   <button class="full-bg button_background_color" onclick="getInterview(' . $empDetails->id . ')" id="scheduleInterview" style="margin-left: 15px;"><span class="button_text_color btnspan">Add Candidate</span></button>
                                                   
-                                                  <small class="ml-auto"><p>('.$interviews.' Interview going on)</p>
-                                                  <p>('.$offers.' Offers going on)</p></small>
+                                                  <small class="ml-auto"><p>('.$interviews.' Running interviews)</p>
+                                                  <p>('.$offers.' Offer held on)</p></small>
                                                   </span>
 
                                                 </h2>
