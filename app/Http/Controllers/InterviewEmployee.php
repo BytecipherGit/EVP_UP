@@ -1222,9 +1222,10 @@ class InterviewEmployee extends Controller
 
          if (!empty($request->interview_id) && !empty($request->status) && ($request->interview_status == 'Qualified') ) {
             $templateData = CompanyEmailTemplate::where('email_type','Qualified')->where('company_id',Auth::id())->first();
-            $mailDataTemplate = [
 
-                'content' => !empty($templateData->content) ? str_replace('#candidate',$candidate->first_name . ' ' . $candidate->last_name,$templateData->content) : '',
+            $mailDataTemplate = [
+                 'content' => !empty($templateData->content) ? str_replace('#candidate',$candidate->first_name . ' ' . $candidate->last_name,$templateData->content) : '',
+
             ];
 
             FacadesMail::to($candidate->email)->send(new QualifiedEmailTemplate($mailDataTemplate));

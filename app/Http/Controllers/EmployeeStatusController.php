@@ -107,6 +107,7 @@ class EmployeeStatusController extends Controller
                     'employee_id' => !empty($request->employee_id) ? $request->employee_id : null,
                     'name' => !empty($request->name) ? $request->name : null,
                     'email' => !empty($request->email) ? $employeeExist->email : null,
+                    // 'companyName' => !empty($request->org_name) ? $employeeExist->org_name : null,
                     'EmployeeOfferId' => encrypt($employeeOfferStatusData->id), 
                 ];
                 // dd($mailData);
@@ -135,10 +136,11 @@ class EmployeeStatusController extends Controller
                        ->update([
                            'status' => 'accepted',
                        ]);
+                  if ($changeStatus) {
                    return redirect('/success');
-
+                  }
                } else {
-                   return "Already updated";
+                return redirect('/response_submited');
                }
            } else {
                return Response::json(['success' => '0']);

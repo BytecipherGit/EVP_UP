@@ -93,7 +93,7 @@
                       </g>
                       </svg>
                   </div>  
-                  <a href="/invite-employee" class="link_color">View</a>              
+                  <a href="/invite_employee" class="link_color">View</a>              
                 </h6>
   
               </div>

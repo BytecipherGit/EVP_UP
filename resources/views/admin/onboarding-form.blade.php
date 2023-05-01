@@ -3,6 +3,9 @@
         color: red;
         font-weight: 400;
     }
+    .onboardingLine{
+        padding-top: 18px;
+    }
 </style>
 
 <h2 class="modal-title" id=""></h2>
@@ -14,7 +17,7 @@
         @php $a = 0 @endphp
         @foreach ($onboardProcess as $process)
       
-                <div class="col-md-12">
+                <div class="col-md-12 onboardingLine">
                     <div class="form-group">
                         <input type="hidden" name="process_id[]" value={{ $process->id }}>
                         <label class="exitonboard"> <input type="checkbox" name="status[{{ $a }}]"
