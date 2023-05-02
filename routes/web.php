@@ -201,9 +201,21 @@ Route::middleware([Admin::class])->group(function () {
     Route::any("send_not_appeared/{id?}", [InterviewEmployee::class, 'sendNotAppearedStatus'])->name('send.not.appeared')->middleware('documents');
 
     Route::get("exit-employee/form/{id?}", [App\Http\Controllers\ExitEmployeeProcess::class, 'getExitEmployee'])->middleware('documents');
-    Route::any("exit-employee/submit/{id?}", [App\Http\Controllers\ExitEmployeeProcess::class, 'createExitEmployee'])->name('exit.employee.create')->middleware('documents');
-    Route::post('exit-employee/update', [App\Http\Controllers\ExitEmployeeProcess::class, 'updateExitEmployee'])->middleware('documents');
+    Route::any("exit-employee/submit/{id?}", [App\Http\Controllers\ExitEmployeeProcess::class, 'creiateExitEmployee'])->name('exit.employee.create')->middleware('documents');
+    Route::post('exit-employee/update', [App\Http\Controllers\ExitEmployeeProcess::class, 'updateExtEmployee'])->middleware('documents');
+
+    //new employee form for testing
+    Route::get("Newemployee/form/{id?}", [App\Http\Controllers\NewEmployeeController::class, 'index'])->name('basicinfo.index')->middleware('documents');
+    Route::any('Newemployee/submit/{id?}', [App\Http\Controllers\NewEmployeeController::class, 'createEmployee'])->middleware('documents');
+    Route::post('Newemployee/form/update', [App\Http\Controllers\NewEmployeeController::class, 'updateEmployee'])->middleware('documents');
+
+    Route::get("qualification/form/{id?}", [App\Http\Controllers\NewEmployeeController::class, 'getQualificationForm'])->name('basicinfo.index')->middleware('documents');
+    Route::any('qualification/submit/{id?}', [App\Http\Controllers\NewEmployeeController::class, 'createEmployeeQualification'])->middleware('documents');
+    Route::post('qualification/form/update', [App\Http\Controllers\NewEmployeeController::class, 'updateEmployeeQualification'])->middleware('documents');
     
+    Route::get("workhistory/form/{id?}", [App\Http\Controllers\NewEmployeeController::class, 'getWorkhistoryForm'])->name('basicinfo.index')->middleware('documents');
+    Route::any('workhistory/submit/{id?}', [App\Http\Controllers\NewEmployeeController::class, 'createEmployeeWorkhistory'])->middleware('documents');
+    Route::post('workhistory/form/update', [App\Http\Controllers\NewEmployeeController::class, 'updateEmployeeWorkhistory'])->middleware('documents');
 
 });
 Route::get('reload-captcha', [App\Http\Controllers\Auth\RegisteredUserController::class, 'reloadCaptcha'])->name('reloadCaptcha');

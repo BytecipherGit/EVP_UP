@@ -35,6 +35,9 @@ return new class extends Migration
             $table->string('document_type')->nullable();
             $table->string('document_number')->nullable()->unique();
             $table->string('document_id')->nullable();
+            $table->tinyInteger('verification_type')->default('0')->comment('1=Verified, 0=Not Verified')->nullable();
+            $table->string('third_party_document')->nullable();
+            $table->tinyInteger('third_party_verification')->default('0')->comment('1=Verified, 0=Not Verified')->nullable();
             $table->timestamps();
         });
     }

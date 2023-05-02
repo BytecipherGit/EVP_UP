@@ -1,6 +1,11 @@
 @extends('company.layouts.app')
 @section('content')
 @section('title', 'EVP - Onboarding-Employee')
+<style>
+    .doc{
+    margin-top: 38px !important;
+    }
+</style>
 
 <!--- Main Container Start ----->
 <div class="main-container">
@@ -220,7 +225,7 @@
                                             <strong class="error" id="marital_status-error"></strong>
                                         </div>
                                     </div>
-                                    <div class="col-xl-4 col-lg-6 col-md-12">
+                                    <div class="col-xl-3 col-lg-6 col-md-12">
                                         <div class="form-group">
                                             <label>Document Type<span style="color:red">*</span></label>
                                             <select name="document_type" class="form-control" id="document_type">
@@ -233,7 +238,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-xl-4 col-lg-6 col-md-12">
+                                    <div class="col-xl-3 col-lg-6 col-md-12">
                                         <div class="form-group">
                                             <label>Document Number<span style="color:red">*</span></label>
                                             <input type="text" name="document_number" class="form-control"
@@ -242,7 +247,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-xl-4 col-lg-6 col-md-12">
+                                    <div class="col-xl-3 col-lg-6 col-md-12">
                                         <div class="form-group">
                                             <label>Document Id<span style="color:red">*</span></label>
                                             <input type="file" id="document_id" name="document_id"
@@ -250,6 +255,28 @@
                                             <strong class="error" id="document_id-error"></strong>
                                         </div>
                                     </div>
+                                    <div class="col-xl-3 col-lg-6 col-md-12">
+                                        <div class="form-group">
+                                            <label class="exitonboard doc"> <input type="checkbox" name="verification_type" class="checkboxexitform">Document Verification</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xl-6 col-lg-6 col-md-12">
+                                        <div class="form-group">
+                                            <label>3rd Party Verification Document</label>
+                                            <input type="file" id="third_party_document" name="third_party_document" class="form-control">
+                        
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xl-6 col-lg-6 col-md-12">
+                                        <div class="form-group">
+                                            {{-- <label class="docVerification"> 3rd party verification
+                                          <input type="checkbox" name="status" class="checkboxexitform"/></label> --}}
+                                          <label class="exitonboard doc"> <input type="checkbox" name="third_party_verification" class="checkboxexitform"> 3rd Party Verification </label>
+                                        </div>
+                                    </div>
+                                    
                                     <div class="col-xl-6 col-lg-6 col-md-12">
                                         <div class="form-group">
                                             <label for="current_address">Current Address<span
@@ -334,7 +361,7 @@
                         </div>
                     </div>
                 </div>
-            @else
+             @else
                 <div class="tab-pane" id="tabs-1" role="tabpanel">
                     {{-- <div id="tabs-1"  class="tab-pane {{ !session('tabs-6_active') ? 'active': '' }} "> --}}
                     <div class="eml-persnal ">
@@ -1257,15 +1284,16 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <label>Verification<span style="color:red">*</span></label>
+                                    {{-- <label>Verification<span style="color:red">*</span></label>
 
                                     <select class="form-control" name="verification_type" id="verification_type">
                                         <option value="">Select Type </option>
                                         <option value="Verified">Verified</option>
                                         <option value="Not Verified">Not Verified</option>
-                                    </select>
+                                    </select> --}}
+                                    <label class="exitonboard"> <input type="checkbox" name="verification_type" class="checkboxexitform">Document Verification</label>
                                 </div>
-                                <strong class="error" id="verification_type-error"></strong>
+                                {{-- <strong class="error" id="verification_type-error"></strong> --}}
                             </div>
                         </div>
 
@@ -1280,88 +1308,6 @@
     </div>
 </div>
 </form>
-<!-- The Modal Identity Edit -->
-<div class="modal fade custu-modal-popup" id="identityEdit" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title" id="exampleModalLabel">Edit Identity</h2>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <img src="{{ asset('assets') }}/admin/images/close-btn-icon.png">
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="comman-body">
-                    <form method="post" enctype="multipart/form-data">
-                        @csrf
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label>Id Type</label>
-                                    <div class="selectBox active form-control">
-                                        <div class="selectBox__value">Pan Card</div>
-                                        <div class="dropdown-menu" id="style-5">
-                                            <a class="dropdown-item ">Id Type</a>
-                                            <a class="dropdown-item active"></a>
-                                            <a class="dropdown-item">Aadhar Card</a>
-                                            <a class="dropdown-item">voter Id</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <label>Id Number</label>
-                                    <input type="text" name="" class="form-control" value="AXXX11100X">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <label>Upload Document</label>
-                                    <div class="upload-img-file">
-                                        <div class="circle">
-                                            <img class="profile-pic" id="profile-pic2"
-                                                src="{{ asset('assets') }}/admin/images/pan-card.png">
-                                        </div>
-                                        <p>You can drag or drop <span>png. jpeg</span> </p>
-                                        <div class="p-image ml-auto">
-                                            <span class="upload-button" id="upload-button2">Choose File</span>
-                                            <input class="file-upload" id="file-upload2" type="file"
-                                                accept="image/*">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <label>Verification</label>
-                                    <div class="selectBox active form-control">
-                                        <div class="selectBox__value">Verified</div>
-                                        <div class="dropdown-menu">
-                                            <a class="dropdown-item ">Verification Type</a>
-                                            <a class="dropdown-item active">Verified</a>
-                                            <a class="dropdown-item">Not Verified</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn-primary-cust button_background_color" data-dismiss="modal"><span
-                        class="button_text_color">Save Changes</span></button>
-            </div>
-        </div>
-    </div>
-</div>
-
 <!-- The Modal Qualification Add -->
 <div class="modal fade custu-modal-popup" id="qualificationAdd" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
@@ -1451,17 +1397,14 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <label>Verification<span style="color:red">*</span></label>
+                                    {{-- <label>Verification<span style="color:red">*</span></label>
                                     <select class="form-control" name="verification_type" id="verification_type">
                                         <option value="{{ old('verification_type') }}">Verification Type
                                             {{ old('verification_type') }}</option>
                                         <option value="Verified">Verified</option>
                                         <option value="Not Verified">Not Verified</option>
-                                    </select>
-                                    <strong class="error" id="verification_type-error"></strong>
-                                    {{-- @error('verification_type')
-                    <span class="velidation">{{ $message }}</span>
-                    @enderror  --}}
+                                    </select> --}}
+                                    <label class="exitonboard"> <input type="checkbox" name="qualification_verification_type" class="checkboxexitform">Document Verification</label>
                                 </div>
                             </div>
 
@@ -1674,16 +1617,13 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <label>Verification<span style="color:red">*</span></label>
+                                    {{-- <label>Verification<span style="color:red">*</span></label>
                                     <select class="form-control" name="verification_type" id="verification_type">
                                         <option value="">Verification Type</option>
                                         <option value="Verified">Verified</option>
                                         <option value="Not Verified">Not Verified</option>
-                                    </select>
-                                    {{-- @error('verification_type')
-                      <span class="velidation">{{ $message }}</span>
-                    @enderror  --}}
-                                    <strong class="error" id="verification_type-error"></strong>
+                                    </select> --}}
+                                    <label class="exitonboard"> <input type="checkbox" name="verification_type" class="checkboxexitform">Document Verification</label>
                                 </div>
                             </div>
                         </div>
