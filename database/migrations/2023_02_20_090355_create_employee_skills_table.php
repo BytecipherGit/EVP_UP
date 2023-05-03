@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('employee_id')->comment('employee Table PK');
             $table->foreign('employee_id')->references('id')->on('employee')->comment('Id form employee')->onDelete('cascade');
-            $table->string('skill');
-            $table->string('skill_type');
+            $table->string('skill')->nullable();
+            $table->string('skill_type')->nullable();
             $table->timestamps();
         });
     }
