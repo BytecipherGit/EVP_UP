@@ -66,7 +66,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><img src="{{ asset('assets') }}/admin/images/close-btn-icon.png">
                 </button>
             </div>
-            <form id="employee_skills_form" action="{{ url('add_employee_skills/submit') }}" method="post" autocomplete="off" enctype="multipart/form-data">
+            <form id="employee_skills_submit" action="{{ url('add_employee_skills/submit') }}" method="post" autocomplete="off" enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" id="employee_id" name="employee_id" value="{{ $employeeSkillsExists ? $employeeSkillsExists->employee_id : '' }}" />
                <div class="modal-body">
@@ -114,7 +114,7 @@
             </div>
             <div class="modal-body">
                 <div class="comman-body">
-                    <form id="employee_skills_form" action="{{ url('add_employee_lang_skills/submit') }}" method="post" autocomplete="off" enctype="multipart/form-data">
+                    <form id="employee_lanf_form" action="{{ url('add_employee_lang_skills/submit') }}" method="post" autocomplete="off" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" id="employee_id" name="employee_id" value="{{ $employeeSkillsExists ? $employeeSkillsExists->employee_id : '' }}" />
                         <div class="form-group inputtag-custom">
@@ -148,20 +148,21 @@
     </div>
 </div>
 
-@foreach ($employeeLanguageViewExists as $employeeSkills)
 <!-- The Modal Skill Edit -->
+@foreach ($employeeLanguageViewExists as $employeeSkills)
+
 <div class="modal fade custu-modal-popup" id="edit_language{{ $employeeSkills->id }}" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title" id="exampleModalLabel">Add known Language</h2>
+                <h2 class="modal-title" id="exampleModalLabel">Edit Language</h2>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <img src="{{ asset('assets') }}/admin/images/close-btn-icon.png">
                 </button>
             </div>
             <div class="modal-body">
                 <div class="comman-body">
-                    <form id="employee_skills_form" action="{{ url('edit_skills/update') }}" method="post" autocomplete="off" enctype="multipart/form-data">
+                    <form id="employee_lang_submit" action="{{ url('edit_language/update') }}" method="post" autocomplete="off" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" id="employee_id" name="employee_id" value="{{ $employeeSkillsExists ? $employeeSkillsExists->employee_id : '' }}" />
                         <div class="form-group inputtag-custom">
@@ -195,16 +196,17 @@
 </div>
 @endforeach
 
- <!-- The Modal Skills Add -->
- <div class="modal fade custu-modal-popup" id="edit_skills" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+ <!-- The Modal Skills Edit -->
+ @foreach ($employeeSkillsViewExists as $employeeSkills)
+ <div class="modal fade custu-modal-popup" id="edit_skills{{ $employeeSkills->id  }}" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title" id="exampleModalLabel">Add Skills</h2>
+                <h2 class="modal-title" id="exampleModalLabel">Edit Skills</h2>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><img src="{{ asset('assets') }}/admin/images/close-btn-icon.png">
                 </button>
             </div>
-            <form id="employee_skills_form" action="{{ url('add_employee_skills/submit') }}" method="post" autocomplete="off" enctype="multipart/form-data">
+            <form id="employee_skills_update" action="{{ url('edit_skills/update') }}" method="post" autocomplete="off" enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" id="employee_id" name="employee_id" value="{{ $employeeSkillsExists ? $employeeSkillsExists->employee_id : '' }}" />
                <div class="modal-body">
@@ -213,16 +215,15 @@
                             <label>Add Skill</label>
                             <div class="row customer_records1">
                                 <div class="col-md-8">
-                                    <input type="text" name="skill" class="form-control input-search-box typeahead" data-provide="typeahead" placeholder="Language">
+                                    <input type="text" name="skill" class="form-control input-search-box typeahead"  value="{{ $employeeSkills ? $employeeSkills->skill : ''}}"  data-provide="typeahead" placeholder="Language">
                                 </div>
                                 <div class="col-md-8">
                                     <h6>
-                                        <span><input type="radio" name="skill_type" id="customRadioInline4" class="" value="Beginner" checked="">
+                                        <span><input type="radio" name="skill_type" id="customRadioInline4" class="" value="Beginner" <?php if ($employeeSkills->skill_type == 'Beginner') { ?> checked <?php } ?>>
                                             <label class="" for="customRadioInline4">Beginner</label></span>
-
-                                        <span><input type="radio" name="skill_type" id="customRadioInline5" value="Intermediate" class="">
+                                        <span><input type="radio" name="skill_type" id="customRadioInline5" value="Intermediate" class="" <?php  if ($employeeSkills->skill_type == 'Intermediate') { ?> checked <?php } ?>>
                                             <label class=""for="customRadioInline5">Intermediate</label></span>
-                                        <span><input type="radio" name="skill_type" id="customRadioInline6" value="Expert" class="">
+                                        <span><input type="radio" name="skill_type" id="customRadioInline6" value="Expert" class="" <?php  if ($employeeSkills->skill_type == 'Expert') { ?> checked <?php } ?>>
                                             <label class="" for="customRadioInline6">Expert</label></span>
                                     </h6>
                                 </div>
@@ -239,5 +240,5 @@
         </div>
     </div>
 </div>
-
+@endforeach
 

@@ -13,8 +13,8 @@ body{
   color: #f7faf7 !important;
   background: green !important;
   pointer-events: none !important;
-}
 
+}
 .error {
   color: red !important;
   font-weight: 400;

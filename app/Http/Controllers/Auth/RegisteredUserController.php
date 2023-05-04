@@ -13,6 +13,7 @@ use App\Models\Country;
 use App\Models\State;
 use App\Models\ThemeSetting;
 use App\Models\User;
+use App\Models\SmtpDetails;
 use App\Rules\EmailDomain;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -116,8 +117,8 @@ class RegisteredUserController extends Controller
                 }
             }
 
-            // Condition for template add
-            $emailtemplate = CompanyTemplate::all();
+        // Condition for template add
+         $emailtemplate = CompanyTemplate::all();
             foreach ($emailtemplate as $emailtemp) {
                 $insertTemplatesRecords = array(
                     'company_id' => $user->id,
@@ -129,6 +130,13 @@ class RegisteredUserController extends Controller
 
                 CompanyEmailTemplate::create($insertTemplatesRecords);
             }
+
+     // Insert Compant id  for SMTP Details 
+           $insertSMTPRecords = array(
+                 'company_id' => $user->id,
+             );
+
+             SmtpDetails::create($insertSMTPRecords);
         }
 
         // for email send

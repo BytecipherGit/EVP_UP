@@ -55,9 +55,27 @@
             </div>
         </div>
     </div>
-</form>
+</form>  
 
-@section('pagescript')
+<script type="text/javascript">
+    var i = 0;
+    $("#dynamic-ar").click(function() {
+        ++i;
+        $("#dynamicAddRemove").append('<tr><td><input type="text" name="skill[' + i +
+            ']" placeholder="Enter subject" class="form-control" /></td><td><h6><span><input type="radio" id="customRadioInline1" name="skill_type[' +
+            i +
+            ']" class=""  value="Beginner" checked="">  <label class="" for="customRadioInline1">Beginner</label></span> <span><input type="radio" id="customRadioInline2" name="skill_type[' +
+            i +
+            ']" class="" value="Intermediate">  <label class="" for="customRadioInline2">Intermediate</label></span> <span><input type="radio" id="customRadioInline3" name="skill_type[' +
+            i +
+            ']" class="" value="Expert">  <label class="" for="customRadioInline3">Expert</label></span></h6></td><td><a href=""class="remove-input-field remove-field btn-remove-customer add-plus minus-icon"><span class="button_background_color"><img src="{{ asset('assets') }}/admin/images/minus-icon.png"></span></td></tr>'
+        );
+    });
+    $(document).on('click', '.remove-input-field', function() {
+        $(this).parents('tr').remove();
+    });
+</script>
+
 <script type="text/javascript">
     var j = 0;
     $("#dynamic-ar1").click(function() {
@@ -77,25 +95,6 @@
     });
 </script>
 
-<script type="text/javascript">
-    var i = 0;
-    $("#dynamic-ar").click(function() {
-        ++i;
-        $("#dynamicAddRemove").append('<tr><td><input type="text" name="skill[' + i +
-            ']" placeholder="Enter subject" class="form-control" /></td><td><h6><span><input type="radio" id="customRadioInline1" name="skill_type[' +
-            i +
-            ']" class=""  value="Beginner" checked="">  <label class="" for="customRadioInline1">Beginner</label></span> <span><input type="radio" id="customRadioInline2" name="skill_type[' +
-            i +
-            ']" class="" value="Intermediate">  <label class="" for="customRadioInline2">Intermediate</label></span> <span><input type="radio" id="customRadioInline3" name="skill_type[' +
-            i +
-            ']" class="" value="Expert">  <label class="" for="customRadioInline3">Expert</label></span></h6></td><td><a href=""class="remove-input-field remove-field btn-remove-customer add-plus minus-icon"><span class="button_background_color"><img src="{{ asset('assets') }}/admin/images/minus-icon.png"></span></td></tr>'
-        );
-    });
-    $(document).on('click', '.remove-input-field', function() {
-        $(this).parents('tr').remove();
-    });
-  </script>
-
 <script>
     $('.extra-fields-customer1').click(function() {
         $('.customer_records1').clone().appendTo('.customer_records_dynamic1');
@@ -105,23 +104,23 @@
             '<a href="#" class="remove-field btn-remove-customer add-plus minus-icon"><span><img src="{{ asset('assets') }}/admin/images/minus-icon.png"></span></a>'
             );
         $('.customer_records_dynamic1 > .single').attr("class", "row");
-  
+
         $('.customer_records_dynamic1 input').each(function() {
             var count = 0;
             var fieldname = $(this).attr("name");
             $(this).attr('name', fieldname + count);
             count++;
         });
-  
+
     });
-  
+
     $(document).on('click', '.remove-field', function(e) {
         $(this).parent('.row').remove();
         e.preventDefault();
     });
-  </script>
-  
-  <script>
+</script>
+
+<script>
     $('.extra-fields-customeroff').click(function() {
         $('.customer_recordsoff').clone().appendTo('.customer_records_dynamicoff');
         $('.customer_records_dynamicoff .customer_recordsoff').addClass('single remove');
@@ -130,21 +129,18 @@
             '<a href="#" class="remove-field btn-remove-customer add-plus minus-icon"><span><img src="{{ asset('assets') }}/admin/images/minus-icon.png"></span></a>'
             );
         $('.customer_records_dynamicoff > .single').attr("class", "row");
-  
+
         $('.customer_records_dynamicoff input').each(function() {
             var count = 0;
             var fieldname = $(this).attr("name");
             $(this).attr('name', fieldname + count);
             count++;
         });
-  
+
     });
-  
+
     $(document).on('click', '.remove-field', function(e) {
         $(this).parent('.row').remove();
         e.preventDefault();
     });
-  </script>
-  
-
-@stop
+</script>

@@ -70,6 +70,13 @@
                          <strong class="error" id="lpa-error"></strong>
                      </div>
                  </div>
+                 <div class="col-xl-3 col-lg-6 col-md-12">
+                    <div class="form-group">
+                        <div class="add-btn-part">
+                            <button type="button" id="exitemployee" class="btn-primary-cust button_background_color" style="color:white;background:red;"><span class="button_text_color">Employee Exit</span></button>     
+                        </div>
+                    </div>
+                </div>
                  <div class="col-md-12">
                      <div class="form-group">
                          <div class="add-btn-part">
@@ -80,4 +87,57 @@
                  </div>
              </div>
          </form>
-    
+
+  
+    <div class="modal fade custu-modal-popup" id="exitemployeemodel" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+         <div class="modal-dialog" role="document">
+             <form id="exit_employee_form" method="post" autocomplete="off" enctype="multipart/form-data">
+                <input type="hidden" id="employee_id" name="employee_id" value="{{ $employeeExists ? $employeeExists->id : '' }}" />
+                 <div class="modal-content">
+                     <div class="modal-header">
+                         <h2 class="modal-title" id="Heading">Employee exit</h2>
+                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                             <img src="{{ asset('assets') }}/admin/images/close-btn-icon.png">
+                         </button>
+                     </div>      
+                     <div class="modal-body">
+                          <div class="comman-body">     
+                          </div>
+                     </div>
+                     <div class="modal-footer">
+                         <div class="loadingImg"></div>
+                         <div style="font-size: 16px; display:none;" class="text-success" id="success">Employee successfully exit.</div>
+                         <div style="font-size: 16px; display:none;" class="text-danger" id="failed">Employee already exit</div>
+                         <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
+                         <button type="submit" id="scheduleInterviewSubmit" class="btn-primary-cust button_background_color"><span class="button_text_color">Submit</span></button>
+                     </div>
+                 </div>
+             </form>
+         </div>
+     </div>         
+
+  @section('pagescript')
+ <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script>
+        window.jQuery || document.write('<script src="../../{{ asset('assets') }}/admin/js/vendor/jquery.min.js"><\/script>')
+      </script>
+      <script src="{{ asset('assets') }}/admin/js/bootstrap.min.js"></script> 
+      <script src="{{ asset('assets') }}/admin/js/file-upload.js"></script>
+     <script src="{{ asset('assets') }}/admin/js/typeahead.min.js"></script>
+     
+<script>
+    $(".selectBox").on("click", function(e) {
+        $(this).toggleClass("show");
+        var dropdownItem = e.target;
+        var container = $(this).find(".selectBox__value");
+        container.text(dropdownItem.text);
+        $(dropdownItem)
+            .addClass("active")
+            .siblings()
+            .removeClass("active");
+    });
+</script>
+   @stop

@@ -1,6 +1,7 @@
 @extends('company.layouts.app')
 @section('content')
 @section('title', 'EVP - Onboarding-Employee')
+
 <style>
     .doc {
         margin-top: 38px !important;
@@ -55,6 +56,22 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="tab-pane" id="official" role="tabpanel">
+                    <div class="eml-persnal ">
+                      <div class="add-emply-details">                
+                        <div class="row">
+                          <div class="col-lg-12">
+                            @if (empty($employeeOfficials))
+                                @include('employees.employee_official_details')
+                            @else
+                                @include('employees.view_official_details')
+                            @endif
+                          </div>
+                        </div>                
+                      </div>
+                    </div>
+                </div> 
         
                 <div class="tab-pane" id="qualification" role="tabpanel">
                     <div class="eml-persnal ">
@@ -69,13 +86,13 @@
                                 @else
                                     @include('employees.view_qualification')
                                 @endif
-
-                            </div>
+                               </div>
+                           </div>
                         </div>
                     </div>
-                  </div>
                 </div>
 
+        
                 <div class="tab-pane" id="workhistory" role="tabpanel">
                   <div class="eml-persnal ">
                       <div class="add-emply-details">
@@ -91,40 +108,25 @@
                           </div>
                       </div>
                    </div>
-                 </div>
-              </div>
-            
-          <div class="tab-pane" id="skills" role="tabpanel">
-            <div class="eml-persnal ">
-              <div class="add-emply-details">                
-                <div class="row">
-                  <div class="col-lg-12">
-                    @if (empty($employeeSkillsExists))
-                        @include('employees.employee_skills')
-                    @else
-                        @include('employees.view_employee_skills')
-                    @endif
                   </div>
-                </div>                
-              </div>
-            </div>
-          </div>
+                </div>
 
-          <div class="tab-pane" id="official" role="tabpanel">
-            <div class="eml-persnal ">
-              <div class="add-emply-details">                
-                <div class="row">
-                  <div class="col-lg-12">
-                    @if (empty($employeeOfficials))
-                        @include('employees.employee_official_details')
-                    @else
-                        @include('employees.view_official_details')
-                    @endif
-                  </div>
-                </div>                
-              </div>
-            </div>
-          </div> 
+                <div class="tab-pane" id="skills" role="tabpanel">
+                    <div class="eml-persnal ">
+                      <div class="add-emply-details">                
+                        <div class="row">
+                          <div class="col-lg-12">
+                            @if (empty($employeeSkillsExists))
+                                @include('employees.employee_skills')
+                            @else
+                                @include('employees.view_employee_skills')
+                            @endif
+                          </div>
+                        </div>                
+                      </div>
+                    </div>
+                </div>
+            
             </div>
         </div>
 
@@ -174,6 +176,10 @@
     </div>
 </div>
 
+@endsection
+
+@section('pagescript')
+
 <!-- Bootstrap core JavaScript
     ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
@@ -183,18 +189,8 @@
 </script>
 <script src="{{ asset('assets') }}/admin/js/bootstrap.min.js"></script>
 <script src="{{ asset('assets') }}/admin/js/file-upload.js"></script>
-<!--  <script src="{{ asset('assets') }}/admin/js/typeahead.min.js"></script> -->
-<script>
-  $(document).ready(function(){
-    
-        if($(".nav-link").attr("href")==window.location.href){
-            $(".nav-link").attr("class","nav-link active");
-        }
-       else{
-          $(".nav-link").attr("class","nav-link");
-         }
-    });
-</script>
+ {{-- <script src="{{ asset('assets') }}/admin/js/typeahead.min.js"></script>  --}}
+
 <script>
     $(".selectBox").on("click", function(e) {
         $(this).toggleClass("show");
@@ -207,96 +203,6 @@
             .removeClass("active");
     });
 </script>
-
-<script>
-  $('.extra-fields-customer1').click(function() {
-      $('.customer_records1').clone().appendTo('.customer_records_dynamic1');
-      $('.customer_records_dynamic1 .customer_records1').addClass('single remove');
-      $('.single .extra-fields-customer1').remove();
-      $('.single').append(
-          '<a href="#" class="remove-field btn-remove-customer add-plus minus-icon"><span><img src="{{ asset('assets') }}/admin/images/minus-icon.png"></span></a>'
-          );
-      $('.customer_records_dynamic1 > .single').attr("class", "row");
-
-      $('.customer_records_dynamic1 input').each(function() {
-          var count = 0;
-          var fieldname = $(this).attr("name");
-          $(this).attr('name', fieldname + count);
-          count++;
-      });
-
-  });
-
-  $(document).on('click', '.remove-field', function(e) {
-      $(this).parent('.row').remove();
-      e.preventDefault();
-  });
-</script>
-
-<script>
-  $('.extra-fields-customeroff').click(function() {
-      $('.customer_recordsoff').clone().appendTo('.customer_records_dynamicoff');
-      $('.customer_records_dynamicoff .customer_recordsoff').addClass('single remove');
-      $('.single .extra-fields-customeroff').remove();
-      $('.single').append(
-          '<a href="#" class="remove-field btn-remove-customer add-plus minus-icon"><span><img src="{{ asset('assets') }}/admin/images/minus-icon.png"></span></a>'
-          );
-      $('.customer_records_dynamicoff > .single').attr("class", "row");
-
-      $('.customer_records_dynamicoff input').each(function() {
-          var count = 0;
-          var fieldname = $(this).attr("name");
-          $(this).attr('name', fieldname + count);
-          count++;
-      });
-
-  });
-
-  $(document).on('click', '.remove-field', function(e) {
-      $(this).parent('.row').remove();
-      e.preventDefault();
-  });
-</script>
-
-<script type="text/javascript">
-  var i = 0;
-  $("#dynamic-ar").click(function() {
-      ++i;
-      $("#dynamicAddRemove").append('<tr><td><input type="text" name="skill[' + i +
-          ']" placeholder="Enter subject" class="form-control" /></td><td><h6><span><input type="radio" id="customRadioInline1" name="skill_type[' +
-          i +
-          ']" class=""  value="Beginner" checked="">  <label class="" for="customRadioInline1">Beginner</label></span> <span><input type="radio" id="customRadioInline2" name="skill_type[' +
-          i +
-          ']" class="" value="Intermediate">  <label class="" for="customRadioInline2">Intermediate</label></span> <span><input type="radio" id="customRadioInline3" name="skill_type[' +
-          i +
-          ']" class="" value="Expert">  <label class="" for="customRadioInline3">Expert</label></span></h6></td><td><a href=""class="remove-input-field remove-field btn-remove-customer add-plus minus-icon"><span class="button_background_color"><img src="{{ asset('assets') }}/admin/images/minus-icon.png"></span></td></tr>'
-      );
-  });
-  $(document).on('click', '.remove-input-field', function() {
-      $(this).parents('tr').remove();
-  });
-</script>
-
-<script type="text/javascript">
-  var j = 0;
-  $("#dynamic-ar1").click(function() {
-      ++j;
-      $("#dynamicAddRemove1").append('<tr><td><input type="text" name="lang[' + j +
-          ']" placeholder="Enter subject" class="form-control" /></td><td><h6><span><input type="radio" id="customRadioInline4" name="lang_type[' +
-          j +
-          ']" class=""  value="Beginner" checked="">  <label class="" for="customRadioInline4">Beginner</label></span>  <span><input type="radio" id="customRadioInline5" name="lang_type[' +
-          j +
-          ']" class="" value="Intermediate">  <label class="" for="customRadioInline5">Intermediate</label></span> <span><input type="radio" id="customRadioInline6" name="lang_type[' +
-          j +
-          ']" class="" value="Expert">  <label class="" for="customRadioInline6">Expert</label></span></h6></td><td><a href=""class="remove-input-field remove-field btn-remove-customer add-plus minus-icon"><span class="button_background_color"><img src="{{ asset('assets') }}/admin/images/minus-icon.png"></span></td></tr>'
-      );
-  });
-  $(document).on('click', '.remove-input-field1', function() {
-      $(this).parents('tr').remove();
-  });
-</script>
-
-
 
 <script>
     // Initializes  input( name of states)
@@ -366,6 +272,229 @@
     });
 </script>
 
+<script type="text/javascript">
+    var i = 0;
+    $("#dynamic-ar").click(function() {
+        ++i;
+        $("#dynamicAddRemove").append('<tr><td><input type="text" name="skill[' + i +
+            ']" placeholder="Enter subject" class="form-control" /></td><td><h6><span><input type="radio" id="customRadioInline1" name="skill_type[' +
+            i +
+            ']" class=""  value="Beginner" checked="">  <label class="" for="customRadioInline1">Beginner</label></span> <span><input type="radio" id="customRadioInline2" name="skill_type[' +
+            i +
+            ']" class="" value="Intermediate">  <label class="" for="customRadioInline2">Intermediate</label></span> <span><input type="radio" id="customRadioInline3" name="skill_type[' +
+            i +
+            ']" class="" value="Expert">  <label class="" for="customRadioInline3">Expert</label></span></h6></td><td><a href=""class="remove-input-field remove-field btn-remove-customer add-plus minus-icon"><span class="button_background_color"><img src="{{ asset('assets') }}/admin/images/minus-icon.png"></span></td></tr>'
+        );
+    });
+    $(document).on('click', '.remove-input-field', function() {
+        $(this).parents('tr').remove();
+    });
+</script>
 
+<script type="text/javascript">
+    var j = 0;
+    $("#dynamic-ar1").click(function() {
+        ++j;
+        $("#dynamicAddRemove1").append('<tr><td><input type="text" name="lang[' + j +
+            ']" placeholder="Enter subject" class="form-control" /></td><td><h6><span><input type="radio" id="customRadioInline4" name="lang_type[' +
+            j +
+            ']" class=""  value="Beginner" checked="">  <label class="" for="customRadioInline4">Beginner</label></span>  <span><input type="radio" id="customRadioInline5" name="lang_type[' +
+            j +
+            ']" class="" value="Intermediate">  <label class="" for="customRadioInline5">Intermediate</label></span> <span><input type="radio" id="customRadioInline6" name="lang_type[' +
+            j +
+            ']" class="" value="Expert">  <label class="" for="customRadioInline6">Expert</label></span></h6></td><td><a href=""class="remove-input-field remove-field btn-remove-customer add-plus minus-icon"><span class="button_background_color"><img src="{{ asset('assets') }}/admin/images/minus-icon.png"></span></td></tr>'
+        );
+    });
+    $(document).on('click', '.remove-input-field1', function() {
+        $(this).parents('tr').remove();
+    });
+</script>
 
-@endsection
+<script>
+    $('.extra-fields-customer1').click(function() {
+        $('.customer_records1').clone().appendTo('.customer_records_dynamic1');
+        $('.customer_records_dynamic1 .customer_records1').addClass('single remove');
+        $('.single .extra-fields-customer1').remove();
+        $('.single').append(
+            '<a href="#" class="remove-field btn-remove-customer add-plus minus-icon"><span><img src="{{ asset('assets') }}/admin/images/minus-icon.png"></span></a>'
+            );
+        $('.customer_records_dynamic1 > .single').attr("class", "row");
+
+        $('.customer_records_dynamic1 input').each(function() {
+            var count = 0;
+            var fieldname = $(this).attr("name");
+            $(this).attr('name', fieldname + count);
+            count++;
+        });
+
+    });
+
+    $(document).on('click', '.remove-field', function(e) {
+        $(this).parent('.row').remove();
+        e.preventDefault();
+    });
+</script>
+
+<script>
+    $('.extra-fields-customeroff').click(function() {
+        $('.customer_recordsoff').clone().appendTo('.customer_records_dynamicoff');
+        $('.customer_records_dynamicoff .customer_recordsoff').addClass('single remove');
+        $('.single .extra-fields-customeroff').remove();
+        $('.single').append(
+            '<a href="#" class="remove-field btn-remove-customer add-plus minus-icon"><span><img src="{{ asset('assets') }}/admin/images/minus-icon.png"></span></a>'
+            );
+        $('.customer_records_dynamicoff > .single').attr("class", "row");
+
+        $('.customer_records_dynamicoff input').each(function() {
+            var count = 0;
+            var fieldname = $(this).attr("name");
+            $(this).attr('name', fieldname + count);
+            count++;
+        });
+
+    });
+
+    $(document).on('click', '.remove-field', function(e) {
+        $(this).parent('.row').remove();
+        e.preventDefault();
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+
+        $("#employee_basic_form").validate({
+
+            rules: {
+                first_name: "required",
+                last_name: "required",
+                email: "required",
+                blood_group: "required",
+                gender: "required",
+                dob: "required",
+                phone: "required",
+                emg_phone: "required",
+                permanent_address: "required",
+                current_address: "required",
+                marital_status: "required",
+                emg_name: "required",
+                emg_address: "required",
+                emg_relationship: "required",
+                document_type: "required",
+                document_number: "required",
+                document_id: "required",
+
+            },
+
+            messages: {
+                firstName: "first name is required",
+                last_name: "Last name is required",
+                email: "Email is required",
+                blood_group: "Blood group is required",
+                gender: "Gender  is required",
+                dob: "Date of birth is required",
+                phone: "Phone number is required",
+                emg_phone: "Emergency phone number is required",
+                permanent_address: "Permanent address is required",
+                current_address: "Current address is required",
+                marital_status: "Marital status is required",
+                emg_name: "Emergency name is required",
+                emg_relationship: "Emergency relationship is required",
+                emg_address: "Emergency address is required",
+                document_id: "document id is required",
+                document_number: "document number is required",
+                document_type: "document type is required",
+
+            }
+        });
+
+        $("#employee_qualification_form").validate({
+            rules: {
+                inst_name: "required",
+                degree: "required",
+                subject: "required",
+                duration_from: "required",
+                duration_to: "required",
+                verification_type: "required",
+                document: {
+                    required: true,
+                    extension: "pdf|doc|docx",
+                }
+            },
+
+            messages: {
+                inst_name: "Institute name is required",
+                degree: "Degree is required",
+                subject: "Subject is required",
+                duration_from: "Duration date is required",
+                duration_to: "Duration to is required",
+                verification_type: "Verification type is required",
+                document: {
+                    required: "Document is required",
+                    extension: "extension shuold not wrong",
+                },
+            }
+        }); 
+        
+        $("#employee_official_form").validate({
+            rules: {
+                date_of_joining: "required",
+                emp_type: "required",
+                work_location: "required",
+                emp_status: "required",
+                lpa: "required",
+                designation: "required",
+            },
+
+            messages: {
+                date_of_joining: "Date of joining is required",
+                emp_type: "Employee type is required",
+                work_location: "Work location is required",
+                emp_status: "Employee status to is required",
+                lpa: "LPA is required",
+                designation: "Manager designation is required",
+
+            }
+        });
+
+        $("#employee_workhistory_form").validate({
+            rules: {
+                com_name: "required",
+                designation: "required",
+                work_duration_to: "required",
+                work_duration_from: "required",
+                offer_letter: "required",
+                verification_type: "required",
+                exp_letter: "required",
+                salary_slip: "required",
+            },
+
+            messages: {
+                com_name: "Company name is required",
+                designation: "Designation is required",
+                work_duration_to: "Work duration is required",
+                work_duration_from: "Work duration From is required",
+                offer_letter: "Offer letter to is required",
+                verification_type: "Verification type is required",
+                exp_letter: "Experience letter is required",
+                salary_slip: "Salary slip is required",
+            }
+        });
+
+        $("#employee_skills_form").validate({
+            rules: {
+                skill: "required",
+                lang: "required",
+            },
+
+            messages: {
+                skill: "Skill is required",
+                lang: "Known language is required",
+
+            }
+        });
+
+    });
+</script>
+
+@stop

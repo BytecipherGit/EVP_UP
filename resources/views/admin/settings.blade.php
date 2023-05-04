@@ -92,6 +92,16 @@
                 </a>
               </li>
               <li class="nav-item">
+                <a class="nav-link" id="applicants-Tab7-tab" data-toggle="tab" href="#applicants-Tab7" role="tab" aria-controls="applicants-Tab7" aria-selected="false">
+                  <div class="img-box-iocn"> 
+                    <svg xmlns="http://www.w3.org/2000/svg" width="21" height="25" viewBox="0 0 21 25" fill="none">
+                      <path d="M15.5 24.9697H5.5C2.743 24.9697 0.5 22.7267 0.5 19.9697V5.96973C0.5 3.21273 2.743 0.969727 5.5 0.969727H15.5C18.257 0.969727 20.5 3.21273 20.5 5.96973V19.9697C20.5 22.7267 18.257 24.9697 15.5 24.9697ZM5.5 2.96973C3.846 2.96973 2.5 4.31573 2.5 5.96973V19.9697C2.5 21.6237 3.846 22.9697 5.5 22.9697H15.5C17.154 22.9697 18.5 21.6237 18.5 19.9697V5.96973C18.5 4.31573 17.154 2.96973 15.5 2.96973H5.5ZM16.5 6.96973C16.5 6.41773 16.052 5.96973 15.5 5.96973H11.5C10.948 5.96973 10.5 6.41773 10.5 6.96973C10.5 7.52173 10.948 7.96973 11.5 7.96973H15.5C16.052 7.96973 16.5 7.52173 16.5 6.96973ZM16.5 12.9697C16.5 12.4177 16.052 11.9697 15.5 11.9697H11.5C10.948 11.9697 10.5 12.4177 10.5 12.9697C10.5 13.5217 10.948 13.9697 11.5 13.9697H15.5C16.052 13.9697 16.5 13.5217 16.5 12.9697ZM16.5 18.9697C16.5 18.4177 16.052 17.9697 15.5 17.9697H11.5C10.948 17.9697 10.5 18.4177 10.5 18.9697C10.5 19.5217 10.948 19.9697 11.5 19.9697H15.5C16.052 19.9697 16.5 19.5217 16.5 18.9697ZM8.5 7.96973V5.96973C8.5 5.41773 8.052 4.96973 7.5 4.96973H5.5C4.948 4.96973 4.5 5.41773 4.5 5.96973V7.96973C4.5 8.52173 4.948 8.96973 5.5 8.96973H7.5C8.052 8.96973 8.5 8.52173 8.5 7.96973ZM8.5 13.9697V11.9697C8.5 11.4177 8.052 10.9697 7.5 10.9697H5.5C4.948 10.9697 4.5 11.4177 4.5 11.9697V13.9697C4.5 14.5217 4.948 14.9697 5.5 14.9697H7.5C8.052 14.9697 8.5 14.5217 8.5 13.9697ZM8.5 19.9697V17.9697C8.5 17.4177 8.052 16.9697 7.5 16.9697H5.5C4.948 16.9697 4.5 17.4177 4.5 17.9697V19.9697C4.5 20.5217 4.948 20.9697 5.5 20.9697H7.5C8.052 20.9697 8.5 20.5217 8.5 19.9697Z" fill="black" class="iconFill" />
+                      </svg>
+                  </div>
+                  <h2>SMTP <span>Set up your User method</span></h2>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a class="nav-link" id="applicants-Tab6-tab" data-toggle="tab" href="#applicants-Tab6" role="tab" aria-controls="applicants-Tab6" aria-selected="false">
                   <div class="img-box-iocn"> 
                     <svg xmlns="http://www.w3.org/2000/svg" width="21" height="25" viewBox="0 0 21 25" fill="none">
@@ -219,9 +229,10 @@
                 <div class="tab-button-bx">
                    {{-- <button type="button" class="btn-secondary-cust" href="{{ route('settings') }}">Cancel</button>  --}}
                    <button type="submit" name="profile" class="btn-primary-cust button_background_color"><span class="button_text_color">Save Changes</span></button>
-                </div>           
-              </div>
-            </form>
+                </div>  
+              </form>         
+            </div>
+           
               <div class="tab-pane fade" id="applicants-Tab2" role="tabpanel" aria-labelledby="applicants-Tab2-tab">
                 <div class="tab-content-details">
                   <h2>Address</h2>
@@ -237,21 +248,24 @@
                         </div>  
                       </div>
                     </div>
+
                     <div class="form-group">
                       <div class="row">
                         <div class="col-xl-12">
                           <label>Corporate Office</label>
                           <textarea class="form-control" name="cor_office_address" @if ($profile->cor_office_address) value="{{old('cor_office_address',$profile->cor_office_address)}}" @endif rows="2" placeholder="Add Corporate Office Address">@if ($profile->cor_office_address) {{old('cor_office_address',$profile->cor_office_address)}} @endif</textarea>
                         </div>  
-                      </div>
-                    </div>
-                  </div>
-                   <div class="tab-button-bx">
-                   {{-- <button class="btn-secondary-cust">Cancel</button>  --}}
-                   <button type="submit" name="add_address" class="btn-primary-cust button_background_color"><span class="button_text_color">Save Changes</span></button>
-                 </div> 
+                       </div>
+                     </div>
+                
+                    <div class="tab-button-bx">
+                    {{-- <button class="btn-secondary-cust">Cancel</button>  --}}
+                      <button type="submit" name="add_address" class="btn-primary-cust button_background_color"><span class="button_text_color">Save Changes</span></button>
+                    </div> 
+                  </form>
                 </div>   
-            </form>
+              </div>
+
               <div class="tab-pane fade" id="applicants-Tab3" role="tabpanel" aria-labelledby="applicants-Tab3-tab">
                 <div class="tab-content-details">
                   <h2>Department <button class="ml-auto" data-toggle="modal" data-target="#departIdBtn"><img src="{{ asset('assets') }}/admin/images/edit-icon.png"></button></h2>
@@ -330,6 +344,86 @@
 
               </div> 
 
+              <div class="tab-pane fade" id="applicants-Tab7" role="tabpanel" aria-labelledby="applicants-Tab7-tab">
+                <div class="tab-content-details">
+                  <h2>SMTP </h2>
+                <form method="POST" id="create_smtp_form" action="{{route('create.smtp.details')}}" enctype="multipart/form-data">
+                    @csrf
+
+                    {{-- <input type="hidden" id="company_id" name="company_id" value="{{ $smtpDetails ? $smtpDetails->company_id : '' }}" /> --}}
+                  <div class="setting-polici-box">
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-xl-6">
+                          <label>Driver<span style="color:red">*</span></label>
+                          <input type="text"  name="driver" placeholder="Driver" value="{{ $smtpDetails ? $smtpDetails->driver : ''}}" class="form-control">
+                          <strong class="error" id="driver-error"></strong>
+                        </div>
+
+                        <div class="col-xl-6 input-mt-from">
+                          <label>Host Name<span style="color:red">*</span></label>
+                          <input type="text" name="host" placeholder="Host Name" value="{{ $smtpDetails ? $smtpDetails->host : ''}}" class="form-control">
+                          <strong class="error" id="host-error"></strong>
+                        </div>  
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-xl-6">
+                          <label>Port Name<span style="color:red">*</span></label>      
+                            <input type="text" name="port" placeholder="Port Name" value="{{ $smtpDetails ? $smtpDetails->port : ''}}" class="form-control">
+                            <strong class="error" id="port-error"></strong>
+                        </div> 
+
+                        <div class="col-xl-6 input-mt-from">
+                          <label>Name<span style="color:red">*</span></label>
+                          <input type="text" name="from_name" placeholder="Name" value="{{ $smtpDetails ? $smtpDetails->from_name : ''}}"  class="form-control">
+                          <strong class="error" id="from_name-error"></strong>
+                        </div>                         
+                      </div>
+                    </div> 
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-xl-6">
+                          <label>Address<span style="color:red">*</span></label>
+                           <input type="text" name="from_address" placeholder="Address" value="{{ $smtpDetails ? $smtpDetails->from_address : ''}}" class="form-control">
+                           <strong class="error" id="from_address-error"></strong>
+                         </div>
+
+                        <div class="col-xl-6 input-mt-from">
+                          <label>Encryption<span style="color:red">*</span></label>
+                          <input type="text" name="encryption"  placeholder="Encryption" value="{{ $smtpDetails ? $smtpDetails->encryption : ''}}" class="form-control">
+                          <strong class="error" id="encryption-error"></strong>
+                        </div>  
+                      </div>
+                    </div>  
+
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-xl-6">
+                          <label>User Name<span style="color:red">*</span></label>
+                           <input type="text" name="username" placeholder="User Name" value="{{ $smtpDetails ? $smtpDetails->username : ''}}" class="form-control">
+                           <strong class="error" id="username-error"></strong>
+                         </div>
+
+                        <div class="col-xl-6 input-mt-from">
+                          <label>Password<span style="color:red">*</span></label>
+                          <input type="password" name="password"  placeholder="Password" value="{{ $smtpDetails ? $smtpDetails->password : ''}}"  class="form-control">
+                          <strong class="error" id="password-error"></strong>
+                        </div>  
+                      </div>
+                    </div>  
+                 </div>
+
+                  <div class="tab-button-bx"  style="padding-top: 30px;">
+                    {{-- <button type="button" class="btn-secondary-cust" href="{{ route('settings') }}">Cancel</button>  --}}
+                    <button type="submit" class="btn-primary-cust button_background_color"><span class="button_text_color">Update Changes</span></button>
+                  </div>  
+                </form>
+                </div>
+              </div> 
+
+
               <div class="tab-pane fade" id="applicants-Tab5" role="tabpanel" aria-labelledby="applicants-Tab5-tab">
                 <div class="tab-content-details">
                   <h2>Policies </h2>
@@ -359,16 +453,16 @@
             <div class="tab-pane fade" id="applicants-Tab6" role="tabpanel" aria-labelledby="applicants-Tab6-tab">
               <div class="tab-content-details">
                   <h2>My Plan</h2>
-                 <form method="POST" action="{{ route('update_company_profile') }}" enctype="multipart/form-data">
+                <form method="POST" action="{{ route('update_company_profile') }}" enctype="multipart/form-data">
                     @csrf
-                  <div class="form-group">
+                   <div class="form-group">
                       <div class="row">
                         <div class="col-xl-6">
                           <label>Plan Name</label>
                           <input type="text" name="plan_name" placeholder="Plan" @if ($plans) value="{{old('plan_name',$plans->plan_name)}}" @endif class="form-control">
                           {{-- <input type="text" name="plan" @if ($plans) value="{{ old('plan'), $plans->plan }}" @endif class="form-control"> --}}
                         </div> 
-                        <div class="col-xl-6 input-mt-from">
+                         <div class="col-xl-6 input-mt-from">
                           <label>Authority</label>
                           {{-- <div class="selectBox active"> --}}
                             <select name="authority" @if ($plans) value="{{ old('authority', $plans->authority) }}" @endif class="form-control" required>
@@ -381,8 +475,8 @@
 
                             </select>
                         {{-- </div>  --}}
+                         </div>
                       </div>
-                        </div>
                         <div class="form-group">
                           <div class="row">
                             <div class="col-xl-12">
@@ -397,16 +491,14 @@
                             </div> 
                           </div>
                         </div>
-           
-                   </div>   
-                 <div class="tab-button-bx" style="padding-top: 30px;">
-                   {{-- <button class="btn-secondary-cust">Cancel</button>  --}}
-                   <button type="submit" name="plan" class="btn-primary-cust button_background_color"><span class="button_text_color">Save Changes</span></button>
-                </div>   
-                 
+                    </div>   
+                      <div class="tab-button-bx" style="padding-top: 30px;">
+                      {{-- <button class="btn-secondary-cust">Cancel</button>  --}}
+                      <button type="submit" name="plan" class="btn-primary-cust button_background_color"><span class="button_text_color">Save Changes</span></button>
+                      </div>   
+                 </form>   
               </div>       
-            </div>
-          </form>    
+            </div> 
           </div>
         </div>
       </div>  
@@ -589,4 +681,37 @@
       });
     </script>
 
+<script>
+  $(document).ready(function() {
+
+      $("#create_smtp_form").validate({
+          rules: {
+              driver: "required",
+              port: "required",
+              host: "required",
+              from_name: "required",
+              from_address: "required",
+              encryption: "required",
+              username: "required",
+              password: "required",
+           
+          },
+
+          messages: {
+
+            driver: "Driver name is required",
+            port: "Port is required",
+            host: "Host is required",
+            from_name: "name is required",
+            from_address: "Address is required",
+            encryption: "Encryption type is required",
+            username: "Username is required",
+            password: "Password is required",
+
+          }
+         });
+
+    });
+
+</script>
 @stop

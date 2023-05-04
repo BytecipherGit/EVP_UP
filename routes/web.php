@@ -92,6 +92,8 @@ Route::middleware([Admin::class])->group(function () {
     Route::post('edit-employee/{id?}', [App\Http\Controllers\EmployeeController::class, 'editEmployee'])->middleware('documents');
     Route::get('/company_profile', [App\Http\Controllers\companySettingsController::class, 'profiledata'])->middleware('documents');
     Route::post('/update_company_profile', [App\Http\Controllers\companySettingsController::class, 'updateCompanyProfile'])->name('update_company_profile')->middleware('documents');
+    Route::post('smtp_details/form', [App\Http\Controllers\companySettingsController::class, 'createSmtpForm'])->name('create.smtp.details')->middleware('documents');
+
     Route::get('/employee-exit/{id?}', [App\Http\Controllers\EmployeeController::class, 'exitEmp'])->middleware('documents');
     Route::post('/employee-exit/{id?}', [App\Http\Controllers\EmployeeController::class, 'exitEmployee'])->middleware('documents');
     Route::get('/post-employee-details/{id}', [App\Http\Controllers\EmployeeController::class, 'postEmpDetails'])->middleware('documents');
@@ -201,33 +203,29 @@ Route::middleware([Admin::class])->group(function () {
     Route::any("send_not_appeared/{id?}", [InterviewEmployee::class, 'sendNotAppearedStatus'])->name('send.not.appeared')->middleware('documents');
 
     Route::get("exit-employee/form/{id?}", [App\Http\Controllers\ExitEmployeeProcess::class, 'getExitEmployee'])->middleware('documents');
-    Route::any("exit-employee/submit/{id?}", [App\Http\Controllers\ExitEmployeeProcess::class, 'creiateExitEmployee'])->name('exit.employee.create')->middleware('documents');
+    Route::any("exit-employee/submit/{id?}", [App\Http\Controllers\ExitEmployeeProcess::class, 'createExitEmployee'])->name('exit.employee.create')->middleware('documents');
     Route::post('exit-employee/update', [App\Http\Controllers\ExitEmployeeProcess::class, 'updateExtEmployee'])->middleware('documents');
 
     //new employee form for testing
-    Route::get("Newemployee/form/{id?}", [App\Http\Controllers\NewEmployeeController::class, 'index'])->name('basicinfo.index')->middleware('documents');
-    Route::any('Newemployee/submit/{id?}', [App\Http\Controllers\NewEmployeeController::class, 'createEmployee'])->middleware('documents');
-    Route::post('Newemployee/form/update', [App\Http\Controllers\NewEmployeeController::class, 'updateEmployee'])->middleware('documents');
+    Route::get("employee/form/{id?}", [App\Http\Controllers\NewEmployeeController::class, 'index'])->name('basicinfo.index')->middleware('documents');
+    Route::any('employee/submit/{id?}', [App\Http\Controllers\NewEmployeeController::class, 'createEmployee'])->middleware('documents');
+    Route::post('employee/form/update', [App\Http\Controllers\NewEmployeeController::class, 'updateEmployee'])->middleware('documents');
 
-    Route::get("qualification/form/{id?}", [App\Http\Controllers\NewEmployeeController::class, 'getQualificationForm'])->name('basicinfo.index')->middleware('documents');
     Route::any('qualification/submit/{id?}', [App\Http\Controllers\NewEmployeeController::class, 'createEmployeeQualification'])->middleware('documents');
     Route::post('qualification/form/update', [App\Http\Controllers\NewEmployeeController::class, 'updateEmployeeQualification'])->middleware('documents');
     
-    Route::get("workhistory/form/{id?}", [App\Http\Controllers\NewEmployeeController::class, 'getWorkhistoryForm'])->name('basicinfo.index')->middleware('documents');
     Route::any('workhistory/submit/{id?}', [App\Http\Controllers\NewEmployeeController::class, 'createEmployeeWorkhistory'])->middleware('documents');
     Route::post('workhistory/form/update', [App\Http\Controllers\NewEmployeeController::class, 'updateEmployeeWorkhistory'])->middleware('documents');
 
-    Route::get("employee_skills/form/{id?}", [App\Http\Controllers\NewEmployeeController::class, 'getSkillsForm'])->name('basicinfo.index')->middleware('documents');
     Route::any('employee_skills/submit/{id?}', [App\Http\Controllers\NewEmployeeController::class, 'createEmployeeSkills'])->middleware('documents');
     Route::post('employee_skills/form/update', [App\Http\Controllers\NewEmployeeController::class, 'updateEmployeeSkills'])->middleware('documents');
     Route::any('add_employee_skills/submit/{id?}', [App\Http\Controllers\NewEmployeeController::class, 'addMoreEmployeeSkills'])->middleware('documents');
     Route::any('add_employee_lang_skills/submit/{id?}', [App\Http\Controllers\NewEmployeeController::class, 'addMorelangEmployeeSkills'])->middleware('documents');
 
-    Route::get("employee_official/form/{id?}", [App\Http\Controllers\NewEmployeeController::class, 'getemployeeofficialForm'])->name('basicinfo.index')->middleware('documents');
     Route::any('employee_official/submit/{id?}', [App\Http\Controllers\NewEmployeeController::class, 'createEmployeeOfficial'])->middleware('documents');
     Route::post('employee_official/form/update', [App\Http\Controllers\NewEmployeeController::class, 'updateEmployeeOfficial'])->middleware('documents');
 
-    Route::any('edit_language/update/{id?}', [App\Http\Controllers\NewEmployeeController::class, 'updateSkills'])->middleware('documents');
+    Route::any('edit_skills/update/{id?}', [App\Http\Controllers\NewEmployeeController::class, 'updateSkills'])->middleware('documents');
     Route::any('edit_language/update/{id?}', [App\Http\Controllers\NewEmployeeController::class, 'updateLanguage'])->middleware('documents');
 
 });

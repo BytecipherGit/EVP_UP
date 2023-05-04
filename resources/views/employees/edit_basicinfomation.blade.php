@@ -1,4 +1,4 @@
-<form id="employee_basic_form" action="{{ url('Newemployee/form/update') }}" method="post" autocomplete="off"
+<form id="employee_basic_form_edit" action="{{ url('employee/form/update') }}" method="post" autocomplete="off"
     enctype="multipart/form-data">
     @csrf
     <input type="hidden" id="is_add" value="{{ $employeeExists ? '' : 1 }}" />
@@ -8,12 +8,12 @@
             <div class="profile-add-img">
                 <div class="circle">
                     <img class="profile-pic" id="profile-pic" name="profile"
-                        src="{{ asset('assets') }}/admin/images/user-img.png">
-                </div>
+                    @if (!empty($employeeExists->profile)) value="{{ $employeeExists->profile }}" src="{{ $employeeExists->profile }}" @else src="{{ asset('assets') }}/admin/images/user-img.png" @endif required>
+                  </div>
                 <div class="p-image ml-auto">
                     <span class="upload-button" for="file-upload" id="upload-button"><img src="{{ asset('assets') }}/admin/images/edit-icon.png"></span>
                     <input class="file-upload" name="profile" id="file-upload" type="file" accept="image/*" />
-                    <strong class="error" id="id_type-error"></strong>
+
                 </div>
             </div>
         </div>
@@ -72,7 +72,7 @@
             <div class="form-group">
                 <label>Select Blood Group<span style="color:red">*</span></label>
                 <select class="form-control" name="blood_group" id="blood_group">
-                    <option value="{{ $employeeExists ? $employeeExists->blood_group : '' }}"> {{ $employeeExists ? $employeeExists->blood_group : 'Select Group' }}</option>
+                    <option value="{{ $employeeExists ? $employeeExists->blood_group : '' }}"> {{ $employeeExists->blood_group ? $employeeExists->blood_group : 'Select Group' }}</option>
                     <option value="A+">A+</option>
                     <option value="A-">A-</option>
                     <option value="B+">B+</option>
@@ -92,7 +92,7 @@
                 {{-- <div class="selectBox__value">Select Gender</div> --}}
 
                 <select class="form-control" name="gender" id="gender">
-                    <option value="{{ $employeeExists ? $employeeExists->gender : ''}} ">{{ $employeeExists ? $employeeExists->gender : 'Select Gender' }}</option>
+                    <option value="">{{ $employeeExists->gender ? $employeeExists->gender : ' Select Gender' }}</option>
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
                 </select>
@@ -105,7 +105,7 @@
                 <label>Marital Status<span style="color:red">*</span></label>
 
                 <select class="form-control" name="marital_status" id="marital_status">
-                    <option value="{{ $employeeExists ? $employeeExists->marital_status : '' }}">{{ $employeeExists ? $employeeExists->marital_status : 'Select Status' }}</option>
+                    <option value="{{ $employeeExists ? $employeeExists->marital_status : '' }}">{{ $employeeExists->marital_status ? $employeeExists->marital_status : 'Select Status' }}</option>
                     <option value="Married">Married</option>
                     <option value="Single">Single</option>
                 </select>
@@ -116,7 +116,7 @@
             <div class="form-group">
                 <label>Document Type<span style="color:red">*</span></label>
                 <select name="document_type" class="form-control" id="document_type">
-                    <option value="{{$employeeExists ? $employeeExists->document_type : ''}}">{{ $employeeExists ? $employeeExists->document_type : 'Select document type' }}</option>
+                    <option value="{{$employeeExists ? $employeeExists->document_type : '' }}">{{ $employeeExists->document_type ? $employeeExists->document_type : 'Select document type' }}</option>
                     <option value="Pan Card">Pan Card</option>
                     <option value="Aadhar Card">Aadhar Card</option>
                     <option value="Passport">Passport</option>
@@ -128,7 +128,7 @@
         <div class="col-xl-3 col-lg-6 col-md-12">
             <div class="form-group">
                 <label>Document Number<span style="color:red">*</span></label>
-                <input type="text" name="document_number" class="form-control" value="{{ $employeeExists ? $employeeExists->document_number : '' }}" placeholder="Enter document number">
+                <input type="text" name="document_number" class="form-control" value="{{ $employeeExists->document_number ? $employeeExists->document_number : '' }}" placeholder="Enter document number">
                 <strong class="error" id="document_number-error"></strong>
             </div>
         </div>
@@ -136,7 +136,7 @@
         <div class="col-xl-3 col-lg-6 col-md-12">
             <div class="form-group">
                 <label>Document Id<span style="color:red">*</span></label>
-                <input type="file" id="document_id" name="document_id" value="{{ $employeeExists ? $employeeExists->document_id : ''}}" class="form-control">
+                <input type="file" id="document_id" name="document_id" value="{{ $employeeExists->document_id ? $employeeExists->document_id : ''}}" class="form-control">
                 <strong class="error" id="document_id-error"></strong>
             </div>
         </div>
@@ -216,3 +216,321 @@
         <button type="submit" class="btn-primary-cust button_background_color"><span class="button_text_color">Next</span></button>
     </div>
 </form>
+
+@section('pagescript')
+<!-- Bootstrap core JavaScript
+    ================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script>
+    window.jQuery || document.write(
+        '<script src="../../{{ asset('assets') }}/admin/js/vendor/jquery.min.js"><\/script>')
+</script>
+<script src="{{ asset('assets') }}/admin/js/bootstrap.min.js"></script>
+<script src="{{ asset('assets') }}/admin/js/file-upload.js"></script>
+<!--  <script src="{{ asset('assets') }}/admin/js/typeahead.min.js"></script> -->
+
+
+<script>
+    $(document).ready(function() {
+
+        $("#employee_basic_form_edit").validate({
+
+            rules: {
+                first_name: "required",
+                last_name: "required",
+                email: "required",
+                blood_group: "required",
+                gender: "required",
+                dob: "required",
+                phone: "required",
+                emg_phone: "required",
+                permanent_address: "required",
+                current_address: "required",
+                marital_status: "required",
+                emg_name: "required",
+                emg_address: "required",
+                emg_relationship: "required",
+                document_type: "required",
+                document_number: "required",
+                document_id: "required",
+
+            },
+
+            messages: {
+                firstName: "first name is required",
+                last_name: "Last name is required",
+                email: "Email is required",
+                blood_group: "Blood group is required",
+                gender: "Gender  is required",
+                dob: "Date of birth is required",
+                phone: "Phone number is required",
+                emg_phone: "Emergency phone number is required",
+                permanent_address: "Permanent address is required",
+                current_address: "Current address is required",
+                marital_status: "Marital status is required",
+                emg_name: "Emergency name is required",
+                emg_relationship: "Emergency relationship is required",
+                emg_address: "Emergency address is required",
+                document_id: "document id is required",
+                document_number: "document number is required",
+                document_type: "document type is required",
+
+            }
+        });
+
+        $("#employee_qualification_form").validate({
+            rules: {
+                inst_name: "required",
+                degree: "required",
+                subject: "required",
+                duration_from: "required",
+                duration_to: "required",
+                verification_type: "required",
+                document: {
+                    required: true,
+                    extension: "pdf|doc|docx",
+                }
+            },
+
+            messages: {
+                inst_name: "Institute name is required",
+                degree: "Degree is required",
+                subject: "Subject is required",
+                duration_from: "Duration date is required",
+                duration_to: "Duration to is required",
+                verification_type: "Verification type is required",
+                document: {
+                    required: "Document is required",
+                    extension: "extension shuold not wrong",
+                },
+            }
+        }); 
+        
+        $("#employee_official_form").validate({
+            rules: {
+                date_of_joining: "required",
+                emp_type: "required",
+                work_location: "required",
+                emp_status: "required",
+                lpa: "required",
+                designation: "required",
+            },
+
+            messages: {
+                date_of_joining: "Date of joining is required",
+                emp_type: "Employee type is required",
+                work_location: "Work location is required",
+                emp_status: "Employee status to is required",
+                lpa: "LPA is required",
+                designation: "Manager designation is required",
+
+            }
+        });
+
+        $("#employee_workhistory_form").validate({
+            rules: {
+                com_name: "required",
+                designation: "required",
+                work_duration_to: "required",
+                work_duration_from: "required",
+                offer_letter: "required",
+                verification_type: "required",
+                exp_letter: "required",
+                salary_slip: "required",
+            },
+
+            messages: {
+                com_name: "Company name is required",
+                designation: "Designation is required",
+                work_duration_to: "Work duration is required",
+                work_duration_from: "Work duration From is required",
+                offer_letter: "Offer letter to is required",
+                verification_type: "Verification type is required",
+                exp_letter: "Experience letter is required",
+                salary_slip: "Salary slip is required",
+            }
+        });
+
+        $("#employee_skills_form").validate({
+            rules: {
+                skill: "required",
+                lang: "required",
+            },
+
+            messages: {
+                skill: "Skill is required",
+                lang: "Known language is required",
+
+            }
+        });
+
+    });
+</script>
+<script type="text/javascript">
+    var i = 0;
+    $("#dynamic-ar").click(function() {
+        ++i;
+        $("#dynamicAddRemove").append('<tr><td><input type="text" name="skill[' + i +
+            ']" placeholder="Enter subject" class="form-control" /></td><td><h6><span><input type="radio" id="customRadioInline1" name="skill_type[' +
+            i +
+            ']" class=""  value="Beginner" checked="">  <label class="" for="customRadioInline1">Beginner</label></span> <span><input type="radio" id="customRadioInline2" name="skill_type[' +
+            i +
+            ']" class="" value="Intermediate">  <label class="" for="customRadioInline2">Intermediate</label></span> <span><input type="radio" id="customRadioInline3" name="skill_type[' +
+            i +
+            ']" class="" value="Expert">  <label class="" for="customRadioInline3">Expert</label></span></h6></td><td><a href=""class="remove-input-field remove-field btn-remove-customer add-plus minus-icon"><span class="button_background_color"><img src="{{ asset('assets') }}/admin/images/minus-icon.png"></span></td></tr>'
+        );
+    });
+    $(document).on('click', '.remove-input-field', function() {
+        $(this).parents('tr').remove();
+    });
+</script>
+
+<script type="text/javascript">
+    var j = 0;
+    $("#dynamic-ar1").click(function() {
+        ++j;
+        $("#dynamicAddRemove1").append('<tr><td><input type="text" name="lang[' + j +
+            ']" placeholder="Enter subject" class="form-control" /></td><td><h6><span><input type="radio" id="customRadioInline4" name="lang_type[' +
+            j +
+            ']" class=""  value="Beginner" checked="">  <label class="" for="customRadioInline4">Beginner</label></span>  <span><input type="radio" id="customRadioInline5" name="lang_type[' +
+            j +
+            ']" class="" value="Intermediate">  <label class="" for="customRadioInline5">Intermediate</label></span> <span><input type="radio" id="customRadioInline6" name="lang_type[' +
+            j +
+            ']" class="" value="Expert">  <label class="" for="customRadioInline6">Expert</label></span></h6></td><td><a href=""class="remove-input-field remove-field btn-remove-customer add-plus minus-icon"><span class="button_background_color"><img src="{{ asset('assets') }}/admin/images/minus-icon.png"></span></td></tr>'
+        );
+    });
+    $(document).on('click', '.remove-input-field1', function() {
+        $(this).parents('tr').remove();
+    });
+</script>
+
+<script>
+    $('.extra-fields-customer1').click(function() {
+        $('.customer_records1').clone().appendTo('.customer_records_dynamic1');
+        $('.customer_records_dynamic1 .customer_records1').addClass('single remove');
+        $('.single .extra-fields-customer1').remove();
+        $('.single').append(
+            '<a href="#" class="remove-field btn-remove-customer add-plus minus-icon"><span><img src="{{ asset('assets') }}/admin/images/minus-icon.png"></span></a>'
+            );
+        $('.customer_records_dynamic1 > .single').attr("class", "row");
+
+        $('.customer_records_dynamic1 input').each(function() {
+            var count = 0;
+            var fieldname = $(this).attr("name");
+            $(this).attr('name', fieldname + count);
+            count++;
+        });
+
+    });
+
+    $(document).on('click', '.remove-field', function(e) {
+        $(this).parent('.row').remove();
+        e.preventDefault();
+    });
+</script>
+
+<script>
+    $('.extra-fields-customeroff').click(function() {
+        $('.customer_recordsoff').clone().appendTo('.customer_records_dynamicoff');
+        $('.customer_records_dynamicoff .customer_recordsoff').addClass('single remove');
+        $('.single .extra-fields-customeroff').remove();
+        $('.single').append(
+            '<a href="#" class="remove-field btn-remove-customer add-plus minus-icon"><span><img src="{{ asset('assets') }}/admin/images/minus-icon.png"></span></a>'
+            );
+        $('.customer_records_dynamicoff > .single').attr("class", "row");
+
+        $('.customer_records_dynamicoff input').each(function() {
+            var count = 0;
+            var fieldname = $(this).attr("name");
+            $(this).attr('name', fieldname + count);
+            count++;
+        });
+
+    });
+
+    $(document).on('click', '.remove-field', function(e) {
+        $(this).parent('.row').remove();
+        e.preventDefault();
+    });
+</script>
+
+<script>
+
+    $("#exitemployee").click(function() {
+           getExitEmployeeForm();
+       });
+
+       function getExitEmployeeForm(id = '') {
+           let getFormUrl = '{{ url('exit-employee/form') }}';
+           if (id !== '') {
+               getFormUrl = getFormUrl + "/" + id;
+           }
+           $.ajax({
+               url: getFormUrl,
+               type: "get",
+               datatype: "html",
+           }).done(function(data) {
+
+              $('#Heading').text("Exit employee");
+
+               $('#exitemployeemodel').find('.modal-body').html(data);
+               $('#exitemployeemodel').modal({
+                   backdrop: 'static',
+                   keyboard: false
+               });
+           }).fail(function(jqXHR, ajaxOptions, thrownError) {
+               alert('No response from server');
+           });
+       }
+       $('#exit_employee_form').on('submit', function(event) {
+           event.preventDefault();
+           var isAdd = $('#is_add').val();
+           var url = '{{ url('exit-employee/submit') }}';
+
+           $('.loadingImg').show();
+           var formData = new FormData(this);
+           $.ajax({
+               url: url,
+               type: 'POST',
+               headers: {
+                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+               },
+               data: formData,
+               contentType: false,
+               processData: false,
+               success: function(data) {
+                   if (data.errors) {
+                       if (data.errors.date_of_exit) {
+                           $('#date_of_exit-error').html(data.errors.date_of_exit[0]);
+                       }
+                       if (data.errors.reason_of_exit) {
+                           $('#reason_of_exit-error').html(data.errors.reason_of_exit[0]);
+                       }
+                       $('.loadingImg').hide();
+                   } else {
+                       if (data.success != 0) {
+                           $('.loadingImg').hide();
+                           $('#date_of_exit-error').html('');
+                           $('#reason_of_exit-error').html('');
+
+                           $('#success').css('display', 'block');
+                           setInterval(function() {
+                               location.reload();
+                           }, 3000);
+
+                       } else {
+                           $('#failed').css('display', 'block');
+                           setInterval(function() {
+                               location.reload();
+                           }, 3000);
+                       }
+                   }
+
+               },
+               error: function(xhr, textStatus, errorThrown) {
+                   console.log(xhr.responseText);
+               }
+           });
+       });
+</script>
+@stop

@@ -1,5 +1,5 @@
 
-<form id="employee_basic_form" action="{{ url('Newemployee/submit') }}" method="post" autocomplete="off" enctype="multipart/form-data">
+<form id="employee_basic_form" action="{{ url('employee/submit') }}" method="post" autocomplete="off" enctype="multipart/form-data">
     @csrf
     <input type="hidden" id="is_add" value="{{ $employeeExists ? '' : 1 }}" />
     <input type="hidden" id="employee_id" name="employee_id" value="{{ $employeeExists ? $employeeExists->id : '' }}" />
@@ -7,15 +7,16 @@
         <div class="col-lg-3">
             <div class="profile-add-img">
                 <div class="circle">
-                    <img class="profile-pic" id="profile" name="profile" src="{{ asset('assets') }}/admin/images/user-img.png">
-                </div>
+                    <img class="profile-pic" id="profile-pic" name="profile"
+                    @if (!empty($employeeExists->profile)) value="{{ $employeeExists->profile }}" src="{{ $employeeExists->profile }}" @else src="{{ asset('assets') }}/admin/images/user-img.png" @endif required>
+                  </div>
                 <div class="p-image ml-auto">
                     <span class="upload-button" for="file-upload" id="upload-button"><img src="{{ asset('assets') }}/admin/images/edit-icon.png"></span>
                     <input class="file-upload" name="profile" id="file-upload" type="file" accept="image/*" />
+
                 </div>
             </div>
         </div>
-     
 
         <div class="col-lg-9">
             <div class="row">
@@ -87,9 +88,6 @@
         <div class="col-xl-3 col-lg-6 col-md-12">
             <div class="form-group">
                 <label>Select Gender<span style="color:red">*</span></label>
-
-                {{-- <div class="selectBox__value">Select Gender</div> --}}
-
                 <select class="form-control" name="gender" id="gender">
                     <option value="{{ $employeeExists ? $employeeExists->gender : ''}} ">Select Gender</option>
                     <option value="Male">Male</option>
@@ -214,3 +212,18 @@
         <button type="submit" class="btn-primary-cust button_background_color"><span class="button_text_color">Next</span></button>
     </div>
 </form>
+
+
+
+<!-- Bootstrap core JavaScript
+    ================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script>
+    window.jQuery || document.write(
+        '<script src="../../{{ asset('assets') }}/admin/js/vendor/jquery.min.js"><\/script>')
+</script>
+<script src="{{ asset('assets') }}/admin/js/bootstrap.min.js"></script>
+<script src="{{ asset('assets') }}/admin/js/file-upload.js"></script>
+<!--  <script src="{{ asset('assets') }}/admin/js/typeahead.min.js"></script> -->
+
+
