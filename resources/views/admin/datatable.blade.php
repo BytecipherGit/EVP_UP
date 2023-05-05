@@ -23,7 +23,7 @@
                 <div class="main-right-button-box backhover">
                     <a href="/current-employee" class="emp button_background_color"><span class="button_text_color">Current Employees</span></a>
                     <a href="/post-employee" class="emp button_background_color"><span class="button_text_color">Old Employees</span></a>
-                    <a href="employee/form" class="emp button_background_color"><img src="{{ asset('assets') }}/admin/images/button-plus.png"><span class="button_text_color">Add New</span></a>
+                    <a href="employee_info" class="emp button_background_color"><img src="{{ asset('assets') }}/admin/images/button-plus.png"><span class="button_text_color">Add New</span></a>
                 </div>
             </div>
         </div>
@@ -81,7 +81,7 @@
 
                             @if ($emp->status == 1 || $emp->status == 2)
                                 <td style="color:#5BD94E"><b>Active</b></td>
-                                <td class="d-flex"><a href="employee/form/{{ $emp->employee_id }}"
+                                <td class="d-flex"><a href="employee_info/{{ $emp->employee_id }}"
                                         class="edit-btn fa fa-edit" data-title="Edit"></a>
                                     {{-- <a href="employee-exit/{{ $emp->employee_id }}" title="Exit Employee" class="edit-btn fa fa-user-times" data-title="Exit"></a></td> --}}
                                 @else

@@ -5,7 +5,6 @@
     <table class="table table-bordered" id="dynamicAddRemove">
         <tr>
             <th>Add Skills<span style="color:red">*</span></th>
-            <th></th>
         </tr>
         <tr>
             <td><input type="text" name="skill[]" placeholder="Enter subject" class="form-control" required />
@@ -24,11 +23,10 @@
         </tr>
     </table>
 
-    <h2>Known Language</h2>
+    <h2>Add Language</h2>
     <table class="table table-bordered" id="dynamicAddRemove1">
         <tr>
             <th>Add Languages<span style="color:red">*</span></th>
-            <th></th>
         </tr>
         <tr>
             <td><input type="text" name="lang[]" placeholder="Enter subject" class="form-control" required />

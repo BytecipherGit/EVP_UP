@@ -2675,11 +2675,17 @@ center{
   margin: 34px 0;
   padding: 29px 34px;
 }
-.serch-main-box .verified-img {
+/* .serch-main-box .verified-img {
     width: 30px;
     margin: 0 0 0 auto;
     align-self: center;
-}
+} */
+  .serch-main-box .verified-img {
+  width: 15%;
+  margin: 0 0 0 auto;
+  font-size: 14px;
+  align-self: center;
+  }
 .serch-main-box fieldset label {
     display: inline-block;
     margin-bottom: 0;

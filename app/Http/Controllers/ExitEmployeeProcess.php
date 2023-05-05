@@ -213,17 +213,13 @@ class ExitEmployeeProcess extends Controller
                         'rating' => $request->rating,
                         'review' => $request->review,
                     ]);
-                
+
+                    return redirect('employee');
                     //   Employee::where('id',$employeeData->employee_id)->update([
                     //     'status'  => '0'
-                    //   ]);
-            
-                    return redirect('employee')->with('message','Employee exit successfully');
-                }
+                    //   ]);     
 
-                if (!empty($employeeData)) {
-                    return Response::json(['success' => '1']);
-                } else {
+                }  else {
                     return Response::json(['success' => '0']);
                 }
             } else {

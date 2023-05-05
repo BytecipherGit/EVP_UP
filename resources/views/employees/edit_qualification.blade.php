@@ -45,6 +45,16 @@
             </div>
         </div>
 
+        <div class="form-group">
+            <label>Attech File<span style="color:red">*</span></br><b>File type:</b> Only .jpeg, .pdf,
+                .docs, or .doc files allowed. <b>File Size:</b> Max:10MB</p></label>
+            <div class="upload-img-file">
+                <input type="file" id="document" name="document" class="form-control" accept="image/jpg,image/doc,image/pdf" />
+                <strong class="error" id="document-error"></strong>
+  
+            </div>
+        </div>
+
       <div class="form-group">
             <div class="row">
                 <div class="col-md-12">
@@ -53,25 +63,25 @@
             </div>
         </div>
   
+        {{-- <div class="form-group">        
+            <div class="row">
+              <div class="col-md-12">
+                <label class="exitonboard"> <input type="checkbox" <?php  if //($qualification->third_party_qualification_verification == '1') { ?> checked <?php //} ?> name="third_party_qualification_verification" class="checkboxexitform"> 3rd Party Verification </label>
+              </div>
+          </div>
+        </div> --}}
      
            <div class="form-group">
             <div class="row">
               <div class="col-md-12">
               <label>3rd Party Verification Document</label>
+              <label class="exitonboard"> <input type="checkbox" <?php  if ($qualification->third_party_qualification_verification == '1') { ?> checked <?php } ?> name="third_party_qualification_verification" class="checkboxexitform"> 3rd Party Verification </label>
               <input type="file" id="third_party_qualification_document" name="third_party_qualification_document" class="form-control">
               </div>
             </div>
           </div>
 
           
-          <div class="form-group">        
-              <div class="row">
-                <div class="col-md-12">
-                  <label class="exitonboard"> <input type="checkbox" <?php  if ($qualification->third_party_qualification_verification == '1') { ?> checked <?php } ?> name="third_party_qualification_verification" class="checkboxexitform"> 3rd Party Verification </label>
-                </div>
-            </div>
-          </div>
-  
         <div class="modal-footer">
           <div id="loadingImg"></div>
           <div style="font-size: 16px; display:none;" class="text-success" id="success">Position successfully created.</div>

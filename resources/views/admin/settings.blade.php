@@ -98,7 +98,7 @@
                       <path d="M15.5 24.9697H5.5C2.743 24.9697 0.5 22.7267 0.5 19.9697V5.96973C0.5 3.21273 2.743 0.969727 5.5 0.969727H15.5C18.257 0.969727 20.5 3.21273 20.5 5.96973V19.9697C20.5 22.7267 18.257 24.9697 15.5 24.9697ZM5.5 2.96973C3.846 2.96973 2.5 4.31573 2.5 5.96973V19.9697C2.5 21.6237 3.846 22.9697 5.5 22.9697H15.5C17.154 22.9697 18.5 21.6237 18.5 19.9697V5.96973C18.5 4.31573 17.154 2.96973 15.5 2.96973H5.5ZM16.5 6.96973C16.5 6.41773 16.052 5.96973 15.5 5.96973H11.5C10.948 5.96973 10.5 6.41773 10.5 6.96973C10.5 7.52173 10.948 7.96973 11.5 7.96973H15.5C16.052 7.96973 16.5 7.52173 16.5 6.96973ZM16.5 12.9697C16.5 12.4177 16.052 11.9697 15.5 11.9697H11.5C10.948 11.9697 10.5 12.4177 10.5 12.9697C10.5 13.5217 10.948 13.9697 11.5 13.9697H15.5C16.052 13.9697 16.5 13.5217 16.5 12.9697ZM16.5 18.9697C16.5 18.4177 16.052 17.9697 15.5 17.9697H11.5C10.948 17.9697 10.5 18.4177 10.5 18.9697C10.5 19.5217 10.948 19.9697 11.5 19.9697H15.5C16.052 19.9697 16.5 19.5217 16.5 18.9697ZM8.5 7.96973V5.96973C8.5 5.41773 8.052 4.96973 7.5 4.96973H5.5C4.948 4.96973 4.5 5.41773 4.5 5.96973V7.96973C4.5 8.52173 4.948 8.96973 5.5 8.96973H7.5C8.052 8.96973 8.5 8.52173 8.5 7.96973ZM8.5 13.9697V11.9697C8.5 11.4177 8.052 10.9697 7.5 10.9697H5.5C4.948 10.9697 4.5 11.4177 4.5 11.9697V13.9697C4.5 14.5217 4.948 14.9697 5.5 14.9697H7.5C8.052 14.9697 8.5 14.5217 8.5 13.9697ZM8.5 19.9697V17.9697C8.5 17.4177 8.052 16.9697 7.5 16.9697H5.5C4.948 16.9697 4.5 17.4177 4.5 17.9697V19.9697C4.5 20.5217 4.948 20.9697 5.5 20.9697H7.5C8.052 20.9697 8.5 20.5217 8.5 19.9697Z" fill="black" class="iconFill" />
                       </svg>
                   </div>
-                  <h2>SMTP <span>Set up your User method</span></h2>
+                  <h2>SMTP <span>Set up your SMTP method</span></h2>
                 </a>
               </li>
               <li class="nav-item">
@@ -361,7 +361,7 @@
                         </div>
 
                         <div class="col-xl-6 input-mt-from">
-                          <label>Host Name<span style="color:red">*</span></label>
+                          <label>Host<span style="color:red">*</span></label>
                           <input type="text" name="host" placeholder="Host Name" value="{{ $smtpDetails ? $smtpDetails->host : ''}}" class="form-control">
                           <strong class="error" id="host-error"></strong>
                         </div>  
@@ -370,13 +370,13 @@
                     <div class="form-group">
                       <div class="row">
                         <div class="col-xl-6">
-                          <label>Port Name<span style="color:red">*</span></label>      
+                          <label>Port<span style="color:red">*</span></label>      
                             <input type="text" name="port" placeholder="Port Name" value="{{ $smtpDetails ? $smtpDetails->port : ''}}" class="form-control">
                             <strong class="error" id="port-error"></strong>
                         </div> 
 
                         <div class="col-xl-6 input-mt-from">
-                          <label>Name<span style="color:red">*</span></label>
+                          <label>From Name<span style="color:red">*</span></label>
                           <input type="text" name="from_name" placeholder="Name" value="{{ $smtpDetails ? $smtpDetails->from_name : ''}}"  class="form-control">
                           <strong class="error" id="from_name-error"></strong>
                         </div>                         
@@ -385,14 +385,19 @@
                     <div class="form-group">
                       <div class="row">
                         <div class="col-xl-6">
-                          <label>Address<span style="color:red">*</span></label>
+                          <label>From Address<span style="color:red">*</span></label>
                            <input type="text" name="from_address" placeholder="Address" value="{{ $smtpDetails ? $smtpDetails->from_address : ''}}" class="form-control">
                            <strong class="error" id="from_address-error"></strong>
                          </div>
 
                         <div class="col-xl-6 input-mt-from">
                           <label>Encryption<span style="color:red">*</span></label>
-                          <input type="text" name="encryption"  placeholder="Encryption" value="{{ $smtpDetails ? $smtpDetails->encryption : ''}}" class="form-control">
+                          {{-- <input type="text" name="encryption"  placeholder="Encryption" value="{{ $smtpDetails ? $smtpDetails->encryption : ''}}" class="form-control"> --}}
+                          <select class="form-control" name="encryption" id="encryption">
+                            <option value="{{ $smtpDetails ? $smtpDetails->encryption : ''}}">{{ $smtpDetails ? $smtpDetails->encryption : 'Select encryption'}}</option>
+                            <option value="ssl">ssl</option>
+                            <option value="tls">tls</option>
+                        </select>
                           <strong class="error" id="encryption-error"></strong>
                         </div>  
                       </div>

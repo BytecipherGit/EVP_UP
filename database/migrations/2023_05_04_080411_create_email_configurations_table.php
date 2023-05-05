@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('smtp_details', function (Blueprint $table) {
+        Schema::create('email_configurations', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('company_id');
             $table->foreign('company_id')->references('id')->on('users')->onDelete('cascade');
@@ -36,6 +36,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('smtp_details');
+        Schema::dropIfExists('email_configurations');
     }
 };

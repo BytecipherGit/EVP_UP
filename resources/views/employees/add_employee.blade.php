@@ -21,23 +21,32 @@
             </div>
         </div>
         <!--- Main Heading ----->
-
+        <div id="successMessage">
+            @if (session()->has('message'))
+            <div class="alert alert-success">
+                {{ session()->get('message') }}
+            </div>
+        </div>
+        @endif
         <div class="employee-tab-bar">
             <ul class="nav nav-tabs table-responsive-width" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active secondary_color" data-toggle="tab" href="#basicInformation" role="tab">Basic Info</a>
+                    <li class="nav-item">
+                    <a class="nav-link @if (Request::segment(3) == null) active @endif  secondary_color" data-toggle="tab" href="#basicInformation" role="tab">Basic Info</a>
+                   {{-- <a href="#hardware" data-toggle="tab"><strong>Hardware(s)</strong></a></li> --}}
+
                 </li>
                 {{-- <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab">Identity</a>
           </li> --}}
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#qualification" role="tab">Qualification</a>
+                    <a class="nav-link @if (Request::segment(3) == 'qualification') active @endif " data-toggle="tab" href="#qualification" role="tab">Qualification</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#workhistory" role="tab">Work History</a>
+                    <a class="nav-link @if (Request::segment(3) == 'workhistory') active @endif" data-toggle="tab" href="#workhistory" role="tab">Work History</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#skills" role="tab">Skills</a>
+                    <a class="nav-link @if (Request::segment(3) == 'skills') active @endif" data-toggle="tab" href="#skills" role="tab">Skills</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" data-toggle="tab" href="#official" role="tab">Official Use</a>
@@ -45,7 +54,7 @@
 
             </ul>
             <div class="tab-content">
-                <div  class="tab-pane active" id="basicInformation" role="tabpanel">
+                <div  class="tab-pane @if (Request::segment(3) == null) active @endif" id="basicInformation" role="tabpanel">
                     <div class="eml-persnal ">
                         <div class="add-emply-details">
                             @if (empty($employeeExists))
@@ -73,7 +82,7 @@
                     </div>
                 </div> 
         
-                <div class="tab-pane" id="qualification" role="tabpanel">
+                <div class="tab-pane @if (Request::segment(3) == 'qualification') active @endif" id="qualification" role="tabpanel">
                     <div class="eml-persnal ">
                         <div class="add-emply-details">
                             <div class="row">
@@ -93,7 +102,7 @@
                 </div>
 
         
-                <div class="tab-pane" id="workhistory" role="tabpanel">
+                <div class="tab-pane @if (Request::segment(3) == 'workhistory') active @endif" id="workhistory" role="tabpanel">
                   <div class="eml-persnal ">
                       <div class="add-emply-details">
                           <div class="row">
@@ -111,7 +120,7 @@
                   </div>
                 </div>
 
-                <div class="tab-pane" id="skills" role="tabpanel">
+                <div class="tab-pane @if (Request::segment(3) == 'skills') active @endif" id="skills" role="tabpanel">
                     <div class="eml-persnal ">
                       <div class="add-emply-details">                
                         <div class="row">
@@ -489,7 +498,7 @@
 
             messages: {
                 skill: "Skill is required",
-                lang: "Known language is required",
+                lang: "Language is required",
 
             }
         });

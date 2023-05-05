@@ -29,14 +29,14 @@
      </div>
      <div class="col-xl-6">
          <div class="col-xl-12">
-             <h2>known Language <span class="ml-auto on-head-right" data-toggle="modal" data-target="#add_skills_Language"><img src="{{ asset('assets') }}/admin/images/button-plus-clr.png"> <small>Add</small> </span></h2>
+             <h2>Language <span class="ml-auto on-head-right" data-toggle="modal" data-target="#add_skills_Language"><img src="{{ asset('assets') }}/admin/images/button-plus-clr.png"> <small>Add</small> </span></h2>
          </div>
          <div class="eml-per-main">
              <div class="table-responsive">
                  <table class="table">
                      <thead>
                          <tr>
-                             <th>Skill Name</th>
+                             <th>Language</th>
                              <th>Competency Levels</th>
                              <th>Action</th>
                          </tr>
@@ -107,7 +107,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title" id="exampleModalLabel">Add known Language</h2>
+                <h2 class="modal-title" id="exampleModalLabel">Add Language</h2>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <img src="{{ asset('assets') }}/admin/images/close-btn-icon.png">
                 </button>

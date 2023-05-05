@@ -73,24 +73,25 @@
                                 </div>
                             </div>
                         </div>
+{{-- 
+                        <div class="form-group">        
+                            <div class="row">
+                              <div class="col-md-12">
+                                <label class="exitonboard"> <input type="checkbox" name="third_party_workhistory_verification" class="checkboxexitform"> 3rd Party Verification </label>
+                              </div>
+                          </div>
+                        </div> --}}
 
                         <div class="form-group">
                             <div class="row">
                               <div class="col-md-12">
                               <label>3rd Party Verification Document</label>
+                              <label class="exitonboard"> <input type="checkbox" name="third_party_workhistory_verification" class="checkboxexitform"> 3rd Party Verification </label>
                               <input type="file" id="third_party_workhistory_document" name="third_party_workhistory_document" class="form-control">
                               </div>
                             </div>
-                          </div>
-                   
-                          <div class="form-group">        
-                              <div class="row">
-                                <div class="col-md-12">
-                                  <label class="exitonboard"> <input type="checkbox" name="third_party_workhistory_verification" class="checkboxexitform"> 3rd Party Verification </label>
-                                </div>
-                            </div>
-                          </div>
-                      
+                        </div>
+       
 
             <div class="modal-footer">
                 <button type="cancel" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>

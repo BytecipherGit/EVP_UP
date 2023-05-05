@@ -1,4 +1,4 @@
-<form id="employee_basic_form_edit" action="{{ url('employee/form/update') }}" method="post" autocomplete="off"
+<form id="employee_basic_form_edit" action="{{ url('employee_info/update') }}" method="post" autocomplete="off"
     enctype="multipart/form-data">
     @csrf
     <input type="hidden" id="is_add" value="{{ $employeeExists ? '' : 1 }}" />
@@ -92,7 +92,7 @@
                 {{-- <div class="selectBox__value">Select Gender</div> --}}
 
                 <select class="form-control" name="gender" id="gender">
-                    <option value="">{{ $employeeExists->gender ? $employeeExists->gender : ' Select Gender' }}</option>
+                    <option value="{{ $employeeExists ? $employeeExists->gender : '' }}">{{ $employeeExists ? $employeeExists->gender : ' Select Gender' }}</option>
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
                 </select>
@@ -136,7 +136,7 @@
         <div class="col-xl-3 col-lg-6 col-md-12">
             <div class="form-group">
                 <label>Document Id<span style="color:red">*</span></label>
-                <input type="file" id="document_id" name="document_id" value="{{ $employeeExists->document_id ? $employeeExists->document_id : ''}}" class="form-control">
+                <input type="file" id="document_id" name="document_id" value="{{ $employeeExists->document_id ? $employeeExists->document_id : ''}}" class="form-control" accept="image/jpeg,image/doc,image/pdf" >
                 <strong class="error" id="document_id-error"></strong>
             </div>
         </div>
@@ -149,7 +149,7 @@
         <div class="col-xl-6 col-lg-6 col-md-12">
             <div class="form-group">
                 <label>3rd Party Verification Document</label>
-                <input type="file" id="third_party_document" name="third_party_document" class="form-control">
+                <input type="file" id="third_party_document" name="third_party_document" class="form-control" accept="image/jpeg,image/doc,image/pdf" >
             </div>
         </div>
 
@@ -366,6 +366,7 @@
 
     });
 </script>
+
 <script type="text/javascript">
     var i = 0;
     $("#dynamic-ar").click(function() {

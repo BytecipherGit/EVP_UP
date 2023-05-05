@@ -63,8 +63,9 @@ Route::get('/organization', function () {
 
 
 Route::get('/superlogin', [App\Http\Controllers\SuperAdminController::class, 'superAdminLogin'])->name('superlogin');
-Route::post('/invite-email/{id?}', [App\Http\Controllers\InviteempController::class, 'sendemail'])->name('invite-email');
-Route::post('send_invidation_to_employee',[App\Http\Controllers\InviteempController::class, 'sendInvidationToEmployee'])->name('send_invidation_to_employee');
+// Route::post('/invite-email/{id?}', [App\Http\Controllers\InviteempController::class, 'sendemail'])->name('invite-email');
+Route::post('send_invitation_to_employee',[App\Http\Controllers\InviteempController::class, 'sendInvitationToEmployee'])->name('send_invitation_to_employee');
+
 Route::middleware([Superadmin::class])->group(function () {
     Route::get('/superadmin', [App\Http\Controllers\SuperAdminController::class, 'index'])->name('superadmin');
     Route::get('superadmin/logout', [App\Http\Controllers\SuperAdminController::class, 'logout'])->name('superadmin.logout');
@@ -207,9 +208,9 @@ Route::middleware([Admin::class])->group(function () {
     Route::post('exit-employee/update', [App\Http\Controllers\ExitEmployeeProcess::class, 'updateExtEmployee'])->middleware('documents');
 
     //new employee form for testing
-    Route::get("employee/form/{id?}", [App\Http\Controllers\NewEmployeeController::class, 'index'])->name('basicinfo.index')->middleware('documents');
+    Route::get("employee_info/{id?}/{segment?}", [App\Http\Controllers\NewEmployeeController::class, 'index'])->name('basicinfo.index')->middleware('documents');
     Route::any('employee/submit/{id?}', [App\Http\Controllers\NewEmployeeController::class, 'createEmployee'])->middleware('documents');
-    Route::post('employee/form/update', [App\Http\Controllers\NewEmployeeController::class, 'updateEmployee'])->middleware('documents');
+    Route::post('employee_info/update', [App\Http\Controllers\NewEmployeeController::class, 'updateEmployee'])->middleware('documents');
 
     Route::any('qualification/submit/{id?}', [App\Http\Controllers\NewEmployeeController::class, 'createEmployeeQualification'])->middleware('documents');
     Route::post('qualification/form/update', [App\Http\Controllers\NewEmployeeController::class, 'updateEmployeeQualification'])->middleware('documents');
@@ -249,6 +250,10 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+// Route::get("email", [App\Http\Controllers\Auth\InviteempController::class, "sendEmail"])->name("email");
+Route::any("compose-email", [App\Http\Controllers\InviteempController::class, "sendExEmail"]);
+
 
 Route::get('interview/feedback/{id?}', [InterviewProcess::class, 'interviewFeedback'])->name('interview.feedback');
 Route::post('interview/feedback', [InterviewProcess::class, 'interviewFeedbackForEmployee'])->name('interview.feedback.mail');

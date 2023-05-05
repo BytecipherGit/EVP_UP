@@ -84,25 +84,27 @@
         </div>
     </div>
 
-    <div class="form-group">
+    {{-- <div class="form-group">
         <div class="row">
             <div class="col-md-12">
-                <label>3rd Party Verification Document</label>
-                <input type="file" id="third_party_workhistory_document" name="third_party_workhistory_document"
-                    class="form-control">
+                <label class="exitonboard"> <input type="checkbox" name="third_party_workhistory_verification" <?php // if ($workhistory->third_party_workhistory_verification == '1') { ?> checked <?php// } ?> class="checkboxexitform"> 3rd Party
+                    Verification </label>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <div class="form-group">
         <div class="row">
             <div class="col-md-12">
-                <label class="exitonboard"> <input type="checkbox" name="third_party_workhistory_verification"
-                        <?php  if ($workhistory->third_party_workhistory_verification == '1') { ?> checked <?php } ?> class="checkboxexitform"> 3rd Party
+                <label>3rd Party Verification Document</label>
+                <label class="exitonboard"> <input type="checkbox" name="third_party_workhistory_verification" <?php  if ($workhistory->third_party_workhistory_verification == '1') { ?> checked <?php } ?> class="checkboxexitform"> 3rd Party
                     Verification </label>
+                <input type="file" id="third_party_workhistory_document" name="third_party_workhistory_document" class="form-control">
             </div>
         </div>
     </div>
+
+    
 
 
     <div class="modal-footer">

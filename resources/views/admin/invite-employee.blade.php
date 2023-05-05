@@ -22,7 +22,9 @@
                 <p></p>
             </div>
             <div class="col-md-4">
-                <div class="main-right-button-box">
+            
+                <div class="main-right-button-box">      
+                    <p class="loadingImg" style="padding-right:5px"></p> 
                     <a href="#" name="bulk_mail_invite" id="bulk_mail_invite" class="button_background_color" style="margin-right: 15px"><span class="button_text_color">Invite</span></a>
                     <a href="add-invite-employee" class="button_background_color"><img src="assets/admin/images/button-plus.png"><span class="button_text_color">Add New</span></a>
                 </div>
@@ -275,7 +277,7 @@
     //                     id.push(checkboxes[i].value);
     //                 }
     //                 if (id.length > 0) {
-    //                     var url = '{{ url('send_invidation_to_employee') }}';
+    //                     var url = '{{ url('send_invitation_to_employee') }}';
     //                     var my_data = {
     //                         id: id
     //                     };
@@ -319,16 +321,16 @@
         //     })
         var checkboxes = document.querySelectorAll('input[class="users_checkbox"]:checked');
         var id = [];
-                for (var i = 0; i < checkboxes.length; i++) {
-                id.push(checkboxes[i].value);
+                for (var i = 0; i < checkboxes.length; i++) {  
+                      id.push(checkboxes[i].value);
                     }
                     if (id.length > 0) { 
+                      $('.loadingImg').show();
                        swal('Are you sure you want to send email?');
-                        var url = '{{ url('send_invidation_to_employee') }}';
+                        var url = '{{ url('send_invitation_to_employee') }}';
                         var my_data = {
                             id: id
                         };
-               
                         $.ajax({
                             url: url,
                             type: 'POST',
@@ -343,9 +345,10 @@
                                         icon: "success",
                                     });
                                     // location.reload();
+                                    $('.loadingImg').hide();
                                     setInterval(function() {
                                         location.reload();
-                                    }, 3000);
+                                    }, 2000);
                                 }
                             },
                             error: function(xhr, textStatus, errorThrown) {

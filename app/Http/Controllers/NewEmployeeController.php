@@ -25,7 +25,7 @@ class NewEmployeeController extends Controller
 
     public function index(request $request)
     {
-
+      
         $employeeExists = (!empty($request->id)) ? Employee::find($request->id) : false;
         $qualificationExist = Empqualification::where('employee_id',$request->id)->first();
         $qualificationViewExist = Empqualification::where('employee_id',$request->id)->get();
@@ -134,8 +134,7 @@ class NewEmployeeController extends Controller
                         $companyemployeeData = CompanyEmployee::create($insertCompanyEmployee);
                         }
 
-                     return redirect('employee/form/'.$employee->id)->with('tabs-5_active', true);
-
+                     return redirect('employee_info/'.$employee->id.'/qualification')->with('message','Information added successfully');
 
                     } else {
                         return Response::json(['success' => '0']);
@@ -236,7 +235,7 @@ class NewEmployeeController extends Controller
 
                     if (!empty($emplotyeeUpdate)) {
 
-                        return redirect()->back();
+                        return redirect('employee_info/'.$request->employee_id)->with('message','Information added successfully');
                     } else {
                         return Response::json(['success' => '0']);
                     }
@@ -256,6 +255,7 @@ class NewEmployeeController extends Controller
     public function createEmployeeQualification(request $request)
     {
         // dd($request->all());
+    
         if (Auth::check()) {
             $validator = Validator::make($request->all(), [
                 // 'inst_name' => 'required|string|max:255',
@@ -318,8 +318,10 @@ class NewEmployeeController extends Controller
 
                         $qualificationData = Empqualification::create($insert);
 
+                        // return redirect('employee/form/'.$employee->id.'/#qualification');
+
                         if (!empty($qualificationData)) {
-                            return redirect()->back();
+                            return redirect('employee_info/'.$request->employee_id.'/qualification');
                         } else {
                             return Response::json(['success' => '0']);
                         }        
@@ -397,7 +399,7 @@ class NewEmployeeController extends Controller
                     $qualificationData = Empqualification::where('id',$request->id)->update($update);
 
                     if (!empty($qualificationData)) {
-                        return redirect()->back();
+                        return redirect('employee_info/'.$employeeDetails->id.'/qualification');
                     } else {
                         return Response::json(['success' => '0']);
                     }
@@ -491,8 +493,11 @@ class NewEmployeeController extends Controller
                         $workhistoryData = Empworkhistory::create($insert);
 
                         if (!empty($workhistoryData)) {
-                            return redirect()->back();
+
+                            return redirect('employee_info/'.$employeeDetails->id.'/workhistory');
+
                         } else {
+
                             return Response::json(['success' => '0']);
                         }
                     
@@ -588,7 +593,8 @@ class NewEmployeeController extends Controller
 
                     if (!empty($workhistoryData)) {
 
-                        return redirect()->back();
+                        return redirect('employee_info/'.$employeeDetails->id.'/workhistory');
+
                     } else {
                         return Response::json(['success' => '0']);
                     }
@@ -645,7 +651,7 @@ class NewEmployeeController extends Controller
                      $language = DB::table('employee_language')->insert($insertDatalang);  
                   } 
 
-                  return redirect()->back();
+                  return redirect('employee_info/'.$employeeDetails->id.'/skills');
                          
                 } else {
                         return Response::json(['errors' => $validator->errors()]);
@@ -673,7 +679,7 @@ class NewEmployeeController extends Controller
             $skillsData = Empskills::create($insert);
           }
 
-          return redirect()->back();
+            return redirect('employee_info/'.$employeeDetails->id.'/skills');
     }
 
     public function addMorelangEmployeeSkills(request $request)
@@ -695,19 +701,20 @@ class NewEmployeeController extends Controller
         $languageData = Emplang::create($insertLanguage);
     }
 
-    return redirect()->back();
+    return redirect('employee_info/'.$employeeDetails->id.'/skills');
   }
 
   public function createEmployeeOfficial(request $request)
   {
 
-// dd($request->all());
+  // dd($request->all());
       if (Auth::check()) {
           $validator = Validator::make($request->all(), [
               // 'title' => 'required|string|max:255',
               // 'descriptions' => 'required|string|max:255',
               
           ]);
+
           $employeeDetails = Employee::where('id',$request->employee_id)->first();
 
           if(!empty($employeeDetails)){
@@ -774,7 +781,7 @@ class NewEmployeeController extends Controller
                   if (!empty($officialData)) {
 
                       $officialEmpData = Empofficial::where('employee_id',$request->employee_id)->first();
-                      
+
                         CompanyEmployee::where('employee_id',$officialEmpData->employee_id)->update([
                             'start_date'  => $officialEmpData->date_of_joining,
                             'status' => $officialEmpData->emp_status
@@ -824,7 +831,7 @@ class NewEmployeeController extends Controller
 
                   if (!empty($languageData)) {
                     
-                      return redirect()->back();
+                    return redirect('employee_info'.$employeeDetails->id.'/skills');
                   } else {
                       return Response::json(['success' => '0']);
                   }
@@ -867,7 +874,9 @@ class NewEmployeeController extends Controller
                   $skillsData = Empskills::where('employee_id',$request->employee_id)->update($update);
 
                   if (!empty($skillsData)) {
-                      return redirect()->back();
+
+                    return redirect('employee_info/'.$employeeDetails->id.'/skills');
+
                   } else {
                       return Response::json(['success' => '0']);
                   }

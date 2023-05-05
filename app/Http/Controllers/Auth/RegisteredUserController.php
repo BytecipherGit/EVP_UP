@@ -134,6 +134,15 @@ class RegisteredUserController extends Controller
      // Insert Compant id  for SMTP Details 
            $insertSMTPRecords = array(
                  'company_id' => $user->id,
+                 'driver'=> 'smtp',
+                 'host'=>'smtp.gmail.com',
+                 'port'=> '587',
+                 'from_address'=> 'jharshita259@gmail.com',
+                 'from_name'=> '${APP_NAME}',
+                 'encryption'=>'tls',
+                 'username'=> 'jharshita259@gmail.com',
+                 'password'=> 'bfhagppogpishvbq',
+             
              );
 
              SmtpDetails::create($insertSMTPRecords);

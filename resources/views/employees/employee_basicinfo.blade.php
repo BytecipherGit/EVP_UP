@@ -89,11 +89,11 @@
             <div class="form-group">
                 <label>Select Gender<span style="color:red">*</span></label>
                 <select class="form-control" name="gender" id="gender">
-                    <option value="{{ $employeeExists ? $employeeExists->gender : ''}} ">Select Gender</option>
+                    <option value="{{ $employeeExists ? $employeeExists->gender : '' }}">Select Gender</option>
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
+                    <strong class="error" id="gender-error"></strong>
                 </select>
-                <strong class="error" id="gender-error"></strong>
             </div>
         </div>
 
@@ -133,7 +133,7 @@
         <div class="col-xl-3 col-lg-6 col-md-12">
             <div class="form-group">
                 <label>Document Id<span style="color:red">*</span></label>
-                <input type="file" id="document_id" name="document_id" value="{{ $employeeExists ? $employeeExists->document_id : ''}}" class="form-control">
+                <input type="file" id="document_id" name="document_id" value="{{ $employeeExists ? $employeeExists->document_id : ''}}" class="form-control" accept="image/jpeg,image/doc,image/pdf" >
                 <strong class="error" id="document_id-error"></strong>
             </div>
         </div>
@@ -146,7 +146,7 @@
         <div class="col-xl-6 col-lg-6 col-md-12">
             <div class="form-group">
                 <label>3rd Party Verification Document</label>
-                <input type="file" id="third_party_document" name="third_party_document" class="form-control">
+                <input type="file" id="third_party_document" name="third_party_document" class="form-control" accept="image/jpeg,image/doc,image/pdf" >
             </div>
         </div>
 
