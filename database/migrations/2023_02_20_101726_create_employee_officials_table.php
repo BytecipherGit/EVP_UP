@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('employee_officials', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('employee_id')->comment('employee Table PK');
+            $table->unsignedBigInteger('employee_id')->comment('employee Table PK');
             $table->foreign('employee_id')->references('id')->on('employee')->comment('Id form employee')->onDelete('cascade');
             $table->string('date_of_joining')->nullable();
             $table->string('emp_type')->nullable();
@@ -23,7 +23,6 @@ return new class extends Migration
             $table->boolean('emp_status')->default(0)->comment('1 Active, 0 Inactive');
             $table->string('lpa')->nullable();
             $table->string('designation')->nullable();
-    
             $table->timestamps();
         });
     }
@@ -34,11 +33,7 @@ return new class extends Migration
      * @return void
      */
     public function down()
-    {
-        Schema::table('employee_officials', function (Blueprint $table) {
-            $table->dropForeign('employee_officials_employee_id_foreign');
-            $table->dropColumn('employee_id');
-        });
+    {   
         Schema::dropIfExists('employee_officials');
     }
 };

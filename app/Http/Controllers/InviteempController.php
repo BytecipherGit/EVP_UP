@@ -26,7 +26,8 @@ class InviteempController extends Controller
     public function index()
     {
         $empinvite = Employee::join('company_employee', 'company_employee.employee_id', '=', 'employee.id')
-                    ->where('company_employee.status',0)->where('company_employee.company_id',Auth::id())
+                    // ->where('company_employee.status',0)
+                    ->where('company_employee.company_id',Auth::id())
                     ->select('employee.*')->get();
         return view('admin/invite-employee', compact('empinvite'));
     }
@@ -306,8 +307,7 @@ class InviteempController extends Controller
                 $company_name = ['company_name' => Auth::user()->name];
                 
                 Mail::send('org-invite/invite-email', ['mailName' => $company_name, 'mailId' => $send_id], function ($message) use ($email, $name) {
-                    $message->to($email, $name)->subject
-                        ('ByteCipher Pvt Ltd Interview Invitation Email');
+                    $message->to($email, $name)->subject('ByteCipher Pvt Ltd Interview Invitation Email');
                    $message->from(Config::get('mail.from.address'),Config::get('mail.from.name'));
                 });
             }

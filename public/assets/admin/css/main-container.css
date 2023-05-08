@@ -2680,6 +2680,11 @@ center{
     margin: 0 0 0 auto;
     align-self: center;
 } */
+  .veri-font{
+    color: #1f2b6c !important;
+    font-weight: normal !important;
+    }
+
   .serch-main-box .verified-img {
   width: 15%;
   margin: 0 0 0 auto;

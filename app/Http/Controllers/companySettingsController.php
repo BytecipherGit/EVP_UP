@@ -5,7 +5,7 @@ use App\Models\CompanyProfile;
 use App\Models\CompanyAddress;
 use App\Models\Department;
 use App\Models\User;
-use App\Models\SmtpDetails;
+use App\Models\EmailConfiguration;
 use Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Plan;
@@ -24,7 +24,7 @@ class companySettingsController extends Controller
         $department = Department::all();
         $designat = Designation::all();
         $plans = Plan::latest()->first();
-        $smtpDetails = SmtpDetails::where('company_id',Auth::id())->first();
+        $smtpDetails = EmailConfiguration::where('company_id',Auth::id())->first();
 
         return view('admin/settings', compact('profile','department','designat','plans','smtpDetails'));
     
@@ -138,7 +138,7 @@ class companySettingsController extends Controller
         {
           if (Auth::check()) {
 
-            $smtpData=DB::table('smtp_details')->where('company_id',Auth::id())
+            $smtpData=DB::table('email_configurations')->where('company_id',Auth::id())
                ->update([
 
                   'company_id'=> Auth::id(),

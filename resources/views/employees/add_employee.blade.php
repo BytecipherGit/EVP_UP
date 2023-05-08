@@ -29,7 +29,7 @@
         </div>
         @endif
         <div class="employee-tab-bar">
-            <ul class="nav nav-tabs table-responsive-width" role="tablist">
+            <ul class="nav nav-tabs table-responsive-width primary_color" role="tablist">
                 <li class="nav-item">
                     <li class="nav-item">
                     <a class="nav-link @if (Request::segment(3) == null) active @endif  secondary_color" data-toggle="tab" href="#basicInformation" role="tab">Basic Info</a>

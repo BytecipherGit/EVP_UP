@@ -4,7 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use DB;
-use Config;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
 
 class MailConfigServiceProvider extends ServiceProvider
 {
@@ -16,6 +17,7 @@ class MailConfigServiceProvider extends ServiceProvider
     public function register()
     {
         $mail = DB::table('email_configurations')->first();
+        // dd($mail);
         if ($mail) {
             $config = array(
                 'driver'     => $mail->driver,

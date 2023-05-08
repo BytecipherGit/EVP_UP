@@ -34,7 +34,7 @@
                                   @else
                                       <td><span class="not-verified-clr"><i class="fa fa-times"></i>Not Verified</span></td>
                                   @endif
-                                  <td><button type="button" class="border-none" data-toggle="modal" data-target="#edit_qualification{{ $workhistory->id }}"><img src="{{ asset('assets') }}/admin/images/edit-icon.png"></button></td>
+                                  <td><button type="button" class="border-none" data-toggle="modal" data-target="#edit_workhistory{{ $workhistory->id }}"><img src="{{ asset('assets') }}/admin/images/edit-icon.png"></button></td>
                               </tr>
                               @endforeach
                           </tbody>
@@ -47,11 +47,11 @@
  <!-- The Modal Workhistory Add -->
 @foreach ($workhistoryViewExist as $workhistory)
 
-<div class="modal fade custu-modal-popup" id="edit_qualification{{ $workhistory->id }}" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade custu-modal-popup" id="edit_workhistory{{ $workhistory->id }}" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title" id="exampleModalLabel">Add Qualification</h2>
+                <h2 class="modal-title" id="exampleModalLabel">Add Workhistory</h2>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <img src="{{ asset('assets') }}/admin/images/close-btn-icon.png">
                 </button>

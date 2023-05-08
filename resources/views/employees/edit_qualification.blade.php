@@ -4,6 +4,8 @@
     @csrf
   <input type="hidden" id="id" name="id" value="{{ $qualification ? $qualification->id : '' }}" />
   <input type="hidden" id="employee_id" name="employee_id" value="{{ $employeeExists ? $employeeExists->id : '' }}" />
+  <input type="hidden" id="verification_id" name="verification_id" value="{{ $qualificationStatus ? $qualificationStatus->id : '' }}" />
+
   
      <div class="form-group">
             <div class="row">

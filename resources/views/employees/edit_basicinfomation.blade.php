@@ -3,6 +3,7 @@
     @csrf
     <input type="hidden" id="is_add" value="{{ $employeeExists ? '' : 1 }}" />
     <input type="hidden" id="employee_id" name="employee_id" value="{{ $employeeExists ? $employeeExists->id : '' }}" />
+    <input type="hidden" id="verification_id" name="verification_id" value="{{ $verificationData ? $verificationData->id : '' }}" />
     <div class="row">
         <div class="col-lg-3">
             <div class="profile-add-img">
@@ -252,7 +253,7 @@
                 emg_relationship: "required",
                 document_type: "required",
                 document_number: "required",
-                document_id: "required",
+                // document_id: "required",
 
             },
 
@@ -271,7 +272,7 @@
                 emg_name: "Emergency name is required",
                 emg_relationship: "Emergency relationship is required",
                 emg_address: "Emergency address is required",
-                document_id: "document id is required",
+                // document_id: "document id is required",
                 document_number: "document number is required",
                 document_type: "document type is required",
 
@@ -286,10 +287,10 @@
                 duration_from: "required",
                 duration_to: "required",
                 verification_type: "required",
-                document: {
-                    required: true,
-                    extension: "pdf|doc|docx",
-                }
+                // document: {
+                //     required: true,
+                //     extension: "pdf|doc|docx",
+                // }
             },
 
             messages: {
@@ -299,10 +300,10 @@
                 duration_from: "Duration date is required",
                 duration_to: "Duration to is required",
                 verification_type: "Verification type is required",
-                document: {
-                    required: "Document is required",
-                    extension: "extension shuold not wrong",
-                },
+                // document: {
+                //     required: "Document is required",
+                //     extension: "extension shuold not wrong",
+                // },
             }
         }); 
         
@@ -333,10 +334,10 @@
                 designation: "required",
                 work_duration_to: "required",
                 work_duration_from: "required",
-                offer_letter: "required",
+                // offer_letter: "required",
                 verification_type: "required",
-                exp_letter: "required",
-                salary_slip: "required",
+                // exp_letter: "required",
+                // salary_slip: "required",
             },
 
             messages: {
@@ -344,10 +345,10 @@
                 designation: "Designation is required",
                 work_duration_to: "Work duration is required",
                 work_duration_from: "Work duration From is required",
-                offer_letter: "Offer letter to is required",
+                // offer_letter: "Offer letter to is required",
                 verification_type: "Verification type is required",
-                exp_letter: "Experience letter is required",
-                salary_slip: "Salary slip is required",
+                // exp_letter: "Experience letter is required",
+                // salary_slip: "Salary slip is required",
             }
         });
 

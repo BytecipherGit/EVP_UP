@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Verification extends Model
 {
     use HasFactory;
+    protected $table='verification';
+    public $guarded = ['id'];
 }

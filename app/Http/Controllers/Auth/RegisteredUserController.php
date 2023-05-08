@@ -13,13 +13,14 @@ use App\Models\Country;
 use App\Models\State;
 use App\Models\ThemeSetting;
 use App\Models\User;
-use App\Models\SmtpDetails;
+use App\Models\EmailConfiguration;
 use App\Rules\EmailDomain;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail as FacadesMail;
+// use Illuminate\Support\Facades\Mail as FacadesMail;
+use Mail as FacadesMail;
 use Illuminate\View\View;
 use Response;
 use Illuminate\Validation\Rules;
@@ -145,7 +146,7 @@ class RegisteredUserController extends Controller
              
              );
 
-             SmtpDetails::create($insertSMTPRecords);
+             EmailConfiguration::create($insertSMTPRecords);
         }
 
         // for email send

@@ -10,6 +10,7 @@ use App\Models\Empofficial;
 use App\Models\Exitemp;
 use App\Models\EmployeeTest;
 use App\Models\User;
+use App\Models\Verification;
 use App\Models\CompanyEmployee;
 use App\Models\Emplang;
 use Auth;
@@ -35,12 +36,17 @@ class NewEmployeeController extends Controller
         $employeeSkillsViewExists = Empskills:: where('employee_id',$request->id)->get();
         $employeeLanguageViewExists = Emplang:: where('employee_id',$request->id)->get();
         $employeeOfficials = Empofficial:: where('employee_id',$request->id)->first();
+        $verificationData = Verification:: where('employee_id',$request->id)->where('verification_document_type','=','identity_document')->first();
+        $qualificationStatus = Verification:: where('employee_id',$request->id)->where('verification_document_type','=','qualification_document')->first();
+        $experienceStatus = Verification:: where('employee_id',$request->id)->where('verification_document_type','=','experience_document')->first();
 
-        return view('employees/add_employee',compact('employeeExists','qualificationExist','qualificationViewExist','workhistoryExists','workhistoryViewExist','employeeSkillsExists','employeeSkillsViewExists','employeeLanguageViewExists','employeeOfficials'));
+// dd($verificationData);
+        return view('employees/add_employee',compact('employeeExists','qualificationExist','qualificationViewExist','workhistoryExists','workhistoryViewExist','employeeSkillsExists','employeeSkillsViewExists','employeeLanguageViewExists','employeeOfficials','verificationData','qualificationStatus','experienceStatus'));
     }
 
     public function createEmployee(request $request)
     {
+       
         if (Auth::check()) {
             // $userDetails = HelpersHelper::getUserDetails(Auth::id());
             $validator = Validator::make($request->all(), [
@@ -114,7 +120,7 @@ class NewEmployeeController extends Controller
                         'document_id'=>!empty($request->document_id) ? $request->document_id : null,
                         'document_number'=>!empty($request->document_number) ? $request->document_number : null,
                         'verification_type'=> $statusVerification,
-                        'third_party_document'=>!empty($request->third_party_document) ? $request->third_party_document : null,
+                        'third_party_document'=>!empty($uploadThirdPartyDocument) ? $uploadThirdPartyDocument : null,
                         'third_party_verification'=> $statusThirdPartyVerification,
                     ];
 
@@ -125,12 +131,24 @@ class NewEmployeeController extends Controller
                         
                         $employeeData = Employee::where('empCode',$empCode)->first();
 
+
+
                         if (!empty($employeeData)) {
-                         $insertCompanyEmployee = [
-                           'employee_id' => $employeeData->id,
-                           'company_id' => Auth::id(),
-                           'status' => '1',
-                       ];
+
+                            $insertVerification = [
+                                'employee_id' => $employeeData->id,
+                                'company_id' => Auth::id(),
+                                'status' => $employeeData->third_party_verification,
+                                'document' => !empty($employeeData->third_party_document) ? $employeeData->third_party_document : null,
+                                'verification_document_type' => 'identity_document',
+                              ];
+                            $verificationData = Verification::create($insertVerification);
+
+                            $insertCompanyEmployee = [
+                                'employee_id' => $employeeData->id,
+                                'company_id' => Auth::id(),
+                                'status' => '1',
+                            ];
                         $companyemployeeData = CompanyEmployee::create($insertCompanyEmployee);
                         }
 
@@ -151,7 +169,7 @@ class NewEmployeeController extends Controller
 
     public function updateEmployee(request $request)
     {
-
+// dd($request->all());
         if (Auth::check()) {
             $validator = Validator::make($request->all(), [
                 // 'title' => 'required|string|max:255',
@@ -233,7 +251,18 @@ class NewEmployeeController extends Controller
 
                     ]);
 
+                    $employeeDetails = Employee::where('id',$request->employee_id)->first();
+
                     if (!empty($emplotyeeUpdate)) {
+
+                        $updateVerification = [
+
+                            'status' => $employeeDetails->third_party_verification,
+                            'document' => !empty($employeeDetails->third_party_document) ? $employeeDetails->third_party_document : null,
+                          ];
+
+                          $VerificationData = Verification::where('id',$request->verification_id)
+                                              ->where('company_id',Auth::id())->where('verification_document_type','=','identity_document')->update($updateVerification);
 
                         return redirect('employee_info/'.$request->employee_id)->with('message','Information added successfully');
                     } else {
@@ -321,6 +350,17 @@ class NewEmployeeController extends Controller
                         // return redirect('employee/form/'.$employee->id.'/#qualification');
 
                         if (!empty($qualificationData)) {
+
+                            $insertVerification = [
+                                'employee_id' => $qualificationData->employee_id,
+                                'company_id' => Auth::id(),
+                                'status' => $qualificationData->third_party_qualification_verification,
+                                'document' => !empty($qualificationData->third_party_qualification_document) ? $qualificationData->third_party_qualification_document : null,
+                                'verification_document_type' => 'qualification_document',
+                              ];
+
+                            $verificationData = Verification::create($insertVerification);
+
                             return redirect('employee_info/'.$request->employee_id.'/qualification');
                         } else {
                             return Response::json(['success' => '0']);
@@ -339,7 +379,7 @@ class NewEmployeeController extends Controller
 
     public function updateEmployeeQualification(request $request)
     {
-
+// dd($request->all());
         if (Auth::check()) {
             $validator = Validator::make($request->all(), [
                 // 'title' => 'required|string|max:255',
@@ -398,7 +438,19 @@ class NewEmployeeController extends Controller
 
                     $qualificationData = Empqualification::where('id',$request->id)->update($update);
 
+                    $employee = Empqualification::where('employee_id',$request->employee_id)->first();
+
                     if (!empty($qualificationData)) {
+
+                        $updateVerification = [
+
+                            'status' => $employee->third_party_qualification_verification,
+                            'document' => !empty($employee->third_party_qualification_document) ? $employee->third_party_qualification_document : null,
+                          ];
+
+                          $VerificationData = Verification::where('id',$request->verification_id)
+                                              ->where('company_id',Auth::id())->where('verification_document_type','=','qualification_document')->update($updateVerification);
+
                         return redirect('employee_info/'.$employeeDetails->id.'/qualification');
                     } else {
                         return Response::json(['success' => '0']);
@@ -493,6 +545,16 @@ class NewEmployeeController extends Controller
                         $workhistoryData = Empworkhistory::create($insert);
 
                         if (!empty($workhistoryData)) {
+
+                            $insertVerification = [
+                                'employee_id' => $workhistoryData->employee_id,
+                                'company_id' => Auth::id(),
+                                'status' => $workhistoryData->third_party_workhistory_verification,
+                                'document' => !empty($workhistoryData->third_party_workhistory_document) ? $workhistoryData->third_party_workhistory_document : null,
+                                'verification_document_type' => 'experience_document',
+                              ];
+
+                            $verificationData = Verification::create($insertVerification);
 
                             return redirect('employee_info/'.$employeeDetails->id.'/workhistory');
 
@@ -590,8 +652,18 @@ class NewEmployeeController extends Controller
                     ];
 
                     $workhistoryData = Empworkhistory::where('id',$request->id)->update($update);
+                    $employee = Empworkhistory::where('employee_id',$request->employee_id)->first();
+
 
                     if (!empty($workhistoryData)) {
+                           $updateVerification = [
+
+                            'status' => $employee->third_party_workhistory_verification,
+                            'document' => !empty($employee->third_party_workhistory_document) ? $employee->third_party_workhistory_document : null,
+                          ];
+
+                          $VerificationData = Verification::where('id',$request->verification_id)
+                                              ->where('company_id',Auth::id())->where('verification_document_type','=','experience_document')->update($updateVerification);
 
                         return redirect('employee_info/'.$employeeDetails->id.'/workhistory');
 
@@ -733,12 +805,21 @@ class NewEmployeeController extends Controller
                       ];
 
                       $officialData = Empofficial::create($insert);
-    //    dd($officialData);
+
                       if (!empty($officialData)) {
-                          return redirect('employee');
-                      } else {
-                          return Response::json(['success' => '0']);
-                      }
+
+                        $officialEmpData = Empofficial::where('employee_id',$request->employee_id)->first();
+                    
+                          CompanyEmployee::where('employee_id',$officialEmpData->employee_id)->update([
+                              'start_date'  => $officialEmpData->date_of_joining,
+                              'status' => $officialEmpData->emp_status
+                            ]);
+                            
+                        return redirect('employee');
+                    
+                    } else {
+                        return Response::json(['success' => '0']);
+                    }
                   
               } else {
                       return Response::json(['errors' => $validator->errors()]);
@@ -750,6 +831,10 @@ class NewEmployeeController extends Controller
 
       }
   }
+
+
+
+
 
   public function updateEmployeeOfficial(request $request)
   {
@@ -893,8 +978,5 @@ class NewEmployeeController extends Controller
       }
 
   }
-
-
-
 
 }

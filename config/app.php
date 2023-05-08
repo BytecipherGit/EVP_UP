@@ -183,7 +183,6 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         // Anhskohbo\NoCaptcha\NoCaptchaServiceProvider::class,
         Mews\Captcha\CaptchaServiceProvider::class,
-        App\Providers\MailConfigServiceProvider::class,
         /*
          * Package Service Providers...
          */
@@ -196,6 +195,8 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\MailConfigServiceProvider::class,
+        
 
     ],
 

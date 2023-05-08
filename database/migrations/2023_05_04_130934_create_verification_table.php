@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedInteger('company_id');
             $table->foreign('company_id')->references('id')->on('users')->onDelete('cascade');
-            $table->unsignedBigInteger('template_id');
-            $table->foreign('template_id')->references('id')->on('company_templates')->comment('Primary key from company_templates table')->onDelete('cascade');
+            $table->unsignedBigInteger('employee_id');
+            $table->foreign('employee_id')->references('id')->on('employee')->comment('Primary key from employee table')->onDelete('cascade');
             $table->boolean('status')->default(0)->comment('1 verified, 0 Not Verified');
             $table->string('document')->nullable();
             $table->string('verification_document_type')->nullable();
