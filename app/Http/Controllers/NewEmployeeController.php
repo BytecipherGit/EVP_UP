@@ -361,7 +361,7 @@ class NewEmployeeController extends Controller
 
                             $verificationData = Verification::create($insertVerification);
 
-                            return redirect('employee_info/'.$request->employee_id.'/qualification');
+                            return redirect('employee_info/'.$request->employee_id.'/qualification')->with('message','Information added successfully');
                         } else {
                             return Response::json(['success' => '0']);
                         }        
@@ -453,7 +453,7 @@ class NewEmployeeController extends Controller
                           $VerificationData = Verification::where('id',$request->verification_id)
                                               ->where('company_id',Auth::id())->where('verification_document_type','=','qualification_document')->update($updateVerification);
 
-                        return redirect('employee_info/'.$employeeDetails->id.'/qualification');
+                        return redirect('employee_info/'.$employeeDetails->id.'/qualification')->with('message','Information added successfully');
                     } else {
                         return Response::json(['success' => '0']);
                     }
@@ -558,7 +558,7 @@ class NewEmployeeController extends Controller
 
                             $verificationData = Verification::create($insertVerification);
 
-                            return redirect('employee_info/'.$employeeDetails->id.'/workhistory');
+                            return redirect('employee_info/'.$employeeDetails->id.'/workhistory')->with('message','Information added successfully');
 
                         } else {
 
@@ -668,7 +668,7 @@ class NewEmployeeController extends Controller
                           $VerificationData = Verification::where('id',$request->verification_id)
                                               ->where('company_id',Auth::id())->where('verification_document_type','=','experience_document')->update($updateVerification);
 
-                        return redirect('employee_info/'.$employeeDetails->id.'/workhistory');
+                        return redirect('employee_info/'.$employeeDetails->id.'/workhistory')->with('message','Information added successfully');
 
                     } else {
                         return Response::json(['success' => '0']);
@@ -726,7 +726,7 @@ class NewEmployeeController extends Controller
                      $language = DB::table('employee_language')->insert($insertDatalang);  
                   } 
 
-                  return redirect('employee_info/'.$employeeDetails->id.'/skills');
+                  return redirect('employee_info/'.$employeeDetails->id.'/skills')->with('message','Information added successfully');
                          
                 } else {
                         return Response::json(['errors' => $validator->errors()]);
@@ -754,7 +754,7 @@ class NewEmployeeController extends Controller
             $skillsData = Empskills::create($insert);
           }
 
-            return redirect('employee_info/'.$employeeDetails->id.'/skills');
+            return redirect('employee_info/'.$employeeDetails->id.'/skills')->with('message','Information added successfully');
     }
 
     public function addMorelangEmployeeSkills(request $request)
@@ -776,7 +776,7 @@ class NewEmployeeController extends Controller
         $languageData = Emplang::create($insertLanguage);
     }
 
-    return redirect('employee_info/'.$employeeDetails->id.'/skills');
+    return redirect('employee_info/'.$employeeDetails->id.'/skills')->with('message','Information added successfully');
   }
 
   public function createEmployeeOfficial(request $request)
@@ -818,7 +818,7 @@ class NewEmployeeController extends Controller
                               'status' => $officialEmpData->emp_status
                             ]);
                             
-                        return redirect('employee');
+                        return redirect('employee')->with('message','Information added successfully');
                     
                     } else {
                         return Response::json(['success' => '0']);
@@ -875,7 +875,7 @@ class NewEmployeeController extends Controller
                             'status' => $officialEmpData->emp_status
                           ]);
                           
-                      return redirect('employee');
+                      return redirect('employee')->with('message','Information added successfully');
 
                   } else {
                       return Response::json(['success' => '0']);
@@ -919,7 +919,7 @@ class NewEmployeeController extends Controller
 
                   if (!empty($languageData)) {
                     
-                    return redirect('employee_info'.$employeeDetails->id.'/skills');
+                    return redirect('employee_info'.$employeeDetails->id.'/skills')->with('message','Information added successfully');
                   } else {
                       return Response::json(['success' => '0']);
                   }
@@ -963,7 +963,7 @@ class NewEmployeeController extends Controller
 
                   if (!empty($skillsData)) {
 
-                    return redirect('employee_info/'.$employeeDetails->id.'/skills');
+                    return redirect('employee_info/'.$employeeDetails->id.'/skills'->with('message','Information added successfully'));
 
                   } else {
                       return Response::json(['success' => '0']);

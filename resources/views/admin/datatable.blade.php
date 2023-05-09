@@ -8,12 +8,13 @@
 <link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/responsive.bootstrap.min.css">
 
 <div class="main-container">
+    <div id="successMessage">
     @if (session()->has('message'))
         <div class="alert alert-success">
             {{ session()->get('message') }}
         </div>
     @endif
-
+</div>
     <div class="main-heading">
         <div class="row">
             <div class="col-md-4">
@@ -178,6 +179,11 @@
 <script src="{{ asset('assets') }}/datatable/js/responsive.bootstrap.min.js"></script>
 <script>
     $(document).ready(function() {
+
+        setTimeout(function(){
+          $('#successMessage').fadeOut('fast');
+      }, 2000);
+
         var table = $('#example').DataTable({
             responsive: true,
             pagination: false
