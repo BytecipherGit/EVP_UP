@@ -234,6 +234,12 @@
 <script>
     $(document).ready(function() {
 
+   
+    setTimeout(function(){
+        $('#successMessage').fadeOut('fast');
+    }, 2000);
+
+
         $("#employee_basic_form_edit").validate({
 
             rules: {

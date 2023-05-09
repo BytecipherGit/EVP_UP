@@ -21,13 +21,14 @@
             </div>
         </div>
         <!--- Main Heading ----->
-        {{-- <div id="successMessage">
+        <div id="successMessage">
             @if (session()->has('message'))
             <div class="alert alert-success">
                 {{ session()->get('message') }}
             </div>
+            @endif
         </div>
-        @endif --}}
+        
         <div class="employee-tab-bar">
             <ul class="nav nav-tabs table-responsive-width primary_color" role="tablist">
                 <li class="nav-item">

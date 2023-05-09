@@ -1261,6 +1261,7 @@ class InterviewEmployee extends Controller
 
     public function getEmailTemplate(request $request)
     {
+        // dd($request->all);
         if($request->interview_status){
             $interviewStatus = $request->interview_status;
             return view('admin.email_template_confirmation',compact('interviewStatus'));
