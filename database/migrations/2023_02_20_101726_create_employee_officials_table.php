@@ -20,10 +20,9 @@ return new class extends Migration
             $table->string('date_of_joining')->nullable();
             $table->string('emp_type')->nullable();
             $table->string('work_location')->nullable();
-            $table->tinyInteger('emp_status')->comment('1=Active, 0=Inactive');
+            $table->boolean('emp_status')->default(0)->comment('1 Active, 0 Inactive');
             $table->string('lpa')->nullable();
             $table->string('designation')->nullable();
-    
             $table->timestamps();
         });
     }
@@ -34,11 +33,7 @@ return new class extends Migration
      * @return void
      */
     public function down()
-    {
-        Schema::table('employee_officials', function (Blueprint $table) {
-            $table->dropForeign('employee_officials_employee_id_foreign');
-            $table->dropColumn('employee_id');
-        });
+    {   
         Schema::dropIfExists('employee_officials');
     }
 };

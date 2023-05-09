@@ -12,6 +12,7 @@ use App\Mail\SendInterviewScheduleOfficeMailToInterviewer;
 use App\Mail\SendInterviewSchedulePhoneMail;
 use App\Mail\SendInterviewScheduleHomeMail;
 use App\Mail\SendInterviewSchedulePhoneMailToInterviewer;
+use App\Mail\SendInterviewScheduleHomeMailToInterviewer;
 use App\Mail\QualifiedEmailTemplate;
 use App\Mail\NotQualifiedEmailTemplate;
 use App\Models\Employee;
@@ -1212,14 +1213,14 @@ class InterviewEmployee extends Controller
 
     public function sendEmailTemplate(request $request)
     {
-        // dd($request->interview_status);
+        // dd($request->interview_id);
         // if (!empty($request->interview_id) && !empty($request->status)) {
             $candidate = Employee::join('interview_employees','interview_employees.employee_id','=','employee.id')
                          ->join('interview_employee_rounds','interview_employees.id','=','interview_employee_rounds.interview_employees_id')
                          ->where('interview_employee_rounds.company_id',Auth::id())->where('interview_employee_rounds.interview_employees_id',$request->interview_id)->first();
             $templateData = CompanyEmailTemplate::where('company_id',Auth::id())->first();     
   
-
+// dd($templateData);
          if (!empty($request->interview_id) && !empty($request->status) && ($request->interview_status == 'Qualified') ) {
             $templateData = CompanyEmailTemplate::where('email_type','Qualified')->where('company_id',Auth::id())->first();
 

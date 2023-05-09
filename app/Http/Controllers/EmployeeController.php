@@ -61,6 +61,7 @@ class EmployeeController extends Controller
 
         $uploadProfile = '';
         $uploadDocumentId = '';
+        $uploadThirdPartyDocument = '';
         $empCode = substr(time(), -6) . sprintf('%04d', rand(0, 9999));
 
        if ($request->hasFile('profile')) {
@@ -76,7 +77,28 @@ class EmployeeController extends Controller
         $file->storeAs('public/employee/employee_document', $fileName);
         $uploadDocumentId = asset('storage/employee/employee_document/' . $fileName);
          }
-      
+
+         if ($request->hasFile('third_party_document')) {
+          $file = $request->file('third_party_document');
+          $fileName = time() . '_' . $empCode .'_'. $file->getClientOriginalName();
+          $file->storeAs('public/employee/third_party_documents', $fileName);
+          $uploadThirdPartyDocument = asset('storage/employee/third_party_documents/' . $fileName);
+           }
+
+         $statusVerification = '';
+         if (!empty($request->verification_type) && $request->verification_type == true) {
+             $statusVerification = 1;
+         } else {
+             $statusVerification = 0;
+         }
+
+         $statusThirdPartyVerification = '';
+         if (!empty($request->third_party_verification) && $request->third_party_verification == true) {
+             $statusThirdPartyVerification = 1;
+         } else {
+             $statusThirdPartyVerification = 0;
+         }
+
         $employe = new Employee();
         $employe->first_name=$request->input('first_name');
         $employe->profile=$uploadProfile;
@@ -98,6 +120,9 @@ class EmployeeController extends Controller
         $employe->document_type=$request->input('document_type');
         $employe->document_id=$uploadDocumentId;
         $employe->document_number=$request->input('document_number');
+        $employe->verification_type=$statusVerification;
+        $employe->third_party_document=$uploadThirdPartyDocument;
+        $employe->third_party_verification=$statusThirdPartyVerification;
 
         $employe->save();
 
@@ -192,20 +217,45 @@ class EmployeeController extends Controller
 
                
 
-              $emp_id=Employee::where('id',$request->id)->first();
+              $employeeDetails=Employee::where('id',$request->id)->first();
               // print_r($basic_id);die();
+
+              if ($request->hasFile('document')) {
+                $file = $request->file('document');
+                $fileName = time() . '_' . $employeeDetails->empCode .'_'. $file->getClientOriginalName();
+                $file->storeAs('public/employee/documents', $fileName);
+                $uploadDocument = asset('storage/employee/documents/' . $fileName);
+                 }
+
+              if ($request->hasFile('third_party_document')) {
+                $file = $request->file('third_party_document');
+                $fileName = time() . '_' . $employeeDetails->empCode .'_'. $file->getClientOriginalName();
+                $file->storeAs('public/employee/third_party_documents', $fileName);
+                $uploadThirdPartyDocument = asset('storage/employee/third_party_documents/' . $fileName);
+                 }
+      
+               $statusVerification = '';
+               if (!empty($request->verification_type) && $request->verification_type == true) {
+                   $statusVerification = 1;
+               } else {
+                   $statusVerification = 0;
+               }
+      
+               $statusThirdPartyVerification = '';
+               if (!empty($request->third_party_verification) && $request->third_party_verification == true) {
+                   $statusThirdPartyVerification = 1;
+               } else {
+                   $statusThirdPartyVerification = 0;
+               }
+
               $employee_ident = new Employeeidentity();
-              $employee_ident->employee_id=$emp_id->id;
+              $employee_ident->employee_id=$employeeDetails->id;
               $employee_ident->id_type=$request->input('id_type');
               $employee_ident->id_number=$request->input('id_number');
-              $employee_ident->document=$request->input('profile');
-              $employee_ident->verification_type=$request->input('verification_type');
-      
-              if($request->has('document')) {
-                $image = $request->file('document');
-                $employee_ident->document = $image->getClientOriginalName();
-                $image->move(public_path('/Image'), $image->getClientOriginalName());
-              }
+              $employee_ident->document=$uploadDocument;
+              $employee_ident->verification_type=$statusVerification;
+              $employee_ident->third_party_document=$uploadThirdPartyDocument;
+              $employee_ident->third_party_verification=$statusThirdPartyVerification;
 
               $employee_ident->save();
 
@@ -237,9 +287,38 @@ class EmployeeController extends Controller
                 'verification_type' => ['required','string', 'max:255'],
                 // 'document' => ['required','file','mimes:jpeg,png,pdf,docs,doc','max:2048']
               
-                ]);
-                
-                $emp_id=Employee::where('id',$request->id)->first();
+                ]);   
+
+                $employeeDetails=Employee::where('id',$request->id)->first();
+
+                if ($request->hasFile('document')) {
+                  $file = $request->file('document');
+                  $fileName = time() . '_' . $employeeDetails->empCode .'_'. $file->getClientOriginalName();
+                  $file->storeAs('public/employee/documents', $fileName);
+                  $uploadDocument = asset('storage/employee/documents/' . $fileName);
+                   }
+
+               if ($request->hasFile('third_party_qualification_document')) {
+                $file = $request->file('third_party_qualification_document');
+                $fileName = time() . '_' . $employeeDetails->empCode .'_'. $file->getClientOriginalName();
+                $file->storeAs('public/employee/third_party_documents', $fileName);
+                $uploadThirdPartyDocument = asset('storage/employee/third_party_documents/' . $fileName);
+                 }
+      
+               $statusVerification = '';
+               if (!empty($request->qualification_verification_type) && $request->qualification_verification_type == true) {
+                   $statusVerification = 1;
+               } else {
+                   $statusVerification = 0;
+               }
+      
+               $statusThirdPartyVerification = '';
+               if (!empty($request->third_party_qualification_verification) && $request->third_party_qualification_verification == true) {
+                   $statusThirdPartyVerification = 1;
+               } else {
+                   $statusThirdPartyVerification = 0;
+               }
+
                 $employee_qualf = new Empqualification();
                 $employee_qualf->employee_id=$emp_id->id;
                 $employee_qualf->inst_name=$request->input('inst_name');
@@ -247,15 +326,11 @@ class EmployeeController extends Controller
                 $employee_qualf->subject=$request->input('subject');
                 $employee_qualf->duration_from=$request->input('duration_from');
                 $employee_qualf->duration_to=$request->input('duration_to');
-                $employee_qualf->document=$request->input('document');
-                $employee_qualf->verification_type=$request->input('verification_type');
-              
-                if($request->has('document')) {
-                  $image = $request->file('document');
-                  $employee_qualf->document = $image->getClientOriginalName();
-                  $image->move(public_path('/Image'), $image->getClientOriginalName());
-                 }
-        
+                $employee_qualf->document=$uploadDocument;
+                $employee_qualf->qualification_verification_type=$statusVerification;
+                $employee_qualf->third_party_qualification_document=$uploadThirdPartyDocument;
+                $employee_qualf->third_party_qualification_verification=$statusThirdPartyVerification;
+
                 $employee_qualf->save();
              
                 $qualifinfo = Empworkhistory::where('employee_id',$request->id)->first();
@@ -287,38 +362,68 @@ class EmployeeController extends Controller
 
                 ]);
 
-                $emp_id=Employee::where('id',$request->id)->first();
+                $employeeDetails=Employee::where('id',$request->id)->first();
+                 $uploadOfferDocument = '';
+                 $uploadExperienceDocument = '';
+                 $uploadThirdPartyDocument = '';
+                 $uploadSalaryDocument = '';
 
+                if ($request->hasFile('offer_letter')) {
+                  $file = $request->file('offer_letter');
+                  $fileName = time() . '_' . $employeeDetails->empCode .'_'. $file->getClientOriginalName();
+                  $file->storeAs('public/employee/documents', $fileName);
+                  $uploadOfferDocument = asset('storage/employee/documents/' . $fileName);
+                   }
+
+                if ($request->hasFile('exp_letter')) {
+                  $file = $request->file('exp_letter');
+                  $fileName = time() . '_' . $employeeDetails->empCode .'_'. $file->getClientOriginalName();
+                  $file->storeAs('public/employee/documents', $fileName);
+                  $uploadExperienceDocument = asset('storage/employee/documents/' . $fileName);
+                   }
+
+                if ($request->hasFile('salary_slip')) {
+                  $file = $request->file('salary_slip');
+                  $fileName = time() . '_' . $employeeDetails->empCode .'_'. $file->getClientOriginalName();
+                  $file->storeAs('public/employee/documents', $fileName);
+                  $uploadSalaryDocument = asset('storage/employee/documents/' . $fileName);
+                   }
+
+               if ($request->hasFile('third_party_workhistory_document')) {
+                $file = $request->file('third_party_workhistory_document');
+                $fileName = time() . '_' . $employeeDetails->empCode .'_'. $file->getClientOriginalName();
+                $file->storeAs('public/employee/third_party_documents', $fileName);
+                $uploadThirdPartyDocument = asset('storage/employee/third_party_documents/' . $fileName);
+                 }
+      
+               $statusVerification = '';
+               if (!empty($request->qualification_verification_type) && $request->qualification_verification_type == true) {
+                   $statusVerification = 1;
+               } else {
+                   $statusVerification = 0;
+               }
+      
+               $statusThirdPartyVerification = '';
+               if (!empty($request->third_party_qualification_verification) && $request->third_party_qualification_verification == true) {
+                   $statusThirdPartyVerification = 1;
+               } else {
+                   $statusThirdPartyVerification = 0;
+               }
                 $employee_work = new Empworkhistory();
                 $employee_work->employee_id=$emp_id->id;
                 $employee_work->com_name=$request->input('com_name');
                 $employee_work->designation=$request->input('designation');
-                $employee_work->offer_letter=$request->input('offer_letter');
+                $employee_work->offer_letter=$uploadOfferDocument;
                 $employee_work->work_duration_from=$request->input('work_duration_from');
                 $employee_work->work_duration_to=$request->input('work_duration_to');
-                $employee_work->exp_letter=$request->input('exp_letter');
-                $employee_work->salary_slip=$request->input('salary_slip');
-                $employee_work->verification_type=$request->input('verification_type');
-              
-
-                if($request->has('offer_letter')) {
-                  $image = $request->file('offer_letter');
-                  $employee_work->offer_letter = $image->getClientOriginalName();
-                  $image->move(public_path('/Image'), $image->getClientOriginalName());
-                }
-                if($request->has('exp_letter')) {
-                  $image = $request->file('exp_letter');
-                  $employee_work->exp_letter = $image->getClientOriginalName();
-                  $image->move(public_path('/Image'), $image->getClientOriginalName());
-                }
-                if($request->has('salary_slip')) {
-                $image = $request->file('salary_slip');
-                $employee_work->salary_slip = $image->getClientOriginalName();
-                $image->move(public_path('/Image'), $image->getClientOriginalName());
-                }
-        
+                $employee_work->exp_letter=$uploadExperienceDocument;
+                $employee_work->salary_slip=$uploadSalaryDocument;
+                $employee_work->workhistory_verification_type=$statusVerification;
+                $employee_work->third_party_workhistory_document=$uploadThirdPartyDocument;
+                $employee_work->third_party_workhistory_verification=$statusThirdPartyVerification;
         
                 $employee_work->save();
+
                 $workinfo = Empskills::where('employee_id',$request->id)->first();
                 if (empty($workinfo)) {
             

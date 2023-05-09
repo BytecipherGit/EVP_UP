@@ -13,12 +13,14 @@ use App\Models\Country;
 use App\Models\State;
 use App\Models\ThemeSetting;
 use App\Models\User;
+use App\Models\EmailConfiguration;
 use App\Rules\EmailDomain;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail as FacadesMail;
+// use Illuminate\Support\Facades\Mail as FacadesMail;
+use Mail as FacadesMail;
 use Illuminate\View\View;
 use Response;
 use Illuminate\Validation\Rules;
@@ -116,8 +118,8 @@ class RegisteredUserController extends Controller
                 }
             }
 
-            // Condition for template add
-            $emailtemplate = CompanyTemplate::all();
+        // Condition for template add
+         $emailtemplate = CompanyTemplate::all();
             foreach ($emailtemplate as $emailtemp) {
                 $insertTemplatesRecords = array(
                     'company_id' => $user->id,
@@ -129,6 +131,22 @@ class RegisteredUserController extends Controller
 
                 CompanyEmailTemplate::create($insertTemplatesRecords);
             }
+
+     // Insert Compant id  for SMTP Details 
+           $insertSMTPRecords = array(
+                 'company_id' => $user->id,
+                 'driver'=> 'smtp',
+                 'host'=>'smtp.gmail.com',
+                 'port'=> '587',
+                 'from_address'=> 'jharshita259@gmail.com',
+                 'from_name'=> '${APP_NAME}',
+                 'encryption'=>'tls',
+                 'username'=> 'jharshita259@gmail.com',
+                 'password'=> 'bfhagppogpishvbq',
+             
+             );
+
+             EmailConfiguration::create($insertSMTPRecords);
         }
 
         // for email send

@@ -63,8 +63,9 @@ Route::get('/organization', function () {
 
 
 Route::get('/superlogin', [App\Http\Controllers\SuperAdminController::class, 'superAdminLogin'])->name('superlogin');
-Route::post('/invite-email/{id?}', [App\Http\Controllers\InviteempController::class, 'sendemail'])->name('invite-email');
-Route::post('send_invidation_to_employee',[App\Http\Controllers\InviteempController::class, 'sendInvidationToEmployee'])->name('send_invidation_to_employee');
+// Route::post('/invite-email/{id?}', [App\Http\Controllers\InviteempController::class, 'sendemail'])->name('invite-email');
+Route::post('send_invitation_to_employee',[App\Http\Controllers\InviteempController::class, 'sendInvitationToEmployee'])->name('send_invitation_to_employee');
+
 Route::middleware([Superadmin::class])->group(function () {
     Route::get('/superadmin', [App\Http\Controllers\SuperAdminController::class, 'index'])->name('superadmin');
     Route::get('superadmin/logout', [App\Http\Controllers\SuperAdminController::class, 'logout'])->name('superadmin.logout');
@@ -92,6 +93,8 @@ Route::middleware([Admin::class])->group(function () {
     Route::post('edit-employee/{id?}', [App\Http\Controllers\EmployeeController::class, 'editEmployee'])->middleware('documents');
     Route::get('/company_profile', [App\Http\Controllers\companySettingsController::class, 'profiledata'])->middleware('documents');
     Route::post('/update_company_profile', [App\Http\Controllers\companySettingsController::class, 'updateCompanyProfile'])->name('update_company_profile')->middleware('documents');
+    Route::post('smtp_details/form', [App\Http\Controllers\companySettingsController::class, 'createSmtpForm'])->name('create.smtp.details')->middleware('documents');
+
     Route::get('/employee-exit/{id?}', [App\Http\Controllers\EmployeeController::class, 'exitEmp'])->middleware('documents');
     Route::post('/employee-exit/{id?}', [App\Http\Controllers\EmployeeController::class, 'exitEmployee'])->middleware('documents');
     Route::get('/post-employee-details/{id}', [App\Http\Controllers\EmployeeController::class, 'postEmpDetails'])->middleware('documents');
@@ -202,10 +205,32 @@ Route::middleware([Admin::class])->group(function () {
 
     Route::get("exit-employee/form/{id?}", [App\Http\Controllers\ExitEmployeeProcess::class, 'getExitEmployee'])->middleware('documents');
     Route::any("exit-employee/submit/{id?}", [App\Http\Controllers\ExitEmployeeProcess::class, 'createExitEmployee'])->name('exit.employee.create')->middleware('documents');
-    Route::post('exit-employee/update', [App\Http\Controllers\ExitEmployeeProcess::class, 'updateExitEmployee'])->middleware('documents');
+    Route::post('exit-employee/update', [App\Http\Controllers\ExitEmployeeProcess::class, 'updateExtEmployee'])->middleware('documents');
+
+    //new employee form for testing
+    Route::get("employee_info/{id?}/{segment?}", [App\Http\Controllers\NewEmployeeController::class, 'index'])->name('basicinfo.index')->middleware('documents');
+    Route::any('employee/submit/{id?}', [App\Http\Controllers\NewEmployeeController::class, 'createEmployee'])->middleware('documents');
+    Route::post('employee_info/update', [App\Http\Controllers\NewEmployeeController::class, 'updateEmployee'])->middleware('documents');
+
+    Route::any('qualification/submit/{id?}', [App\Http\Controllers\NewEmployeeController::class, 'createEmployeeQualification'])->middleware('documents');
+    Route::post('qualification/form/update', [App\Http\Controllers\NewEmployeeController::class, 'updateEmployeeQualification'])->middleware('documents');
     
+    Route::any('workhistory/submit/{id?}', [App\Http\Controllers\NewEmployeeController::class, 'createEmployeeWorkhistory'])->middleware('documents');
+    Route::post('workhistory/form/update', [App\Http\Controllers\NewEmployeeController::class, 'updateEmployeeWorkhistory'])->middleware('documents');
+
+    Route::any('employee_skills/submit/{id?}', [App\Http\Controllers\NewEmployeeController::class, 'createEmployeeSkills'])->middleware('documents');
+    Route::post('employee_skills/form/update', [App\Http\Controllers\NewEmployeeController::class, 'updateEmployeeSkills'])->middleware('documents');
+    Route::any('add_employee_skills/submit/{id?}', [App\Http\Controllers\NewEmployeeController::class, 'addMoreEmployeeSkills'])->middleware('documents');
+    Route::any('add_employee_lang_skills/submit/{id?}', [App\Http\Controllers\NewEmployeeController::class, 'addMorelangEmployeeSkills'])->middleware('documents');
+
+    Route::any('employee_official/submit/{id?}', [App\Http\Controllers\NewEmployeeController::class, 'createEmployeeOfficial'])->middleware('documents');
+    Route::post('employee_official/form/update', [App\Http\Controllers\NewEmployeeController::class, 'updateEmployeeOfficial'])->middleware('documents');
+
+    Route::any('edit_skills/update/{id?}', [App\Http\Controllers\NewEmployeeController::class, 'updateSkills'])->middleware('documents');
+    Route::any('edit_language/update/{id?}', [App\Http\Controllers\NewEmployeeController::class, 'updateLanguage'])->middleware('documents');
 
 });
+
 Route::get('reload-captcha', [App\Http\Controllers\Auth\RegisteredUserController::class, 'reloadCaptcha'])->name('reloadCaptcha');
 Route::get('verification-success/{id?}', [InterviewEmployee::class, 'verificationEmail'])->name('verification.success');
 Route::any('resetverification-mail/{id?}', [App\Http\Controllers\Auth\RegisteredUserController::class, 'resetMailSend'])->name('resetverification.mail');
@@ -225,6 +250,10 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+// Route::get("email", [App\Http\Controllers\Auth\InviteempController::class, "sendEmail"])->name("email");
+Route::any("compose-email", [App\Http\Controllers\InviteempController::class, "sendExEmail"]);
+
 
 Route::get('interview/feedback/{id?}', [InterviewProcess::class, 'interviewFeedback'])->name('interview.feedback');
 Route::post('interview/feedback', [InterviewProcess::class, 'interviewFeedbackForEmployee'])->name('interview.feedback.mail');

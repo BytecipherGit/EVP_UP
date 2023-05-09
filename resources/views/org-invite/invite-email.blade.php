@@ -23,7 +23,7 @@
                     Hi there!,
                 </h2>
                 <p style="font-size: 18px; line-height: 32px; color: #373E57; padding: 0 20px 0px; margin:0; font-family: 'DM Sans', sans-serif; text-align: left;">                 
-                    @foreach($data as $bill) You have been invited by {{ $bill }} to join the organization: ByteCipher.  You can have access to this organization, once you accept the invite.@endforeach</p> 
+                    @foreach($mailName as $name) You have been invited by {{ $name }} to join the organization: ByteCipher.  You can have access to this organization, once you accept the invite.@endforeach</p> 
 
                 <p style="font-size: 18px; line-height: 32px; color: #373E57; padding:15px 20px 0px; margin:0; font-family: 'DM Sans', sans-serif; text-align: left;">
                    We hope you enjoy ByteCipher 
@@ -32,7 +32,7 @@
                  
 
                  <button style="background: #5533FF; border:none; border-radius: 6px; padding:15px 40px; margin:25px 0">
-                    @foreach($data2 as $id) <a href="{{route('email-config')}}/{{ $id }}" style="color: #fff; text-decoration:none; font-weight: 500; font-size: 20px; line-height: 26px; font-family: 'DM Sans', sans-serif;">
+                    @foreach($mailId as $id) <a href="{{route('email-config')}}/{{ $id }}" style="color: #fff; text-decoration:none; font-weight: 500; font-size: 20px; line-height: 26px; font-family: 'DM Sans', sans-serif;">
                     Accept Invitation
                     </a>@endforeach
                 </button>
@@ -41,7 +41,7 @@
                 <p style="text-align: center; margin-bottom: 30px; padding: 0 20px 0px; font-family: 'DM Sans', sans-serif;">
                     <span style="margin-bottom: 10px; display: block;">OR</span>
                     <br>
-                    <span>Follow the link:   @foreach($data2 as $id) <a href="{{route('email-config')}}/{{ $id }}" style="text-decoration: underline; cursor: pointer; color: #18a749; ">{{route('email-config')}}/{{ $id }}</a> @endforeach</span>
+                    <span>Follow the link:  @foreach($mailId as $id) <a href="{{route('email-config')}}/{{ $id }}" style="text-decoration: underline; cursor: pointer; color: #18a749; ">{{route('email-config')}}/{{ $id }}</a> @endforeach</span>
                 </p>
 
                 <p style="margin-top:15px;margin-bottom:15px;font-size:16px;line-height: 24px; color: #373E57;  text-align: left; padding: 0 20px 0px; font-family: 'DM Sans', sans-serif;">

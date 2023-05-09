@@ -23,7 +23,9 @@ return new class extends Migration
             $table->string('duration_from')->nullable();
             $table->string('duration_to')->nullable();
             $table->string('document')->nullable();
-            $table->string('verification_type')->nullable();
+            $table->tinyInteger('qualification_verification_type')->default('0')->comment('1=Verified, 0=Not Verified');
+            $table->string('third_party_qualification_document')->nullable();
+            $table->tinyInteger('third_party_qualification_verification')->default('0')->comment('1=Verified, 0=Not Verified');
             $table->timestamps();
         });
     }

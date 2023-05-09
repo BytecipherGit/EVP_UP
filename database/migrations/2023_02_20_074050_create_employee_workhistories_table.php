@@ -24,7 +24,9 @@ return new class extends Migration
             $table->string('offer_letter')->nullable();
             $table->string('exp_letter')->nullable();
             $table->string('salary_slip')->nullable();
-            $table->string('verification_type')->nullable();
+            $table->tinyInteger('workhistory_verification_type')->default('0')->comment('1=Verified, 0=Not Verified');
+            $table->string('third_party_workhistory_document')->nullable();
+            $table->tinyInteger('third_party_workhistory_verification')->default('0')->comment('1=Verified, 0=Not Verified');
             $table->timestamps();
         });
     }

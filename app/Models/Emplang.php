@@ -9,5 +9,6 @@ class Emplang extends Model
 {
     use HasFactory;
     protected $table='employee_language';
-    protected $fillable=['employee_id','lang','lang_type'];
+    public $guarded = ['id'];
+    
 }

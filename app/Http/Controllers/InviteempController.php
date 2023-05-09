@@ -11,10 +11,12 @@ use App\Models\Emplang;
 use App\Models\CompanyEmployee;
 use App\Models\EmployeeInterview;
 use App\Models\Empworkhistory;
+use App\Mail\DynamicEmail;
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Mail;
+use Config;
 use Redirect;
 use Response;
 
@@ -24,7 +26,8 @@ class InviteempController extends Controller
     public function index()
     {
         $empinvite = Employee::join('company_employee', 'company_employee.employee_id', '=', 'employee.id')
-                    ->where('company_employee.status',0)->where('company_employee.company_id',Auth::id())
+                    // ->where('company_employee.status',0)
+                    ->where('company_employee.company_id',Auth::id())
                     ->select('employee.*')->get();
         return view('admin/invite-employee', compact('empinvite'));
     }
@@ -91,7 +94,7 @@ class InviteempController extends Controller
         $employee->last_name = $request->input('last_name');
         $employee->email = $request->input('email');
         $employee->phone = $request->input('phone');
-        $employee->status = '2';
+        // $employee->status = '2';
 
         $employee->save();
         
@@ -100,12 +103,12 @@ class InviteempController extends Controller
             $insertCompanyEmployee = [
                 'employee_id' => $employee->id,
                 'company_id' => Auth::id(),
-                'status' => '0',
+                'status' => '1',
             ];
             $companyemployeeData = CompanyEmployee::create($insertCompanyEmployee);
         }
 
-        return redirect('invite-employee');
+        return redirect('invite_employee');
     }
 
     public function getCsvInvite(Request $request)
@@ -269,7 +272,7 @@ class InviteempController extends Controller
         return Response::download($file, 'Exp. Letter.jpg', $headers);
     }
 
-    public function sendInvidationToEmployee(request $request)
+    public function sendInvitationToEmployee(request $request)
     {
 
         $temp = array();
@@ -279,8 +282,6 @@ class InviteempController extends Controller
                 $temp[] = $ids;
             }
         }
-
-        
 
         $emp = DB::table('employee')->whereIn('id', $temp)->get();
         $info = array();
@@ -301,12 +302,13 @@ class InviteempController extends Controller
                 }
                 
                 $name = $row['first_name'] . ' ' . $row['last_name'];
-                $dat = ['first' => $name];
-                $id = ['ids' => $row['id']];
-                Mail::send('org-invite/invite-email', ['data' => $dat, 'data2' => $id], function ($message) use ($email, $name) {
-                    $message->to($email, $name)->subject
-                        ('ByteCipher Pvt Ltd Interview Invitation Email');
-                    $message->from('jharshita259@gmail.com', 'ByteCipher Pvt Ltd');
+                $send_name = ['first' => $name];
+                $send_id = ['ids' => $row['id']];
+                $company_name = ['company_name' => Auth::user()->name];
+                
+                Mail::send('org-invite/invite-email', ['mailName' => $company_name, 'mailId' => $send_id], function ($message) use ($email, $name) {
+                    $message->to($email, $name)->subject('ByteCipher Pvt Ltd Interview Invitation Email');
+                   $message->from(Config::get('mail.from.address'),Config::get('mail.from.name'));
                 });
             }
             return Response::json(['success' => '1']);

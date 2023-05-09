@@ -130,6 +130,7 @@ class ExitEmployeeProcess extends Controller
 
     public function createExitEmployee(request $request)
     {
+        // dd($request->all());
         $validator = Validator::make($request->all(), [
             'date_of_exit' => 'required|string|max:255',
             // 'decipline' => 'required|string|max:255',
@@ -140,7 +141,7 @@ class ExitEmployeeProcess extends Controller
         ]);
     // $exitprocess = ExitEmployee::where('company_id',Auth::id())->first();
     $checkRecordExist = Exitemp::join('company_employee','company_employee.company_id','=','exit_employee.company_id')->where('exit_employee.company_id',Auth::id())
-                        ->where('exit_employee.employee_id', $request->emp_id)->first();
+                        ->where('exit_employee.employee_id', $request->employee_id)->first();
                         // dd($exitprocess);
         if (empty($checkRecordExist)) {
             if ($validator->passes()) {
@@ -162,7 +163,7 @@ class ExitEmployeeProcess extends Controller
                         }
                         $insert = array(
                             'company_id' => Auth::id(),
-                            'employee_id' => $request->emp_id,
+                            'employee_id' => $request->employee_id,
                             'exit_process_id' => $request->exit_process_id[$i],
                             'date_of_exit' => $request->date_of_exit,
                             'decipline' => $request->decipline,
@@ -187,7 +188,7 @@ class ExitEmployeeProcess extends Controller
                         }
                         $insert = array(
                             'company_id' => Auth::id(),
-                            'employee_id' => $request->emp_id,
+                            'employee_id' => $request->employee_id,
                             'exit_process_id' => $request->exit_process_id[$i],
                             'date_of_exit' => $request->date_of_exit,
                             'decipline' => $request->decipline,
@@ -212,17 +213,13 @@ class ExitEmployeeProcess extends Controller
                         'rating' => $request->rating,
                         'review' => $request->review,
                     ]);
-                
+
+                    return redirect('employee');
                     //   Employee::where('id',$employeeData->employee_id)->update([
                     //     'status'  => '0'
-                    //   ]);
-            
-                    return redirect('employee')->with('message','Employee exit successfully');
-                }
+                    //   ]);     
 
-                if (!empty($employeeData)) {
-                    return Response::json(['success' => '1']);
-                } else {
+                }  else {
                     return Response::json(['success' => '0']);
                 }
             } else {
