@@ -31,9 +31,10 @@ use Carbon\Carbon;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
-// use DB;
 use Illuminate\Support\Facades\Mail as FacadesMail;
+
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
 
@@ -249,6 +250,21 @@ class InterviewEmployee extends Controller
     {
         if (Auth::check()) {
             $userDetails = HelpersHelper::getUserDetails(Auth::id());
+            $emailDetails = HelpersHelper::getSmtpConfig(Auth::id());
+
+            $config = array(
+                'driver'     => $emailDetails->driver,
+                'host'       => $emailDetails->host,
+                'port'       => $emailDetails->port,
+                'from'       => array('address' => $emailDetails->from_address, 'name' => $emailDetails->from_name),
+                'encryption' => $emailDetails->encryption,
+                'username'   => $emailDetails->username,
+                'password'   => $emailDetails->password,
+                'sendmail'   => '/usr/sbin/sendmail -bs',
+                'pretend'    => false,
+            );
+            Config::set('mail', $config);
+
             if (!empty($request->interview_type)) {
                 if ($request->interview_type == 'Video') {
                     $validator = Validator::make($request->all(), [
@@ -405,6 +421,19 @@ class InterviewEmployee extends Controller
                                             'instruction' => !empty($uploadInstructionPath) ? $uploadInstructionPath : '',
 
                                         ];
+                                        // config([
+                                        //     'mail.driver' => $config['driver'],
+                                        //     'mail.host' => $config['host'],
+                                        //     'mail.port' => $config['port'],
+                                        //     'mail.from_address' => $config['from_address'],
+                                        //     'mail.from_name' => $config['from_name'],
+                                        //     'mail.username' => $config['username'],
+                                        //     'mail.password' => $config['password'],
+                                        //     'mail.encryption' => $config['encryption'],
+                                            
+                                        // ]);
+                                               
+  
                                         FacadesMail::to($request->email)->send(new SendInterviewScheduleMail($mailData));
 
                                     } elseif ($request->interview_type == 'Telephonic') {
@@ -422,6 +451,8 @@ class InterviewEmployee extends Controller
                                             'interview_title' => !empty($getInterviewTitle->title) ? $getInterviewTitle->title : '',
                                             'instruction' => !empty($uploadInstructionPath) ? $uploadInstructionPath : '',
                                         ];
+
+                                        
 
                                         FacadesMail::to($request->email)->send(new SendInterviewSchedulePhoneMail($mailData));
                                     } elseif ($request->interview_type == 'At Office') {
@@ -562,6 +593,21 @@ class InterviewEmployee extends Controller
     {
         if (Auth::check()) {
             $userDetails = HelpersHelper::getUserDetails(Auth::id());
+            $emailDetails = HelpersHelper::getSmtpConfig(Auth::id());
+
+            $config = array(
+                'driver'     => $emailDetails->driver,
+                'host'       => $emailDetails->host,
+                'port'       => $emailDetails->port,
+                'from'       => array('address' => $emailDetails->from_address, 'name' => $emailDetails->from_name),
+                'encryption' => $emailDetails->encryption,
+                'username'   => $emailDetails->username,
+                'password'   => $emailDetails->password,
+                'sendmail'   => '/usr/sbin/sendmail -bs',
+                'pretend'    => false,
+            );
+            Config::set('mail', $config);
+
             if (!empty($request->interview_type)) {
                 if ($request->interview_type == 'Video') {
                     $validator = Validator::make($request->all(), [
@@ -902,9 +948,24 @@ class InterviewEmployee extends Controller
 
     public function scheduleNextRoundOfInterview(request $request)
     {
-        // dd($request->interview_id); 
+        // dd($request->all()); 
         if (Auth::check()) {
             $userDetails = HelpersHelper::getUserDetails(Auth::id());
+            $emailDetails = HelpersHelper::getSmtpConfig(Auth::id());
+
+            $config = array(
+                'driver'     => $emailDetails->driver,
+                'host'       => $emailDetails->host,
+                'port'       => $emailDetails->port,
+                'from'       => array('address' => $emailDetails->from_address, 'name' => $emailDetails->from_name),
+                'encryption' => $emailDetails->encryption,
+                'username'   => $emailDetails->username,
+                'password'   => $emailDetails->password,
+                'sendmail'   => '/usr/sbin/sendmail -bs',
+                'pretend'    => false,
+            );
+            Config::set('mail', $config);
+
             if (!empty($request->interview_type)) {
                 if ($request->interview_type == 'Video') {
                     $validator = Validator::make($request->all(), [
@@ -945,7 +1006,9 @@ class InterviewEmployee extends Controller
 
             if ($validator->passes()) {
 
-                $checkRecordExist = EmployeeInterview::where('id', $request->interview_id)->first();
+                $checkRecordExist = EmployeeInterview::join('employee','employee.id','=','interview_employees.employee_id')
+                                    ->where('interview_employees.id', $request->interview_id)->first();
+
                 if (!empty($checkRecordExist)) {
                 //  dd('hii');
                     //Check Interview is already created or not
@@ -991,7 +1054,9 @@ class InterviewEmployee extends Controller
                                     'interview_title' => !empty($getInterviewTitle->title) ? $getInterviewTitle->title : '',
                                     'instruction' => '',
                                 ];
+
                                 FacadesMail::to($checkRecordExist->email)->send(new SendInterviewScheduleMail($mailData));
+
                             } elseif ($request->interview_type == 'Telephonic') {
                                 $mailData = [
                                     'organisationName' => !empty($userDetails->org_name) ? $userDetails->org_name : '',
@@ -1214,6 +1279,21 @@ class InterviewEmployee extends Controller
     public function sendEmailTemplate(request $request)
     {
         // dd($request->interview_id);
+        $emailDetails = HelpersHelper::getSmtpConfig(Auth::id());
+
+        $config = array(
+            'driver'     => $emailDetails->driver,
+            'host'       => $emailDetails->host,
+            'port'       => $emailDetails->port,
+            'from'       => array('address' => $emailDetails->from_address, 'name' => $emailDetails->from_name),
+            'encryption' => $emailDetails->encryption,
+            'username'   => $emailDetails->username,
+            'password'   => $emailDetails->password,
+            'sendmail'   => '/usr/sbin/sendmail -bs',
+            'pretend'    => false,
+        );
+        Config::set('mail', $config);
+
         // if (!empty($request->interview_id) && !empty($request->status)) {
             $candidate = Employee::join('interview_employees','interview_employees.employee_id','=','employee.id')
                          ->join('interview_employee_rounds','interview_employees.id','=','interview_employee_rounds.interview_employees_id')
@@ -1302,6 +1382,21 @@ class InterviewEmployee extends Controller
 
     public function sendReminderForInterview(request $request)
     {
+
+        $emailDetails = HelpersHelper::getSmtpConfig(Auth::id());
+
+        $config = array(
+            'driver'     => $emailDetails->driver,
+            'host'       => $emailDetails->host,
+            'port'       => $emailDetails->port,
+            'from'       => array('address' => $emailDetails->from_address, 'name' => $emailDetails->from_name),
+            'encryption' => $emailDetails->encryption,
+            'username'   => $emailDetails->username,
+            'password'   => $emailDetails->password,
+            'sendmail'   => '/usr/sbin/sendmail -bs',
+            'pretend'    => false,
+        );
+        Config::set('mail', $config);
 
         if (!empty($request->interviewId)) {
             $interview = EmployeeInterview::find($request->interviewId);

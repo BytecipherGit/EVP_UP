@@ -19,8 +19,8 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-// use Illuminate\Support\Facades\Mail as FacadesMail;
-use Mail as FacadesMail;
+use App\Helpers\Helper as HelpersHelper;
+use Illuminate\Support\Facades\Mail as FacadesMail;
 use Illuminate\View\View;
 use Response;
 use Illuminate\Validation\Rules;
@@ -150,6 +150,22 @@ class RegisteredUserController extends Controller
         }
 
         // for email send
+
+        $emailDetails = HelpersHelper::getSmtpConfig(Auth::id());
+
+        $config = array(
+            'driver'     => $emailDetails->driver,
+            'host'       => $emailDetails->host,
+            'port'       => $emailDetails->port,
+            'from'       => array('address' => $emailDetails->from_address, 'name' => $emailDetails->from_name),
+            'encryption' => $emailDetails->encryption,
+            'username'   => $emailDetails->username,
+            'password'   => $emailDetails->password,
+            'sendmail'   => '/usr/sbin/sendmail -bs',
+            'pretend'    => false,
+        );
+        Config::set('mail', $config);
+
         if ($user) {
             $mailData = [
                 'name' => !empty($request->name) ? $request->name : '',
@@ -193,6 +209,22 @@ class RegisteredUserController extends Controller
                     'id' => encrypt($user->id),
                     'status' => $user->status,
                 ];
+
+                $emailDetails = HelpersHelper::getSmtpConfig(Auth::id());
+
+                $config = array(
+                    'driver'     => $emailDetails->driver,
+                    'host'       => $emailDetails->host,
+                    'port'       => $emailDetails->port,
+                    'from'       => array('address' => $emailDetails->from_address, 'name' => $emailDetails->from_name),
+                    'encryption' => $emailDetails->encryption,
+                    'username'   => $emailDetails->username,
+                    'password'   => $emailDetails->password,
+                    'sendmail'   => '/usr/sbin/sendmail -bs',
+                    'pretend'    => false,
+                );
+                Config::set('mail', $config);
+                
                 FacadesMail::to($user->email)->send(new CompanyResetVerifyMail($verifyMailData));
 
                 return redirect()->back()->with('message', 'Reset verification link has been sent to your email address.');

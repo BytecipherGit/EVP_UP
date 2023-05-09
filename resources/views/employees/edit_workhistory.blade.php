@@ -1,4 +1,4 @@
-<form id="employee_workhistory_form" action="{{ url('workhistory/form/update') }}" method="post" autocomplete="off"
+<form id="employee_workhistory_form_edit" action="{{ url('workhistory/form/update') }}" method="post" autocomplete="off"
     enctype="multipart/form-data">
     @csrf
     <input type="hidden" id="is_add" value="{{ $workhistoryExists ? '' : 1 }}" />
@@ -50,8 +50,7 @@
         <label>Offer Letter<span style="color:red">*</span></br><b>File type:</b> Only .jpeg,
             .pdf, .docs, or .doc files allowed. <b>File Size:</b> Max:10MB</p></label>
         <div class="upload-img-file">
-            <input type="file" id="offer_letter" name="offer_letter" class="form-control"
-                accept="image/jpg,image/doc,image/pdf" />
+            <input type="file" id="offer_letter" name="offer_letter" class="form-control" value="{{ $workhistory ? $workhistory->offer_letter : '' }}" accept="image/jpg,image/doc,image/pdf" />
             <strong class="error" id="offer_letter-error"></strong>
         </div>
     </div>
@@ -60,8 +59,7 @@
         <label>Experience Letter<span style="color:red">*</span></br><b>File type:</b> Only .jpeg,
             .pdf, .docs, or .doc files allowed. <b>File Size:</b> Max:10MB</p></label>
         <div class="upload-img-file">
-            <input type="file" id="exp_letter" name="exp_letter"
-                class="form-control"accept="image/jpg,image/doc,image/pdf" />
+            <input type="file" id="exp_letter" name="exp_letter" value="{{ $workhistory ? $workhistory->exp_letter : '' }}" class="form-control"accept="image/jpg,image/doc,image/pdf" />
             <strong class="error" id="exp_letter-error"></strong>
         </div>
     </div>
@@ -70,8 +68,7 @@
         <label>Salary Slips<span style="color:red">*</span></br><b>File type:</b> Only .jpeg,
             .pdf, .docs, or .doc files allowed. <b>File Size:</b> Max:10MB</p></label>
         <div class="upload-img-file">
-            <input type="file" id="salary_slip" name="salary_slip" class="form-control"
-                accept="image/jpg,image/doc,image/pdf" />
+            <input type="file" id="salary_slip" name="salary_slip" class="form-control" value="{{ $workhistory ? $workhistory->salary_slip : '' }}" accept="image/jpg,image/doc,image/pdf" />
             <strong class="error" id="salary_slip-error"></strong>
         </div>
     </div>

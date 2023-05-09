@@ -9,7 +9,7 @@
             <div class="profile-add-img">
                 <div class="circle">
                     <img class="profile-pic" id="profile-pic" name="profile"
-                    @if (!empty($employeeExists->profile)) value="{{ $employeeExists->profile }}" src="{{ $employeeExists->profile }}" @else src="{{ asset('assets') }}/admin/images/user-img.png" @endif required>
+                    @if (!empty($employeeExists->profile)) value="{{ $employeeExists ? $employeeExists->profile : '' }}" src="{{ $employeeExists->profile }}" @else src="{{ asset('assets') }}/admin/images/user-img.png" @endif>
                   </div>
                 <div class="p-image ml-auto">
                     <span class="upload-button" for="file-upload" id="upload-button"><img src="{{ asset('assets') }}/admin/images/edit-icon.png"></span>
@@ -137,7 +137,7 @@
         <div class="col-xl-3 col-lg-6 col-md-12">
             <div class="form-group">
                 <label>Document Id<span style="color:red">*</span></label>
-                <input type="file" id="document_id" name="document_id" value="{{ $employeeExists->document_id ? $employeeExists->document_id : ''}}" class="form-control" accept="image/jpeg,image/doc,image/pdf" >
+                <input type="file" id="document_id" name="document_id" value="{{ $employeeExists->document_id ? $employeeExists->document_id : '' }}" class="form-control" accept="image/jpeg,image/doc,image/pdf" >
                 <strong class="error" id="document_id-error"></strong>
             </div>
         </div>
@@ -287,6 +287,34 @@
                 duration_from: "required",
                 duration_to: "required",
                 verification_type: "required",
+                document: {
+                    required: true,
+                    extension: "pdf|doc|docx",
+                }
+            },
+
+            messages: {
+                inst_name: "Institute name is required",
+                degree: "Degree is required",
+                subject: "Subject is required",
+                duration_from: "Duration date is required",
+                duration_to: "Duration to is required",
+                verification_type: "Verification type is required",
+                document: {
+                    required: "Document is required",
+                    extension: "extension shuold not wrong",
+                },
+            }
+        }); 
+
+        $("#employee_qualification_form_edit").validate({
+            rules: {
+                inst_name: "required",
+                degree: "required",
+                subject: "required",
+                duration_from: "required",
+                duration_to: "required",
+                verification_type: "required",
                 // document: {
                 //     required: true,
                 //     extension: "pdf|doc|docx",
@@ -334,6 +362,30 @@
                 designation: "required",
                 work_duration_to: "required",
                 work_duration_from: "required",
+                offer_letter: "required",
+                verification_type: "required",
+                exp_letter: "required",
+                salary_slip: "required",
+            },
+
+            messages: {
+                com_name: "Company name is required",
+                designation: "Designation is required",
+                work_duration_to: "Work duration is required",
+                work_duration_from: "Work duration From is required",
+                offer_letter: "Offer letter to is required",
+                verification_type: "Verification type is required",
+                exp_letter: "Experience letter is required",
+                salary_slip: "Salary slip is required",
+            }
+        });
+
+        $("#employee_workhistory_form_edit").validate({
+            rules: {
+                com_name: "required",
+                designation: "required",
+                work_duration_to: "required",
+                work_duration_from: "required",
                 // offer_letter: "required",
                 verification_type: "required",
                 // exp_letter: "required",
@@ -361,6 +413,39 @@
             messages: {
                 skill: "Skill is required",
                 lang: "Known language is required",
+
+            }
+        });
+
+        $("#employee_skills_form_edit").validate({
+            rules: {
+                skill: "required",    
+            },
+
+            messages: {
+                skill: "Skill is required",
+
+            }
+        });
+
+        $("#employee_lang_form_edit").validate({
+            rules: {
+                lang: "required",
+            },
+
+            messages: {
+                lang: "Language is required",
+
+            }
+        });
+
+        $("#employee_lang_form").validate({
+            rules: {
+                lang: "required",
+            },
+
+            messages: {
+                lang: "Language is required",
 
             }
         });

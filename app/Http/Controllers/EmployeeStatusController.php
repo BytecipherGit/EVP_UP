@@ -11,6 +11,7 @@ use App\Models\EmployeeInterview;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables as FacadesDataTables;
 use Illuminate\Support\Facades\Mail as FacadesMail;
+use App\Helpers\Helper as HelpersHelper;
 use Auth;
 use App\Models\EmployeeStatus;
 
@@ -110,7 +111,22 @@ class EmployeeStatusController extends Controller
                     // 'companyName' => !empty($request->org_name) ? $employeeExist->org_name : null,
                     'EmployeeOfferId' => encrypt($employeeOfferStatusData->id), 
                 ];
-                // dd($mailData);
+
+                $emailDetails = HelpersHelper::getSmtpConfig(Auth::id());
+
+                $config = array(
+                    'driver'     => $emailDetails->driver,
+                    'host'       => $emailDetails->host,
+                    'port'       => $emailDetails->port,
+                    'from'       => array('address' => $emailDetails->from_address, 'name' => $emailDetails->from_name),
+                    'encryption' => $emailDetails->encryption,
+                    'username'   => $emailDetails->username,
+                    'password'   => $emailDetails->password,
+                    'sendmail'   => '/usr/sbin/sendmail -bs',
+                    'pretend'    => false,
+                );
+                Config::set('mail', $config);
+
                FacadesMail::to($employeeOfferStatusData->email)->send(new SendOfferMailToEmployee($mailData));
             }
          }

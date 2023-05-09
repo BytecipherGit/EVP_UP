@@ -66,7 +66,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><img src="{{ asset('assets') }}/admin/images/close-btn-icon.png">
                 </button>
             </div>
-            <form id="employee_skills_submit" action="{{ url('add_employee_skills/submit') }}" method="post" autocomplete="off" enctype="multipart/form-data">
+            <form id="employee_skills_form_edit" action="{{ url('add_employee_skills/submit') }}" method="post" autocomplete="off" enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" id="employee_id" name="employee_id" value="{{ $employeeSkillsExists ? $employeeSkillsExists->employee_id : '' }}" />
                <div class="modal-body">
@@ -114,7 +114,7 @@
             </div>
             <div class="modal-body">
                 <div class="comman-body">
-                    <form id="employee_lanf_form" action="{{ url('add_employee_lang_skills/submit') }}" method="post" autocomplete="off" enctype="multipart/form-data">
+                    <form id="employee_lang_form_edit" action="{{ url('add_employee_lang_skills/submit') }}" method="post" autocomplete="off" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" id="employee_id" name="employee_id" value="{{ $employeeSkillsExists ? $employeeSkillsExists->employee_id : '' }}" />
                         <div class="form-group inputtag-custom">

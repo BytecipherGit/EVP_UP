@@ -65,3 +65,67 @@
     </div>
 </div>
 @endforeach
+
+@foreach ($workhistoryViewExist as $workhistory)
+    <div class="modal fade custu-modal-popup" id="workofferdocument{{ $workhistory->id }}" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title" id="exampleModalLabel">Document View</h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <img src="{{ asset('assets') }}/admin/images/close-btn-icon.png">
+                    </button>
+                </div>
+                @if ($workhistory->offer_letter == null)
+                    <div class="modal-body">
+                        <p>Document not uploaded..</p>
+                    </div>
+                @else
+                    <div class="modal-body">
+                        <div class="document-body">
+                            <img src="{{ $workhistory->offer_letter }}">
+                        </div>
+                        <div class="main-right-button-box backhover">
+                            <a href="/download_offerletter_doc/{{ $workhistory->id }}" class="emp button_background_color" target="_black"><span class="button_text_color">Download</span></a>
+                        </div> 
+                    </div>
+                @endif
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+@endforeach
+
+@foreach ($workhistoryViewExist as $workhistory)
+    <div class="modal fade custu-modal-popup" id="workexpdocument{{ $workhistory->id }}" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title" id="exampleModalLabel">Document View</h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <img src="{{ asset('assets') }}/admin/images/close-btn-icon.png">
+                    </button>
+                </div>
+                @if ($workhistory->exp_letter == null)
+                    <div class="modal-body">
+                        <p>Document not uploaded..</p>
+                    </div>
+                @else
+                    <div class="modal-body">
+                        <div class="document-body">
+                            <img src="{{ $workhistory->exp_letter }}">
+                        </div>
+                        <div class="main-right-button-box backhover">
+                            <a href="/download_expletter_doc/{{ $workhistory->id }}" class="emp button_background_color" target="_black"><span class="button_text_color">Download</span></a>
+                        </div> 
+                    </div>
+                @endif
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+@endforeach
