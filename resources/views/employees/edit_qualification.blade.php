@@ -1,6 +1,6 @@
 
 
-<form id="employee_qualification_form" action="{{ url('qualification/form/update') }}" method="post" autocomplete="off" enctype="multipart/form-data">
+<form id="employee_qualification_form_edit" action="{{ url('qualification/form/update') }}" method="post" autocomplete="off" enctype="multipart/form-data">
     @csrf
   <input type="hidden" id="id" name="id" value="{{ $qualification ? $qualification->id : '' }}" />
   <input type="hidden" id="employee_id" name="employee_id" value="{{ $employeeExists ? $employeeExists->id : '' }}" />
@@ -51,7 +51,7 @@
             <label>Attech File<span style="color:red">*</span></br><b>File type:</b> Only .jpeg, .pdf,
                 .docs, or .doc files allowed. <b>File Size:</b> Max:10MB</p></label>
             <div class="upload-img-file">
-                <input type="file" id="document" name="document" class="form-control" accept="image/jpg,image/doc,image/pdf" />
+                <input type="file" id="document" name="document" class="form-control" value="{{ $qualification ? $qualification->document : ''}}" accept="image/jpg,image/doc,image/pdf" />
                 <strong class="error" id="document-error"></strong>
   
             </div>

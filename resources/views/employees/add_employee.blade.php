@@ -21,13 +21,13 @@
             </div>
         </div>
         <!--- Main Heading ----->
-        <div id="successMessage">
+        {{-- <div id="successMessage">
             @if (session()->has('message'))
             <div class="alert alert-success">
                 {{ session()->get('message') }}
             </div>
         </div>
-        @endif
+        @endif --}}
         <div class="employee-tab-bar">
             <ul class="nav nav-tabs table-responsive-width primary_color" role="tablist">
                 <li class="nav-item">
@@ -417,91 +417,91 @@
             }
         });
 
-        $("#employee_qualification_form").validate({
-            rules: {
-                inst_name: "required",
-                degree: "required",
-                subject: "required",
-                duration_from: "required",
-                duration_to: "required",
-                verification_type: "required",
-                document: {
-                    required: true,
-                    extension: "pdf|doc|docx",
-                }
-            },
+        // $("#employee_qualification_form").validate({
+        //     rules: {
+        //         inst_name: "required",
+        //         degree: "required",
+        //         subject: "required",
+        //         duration_from: "required",
+        //         duration_to: "required",
+        //         verification_type: "required",
+        //         document: {
+        //             required: true,
+        //             extension: "pdf|doc|docx",
+        //         }
+        //     },
 
-            messages: {
-                inst_name: "Institute name is required",
-                degree: "Degree is required",
-                subject: "Subject is required",
-                duration_from: "Duration date is required",
-                duration_to: "Duration to is required",
-                verification_type: "Verification type is required",
-                document: {
-                    required: "Document is required",
-                    extension: "extension shuold not wrong",
-                },
-            }
-        }); 
+        //     messages: {
+        //         inst_name: "Institute name is required",
+        //         degree: "Degree is required",
+        //         subject: "Subject is required",
+        //         duration_from: "Duration date is required",
+        //         duration_to: "Duration to is required",
+        //         verification_type: "Verification type is required",
+        //         document: {
+        //             required: "Document is required",
+        //             extension: "extension shuold not wrong",
+        //         },
+        //     }
+        // }); 
         
-        $("#employee_official_form").validate({
-            rules: {
-                date_of_joining: "required",
-                emp_type: "required",
-                work_location: "required",
-                emp_status: "required",
-                lpa: "required",
-                designation: "required",
-            },
+        // $("#employee_official_form").validate({
+        //     rules: {
+        //         date_of_joining: "required",
+        //         emp_type: "required",
+        //         work_location: "required",
+        //         emp_status: "required",
+        //         lpa: "required",
+        //         designation: "required",
+        //     },
 
-            messages: {
-                date_of_joining: "Date of joining is required",
-                emp_type: "Employee type is required",
-                work_location: "Work location is required",
-                emp_status: "Employee status to is required",
-                lpa: "LPA is required",
-                designation: "Manager designation is required",
+        //     messages: {
+        //         date_of_joining: "Date of joining is required",
+        //         emp_type: "Employee type is required",
+        //         work_location: "Work location is required",
+        //         emp_status: "Employee status to is required",
+        //         lpa: "LPA is required",
+        //         designation: "Manager designation is required",
 
-            }
-        });
+        //     }
+        // });
 
-        $("#employee_workhistory_form").validate({
-            rules: {
-                com_name: "required",
-                designation: "required",
-                work_duration_to: "required",
-                work_duration_from: "required",
-                offer_letter: "required",
-                verification_type: "required",
-                exp_letter: "required",
-                salary_slip: "required",
-            },
+        // $("#employee_workhistory_form").validate({
+        //     rules: {
+        //         com_name: "required",
+        //         designation: "required",
+        //         work_duration_to: "required",
+        //         work_duration_from: "required",
+        //         offer_letter: "required",
+        //         verification_type: "required",
+        //         exp_letter: "required",
+        //         salary_slip: "required",
+        //     },
 
-            messages: {
-                com_name: "Company name is required",
-                designation: "Designation is required",
-                work_duration_to: "Work duration is required",
-                work_duration_from: "Work duration From is required",
-                offer_letter: "Offer letter to is required",
-                verification_type: "Verification type is required",
-                exp_letter: "Experience letter is required",
-                salary_slip: "Salary slip is required",
-            }
-        });
+        //     messages: {
+        //         com_name: "Company name is required",
+        //         designation: "Designation is required",
+        //         work_duration_to: "Work duration is required",
+        //         work_duration_from: "Work duration From is required",
+        //         offer_letter: "Offer letter to is required",
+        //         verification_type: "Verification type is required",
+        //         exp_letter: "Experience letter is required",
+        //         salary_slip: "Salary slip is required",
+        //     }
+        // });
 
-        $("#employee_skills_form").validate({
-            rules: {
-                skill: "required",
-                lang: "required",
-            },
+        // $("#employee_skills_form").validate({
+        //     rules: {
+        //         skill: "required",
+        //         lang: "required",
+        //     },
 
-            messages: {
-                skill: "Skill is required",
-                lang: "Language is required",
+        //     messages: {
+        //         skill: "Skill is required",
+        //         lang: "Language is required",
 
-            }
-        });
+        //     }
+        // });
 
     });
 </script>

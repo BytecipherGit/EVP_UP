@@ -117,7 +117,7 @@ class NewEmployeeController extends Controller
                         'emg_phone'=>!empty($request->emg_phone) ? $request->emg_phone : null,
                         'emg_address'=>!empty($request->emg_address) ? $request->emg_address : null,
                         'document_type'=>!empty($request->document_type) ? $request->document_type : null,
-                        'document_id'=>!empty($request->document_id) ? $request->document_id : null,
+                        'document_id'=>!empty($uploadDocumentId) ? $uploadDocumentId : null,
                         'document_number'=>!empty($request->document_number) ? $request->document_number : null,
                         'verification_type'=> $statusVerification,
                         'third_party_document'=>!empty($uploadThirdPartyDocument) ? $uploadThirdPartyDocument : null,
@@ -222,12 +222,12 @@ class NewEmployeeController extends Controller
                 }
 
                 if($request->employee_id){
-
+                    $employeeDetails = Employee::where('id', $request->employee_id)->first();
                     $emplotyeeUpdate = Employee::where('id', $request->employee_id)
                     ->update([
 
                         'first_name' =>!empty($request->first_name) ? $request->first_name : null,
-                        'profile' => $uploadProfile,
+                        'profile' => !empty($uploadProfile) ? $uploadProfile : $employeeDetails->profile,
                         'last_name'=>!empty($request->last_name) ? $request->last_name : null,
                         'middle_name'=>!empty($request->middle_name) ? $request->middle_name : null,
                         'email'=>!empty($request->email) ? $request->email : null,
@@ -243,7 +243,7 @@ class NewEmployeeController extends Controller
                         'emg_phone'=>!empty($request->emg_phone) ? $request->emg_phone : null,
                         'emg_address'=>!empty($request->emg_address) ? $request->emg_address : null,
                         'document_type'=>!empty($request->document_type) ? $request->document_type : null,
-                        'document_id'=>!empty($request->document_id) ? $request->document_id : null,
+                        'document_id'=>!empty($uploadDocumentId) ? $uploadDocumentId : $employeeDetails->document_id,
                         'document_number'=>!empty($request->document_number) ? $request->document_number : null,
                         'verification_type'=> $statusVerifications,
                         'third_party_document'=>!empty($uploadThirdPartyDocument) ? $uploadThirdPartyDocument : null,
@@ -303,7 +303,7 @@ class NewEmployeeController extends Controller
 
                     if ($request->hasFile('document')) {
                         $file = $request->file('document');
-                        $fileName = time() . '_' . $employeeDetails->empCode .'_'. $file->getClientOriginalName();
+                        $fileName = time() . '_' . $employeeDetails->empCode . '_' . $file->getClientOriginalName();
                         $file->storeAs('public/employee/documents', $fileName);
                         $uploadDocument = asset('storage/employee/documents/' . $fileName);
                         }
@@ -424,13 +424,15 @@ class NewEmployeeController extends Controller
                          $statusThirdPartyVerification = 0;
                      }
 
+                     $employeeQualificationData = Empqualification::where('id',$request->id)->first();
+
                     $update = [
                             'inst_name'=>!empty($request->inst_name) ? $request->inst_name : null,
                             'degree'=> !empty($request->degree) ? $request->degree : null,
                             'subject'=> !empty($request->subject) ? $request->subject : null,
                             'duration_from'=> !empty($request->duration_from) ? $request->duration_from : null,
                             'duration_to'=>!empty($request->duration_to) ? $request->duration_to : null,
-                            'document'=> $uploadDocument,
+                            'document'=> !empty($uploadDocument) ? $uploadDocument : $employeeQualificationData->document, 
                             'qualification_verification_type'=> $statusVerification,
                             'third_party_qualification_document'=> $uploadThirdPartyDocument,
                             'third_party_qualification_verification'=> $statusThirdPartyVerification,
@@ -635,16 +637,17 @@ class NewEmployeeController extends Controller
                         $statusThirdPartyVerification = 0;
                     }
 
+                    $employeeWorkhistoryData = Empworkhistory::where('id',$request->id)->first();
                     $update = [
 
                         'employee_id'=>$employeeDetails->id,
                         'com_name'=>!empty($request->com_name) ? $request->com_name : null,
                         'designation'=>!empty($request->designation) ? $request->designation : null,
-                        'offer_letter'=>$uploadOfferDocument,
+                        'offer_letter'=>!empty($uploadOfferDocument) ? $uploadOfferDocument : $employeeWorkhistoryData->offer_letter, 
                         'work_duration_from'=>!empty($request->work_duration_from) ? $request->work_duration_from : null,
                         'work_duration_to'=>!empty($request->work_duration_to) ? $request->work_duration_to : null,
-                        'exp_letter'=>$uploadExperienceDocument,
-                        'salary_slip'=>$uploadSalaryDocument,
+                        'exp_letter'=>!empty($uploadExperienceDocument) ? $uploadExperienceDocument : $employeeWorkhistoryData->exp_letter, 
+                        'salary_slip'=>!empty($uploadSalaryDocument) ? $uploadSalaryDocument : $employeeWorkhistoryData->salary_slip,
                         'workhistory_verification_type'=>$statusVerification,
                         'third_party_workhistory_document'=>$uploadThirdPartyDocument,
                         'third_party_workhistory_verification'=>$statusThirdPartyVerification,

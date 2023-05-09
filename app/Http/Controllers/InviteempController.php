@@ -15,10 +15,11 @@ use App\Mail\DynamicEmail;
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Helpers\Helper as HelpersHelper;
 use Mail;
 use Config;
 use Redirect;
-use Response;
+use Illuminate\Support\Facades\Response;
 
 class InviteempController extends Controller
 {
@@ -184,7 +185,8 @@ class InviteempController extends Controller
         $fileName = 'invite_employee.csv';
         // $employee = Employee::all();
            $employee= CompanyEmployee::join('employee','company_employee.employee_id','=','employee.id')
-                       ->select('company_employee.*','employee.*')->where('employee.status',2)
+                       ->select('company_employee.*','employee.*')
+                    //    ->where('employee.status',2)
                        ->where('company_employee.company_id',Auth::user()->id)->get();
 // dd($employee);
         $headers = array(
@@ -228,21 +230,20 @@ class InviteempController extends Controller
         return Response::download($file, 'invite-sample.csv', $headers);
     }
 
-    public function downloadQualDoc(request $request)
+    public function downloadQualificationDoc(request $request)
     {
         $data = Empqualification::where('id', $request->id)->first();
-        $file = public_path() . '/image/' . $data->document;
-        $headers = array(
-            'Content-Type: application/jpg',
-        );
+        $path = $data->document;
+        $filename = 'qualification.jpg';
 
-        return Response::download($file, 'qualification.jpg', $headers);
+        return Response::download($path, $filename, ['Content-Type: application/jpg']);
+
     }
 
-    public function downloadOfferDoc(request $request)
+    public function downloadOfferDocument(request $request)
     {
         $work = Empworkhistory::where('id', $request->id)->first();
-        $file = public_path() . '/image/' . $work->offer_letter;
+        $file = $work->offer_letter;
         $headers = array(
             'Content-Type: application/jpg',
         );
@@ -305,6 +306,21 @@ class InviteempController extends Controller
                 $send_name = ['first' => $name];
                 $send_id = ['ids' => $row['id']];
                 $company_name = ['company_name' => Auth::user()->name];
+
+                $emailDetails = HelpersHelper::getSmtpConfig(Auth::id());
+                $config = array(
+                    'driver'     => $emailDetails->driver,
+                    'host'       => $emailDetails->host,
+                    'port'       => $emailDetails->port,
+                    'from'       => array('address' => $emailDetails->from_address, 'name' => $emailDetails->from_name),
+                    'encryption' => $emailDetails->encryption,
+                    'username'   => $emailDetails->username,
+                    'password'   => $emailDetails->password,
+                    'sendmail'   => '/usr/sbin/sendmail -bs',
+                    'pretend'    => false,
+                );
+                Config::set('mail', $config);
+
                 
                 Mail::send('org-invite/invite-email', ['mailName' => $company_name, 'mailId' => $send_id], function ($message) use ($email, $name) {
                     $message->to($email, $name)->subject('ByteCipher Pvt Ltd Interview Invitation Email');
