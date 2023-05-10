@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('end_date')->nullable();
             $table->string('rating')->nullable();
             $table->string('review')->nullable();
-            $table->tinyInteger('status')->default('0')->comment('1=Active, 0=Inactive');
+            $table->tinyInteger('status')->default('0')->comment('1=Active, 0=Inactive, 2=Invite Employee');
             $table->timestamps();
         });
     }

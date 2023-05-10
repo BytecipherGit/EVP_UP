@@ -1261,7 +1261,7 @@ class InterviewEmployee extends Controller
 
     public function getEmailTemplate(request $request)
     {
-        // dd($request->all);
+        // dd($request->interview_id);
         if($request->interview_status){
             $interviewStatus = $request->interview_status;
             return view('admin.email_template_confirmation',compact('interviewStatus'));
@@ -1326,6 +1326,7 @@ class InterviewEmployee extends Controller
 
         if(!empty($request->interview_id) && !empty($request->interview_status)){
             $interview = InterviewEmployeeRounds::find($request->interview_id);
+            dd($interview);
             $interview->interviewer_status = $request->interview_status;
 
             if ($interview->save()) {

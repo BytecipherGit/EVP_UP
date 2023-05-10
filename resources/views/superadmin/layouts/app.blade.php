@@ -6,16 +6,21 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="viewport" content="width=device-width, user-scalable=no">
-  <link rel="icon" href="{{ asset('assets') }}/admin/images/logo-icon.png">
-  <link rel="stylesheet" href="{{ asset('assets') }}/admin/css/bootstrap.min.css">
-  <link rel="stylesheet" href="{{ asset('assets') }}/admin/css/font-awesome.min.css">
-  <link rel="stylesheet" href="{{ asset('assets') }}/admin/css/header-css.css">
-
-  <link rel="stylesheet" href="{{ asset('assets') }}/admin/css/main-container.css">
+  <link rel="icon" href="{{ asset('assets') }}/superadmin/images/logo-icon.png">
+  <link rel="stylesheet" href="{{ asset('assets') }}/superadmin/css/bootstrap.min.css">
+  <link rel="stylesheet" href="{{ asset('assets') }}/superadmin/css/font-awesome.min.css">
+  <link rel="stylesheet" href="{{ asset('assets') }}/superadmin/css/header-css.css">
+  <link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/bootstrap.min.css">
+  <link rel="stylesheet" href="{{ asset('assets') }}/superadmin/css/main-container.css">
 
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-  <script src="{{ asset('assets') }}/admin/js/jquery.min.js"></script>
+  <script src="{{ asset('assets') }}/superadmin/js/jquery.min.js"></script>
+
+<link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/datatables.bootstrap.min.css">
+<link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/fixedheader.bootstrap.min.css">
+<link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/responsive.bootstrap.min.css">
+  
 
   
 </head>
@@ -26,16 +31,16 @@
   <header> 
     <div class="container-fluid">
     <nav class="navbar navbar-expand-md navbar-dark">
-      <a class="navbar-brand" href="dashboard"><img src="{{ asset('assets') }}/admin/images/logo.png"></a>
+      <a class="navbar-brand" href="dashboard"><img src="{{ asset('assets') }}/superadmin/images/logo.png"></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav ml-auto">          
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle dropdown-toggle1" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <img src="{{ asset('assets') }}/admin/images/notifications-icon.png">
-            </a> 
+            {{-- <a class="nav-link dropdown-toggle dropdown-toggle1" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <img src="{{ asset('assets') }}/superadmin/images/notifications-icon.png">
+            </a>  --}}
             <div class="dropdown-menu dropdown-notifications" aria-labelledby="navbarDropdownMenuLink">
               <h2>Recent <span>Notifications</span></h2>
               <div class="dropdown-noti" id="style-5">
@@ -80,11 +85,11 @@
 
           <li class="nav-item dropdown">
             <a class="nav-link profile-droup dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <img src="{{ asset('assets') }}/admin/images/marvin-kinney-profile.png"> 
+              <img src="{{ asset('assets') }}/superadmin/images/marvin-kinney-profile.png"> 
               <span>
                 John Smith              
               </span>
-              <img src="{{ asset('assets') }}/admin/images/droup-down-gray.png" class="right-doun">
+              <img src="{{ asset('assets') }}/superadmin/images/droup-down-gray.png" class="right-doun">
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
               <a class="dropdown-item" href="#">
@@ -98,13 +103,13 @@
               <hr>
               <a class="dropdown-item dropdown-item-no" href="{{ route('superadmin.logout') }}">               
                 Sign out
-                <img src="{{ asset('assets') }}/admin/images/logout-icon.png" class="ml-auto">
+                <img src="{{ asset('assets') }}/superadmin/images/logout-icon.png" class="ml-auto">
               </a>
 
             </div>
           </li>    
         </ul>  
-        
+   
       </div>
     </nav> 
     </div>          
@@ -120,8 +125,8 @@
       </div>
       <aside>
         <li class="active">
-          <a href="/dashboard">
-            <img src="{{ asset('assets') }}/admin/images/overview-icon.png">
+          <a href="{{ route('dashboard')}}">
+            <img src="{{ asset('assets') }}/superadmin/images/overview-icon.png">
             Overview
           </a>
         </li>  
@@ -141,17 +146,17 @@
                 <div id="accordion-1">
                   <ul>                    
                     <li>
-                      <a href="/organization">
-                        <img src="{{ asset('assets') }}/admin/images/invite-icon.png"> 
+                      <a href="{{ route('organization')}}">
+                        <img src="{{ asset('assets') }}/superadmin/images/invite-icon.png"> 
                         Organization
                       </a>
                     </li>   
-                    <li>
+                    {{-- <li>
                       <a href="/individual-user">
-                        <img src="{{ asset('assets') }}/admin/images/invite-icon.png"> 
+                        <img src="{{ asset('assets') }}/superadmin/images/invite-icon.png"> 
                         Individual
                       </a>
-                    </li>                    
+                    </li> --}}
                   </ul>                  
                 </div>      
               
@@ -159,24 +164,18 @@
             </div>
           </div>
         </div> 
+        {{-- <hr> --}}
 
-               
-
-        <hr>
-
-         <li>
+         {{-- <li>
           <a href="#">
-            <img src="{{ asset('assets') }}/admin/images/setting-icon.png">
+            <img src="{{ asset('assets') }}/superadmin/images/setting-icon.png">
             Settings
           </a>
-        </li>
+        </li> --}}
 
       </aside>
     </div>
     <!--- Site Bar Menu Close ----->
-
-
-
       @yield('content')
 
   </div>
@@ -187,13 +186,20 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script>
-      window.jQuery || document.write('<script src="../../{{ asset('assets') }}/admin/js/vendor/jquery.min.js"><\/script>')
+      window.jQuery || document.write('<script src="../../{{ asset('assets') }}/superadmin/js/vendor/jquery.min.js"><\/script>')
     </script>
-    <script src="{{ asset('assets') }}/admin/js/bootstrap.min.js"></script>  
 
-
+    <script src="{{ asset('assets') }}/superadmin/js/bootstrap.min.js"></script>  
+    <script src="{{ asset('assets') }}/datatable/js/jquery-3.5.1.js"></script>
+    <script src="{{ asset('assets') }}/datatable/js/jquery.dataTables.min.js"></script>
+    <script src="{{ asset('assets') }}/datatable/js/dataTables.bootstrap.min.js"></script>
+    
+    <script src="{{ asset('assets') }}/datatable/js/dataTables.fixedHeader.min.js"></script>
+    <script src="{{ asset('assets') }}/datatable/js/dataTables.responsive.min.js"></script>
+    <script src="{{ asset('assets') }}/datatable/js/responsive.bootstrap.min.js"></script>
+    
+    @yield('pagescript')
 
 </body>
-
 </html>
 

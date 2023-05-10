@@ -219,6 +219,7 @@
 </form>
 
 @section('pagescript')
+
 <!-- Bootstrap core JavaScript
     ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
@@ -233,8 +234,6 @@
 
 <script>
     $(document).ready(function() {
-
-   
     setTimeout(function(){
         $('#successMessage').fadeOut('fast');
     }, 2000);
@@ -609,7 +608,8 @@
                            $('#success').css('display', 'block');
                            setInterval(function() {
                                location.reload();
-                           }, 3000);
+                           }, 5000);
+                           window.location.href = '{{ url('employee') }}';
 
                        } else {
                            $('#failed').css('display', 'block');

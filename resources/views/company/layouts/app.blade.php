@@ -552,7 +552,7 @@
                 </li>
 
                 <li @if (Request::segment(1) == 'admin') class="active" @endif>
-                    <a href="/admin">
+                    <a href="/dashboard">
                         {{-- <img src="{{ asset('assets') }}/admin/images/overview-icon.png"> --}}
                         <svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20"
                             fill="none">

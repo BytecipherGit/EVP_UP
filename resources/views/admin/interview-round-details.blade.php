@@ -310,6 +310,8 @@ aria-hidden="true">
             }
             $('#emailtemplate').find('.modal-body').html(data);
             $('#emailtemplate').modal({
+            // $(`#${interviewerstatus}`).find('.modal-body').html(data);
+            // $(`#emailtemplate${interviewerstatus}`).modal({
                 backdrop: 'static',
                 keyboard: false
             });

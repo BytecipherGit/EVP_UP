@@ -798,6 +798,7 @@ class EmployeeController extends Controller
       
         //  $allemp=DB::table('employee')->join('employee_officials', 'employee.id', '=', 'employee_officials.employee_id')
         //                   ->select('employee.*', 'employee_officials.*')->get();
+        
        $employeeDetails= CompanyEmployee::join('users','users.id','=','company_employee.company_id')
                            ->join('employee','company_employee.employee_id','=','employee.id')
                            ->select('company_employee.*','users.id','employee.*')

@@ -57,17 +57,20 @@ Route::get('/basic-info', function () {
     return view('org-invite/basic-info');
 });
 
-Route::get('/organization', function () {
-    return view('superadmin/organization');
-});
+// Route::get('/organization', function () {
+//     return view('superadmin/organization');
+// });
 
 
-Route::get('/superlogin', [App\Http\Controllers\SuperAdminController::class, 'superAdminLogin'])->name('superlogin');
+Route::get('/admin', [App\Http\Controllers\SuperAdminController::class, 'superAdminLogin'])->name('superlogin');
 // Route::post('/invite-email/{id?}', [App\Http\Controllers\InviteempController::class, 'sendemail'])->name('invite-email');
 Route::post('send_invitation_to_employee',[App\Http\Controllers\InviteempController::class, 'sendInvitationToEmployee'])->name('send_invitation_to_employee');
 
 Route::middleware([Superadmin::class])->group(function () {
-    Route::get('/superadmin', [App\Http\Controllers\SuperAdminController::class, 'index'])->name('superadmin');
+   
+    Route::get('admin/dashboard', [App\Http\Controllers\SuperAdminController::class, 'index'])->name('dashboard');
+    Route::get('admin/organization', [App\Http\Controllers\SuperAdminController::class, 'getCompany'])->name('organization');
+    Route::get('admin/organization_details/{id?}', [App\Http\Controllers\SuperAdminController::class, 'getCompanyDetails'])->name('organization_details');
     Route::get('superadmin/logout', [App\Http\Controllers\SuperAdminController::class, 'logout'])->name('superadmin.logout');
    
 });
@@ -79,12 +82,12 @@ Route::get('getEmployeeNameThroughAutocomplete', [App\Http\Controllers\Documents
 Route::get('getEmployeeDetailsForScheduleInterview', [App\Http\Controllers\DocumentsController::class, 'getEmployeeDetailsForScheduleInterview'])->name('getEmployeeDetailsForScheduleInterview');
 
 Route::get('/email-config/{id?}', [App\Http\Controllers\InviteempController::class, 'getConfig'])->name('email-config');
-Route::get('/basic-info/{id?}', [App\Http\Controllers\InviteempController::class, 'getBasicDetails'])->name('basic-info');
+Route::get('/basic_info/{id?}/{segment?}', [App\Http\Controllers\InviteempController::class, 'getInviteEmployeeDetails'])->name('basic-info');
 Route::post('/basic-info/{id?}', [App\Http\Controllers\InviteempController::class, 'getInviteDetails']);
 
 Auth::routes();
 Route::middleware([Admin::class])->group(function () {
-    Route::get('/admin', [App\Http\Controllers\AdminController::class, 'index'])->name('admin')->middleware('documents');
+    Route::get('/dashboard', [App\Http\Controllers\AdminController::class, 'index'])->name('admin')->middleware('documents');
     Route::get('admin/logout', [App\Http\Controllers\AdminController::class, 'logout'])->name('admin.logout')->middleware('documents');
     Route::post('/change_password', [App\Http\Controllers\AdminController::class, 'changePassword'])->name('password.change')->middleware('documents');
     Route::get('/add-employee/{id?}', [App\Http\Controllers\EmployeeController::class, 'index'])->middleware('documents');
@@ -237,9 +240,9 @@ Route::any('resetverification-mail/{id?}', [App\Http\Controllers\Auth\Registered
 
 Route::get('account_verify', [InterviewEmployee::class, 'getCheckStatus']);
 Route::get('resetaccount_verify', [InterviewEmployee::class, 'getResetStatus']);
-Route::get('/dashboard', function () {
+Route::get('/dashboards', function () {
     return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboards');
 
 Route::get('country-state-city', [App\Http\Controllers\Auth\RegisteredUserController::class, 'index']);
 Route::post('get-states-by-country', [App\Http\Controllers\Auth\RegisteredUserController::class, 'getState']);
