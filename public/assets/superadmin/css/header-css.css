@@ -181,12 +181,12 @@ header {
 .dropdown-item {
   display: block;
   width: 100%;
-  padding:10px 0;
+  padding: 12px 43px;
   clear: both;
   text-align: inherit;
   white-space: nowrap;
   background-color: transparent;
-  border: 0; 
+  border: 0;
   font-weight: normal;
   font-size: 14px;
   line-height: 16px;

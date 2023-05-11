@@ -59,7 +59,7 @@ class AuthenticatedSessionController extends Controller
                 if (count($checkDocuments) > 0) {
                     $flagStatus = true;
                     foreach ($checkDocuments as $row) {
-                        if ($row->status == 'pending') {
+                        if ($row->status == '0') {
                             $flagStatus = false;
                         } else {
                             $flagStatus = true;

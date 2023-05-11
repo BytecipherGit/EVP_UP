@@ -2,7 +2,7 @@
     enctype="multipart/form-data">
     @csrf
     <input type="hidden" id="is_add" value="{{ $workhistoryExists ? '' : 1 }}" />
-    <input type="hidden" id="id" name="id" value="{{ $workhistoryExists ? $workhistoryExists->id : '' }}" />
+    <input type="hidden" id="id" name="id" value="{{ $workhistory ? $workhistory->id : '' }}" />
     <input type="hidden" id="employee_id" name="employee_id" value="{{ $employeeExists ? $employeeExists->id : '' }}" />
     <input type="hidden" id="verification_id" name="verification_id" value="{{ $experienceStatus ? $experienceStatus->id : '' }}" />
 

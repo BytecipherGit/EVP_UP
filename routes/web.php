@@ -66,14 +66,8 @@ Route::get('/admin', [App\Http\Controllers\SuperAdminController::class, 'superAd
 // Route::post('/invite-email/{id?}', [App\Http\Controllers\InviteempController::class, 'sendemail'])->name('invite-email');
 Route::post('send_invitation_to_employee',[App\Http\Controllers\InviteempController::class, 'sendInvitationToEmployee'])->name('send_invitation_to_employee');
 
-Route::middleware([Superadmin::class])->group(function () {
-   
-    Route::get('admin/dashboard', [App\Http\Controllers\SuperAdminController::class, 'index'])->name('dashboard');
-    Route::get('admin/organization', [App\Http\Controllers\SuperAdminController::class, 'getCompany'])->name('organization');
-    Route::get('admin/organization_details/{id?}', [App\Http\Controllers\SuperAdminController::class, 'getCompanyDetails'])->name('organization_details');
-    Route::get('superadmin/logout', [App\Http\Controllers\SuperAdminController::class, 'logout'])->name('superadmin.logout');
-   
-});
+
+
 Route::get('/upload_document', [App\Http\Controllers\DocumentsController::class, 'index'])->name('upload.document');
 Route::post('/store_document', [App\Http\Controllers\DocumentsController::class, 'store'])->name('store.document');
 
@@ -86,6 +80,23 @@ Route::get('/basic_info/{id?}/{segment?}', [App\Http\Controllers\InviteempContro
 Route::post('/basic-info/{id?}', [App\Http\Controllers\InviteempController::class, 'getInviteDetails']);
 
 Auth::routes();
+
+Route::middleware([Superadmin::class])->group(function () {
+    //    superlogin
+        Route::get('admin/dashboard', [App\Http\Controllers\SuperAdminController::class, 'index'])->name('superadmin');
+        Route::get('admin/organization', [App\Http\Controllers\SuperAdminController::class, 'getCompany'])->name('organization');
+        Route::get('admin/organization_details/{id?}/{status?}', [App\Http\Controllers\SuperAdminController::class, 'getCompanyDetails'])->name('organization_details');
+        Route::post('update_company_status', [App\Http\Controllers\SuperAdminController::class, 'changeCompanyStatus'])->name('update_company_status');
+        Route::get('admin/add_company/{id?}', [App\Http\Controllers\SuperAdminController::class, 'getCompanyForm']);
+        Route::post('admin/add_company/{id?}', [App\Http\Controllers\SuperAdminController::class, 'createCompany']);
+        Route::get('admin/update_organization/{id?}', [App\Http\Controllers\SuperAdminController::class, 'getUpdateCompanyForm']);
+        Route::post('admin/update_organization/{id?}', [App\Http\Controllers\SuperAdminController::class, 'updateCompanyForm']);
+        Route::post('company/destroy', [App\Http\Controllers\SuperAdminController::class, 'deleteCompany']);
+        Route::get('admin/download_document/{id?}', [App\Http\Controllers\SuperAdminController::class, 'downloadDocument'])->name('download.document');
+        Route::get('superadmin/logout', [App\Http\Controllers\SuperAdminController::class, 'logout'])->name('superadmin.logout');
+       
+    });
+
 Route::middleware([Admin::class])->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\AdminController::class, 'index'])->name('admin')->middleware('documents');
     Route::get('admin/logout', [App\Http\Controllers\AdminController::class, 'logout'])->name('admin.logout')->middleware('documents');
@@ -196,6 +207,8 @@ Route::middleware([Admin::class])->group(function () {
     Route::get('search', [App\Http\Controllers\SearchController::class, 'index'])->middleware('documents');
     Route::get('search-global', [App\Http\Controllers\SearchController::class, 'search'])->name('search-global')->middleware('documents');
     
+   
+
     // Route::get('posts', [App\Http\Controllers\EmailTemplatesController::class, "index"])->middleware('documents');
     Route::get("qualified_email_template", [App\Http\Controllers\CompanyEmailTemplatesController::class, "createQualifiedEmail"])->middleware('documents');
     Route::post('qualified-email-template', [App\Http\Controllers\CompanyEmailTemplatesController::class, "updateQualifiedTemplate"])->name('qualified-template')->middleware('documents');

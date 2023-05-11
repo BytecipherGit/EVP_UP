@@ -4,6 +4,7 @@
 <head>
   <title>EVP - Dashboard</title>
   <meta charset="utf-8">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="viewport" content="width=device-width, user-scalable=no">
   <link rel="icon" href="{{ asset('assets') }}/superadmin/images/logo-icon.png">
@@ -124,8 +125,8 @@
         <span class="toggle-bar"></span> 
       </div>
       <aside>
-        <li class="active">
-          <a href="{{ route('dashboard')}}">
+        <li @if (Request::segment(2) == 'dashboard') class="active" @endif>
+          <a href="{{ route('superadmin')}}">
             <img src="{{ asset('assets') }}/superadmin/images/overview-icon.png">
             Overview
           </a>
@@ -145,7 +146,7 @@
 
                 <div id="accordion-1">
                   <ul>                    
-                    <li>
+                    <li @if (Request::segment(2) == 'organization') class="active" @endif>
                       <a href="{{ route('organization')}}">
                         <img src="{{ asset('assets') }}/superadmin/images/invite-icon.png"> 
                         Organization
@@ -188,7 +189,7 @@
     <script>
       window.jQuery || document.write('<script src="../../{{ asset('assets') }}/superadmin/js/vendor/jquery.min.js"><\/script>')
     </script>
-
+    <script src="{{ asset('assets') }}/admin/js/sweetalert.min.js"></script>
     <script src="{{ asset('assets') }}/superadmin/js/bootstrap.min.js"></script>  
     <script src="{{ asset('assets') }}/datatable/js/jquery-3.5.1.js"></script>
     <script src="{{ asset('assets') }}/datatable/js/jquery.dataTables.min.js"></script>

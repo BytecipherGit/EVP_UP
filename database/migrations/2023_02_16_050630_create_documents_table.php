@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('user_id');      
             $table->string('document');
             $table->string('doc_type');
-            $table->string('status')->default('pending');
+            $table->tinyInteger('status')->default('0')->comment('1=Verified, 0=Pending');
             $table->timestamps();
         });
     }

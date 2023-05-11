@@ -27,9 +27,9 @@ class AdminSeeder extends Seeder
             'designation'=>'Developer',
             'department'=>'CS',
             'address'=>'Indore',
-            'country'=>'India',
-            'state'=>'Madhya Pradesh',
-            'city'=>'Indore',
+            'country'=>'101',
+            'state'=>'21',
+            'city'=>'2229',
             'pin'=>'482003',
             'status'=>'1'
         ]);
@@ -37,16 +37,16 @@ class AdminSeeder extends Seeder
         User::create([
             'role' => 'admin',
             'name' => 'admin',
-            'email' => 'admin3@gmail.com',
+            'email' => 'admin@gmail.com',
             'password' => Hash::make('123456'),
             'org_name' =>'ByteCipher',
             'org_web'=>'bytecipher.net',
             'designation'=>'Developer',
             'department'=>'CS',
             'address'=>'Indore',
-            'country'=>'India',
-            'state'=>'Madhya Pradesh',
-            'city'=>'Indore',
+            'country'=>'101',
+            'state'=>'21',
+            'city'=>'2229',
             'pin'=>'482003',
             'status'=>'1'
         ]);

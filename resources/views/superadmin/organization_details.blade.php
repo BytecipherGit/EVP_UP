@@ -17,6 +17,14 @@
               <a href="{{ route('organization') }}"><img src="{{ asset('assets') }}/superadmin/images/back-icon.png"> Back</a>
             </div>
           </div>
+
+          <div id="showHideAlert" class="col-md-8 alert alert-success" role="alert" style="display:none;">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+            <strong><span id="success_msg"></span> </strong>
+        </div>
+
         </div>
       </div><!--- Main Heading ----->
 
@@ -56,10 +64,6 @@
                       <div class="col-lg-4 col-md-6">
                         <h4>Organization Admin Email</h4>
                         <p>{{ $companyDetails->email }}</p>
-                      </div>
-                      <div class="col-lg-4 col-md-6">
-                        <h4>Company Registration No.</h4>
-                        <p>12AD1551AAXZ</p>
                       </div>
                       <div class="col-lg-4 col-md-6">
                         <h4>Designation</h4>
@@ -112,50 +116,26 @@
                             <th>Actions</th>
                           </tr>
                           </thead>
+                          @foreach($companyDocuments as $companyDocument)
                             <tr>
-                              <td>Pan Card</td>
-                              <td>AXXX11100X</td>
+                              <td>{{ $companyDocument->doc_type }}</td>
+                              <td>{{ $companyDocument->id }}</td>
                               <td>
-                                <div class="table-select-drop">
-                                  <div class="selectBox">
-                                    <div class="selectBox__value">Pending</div>
-                                    <div class="dropdown-menu">
-                                      <a class="dropdown-item active">Pending</a>
-                                      <a class="dropdown-item ">Rejected</a>
-                                      <a class="dropdown-item ">Verified</a>
-                                    </div>
-                                  </div>
-                                </div>
+                                @if ($companyDocument->status == 1)
+                                <span style="cursor:pointer" onClick="update_company_status('{{ $companyDocument->id }}', '{{ $companyDocument->status }}')" class="btn btn-success position">
+                                 <i style="font-size: 10px;"></i>&nbsp;Verified</span>
+                                @else
+                                <span style="cursor:pointer" class="btn btn-danger position" onClick="update_company_status('{{ $companyDocument->id }}', '{{ $companyDocument->status }}')">Pending</span>
+                                @endif
                               </td>
                               <td>
                                 <span class="d-flex">
-                                  <a href="#" target="_black" class="docu-down" data-toggle="modal" data-target="#exampleModaldocument"><i class="fa fa-file-text" aria-hidden="true"></i></a>
-                                  <a href="assets/images/pan-card.png" target="_black" class="docu-download"><i class="fa fa-cloud-download" aria-hidden="true"></i></a> 
+                                  <a href="#" target="_black" class="docu-down" data-toggle="modal" data-target="#companyDocument{{ $companyDocument->id }}"><i class="fa fa-file-text" aria-hidden="true"></i></a>
+                                  <a href="{{ $companyDocument->document }}" target="_black" class="docu-download"><i class="fa fa-cloud-download" aria-hidden="true"></i></a> 
                                 </span>
                               </td>
                             </tr>
-                            <tr>
-                              <td>GST</td>
-                              <td>AXXX11100X</td>
-                              <td>
-                                <div class="table-select-drop">
-                                  <div class="selectBox">
-                                    <div class="selectBox__value">Pending</div>
-                                    <div class="dropdown-menu">
-                                      <a class="dropdown-item active">Pending</a>
-                                      <a class="dropdown-item ">Rejected</a>
-                                      <a class="dropdown-item ">Verified</a>
-                                    </div>
-                                  </div>
-                                </div>
-                              </td>
-                              <td>
-                                <span class="d-flex">
-                                  <a href="#" target="_black" class="docu-down" data-toggle="modal" data-target="#exampleModaldocument"><i class="fa fa-file-text" aria-hidden="true"></i></a>
-                                  <a href="assets/images/pan-card.png" target="_black" class="docu-download"><i class="fa fa-cloud-download" aria-hidden="true"></i></a> 
-                                </span>
-                              </td>
-                            </tr>                            
+                          @endforeach
                           <tbody>
                         </tbody>
                       </table>
@@ -182,7 +162,7 @@
         <div class="modal-header">
           <h2 class="modal-title" id="exampleModalLabel">Confirm Status</h2>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <img src="assets/images/close-btn-icon.png">
+            <img src="{{ asset('assets') }}/superadmin/images/close-btn-icon.png">
           </button>
         </div>
         <div class="modal-body">
@@ -195,30 +175,32 @@
       </div>
     </div>
   </div>
-  
 
-  
+
+
   <!-- The Modal Docum INFO-->
-  <div class="modal fade custu-modal-popup" id="exampleModaldocument" role="dialog" aria-labelledby="exampleModalLabel"  aria-hidden="true">
+  @foreach($companyDocuments as $companyDocument)
+  <div class="modal fade custu-modal-popup" id="companyDocument{{ $companyDocument->id }}" role="dialog" aria-labelledby="exampleModalLabel"  aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h2 class="modal-title" id="exampleModalLabel">Pan Card</h2>
+          <h2 class="modal-title" id="exampleModalLabel">{{ $companyDocument->doc_type }}</h2>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <img src="assets/images/close-btn-icon.png">
+            <img src="{{ asset('assets') }}/superadmin/images/close-btn-icon.png">
           </button>
         </div>
         <div class="modal-body">
           <div class="document-body">
-            <img src="assets/images/pan-card.png">
+            <img src="{{ $companyDocument->document }}">
           </div>
-          <a href="assets/images/pan-card.png" target="_black">Download</a>
+          <a href="/admin/download_document/{{ $companyDocument->id }}" target="_black">Download</a>
         </div>
         <div class="modal-footer">
         </div>
       </div>
     </div>
   </div>
+  @endforeach
 
 
     <!-- Bootstrap core JavaScript
@@ -228,6 +210,53 @@
       window.jQuery || document.write('<script src="../../{{ asset('assets') }}/superadmin/js/vendor/jquery.min.js"><\/script>')
     </script>
     <script src="{{ asset('assets') }}/superadmin/js/bootstrap.min.js"></script>  
+
+    <script>
+   
+      
+      function update_company_status(id, status) {
+            if (confirm('Are you sure you want to change status ?')) {
+
+               $.ajax({
+                   type: 'post',
+                   url: "{{route('update_company_status')}}",
+                   headers: {
+                       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                   },
+                   data: 'id=' + id + '&status=' + status,
+                   success: function(data) {
+
+                       var status = data.status;
+                       var msg = data.msg;
+                       $('#success_msg').html(msg);
+                       if (status == 'success') {
+                           $("#showHideAlert").removeClass('alert-warning');
+                           $("#showHideAlert").addClass('alert-success');
+
+                           var page = window.location.hash.substr(1);
+                           if (page) {
+                               getData(page);
+                           } else {    
+                             location.reload();
+
+                         } 
+                      }
+                       if (status == 'error') {
+                           $("#showHideAlert").removeClass('alert-success');
+                           $("#showHideAlert").addClass('alert-warning');
+                       }
+                       $("#showHideAlert").show();
+                       
+                   },
+                   'error': function(data) {
+                       console.log(data);
+                   }
+               });
+           }
+
+
+       }
+</script>
 
     <script>
       $(".selectBox").on("click", function(e) {
@@ -242,7 +271,4 @@
       });
     </script>
 
-</body>
-
-</html>
 @endsection

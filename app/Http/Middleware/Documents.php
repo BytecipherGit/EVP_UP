@@ -24,7 +24,7 @@ class Documents
 
      if($doc){
         // dd($doc);
-        if ($doc->status == 'verified') {
+        if ($doc->status == '1') {
             return $next($request);
          }
           else {
