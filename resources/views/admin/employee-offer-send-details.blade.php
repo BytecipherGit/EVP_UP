@@ -16,7 +16,7 @@
             </div>
             <div class="col-md-4">
                 <div class="main-right-button-box">
-                      <a href="/admin" class="button_background_color"><img src="{{ asset('assets') }}/admin/images/back-icon.png"><span class="button_text_color">Back</span></a>
+                      <a href="/dashboard" class="button_background_color"><img src="{{ asset('assets') }}/admin/images/back-icon.png"><span class="button_text_color">Back</span></a>
                 </div>
               </div>
         </div>

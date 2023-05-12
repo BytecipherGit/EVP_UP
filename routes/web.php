@@ -7,7 +7,7 @@ use App\Http\Controllers\PositionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ThemeSettingController;
 use App\Http\Middleware\Admin;
-use App\Http\Middleware\Superadmin;
+use App\Http\Middleware\SuperAdmin;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -62,7 +62,7 @@ Route::get('/basic-info', function () {
 // });
 
 
-Route::get('/admin', [App\Http\Controllers\SuperAdminController::class, 'superAdminLogin'])->name('superlogin');
+
 // Route::post('/invite-email/{id?}', [App\Http\Controllers\InviteempController::class, 'sendemail'])->name('invite-email');
 Route::post('send_invitation_to_employee',[App\Http\Controllers\InviteempController::class, 'sendInvitationToEmployee'])->name('send_invitation_to_employee');
 
@@ -75,16 +75,18 @@ Route::get('demo-search', [App\Http\Controllers\DocumentsController::class, 'dem
 Route::get('getEmployeeNameThroughAutocomplete', [App\Http\Controllers\DocumentsController::class, 'getEmployeeNameThroughAutocomplete'])->name('employeeNameAutocomplete');
 Route::get('getEmployeeDetailsForScheduleInterview', [App\Http\Controllers\DocumentsController::class, 'getEmployeeDetailsForScheduleInterview'])->name('getEmployeeDetailsForScheduleInterview');
 
-Route::get('/email-config/{id?}', [App\Http\Controllers\InviteempController::class, 'getConfig'])->name('email-config');
+Route::get('/email-config/{id?}', [App\Http\Controllers\InviteempController::class, 'getConfig'])->name('invite.email.config');
 Route::get('/basic_info/{id?}/{segment?}', [App\Http\Controllers\InviteempController::class, 'getInviteEmployeeDetails'])->name('basic-info');
 Route::post('/basic-info/{id?}', [App\Http\Controllers\InviteempController::class, 'getInviteDetails']);
-
 Auth::routes();
 
-Route::middleware([Superadmin::class])->group(function () {
-    //    superlogin
+Route::get('admin', [App\Http\Controllers\SuperAdminController::class, 'superAdminLogin'])->name('superlogin');
+
+Route::middleware([SuperAdmin::class])->group(function () {
+    
         Route::get('admin/dashboard', [App\Http\Controllers\SuperAdminController::class, 'index'])->name('superadmin');
         Route::get('admin/organization', [App\Http\Controllers\SuperAdminController::class, 'getCompany'])->name('organization');
+        Route::get('admin/verified_organization', [App\Http\Controllers\SuperAdminController::class, 'getVerifiedCompany'])->name('organization.verified');
         Route::get('admin/organization_details/{id?}/{status?}', [App\Http\Controllers\SuperAdminController::class, 'getCompanyDetails'])->name('organization_details');
         Route::post('update_company_status', [App\Http\Controllers\SuperAdminController::class, 'changeCompanyStatus'])->name('update_company_status');
         Route::get('admin/add_company/{id?}', [App\Http\Controllers\SuperAdminController::class, 'getCompanyForm']);
@@ -93,12 +95,14 @@ Route::middleware([Superadmin::class])->group(function () {
         Route::post('admin/update_organization/{id?}', [App\Http\Controllers\SuperAdminController::class, 'updateCompanyForm']);
         Route::post('company/destroy', [App\Http\Controllers\SuperAdminController::class, 'deleteCompany']);
         Route::get('admin/download_document/{id?}', [App\Http\Controllers\SuperAdminController::class, 'downloadDocument'])->name('download.document');
-        Route::get('superadmin/logout', [App\Http\Controllers\SuperAdminController::class, 'logout'])->name('superadmin.logout');
-       
+        // Route::get('superadmin/logout', [App\Http\Controllers\SuperAdminController::class, 'logout'])->name('superadmin.logout');
+        Route::get('logout', [App\Http\Controllers\SuperAdminController::class, 'destroy'])->name('logout');
     });
 
+
+
 Route::middleware([Admin::class])->group(function () {
-    Route::get('/dashboard', [App\Http\Controllers\AdminController::class, 'index'])->name('admin')->middleware('documents');
+    Route::get('/dashboard', [App\Http\Controllers\AdminController::class, 'index'])->name('dashboard')->middleware('documents');
     Route::get('admin/logout', [App\Http\Controllers\AdminController::class, 'logout'])->name('admin.logout')->middleware('documents');
     Route::post('/change_password', [App\Http\Controllers\AdminController::class, 'changePassword'])->name('password.change')->middleware('documents');
     Route::get('/add-employee/{id?}', [App\Http\Controllers\EmployeeController::class, 'index'])->middleware('documents');
@@ -121,7 +125,7 @@ Route::middleware([Admin::class])->group(function () {
     Route::get('/add-invite-employee', [App\Http\Controllers\InviteempController::class, 'inviteEmp'])->middleware('documents');
     Route::post('/add-invite-employee', [App\Http\Controllers\InviteempController::class, 'getInviteEmp'])->middleware('documents');
     Route::get('/invite_employee', [App\Http\Controllers\InviteempController::class, 'index'])->middleware('documents');
-    Route::post('/invite-employee', [App\Http\Controllers\InviteempController::class, 'getCsvInvite'])->middleware('documents');
+    Route::post('/invite_employee', [App\Http\Controllers\InviteempController::class, 'getCsvInvite'])->middleware('documents');
     Route::get('/edit-invite-employee/{id?}', [App\Http\Controllers\InviteempController::class, 'editInviteEmp'])->middleware('documents');
     Route::post('/edit-invite-employee/{id?}', [App\Http\Controllers\InviteempController::class, 'geteditInvite'])->middleware('documents');
     Route::get('/delete-invite/{id?}', [App\Http\Controllers\InviteempController::class, 'deleteInvite'])->middleware('documents');
@@ -190,7 +194,6 @@ Route::middleware([Admin::class])->group(function () {
     Route::post('next_round_of_interview/submit', [InterviewEmployee::class, 'scheduleNextRoundOfInterview'])->middleware('documents');
     Route::any('get_interview_details/form/{id?}', [InterviewEmployee::class, 'getInterviewDetailForm'])->middleware('documents');
   
-
     Route::get('position', [PositionController::class, 'index'])->name('position.index')->middleware('documents');
     Route::any('position/form/{id?}', [PositionController::class, 'getPositionForm'])->middleware('documents');
     Route::post('position/submit', [PositionController::class, 'createPosition'])->middleware('documents');
@@ -253,9 +256,9 @@ Route::any('resetverification-mail/{id?}', [App\Http\Controllers\Auth\Registered
 
 Route::get('account_verify', [InterviewEmployee::class, 'getCheckStatus']);
 Route::get('resetaccount_verify', [InterviewEmployee::class, 'getResetStatus']);
-Route::get('/dashboards', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboards');
+// Route::get('/dashboards', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboards');
 
 Route::get('country-state-city', [App\Http\Controllers\Auth\RegisteredUserController::class, 'index']);
 Route::post('get-states-by-country', [App\Http\Controllers\Auth\RegisteredUserController::class, 'getState']);

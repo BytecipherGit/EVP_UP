@@ -55,7 +55,7 @@
                         <div class="col-xl-12 mt-3">
                             <h2>Organization Details</h2>
                         </div>
-                        <div class="col-xl-6 col-lg-6 col-md-12">
+                        <div class="col-xl-4 col-lg-6 col-md-12">
                             <div class="form-group">
                                 <label for="org_name">Orgnization name<span style="color:red">*</span></label>
                                 <input type="text" name="org_name" class="form-control" value="{{ $companyData ? $companyData->org_name : '' }}" placeholder="Orgnization name">
@@ -63,7 +63,7 @@
                             </div>
                         </div>
                    
-                        <div class="col-xl-6 col-lg-6 col-md-12">
+                        <div class="col-xl-4 col-lg-6 col-md-12">
                             <div class="form-group">
                                 <label>Website<span style="color:red">*</span></label>
                                 <input type="text" name="org_web" class="form-control" value="{{ $companyData ? $companyData->org_web : '' }}" placeholder="Enter website">
@@ -79,7 +79,7 @@
                             </div>
                         </div>
 
-                        <div class="col-xl-4 col-lg-6 col-md-12">
+                        <div class="col-xl-6 col-lg-6 col-md-12">
                             <div class="form-group">
                                 <label>Password<span style="color:red">*</span></label>
                                 <input type="password" name="password" class="form-control" value="{{ $companyData ? $companyData->password : '' }}" placeholder="Enter password">
@@ -89,7 +89,7 @@
                         </div>
 
                
-                        <div class="col-xl-4 col-lg-6 col-md-12">
+                        <div class="col-xl-6 col-lg-6 col-md-12">
                             <div class="form-group">
                                 <label>Confirm Password<span style="color:red">*</span></label>
                                 <input type="password" name="password_confirmation" class="form-control" value="{{ $companyData ? $companyData->password_confirmation : '' }}" placeholder="Enter confirm password">

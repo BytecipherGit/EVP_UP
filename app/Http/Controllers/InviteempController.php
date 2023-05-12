@@ -48,7 +48,7 @@ class InviteempController extends Controller
     public function deleteInvite(request $request, $id)
     {
         Employee::where('id', $request->id)->delete();
-        return redirect('invite-employee')->with('message', 'Employee delete successfully.');
+        return redirect('invite_employee')->with('message', 'Employee delete successfully.');
     }
 
     public function geteditInvite(request $request)
@@ -72,7 +72,7 @@ class InviteempController extends Controller
             ]);
          
 
-        return redirect('invite-employee')->with('message', 'Infomation updated successfully.');
+        return redirect('invite_employee')->with('message', 'Infomation updated successfully.');
 
     }
 
@@ -241,9 +241,6 @@ class InviteempController extends Controller
         $headers = array(
             'Content-Type: application/jpg',
         );
-      
-
-
         return Response::download($file, 'qualification.jpg', $headers);
 
     }
@@ -312,7 +309,7 @@ class InviteempController extends Controller
                 
                 $name = $row['first_name'] . ' ' . $row['last_name'];
                 $send_name = ['first' => $name];
-                $send_id = ['ids' => $row['id']];
+                $send_id = ['ids' => encrypt($row['id'])];
                 $company_name = ['company_name' => Auth::user()->name];
 
                 $emailDetails = HelpersHelper::getSmtpConfig(Auth::id());
@@ -390,27 +387,28 @@ class InviteempController extends Controller
 
     public function getConfig(request $request)
     {
-        $empid = Employee::where('id', $request->id)->first();
-        return view('org-invite/index', compact('empid'));
+        $employee = Employee::where('id', decrypt($request->id))->first();
+        return view('org-invite/index', compact('employee'));
     }
 
     public function getInviteEmployeeDetails(request $request, $id)
     {
+       if($request->id){
 
-        $employeeExists = (!empty($request->id)) ? Employee::find($request->id) : false;
-        $qualificationExist = Empqualification::where('employee_id',$request->id)->first();
-        $qualificationViewExist = Empqualification::where('employee_id',$request->id)->get();
-        $workhistoryExists = Empworkhistory::where('employee_id',$request->id)->first();
-        $workhistoryViewExist = Empworkhistory::where('employee_id',$request->id)->get();
-        $employeeSkillsExists = Empskills:: where('employee_id',$request->id)->first();
-        $employeeSkillsViewExists = Empskills:: where('employee_id',$request->id)->get();
-        $employeeLanguageViewExists = Emplang:: where('employee_id',$request->id)->get();
-        $employeeOfficials = Empofficial:: where('employee_id',$request->id)->first();
-        $verificationData = Verification:: where('employee_id',$request->id)->where('verification_document_type','=','identity_document')->first();
-        $qualificationStatus = Verification:: where('employee_id',$request->id)->where('verification_document_type','=','qualification_document')->first();
-        $experienceStatus = Verification:: where('employee_id',$request->id)->where('verification_document_type','=','experience_document')->first();
+            $employeeExists = (!empty($request->id)) ? Employee::find(decrypt($request->id)) : false;
+            $qualificationExist = Empqualification::where('employee_id',decrypt($request->id))->first();
+            $qualificationViewExist = Empqualification::where('employee_id',decrypt($request->id))->get();
+            $workhistoryExists = Empworkhistory::where('employee_id',decrypt($request->id))->first();
+            $workhistoryViewExist = Empworkhistory::where('employee_id',decrypt($request->id))->get();
+            $employeeSkillsExists = Empskills:: where('employee_id',decrypt($request->id))->first();
+            $employeeSkillsViewExists = Empskills:: where('employee_id',decrypt($request->id))->get();
+            $employeeLanguageViewExists = Emplang:: where('employee_id',decrypt($request->id))->get();
+            $employeeOfficials = Empofficial:: where('employee_id',decrypt($request->id))->first();
+            $verificationData = Verification:: where('employee_id',decrypt($request->id))->where('verification_document_type','=','identity_document')->first();
+            $qualificationStatus = Verification:: where('employee_id',decrypt($request->id))->where('verification_document_type','=','qualification_document')->first();
+            $experienceStatus = Verification:: where('employee_id',decrypt($request->id))->where('verification_document_type','=','experience_document')->first();
+       }
 
-// dd($verificationData);
         return view('org-invite/basic-info',compact('employeeExists','qualificationExist','qualificationViewExist','workhistoryExists','workhistoryViewExist','employeeSkillsExists','employeeSkillsViewExists','employeeLanguageViewExists','employeeOfficials','verificationData','qualificationStatus','experienceStatus'));
     }
      

@@ -18,12 +18,27 @@
             </div>
           </div>
 
-          <div id="showHideAlert" class="col-md-8 alert alert-success" role="alert" style="display:none;">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <div id="showHideAlert" class="modal fade custu-no-select" role="dialog" style="display:none;">
+            <button type="button" class="close" data-dismiss="dialog" aria-label="Close">
                 <span aria-hidden="true">×</span>
             </button>
             <strong><span id="success_msg"></span> </strong>
-        </div>
+          </div>
+
+          {{-- <div class="modal fade custu-no-select" id="showHideAlert" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <img src="{{ asset('assets') }}/admin/images/deactivate-popup-icon.png" class="img-size-wth">
+                        <h1 class="h1-delete">Are you sure?</h1>
+                        <p>You want to change status?</p>
+                        <a href="delete-invite/{{ $invite->id }}" class="button_background_color">Delete</a>
+                    </div>
+                </div>
+            </div>
+        </div> --}}
+
+          
 
         </div>
       </div><!--- Main Heading ----->
@@ -106,12 +121,13 @@
                 <div class="col-xl-12">
                   <div class="eml-per-main">
                     <h2>Documents</h2>
+                @if(!empty($documentExist))
                     <div class="table-responsive1">
                       <table class="table">
                         <thead>
                           <tr>
                             <th>Type</th>
-                            <th>Id</th>
+                            {{-- <th>Id</th> --}}
                             <th>Status</th>
                             <th>Actions</th>
                           </tr>
@@ -119,7 +135,7 @@
                           @foreach($companyDocuments as $companyDocument)
                             <tr>
                               <td>{{ $companyDocument->doc_type }}</td>
-                              <td>{{ $companyDocument->id }}</td>
+                              {{-- <td>{{ $companyDocument->id }}</td> --}}
                               <td>
                                 @if ($companyDocument->status == 1)
                                 <span style="cursor:pointer" onClick="update_company_status('{{ $companyDocument->id }}', '{{ $companyDocument->status }}')" class="btn btn-success position">
@@ -140,6 +156,11 @@
                         </tbody>
                       </table>
                     </div>
+                 @else
+                 <div class="col-xl-12">
+                    <p>Documets not uploaded.</p>
+                 </div>
+                 @endif   
                   </div>
                 </div>
               </div>

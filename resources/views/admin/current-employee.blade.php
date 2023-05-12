@@ -60,7 +60,7 @@
                 <td>{{ $curremp->phone}}</td>
                 <td>{{ $curremp->email }}</td>
                 {{-- <td>{{ $curremp->mang_name}}</td> --}}
-                <td class="d-flex"><a href="edit-employee/{{ $curremp->employee_id }}" class="edit-btn fa fa-edit" data-title="Edit"></a>
+                <td class="d-flex"><a href="employee_info/{{ $curremp->employee_id }}" class="edit-btn fa fa-edit" title="Edit"></a>
                   {{-- <a href="employee-exit/{{ $curremp->employee_id }}" class="edit-btn fa fa-user-times" data-title="Exit"></a></td> --}}
               </tr>  
               @endforeach                              

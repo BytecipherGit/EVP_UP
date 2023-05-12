@@ -1279,7 +1279,7 @@ class InterviewEmployee extends Controller
 
     public function sendEmailTemplate(request $request)
     {
-        // dd($request->interview_id);
+        // dd($request->interview_status);
         $emailDetails = HelpersHelper::getSmtpConfig(Auth::id());
 
         $config = array(
@@ -1326,7 +1326,7 @@ class InterviewEmployee extends Controller
 
         if(!empty($request->interview_id) && !empty($request->interview_status)){
             $interview = InterviewEmployeeRounds::find($request->interview_id);
-            dd($interview);
+          
             $interview->interviewer_status = $request->interview_status;
 
             if ($interview->save()) {

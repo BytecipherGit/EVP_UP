@@ -32,7 +32,7 @@
   <header> 
     <div class="container-fluid">
     <nav class="navbar navbar-expand-md navbar-dark">
-      <a class="navbar-brand" href="dashboard"><img src="{{ asset('assets') }}/superadmin/images/logo.png"></a>
+      <a class="navbar-brand" href=""><img src="{{ asset('assets') }}/superadmin/images/logo.png"></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -102,7 +102,7 @@
               </a>
               @endif
               <hr>
-              <a class="dropdown-item dropdown-item-no" href="{{ route('superadmin.logout') }}">               
+              <a class="dropdown-item dropdown-item-no" href="{{ route('logout') }}">               
                 Sign out
                 <img src="{{ asset('assets') }}/superadmin/images/logout-icon.png" class="ml-auto">
               </a>
@@ -125,7 +125,7 @@
         <span class="toggle-bar"></span> 
       </div>
       <aside>
-        <li @if (Request::segment(2) == 'dashboard') class="active" @endif>
+        <li @if (Request::segment(2) == '') class="active" @endif>
           <a href="{{ route('superadmin')}}">
             <img src="{{ asset('assets') }}/superadmin/images/overview-icon.png">
             Overview

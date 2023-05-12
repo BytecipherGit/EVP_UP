@@ -45,7 +45,7 @@
           <div class="bg-section">
             {{ $getVerifiedCompany }} <img src="{{ asset('assets') }}/admin/images/button-plus-clr.png"> 
           </div>  
-          <a href="/organization">View</a>              
+          <a href="verified_organization">View</a>              
         </h6>
       </div>
     </div>

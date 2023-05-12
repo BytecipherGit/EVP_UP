@@ -19,7 +19,7 @@
         <div class="main-heading">        
           <div class="row">
             <div class="col-md-8">
-              <h1>Add Company</h1>
+              <h1>Edit Company</h1>
               <p></p>
             </div>
             <div class="col-md-4">
@@ -55,7 +55,7 @@
                         <div class="col-xl-12 mt-3">
                             <h2>Organization Details</h2>
                         </div>
-                        <div class="col-xl-6 col-lg-6 col-md-12">
+                        <div class="col-xl-4 col-lg-6 col-md-12">
                             <div class="form-group">
                                 <label for="org_name">Orgnization name<span style="color:red">*</span></label>
                                 <input type="text" name="org_name" class="form-control" value="{{ $companyData ? $companyData->org_name : '' }}" placeholder="Orgnization name">
@@ -63,7 +63,7 @@
                             </div>
                         </div>
                    
-                        <div class="col-xl-6 col-lg-6 col-md-12">
+                        <div class="col-xl-4 col-lg-6 col-md-12">
                             <div class="form-group">
                                 <label>Website<span style="color:red">*</span></label>
                                 <input type="text" name="org_web" class="form-control" value="{{ $companyData ? $companyData->org_web : '' }}" placeholder="Enter website">

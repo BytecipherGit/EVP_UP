@@ -3,10 +3,11 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
-class Superadmin 
+class SuperAdmin 
 {
     /**
      * Handle an incoming request.
@@ -17,16 +18,17 @@ class Superadmin
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!Auth::check()) {
-            return redirect()->route('admin');
+
+        if (!Auth::check()){
+            return redirect('/admin');     
         }
 
-        if (Auth::user()->role == 'superadmin') {
+        $userRole = User::find(Auth::user()->id);   
+        if($userRole->role == 'superadmin'){
             return $next($request);
-        }
-
-        if (Auth::user()->role == 'admin') {
-            return redirect()->route('dashboard');
-        }
+        } else {
+            return abort(404);
+        }     
     }
 }
+

@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\RedirectResponse;
 use App\Models\CompanyTemplate;
 use App\Models\CompanyEmailTemplate;
 use Illuminate\Auth\Events\Registered;
@@ -30,6 +31,8 @@ use Illuminate\Support\Facades\Auth;
 
 class SuperAdminController extends Controller
 {
+
+
     /**
      * Show the application dashboard.
      *
@@ -40,6 +43,11 @@ class SuperAdminController extends Controller
         $getVerifiedCompany = User::where('status','=',1)->count();
         $getCompanyData = User::count();
         return view('superadmin/index',compact('getVerifiedCompany','getCompanyData'));
+    }
+
+    public function create(): View
+    {
+        return view('auth.login');
     }
 
     public function superAdminLogin(){
@@ -70,6 +78,12 @@ class SuperAdminController extends Controller
         $getCompany = User::all();
         return view('superadmin/organization',compact('getCompany'));
     }
+
+    public function getVerifiedCompany(request $request)
+    {
+        $getverifiedCompany = User::where('status','=','1')->get();
+        return view('superadmin/verified_organization',compact('getverifiedCompany'));
+    }
     
     public function getCompanyDetails(request $request)
     {
@@ -77,6 +91,7 @@ class SuperAdminController extends Controller
 
             $companyDetails = User::where('id',$request->id)->first();  
             $companyDocuments = Documents::where('user_id',$request->id)->get();
+            $documentExist = Documents::where('user_id',$request->id)->first();
             $address= User::join('cities','cities.id','=','users.city')
                         ->join('states','states.id','=','cities.state_id')
                         ->join('countries','countries.id','=','states.country_id')
@@ -84,7 +99,7 @@ class SuperAdminController extends Controller
                         ->where('users.id', $request->id)
                         ->first();
        
-            return view('superadmin/organization_details',compact('companyDetails','address','companyDocuments'));
+            return view('superadmin.organization_details',compact('companyDetails','address','companyDocuments','documentExist'));
             
         }else {
             return Response::json(['success' => '0']);
@@ -373,5 +388,17 @@ class SuperAdminController extends Controller
         Auth::logout();
         Session::flush();	  
         return redirect('/login');
+      }
+
+
+      public function destroy(Request $request): RedirectResponse
+      {
+          Auth::guard('web')->logout();
+  
+          $request->session()->invalidate();
+  
+          $request->session()->regenerateToken();
+  
+          return redirect('/admin');
       }
 }

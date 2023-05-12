@@ -266,7 +266,7 @@ class NewEmployeeController extends Controller
                                               ->where('company_id',Auth::id())->where('verification_document_type','=','identity_document')->update($updateVerification);
 
                         if($employeeDetails->status == '2'){
-                           return redirect('basic_info/'.$request->employee_id)->with('message','Information added successfully');
+                           return redirect('basic_info/'.encrypt($request->employee_id))->with('message','Information added successfully');
                         }else{
                            return redirect('employee_info/'.$request->employee_id)->with('message','Information added successfully');
                         }
@@ -368,7 +368,7 @@ class NewEmployeeController extends Controller
                             $verificationData = Verification::create($insertVerification);
 
                             if($qualificationDetails->status == '2'){
-                                return redirect('basic_info/'.$request->employee_id.'/qualification')->with('message','Information added successfully');
+                                return redirect('basic_info/'.encrypt($request->employee_id).'/qualification')->with('message','Information added successfully');
                              }else{
                                 return redirect('employee_info/'.$request->employee_id.'/qualification')->with('message','Information added successfully');
                              }
@@ -467,7 +467,7 @@ class NewEmployeeController extends Controller
 
                        
                         if($employee->status == '2'){
-                            return redirect('basic_info/'.$request->employee_id.'/qualification')->with('message','Information added successfully');
+                            return redirect('basic_info/'.encrypt($request->employee_id).'/qualification')->with('message','Information added successfully');
                          }else{
                             return redirect('employee_info/'.$request->employee_id.'/qualification')->with('message','Information added successfully');
                          }
@@ -488,7 +488,7 @@ class NewEmployeeController extends Controller
 
     public function createEmployeeWorkhistory(request $request)
     {
-
+// dd($request->all());
         if (Auth::check()) {
             $validator = Validator::make($request->all(), [
                 // 'title' => 'required|string|max:255',
@@ -496,7 +496,7 @@ class NewEmployeeController extends Controller
                 
             ]);
             $employeeDetails = Employee::where('id',$request->employee_id)->first();
-
+// dd($employeeDetails);
             if(!empty($employeeDetails)){
                 if ($validator->passes()) {
 
@@ -565,7 +565,7 @@ class NewEmployeeController extends Controller
                         $workhistoryData = Empworkhistory::create($insert);
                         $employee = Empworkhistory::join('company_employee','company_employee.employee_id','=','employee_workhistories.employee_id')
                                    ->where('employee_workhistories.employee_id',$request->employee_id)->first();
-
+// dd($workhistoryData);
                         if (!empty($workhistoryData)) {
 
                             $insertVerification = [
@@ -580,9 +580,9 @@ class NewEmployeeController extends Controller
 
                             
                             if($employee->status == '2'){
-                                return redirect('basic_info/'.$request->employee_id.'/workhistory')->with('message','Information added successfully');
+                                return redirect('basic_info/'.encrypt($employeeDetails->id).'/workhistory')->with('message','Information added successfully');
                              }else{
-                                return redirect('employee_info/'.$request->employee_id.'/workhistory')->with('message','Information added successfully');
+                                return redirect('employee_info/'.$employeeDetails->id.'/workhistory')->with('message','Information added successfully');
                              }
 
                         } else {
@@ -696,7 +696,7 @@ class NewEmployeeController extends Controller
 
                         
                         if($employee->status == '2'){
-                            return redirect('basic_info/'.$employeeDetails->id.'/workhistory')->with('message','Information added successfully');
+                            return redirect('basic_info/'.encrypt($employeeDetails->id).'/workhistory')->with('message','Information added successfully');
                          }else{
                             return redirect('employee_info/'.$employeeDetails->id.'/workhistory')->with('message','Information added successfully');
                          }
@@ -720,7 +720,7 @@ class NewEmployeeController extends Controller
 
     public function createEmployeeSkills(request $request)
     {
-
+// dd($request->all());
         if (Auth::check()) {
             $validator = Validator::make($request->all(), [
                 // 'title' => 'required|string|max:255',
@@ -730,10 +730,12 @@ class NewEmployeeController extends Controller
             $employeeDetails = Employee::where('id',$request->employee_id)->first();
 
             $skillsExist = Empskills::join('company_employee','company_employee.employee_id','=','employee_skills.employee_id')
-                          ->where('employee_skills.employee_id',$request->employee_id)->first();
-            $skillsLangExist = Emplang::join('company_employee','company_employee.employee_id','=','employee_language.employee_id')
-                             ->where('employee_language.employee_id',$request->employee_id)->first();
-   
+                           ->join('employee_language','employee_language.employee_id','=','company_employee.employee_id')
+                           ->where('employee_skills.employee_id',$request->employee_id)->first();
+
+            // $skillsLangExist = Emplang::join('company_employee','company_employee.employee_id','=','employee_language.employee_id')
+            //                  ->where('employee_language.employee_id',$request->employee_id)->first();
+//    dd($skillsExist);
             if(!empty($employeeDetails)){
                 if ($validator->passes()) {
 
@@ -760,8 +762,8 @@ class NewEmployeeController extends Controller
                      $language = DB::table('employee_language')->insert($insertDatalang);  
                   } 
 
-                  if(($skillsExist->status == '2') || ($skillsLangExist->status == '2')){
-                    return redirect('basic_info/'.$employeeDetails->id.'/skills')->with('message','Information added successfully');
+                  if($skillsExist->status == '2'){
+                    return redirect('basic_info/'.encrypt($employeeDetails->id).'/skills')->with('message','Information added successfully');
                  }else{
                     return redirect('employee_info/'.$employeeDetails->id.'/skills')->with('message','Information added successfully');
                  }
@@ -826,7 +828,7 @@ class NewEmployeeController extends Controller
 
     if($skillsLangExist->status == '2'){
 
-        return redirect('basic_info/'.$employeeDetails->id.'/skills')->with('message','Information added successfully');
+        return redirect('basic_info/'.encrypt($employeeDetails->id).'/skills')->with('message','Information added successfully');
      }else{
         return redirect('employee_info/'.$employeeDetails->id.'/skills')->with('message','Information added successfully');
      }
@@ -986,7 +988,7 @@ class NewEmployeeController extends Controller
                    if (!empty($langData)) {
 
                       if($languageDetails->status == '2'){
-                        return redirect('basic_info/'.$employeeDetails->id.'/skills')->with('message','Information added successfully');
+                        return redirect('basic_info/'.encrypt($employeeDetails->id).'/skills')->with('message','Information added successfully');
                        }else{
                         return redirect('employee_info/'.$employeeDetails->id.'/skills')->with('message','Information added successfully');
                        }
@@ -1039,7 +1041,7 @@ class NewEmployeeController extends Controller
                   if (!empty($skillData)) {
 
                     if($skillDetails->status == '2'){
-                        return redirect('basic_info/'.$employeeDetails->id.'/skills')->with('message','Information added successfully');
+                        return redirect('basic_info/'.encrypt($employeeDetails->id).'/skills')->with('message','Information added successfully');
                     }else{
                         return redirect('employee_info/'.$employeeDetails->id.'/skills')->with('message','Information added successfully');
                     }

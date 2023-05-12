@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Auth;
+use App\Models\User; 
 use Illuminate\Http\Request;
 
 class Admin
@@ -17,17 +18,29 @@ class Admin
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!Auth::check()) {
-            return redirect()->route('login');
-        }
+        // if (!Auth::check()) {
+        //     return redirect()->route('login');
+        // }
 
-        if (Auth::user()->role == 'superadmin') {
+        // if (Auth::user()->role == 'superadmin') {
           
-            return redirect()->route('superadmin');
+        //     return redirect()->route('superadmin');
+        // }
+
+        // if (Auth::user()->role == 'admin') {
+        //     return $next($request);
+        // }
+
+        if (!Auth::check()){
+            return redirect('/login');     
         }
 
-        if (Auth::user()->role == 'admin') {
+        $userRole = User::find(Auth::user()->id);
+        // dd($userRole->role);
+        if($userRole->role == 'admin'){
             return $next($request);
-        }
+        } else {
+            return abort(404);
+        }   
     }
 }

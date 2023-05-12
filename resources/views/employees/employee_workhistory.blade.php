@@ -2,7 +2,7 @@
 <form id="employee_workhistory_form" action="{{ url('workhistory/submit') }}" method="post" autocomplete="off" enctype="multipart/form-data">
     @csrf
     <input type="hidden" id="is_add" value="{{ $qualificationExist ? '' : 1 }}" />
-    {{-- <input type="hidden" id="employee_id" name="employee_id" value="{{ $employeeExists ? $employeeExists->id : '' }}" /> --}}
+    <input type="hidden" id="employee_id" name="employee_id" value="{{ $employeeExists ? $employeeExists->id : '' }}" />
 
                         <div class="form-group">
                             <div class="row">
