@@ -762,7 +762,7 @@ class NewEmployeeController extends Controller
                      $language = DB::table('employee_language')->insert($insertDatalang);  
                   } 
 
-                  if($skillsExist->status == '2'){
+                  if($skillsExist->status === '2'){
                     return redirect('basic_info/'.encrypt($employeeDetails->id).'/skills')->with('message','Information added successfully');
                  }else{
                     return redirect('employee_info/'.$employeeDetails->id.'/skills')->with('message','Information added successfully');
@@ -798,7 +798,7 @@ class NewEmployeeController extends Controller
           }
 
           if($skillsExist->status == '2'){
-            return redirect('basic_info/'.$employeeDetails->id.'/skills')->with('message','Information added successfully');
+            return redirect('basic_info/'.encrypt($employeeDetails->id).'/skills')->with('message','Information added successfully');
          }else{
             return redirect('employee_info/'.$employeeDetails->id.'/skills')->with('message','Information added successfully');
          }

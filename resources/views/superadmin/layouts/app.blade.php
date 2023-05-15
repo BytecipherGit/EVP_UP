@@ -93,9 +93,9 @@
               <img src="{{ asset('assets') }}/superadmin/images/droup-down-gray.png" class="right-doun">
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <a class="dropdown-item" href="#">
+              {{-- <a class="dropdown-item" href="#">
                 Profile
-              </a>
+              </a> --}}
               @if (Route::has('password.request'))
               <a class="dropdown-item" href="{{ route('password.request') }}">
                 Change Password

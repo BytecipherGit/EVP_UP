@@ -42,16 +42,34 @@ class SuperAdminController extends Controller
     {
         $getVerifiedCompany = User::where('status','=',1)->count();
         $getCompanyData = User::count();
-        return view('superadmin/index',compact('getVerifiedCompany','getCompanyData'));
+
+        if (Auth::check()) {
+            $userRole = User::find(Auth::user()->id);
+
+            // dd($userRole->role);
+            if($userRole->role != 'superadmin'){
+                return redirect('admin');
+            }
+            return view('superadmin/index',compact('getVerifiedCompany','getCompanyData'));
+        } else {
+            return view('auth.superadminlogin');
+        }
+       
     }
 
-    public function create(): View
+    // public function create(): View
+    // {
+    //     return view('auth.login');
+    // }
+
+    public function superAdminLogin()
     {
-        return view('auth.login');
-    }
-
-    public function superAdminLogin(){
-        return view('auth/superadminlogin');
+        if (!Auth::check()) {
+            return view('auth.superadminlogin');
+        } else {
+            return redirect('admin/dashboard');
+        }
+       
     }
 
     public function getCompanyForm(request $request)
@@ -98,8 +116,9 @@ class SuperAdminController extends Controller
                         ->select(('states.name as stateName'),('countries.name as countryName'),('cities.name as cityName'))
                         ->where('users.id', $request->id)
                         ->first();
-       
-            return view('superadmin.organization_details',compact('companyDetails','address','companyDocuments','documentExist'));
+                        
+            $activeTab = $request->input('tab', 'tab1');
+            return view('superadmin.organization_details',compact('companyDetails','address','companyDocuments','documentExist','activeTab'));
             
         }else {
             return Response::json(['success' => '0']);
@@ -399,6 +418,6 @@ class SuperAdminController extends Controller
   
           $request->session()->regenerateToken();
   
-          return redirect('/admin');
+          return redirect('admin');
       }
 }

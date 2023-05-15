@@ -18,6 +18,11 @@
         color: #dc3545 !important;
         font-size: 14px;
     }
+            .loadingImg {
+            display: none;
+            content: url('http://127.0.0.1:8000/ajaxLoading.gif') !important;
+        }
+
 </style>
 
 
@@ -127,7 +132,7 @@ aria-hidden="true">
                 </div>
             </div>
             <div class="modal-footer">
-                <div class="loadingImg"></div>
+                <div id="loadingImg"></div>
                 <div style="font-size: 16px; display:none;" class="text-success" id="success">Status update successfully</div>
                 <button type="button" class="btn-secondary-cust" onclick="refreshPage();" data-dismiss="modal">Cancel</button>
                 <button type="submit" id="Submit" class="btn-primary-cust button_background_color"><span class="button_text_color">Submit</span></button>
@@ -156,7 +161,7 @@ aria-hidden="true">
                  </div>
              </div>
              <div class="modal-footer">
-                 <div class="loadingImg"></div>
+                 <div id="loadingImg"></div>
                  <div style="font-size: 16px; display:none;" class="text-success" id="successs">Status update successfully</div>
                  <button type="button" class="btn-secondary-cust" onclick="refreshPage();" data-dismiss="modal">Cancel</button>
                  <button type="submit" id="Submit" class="btn-primary-cust button_background_color"><span class="button_text_color">Submit</span></button>
@@ -259,7 +264,7 @@ aria-hidden="true">
                 event.preventDefault();
                 var isAdd = $('#is_add').val();
                 var url = '{{ url('send_not_appeared') }}';
-                $('.loadingImg').show();
+                $('#loadingImg').show();
                 var formData = new FormData(this);              
                 $.ajax({
                     url: url,
@@ -272,7 +277,7 @@ aria-hidden="true">
                     processData: false,
                     success: function(data) {
                             if (data.success) {
-                                $('.loadingImg').hide();
+                                $('#loadingImg').hide();
                                 $('#successs').css('display', 'block');
                                 setInterval(function() {
                                     location.reload();
@@ -325,7 +330,7 @@ aria-hidden="true">
                 event.preventDefault();
                 var isAdd = $('#is_add').val();
                 var url = '{{ url('send_email_template') }}';
-                // $('.loadingImg').show();
+                $('#loadingImg').show();
                 var formData = new FormData(this);              
                 $.ajax({
                     url: url,
@@ -338,7 +343,7 @@ aria-hidden="true">
                     processData: false,
                     success: function(data) {
                             if (data.success) {
-                                $('#loadingImg').hide();
+                                $('#loadingImg').show();
                                 $('#success').css('display', 'block');
                                 setInterval(function() {
                                     location.reload();

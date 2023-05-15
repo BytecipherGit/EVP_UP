@@ -39,8 +39,9 @@ class Admin
         // dd($userRole->role);
         if($userRole->role == 'admin'){
             return $next($request);
-        } else {
-            return abort(404);
-        }   
+        }  
+        if($userRole->role == 'superadmin'){
+            return redirect()->route('superadmin');
+        } 
     }
 }

@@ -46,14 +46,16 @@
       <div class="employee-tab-bar"> 
         <ul class="nav nav-tabs table-responsive-width" role="tablist">
           <li class="nav-item">
-            <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab">Organization Details</a>
+            <a class="nav-link active" data-toggle="tab" href="#tab1" role="tab">Organization Details</a>
+            {{-- {{ request('tab') == 'tab1' ? 'active' : '' }}" href="{{ url('/page-url', ['tab' => 'tab1']) }}">Tab 1</a> --}}
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab">Documents</a>
+            <a class="nav-link" data-toggle="tab" href="#tab2" role="tab">Documents</a>
           </li> 
         </ul> 
         <div class="tab-content">
-          <div class="tab-pane active" id="tabs-1" role="tabpanel">
+          <div class="tab-pane active" id="tab1" role="tabpanel">
+            {{-- {{ $activeTab == 'tab1' ? 'active' : '' }}" id="tab1" --}}
             <div class="eml-persnal">
               <div class="row">
                 <div class="col-xl-12">
@@ -115,7 +117,7 @@
               </div>
             </div>
           </div>
-          <div class="tab-pane" id="tabs-2" role="tabpanel">
+          <div class="tab-pane" id="tab2" role="tabpanel">
             <div class="eml-persnal">
               <div class="row">
                 <div class="col-xl-12">
@@ -232,6 +234,13 @@
     </script>
     <script src="{{ asset('assets') }}/superadmin/js/bootstrap.min.js"></script>  
 
+    {{-- <script>
+      $(document).ready(function() {
+          var activeTab = "{{ $activeTab }}";
+          $('.nav-tabs a[href="#' + activeTab + '"]').tab('active');
+      });
+    </script> --}}
+  
     <script>
    
       

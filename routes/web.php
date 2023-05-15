@@ -80,14 +80,14 @@ Route::get('/basic_info/{id?}/{segment?}', [App\Http\Controllers\InviteempContro
 Route::post('/basic-info/{id?}', [App\Http\Controllers\InviteempController::class, 'getInviteDetails']);
 Auth::routes();
 
-Route::get('admin', [App\Http\Controllers\SuperAdminController::class, 'superAdminLogin'])->name('superlogin');
+Route::get('admin', [App\Http\Controllers\SuperAdminController::class, 'superAdminLogin']);
 
 Route::middleware([SuperAdmin::class])->group(function () {
     
         Route::get('admin/dashboard', [App\Http\Controllers\SuperAdminController::class, 'index'])->name('superadmin');
         Route::get('admin/organization', [App\Http\Controllers\SuperAdminController::class, 'getCompany'])->name('organization');
         Route::get('admin/verified_organization', [App\Http\Controllers\SuperAdminController::class, 'getVerifiedCompany'])->name('organization.verified');
-        Route::get('admin/organization_details/{id?}/{status?}', [App\Http\Controllers\SuperAdminController::class, 'getCompanyDetails'])->name('organization_details');
+        Route::get('admin/organization_details/{id?}', [App\Http\Controllers\SuperAdminController::class, 'getCompanyDetails'])->name('organization_details');
         Route::post('update_company_status', [App\Http\Controllers\SuperAdminController::class, 'changeCompanyStatus'])->name('update_company_status');
         Route::get('admin/add_company/{id?}', [App\Http\Controllers\SuperAdminController::class, 'getCompanyForm']);
         Route::post('admin/add_company/{id?}', [App\Http\Controllers\SuperAdminController::class, 'createCompany']);
@@ -102,6 +102,7 @@ Route::middleware([SuperAdmin::class])->group(function () {
 
 
 Route::middleware([Admin::class])->group(function () {
+
     Route::get('/dashboard', [App\Http\Controllers\AdminController::class, 'index'])->name('dashboard')->middleware('documents');
     Route::get('admin/logout', [App\Http\Controllers\AdminController::class, 'logout'])->name('admin.logout')->middleware('documents');
     Route::post('/change_password', [App\Http\Controllers\AdminController::class, 'changePassword'])->name('password.change')->middleware('documents');
@@ -126,6 +127,7 @@ Route::middleware([Admin::class])->group(function () {
     Route::post('/add-invite-employee', [App\Http\Controllers\InviteempController::class, 'getInviteEmp'])->middleware('documents');
     Route::get('/invite_employee', [App\Http\Controllers\InviteempController::class, 'index'])->middleware('documents');
     Route::post('/invite_employee', [App\Http\Controllers\InviteempController::class, 'getCsvInvite'])->middleware('documents');
+    Route::any('interview_employee/submit', [App\Http\Controllers\InviteempController::class, 'inviteEmployeeForm'])->name('invite.employee.submit')->middleware('documents');
     Route::get('/edit-invite-employee/{id?}', [App\Http\Controllers\InviteempController::class, 'editInviteEmp'])->middleware('documents');
     Route::post('/edit-invite-employee/{id?}', [App\Http\Controllers\InviteempController::class, 'geteditInvite'])->middleware('documents');
     Route::get('/delete-invite/{id?}', [App\Http\Controllers\InviteempController::class, 'deleteInvite'])->middleware('documents');

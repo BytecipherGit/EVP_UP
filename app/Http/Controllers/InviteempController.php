@@ -162,11 +162,11 @@ class InviteempController extends Controller
                 $info->email = $data['email'];
                 $info->phone = $data['phone'];
                 $info->save();
-
+// dd($info);
                 if(!empty($info)){
 
                     $insertCompanyEmployee = [
-                        'employee_id' => $employee->id,
+                        'employee_id' => $info->id,
                         'company_id' => Auth::id(),
                         'status' => '2',
                     ];
@@ -174,7 +174,7 @@ class InviteempController extends Controller
                }
         }
 
-            print_r($information);die();
+            // print_r($information);die();
             return redirect()->back()->with('message', 'Upload successfully');
         } else {
             return redirect()->back()->with('message', 'Not select any file to upload');
@@ -395,7 +395,7 @@ class InviteempController extends Controller
     {
        if($request->id){
 
-            $employeeExists = (!empty($request->id)) ? Employee::find(decrypt($request->id)) : false;
+            $employeeExists = (!empty(decrypt($request->id))) ? Employee::find(decrypt($request->id)) : false;
             $qualificationExist = Empqualification::where('employee_id',decrypt($request->id))->first();
             $qualificationViewExist = Empqualification::where('employee_id',decrypt($request->id))->get();
             $workhistoryExists = Empworkhistory::where('employee_id',decrypt($request->id))->first();
@@ -410,6 +410,14 @@ class InviteempController extends Controller
        }
 
         return view('org-invite/basic-info',compact('employeeExists','qualificationExist','qualificationViewExist','workhistoryExists','workhistoryViewExist','employeeSkillsExists','employeeSkillsViewExists','employeeLanguageViewExists','employeeOfficials','verificationData','qualificationStatus','experienceStatus'));
+    }
+
+    public function inviteEmployeeForm(request $request)
+    {
+// dd($request->all());
+        if(!empty($request->employee_id)){
+           return redirect('/success');
+        }
     }
      
     public function getInviteDetails(request $request)

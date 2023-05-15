@@ -67,9 +67,9 @@
               <li class="nav-item">
                   <a class="nav-link @if (Request::segment(3) == 'skills') active @endif" data-toggle="tab" href="#skills" role="tab">Skills</a>
               </li>
-              <li class="nav-item">
+              {{-- <li class="nav-item">
                   <a class="nav-link" data-toggle="tab" href="#official" role="tab">Official Use</a>
-              </li>
+              </li> --}}
 
           </ul>
           <div class="tab-content">
@@ -85,7 +85,7 @@
                   </div>
               </div>
 
-              <div class="tab-pane" id="official" role="tabpanel">
+              {{-- <div class="tab-pane" id="official" role="tabpanel">
                   <div class="eml-persnal ">
                     <div class="add-emply-details">                
                       <div class="row">
@@ -99,7 +99,7 @@
                       </div>                
                     </div>
                   </div>
-              </div> 
+              </div>  --}}
       
               <div class="tab-pane @if (Request::segment(3) == 'qualification') active @endif" id="qualification" role="tabpanel">
                   <div class="eml-persnal ">
@@ -148,11 +148,22 @@
                               @include('employees.employee_skills')
                           @else
                               @include('employees.view_employee_skills')
+                         <form action="{{route('invite.employee.submit')}}">
+                              <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="hidden" id="employee_id" name="employee_id" value="{{ $employeeExists ? encrypt($employeeExists->id) : '' }}" />
+                                    <div class="add-btn-part">
+                                        <button type="reset" class="btn-secondary-cust"data-dismiss="modal">Cancel</button>
+                                        <button type="submit" class="btn-primary-cust button_background_color"><span class="button_text_color">Save</span></button>
+                                    </div>
+                                </div>
+                            </div>
+                         </form>
                           @endif
                         </div>
                       </div>                
                     </div>
-                  </div>
+                  </div>     
               </div>
           
           </div>

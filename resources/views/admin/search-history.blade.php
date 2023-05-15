@@ -29,9 +29,10 @@
           </div>
           <div class="col-lg-2">
             <div class="form-group">
-              <button type="button" class="search-btnkey button_background_color" onclick="searchEmployee()"><span class="button_text_color">Search</span></button>
+              <button type="button" id="searchButton" class="search-btnkey button_background_color" onclick="searchEmployee()"><span class="button_text_color">Search</span></button>
             </div>
         </div>
+        
       </div>
       <div class="row">
         <div class="col-lg-12" >
@@ -116,6 +117,14 @@ $("#filter_by").on("change", function() {
                 alert('No one filter by options is selected. Please select atleast one option.');
         }
     });
+
+    document.getElementById('search').addEventListener('keypress', function (event) {
+        if (event.key === 'Enter') {
+            event.preventDefault(); // prevent form submission
+            document.getElementById('searchButton').click(); // trigger search button click event
+        }
+  });
+
 
   function searchEmployee(){
     var filterby = $('#filter_by :selected').val();
@@ -221,7 +230,7 @@ $("#filter_by").on("change", function() {
         $('#schedule_interview_form').on('submit', function(event) {
             event.preventDefault();
             var isAdd = $('#is_add').val();
-            var url = '{{ url('schedule-interview/submit') }}';
+            var url = '{{ url('schedule-searchemp-interview/submit') }}';
             $('.loadingImg').show();
             var formData = new FormData(this);
             $.ajax({

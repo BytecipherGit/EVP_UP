@@ -910,7 +910,6 @@ class EmployeeController extends Controller
              $qualification->subject=$data['subject'];
              $qualification->duration_from=$data['duration_from'];
              $qualification->duration_to=$data['duration_to'];
-             $qualification->verification_type='Not Verified';
              $qualification->save();
 
 
@@ -934,7 +933,6 @@ class EmployeeController extends Controller
                 $employee_work->designation=$data['designation'];
                 $employee_work->work_duration_from=$data['work_duration_from'];
                 $employee_work->work_duration_to=$data['work_duration_to'];
-                $employee_work->verification_type='Not Verified';
 
                 $employee_work->save();
 

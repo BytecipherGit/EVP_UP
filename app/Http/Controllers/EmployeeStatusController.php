@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables as FacadesDataTables;
 use Illuminate\Support\Facades\Mail as FacadesMail;
 use App\Helpers\Helper as HelpersHelper;
+use Illuminate\Support\Facades\Config;
 use Auth;
 use App\Models\EmployeeStatus;
 
