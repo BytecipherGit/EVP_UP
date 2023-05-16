@@ -14,6 +14,7 @@
     {{-- <input type="hidden" id="interview_status" name="interview_status" value="{{ $interviewStatus }}"> --}}
     <label><h4>Please checked checkbox if you want to send email to employee 
         <input type="hidden" id="interview_status" name="interview_status" value="{{ $interviewStatus }}">
+        <input type="hidden" id="interview_id" name="interview_id" value="{{ $interviewRoundId }}">
         <input type="checkbox" name="status" class="switch-input" value="1"/></h4>
     </label>
    

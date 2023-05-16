@@ -148,7 +148,7 @@ Route::middleware([Admin::class])->group(function () {
     Route::get('/download_identity_doc/{id?}', [App\Http\Controllers\InviteempController::class, 'downloadIdDoc'])->middleware('documents');
 
     Route::get('/schedule_interview', [InterviewEmployee::class, 'index'])->name('schedule.interview')->middleware('documents');
-    Route::get('interview-round-details/{id?}', [InterviewEmployee::class, 'interviewRoundDetails'])->name('interview.round.details')->middleware('documents');
+    Route::any('interview-round-details/{id?}', [InterviewEmployee::class, 'interviewRoundDetails'])->name('interview.round.details')->middleware('documents');
     Route::any('/schedule-interview/form/{id?}', [InterviewEmployee::class, 'getScheduleInterviewForm'])->middleware('documents');
     Route::any('/schedule-searchemployee-interview/form/{id?}', [InterviewEmployee::class, 'getSearchEmpInterviewForm'])->middleware('documents');
     Route::post('schedule-searchemp-interview/submit', [InterviewEmployee::class, 'scheduleSearchempInterview'])->middleware('documents');
