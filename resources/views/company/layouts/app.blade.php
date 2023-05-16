@@ -501,7 +501,7 @@
                                 <a class="dropdown-item" href="/company_profile">
                                     Profile
                                 </a>
-                                <a class="dropdown-item" href="/change_password">
+                                <a class="dropdown-item" href="/changePassword">
                                     Change Password
                                 </a>
                                 <hr>

@@ -163,6 +163,111 @@ a{
 
 /*----======= Main Heading Css End ========--------*/
 
+/*----===== Change Password Page Css Start =====------*/
+.change-password-page{
+  width: 100%;
+  margin:0 auto;
+  background: #FFFFFF;
+  box-shadow: 0px 0px 14px rgba(23, 54, 97, 0.04);
+  border-radius: 20px;
+  padding:80px;
+}
+.change-password-page h2 {
+  margin: 0 0 30px;
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 40px;
+  color: #081131;
+  text-align: left;
+}
+
+.change-password-page p {
+  margin: 4px 0 0;
+  font-size: 16px;
+  line-height: 24px;
+  color: #fff;;
+}
+.change-password-page ul {
+  margin: 15px 0 15px 17px;
+  padding: 0;
+}
+.change-password-page ul li::marker {
+  color:#5533FF;
+  font-size: 20px;
+}
+.change-password-page ul li {
+  font-size: 16px;
+  line-height: 24px;
+  color: #6D7D93;
+  list-style-type: circle;
+  padding: 6px 0;
+}
+.change-password-page .form-group label {
+    display: inline-block;
+    margin-bottom: 10px;
+    font-size: 14px;
+    line-height: 24px;
+}
+.change-password-page .form-group .effect-box {
+    position: relative;
+}
+.change-password-page .form-group .form-control {
+    display: block;
+    width: 100%;
+    height: auto;
+    padding:14px 40px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 24px;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+.change-password-page .form-group span {
+    /* position: absolute; */
+    display: block;
+    color: #ea2810;
+    left: 16px;
+    top: 12px;
+    font-size: 12px;
+    opacity: 1;
+       
+}
+
+.change-password-page .form-group .eye-pst {
+    left: auto !important;
+    right: 16px;
+    cursor: pointer;
+}
+.change-password-page button {
+  color: #fff;
+  background: #5533FF;
+  padding: 15px 45px;
+  display: block;
+  width: max-content;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 20px;
+  margin:30px 0 0 auto;
+}
+.change-password-page button:hover {
+    box-shadow: 0px 4px 31px rgba(85, 51, 255, 0.45);
+}
+
+@media (max-width: 1280px){
+.change-password-page {padding:50px 30px;}
+}
+@media (max-width: 991px){
+.change-password-page button {margin: 30px 0 0;}
+}
+/*----===== Change Password Page Css End =====------*/
+
 /*----====== =======-----*/
 .custu-modal-popup {
   display: none; /* Hidden by default */

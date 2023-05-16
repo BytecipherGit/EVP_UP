@@ -94,7 +94,18 @@ Route::middleware([SuperAdmin::class])->group(function () {
         Route::get('admin/update_organization/{id?}', [App\Http\Controllers\SuperAdminController::class, 'getUpdateCompanyForm']);
         Route::post('admin/update_organization/{id?}', [App\Http\Controllers\SuperAdminController::class, 'updateCompanyForm']);
         Route::post('company/destroy', [App\Http\Controllers\SuperAdminController::class, 'deleteCompany']);
+        Route::any('admin/change_password', [App\Http\Controllers\SuperAdminController::class, 'change_password'])->name('change.password');
         Route::get('admin/download_document/{id?}', [App\Http\Controllers\SuperAdminController::class, 'downloadDocument'])->name('download.document');
+        // Route::get('admin/download_document/{id?}', function () {
+        //     $path = storage_path('app/files/shares/filename.ext');
+        
+        //     // Check if the file exists
+        //     if (!Storage::exists($path)) {
+        //         abort(404);
+        //     }
+        
+        //     return new BinaryFileResponse($path);
+        // });
         // Route::get('superadmin/logout', [App\Http\Controllers\SuperAdminController::class, 'logout'])->name('superadmin.logout');
         Route::get('logout', [App\Http\Controllers\SuperAdminController::class, 'destroy'])->name('logout');
     });
@@ -105,7 +116,6 @@ Route::middleware([Admin::class])->group(function () {
 
     Route::get('/dashboard', [App\Http\Controllers\AdminController::class, 'index'])->name('dashboard')->middleware('documents');
     Route::get('admin/logout', [App\Http\Controllers\AdminController::class, 'logout'])->name('admin.logout')->middleware('documents');
-    Route::post('/change_password', [App\Http\Controllers\AdminController::class, 'changePassword'])->name('password.change')->middleware('documents');
     Route::get('/add-employee/{id?}', [App\Http\Controllers\EmployeeController::class, 'index'])->middleware('documents');
     Route::post('/add-employee/{id?}', [App\Http\Controllers\EmployeeController::class, 'basicInfo'])->middleware('documents');
     Route::get('edit-employee/{id?}', [App\Http\Controllers\EmployeeController::class, 'getEditEmployee'])->middleware('documents');
@@ -131,7 +141,7 @@ Route::middleware([Admin::class])->group(function () {
     Route::get('/edit-invite-employee/{id?}', [App\Http\Controllers\InviteempController::class, 'editInviteEmp'])->middleware('documents');
     Route::post('/edit-invite-employee/{id?}', [App\Http\Controllers\InviteempController::class, 'geteditInvite'])->middleware('documents');
     Route::get('/delete-invite/{id?}', [App\Http\Controllers\InviteempController::class, 'deleteInvite'])->middleware('documents');
-    Route::get('/change_password', [App\Http\Controllers\AdminController::class, 'getPasswordReset'])->middleware('documents');
+    Route::any('/changePassword', [App\Http\Controllers\AdminController::class, 'changePassword'])->name('changepassword')->middleware('documents');
     Route::get('/download_qualification_doc/{id?}', [App\Http\Controllers\InviteempController::class, 'downloadQualificationDoc'])->middleware('documents');
     Route::get('/download_offerletter_doc/{id?}', [App\Http\Controllers\InviteempController::class, 'downloadOfferDocument'])->middleware('documents');
     Route::get('/download_expletter_doc/{id?}', [App\Http\Controllers\InviteempController::class, 'downloadExpDoc'])->middleware('documents');
@@ -150,7 +160,7 @@ Route::middleware([Admin::class])->group(function () {
     Route::post('interview/declined/{id?}', [InterviewEmployee::class, 'declineInterview'])->middleware('documents');
     Route::post('interview/newtime/{id?}', [InterviewEmployee::class, 'suggestNewTime'])->middleware('documents');
     Route::get('interview/confirmed/{id?}', [InterviewEmployee::class, 'interviewConfirmed'])->name('interview.confirmed')->middleware('documents');
-    // Route::post('schedule-interview/changeInterviewerStatus', [InterviewEmployee::class, 'update_interviewer_status'])->middleware('documents');
+    Route::post('schedule-interview/changeInterviewerStatus', [InterviewEmployee::class, 'update_interviewer_status'])->middleware('documents');
     
     Route::get('offer/accepted/{id?}', [App\Http\Controllers\EmployeeStatusController::class, 'offerSendAcceptStatus'])->name('offer.accepted')->middleware('documents');
     Route::get('offer/declined/{id?}', [App\Http\Controllers\EmployeeStatusController::class, 'offerSendDeclineStatus'])->name('offer.declined')->middleware('documents');

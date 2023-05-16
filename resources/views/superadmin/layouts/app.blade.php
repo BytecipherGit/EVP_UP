@@ -96,11 +96,9 @@
               {{-- <a class="dropdown-item" href="#">
                 Profile
               </a> --}}
-              @if (Route::has('password.request'))
-              <a class="dropdown-item" href="{{ route('password.request') }}">
+              <a class="dropdown-item" href="{{ route('change.password') }}">
                 Change Password
               </a>
-              @endif
               <hr>
               <a class="dropdown-item dropdown-item-no" href="{{ route('logout') }}">               
                 Sign out

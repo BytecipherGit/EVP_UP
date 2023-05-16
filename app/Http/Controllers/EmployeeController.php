@@ -813,7 +813,7 @@ class EmployeeController extends Controller
         $headers = array(
                   'Content-Type: application/csv',
                 );
-    
+    // dd($file);
         return Response::download($file, 'sample.csv', $headers);
       }
 

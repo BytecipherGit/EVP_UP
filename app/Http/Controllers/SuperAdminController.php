@@ -27,6 +27,7 @@ use App\Models\EmailConfiguration;
 use App\Models\ThemeSetting;
 use App\Helpers\Helper as HelpersHelper;
 use Illuminate\Validation\Rules;
+use Storage;
 use Illuminate\Support\Facades\Auth;
 
 class SuperAdminController extends Controller
@@ -56,11 +57,6 @@ class SuperAdminController extends Controller
         }
        
     }
-
-    // public function create(): View
-    // {
-    //     return view('auth.login');
-    // }
 
     public function superAdminLogin()
     {
@@ -117,7 +113,7 @@ class SuperAdminController extends Controller
                         ->where('users.id', $request->id)
                         ->first();
                         
-            $activeTab = $request->input('tab', 'tab1');
+            $activeTab = $request->input('tab', 'tab2');
             return view('superadmin.organization_details',compact('companyDetails','address','companyDocuments','documentExist','activeTab'));
             
         }else {
@@ -391,14 +387,16 @@ class SuperAdminController extends Controller
 
     public function downloadDocument(request $request)
     {
+        //  dd('hii');
         $data = Documents::where('id', $request->id)->first();
         $path = $data->document;
-        $file = basename($path);    
-    
+        // // $file = basename($path);    
+        // $filepath = public_path(). '/' .$path;
         $headers = array(
             'Content-Type: application/jpg',
         );
-        return Response::download($file, 'document.jpg', $headers);
+        // // dd($filepath);
+        return Response::download($path, 'document.jpg', $headers);  
 
     }
 
@@ -420,4 +418,65 @@ class SuperAdminController extends Controller
   
           return redirect('admin');
       }
+
+    //  public function getChangePasswordForm()
+    //   {
+    //     return view('superadmin.change_password');
+    //   }
+
+      public function changePasswordSubmit(request $request)
+      {
+          if (Auth::check()) {
+              $request->validate([
+                  // 'password' => ['required', 'confirmed'],
+                  'old_password' => 'required',
+                  'new_password' => 'required|confirmed',
+              ]);
+  
+              if(!Hash::check($request->old_password, auth()->user()->password)){
+                  return back()->with("error", "Old Password Doesn't match!");
+                 }
+  
+                  #Update the new Password
+                  User::whereId(auth()->user()->id)->update([
+                      'password' => Hash::make($request->new_password)
+                  ]);
+  
+              return back()->with("status", "Password changed successfully!");
+  
+            }
+       }
+
+
+    public function change_password(Request $request)
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $this->validate($request, [
+                'old' => 'required',
+                'password' => 'required|min:6|confirmed',
+            ]);
+
+            $user = User::find(Auth::id());
+            $hashedPassword = $user->password;
+
+            if (Hash::check($request->old, $hashedPassword)) {
+                //Change the password
+                $user->fill([
+                    'password' => Hash::make($request->password),
+                ])->save();
+
+                $request->session()->flash('success', 'Password successfully updated.');
+
+                return back();
+            }
+
+            $request->session()->flash('failure', 'Password not change.');
+
+            return back();
+        } else {
+            return view('superadmin.change_password');
+        }
+
+    }
+
 }

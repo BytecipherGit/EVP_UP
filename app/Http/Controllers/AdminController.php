@@ -39,7 +39,7 @@ class AdminController extends Controller
             // dd($userRole->role);
             if($userRole->role != 'admin'){
                 return redirect('login');
-            }
+             }
             return view('company/index',compact('current','empinvite','allemployee'));
         } else {
             return view('auth.login');
@@ -49,7 +49,7 @@ class AdminController extends Controller
 
     public function getPasswordReset()
     {
-        return view('company/change-password');
+        return view('company.change-password');
     }
 
       
@@ -59,31 +59,60 @@ class AdminController extends Controller
     //     return redirect('/');
     //   }
 
-      public function changePassword(request $request){
+    // public function change_Password(request $request)
+    // {
+    //     if (Auth::check()) {
+    //         $request->validate([
+    //             // 'password' => ['required', 'confirmed'],
+    //             'old_password' => 'required',
+    //             'new_password' => 'required|confirmed',
+    //         ]);
 
-        $request->validate([
-            // 'password' => ['required', 'confirmed'],
-            'old_password' => 'required',
-            'new_password' => 'required|confirmed',
-        ]);
+    //         if(!Hash::check($request->old_password, auth()->user()->password)){
+    //             return back()->with("error", "Old Password Doesn't match!");
+    //            }
 
-        if(!Hash::check($request->old_password, auth()->user()->password)){
-            return back()->with("error", "Old Password Doesn't match!");
-        }
-            #Update the new Password
-            User::whereId(auth()->user()->id)->update([
-                'password' => Hash::make($request->new_password)
+    //             #Update the new Password
+    //             User::whereId(auth()->user()->id)->update([
+    //                 'password' => Hash::make($request->new_password)
+    //             ]);
+
+    //         return back()->with("status", "Password changed successfully!");
+
+    //       }
+    //  }
+
+     public function changePassword(Request $request)
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $this->validate($request, [
+                'old' => 'required',
+                'password' => 'required|min:6|confirmed',
             ]);
 
-         return back()->with("status", "Password changed successfully!");
-        // $password=User::where('id',Auth::id())
-        // ->update([
-        //   'password'=>Hash::make($request->new_password)
-        //   ]);
-        //   // echo($desi); die();
-        //   return redirect()->back()->with('message',"Your password Updated Successfully..");
-        
-      }
+            $user = User::find(Auth::id());
+            $hashedPassword = $user->password;
+
+            if (Hash::check($request->old, $hashedPassword)) {
+                //Change the password
+                $user->fill([
+                    'password' => Hash::make($request->password),
+                ])->save();
+
+                $request->session()->flash('success', 'Password successfully updated.');
+
+                return back();
+            }
+
+            $request->session()->flash('failure', 'Password not change.');
+
+            return back();
+        } else {
+            return view('company.change-password');
+        }
+
+    }
+
 
 
      

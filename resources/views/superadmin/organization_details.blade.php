@@ -17,7 +17,8 @@
               <a href="{{ route('organization') }}"><img src="{{ asset('assets') }}/superadmin/images/back-icon.png"> Back</a>
             </div>
           </div>
-
+      
+      
           <div id="showHideAlert" class="modal fade custu-no-select" role="dialog" style="display:none;">
             <button type="button" class="close" data-dismiss="dialog" aria-label="Close">
                 <span aria-hidden="true">×</span>
@@ -41,8 +42,9 @@
           
 
         </div>
+    
       </div><!--- Main Heading ----->
-
+      <div id="successMessage">  </div>
       <div class="employee-tab-bar"> 
         <ul class="nav nav-tabs table-responsive-width" role="tablist">
           <li class="nav-item">
@@ -217,6 +219,8 @@
             <img src="{{ $companyDocument->document }}">
           </div>
           <a href="/admin/download_document/{{ $companyDocument->id }}" target="_black">Download</a>
+          {{-- <a href="{{ route('download.document') }}/{{ $companyDocument->document }}" target="_black">Download</a> --}}
+          {{-- <a href="{{ Storage::url($path) }}" download>{{$fileName }}</a> --}}
         </div>
         <div class="modal-footer">
         </div>
@@ -249,7 +253,7 @@
 
                $.ajax({
                    type: 'post',
-                   url: "{{route('update_company_status')}}",
+                   url: "{{ route('update_company_status') }}",
                    headers: {
                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                    },
@@ -266,10 +270,15 @@
                            var page = window.location.hash.substr(1);
                            if (page) {
                                getData(page);
-                           } else {    
-                             location.reload();
+                           } else {     
 
+                            $("#successMessage").html("<div class='alert alert-success'> Status has beed changed successfully!</div>");
+                            window.setTimeout(function(){location.reload()},2000)
+                            // location.reload();
+                            //  window.location.href = '{{ url('admin/organization_details') }}';
                          } 
+                        
+
                       }
                        if (status == 'error') {
                            $("#showHideAlert").removeClass('alert-success');

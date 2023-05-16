@@ -45,6 +45,9 @@
                     <div class="form-group">
                         <label for="email">Official Email Id<span style="color:red">*</span></label>
                         <input type="text" name="email" class="form-control" value="{{ $employeeExists ? $employeeExists->email : '' }}" placeholder="Enter Your Email">
+                        @error('email')
+                        <p class="velidation">{{ $message }}</p>
+                       @enderror
                         <strong class="error" id="email-error"></strong>
                     </div>
                 </div>

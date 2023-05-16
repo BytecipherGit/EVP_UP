@@ -48,9 +48,9 @@ class NewEmployeeController extends Controller
     {
        
         if (Auth::check()) {
-            // $userDetails = HelpersHelper::getUserDetails(Auth::id());
-            $validator = Validator::make($request->all(), [
-                // 'first_name' => 'required|string|max:255',
+
+            $request->validate([
+                'email' => 'required | unique:users,email',
                 // 'last_name' => 'required|string|max:255',
             ]);
 
@@ -73,7 +73,7 @@ class NewEmployeeController extends Controller
             $uploadDocumentId = asset('storage/employee/employee_document/' . $fileName);
             }
     
-             if ($request->hasFile('third_party_document')) {
+            if ($request->hasFile('third_party_document')) {
               $file = $request->file('third_party_document');
               $fileName = time() . '_' . $empCode .'_'. $file->getClientOriginalName();
               $file->storeAs('public/employee/third_party_documents', $fileName);
@@ -83,7 +83,7 @@ class NewEmployeeController extends Controller
            
 
              $empCode = substr(time(), -6) . sprintf('%04d', rand(0, 9999));
-            if ($validator->passes()) {
+            // if ($validator->passes()) {
 
                 $statusVerification = '';
                 if (!empty($request->verification_type) && $request->verification_type == true) {    
@@ -160,9 +160,9 @@ class NewEmployeeController extends Controller
 
              
                 
-            } else {
-                return Response::json(['errors' => $validator->errors()]);
-            }
+            // } else {
+            //     return Response::json(['errors' => $validator->errors()]);
+            // }
         }
 
     }
@@ -171,9 +171,9 @@ class NewEmployeeController extends Controller
     {
 // dd($request->all());
         if (Auth::check()) {
-            $validator = Validator::make($request->all(), [
-                // 'title' => 'required|string|max:255',
-                // 'descriptions' => 'required|string|max:255',
+            $request->validate([
+                'email' => 'required | unique:users,email',
+                // 'last_name' => 'required|string|max:255',
             ]);
 
             $uploadProfile = '';
@@ -202,8 +202,6 @@ class NewEmployeeController extends Controller
               $uploadThirdPartyDocument = asset('storage/employee/third_party_documents/' . $fileName);
             }
           
-
-            if ($validator->passes()) {
 
                 $statusVerifications = '';
                 if (!empty($request->verification_type) && $request->verification_type == true) {
@@ -277,9 +275,7 @@ class NewEmployeeController extends Controller
                     return Response::json(['success' => '0']);
                 }
                 
-            } else {
-                return Response::json(['errors' => $validator->errors()]);
-            }
+            
         }
        
         

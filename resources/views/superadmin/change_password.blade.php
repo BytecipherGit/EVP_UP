@@ -1,7 +1,7 @@
  
- @extends('company.layouts.app')
- @section('content')
- @section('title','EVP - Company Verification Document')
+@extends('superadmin.layouts.app')
+@section('content')
+@section('title','EVP - Change Password')
  
  <style>
   .pass{
@@ -14,7 +14,7 @@
 
     <div class="change-password-page">
       <h2>Change Password</h2>
-            <form action="{{ URL::to('changePassword') }}" method="post" role="form" enctype="multipart/form-data">
+            <form action="{{ URL::to('admin/change_password') }}" method="post" role="form" enctype="multipart/form-data">
 				
 				    @if (Session::has('success'))
                     <div class="alert alert-success">{!! Session::get('success') !!}</div>
@@ -97,4 +97,4 @@
         }
     });
 </script>
-  @endsection
+ @endsection
