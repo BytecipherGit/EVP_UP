@@ -21,7 +21,12 @@ class AuthenticatedSessionController extends Controller
      */
     public function create(): View
     {
-        return view('auth.login');
+        // return view('auth.login');
+        if (!Auth::check()) {
+            return view('auth.login');
+        } else {
+            return redirect('/dashboard');
+        }
     }
 
     use AuthenticatesUsers;
@@ -33,7 +38,8 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
         $request->session()->regenerate();
         if (Auth::check()) {
-            if (Auth::user()->role == 'admin' && Auth::user()->status == '1') {
+            if (Auth::user()->role == 'admin'){  
+                if(Auth::user()->status == '1') {
                 //Set Then variable in session
                 $themes = ThemeSetting::where('company_id',Auth::id())->get();
                 if(count($themes) > 0){
@@ -58,7 +64,7 @@ class AuthenticatedSessionController extends Controller
                 if (count($checkDocuments) > 0) {
                     $flagStatus = true;
                     foreach ($checkDocuments as $row) {
-                        if ($row->status == 'pending') {
+                        if ($row->status == '0') {
                             $flagStatus = false;
                         } else {
                             $flagStatus = true;
@@ -78,11 +84,12 @@ class AuthenticatedSessionController extends Controller
              else{
                 return redirect('resetaccount_verify');
              }
-            if (Auth::user()->role == 'superadmin') {
+            }
+              elseif(Auth::user()->role == 'superadmin') {
                 return redirect()->intended(RouteServiceProvider::SUPERADMIN);
             }
         }
-    }
+    }   
 
     /**
      * Destroy an authenticated session.

@@ -17,10 +17,10 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    public const SUPERADMIN = '/superadmin';
+    public const SUPERADMIN = 'admin/dashboard';
     // public const DOCUMENT = '/document';
     public const DOCUMENT = '/upload_document';
-    public const ADMIN = '/admin';
+    public const ADMIN = '/dashboard';
     public const PENDING = '/status';
     /**
      * Define your route model bindings, pattern filters, and other route configuration.

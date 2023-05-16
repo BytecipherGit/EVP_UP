@@ -26,7 +26,8 @@
           <img src="{{ asset('assets') }}/org-invite/images/logo.png" class="login-logo">
           <h1>Confirm your action</h1>
           <p>Are you sure you want to register here?</p> 
-          <a href="#" class="btn-secondary-cust">Cancel</a><a href="{{route('basic-info')}}/{{$empid->id}}" class="btn-primary-cust">Confirm</a>
+          {{-- <a href="#" class="btn-secondary-cust">Cancel</a> --}}
+          <a href="{{route('basic-info')}}/{{ encrypt($employee->id) }}" class="btn-primary-cust">Confirm</a>
           <div class="foot-bottom">
             <p>© 2022 ByteCipher Pvt. Ltd.</p>
           </div> 

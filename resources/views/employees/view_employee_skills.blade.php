@@ -164,7 +164,8 @@
                 <div class="comman-body">
                     <form id="employee_lang_submit" action="{{ url('edit_language/update') }}" method="post" autocomplete="off" enctype="multipart/form-data">
                         @csrf
-                        <input type="hidden" id="employee_id" name="employee_id" value="{{ $employeeSkillsExists ? $employeeSkillsExists->employee_id : '' }}" />
+                        <input type="hidden" id="employee_id" name="employee_id" value="{{ $employeeSkills ? $employeeSkills->employee_id : '' }}" />
+                        <input type="hidden" id="id" name="id" value="{{ $employeeSkills ? $employeeSkills->id : '' }}" />
                         <div class="form-group inputtag-custom">
                             <label>Add Language</label>
                             <div class="row customer_records1">
@@ -208,7 +209,8 @@
             </div>
             <form id="employee_skills_update" action="{{ url('edit_skills/update') }}" method="post" autocomplete="off" enctype="multipart/form-data">
                 @csrf
-                <input type="hidden" id="employee_id" name="employee_id" value="{{ $employeeSkillsExists ? $employeeSkillsExists->employee_id : '' }}" />
+                <input type="hidden" id="id" name="id" value="{{ $employeeSkills ? $employeeSkills->id : '' }}" />
+                <input type="hidden" id="employee_id" name="employee_id" value="{{ $employeeSkills ? $employeeSkills->employee_id : '' }}" />
                <div class="modal-body">
                    <div class="comman-body">
                         <div class="form-group inputtag-custom">

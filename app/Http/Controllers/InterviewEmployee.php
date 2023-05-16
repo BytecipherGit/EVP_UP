@@ -591,6 +591,7 @@ class InterviewEmployee extends Controller
 
     public function scheduleSearchempInterview(request $request)
     {
+        // dd($request->all());
         if (Auth::check()) {
             $userDetails = HelpersHelper::getUserDetails(Auth::id());
             $emailDetails = HelpersHelper::getSmtpConfig(Auth::id());
@@ -677,6 +678,7 @@ class InterviewEmployee extends Controller
                 $empCode = substr(time(), -6) . sprintf('%04d', rand(0, 9999));
                 // $checkRecordExist = EmployeeInterview::where('empCode', $empCode)->first();
                 $checkRecordExist = Employee::where('empCode', $empCode)->first();
+                // dd($checkRecordExist);
                 if (empty($checkRecordExist) && !empty($empCode)) {
                     $insertEmployee = [
                         'empCode' => $empCode,
@@ -695,7 +697,10 @@ class InterviewEmployee extends Controller
                         $employeeData = Employee::create($insertEmployee);
                     }
 
-                    if(!empty($employeeData)){
+                
+                    $checkCompanyEmpRecordExist = CompanyEmployee::where('employee_id', $employeeData->id)->where('company_id', Auth::id())->first();
+                    // dd($checkCompanyEmpRecordExist); die();
+                    if(empty($checkCompanyEmpRecordExist)){
 
                         $insertCompanyEmployee = [
                             'employee_id' => $employeeData->id,
@@ -719,7 +724,7 @@ class InterviewEmployee extends Controller
                         //Check if record already exist for the same employee id & same company
                         $checkInterviewEmpRecordExist = EmployeeInterview::where('employee_id', $employeeData->id)->where('company_id', Auth::id())->first();
 
-
+// dd($checkInterviewEmpRecordExist);
                         if (empty($checkInterviewEmpRecordExist)) {
                             $employeeInterviewData = EmployeeInterview::create($insertEmployeeInteview);
                             if (!empty($employeeInterviewData)) {
@@ -1261,26 +1266,44 @@ class InterviewEmployee extends Controller
 
     public function getEmailTemplate(request $request)
     {
-        // dd($request->all);
-        if($request->interview_status){
+        // dd($request->interview_status);
+        if($request->interview_status && $request->interview_id){
             $interviewStatus = $request->interview_status;
-            return view('admin.email_template_confirmation',compact('interviewStatus'));
+            $interviewRoundId = $request->interview_id;
+            return view('admin.email_template_confirmation',compact('interviewStatus','interviewRoundId'));
         }
     }
     
     public function createNotAppearedForm(request $request)
      {
 
-        if($request->interview_status){
+        if($request->interview_status && $request->interview_id){
             $interviewStatus = $request->interview_status;
-            return view('admin.not_appeared',compact('interviewStatus'));
+            $interviewRoundId = $request->interview_id;
+            return view('admin.not_appeared',compact('interviewStatus','interviewRoundId'));
         }
     }
 
     public function sendEmailTemplate(request $request)
     {
-        // dd($request->interview_id);
-        $emailDetails = HelpersHelper::getSmtpConfig(Auth::id());
+        // dd($request->all());
+
+
+        if(!empty($request->interview_id) && !empty($request->interview_status)){
+            $interview = InterviewEmployeeRounds::find($request->interview_id);
+          
+            $interview->interviewer_status = $request->interview_status;
+
+            if ($interview->save()) {
+                return Response::json(['success' => '1']);
+            } else {
+                return Response::json(['success' => '0']);
+            }
+            dd($interview);
+        }
+        else {
+            return Response::json(['success' => '0']);
+        }
 
         $config = array(
             'driver'     => $emailDetails->driver,
@@ -1301,7 +1324,7 @@ class InterviewEmployee extends Controller
                          ->where('interview_employee_rounds.company_id',Auth::id())->where('interview_employee_rounds.interview_employees_id',$request->interview_id)->first();
             $templateData = CompanyEmailTemplate::where('company_id',Auth::id())->first();     
   
-// dd($templateData);
+// dd($candidate);
          if (!empty($request->interview_id) && !empty($request->status) && ($request->interview_status == 'Qualified') ) {
             $templateData = CompanyEmailTemplate::where('email_type','Qualified')->where('company_id',Auth::id())->first();
 
@@ -1315,40 +1338,31 @@ class InterviewEmployee extends Controller
         }
         elseif(!empty($request->interview_id) && !empty($request->status) && ($request->interview_status == 'Not Qualified')){
             $templateData = CompanyEmailTemplate::where('email_type','NotQualified')->where('company_id',Auth::id())->first();   
-  
-            $mailDataTemplate = [
-                'content' => !empty($templateData->content) ? str_replace('#candidate',$candidate->first_name . ' ' . $candidate->last_name,$templateData->content) : '',
+
+            $emailContent = $templateData->content;
+            $search = array("#candidate", "#company_name");
+            $replace = array($candidate->first_name . ' ' . $candidate->last_name,  $request->user()->org_name);
+
+            $mailDataTemplate = str_replace($search, $replace, $emailContent);
+            // $mailDataTemplate = [
+            //     'content' => !empty($templateData->content) ? str_replace('#candidate',$candidate->first_name . ' ' . $candidate->last_name,$templateData->content) : '',
                    
-            ];
+            // ];
 
             FacadesMail::to($candidate->email)->send(new NotQualifiedEmailTemplate($mailDataTemplate));
         }
 
-        if(!empty($request->interview_id) && !empty($request->interview_status)){
-            $interview = InterviewEmployeeRounds::find($request->interview_id);
-            $interview->interviewer_status = $request->interview_status;
-
-            if ($interview->save()) {
-                return Response::json(['success' => '1']);
-            } else {
-                return Response::json(['success' => '0']);
-            }
-        }
-        else {
-            return Response::json(['success' => '0']);
-        }
-     
     }
 
     public function sendNotAppearedStatus(request $request)
     {
         // dd($request->all()); die();
-   if(!empty($request->interview_round_id) && !empty($request->interview_status)){
-        $interview = InterviewEmployeeRounds::find($request->interview_round_id);
+   if(!empty($request->interview_id) && !empty($request->interview_status)){
+        $interview = InterviewEmployeeRounds::find($request->interview_id);
         $interview->interviewer_status = $request->interview_status;
 
         if(empty($interview->not_appeared_comment)){
-            $empNotAppeared = DB::table('interview_employee_rounds')->where('id', $request->interview_round_id)
+            $empNotAppeared = DB::table('interview_employee_rounds')->where('id', $request->interview_id)
                 ->update([
                     'not_appeared_comment' => $request->input('comment'),
                 ]);

@@ -22,7 +22,7 @@
             <div style="background: #fff; border-top:4px solid #5533FF; margin:0 30px; padding:0 0 30px">
                 <h2
                 style="font-weight: 200; font-size: 15px; line-height: 16px; color: #373E57; padding: 0px 1px 2px; margin:0; text-align:left;">
-                    {!! nl2br($mailDataTemplate['content']) !!}</h2>
+                    {!! nl2br($mailDataTemplate) !!}</h2>
                 
                 <p
                     style="width:100%; margin-top:15px;margin-bottom:15px; margin-top: 30px; font-size:16px;line-height: 24px; color: #373E57;  text-align: left; padding: 0 20px 0px; font-family: 'DM Sans', sans-serif;">

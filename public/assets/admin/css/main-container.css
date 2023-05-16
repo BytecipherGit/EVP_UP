@@ -1929,12 +1929,12 @@ button.btn-secondary-custexport {
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 .change-password-page .form-group span {
-    position: absolute;
+    /* position: absolute; */
     display: block;
-    color: #495057;
+    color: #d92b0d;
     left: 16px;
     top: 12px;
-    font-size: 20px;
+    font-size: 13px;
     opacity: 1;
 }
 .change-password-page .form-group .eye-pst {

@@ -103,7 +103,7 @@
                                             class="form-control dropdownReg">
                                             <option value="">Select Country</option>
                                             @foreach ($countries as $country)
-                                                <option value="{{ $country->id }}" {{ old('country') == $country->id ? 'selected' : '' }}> {{ $country->name }} </option>
+                                                <option value="{{ $country->id }}" {{ old('country') == $country->id ? 'selected' : '' }}>{{ $country->name }} </option>
                                             @endforeach
                                         </select>
                                         {{-- @error('country')
@@ -120,10 +120,8 @@
                                     <div>
 
                                         <div class="form-group mb-3">
-                                            <select id="state-dropdown" name="state" value="{{ old('state') }}"
-                                                class="form-control dropdownReg">
-                                                <option value="">Select State</option>
-                                              
+                                            <select id="state-dropdown" name="state" value="{{ old('state') }}" class="form-control dropdownReg">
+                                            <option value="">Select State</option>      
                                             </select>
                                             {{-- @error('state')
                                                 <p class="velidation">{{ $message }}</p>
@@ -142,8 +140,7 @@
                                     <div>
 
                                         <div class="form-group">
-                                            <select id="city-dropdown" name="city" value="{{ old('city') }}"
-                                                class="form-control dropdownReg">
+                                            <select id="city-dropdown" name="city" value="{{ old('city') }}" class="form-control dropdownReg">
                                                 <option value="">Select City</option>
                                             </select>
                                             {{-- @error('city')

@@ -7,12 +7,17 @@
 
       <div class="main-heading">        
         <div class="row">
-          <div class="col-md-12">
+          <div class="col-md-8">
             <h1>Add Employee</h1>
             <p></p>
           </div>
+            <div class="col-md-4">
+            <div class="main-right-button-box backhover">
+              <a href="/employee" class="button_background_color"><img src="{{ asset('assets') }}/admin/images/back-icon.png" class="back"><span class="button_text_color">Back</span></a>
+          </div>
         </div>
-      </div><!--- Main Heading ----->
+      </div>
+    </div><!--- Main Heading ----->
 
       <div class="employee-tab-bar"> 
 

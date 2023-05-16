@@ -10,6 +10,10 @@
         margin: 5px 0;
         display: flex;
     }
+    li{
+      display: block;
+      margin-left: -36px;
+    }
 </style>
 <!-- Login Main Container -->
 <div class="col-lg-6 align-self-center pad-0 form-section">
@@ -46,9 +50,9 @@
               <div class="form-group">
                 <div class="forg-box">
                   {{-- <input type="checkbox" id="customRadioInline4" name="customRadioInline" value="1">  --}}
-                  <input class="form-check-input" type="checkbox" name="remember_me" id="remember_me" {{ old('remember_me') ? 'checked' : '' }}>
+                  <input id="remember" type="checkbox"  name="remember" {{ old('remember') ? 'checked' : '' }}> </label>
                   <label for="remember_me">Remember me</label>
-                  <a href="{{ route('password.request') }}">Forgot Password?</a>
+                  {{-- <a href="{{ route('password.request') }}">Forgot Password?</a> --}}
                 </div>
               </div>              
               <div class="form-group">

@@ -56,7 +56,7 @@
                     <img src="{{ asset('assets') }}/admin/images/close-btn-icon.png">
                 </button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body"> 
                 <div class="comman-body">
                     @include('employees.edit_workhistory')         
                 </div>

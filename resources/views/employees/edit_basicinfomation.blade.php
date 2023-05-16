@@ -45,6 +45,9 @@
                     <div class="form-group">
                         <label for="email">Official Email Id<span style="color:red">*</span></label>
                         <input type="text" name="email" class="form-control" value="{{ $employeeExists ? $employeeExists->email : '' }}" placeholder="Enter Your Email">
+                        @error('email')
+                        <p class="velidation">{{ $message }}</p>
+                       @enderror
                         <strong class="error" id="email-error"></strong>
                     </div>
                 </div>
@@ -219,6 +222,7 @@
 </form>
 
 @section('pagescript')
+
 <!-- Bootstrap core JavaScript
     ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
@@ -233,8 +237,6 @@
 
 <script>
     $(document).ready(function() {
-
-   
     setTimeout(function(){
         $('#successMessage').fadeOut('fast');
     }, 2000);
@@ -609,7 +611,8 @@
                            $('#success').css('display', 'block');
                            setInterval(function() {
                                location.reload();
-                           }, 3000);
+                           }, 5000);
+                           window.location.href = '{{ url('employee') }}';
 
                        } else {
                            $('#failed').css('display', 'block');

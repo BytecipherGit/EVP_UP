@@ -34,8 +34,10 @@
             </div>
             <div class="col-md-4">
                 <div class="main-right-button-box">
-                    <a href="/schedule_interview" class="button_background_color"><img src="{{ asset('assets') }}/admin/images/back-icon.png"><span class="button_text_color"> Back</span></a>
-              </div>
+                    <a href="/schedule_interview" class="button_background_color"><img
+                            src="{{ asset('assets') }}/admin/images/back-icon.png"><span class="button_text_color">
+                            Back</span></a>
+                </div>
             </div>
         </div>
     </div>
@@ -43,7 +45,7 @@
 
     <div class="employee-view-page">
         <div class="table-responsive-bg">
-            <div class="row">    
+            <div class="row">
             </div>
             <div class="row" style="margin-top: 20px;">
                 <div class="col-xs-12">
@@ -61,40 +63,44 @@
                             </tr>
                         </thead>
                         @if ($interviewEmpoloyeeRounds)
-                        @php $counter = 1 @endphp
-                        @foreach ($interviewEmpoloyeeRounds as $interviewEmpoloyeeRound)
-                            <input type="hidden" name="id" value="{{$interviewEmpoloyeeRound->id}}">
+                            @php $counter = 1 @endphp
+                            @foreach ($interviewEmpoloyeeRounds as $interviewEmpoloyeeRound)
+                                <input type="hidden" name="id" value="{{ $interviewEmpoloyeeRound->id }}">
                                 <tr>
                                     <th scope="row">{{ $counter }}</th>
-                                    <td>{{ $interviewEmpoloyeeRound->title}}</td>
-                                    <td>{{ $interviewEmpoloyeeRound->interview_date}}</td>
-                                    <td>{{ $interviewEmpoloyeeRound->interview_start_time}}</td>
-                                    <td>{{ $interviewEmpoloyeeRound->duration}}</td>
-                                   <td>
-                                    {{-- <select style="width: 150px;" class="form-control" name="interviewer_status" 
+                                    <td>{{ $interviewEmpoloyeeRound->title }}</td>
+                                    <td>{{ $interviewEmpoloyeeRound->interview_date }}</td>
+                                    <td>{{ $interviewEmpoloyeeRound->interview_start_time }}</td>
+                                    <td>{{ $interviewEmpoloyeeRound->duration }}</td>
+                                    <td>
+                                        {{-- <select style="width: 150px;" class="form-control" name="interviewer_status" 
                                         id="interviewer_status"> --}}
-                                        <select style="width: 150px;" class="form-control" name="interviewer_status" id="interviewer_status" style="text-decoration:none" href="#"> 
+                                        <select style="width: 150px;" class="form-control interviewer"
+                                            name="interviewer_status"
+                                            id="interviewer_status{{ $interviewEmpoloyeeRound->id }}"
+                                            style="text-decoration:none" href="#">
                                             <option value="Qualified"
                                                 @if ($interviewEmpoloyeeRound->interviewer_status == 'Qualified') selected="selected" @endif
-                                                data-id="{{ $interviewEmpoloyeeRound->id}}">Qualified</option>
+                                                data-id="{{ $interviewEmpoloyeeRound->id }}">Qualified</option>
                                             <option value="Not Qualified"
                                                 @if ($interviewEmpoloyeeRound->interviewer_status == 'Not Qualified') selected="selected" @endif
-                                               data-id="{{ $interviewEmpoloyeeRound->id }}">Not Qualified</option>
+                                                data-id="{{ $interviewEmpoloyeeRound->id }}">Not Qualified</option>
                                             <option value="Not Appeared"
-                                                 @if ($interviewEmpoloyeeRound->interviewer_status == 'Not Appeared') selected="selected" @endif
+                                                @if ($interviewEmpoloyeeRound->interviewer_status == 'Not Appeared') selected="selected" @endif
                                                 data-id="{{ $interviewEmpoloyeeRound->id }}">Not Appeared</option>
 
-                                    </select>
-                                    {{-- <a href="" class="edit-btn fa fa-trash" data-toggle="modal"
+                                        </select>
+                                        {{-- <a href="" class="edit-btn fa fa-trash" data-toggle="modal"
                                     data-target="#deletebtninfo{{ $invite->id }}" data-title="Delete"></a> --}}
-                                </td> 
+                                    </td>
                                     <td>
                                         <a href="#" class="edit-btn fa fa-comments-o" id="viewInterview"
-                                        data-id="{{ $interviewEmpoloyeeRound->id }}" data-title="Feedback" style="font-size:18px"></a>
+                                            data-id="{{ $interviewEmpoloyeeRound->id }}" data-title="Feedback"
+                                            style="font-size:18px"></a>
                                     </td>
                                 </tr>
                                 @php $counter++ @endphp
-                            @endforeach    
+                            @endforeach
                         @endif
                     </table>
                 </div>
@@ -106,74 +112,80 @@
 
 </div>
 
- <!-- The Modal Interview  -->
-<div class="modal fade custu-modal-popup" id="emailtemplate" role="dialog" aria-labelledby="exampleModalLabel"
-aria-hidden="true">
-<div class="modal-dialog" role="document">
-    <form id="send_email_to_employee" method="post" autocomplete="off" enctype="multipart/form-data">
-        <input type="hidden" value="{{$interviewEmpoloyee->id}}" name="interview_id">
-        {{-- <input type="hidden" id="interview_status" value="{{ $interviewStatus }}"> --}}
-        {{-- <input type="hidden" value="{{$interviewEmpoloyee->interviewer_status}}" name="interviewer_status"> --}}
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-titles" id="Heading"></h2>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <img src="{{ asset('assets') }}/admin/images/close-btn-icon.png">
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="comman-body">
+<!-- The Modal Interview  -->
 
+<div class="modal fade custu-modal-popup" id="emailtemplate" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form id="send_email_to_employee" method="post" autocomplete="off" enctype="multipart/form-data">
+            {{-- <input type="hidden" id="interview_status" value="{{ $interviewStatus }}"> --}}
+            {{-- <input type="hidden" value="{{$interviewEmpoloyee->interviewer_status}}" name="interviewer_status"> --}}
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-titles" id="Heading"></h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <img src="{{ asset('assets') }}/admin/images/close-btn-icon.png">
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="comman-body">
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="loadingImg"></div>
+                    <div style="font-size: 16px; display:none;" class="text-success" id="success">Status update
+                        successfully</div>
+                    <button type="button" class="btn-secondary-cust" onclick="refreshPage();"
+                        data-dismiss="modal">Cancel</button>
+                    <button type="submit" id="Submit" class="btn-primary-cust button_background_color"><span
+                            class="button_text_color">Submit</span></button>
                 </div>
             </div>
-            <div class="modal-footer">
-                <div class="loadingImg"></div>
-                <div style="font-size: 16px; display:none;" class="text-success" id="success">Status update successfully</div>
-                <button type="button" class="btn-secondary-cust" onclick="refreshPage();" data-dismiss="modal">Cancel</button>
-                <button type="submit" id="Submit" class="btn-primary-cust button_background_color"><span class="button_text_color">Submit</span></button>
-            </div>
-        </div>
-    </form>
-</div>
+        </form>
+    </div>
 </div>
 
- <!-- The Modal Interview  -->
- <div class="modal fade custu-modal-popup" id="notAppeared" role="dialog" aria-labelledby="exampleModalLabel"
- aria-hidden="true">
- <div class="modal-dialog" role="document">
-     <form id="add_not_appeared" method="post" autocomplete="off" enctype="multipart/form-data">
-         <input type="hidden" value="{{$interviewEmpoloyee->id}}" name="interview_round_id">
-         <div class="modal-content">
-             <div class="modal-header">
-                 <h2 class="modal-titles" id="Heading">Create not appeared</h2>
-                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                     <img src="{{ asset('assets') }}/admin/images/close-btn-icon.png">
-                 </button>
-             </div>
-             <div class="modal-body">
-                 <div class="comman-body">
-   
-                 </div>
-             </div>
-             <div class="modal-footer">
-                 <div class="loadingImg"></div>
-                 <div style="font-size: 16px; display:none;" class="text-success" id="successs">Status update successfully</div>
-                 <button type="button" class="btn-secondary-cust" onclick="refreshPage();" data-dismiss="modal">Cancel</button>
-                 <button type="submit" id="Submit" class="btn-primary-cust button_background_color"><span class="button_text_color">Submit</span></button>
-             </div>
-         </div>
-     </form>
- </div>
- </div>
+
+<!-- The Modal Interview  -->
+<div class="modal fade custu-modal-popup" id="notAppeared" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form id="add_not_appeared" method="post" autocomplete="off" enctype="multipart/form-data">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-titles" id="Heading">Create not appeared</h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <img src="{{ asset('assets') }}/admin/images/close-btn-icon.png">
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="comman-body">
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="loadingImg"></div>
+                    <div style="font-size: 16px; display:none;" class="text-success" id="successs">Status update
+                        successfully</div>
+                    <button type="button" class="btn-secondary-cust" onclick="refreshPage();"
+                        data-dismiss="modal">Cancel</button>
+                    <button type="submit" id="Submit" class="btn-primary-cust button_background_color"><span
+                            class="button_text_color">Submit</span></button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 
 
 
 <!--- Main Container Close ----->
 
-<div class="modal fade custu-modal-popup" id="viewFeedbackModel" role="dialog"
-    aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade custu-modal-popup" id="viewFeedbackModel" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <form  method="post" autocomplete="off" enctype="multipart/form-data">
+        <form method="post" autocomplete="off" enctype="multipart/form-data">
             <div class="modal-content">
                 <div class="modal-header">
                     <h2 class="modal-title textColor" id="Heading">Employee interview feedback details</h2>
@@ -214,33 +226,33 @@ aria-hidden="true">
     });
 </script>
 <script>
-      function refreshPage(){
-            window.location.reload();
-        } 
+    function refreshPage() {
+        window.location.reload();
+    }
 </script>
 
-    <script>
-    
-    $(document).on('change', '#interviewer_status', function() {
-        var interviewerstatus = $('#interviewer_status').find(":selected").val();
-        getEmployeeTemplateConfirmation(interviewerstatus);
+<script>
+    $(document).on('change', '.interviewer', function() {
+        var interviewId = $('option:selected', this).data('id');
+        var interviewerstatus = $('#interviewer_status' + interviewId).find(":selected").val();
+        getEmployeeTemplateConfirmation(interviewerstatus, interviewId);
     });
 
-  
-    function getEmployeeTemplateConfirmation(interviewerstatus = '') { 
-        if (interviewerstatus === 'Not Appeared') {
-                let getFormUrl = '{{ url('not_appeared/form') }}';
-                    if (getFormUrl !== '') {
-                    getFormUrl = getFormUrl + "?interview_status=" + interviewerstatus;
-                    }
 
-                $.ajax({
+    function getEmployeeTemplateConfirmation(interviewerstatus = '', interviewId = '') {
+        if (interviewerstatus === 'Not Appeared') {
+            let getFormUrl = '{{ url('not_appeared/form') }}';
+            if (getFormUrl !== '') {
+                getFormUrl = getFormUrl + "?interview_status=" + interviewerstatus + "&interview_id=" + interviewId;
+            }
+
+            $.ajax({
                 url: getFormUrl,
                 type: "get",
                 datatype: "html",
-            
+
             }).done(function(data) {
-                if (interviewerstatus === '') {
+                if (interviewerstatus === '', interviewId === '') {
                     $('#Heading').text("Not appeared");
                 } else {
                     $('#Heading').text("Not appeared");
@@ -250,7 +262,7 @@ aria-hidden="true">
                     backdrop: 'static',
                     keyboard: false
                 });
-            
+
             }).fail(function(jqXHR, ajaxOptions, thrownError) {
                 alert('No response from server');
             });
@@ -260,7 +272,7 @@ aria-hidden="true">
                 var isAdd = $('#is_add').val();
                 var url = '{{ url('send_not_appeared') }}';
                 $('.loadingImg').show();
-                var formData = new FormData(this);              
+                var formData = new FormData(this);
                 $.ajax({
                     url: url,
                     type: 'POST',
@@ -271,88 +283,87 @@ aria-hidden="true">
                     contentType: false,
                     processData: false,
                     success: function(data) {
-                            if (data.success) {
-                                $('.loadingImg').hide();
-                                $('#successs').css('display', 'block');
-                                setInterval(function() {
-                                    location.reload();
-                                }, 3000);
+                        if (data.success) {
+                            $('.loadingImg').hide();
+                            $('#successs').css('display', 'block');
+                            setInterval(function() {
+                                location.reload();
+                            }, 3000);
 
-                            }
+                        }
 
                     },
                     error: function(xhr, textStatus, errorThrown) {
                         console.log(xhr.responseText);
                     }
-                
+
                 });
-            
+
             });
 
-        }
-        else{
+        } else {
 
-        let getFormUrl = '{{ url('email_template/form') }}';
-        if (getFormUrl !== '') {
-            getFormUrl = getFormUrl + "?interview_status=" + interviewerstatus;
-        }
-     
-        $.ajax({
-            url: getFormUrl,
-            type: "get",
-            datatype: "html",
-        
-          }).done(function(data,appeared) {
-            if (interviewerstatus === '') {
-                $('#Heading').text("Employee interview status");
-            } else {
-                $('#Heading').text("Employee interview final status");
+            let getFormUrl = '{{ url('email_template/form') }}';
+            if (getFormUrl !== '') {
+                getFormUrl = getFormUrl + "?interview_status=" + interviewerstatus + "&interview_id=" + interviewId;
             }
-            $('#emailtemplate').find('.modal-body').html(data);
-            $('#emailtemplate').modal({
-                backdrop: 'static',
-                keyboard: false
-            });
-        
-        }).fail(function(jqXHR, ajaxOptions, thrownError) {
-            alert('No response from server');
-        });
-     }
-    }
-        $('#send_email_to_employee').on('submit', function(event) {
-                event.preventDefault();
-                var isAdd = $('#is_add').val();
-                var url = '{{ url('send_email_template') }}';
-                // $('.loadingImg').show();
-                var formData = new FormData(this);              
-                $.ajax({
-                    url: url,
-                    type: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    data: formData,
-                    contentType: false,
-                    processData: false,
-                    success: function(data) {
-                            if (data.success) {
-                                $('#loadingImg').hide();
-                                $('#success').css('display', 'block');
-                                setInterval(function() {
-                                    location.reload();
-                                }, 2000);
 
-                            }
+            $.ajax({
+                url: getFormUrl,
+                type: "get",
+                datatype: "html",
 
-                    },
-                    error: function(xhr, textStatus, errorThrown) {
-                        console.log(xhr.responseText);
-                    }
-                
+            }).done(function(data, appeared) {
+                if (interviewerstatus === '', interviewId === '') {
+                    $('#Heading').text("Employee interview status");
+                } else {
+                    $('#Heading').text("Employee interview final status");
+                }
+                $('#emailtemplate').find('.modal-body').html(data);
+                $('#emailtemplate').modal({
+                    backdrop: 'static',
+                    keyboard: false
                 });
-            
+
+            }).fail(function(jqXHR, ajaxOptions, thrownError) {
+                alert('No response from server');
             });
-    </script>
+        }
+    }
+    $('#send_email_to_employee').on('submit', function(event) {
+        event.preventDefault();
+        var isAdd = $('#is_add').val();
+        var url = '{{ url('send_email_template') }}';
+        // $('.loadingImg').show();
+        var formData = new FormData(this);
+        $.ajax({
+            url: url,
+            type: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(data) {
+                if (data.success) {
+                    $('#loadingImg').hide();
+                    $('#success').css('display', 'block');
+                    setInterval(function() {
+                        location.reload();
+                    }, 2000);
+
+                }
+
+            },
+            error: function(xhr, textStatus, errorThrown) {
+                console.log(xhr.responseText);
+            }
+
+        });
+
+    });
+</script>
 
 <script>
     $(".selectBox").on("click", function(e) {
@@ -386,10 +397,10 @@ aria-hidden="true">
             });
         });
 
-     
 
-     
-      
+
+
+
         // $(document).on('click', '#send_email_template', function() {
         //     swal({
         //             title: "Are you sure?",

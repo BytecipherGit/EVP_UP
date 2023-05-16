@@ -20,36 +20,36 @@
     <div class="col-xl-4 col-lg-6 col-md-6">
       <div class="ser-box">
         <div class="head-sec">
-          <h2>All <span>Lorem Ipsum</span></h2>
+          <h2>All</h2>
           <div class="img-bg ml-auto">
             <img src="{{ asset('assets') }}/admin/images/employees-view.png">
           </div>
         </div>
         <h6>
           <div class="bg-section">
-            980 <img src="{{ asset('assets') }}/admin/images/button-plus-clr.png"> 
+            {{ $getCompanyData }} <img src="{{ asset('assets') }}/admin/images/button-plus-clr.png"> 
           </div>  
-          <a href="#">View</a>              
+          <a href="organization">View</a>              
         </h6>
       </div>
     </div> 
     <div class="col-xl-4 col-lg-6 col-md-6">
       <div class="ser-box">
         <div class="head-sec">
-          <h2>Organization<span>Lorem Ipsum</span></h2>
+          <h2>Verified Organization</h2>
           <div class="img-bg ml-auto">
             <img src="{{ asset('assets') }}/admin/images/employees-view.png">
           </div>  
         </div>
         <h6>
           <div class="bg-section">
-            240 <img src="{{ asset('assets') }}/admin/images/button-plus-clr.png"> 
+            {{ $getVerifiedCompany }} <img src="{{ asset('assets') }}/admin/images/button-plus-clr.png"> 
           </div>  
-          <a href="/organization">View</a>              
+          <a href="verified_organization">View</a>              
         </h6>
       </div>
     </div>
-    <div class="col-xl-4 col-lg-6 col-md-6">
+    {{-- <div class="col-xl-4 col-lg-6 col-md-6">
       <div class="ser-box">
         <div class="head-sec">
           <h2>Individual <span>Lorem Ipsum</span></h2>
@@ -65,7 +65,7 @@
         </h6>
 
       </div>
-    </div>
+    </div> --}}
   </div>
 </div>
 <!--- Status Heading End ----->

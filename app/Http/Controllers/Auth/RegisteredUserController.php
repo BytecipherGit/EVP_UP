@@ -147,24 +147,8 @@ class RegisteredUserController extends Controller
              );
 
              EmailConfiguration::create($insertSMTPRecords);
-        }
+            }
 
-        // for email send
-
-        $emailDetails = HelpersHelper::getSmtpConfig(Auth::id());
-
-        $config = array(
-            'driver'     => $emailDetails->driver,
-            'host'       => $emailDetails->host,
-            'port'       => $emailDetails->port,
-            'from'       => array('address' => $emailDetails->from_address, 'name' => $emailDetails->from_name),
-            'encryption' => $emailDetails->encryption,
-            'username'   => $emailDetails->username,
-            'password'   => $emailDetails->password,
-            'sendmail'   => '/usr/sbin/sendmail -bs',
-            'pretend'    => false,
-        );
-        Config::set('mail', $config);
 
         if ($user) {
             $mailData = [

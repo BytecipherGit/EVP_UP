@@ -214,7 +214,7 @@ class ExitEmployeeProcess extends Controller
                         'review' => $request->review,
                     ]);
 
-                    return redirect('employee');
+                     return Response::json(['success' => '1']);
                     //   Employee::where('id',$employeeData->employee_id)->update([
                     //     'status'  => '0'
                     //   ]);     
