@@ -96,17 +96,6 @@ Route::middleware([SuperAdmin::class])->group(function () {
         Route::post('company/destroy', [App\Http\Controllers\SuperAdminController::class, 'deleteCompany']);
         Route::any('admin/change_password', [App\Http\Controllers\SuperAdminController::class, 'change_password'])->name('change.password');
         Route::get('admin/download_document/{id?}', [App\Http\Controllers\SuperAdminController::class, 'downloadDocument'])->name('download.document');
-        // Route::get('admin/download_document/{id?}', function () {
-        //     $path = storage_path('app/files/shares/filename.ext');
-        
-        //     // Check if the file exists
-        //     if (!Storage::exists($path)) {
-        //         abort(404);
-        //     }
-        
-        //     return new BinaryFileResponse($path);
-        // });
-        // Route::get('superadmin/logout', [App\Http\Controllers\SuperAdminController::class, 'logout'])->name('superadmin.logout');
         Route::get('logout', [App\Http\Controllers\SuperAdminController::class, 'destroy'])->name('logout');
     });
 

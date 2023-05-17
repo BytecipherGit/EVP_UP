@@ -91,11 +91,11 @@
 
                                         </select>
                                         {{-- <a href="" class="edit-btn fa fa-trash" data-toggle="modal"
-                                    data-target="#deletebtninfo{{ $invite->id }}" data-title="Delete"></a> --}}
+                                    data-target="#deletebtninfo{{ $invite->id }}" title="Delete"></a> --}}
                                     </td>
                                     <td>
                                         <a href="#" class="edit-btn fa fa-comments-o" id="viewInterview"
-                                            data-id="{{ $interviewEmpoloyeeRound->id }}" data-title="Feedback"
+                                            data-id="{{ $interviewEmpoloyeeRound->id }}" title="Feedback"
                                             style="font-size:18px"></a>
                                     </td>
                                 </tr>

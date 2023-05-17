@@ -41,16 +41,16 @@
             <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab">Identity</a>
           </li> --}}
                 <li class="nav-item">
-                    <a class="nav-link @if (Request::segment(3) == 'qualification') active @endif " data-toggle="tab" href="#qualification" role="tab">Qualification</a>
+                    <a class="nav-link @if (Request::segment(3) == 'qualification') active @endif secondary_color" data-toggle="tab" href="#qualification" role="tab">Qualification</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link @if (Request::segment(3) == 'workhistory') active @endif" data-toggle="tab" href="#workhistory" role="tab">Work History</a>
+                    <a class="nav-link @if (Request::segment(3) == 'workhistory') active @endif secondary_color" data-toggle="tab" href="#workhistory" role="tab">Work History</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link @if (Request::segment(3) == 'skills') active @endif" data-toggle="tab" href="#skills" role="tab">Skills</a>
+                    <a class="nav-link @if (Request::segment(3) == 'skills') active @endif secondary_color" data-toggle="tab" href="#skills" role="tab">Skills</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#official" role="tab">Official Use</a>
+                    <a class="nav-link secondary_color" data-toggle="tab" href="#official" role="tab">Official Use</a>
                 </li>
 
             </ul>

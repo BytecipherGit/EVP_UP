@@ -218,9 +218,7 @@
           <div class="document-body">
             <img src="{{ $companyDocument->document }}">
           </div>
-          <a href="/admin/download_document/{{ $companyDocument->id }}" target="_black">Download</a>
-          {{-- <a href="{{ route('download.document') }}/{{ $companyDocument->document }}" target="_black">Download</a> --}}
-          {{-- <a href="{{ Storage::url($path) }}" download>{{$fileName }}</a> --}}
+          <a href="{{route('download.document',['id' =>$companyDocument->id])}}" target="_black">Download</a>
         </div>
         <div class="modal-footer">
         </div>

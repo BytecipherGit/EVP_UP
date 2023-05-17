@@ -61,7 +61,7 @@
                 <td>{{ $curremp->email }}</td>
                 {{-- <td>{{ $curremp->mang_name}}</td> --}}
                 <td class="d-flex"><a href="employee_info/{{ $curremp->employee_id }}" class="edit-btn fa fa-edit" title="Edit"></a>
-                  {{-- <a href="employee-exit/{{ $curremp->employee_id }}" class="edit-btn fa fa-user-times" data-title="Exit"></a></td> --}}
+                  {{-- <a href="employee-exit/{{ $curremp->employee_id }}" class="edit-btn fa fa-user-times" title="Exit"></a></td> --}}
               </tr>  
               @endforeach                              
             </tbody>

@@ -8,16 +8,14 @@
     <div class="main-container">
         <div class="main-heading">
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-8">
                     <h1>Verified Organizations</h1>
                 </div>
-                {{-- <div class="col-md-8">
+                <div class="col-md-4">
                     <div class="main-right-button-box backhover">
-                        <a href="add_company" class="emp"><img
-                                src="{{ asset('assets') }}/admin/images/button-plus.png"><span
-                                class="button_text_color">Add New</span></a>
+                        <a href="add_company" class="emp"><img src="{{ asset('assets') }}/admin/images/button-plus.png"><span class="button_text_color">Add New</span></a>
                     </div>
-                </div> --}}
+                </div>
             </div>
         </div>
         <!--- Main Heading ----->

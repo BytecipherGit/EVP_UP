@@ -39,8 +39,8 @@ class PositionController extends Controller
                         return $button;
                     })
                   ->addColumn('action', function($row){
-                     $btn = '<a href="javascript:void(0)" data-id="'.$row->id.'" class="edit-btn updatePosition fa fa-edit" data-title="Edit"></a>';
-                     $btn .= '<a href="javascript:void(0)" data-id="'.$row->id.'" class="edit-btn deletePosition fa fa-trash" data-title="Delete"></a>';
+                     $btn = '<a href="javascript:void(0)" data-id="'.$row->id.'" class="edit-btn updatePosition fa fa-edit" title="Edit"></a>';
+                     $btn .= '<a href="javascript:void(0)" data-id="'.$row->id.'" class="edit-btn deletePosition fa fa-trash" title="Delete"></a>';
                      return $btn;
                  })
                  ->rawColumns(['action','status'])

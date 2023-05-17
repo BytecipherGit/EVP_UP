@@ -88,7 +88,7 @@
             <a class="nav-link profile-droup dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <img src="{{ asset('assets') }}/superadmin/images/marvin-kinney-profile.png"> 
               <span>
-                John Smith              
+                {{ Auth::user()->name }}
               </span>
               <img src="{{ asset('assets') }}/superadmin/images/droup-down-gray.png" class="right-doun">
             </a>
