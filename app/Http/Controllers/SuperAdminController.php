@@ -338,40 +338,14 @@ class SuperAdminController extends Controller
 
     public function downloadDocument(request $request)
     {
-        // dd($request->id);
         $data = Documents::where('id', $request->id)->first();
         $filename = $data->document;
-        dd($filename);
-        Storage::download('/storage/company_documents/address_proof/1684229086_reparing elect.jpeg');
-        // dd(storage_path());
-        if (Storage::exists('http://127.0.0.1:8000/storage/company_documents/address_proof/1684229086_reparing elect.jpeg')) {
-            // return response()->download(storage_path($filePath));
-            dd('exist');
-        } else {
-            dd('not exist');
-            // Handle file not found scenario
+        $filename = str_replace(url('/') . '/storage/', "", $filename);
+        $filePath = storage_path('app/public/' . $filename);
+        if (file_exists($filePath)) {
+            return response()->download($filePath);
         }
-
-        $headers = ['Content-Type: application/pdf'];
-    
-        return response()->download($filename, 'hello.jpeg', $headers);
-
-        // dd($filename);
-        // $file = basename($filename);
-// dd($filename);  
-        // $filePath = Storage::putFile('app', $filename);
-        // return response()->download(storage_path('app/' . $file));
-        //     if (Storage::exists($filePath)) {
-        //         dd($filePath);
-        //         return response()->download(storage_path($filePath));
-        //     } else {
-        //         return "no";            }
-        // $headers = array(
-        //     'Content-Type: application/jpg',
-        // );
-        // return (new Response($filePath))->header('Content-Type', 'image/jpeg');
-    //    return Response::download($path, 'document.jpg', $headers);  
-
+        abort(404);
     }
 
     public function change_password(Request $request)
