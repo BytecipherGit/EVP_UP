@@ -19,10 +19,10 @@ class AdminSeeder extends Seeder
     {
         User::create([
             'role' => 'superadmin',
-            'name' => 'admin',
+            'name' => 'Superadmin',
             'email' => 'superadmin@gmail.com',
-            'password' => Hash::make('123456'),
-            'org_name' =>'ByteCipher',
+            'password' => Hash::make('12345678'),
+            'org_name' =>'ByteCipher Pvt.Ltd',
             'org_web'=>'bytecipher.net',
             'designation'=>'Developer',
             'department'=>'CS',
@@ -36,10 +36,10 @@ class AdminSeeder extends Seeder
 
         User::create([
             'role' => 'admin',
-            'name' => 'admin',
+            'name' => 'Admin',
             'email' => 'admin@gmail.com',
-            'password' => Hash::make('123456'),
-            'org_name' =>'ByteCipher',
+            'password' => Hash::make('12345678'),
+            'org_name' =>'ByteCipher Pvt.Ltd',
             'org_web'=>'bytecipher.net',
             'designation'=>'Developer',
             'department'=>'CS',

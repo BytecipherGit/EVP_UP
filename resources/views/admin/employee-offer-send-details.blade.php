@@ -59,9 +59,9 @@
                                         <td>
                                             @if(($employee->status === "Joined"))
                                                @if(empty($employee->onboarding_employee_id))
-                                                <a href="#" class="edit-btn fa fa-handshake-o" id="onboarding" data-id="{{ $employee->employee_id }}" data-title="onboarding"></a>
+                                                <a href="#" class="edit-btn fa fa-handshake-o" id="onboarding" data-id="{{ $employee->employee_id }}" title="Onboarding"></a>
                                                 @else
-                                                <a href="#" class="edit-btn fa fa-handshake-o offerBtn" id="onboarding" data-id="{{ $employee->employee_id }}" data-title="onboarding"></a>
+                                                <a href="#" class="edit-btn fa fa-handshake-o offerBtn" id="onboarding" data-id="{{ $employee->employee_id }}" title="Onboarding"></a>
                                                 @endif
                                             @endif
                                         </td>

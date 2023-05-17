@@ -27,8 +27,8 @@ class ExitEmployeeProcess extends Controller
             $data = ExitEmployee::where('company_id', Auth::id())->select('id', 'title', 'descriptions')->get();
             return FacadesDataTables::of($data)->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    $btn = '<a href="javascript:void(0)" data-id="' . $row->id . '" class="edit-btn updateProcess fa fa-edit" data-title="Edit"></a>';
-                    $btn .= '<a href="javascript:void(0)" data-id="' . $row->id . '" class="edit-btn deleteProcess fa fa-trash" data-title="Delete"></a>';
+                    $btn = '<a href="javascript:void(0)" data-id="' . $row->id . '" class="edit-btn updateProcess fa fa-edit" title="Edit"></a>';
+                    $btn .= '<a href="javascript:void(0)" data-id="' . $row->id . '" class="edit-btn deleteProcess fa fa-trash" title="Delete"></a>';
                     return $btn;
                 })
                 ->rawColumns(['action'])

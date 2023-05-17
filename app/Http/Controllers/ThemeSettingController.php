@@ -33,12 +33,12 @@ class ThemeSettingController extends Controller
                 } else {
                     $btn = '<img src="'.$row->value.'" style="width:80px; height:40px;">';
                 }
-                // $btn .= '<a href="javascript:void(0)" data-id="' . $row->id . '" class="edit-btn deleteProcess fa fa-trash" data-title="Delete"></a>';
+                // $btn .= '<a href="javascript:void(0)" data-id="' . $row->id . '" class="edit-btn deleteProcess fa fa-trash" title="Delete"></a>';
                 return $btn;
             })
                 ->addColumn('action', function ($row) {
-                    $btn = '<a href="javascript:void(0)" data-id="' . $row->id . '" class="edit-btn updateThemeSetting fa fa-edit" data-title="Edit"></a>';
-                    // $btn .= '<a href="javascript:void(0)" data-id="' . $row->id . '" class="edit-btn deleteProcess fa fa-trash" data-title="Delete"></a>';
+                    $btn = '<a href="javascript:void(0)" data-id="' . $row->id . '" class="edit-btn updateThemeSetting fa fa-edit" title="Edit"></a>';
+                    // $btn .= '<a href="javascript:void(0)" data-id="' . $row->id . '" class="edit-btn deleteProcess fa fa-trash" title="Delete"></a>';
                     return $btn;
                 })
                 

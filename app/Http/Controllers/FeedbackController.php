@@ -24,8 +24,8 @@ class FeedbackController extends Controller
             $data = Feedbacks::where('company_id', Auth::id())->select('id', 'title')->get();
             return FacadesDataTables::of($data)->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    $btn = '<a href="javascript:void(0)" data-id="' . $row->id . '" class="edit-btn updateFeedback fa fa-edit" data-title="Edit"></a>';
-                    $btn .= '<a href="javascript:void(0)" data-id="' . $row->id . '" class="edit-btn deleteFeedback fa fa-trash" data-title="Delete"></a>';
+                    $btn = '<a href="javascript:void(0)" data-id="' . $row->id . '" class="edit-btn updateFeedback fa fa-edit" title="Edit"></a>';
+                    $btn .= '<a href="javascript:void(0)" data-id="' . $row->id . '" class="edit-btn deleteFeedback fa fa-trash" title="Delete"></a>';
                     return $btn;
                 })
                 ->rawColumns(['action'])

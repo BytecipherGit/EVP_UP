@@ -138,22 +138,21 @@
                                     </td> --}}
                                     {{-- <td>{{ ($employee->interviewee_comment) ? $employee->interviewee_comment : '' }}</td> --}}
                                     <td>
-                                        <span class="notifi-td" id="reminder_interview"
-                                            data-id="{{ $employee->id }}"><img src="assets/admin/images/bell-icon.png"
-                                                width="30px;" height="30px"></span>
+                                        <span class="notifi-td" id="reminder_interview"data-id="{{ $employee->id }}" title="Send Reminder"><img src="assets/admin/images/bell-icon.png"
+                                             width="30px;" height="30px"></span>
                                     </td>
                                     <td>
                                         {{-- <span class="notifi-td" data-toggle="modal" data-target="#remaiderbtninfo"><img
                                                 src="assets/admin/images/bell-icon.png" width="30px;"
                                                 height="30px"></span> --}}
-                                        <a href="{{ route('interview.round.details') }}/{{ $employee->id }}" class="edit-btn fa fa-eye" data-id="{{ $employee->id }}" data-title="Details"></a>
-                                        <a href="#" class="edit-btn fa fa-arrow-circle-right" id="updateInterview" data-id="{{ $employee->id }}" data-title="Next Round"></a>
-                                        <a href="#" class="edit-btn fa fa-trash " id="delete_interview" data-id="{{ $employee->id }}" data-title="Delete"></a>
+                                        <a href="{{ route('interview.round.details') }}/{{ $employee->id }}" class="edit-btn fa fa-eye" data-id="{{ $employee->id }}" title="Details"></a>
+                                        <a href="#" class="edit-btn fa fa-arrow-circle-right" id="updateInterview" data-id="{{ $employee->id }}" title="Next Round Interview"></a>
+                                        <a href="#" class="edit-btn fa fa-trash " id="delete_interview" data-id="{{ $employee->id }}" title="Delete"></a>
                                       
                                 @if(empty($employee->employee_offer_id))
-                                     <a href="#" class="edit-btn fa fa-gift" id="offer_send" data-id="{{ $employee->employee_id }}" data-title="offer_send"></a>
+                                     <a href="#" class="edit-btn fa fa-gift" id="offer_send" data-id="{{ $employee->employee_id }}" title="Offer Send"></a>
                                     @else
-                                      <a href="#" class="edit-btn fa fa-gift offerBtn" id="offer_send" data-id="{{ $employee->employee_id }}" data-title="offer_send"></a>
+                                      <a href="#" class="edit-btn fa fa-gift offerBtn" id="offer_send" data-id="{{ $employee->employee_id }}" title="Offer send"></a>
                                  @endif
                                     </td>
                                 </tr>
