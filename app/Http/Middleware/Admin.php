@@ -5,6 +5,8 @@ namespace App\Http\Middleware;
 use Closure;
 use Auth;
 use App\Models\User; 
+use Carbon\Carbon;
+use App\Models\CompanySubscription; 
 use Illuminate\Http\Request;
 
 class Admin
@@ -32,14 +34,18 @@ class Admin
         // }
 
         if (!Auth::check()){
+
             return redirect('/login');     
         }
 
         $userRole = User::find(Auth::user()->id);
-        // dd($userRole->role);
+        $checkSubscription = CompanySubscription::where('company_subscriptions.company_id',Auth::user()->id)
+                            ->where('company_subscriptions.end_date','>',carbon::today())->get();
+        // dd($checkSubscription);
         if($userRole->role == 'admin'){
             return $next($request);
         }  
+        
         if($userRole->role == 'superadmin'){
             return redirect()->route('superadmin');
         } 

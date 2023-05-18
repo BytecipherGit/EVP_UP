@@ -8,6 +8,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ThemeSettingController;
 use App\Http\Middleware\Admin;
 use App\Http\Middleware\SuperAdmin;
+use App\Http\Controllers\SubscriptionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -96,6 +97,15 @@ Route::middleware([SuperAdmin::class])->group(function () {
         Route::post('company/destroy', [App\Http\Controllers\SuperAdminController::class, 'deleteCompany']);
         Route::any('admin/change_password', [App\Http\Controllers\SuperAdminController::class, 'change_password'])->name('change.password');
         Route::get('admin/download_document/{id?}', [App\Http\Controllers\SuperAdminController::class, 'downloadDocument'])->name('download.document');
+
+         // Subscription 
+
+        Route::get('admin/subscription', [SubscriptionController::class, 'index'])->name('subscription.index');
+        Route::any('admin/subscription/form/{id?}', [SubscriptionController::class, 'getSubscriptionForm']);
+        Route::post('admin/subscription/submit', [SubscriptionController::class, 'createSubscription']);
+        Route::post('admin/subscription/update', [SubscriptionController::class, 'updateSubscription']);
+        Route::post('admin/subscription/destroy', [SubscriptionController::class, 'deleteSubscription']);
+        Route::post('admin/update_status', [SubscriptionController::class, 'update_subscription_status'])->name('update_status');
         Route::get('logout', [App\Http\Controllers\SuperAdminController::class, 'destroy'])->name('logout');
     });
 
@@ -210,8 +220,6 @@ Route::middleware([Admin::class])->group(function () {
     
     Route::get('search', [App\Http\Controllers\SearchController::class, 'index'])->middleware('documents');
     Route::get('search-global', [App\Http\Controllers\SearchController::class, 'search'])->name('search-global')->middleware('documents');
-    
-   
 
     // Route::get('posts', [App\Http\Controllers\EmailTemplatesController::class, "index"])->middleware('documents');
     Route::get("qualified_email_template", [App\Http\Controllers\CompanyEmailTemplatesController::class, "createQualifiedEmail"])->middleware('documents');
@@ -248,6 +256,14 @@ Route::middleware([Admin::class])->group(function () {
 
     Route::any('edit_skills/update/{id?}', [App\Http\Controllers\NewEmployeeController::class, 'updateSkills'])->middleware('documents');
     Route::any('edit_language/update/{id?}', [App\Http\Controllers\NewEmployeeController::class, 'updateLanguage'])->middleware('documents');
+
+    // subscription
+
+
+    Route::get('company_suscription', [App\Http\Controllers\CompanySubscriptionController::class, 'index'])->name('company.suscription');
+
+    Route::get('razorpay-payment', [App\Http\Controllers\PaymentController::class, 'index']);
+    Route::post('razorpay-payment', [App\Http\Controllers\PaymentController::class, 'razorPaySuccess'])->name('razorpay.payment.store');
 
 });
 
@@ -288,5 +304,10 @@ require __DIR__ . '/auth.php';
 
 
 Route::get('color_picker', [App\Http\Controllers\CsvController::class, 'colorPicker']);
+
+Route::post('/subscribe', [SubscriptionController::class, 'subscribe'])->name('subscribe');
+Route::post('/cancel-subscription', [SubscriptionController::class, 'cancelSubscription'])->name('cancel-subscription');
+
+
 
 

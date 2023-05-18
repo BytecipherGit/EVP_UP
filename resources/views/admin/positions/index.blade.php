@@ -256,7 +256,7 @@
                 processData: false,
                 success: function(data) {
                     if (data.errors) {
-                        if (data.errors.first_name) {
+                        if (data.errors.title) {
                             $('#title-error').html(data.errors.title[0]);
                         }
                         if (data.errors.descriptions) {

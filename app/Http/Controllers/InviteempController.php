@@ -280,6 +280,7 @@ class InviteempController extends Controller
 
     public function sendInvitationToEmployee(request $request)
     {
+        // dd($request->all());
 
         $temp = array();
         $users_id = $request->id;
@@ -311,7 +312,7 @@ class InviteempController extends Controller
                 $send_name = ['first' => $name];
                 $send_id = ['ids' => encrypt($row['id'])];
                 $company_name = ['company_name' => Auth::user()->name];
-
+    
                 $emailDetails = HelpersHelper::getSmtpConfig(Auth::id());
                 $config = array(
                     'driver'     => $emailDetails->driver,
@@ -327,7 +328,7 @@ class InviteempController extends Controller
                 Config::set('mail', $config);
 
                 
-                Mail::send('org-invite/invite-email', ['mailName' => $company_name, 'mailId' => $send_id], function ($message) use ($email, $name) {
+                Mail::send('org-invite/invite-email', ['mailName' => $company_name, 'mailId' => $send_id, 'companyId' => Auth::id()], function ($message) use ($email, $name) {
                     $message->to($email, $name)->subject('ByteCipher Pvt Ltd Interview Invitation Email');
                    $message->from(Config::get('mail.from.address'),Config::get('mail.from.name'));
                 });

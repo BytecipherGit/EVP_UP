@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" href="{{ asset('assets') }}/email/images/logo-icon.png">
-
+  <input type="hidden" name="id" value={{$companyId}}>
   
 </head>
 
@@ -32,7 +32,7 @@
                  
 
                  <button style="background: #5533FF; border:none; border-radius: 6px; padding:15px 40px; margin:25px 0">
-                    @foreach($mailId as $id) <a href="{{route('invite.email.config')}}/{{ $id }}" style="color: #fff; text-decoration:none; font-weight: 500; font-size: 20px; line-height: 26px; font-family: 'DM Sans', sans-serif;">
+                    @foreach($mailId as $id) <a href="{{route('invite.email.config')}}/{{ $id }}/{{ $companyId }}" style="color: #fff; text-decoration:none; font-weight: 500; font-size: 20px; line-height: 26px; font-family: 'DM Sans', sans-serif;">
                     Accept Invitation
                     </a>@endforeach
                 </button>

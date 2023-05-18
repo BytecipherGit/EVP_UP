@@ -225,7 +225,7 @@
 </script>
 <script src="{{ asset('assets') }}/admin/js/bootstrap.min.js"></script>
 <script src="{{ asset('assets') }}/admin/js/file-upload.js"></script>
-{{-- <script src="{{ asset('assets') }}/admin/js/typeahead.min.js"></script>  --}}
+{{-- <script src="{{ asset('assets') }}/admin/js/typeahead.min.js"></script> 
 
 <script>
   $(".selectBox").on("click", function(e) {
@@ -238,9 +238,9 @@
           .siblings()
           .removeClass("active");
   });
-</script>
+</script> --}}
 
-<script>
+{{-- <script>
   // Initializes  input( name of states)
   // with a typeahead
   var $input = $(".typeahead");
@@ -306,9 +306,9 @@
           }
       }
   });
-</script>
+</script> --}}
 
-<script type="text/javascript">
+{{-- <script type="text/javascript">
   var i = 0;
   $("#dynamic-ar").click(function() {
       ++i;
@@ -394,7 +394,7 @@
       $(this).parent('.row').remove();
       e.preventDefault();
   });
-</script>
+</script>--}}
 
 <script>
     $(document).ready(function() {
@@ -620,4 +620,4 @@
         });
 
     });
-</script>
+</script> 

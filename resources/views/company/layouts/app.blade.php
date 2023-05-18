@@ -501,6 +501,9 @@
                                 <a class="dropdown-item" href="/company_profile">
                                     Profile
                                 </a>
+                                <a class="dropdown-item" href="/company_suscription">
+                                   My Subscription
+                                </a>
                                 <a class="dropdown-item" href="/changePassword">
                                     Change Password
                                 </a>
@@ -931,3 +934,4 @@
 </body>
 
 </html>
+

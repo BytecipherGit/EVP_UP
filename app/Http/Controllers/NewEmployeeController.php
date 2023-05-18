@@ -24,6 +24,13 @@ use Redirect;
 class NewEmployeeController extends Controller
 {
 
+    public function __construct() {
+        $this->middleware('Admin', ['except' => [
+            'index', 'createEmployee', 'updateEmployee','createEmployeeQualification','updateEmployeeQualification','createEmployeeWorkhistory','updateEmployeeWorkhistory',
+            'createEmployeeSkills','addMoreEmployeeSkills','addMorelangEmployeeSkills','createEmployeeOfficial','updateEmployeeOfficial','updateLanguage','updateLanguage'
+        ]]);
+    }
+
     public function index(request $request)
     {
       
@@ -168,7 +175,7 @@ class NewEmployeeController extends Controller
     }
 
     public function updateEmployee(request $request)
-    {
+      {
 // dd($request->all());
         if (Auth::check()) {
             $request->validate([
@@ -283,7 +290,7 @@ class NewEmployeeController extends Controller
     }
 
     public function createEmployeeQualification(request $request)
-    {
+      {
         // dd($request->all());
     
         if (Auth::check()) {
@@ -725,13 +732,10 @@ class NewEmployeeController extends Controller
             ]);
             $employeeDetails = Employee::where('id',$request->employee_id)->first();
 
-            $skillsExist = Empskills::join('company_employee','company_employee.employee_id','=','employee_skills.employee_id')
-                           ->join('employee_language','employee_language.employee_id','=','company_employee.employee_id')
-                           ->where('employee_skills.employee_id',$request->employee_id)->first();
 
             // $skillsLangExist = Emplang::join('company_employee','company_employee.employee_id','=','employee_language.employee_id')
             //                  ->where('employee_language.employee_id',$request->employee_id)->first();
-//    dd($skillsExist);
+
             if(!empty($employeeDetails)){
                 if ($validator->passes()) {
 
@@ -758,7 +762,13 @@ class NewEmployeeController extends Controller
                      $language = DB::table('employee_language')->insert($insertDatalang);  
                   } 
 
-                  if($skillsExist->status === '2'){
+
+                $skillsExist = Empskills::join('company_employee','company_employee.employee_id','=','employee_skills.employee_id')
+                            ->join('employee_language','employee_language.employee_id','=','company_employee.employee_id')
+                            ->where('company_employee.employee_id',$request->employee_id)->first();
+            //   dd($skillsExist);
+
+                  if($skillsExist->status == '2'){
                     return redirect('basic_info/'.encrypt($employeeDetails->id).'/skills')->with('message','Information added successfully');
                  }else{
                     return redirect('employee_info/'.$employeeDetails->id.'/skills')->with('message','Information added successfully');
