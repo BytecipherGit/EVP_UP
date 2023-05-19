@@ -13,18 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('company_subscriptions', function (Blueprint $table) {
+        Schema::create('company_subscription_payment', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('company_id');
             $table->foreign('company_id')->references('id')->on('users')->onDelete('cascade');
-            $table->string('subscription_id')->nullable();
-            $table->string('subscription_type')->nullable();
-            $table->integer('price')->nullable();
+            $table->unsignedBigInteger('subscription_id');
+            $table->foreign('subscription_id')->references('id')->on('subscriptions')->comment('Primary key from company_subscriptions table')->onDelete('cascade');
+            $table->string('payment_id')->nullable();
+            $table->string('payment_status')->nullable();
             $table->string('name')->nullable();
-            $table->longText('dscription')->nullable()->default('text');
-            $table->boolean('status')->default(0)->comment('1 Active, 0 Inactive');
-            $table->string('start_date')->nullable();
-            $table->string('end_date')->nullable();
+            $table->string('payment_object')->nullable();
             $table->timestamps();
         });
     }
@@ -36,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('company_subscriptions');
+        Schema::dropIfExists('company_subscription_payment');
     }
 };

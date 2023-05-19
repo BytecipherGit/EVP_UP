@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->string('type')->nullable();
             $table->integer('price')->nullable();
+            $table->string('plan_id')->nullable();
             $table->longText('description')->nullable()->default('text');
             $table->string('duration')->nullable();
             $table->boolean('status')->default(0)->comment('1 Active, 0 Inactive');
