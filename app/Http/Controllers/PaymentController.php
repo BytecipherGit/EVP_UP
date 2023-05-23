@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Razorpay\Api\Api;
 use App\Models\CompanySubscription;
+use App\Models\CompanySubscriptionPayment;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\DB;
 use Session;
 use Auth;
 use Exception;
@@ -53,29 +55,62 @@ class PaymentController extends Controller
 
     public function getPaySuccess(Request $request)
     {
-      // dd($request->all());
+
       if($request->all()){
-        $str_result = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-        $subscriptionId = 'sub_'.substr(str_shuffle($str_result),0, 15);
-    //    dd($planId);
+
             $insert = [
                 'company_id' => Auth::id(),
-                'subscription_id' =>$subscriptionId,
-                'subscription_type' => !empty($request->type) ? $request->type : null,
-                'name' => !empty($request->name) ? $request->name : null,
-                'price' => !empty($request->price) ? $request->price : null, 
-                'description' => !empty($request->description) ? $request->description : null,
-                'status' => '1',
+                'company_subscription_id' => !empty($request->id) ? $request->id : null,
+                'razorpay_subscription_id' => !empty($request->razorpay_subscription_id) ? $request->razorpay_subscription_id : null,
+                'subscription_id' => !empty($request->subscription_id) ? $request->subscription_id : null,
+                'payment_id' => !empty($request->razorpay_payment_id) ? $request->razorpay_payment_id : null,
+                'status' => 'Active',
             ];
-            $subscriptionData = CompanySubscription::create($insert);
+            $subscriptionData = CompanySubscriptionPayment::create($insert);
             if (!empty($subscriptionData)) {
-                return redirect()->back();
+                return redirect('company_suscription');
             } else {
                 return Response::json(['success' => '0']);
             }
         }
      }
 
-}
+     public function deleteSubscription(request $request)
+     {
+        // dd($request->subId);
+         if (!empty($request->subscriptionId)) {
+            $subscriptionId = $request->input('subscriptionId');
 
+            $api = new Api(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
+            $subscription = $api->subscription->fetch($subscriptionId);
+            $subscription->cancel();
+
+            $subscriptionStatus = DB::table('company_subscription_payment')->where('id', $request->subId)
+             ->update([
+                 'payment_status' => 'Cancelled',
+             ]);
+
+             $subscriptionStatus = DB::table('company_subscriptions')->where('razorpay_subscription_id', $subscriptionId)
+             ->update([
+                 'status' => '0',
+             ]);
+
+             if (!empty($subscriptionStatus)) {
+                 return Response::json(['success' => '1']);
+             } else {
+                 return Response::json(['success' => '0']);
+             }
+         } else {
+             return Response::json(['success' => '0']);
+         }
+     }
+
+}
+// $subscriptionId = $request->input('subscription_id');
+
+// $api = new Api($key_id, $secret);
+
+// try {
+//     $subscription = $api->subscription->fetch($subscriptionId);
+//     $subscription->cancel();
 

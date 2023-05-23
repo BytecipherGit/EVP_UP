@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Subscription;
+use Razorpay\Api\Api;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
@@ -21,7 +22,7 @@ class SubscriptionController extends Controller
      public function index(Request $request)
      {
          if ($request->ajax()) {
-             $data = Subscription::where('user_id',Auth::id())->select('id','type','duration','price','name','description','status')->get();
+             $data = Subscription::select('id','type','duration','price','name','description','status')->get();
              return FacadesDataTables::of($data)->addIndexColumn()
                     ->addColumn('status', function ($row) {
                         $button = "";
@@ -36,8 +37,8 @@ class SubscriptionController extends Controller
                         return $button;
                     })
                   ->addColumn('action', function($row){
-                     $btn = '<a href="javascript:void(0)" data-id="'.$row->id.'" class="edit-btn updateSubscription fa fa-edit" title="Edit"></a>';
-                     $btn .= '<a href="javascript:void(0)" data-id="'.$row->id.'" class="edit-btn deleteSubscription fa fa-trash" title="Delete"></a>';
+                    //  $btn = '<a href="javascript:void(0)" data-id="'.$row->id.'" class="edit-btn updateSubscription fa fa-edit" title="Edit"></a>';
+                     $btn = '<a href="javascript:void(0)" data-id="'.$row->id.'" class="edit-btn deleteSubscription fa fa-trash" title="Delete"></a>';
                      return $btn;
                  })
                  ->rawColumns(['action','status'])
@@ -87,11 +88,20 @@ class SubscriptionController extends Controller
                 
             ]);
             if ($validator->passes()) {
+                $str_result = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+                $planId = 'plan_'.substr(str_shuffle($str_result),0, 15);
+                $api = new Api(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
+  
+                $plan_id = $api->plan->create(array('period' => 'weekly', 'interval' => 1, 'item' => array('name' => 'Test Weekly 1 plan', 
+                'description' => 'Description for the weekly 1 plan', 
+                'amount' => 600, 'currency' => 'INR'),'notes'=> array('key1'=> 'value3','key2'=> 'value2')));
+            //    dd($plan_id->id);
                     $insert = [
-                        'user_id' => Auth::id(),
+                        // 'user_id' => Auth::id(),
                         'name' => !empty($request->name) ? $request->name : null,
                         'type' => !empty($request->type) ? $request->type : null,
                         'price' => !empty($request->price) ? $request->price : null,
+                        'plan_id' => $plan_id->id,
                         'duration' => !empty($request->duration) ? $request->duration : null,
                         'description' => !empty($request->description) ? $request->description : null,
                         'status' => '1',
@@ -123,7 +133,7 @@ class SubscriptionController extends Controller
             if ($validator->passes()) {
                 if($request->subscription_id){
                     $update = [
-                        'user_id' => Auth::id(),
+                        // 'user_id' => Auth::id(),
                         'name' => !empty($request->name) ? $request->name : null,
                         'type' => !empty($request->type) ? $request->type : null,
                         'price' => !empty($request->price) ? $request->price : null,

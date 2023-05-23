@@ -17,10 +17,14 @@ return new class extends Migration
             $table->id();
             $table->unsignedInteger('company_id');
             $table->foreign('company_id')->references('id')->on('users')->onDelete('cascade');
-            $table->unsignedBigInteger('subscription_id');
-            $table->foreign('subscription_id')->references('id')->on('subscriptions')->comment('Primary key from company_subscriptions table')->onDelete('cascade');
+            $table->string('subscription_id')->nullable()->comment('Table subscriptions id');
+            // $table->unsignedBigInteger('subscription_id');
+            // $table->foreign('subscription_id')->references('id')->on('subscriptions')->comment('Primary key from subscriptions table')->onDelete('cascade');
+            $table->unsignedBigInteger('company_subscription_id');
+            $table->foreign('company_subscription_id')->references('id')->on('company_subscriptions')->onDelete('cascade');
+            $table->string('razorpay_subscription_id')->nullable();
             $table->string('payment_id')->nullable();
-            $table->string('payment_status')->nullable();
+            $table->enum('payment_status',['Active','Cancelled'])->comment('Active / Cancelled');
             $table->string('name')->nullable();
             $table->string('payment_object')->nullable();
             $table->timestamps();

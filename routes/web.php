@@ -260,10 +260,11 @@ Route::middleware([Admin::class])->group(function () {
     // subscription
 
 
-    Route::get('company_suscription', [App\Http\Controllers\CompanySubscriptionController::class, 'index'])->name('company.suscription');
+    Route::any('company_suscription', [App\Http\Controllers\CompanySubscriptionController::class, 'index'])->name('company.suscription');
 
-    // Route::get('razorpay-payment', [App\Http\Controllers\PaymentController::class, 'index']);
+    Route::any('subscription_get', [App\Http\Controllers\CompanySubscriptionController::class, 'createSubscription'])->name('subscription.get');
     // Route::any('razorpay_payment', [App\Http\Controllers\PaymentController::class, 'getPaySuccess'])->name('razorpay.payment');
+    Route::post('subscription/destroy', [App\Http\Controllers\PaymentController::class, 'deleteSubscription']);
     Route::post('razorpay_payment',[App\Http\Controllers\PaymentController::class,'getPaySuccess'])->name('razorpay.payment.store');
 
 });
