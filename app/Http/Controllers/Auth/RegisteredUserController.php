@@ -21,6 +21,7 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Razorpay\Api\Api;
 use App\Helpers\Helper as HelpersHelper;
 use Illuminate\Support\Facades\Mail as FacadesMail;
 use Illuminate\View\View;
@@ -137,13 +138,13 @@ class RegisteredUserController extends Controller
 
     // Add subscription details 
      $getSubscriptionRecords = Subscription::where('type','Free')->get();
-
-       if(count($getSubscriptionRecords) > 0){
-            foreach ($getSubscriptionRecords as $getSubscriptionRecord) {
+     if(count($getSubscriptionRecords) > 0){
+        foreach ($getSubscriptionRecords as $getSubscriptionRecord) {
                 $insertSubscriptionRecord = array(
                     'company_id' => $user->id,
                     'subscription_id' => $getSubscriptionRecord->id,
                     'subscription_type' => $getSubscriptionRecord->type,
+                    'description' => $getSubscriptionRecord->description,
                     'name' => $getSubscriptionRecord->name,
                     'price' => $getSubscriptionRecord->price,
                     'start_date' => $user->created_at->format('Y-m-d'),
@@ -169,7 +170,7 @@ class RegisteredUserController extends Controller
              );
 
              EmailConfiguration::create($insertSMTPRecords);
-            }
+     }
 
 
         if ($user) {

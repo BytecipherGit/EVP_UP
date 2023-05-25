@@ -234,14 +234,6 @@ class InviteempController extends Controller
 
     public function downloadQualificationDoc(request $request)
     {
-        // $data = Empqualification::where('id', $request->id)->first();
-        // $path = $data->document;
-        // $file = basename($path);    
-    
-        // $headers = array(
-        //     'Content-Type: application/jpg',
-        // );
-        // return Response::download($file, 'qualification.jpg', $headers);
 
         $data = Empqualification::where('id', $request->id)->first();
         $filename = $data->document;
@@ -256,16 +248,9 @@ class InviteempController extends Controller
 
     public function downloadOfferDocument(request $request)
     {
-        // $work = Empworkhistory::where('id', $request->id)->first();
-        // $file = $work->offer_letter;
-        // $headers = array(
-        //     'Content-Type: application/jpg',
-        // );
-
-        // return Response::download($file, 'Offer Letter.jpg', $headers);
-
         $data = Empworkhistory::where('id', $request->id)->first();
-        $filename = $data->document;
+        // dd($data);
+        $filename = $data->offer_letter;
         $filename = str_replace(url('/') . '/storage/', "", $filename);
         $filePath = storage_path('app/public/' . $filename);
         if (file_exists($filePath)) {
@@ -276,14 +261,6 @@ class InviteempController extends Controller
 
     public function downloadIdDoc(request $request)
     {
-        // $identity = Employeeidentity::where('id', $request->id)->first();
-        // $file = $identity->document;
-        // $headers = array(
-        //     'Content-Type: application/jpg',
-        // );
-
-        // return Response::download($file, 'Employee Id.jpg', $headers);
-
         $data = Employeeidentity::where('id', $request->id)->first();
         $filename = $data->document;
         $filename = str_replace(url('/') . '/storage/', "", $filename);
@@ -296,17 +273,9 @@ class InviteempController extends Controller
 
     public function downloadExpDoc(request $request)
     {
-        // $data = Empworkhistory::where('id', $request->id)->first();
-        // $file = public_path() . '/image/' . $data->exp_letter;
-        // $headers = array(
-        //     'Content-Type: application/jpg',
-        // );
-
-        // return Response::download($file, 'Exp. Letter.jpg', $headers);
-
-
+ 
         $data = Empworkhistory::where('id', $request->id)->first();
-        $filename = $data->document;
+        $filename = $data->exp_letter;
         $filename = str_replace(url('/') . '/storage/', "", $filename);
         $filePath = storage_path('app/public/' . $filename);
         if (file_exists($filePath)) {

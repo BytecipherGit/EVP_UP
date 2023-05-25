@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('subscription_type')->nullable();
             $table->integer('price')->nullable();
             $table->string('name')->nullable();
-            $table->longText('dscription')->nullable()->default('text');
+            $table->longText('description')->nullable()->default('text');
             $table->boolean('status')->default(0)->comment('1 Active, 0 Inactive');
             $table->string('start_date')->nullable();
             $table->string('end_date')->nullable();
