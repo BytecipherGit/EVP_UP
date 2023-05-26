@@ -27,6 +27,7 @@ return new class extends Migration
             $table->enum('payment_status',['Active','Cancelled'])->comment('Active / Cancelled');
             $table->string('name')->nullable();
             $table->string('payment_object')->nullable();
+            $table->string('payment_price')->nullable();
             $table->string('start_date')->nullable();
             $table->string('end_date')->nullable();
             $table->timestamps();

@@ -23,9 +23,7 @@ class CompanySubscriptionController extends Controller
         $subscriptionDetails = Subscription::leftJoin('company_subscriptions','company_subscriptions.subscription_id','=','subscriptions.id')
                               ->leftJoin('company_subscription_payment','company_subscription_payment.subscription_id','=','company_subscriptions.subscription_id')
                               ->select('subscriptions.*','subscriptions.plan_id','company_subscriptions.razorpay_subscription_id','company_subscription_payment.payment_status',('company_subscription_payment.id as company_pay_id'),'company_subscriptions.status')
-                              // ->where('company_subscriptions.company_id',Auth::id())
                               ->groupBy('subscriptions.id')
-                              // ->orderBy('company_subscription_payment.id','DESC')
                               ->get();
 
         $subscriptions = Subscription::where('name','!=','Free')->count();
@@ -46,16 +44,18 @@ class CompanySubscriptionController extends Controller
     public function createSubscription(Request $request)
     {
 // dd($request->all());
+
     if(Auth::check()){
       
       $startDate = Carbon::now();
       $tomorrow = Carbon::tomorrow();
       $unixTimestamp = $tomorrow->timestamp;
+
       $api = new Api(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
       $checkSubscription = (!empty(decrypt($request->id))) ? Subscription::find(decrypt($request->id)) : false;
-      // dd($checkSubscription);
-     $checkFreeSub = CompanySubscription::where('company_id',Auth::id())->where('name','=','Free')->orderBy('created_at','DESC')->first();
-     $checkCompanySub = CompanySubscription::where('company_id',Auth::id())->where('name','!=','Free')->where('end_date','<',Carbon::now())->orderBy('created_at','DESC')->first();
+          // dd($checkSubscription);
+        $checkFreeSub = CompanySubscription::where('company_id',Auth::id())->where('name','=','Free')->orderBy('created_at','DESC')->first();
+        $checkCompanySub = CompanySubscription::where('company_id',Auth::id())->where('name','!=','Free')->where('end_date','<',Carbon::now())->orderBy('created_at','DESC')->first();
     //  dd($checkFreeSub);
         $duration = $checkSubscription->duration;  
 
@@ -63,8 +63,8 @@ class CompanySubscriptionController extends Controller
           $unixTimestamp, 'addons' => array(array('item' => array('name' => 
           'Delivery charges', 'amount' => 30000, 'currency' => 'INR'))),'notes'=> array('key1'=> 'value3','key2'=> 'value2')));
     //  dd($subscription_id);
-       if($checkCompanySub || $checkFreeSub){
-          $updateSubscriptionData = CompanySubscription::where('company_id',Auth::id())
+        if($checkCompanySub || $checkFreeSub){
+             $updateSubscriptionData = CompanySubscription::where('company_id',Auth::id())
                 ->update([
 
                     'company_id' => Auth::id(),
@@ -79,22 +79,13 @@ class CompanySubscriptionController extends Controller
                     'status' => '1'
           
               ]);
-            }
+           }
           }
             $subscriptionData = CompanySubscription::where('company_id',Auth::id())->orderBy('created_at','DESC')->first();
+            $subscriptionCheck = Subscription::where('id',(decrypt($request->id)))->first();
 
-            // dd($subscriptionData);
-  //       $employee = InterviewEmployeeRounds::where('id', $request->interviewEmpRoundsId)
-  //       ->update([
-  //           'interviewee_comment' => $request->input('employee_comment'),
-  //           'interviewee_comment_date' => Carbon::now(),
-  //           'employee_interview_status' => $request->interview_status,
-  //           'isEmployeeResponseSubmitted' => true,
-  //       ]);
-  // $subscriptionData = CompanySubscription::create($insert);
-  
       if (!empty($subscriptionData)) {
-          return view('admin.payment.razorpay_view',compact('subscriptionData'));
+          return view('admin.payment.razorpay_view',compact('subscriptionData','subscriptionCheck'));
       } else {
           return Response::json(['success' => '0']);
       }

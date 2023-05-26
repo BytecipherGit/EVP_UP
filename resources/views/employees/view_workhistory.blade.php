@@ -27,7 +27,7 @@
                                   </td>
                                   <td><a href="#" target="_black" class="docu-down" data-toggle="modal" data-target="#workexpdocument{{ $workhistory->id }}"><img src="{{ asset('assets') }}/admin/images/document.png"></a>
                                   </td>
-                                  <td><a href="#" target="_black" class="docu-download"><img src="{{ asset('assets') }}/admin/images/pdf-icon.png"></a>
+                                  <td><a href="{{ $workhistory->salary_slip }}" target="_black" class="docu-download"><img src="{{ asset('assets') }}/admin/images/pdf-icon.png"></a>
                                   </td>
                                   @if ($workhistory->workhistory_verification_type == 1)
                                       <td><span class="verified-clr"><i class="fa fa-check"></i>Verified</span></td>

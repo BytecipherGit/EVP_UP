@@ -143,7 +143,7 @@
                 <input type="file" id="document_id" name="document_id" value="{{ $employeeExists->document_id ? $employeeExists->document_id : '' }}" class="form-control" accept="image/jpeg,image/doc,image/pdf" >
                 <strong class="error" id="document_id-error"></strong>
                 @if(!empty($employeeExists->document_id))
-                <span class="btn btn-primary" value="{{ $employeeExists->document_id }}">Uploaded Document</span>
+                 <a href="{{ $employeeExists->document_id ? $employeeExists->document_id : '#'}}" target="_black" class="btn btn-primary">Uploaded Document</a>
                 @endif
             </div>
         </div>

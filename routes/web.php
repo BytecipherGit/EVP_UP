@@ -261,7 +261,6 @@ Route::middleware([Admin::class])->group(function () {
 
 
     Route::any('company_suscription', [App\Http\Controllers\CompanySubscriptionController::class, 'index'])->name('company.suscription');
-
     Route::any('subscription_get', [App\Http\Controllers\CompanySubscriptionController::class, 'createSubscription'])->name('subscription.get');
     // Route::any('razorpay_payment', [App\Http\Controllers\PaymentController::class, 'getPaySuccess'])->name('razorpay.payment');
     Route::post('subscription/destroy', [App\Http\Controllers\PaymentController::class, 'deleteSubscription']);
@@ -310,6 +309,7 @@ Route::get('color_picker', [App\Http\Controllers\CsvController::class, 'colorPic
 
 Route::post('/subscribe', [SubscriptionController::class, 'subscribe'])->name('subscribe');
 Route::post('/cancel-subscription', [SubscriptionController::class, 'cancelSubscription'])->name('cancel-subscription');
+
 
 
 
