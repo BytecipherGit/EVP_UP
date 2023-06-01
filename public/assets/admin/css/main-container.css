@@ -506,6 +506,110 @@ section.plansInclude ul li {
 }
 /* end css */
 
+/* New Subscription CSS */
+
+  .pricingboxDs {
+    background: #ffffff;
+    border: 1px solid rgba(160, 169, 176, 0.5);
+    border-radius: 15px;
+    padding: 35px 24px;
+    margin:30px 0;
+  }
+  .pricingboxDs h4 {
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 30px;
+    letter-spacing: -0.04em;
+    color: #10393b;
+    margin: 0 0 15px;
+  }
+  .pricingboxDs h1 {
+    font-weight: 600;
+    font-size: 42px;
+    line-height: 48px;
+    color: #10393b;
+    margin: 0;
+  }
+  .pricingboxDs h1 span {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    color: #606f7b;
+  }
+  .pricingboxDs p {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 28px;
+    letter-spacing: 0.02em;
+    color: #68807f;
+    text-align: center;
+    margin: 24px 0 6px;
+    min-height: 100px;
+  }
+  .pricingboxDs ul {
+    margin: 0;
+    padding: 0;
+  }
+  .pricingboxDs ul li {
+    list-style-type: none;
+    margin: 0 0 3px;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 33px;
+    letter-spacing: 0.02em;
+    color: #68807f;
+  }
+  .pricingboxDs ul li img {
+    margin: -12px 0 0;
+  }
+  .pricingboxDs button {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 27px;
+    color: #ffffff;
+    background: linear-gradient(98.97deg, #eb6a5c 1.86%, #ff8b7a 98.76%);
+    border-radius: 7px;
+    padding: 12px 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 35px auto 0;
+    display: block;
+  }
+
+  a.deleteSubscriptionPlan {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 27px;
+    color: #ffffff !important;
+    background: linear-gradient(98.97deg, #eb6a5c 1.86%, #ff8b7a 98.76%);
+    border-radius: 7px;
+    padding: 12px 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 35px auto 0;
+    display: block;
+  }
+
+  span.pricingboxDss {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 27px;
+    color: #ffffff !important;
+    background: linear-gradient(98.97deg, #eb6a5c 1.86%, #ff8b7a 98.76%);
+    border-radius: 7px;
+    padding: 12px 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 35px auto 0;
+    display: block;
+  }
+ 
+
+/* Css End */
+
 /*----======= Main Heading Css Start ========--------*/
 .main-container {
   width: 85%;

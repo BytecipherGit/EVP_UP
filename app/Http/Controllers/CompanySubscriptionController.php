@@ -15,6 +15,13 @@ use Auth;
 class CompanySubscriptionController extends Controller
 {
 
+  protected $razorpay;
+
+  public function __construct() {
+    
+       $this->razorpay = new Api(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
+  }
+
     public function index(request $request)
     {
 
@@ -51,7 +58,6 @@ class CompanySubscriptionController extends Controller
       $tomorrow = Carbon::tomorrow();
       $unixTimestamp = $tomorrow->timestamp;
 
-      $api = new Api(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
       $checkSubscription = (!empty(decrypt($request->id))) ? Subscription::find(decrypt($request->id)) : false;
           // dd($checkSubscription);
         $checkFreeSub = CompanySubscription::where('company_id',Auth::id())->where('name','=','Free')->orderBy('created_at','DESC')->first();
@@ -59,10 +65,10 @@ class CompanySubscriptionController extends Controller
     //  dd($checkFreeSub);
         $duration = $checkSubscription->duration;  
 
-         $subscription= $api->subscription->create(array('plan_id' => $checkSubscription->plan_id , 'customer_notify' => 1,'quantity'=>5, 'total_count' => 6, 'start_at' => 
+         $subscription= $this->razorpay->subscription->create(array('plan_id' => $checkSubscription->plan_id , 'customer_notify' => 1,'quantity'=>5, 'total_count' => 6, 'start_at' => 
           $unixTimestamp, 'addons' => array(array('item' => array('name' => 
           'Delivery charges', 'amount' => 30000, 'currency' => 'INR'))),'notes'=> array('key1'=> 'value3','key2'=> 'value2')));
-    //  dd($subscription_id);
+     
         if($checkCompanySub || $checkFreeSub){
              $updateSubscriptionData = CompanySubscription::where('company_id',Auth::id())
                 ->update([
@@ -84,7 +90,7 @@ class CompanySubscriptionController extends Controller
             $subscriptionData = CompanySubscription::where('company_id',Auth::id())->orderBy('created_at','DESC')->first();
             $subscriptionCheck = Subscription::where('id',(decrypt($request->id)))->first();
 
-      if (!empty($subscriptionData)) {
+       if (!empty($subscriptionData)) {
           return view('admin.payment.razorpay_view',compact('subscriptionData','subscriptionCheck'));
       } else {
           return Response::json(['success' => '0']);

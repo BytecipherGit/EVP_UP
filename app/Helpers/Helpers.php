@@ -70,7 +70,7 @@ class Helper {
 
     public static function getStartDate($subscriptionId){
         if(!empty($subscriptionId)){
-            $subscriptionStartDate = DB::table('company_subscription_payment')->where('company_id',Auth::id())->where('subscription_id', $subscriptionId)->orderBy('id','desc')->first();
+            $subscriptionStartDate = DB::table('company_subscriptions')->where('company_id',Auth::id())->where('subscription_id', $subscriptionId)->orderBy('id','desc')->first();
             // dd($subscriptionStartDate);
             if(!empty($subscriptionStartDate->start_date)){
                 // dd($subscriptionStartDate->id);

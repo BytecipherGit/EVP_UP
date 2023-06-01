@@ -13,6 +13,14 @@ use Yajra\DataTables\Facades\DataTables as FacadesDataTables;
 
 class SubscriptionController extends Controller
 {
+
+    protected $razorpay;
+
+    public function __construct() {
+      
+         $this->razorpay = new Api(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
+    }
+  
     /**
      * Display a listing of the resource.
      *
@@ -88,11 +96,8 @@ class SubscriptionController extends Controller
                 
             ]);
             if ($validator->passes()) {
-                $str_result = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-                $planId = 'plan_'.substr(str_shuffle($str_result),0, 15);
-                $api = new Api(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
   
-                $plan_id = $api->plan->create(array('period' => 'weekly', 'interval' => 1, 'item' => array('name' => 'Test Weekly 1 plan', 
+                $plan_id = $this->razorpay->plan->create(array('period' => 'weekly', 'interval' => 1, 'item' => array('name' => 'Test Weekly 1 plan', 
                 'description' => 'Description for the weekly 1 plan', 
                 'amount' => 600, 'currency' => 'INR'),'notes'=> array('key1'=> 'value3','key2'=> 'value2')));
             //    dd($plan_id->id);

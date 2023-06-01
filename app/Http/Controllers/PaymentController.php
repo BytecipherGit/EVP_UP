@@ -16,6 +16,12 @@ use Exception;
 
 class PaymentController extends Controller
 {
+
+    protected $razorpay;
+
+    public function __construct() {
+         $this->razorpay = new Api(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
+    }
     /**
      * Write code on Method
      *
@@ -84,8 +90,8 @@ class PaymentController extends Controller
          if (!empty($request->subscriptionId)) {
             $subscriptionId = $request->input('subscriptionId');
 
-            $api = new Api(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
-            $subscriptionData = $api->subscription->fetch($subscriptionId);
+            // $api = new Api(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
+            $subscriptionData = $this->razorpay->subscription->fetch($subscriptionId);
             $subscriptionData->cancel();
 
             $subscriptionCancel = DB::table('company_subscription_payment')->where('id', $request->subId)->where('company_id',Auth::id())
@@ -93,10 +99,10 @@ class PaymentController extends Controller
                  'payment_status' => 'Cancelled',
              ]);
 
-            //  $subscriptionStatus = DB::table('company_subscriptions')->where('razorpay_subscription_id', $subscriptionId)->where('company_id',Auth::id())
-            //  ->update([
-            //      'status' => '0',
-            //  ]);
+             $subscriptionStatus = DB::table('company_subscriptions')->where('razorpay_subscription_id', $subscriptionId)->where('company_id',Auth::id())
+             ->update([
+                 'status' => '0',
+             ]);
 
              if (!empty($subscriptionStatus) && !empty($subscriptionCancel)) {
                  return Response::json(['success' => '1']);

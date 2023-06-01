@@ -5,14 +5,11 @@
 <section class="ptbm pricingPaid">
     <div class="main-container">
         <div class="row">
-            @foreach ($subscriptionDetails as $planExits)
-                <div class="col-xs-12 col-md-4 col-sm-6">
-                    <div class="panel pricingGrid pricingBasic">
-                        <div class="panel-heading primary_color">
-                            <h3>{{ $planExits->name }}</h3>
-                        </div>
-                        <div class="panel-body">
-                            <p>Features Include {{ $planExits->id }}</p>
+
+            <div class="row col-xl-10 col-lg-12 m-auto">
+                @foreach ($subscriptionDetails as $planExits)
+                    <div class="col-xl-4 col-lg-6">
+                        <div class="pricingboxDs">
                             @php
                                 $payment_status = Helper::getPaymentStatus($planExits->id);
                                 $company_payment_id = Helper::getPaymentId($planExits->id);
@@ -20,24 +17,52 @@
                                 $sub_start_date = Helper::getStartDate($planExits->id);
                                 $sub_end_date = Helper::getEndDate($planExits->id);
                                 $razorpaySubId = Helper::getRazorpaySubId($planExits->id);
-                                // echo $razorpaySubId;
+                                echo $payment_status;
+                                echo $sub_start_date;
+                                echo $sub_end_date;
                             @endphp
-
+                            <h4>{{ $planExits->name }}</h4>
+                            <h1>
+                                ₹ {{ $planExits->price }} <span>/ {{ $planExits->type }} </span>
+                            </h1>
+                            <p>
+                                {{ $planExits->description }}
+                            </p>
                             <ul>
-                                <li>{{ $planExits->description }}</li>
-                                <li>Unlimited Invoice</li>
+                                <li>
+                                    <img src="{{ asset('assets') }}/admin/images/closesquare.png" alt="Close Square" /> 5%
+                                    fee per transaction*
+                                </li>
+                                <li>
+                                    <img src="{{ asset('assets') }}/admin/images/ticksquare.png" alt="Tick Square" />
+                                    Unlimited pages
+                                </li>
+                                <li>
+                                    <img src="{{ asset('assets') }}/admin/images/ticksquare.png" alt="Tick Square" />
+                                    Unlimited payments
+                                </li>
+                                <li>
+                                    <img src="{{ asset('assets') }}/admin/images/ticksquare.png" alt="Tick Square" />
+                                    Email
+                                    notifications
+                                </li>
+                                <li>
+                                    <img src="{{ asset('assets') }}/admin/images/ticksquare.png" alt="Tick Square" />
+                                    Weekly
+                                    reports
+                                </li>
+                                <li>
+                                    <img src="{{ asset('assets') }}/admin/images/ticksquare.png" alt="Tick Square" />
+                                    Customisation options
+                                </li>
+                                <li>
+                                    <img src="{{ asset('assets') }}/admin/images/ticksquare.png" alt="Tick Square" />
+                                    No
+                                    whitelabel branding
+                                </li>
                             </ul>
-                        </div>
-                        <div class="panel-footer">
-                            <div class="pricingRate">
-                                <div class="priceAnnual"><span
-                                        class="price"><sup>₹</sup>{{ $planExits->price }}<small>/{{ $planExits->name }}</small></span>
-                                    <span class="pricePlans">{{ $planExits->type }}</span>
-                                </div>
-                            </div>
-                            {{-- <div class="pricingButton">
-                                    <a href="register?plan=basic_annual" class="btn-primary-cust">Get Started</a>
-                                    </div> --}}
+
+                            {{-- <button class="disebleButtonGray Subscribe">Free Plan</button> --}}
                             <div class="add-btn-part">
                                 <div class="card-body text-center">
                                     <form action="{{ route('subscription.get') }}">
@@ -50,7 +75,7 @@
                                         @elseif($planExits->name != 'Free' && !empty($companySub))
                                             @if ($companySub->subscription_id == $planExits->id)
                                                 @if ($companySub->status == '1')
-                                                    @if (($subscriptionCount != $subscriptions) && ($sub_end_date > $sub_start_date))
+                                                    @if ($subscriptionCount != $subscriptions && $sub_end_date > $sub_start_date)
                                                         <a href="javascript:void(0)"
                                                             data-id="{{ $razorpaySubId ? $razorpaySubId : '' }}"
                                                             data-sub_id="{{ $company_payment_id }}"
@@ -68,9 +93,9 @@
                                                             class="btn btn-primary button_background_color">{{ $sub_end_date }}
                                                             Cancelled</button>
                                                     @else
-                                                        <span data-toggle="modal"
-                                                            class="btn btn-primary button_background_color"
-                                                            data-target="">Current Subscription</span>
+                                                        <span disabled data-toggle="modal"
+                                                            class="btn btn-primary pricingboxDss button_background_color"
+                                                            data-target="">{{ $sub_end_date }} Current Subscription</span>
                                                     @endif
                                                 @endif
                                             @elseif($sub_start_date != 'false' && $sub_end_date < $sub_start_date)
@@ -86,7 +111,7 @@
                                                 @elseif(!empty($paySub->payment_status))
                                                     @if ($paySub->payment_status != 'Cancelled')
                                                         <span data-toggle="modal"
-                                                            class="btn btn-primary button_background_color"
+                                                            class="btn btn-primary pricingboxDss button_background_color"
                                                             data-target="#remaiderbtninfo">Upgrade Now </span>
                                                     @else
                                                         <button type="submit"
@@ -104,40 +129,102 @@
                                                 First Subscription</button>
                                         @endif
 
-                                        {{-- @if ($planExits->name == 'Free')  
-                                    <button disabled type="button" class="btn btn-primary button_background_color">Free Subscription</button>  
-                                 @elseif($companySub->subscription_id == $planExits->id )
-                                      @if ($companySub->status == '1') 
-                                        @if ($subscriptionCount != $subscriptions && $sub_end_date > $sub_start_date)
-                                           <a href="javascript:void(0)" data-id="{{ $razorpaySubId ? $razorpaySubId: ''}}" data-sub_id="{{$company_payment_id}}" class="btn btn-primary deleteSubscriptionPlan" title="Delete"> Cancel Subscription</a>                                   
-                                          @else
-                                           <span data-toggle="modal" class="btn btn-primary button_background_color" data-target="">Expired</span>
-                                        @endif
-                                      @else
-                                        @if ($subscriptionCount != $subscriptions && $sub_end_date > $sub_start_date)
-                                             <button disabled type="submit" class="btn btn-primary button_background_color">{{ $sub_end_date }}Cancelled</button>
-                                           @else
-                                            <span data-toggle="modal" class="btn btn-primary button_background_color" data-target="">Current Subscription</span>
-                                        @endif
-                                      @endif  
-                                  @elseif(!empty($paySub->payment_status))
-                                      @if ($paySub->payment_status != 'Cancelled')
-                                         <span data-toggle="modal" class="btn btn-primary button_background_color" data-target="#remaiderbtninfo">Upgrade Now </span>
-                                       @else
-                                         <button type="submit" class="btn btn-primary button_background_color">Subcription Again</button> 
-                                      @endif
-                                 @else
-                                    <button type="submit" class="btn btn-primary button_background_color">Upgrade Plan</button>  
-                               @endif   --}}
-
-
                                     </form>
                                 </div>
                             </div>
                         </div>
                     </div>
+                @endforeach
+                {{-- <div class="col-xl-4 col-lg-6">
+                  <div class="pricingboxDs">
+                    <h4>Monthly</h4>
+                    <h1>
+                      ₹ 800 <span>/ Monthly </span>
+                    </h1>
+                    <p>
+                      Lorem Ipsum is simply dummy text of the printing and
+                      typesetting industry.
+                    </p>
+                    <ul>
+                      <li>
+                        <img src="" alt="Close Square" /> 5%
+                        fee per transaction*
+                      </li>
+                      <li>
+                        <img src="" alt="Tick Square" />
+                        Unlimited pages
+                      </li>
+                      <li>
+                        <img src="" alt="Tick Square" />
+                        Unlimited payments
+                      </li>
+                      <li>
+                        <img src="" alt="Tick Square" /> Email
+                        notifications
+                      </li>
+                      <li>
+                        <img src="" alt="Tick Square" /> Weekly
+                        reports
+                      </li>
+                      <li>
+                        <img src="" alt="Tick Square" />
+                        Customisation options
+                      </li>
+                      <li>
+                        <img src="" alt="Tick Square" /> No
+                        whitelabel branding
+                      </li>
+                    </ul>
+            
+                    <button class="disebleButtonGray Subscribe">Subscribe</button>
+                  </div>
                 </div>
-            @endforeach
+                <div class="col-xl-4 col-lg-6">
+                  <div class="pricingboxDs">
+                    <h4>Yearly</h4>
+                    <h1>
+                      ₹ 9,600 <span>/ Yearly</span>
+                    </h1>
+                    <p>
+                      Lorem Ipsum is simply dummy text of the printing and
+                      typesetting industry.
+                    </p>
+                    <ul>
+                      <li>
+                        <img src="" alt="Close Square" /> 5%
+                        fee per transaction*
+                      </li>
+                      <li>
+                        <img src="" alt="Tick Square" />
+                        Unlimited pages
+                      </li>
+                      <li>
+                        <img src="" alt="Tick Square" />
+                        Unlimited payments
+                      </li>
+                      <li>
+                        <img src="" alt="Tick Square" /> Email
+                        notifications
+                      </li>
+                      <li>
+                        <img src="" alt="Tick Square" /> Weekly
+                        reports
+                      </li>
+                      <li>
+                        <img src="" alt="Tick Square" />
+                        Customisation options
+                      </li>
+                      <li>
+                        <img src="" alt="Tick Square" /> No
+                        whitelabel branding
+                      </li>
+                    </ul>
+            
+                    <button class="disebleButtonGray Subscribe">Subscribe</button>
+                  </div>
+                </div> --}}
+            </div>
+
         </div>
     </div>
 
