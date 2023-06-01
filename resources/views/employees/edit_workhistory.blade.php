@@ -52,6 +52,9 @@
         <div class="upload-img-file">
             <input type="file" id="offer_letter" name="offer_letter" class="form-control" value="{{ $workhistory ? $workhistory->offer_letter : '' }}" accept="image/jpg,image/doc,image/pdf" />
             <strong class="error" id="offer_letter-error"></strong>
+            @if(!empty( $workhistory->offer_letter))
+             <span href="{{ $workhistory->offer_letter ? $workhistory->offer_letter : '' }}" target="_black" class="btn btn-primary">Uploaded Document</span>
+           @endif
         </div>
     </div>
 
@@ -61,6 +64,9 @@
         <div class="upload-img-file">
             <input type="file" id="exp_letter" name="exp_letter" value="{{ $workhistory ? $workhistory->exp_letter : '' }}" class="form-control"accept="image/jpg,image/doc,image/pdf" />
             <strong class="error" id="exp_letter-error"></strong>
+            @if(!empty($workhistory->exp_letter))
+              <span href="{{ $workhistory->exp_letter ? $workhistory->exp_letter : '' }}" target="_black" class="btn btn-primary">Uploaded Document</span>
+           @endif
         </div>
     </div>
 
@@ -70,6 +76,9 @@
         <div class="upload-img-file">
             <input type="file" id="salary_slip" name="salary_slip" class="form-control" value="{{ $workhistory ? $workhistory->salary_slip : '' }}" accept="image/jpg,image/doc,image/pdf" />
             <strong class="error" id="salary_slip-error"></strong>
+            @if(!empty( $workhistory->salary_slip))
+              <span href="{{ $workhistory->salary_slip ? $workhistory->salary_slip : '' }}" target="_black" class="btn btn-primary">Uploaded Document</span>
+           @endif
         </div>
     </div>
 

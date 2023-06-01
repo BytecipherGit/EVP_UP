@@ -234,52 +234,59 @@ class InviteempController extends Controller
 
     public function downloadQualificationDoc(request $request)
     {
+
         $data = Empqualification::where('id', $request->id)->first();
-        $path = $data->document;
-        $file = basename($path);    
-    
-        $headers = array(
-            'Content-Type: application/jpg',
-        );
-        return Response::download($file, 'qualification.jpg', $headers);
+        $filename = $data->document;
+        $filename = str_replace(url('/') . '/storage/', "", $filename);
+        $filePath = storage_path('app/public/' . $filename);
+        if (file_exists($filePath)) {
+            return response()->download($filePath);
+        }
+        abort(404);
 
     }
 
     public function downloadOfferDocument(request $request)
     {
-        $work = Empworkhistory::where('id', $request->id)->first();
-        $file = $work->offer_letter;
-        $headers = array(
-            'Content-Type: application/jpg',
-        );
-
-        return Response::download($file, 'Offer Letter.jpg', $headers);
+        $data = Empworkhistory::where('id', $request->id)->first();
+        // dd($data);
+        $filename = $data->offer_letter;
+        $filename = str_replace(url('/') . '/storage/', "", $filename);
+        $filePath = storage_path('app/public/' . $filename);
+        if (file_exists($filePath)) {
+            return response()->download($filePath);
+        }
+        abort(404);
     }
 
     public function downloadIdDoc(request $request)
     {
-        $identity = Employeeidentity::where('id', $request->id)->first();
-        $file = $identity->document;
-        $headers = array(
-            'Content-Type: application/jpg',
-        );
-
-        return Response::download($file, 'Employee Id.jpg', $headers);
+        $data = Employeeidentity::where('id', $request->id)->first();
+        $filename = $data->document;
+        $filename = str_replace(url('/') . '/storage/', "", $filename);
+        $filePath = storage_path('app/public/' . $filename);
+        if (file_exists($filePath)) {
+            return response()->download($filePath);
+        }
+        abort(404);
     }
 
     public function downloadExpDoc(request $request)
     {
+ 
         $data = Empworkhistory::where('id', $request->id)->first();
-        $file = public_path() . '/image/' . $data->exp_letter;
-        $headers = array(
-            'Content-Type: application/jpg',
-        );
-
-        return Response::download($file, 'Exp. Letter.jpg', $headers);
+        $filename = $data->exp_letter;
+        $filename = str_replace(url('/') . '/storage/', "", $filename);
+        $filePath = storage_path('app/public/' . $filename);
+        if (file_exists($filePath)) {
+            return response()->download($filePath);
+        }
+        abort(404);
     }
 
     public function sendInvitationToEmployee(request $request)
     {
+        // dd($request->all());
 
         $temp = array();
         $users_id = $request->id;
@@ -311,7 +318,7 @@ class InviteempController extends Controller
                 $send_name = ['first' => $name];
                 $send_id = ['ids' => encrypt($row['id'])];
                 $company_name = ['company_name' => Auth::user()->name];
-
+    
                 $emailDetails = HelpersHelper::getSmtpConfig(Auth::id());
                 $config = array(
                     'driver'     => $emailDetails->driver,
@@ -327,7 +334,7 @@ class InviteempController extends Controller
                 Config::set('mail', $config);
 
                 
-                Mail::send('org-invite/invite-email', ['mailName' => $company_name, 'mailId' => $send_id], function ($message) use ($email, $name) {
+                Mail::send('org-invite/invite-email', ['mailName' => $company_name, 'mailId' => $send_id, 'companyId' => Auth::id()], function ($message) use ($email, $name) {
                     $message->to($email, $name)->subject('ByteCipher Pvt Ltd Interview Invitation Email');
                    $message->from(Config::get('mail.from.address'),Config::get('mail.from.name'));
                 });

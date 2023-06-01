@@ -97,7 +97,7 @@
                                 {{-- <th>Hiring Status</th> --}}
                                 {{-- <th>Employee Status</th> --}}
                                 {{-- <th>Employee Comment</th> --}}
-                                <th class="secondary_color">Send Remider</th>
+                                <th class="secondary_color">Send Reminder</th>
                                 <th width="250px" class="secondary_color">Action</th>
                             </tr>
                         </thead>

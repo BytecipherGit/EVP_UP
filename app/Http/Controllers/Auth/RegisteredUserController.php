@@ -14,14 +14,18 @@ use App\Models\State;
 use App\Models\ThemeSetting;
 use App\Models\User;
 use App\Models\EmailConfiguration;
+use App\Models\Subscription;
+use App\Models\CompanySubscription;
 use App\Rules\EmailDomain;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Razorpay\Api\Api;
 use App\Helpers\Helper as HelpersHelper;
 use Illuminate\Support\Facades\Mail as FacadesMail;
 use Illuminate\View\View;
+use Carbon\Carbon;
 use Response;
 use Illuminate\Validation\Rules;
 
@@ -132,6 +136,25 @@ class RegisteredUserController extends Controller
                 CompanyEmailTemplate::create($insertTemplatesRecords);
             }
 
+    // Add subscription details 
+     $getSubscriptionRecords = Subscription::where('type','Free')->get();
+     if(count($getSubscriptionRecords) > 0){
+        foreach ($getSubscriptionRecords as $getSubscriptionRecord) {
+                $insertSubscriptionRecord = array(
+                    'company_id' => $user->id,
+                    'subscription_id' => $getSubscriptionRecord->id,
+                    'subscription_type' => $getSubscriptionRecord->type,
+                    'description' => $getSubscriptionRecord->description,
+                    'name' => $getSubscriptionRecord->name,
+                    'price' => $getSubscriptionRecord->price,
+                    'start_date' => $user->created_at->format('Y-m-d'),
+                    'end_date' => $user->created_at->addDays(7)->format('Y-m-d'),
+                    'status' => '1'
+                );
+                CompanySubscription::create($insertSubscriptionRecord);
+            }
+        }
+
      // Insert Compant id  for SMTP Details 
            $insertSMTPRecords = array(
                  'company_id' => $user->id,
@@ -147,7 +170,7 @@ class RegisteredUserController extends Controller
              );
 
              EmailConfiguration::create($insertSMTPRecords);
-            }
+     }
 
 
         if ($user) {

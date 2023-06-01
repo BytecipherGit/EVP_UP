@@ -21,11 +21,11 @@ class CompanyTemplates extends Seeder
             <p>Please find machine test in attachment and try to submit it in next two working days via-Google drive link. If you found any query/question please feel free to ask.
             PFA,</p>'),    
             array('email_type' => 'NotQualified','content' => '<p>Dear #candidate</p>
-            <p>Thank you for showing your interest and applying at ByteCipher Pvt Ltd.</p>
+            <p>Thank you for showing your interest and applying at #company_name.</p>
             <p>We carefully reviewed your skills and qualifications and have decided to move forward with another candidate for the position.</p>
-            <p>We appreciate the time you invested to apply for this position at ByteCipher Pvt Ltd, and we encourage you to pursue future openings.</p>
+            <p>We appreciate the time you invested to apply for this position at #company_name, and we encourage you to pursue future openings.</p>
             <p>Best wishes for a successful job search. Thank you, again, for your interest in our company.</p>
-            <p>Note: You can re-apply for same position after 6 month if you will be interested to join in near future to ByteCipher Pvt Ltd.</p>'),  
+            <p>Note: You can re-apply for same position after 6 month if you will be interested to join in near future to #company_name.</p>'),  
         );
         DB::table('company_templates')->insert($qualifiedTemplate);
     }

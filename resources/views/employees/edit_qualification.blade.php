@@ -52,9 +52,11 @@
                 .docs, or .doc files allowed. <b>File Size:</b> Max:10MB</p></label>
             <div class="upload-img-file">
                 <input type="file" id="document" name="document" class="form-control" value="{{ $qualification ? $qualification->document : ''}}" accept="image/jpg,image/doc,image/pdf" />
-                <strong class="error" id="document-error"></strong>
-  
+                <strong class="error" id="document-error"></strong> 
             </div>
+            @if(!empty( $qualification->document))
+              <span href="{{  $qualification->document ?  $qualification->document : ''}}" target="_black" class="btn btn-primary">Uploaded Document</span>
+           @endif
         </div>
 
       <div class="form-group">

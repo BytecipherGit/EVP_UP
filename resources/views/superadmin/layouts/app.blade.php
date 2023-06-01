@@ -123,6 +123,7 @@
         <span class="toggle-bar"></span> 
       </div>
       <aside>
+
         <li @if (Request::segment(2) == '') class="active" @endif>
           <a href="{{ route('superadmin')}}">
             <img src="{{ asset('assets') }}/superadmin/images/overview-icon.png">
@@ -149,20 +150,20 @@
                         <img src="{{ asset('assets') }}/superadmin/images/invite-icon.png"> 
                         Organization
                       </a>
-                    </li>   
-                    {{-- <li>
-                      <a href="/individual-user">
-                        <img src="{{ asset('assets') }}/superadmin/images/invite-icon.png"> 
-                        Individual
-                      </a>
-                    </li> --}}
+                    </li>    
                   </ul>                  
-                </div>      
-              
+                </div> 
               </div>
             </div>
           </div>
         </div> 
+
+        <li @if (Request::segment(2) == 'subscriptions') class="active" @endif>
+          <a href="subscription"><img src="{{ asset('assets') }}/admin/images/overview-icon.png"> 
+              Add Subscription
+          </a>
+      </li>
+
         {{-- <hr> --}}
 
          {{-- <li>
@@ -181,24 +182,28 @@
   <!--- Wapper Close -----> 
    
 
+
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script>
-      window.jQuery || document.write('<script src="../../{{ asset('assets') }}/superadmin/js/vendor/jquery.min.js"><\/script>')
-    </script>
+    <script src="{{ asset('assets') }}/admin/js/jquery.min.js"></script>
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> --}}
+    <script src="{{ asset('assets') }}/admin/js/bootstrap-colorpicker.min.js"></script>
+    <script src="{{ asset('assets') }}/admin/js/jquery-ui.min.js"></script>
+    <script src="{{ asset('assets') }}/admin/js/bootstrap.min.js"></script>
+    <script src="{{ asset('assets') }}/admin/js/select2.min.js"></script>
     <script src="{{ asset('assets') }}/admin/js/sweetalert.min.js"></script>
-    <script src="{{ asset('assets') }}/superadmin/js/bootstrap.min.js"></script>  
-    <script src="{{ asset('assets') }}/datatable/js/jquery-3.5.1.js"></script>
+    <script src="{{ asset('assets') }}/admin/js/jquery.validate.min.js"></script>
     <script src="{{ asset('assets') }}/datatable/js/jquery.dataTables.min.js"></script>
     <script src="{{ asset('assets') }}/datatable/js/dataTables.bootstrap.min.js"></script>
-    
     <script src="{{ asset('assets') }}/datatable/js/dataTables.fixedHeader.min.js"></script>
     <script src="{{ asset('assets') }}/datatable/js/dataTables.responsive.min.js"></script>
-    <script src="{{ asset('assets') }}/datatable/js/responsive.bootstrap.min.js"></script>
-    
+    {{-- <script src="{{ asset('assets') }}/datatable/js/responsive.bootstrap.min.js"></script> --}}
+    <script src="//cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
+
+
     @yield('pagescript')
 
 </body>
-</html>
 
+</html>
