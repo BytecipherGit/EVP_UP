@@ -138,8 +138,10 @@ class RegisteredUserController extends Controller
 
     // Add subscription details 
      $getSubscriptionRecords = Subscription::where('type','Free')->get();
+
      if(count($getSubscriptionRecords) > 0){
         foreach ($getSubscriptionRecords as $getSubscriptionRecord) {
+            $duration = $getSubscriptionRecord->duration;
                 $insertSubscriptionRecord = array(
                     'company_id' => $user->id,
                     'subscription_id' => $getSubscriptionRecord->id,
@@ -147,9 +149,9 @@ class RegisteredUserController extends Controller
                     'description' => $getSubscriptionRecord->description,
                     'name' => $getSubscriptionRecord->name,
                     'price' => $getSubscriptionRecord->price,
-                    'start_date' => $user->created_at->format('Y-m-d'),
-                    'end_date' => $user->created_at->addDays(7)->format('Y-m-d'),
-                    'status' => '1'
+                    'start_date' => Carbon::now()->format('Y-m-d'),
+                    'end_date' => Carbon::now()->addDays($duration)->format('Y-m-d'),
+                    'subscription_status' => 'Active',
                 );
                 CompanySubscription::create($insertSubscriptionRecord);
             }

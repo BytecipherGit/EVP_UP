@@ -80,12 +80,15 @@
                             <td>{{ $emp->email }}</td>
                             {{-- <td>{{$emp->mang_name }}</td> --}}
 
-                            @if ($emp->status == 1 || $emp->status == 2)
+                            @if ($emp->status == 1 )
                                 <td style="color:#5BD94E"><b>Active</b></td>
                                 <td class="d-flex"><a href="employee_info/{{ $emp->employee_id }}"
                                         class="edit-btn fa fa-edit" title="Edit"></a>
                                     {{-- <a href="employee-exit/{{ $emp->employee_id }}" title="Exit Employee" class="edit-btn fa fa-user-times" title="Exit"></a></td> --}}
-                                @else
+                            @elseif($emp->status == 2)
+                               <td style="color:#ac2029"><b>Invite Employee</b></td>
+                                <td class="d-flex"></td>
+                            @else    
                                 <td style="color:#ac2029"><b>Exit</b></td>
                                 <td class="d-flex">
                                     {{-- <a href="edit-employee/{{ $emp->employee_id }}" class="edit-btn fa fa-edit" title="Edit"></a> --}}

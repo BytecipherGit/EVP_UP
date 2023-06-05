@@ -29,7 +29,7 @@ class CompanySubscriptionController extends Controller
        
         $subscriptionDetails = Subscription::leftJoin('company_subscriptions','company_subscriptions.subscription_id','=','subscriptions.id')
                               ->leftJoin('company_subscription_payment','company_subscription_payment.subscription_id','=','company_subscriptions.subscription_id')
-                              ->select('subscriptions.*','subscriptions.plan_id','company_subscriptions.razorpay_subscription_id','company_subscription_payment.payment_status',('company_subscription_payment.id as company_pay_id'),'company_subscriptions.status')
+                              ->select('subscriptions.*','subscriptions.plan_id','company_subscriptions.razorpay_subscription_id','company_subscription_payment.payment_status',('company_subscription_payment.id as company_pay_id'),'company_subscriptions.subscription_status')
                               ->groupBy('subscriptions.id')
                               ->get();
 
@@ -42,61 +42,218 @@ class CompanySubscriptionController extends Controller
                               ->where('company_subscription_payment.company_id', Auth::id())
                               ->count();
 
-  // dd($subscriptions. $subscriptionCount);
+  // dd($paySub);
      
         return view('admin.subscription.index',compact('subscriptionDetails','companySub','paySub','currentDate','subscriptionCount','subscriptions'));
       }
     }
 
+    public function deleteCompanySubscription(request $request)
+    {
+      //  dd($request->all());
+        if (!empty($request->subscriptionId)) {
+           $subscriptionID = $request->input('subscriptionId');
+
+           // $api = new Api(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
+           $subscriptionData = $this->razorpay->subscription->fetch($subscriptionID);
+           $subscriptionData->cancel();
+
+           $subscriptionCancel = DB::table('company_subscription_payment')->where('id', $request->subId)->where('company_id',Auth::id())
+            ->update([
+                'razorpay_subscription_status' => 'Cancelled',
+                'payment_status' => 'Cancelled',
+            ]);
+
+            $subscriptionStatus = DB::table('company_subscriptions')->where('razorpay_subscription_id', $subscriptionID)->where('company_id',Auth::id())
+            ->update([
+                'subscription_status' => 'Cancelled',
+            ]);
+
+            if (!empty($subscriptionStatus) && !empty($subscriptionCancel)) {
+                return Response::json(['success' => '1']);
+            } else {
+                return Response::json(['success' => '0']);
+            }
+        } else {
+            return Response::json(['success' => '0']);
+        }
+    }
+
     public function createSubscription(Request $request)
     {
-// dd($request->all());
+// dd($request->all());  
 
     if(Auth::check()){
       
-      $startDate = Carbon::now();
-      $tomorrow = Carbon::tomorrow();
-      $unixTimestamp = $tomorrow->timestamp;
+      $currentDate = Carbon::now();
+      // $tomorrow = Carbon::tomorrow();
+      // $unixTimestamp = $tomorrow->timestamp;
 
-      $checkSubscription = (!empty(decrypt($request->id))) ? Subscription::find(decrypt($request->id)) : false;
-          // dd($checkSubscription);
+      $subscriptionCheck = (!empty(decrypt($request->id))) ? Subscription::find(decrypt($request->id)) : false;
+          // dd($subscriptionCheck);
+        // $subscriptionCheck = Subscription::where('id',$request->subscription_id)->first();
         $checkFreeSub = CompanySubscription::where('company_id',Auth::id())->where('name','=','Free')->orderBy('created_at','DESC')->first();
-        $checkCompanySub = CompanySubscription::where('company_id',Auth::id())->where('name','!=','Free')->where('end_date','<',Carbon::now())->orderBy('created_at','DESC')->first();
-    //  dd($checkFreeSub);
-        $duration = $checkSubscription->duration;  
+        $checkCompanySubExist = CompanySubscription::where('company_id',Auth::id())->where('name','!=','Free')->orderBy('created_at','DESC')->first();
 
-         $subscription= $this->razorpay->subscription->create(array('plan_id' => $checkSubscription->plan_id , 'customer_notify' => 1,'quantity'=>5, 'total_count' => 6, 'start_at' => 
-          $unixTimestamp, 'addons' => array(array('item' => array('name' => 
-          'Delivery charges', 'amount' => 30000, 'currency' => 'INR'))),'notes'=> array('key1'=> 'value3','key2'=> 'value2')));
-     
-        if($checkCompanySub || $checkFreeSub){
+        $checkCompanySub = CompanySubscriptionPayment::where('company_id',Auth::id())->orderBy('created_at','DESC')->first();
+        $duration = $subscriptionCheck->duration;   
+
+       if($checkCompanySub){   
+         $end = Carbon::parse($checkCompanySub->end_date);
+         $endDate = $end->addDays($duration)->format('Y-m-d');
+        }
+        // $total_count = parseInt(365 / $duration * 9);
+        $totalCount = intval(365 / $duration * 9);
+      // var_dump($totalCount);
+      if($checkFreeSub){
+
+        $subscription= $this->razorpay->subscription->create(array('plan_id' => $subscriptionCheck->plan_id ,'customer_notify' => 1,'quantity'=> 1, 
+        'total_count' => $totalCount,'notes'=> array('key1'=> 'value3','key2'=> 'value2')));
+
+           $updateSubscriptionData = CompanySubscription::where('company_id',Auth::id())
+              ->update([
+
+                  'company_id' => Auth::id(),
+                  'razorpay_subscription_id' =>$subscription->id,
+                  'subscription_id' =>  !empty(decrypt($request->id)) ? (decrypt($request->id)) : null,
+                  'subscription_type' => !empty($subscriptionCheck->type) ? $subscriptionCheck->type : null,
+                  'name' => !empty($subscriptionCheck->name) ? $subscriptionCheck->name : null,
+                  'price' => !empty($subscriptionCheck->price) ? $subscriptionCheck->price : null, 
+                  'description' => !empty($subscriptionCheck->description) ? $subscriptionCheck->description : null,
+                  'start_date' => Carbon::now()->format('Y-m-d'),
+                  'end_date' => Carbon::now()->addDays($duration)->format('Y-m-d'),
+                  'subscription_status' => 'Created',
+        
+            ]);
+             $checkSubscriptionData = CompanySubscription::where('company_id',Auth::id())->orderBy('created_at','DESC')->first();
+
+             if($checkSubscriptionData){
+                $insert = [
+                  'company_id' => Auth::id(),
+                  'company_subscription_id' => !empty($checkSubscriptionData->id) ? $checkSubscriptionData->id : null,
+                  'razorpay_subscription_id' => !empty($subscription->id) ? $subscription->id : null,
+                  'subscription_id' => !empty($subscriptionCheck->id) ? $subscriptionCheck->id : null,
+                  'name' => !empty($subscriptionCheck->name) ? $subscriptionCheck->name : null,
+                  // 'payment_price' => !empty($payment->amount) ? $payment->amount : null,
+                  // 'payment_object' => !empty($payment) ? $payment : null,
+                  // 'razorpay_payment_id' => !empty($payment->id) ? $payment->id : null,
+                  // 'razorpay_token_id' => !empty($payment->token_id) ? $payment->token_id : null,
+                  // 'start_date' => !empty($checkCompanySub->end_date) ? $checkCompanySub->end_date : Carbon::now()->format('Y-m-d'), 
+                  // 'end_date' => !empty($endDate) ? $endDate : Carbon::now()->addDays($duration)->format('Y-m-d'),
+                  'razorpay_subscription_status' => 'Created'
+                ];
+
+              $subscriptionDataExist = CompanySubscriptionPayment::create($insert);
+          // dd($subscriptionDataExist);
+              if (!empty($subscriptionDataExist)) {
+                return view('admin.payment.razorpay_view',compact('subscriptionDataExist','subscriptionCheck'));
+                } else {
+                    return Response::json(['success' => '0']);
+                }
+
+           }else{
+              return Response::json(['success' => '0']);
+           }
+
+      }else{
+
+        if($checkCompanySubExist->end_date == $currentDate || $checkCompanySubExist->end_date < $currentDate ){
+
+          $subscription= $this->razorpay->subscription->create(array('plan_id' => $subscriptionCheck->plan_id ,'customer_notify' => 1,'quantity'=> 1, 
+          'total_count' => 9,'notes'=> array('key1'=> 'value3','key2'=> 'value2')));
+
              $updateSubscriptionData = CompanySubscription::where('company_id',Auth::id())
                 ->update([
 
                     'company_id' => Auth::id(),
                     'razorpay_subscription_id' =>$subscription->id,
-                    'subscription_id' =>$checkSubscription->id,
-                    'subscription_type' => !empty($checkSubscription->type) ? $checkSubscription->type : null,
-                    'name' => !empty($checkSubscription->name) ? $checkSubscription->name : null,
-                    'price' => !empty($checkSubscription->price) ? $checkSubscription->price : null, 
-                    'description' => !empty($checkSubscription->description) ? $checkSubscription->description : null,
-                    'start_date' => Carbon::now()->format('Y-m-d'),
+                    'subscription_id' =>  !empty($subscriptionCheck->id) ? $subscriptionCheck->id : null,
+                    'subscription_type' => !empty($subscriptionCheck->type) ? $subscriptionCheck->type : null,
+                    'name' => !empty($subscriptionCheck->name) ? $subscriptionCheck->name : null,
+                    'price' => !empty($subscriptionCheck->price) ? $subscriptionCheck->price : null, 
+                    'description' => !empty($subscriptionCheck->description) ? $subscriptionCheck->description : null,
                     'end_date' => Carbon::now()->addDays($duration)->format('Y-m-d'),
-                    'status' => '1'
+                    'start_date' => Carbon::now()->format('Y-m-d'),
+                    'subscription_status' => 'Created',
           
               ]);
+
+              $checkSubscriptionData = CompanySubscription::where('company_id',Auth::id())->orderBy('created_at','DESC')->first();
+
+              if($checkSubscriptionData){
+                 $insert = [
+                  'company_id' => Auth::id(),
+                  'company_subscription_id' => !empty($checkSubscriptionData->id) ? $checkSubscriptionData->id : null,
+                  'razorpay_subscription_id' => !empty($subscription->id) ? $subscription->id : null,
+                  'subscription_id' => !empty($subscriptionCheck->subscription_id) ? $subscriptionCheck->subscription_id : null,
+                  'name' => !empty($subscriptionCheck->name) ? $subscriptionCheck->name : null,
+                  // 'payment_price' => !empty($payment->amount) ? $payment->amount : null,
+                  // 'payment_object' => !empty($payment) ? $payment : null,
+                  // 'razorpay_payment_id' => !empty($payment->id) ? $payment->id : null,
+                  // 'razorpay_token_id' => !empty($payment->token_id) ? $payment->token_id : null,
+                  // 'start_date' => !empty($checkCompanySub->end_date) ? $checkCompanySub->end_date : Carbon::now()->format('Y-m-d'), 
+                  // 'end_date' => !empty($endDate) ? $endDate : Carbon::now()->addDays($duration)->format('Y-m-d'),
+                  'razorpay_subscription_status' => 'Created'
+               ];
+ 
+               $subscriptionDataExist = CompanySubscriptionPayment::create($insert);
+
+               if (!empty($subscriptionDataExist)) {
+                return view('admin.payment.razorpay_view',compact('subscriptionDataExist','subscriptionCheck'));
+                } else {
+                    return Response::json(['success' => '0']);
+                }
+ 
+            }else{
+               return Response::json(['success' => '0']);
+            }
+
            }
+           else{
+
+            // $subscriptionCheck = Subscription::where('id',(decrypt($request->id)))->first();
+            $checkSubscriptionData = CompanySubscription::where('company_id',Auth::id())->orderBy('created_at','DESC')->first();
+        // dd($subscriptionCheck);
+           $unixTimestamp = $checkSubscriptionData->end_date;
+          //  dd($unixTimestamp);
+            $subscription= $this->razorpay->subscription->create(array('plan_id' => $subscriptionCheck->plan_id ,'customer_notify' => 1,'quantity'=> 1, 
+            'total_count' => 9,'notes'=> array('key1'=> 'value3','key2'=> 'value2')));
+
+            if($checkSubscriptionData){
+                $insert = [
+                  'company_id' => Auth::id(),
+                  'company_subscription_id' => null,
+                  'razorpay_subscription_id' => !empty($subscription->id) ? $subscription->id : null,
+                  'subscription_id' => !empty($subscriptionCheck->id) ? $subscriptionCheck->id : null,
+                  'name' => !empty($subscriptionCheck->name) ? $subscriptionCheck->name : null,
+                  // 'payment_price' => !empty($payment->amount) ? $payment->amount : null,
+                  // 'payment_object' => !empty($payment) ? $payment : null,
+                  // 'razorpay_payment_id' => !empty($payment->id) ? $payment->id : null,
+                  // 'razorpay_token_id' => !empty($payment->token_id) ? $payment->token_id : null,
+                  // 'start_date' => !empty($checkCompanySub->end_date) ? $checkCompanySub->end_date : Carbon::now()->format('Y-m-d'), 
+                  // 'end_date' => !empty($endDate) ? $endDate : Carbon::now()->addDays($duration)->format('Y-m-d'),
+                  'razorpay_subscription_status' => 'Created'
+              ];
+
+              $subscriptionDataExist = CompanySubscriptionPayment::create($insert);
+
+          }else{
+              return Response::json(['success' => '0']);
           }
-            $subscriptionData = CompanySubscription::where('company_id',Auth::id())->orderBy('created_at','DESC')->first();
-            $subscriptionCheck = Subscription::where('id',(decrypt($request->id)))->first();
 
-       if (!empty($subscriptionData)) {
-          return view('admin.payment.razorpay_view',compact('subscriptionData','subscriptionCheck'));
-      } else {
-          return Response::json(['success' => '0']);
-      }
-
+              if (!empty($subscriptionDataExist)) {
+                  return view('admin.payment.razorpay_view',compact('subscriptionDataExist','subscriptionCheck'));
+              } else {
+                  return Response::json(['success' => '0']);
+              }
+              
+            }
+            
+          }
+       
+     }
     }
+
 }
 
 

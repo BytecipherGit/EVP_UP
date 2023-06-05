@@ -262,12 +262,12 @@ Route::middleware([Admin::class])->group(function () {
 
     Route::any('company_suscription', [App\Http\Controllers\CompanySubscriptionController::class, 'index'])->name('company.suscription');
     Route::any('subscription_get', [App\Http\Controllers\CompanySubscriptionController::class, 'createSubscription'])->name('subscription.get');
-    // Route::any('razorpay_payment', [App\Http\Controllers\PaymentController::class, 'getPaySuccess'])->name('razorpay.payment');
     Route::post('subscription/destroy', [App\Http\Controllers\PaymentController::class, 'deleteSubscription']);
     Route::post('razorpay_payment',[App\Http\Controllers\PaymentController::class,'getPaySuccess'])->name('razorpay.payment.store');
 
 });
 
+// Route::post('razorpay_recurring_payment/', [App\Http\Controllers\PaymentController::class, 'createRecurringSubscriptionPayment']);
 
 Route::get('reload-captcha', [App\Http\Controllers\Auth\RegisteredUserController::class, 'reloadCaptcha'])->name('reloadCaptcha');
 Route::get('verification-success/{id?}', [InterviewEmployee::class, 'verificationEmail'])->name('verification.success');

@@ -16,10 +16,8 @@
                                 $subscription_status = Helper::getSubscriptionStatus($planExits->id);
                                 $sub_start_date = Helper::getStartDate($planExits->id);
                                 $sub_end_date = Helper::getEndDate($planExits->id);
+                                $subscriptionId = Helper::getSubscriptionId($planExits->id);
                                 $razorpaySubId = Helper::getRazorpaySubId($planExits->id);
-                                echo $payment_status;
-                                echo $sub_start_date;
-                                echo $sub_end_date;
                             @endphp
                             <h4>{{ $planExits->name }}</h4>
                             <h1>
@@ -57,8 +55,7 @@
                                 </li>
                                 <li>
                                     <img src="{{ asset('assets') }}/admin/images/ticksquare.png" alt="Tick Square" />
-                                    No
-                                    whitelabel branding
+                                    No whitelabel branding
                                 </li>
                             </ul>
 
@@ -68,43 +65,63 @@
                                     <form action="{{ route('subscription.get') }}">
                                         @csrf
                                         <input type="hidden" name="id" value="{{ encrypt($planExits->id) }}">
-                                        @if ($planExits->name == 'Free')
-                                            <button disabled type="button"
-                                                class="btn btn-primary button_background_color">Free
-                                                Subscription</button>
-                                        @elseif($planExits->name != 'Free' && !empty($companySub))
-                                            @if ($companySub->subscription_id == $planExits->id)
-                                                @if ($companySub->status == '1')
-                                                    @if ($subscriptionCount != $subscriptions && $sub_end_date > $sub_start_date)
-                                                        <a href="javascript:void(0)"
+                                     @if ($planExits->name == 'Free')
+                                            <button disabled type="button" class="btn btn-primary button_background_color">Free Subscription</button>
+                                        @elseif($subscription_status == 'Active')
+                                             @if ($companySub->subscription_id == $planExits->id)
+                                                <a href="javascript:void(0)" data-id="{{ $razorpaySubId ? $razorpaySubId : '' }}" data-sub_id="{{ $company_payment_id }}" class="btn btn-primary deleteSubscriptionPlan" title="Delete"> Cancel</a>
+                                              @else
+                                                 <button type="submit"  class="btn btn-primary button_background_color">Upgrade Plan</button>
+                                             @endif   
+                                        @elseif($subscription_status == 'Cancelled')
+                                             @if($sub_end_date == Carbon\Carbon::now() || $sub_end_date < Carbon\Carbon::now())   
+                                               <button type="submit" class="btn btn-primary button_background_color">Get Subscription</button>  
+                                               @else
+                                               <button disabled type="submit" class="btn btn-danger"> {{$sub_end_date}} Cancelled</button>
+                                             @endif
+                                        @else    
+                                            @if(!empty($paySub))
+                                               @if($subscriptions == $subscriptionCount)
+                                                 <span data-toggle="modal" class="btn btn-primary pricingboxDss button_background_color" data-target="#remaiderbtninfo{{ $planExits->id }}">Started At {{$paySub->start_date}}</span>
+                                                   @else
+                                                 <span data-toggle="modal" class="btn btn-primary pricingboxDss button_background_color" data-target="#remaiderbtninfo{{ $planExits->id }}">Get Subscription </span>
+                                                @endif
+                                              @else
+                                               <span data-toggle="modal" class="btn btn-primary pricingboxDss button_background_color" data-target="#getSubscription{{ $planExits->id }}">Get Subscription </span>
+                                             @endif
+                                               
+                                         @endif       
+                                             {{-- @else
+                                                        <span data-toggle="modal" class="btn btn-primary button_background_color" data-target="">Expired</span>
+                                                    @endif --}}
+                                             {{-- @else --}}
+                                                    {{-- @if ($sub_start_date == $currentDate && $sub_end_date < $sub_start_date) --}}
+                                                    {{-- @if ($subscriptionCount != $subscriptions && $sub_end_date > $sub_start_date) --}}
+                                                        {{-- <button disabled type="submit"
+                                                            class="btn btn-primary button_background_color">{{ $sub_end_date }}
+                                                            Cancelled</button> --}}
+                                                        {{-- <a href="javascript:void(0)"
                                                             data-id="{{ $razorpaySubId ? $razorpaySubId : '' }}"
                                                             data-sub_id="{{ $company_payment_id }}"
                                                             class="btn btn-primary deleteSubscriptionPlan"
                                                             title="Delete"> Cancel Subscription</a>
-                                                    @else
-                                                        <span data-toggle="modal"
-                                                            class="btn btn-primary button_background_color"
-                                                            data-target="">get Subscription</span>
-                                                    @endif
-                                                @else
-                                                    {{-- @if ($sub_start_date == $currentDate && $sub_end_date < $sub_start_date) --}}
-                                                    @if ($subscriptionCount != $subscriptions && $sub_end_date > $sub_start_date)
-                                                        <button disabled type="submit"
-                                                            class="btn btn-primary button_background_color">{{ $sub_end_date }}
-                                                            Cancelled</button>
-                                                    @else
-                                                        <span disabled data-toggle="modal"
+                                                    @else --}}
+                                                        {{-- <span disabled data-toggle="modal"
                                                             class="btn btn-primary pricingboxDss button_background_color"
-                                                            data-target="">{{ $sub_end_date }} Current Subscription</span>
+                                                            data-target="">{{ $sub_end_date }} Current Subscription</span> --}}
+                                                        {{-- <a href="javascript:void(0)"
+                                                            data-id="{{ $razorpaySubId ? $razorpaySubId : '' }}"
+                                                            data-sub_id="{{ $company_payment_id }}"
+                                                            class="btn btn-primary deleteSubscriptionPlan"
+                                                            title="Delete"> Cancel</a>
                                                     @endif
                                                 @endif
                                             @elseif($sub_start_date != 'false' && $sub_end_date < $sub_start_date)
-                                                <button type="submit"
-                                                    class="btn btn-primary button_background_color">Get Subcription
+                                                <button type="submit" class="btn btn-primary button_background_color">Get Subcription
                                                     Again</button>
-                                            @else
+                                            @else --}}
                                                 {{-- <button type="submit" class="btn btn-primary button_background_color">Popup</button>  --}}
-                                                @if ($sub_start_date != 'false')
+                                                {{-- @if ($sub_start_date != 'false')
                                                     <span data-toggle="modal"
                                                         class="btn btn-primary button_background_color"
                                                         data-target="">Upgrade Subscription</span>
@@ -127,7 +144,7 @@
                                         @else
                                             <button type="submit" class="btn btn-primary button_background_color">Get
                                                 First Subscription</button>
-                                        @endif
+                                        @endif --}}
 
                                     </form>
                                 </div>
@@ -229,20 +246,82 @@
     </div>
 
     <!-- The Modal Status Check-->
-    <div class="modal fade custu-no-select" id="remaiderbtninfo" role="dialog" aria-labelledby="exampleModalLabel"
+
+
+
+@foreach ($subscriptionDetails as $planExits)
+
+<div class="modal fade custu-no-select" id="getSubscription{{ $planExits->id }}" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-body">
                     <div class="remainder-body">
-                        <h1>Already you have a subscription.</h1>
-                        <p>First you will have to cancel it.</p>
-                        <button type="button" class="btn-secondary-cust" data-dismiss="modal">OK</button>
+                        <form action="{{ route('subscription.get') }}">
+                            @csrf
+                            <input type="hidden" name="id" value="{{ encrypt($planExits->id) }}">
+                            <h1>Already you have a Free subscription.</h1>
+                            <p>Are you sure you want to get subscription ?</p>
+                             <button type="submit" class="btn-secondary-cust">Ok</button>  
+                             <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
+                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+@if(!empty($paySub))
+  @if($paySub->payment_status != 'Cancelled')   
+    <div class="modal fade custu-no-select" id="remaiderbtninfo{{ $planExits->id }}" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    @php
+                       $payment_end_date = Helper::getPaymentEndDate($planExits->id);
+                    @endphp
+                    @if($subscriptions == $subscriptionCount)
+                        <div class="remainder-body">
+                            <h1>Already you have a subscription.</h1>
+                            <p>Subscription will start on: {{$paySub->start_date}}</p>
+                            <button type="button" class="btn-secondary-cust" data-dismiss="modal">OK</button>
+                        </div>
+                    @else
+                        <div class="remainder-body">
+                            <h1>Already you have a subscription.</h1>
+                            <p>If you want to get subscription again, so you need to cancel current subscription.</p>
+                            <p>Subscription Expired on: {{ $paySub->end_date }}</p>
+                            <button type="button" class="btn-secondary-cust" data-dismiss="modal">Ok</button>
+                        </div>
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
+    @else
+    <div class="modal fade custu-no-select" id="remaiderbtninfo{{ $planExits->id }}" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="remainder-body">
+                    <form action="{{ route('subscription.get') }}">
+                        @csrf
+                        <input type="hidden" name="id" value="{{ encrypt($planExits->id) }}">
+                        <h1>Already you have a subscription.</h1>
+                        <p>Are you sure you want to get subscription ?</p>
+                        <button type="submit" class="btn-secondary-cust">Ok</button>  
+                        <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endif
+@endif
+@endforeach
 
 </section>
 @endsection

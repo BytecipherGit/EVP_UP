@@ -34,10 +34,10 @@ class Helper {
     public static function getSubscriptionStatus($subscriptionId){
         if(!empty($subscriptionId)){
             $subscriptionStatus = DB::table('company_subscriptions')->where('company_id',Auth::id())->where('subscription_id', $subscriptionId)->orderBy('id','desc')->first();
-            if(!empty($subscriptionStatus->status)){
-                return $subscriptionStatus->status;
+            if(!empty($subscriptionStatus->subscription_status)){
+                return $subscriptionStatus->subscription_status;
             } else {
-               return "0";   
+               return "Pending";   
             }
         }
     }
@@ -68,6 +68,19 @@ class Helper {
         }
     }
 
+    public static function getSubscriptionId($subscriptionId){
+        if(!empty($subscriptionId)){
+            $subscriptionId = DB::table('subscriptions')->where('id', $subscriptionId)->orderBy('id','desc')->first();
+            // dd($subscriptionId);
+            if(!empty($subscriptionId->id)){
+                // dd($subscriptionId->razorpay_subscription_id);
+                return $subscriptionId->id;
+            } else {
+                return 'false';
+            }
+        }
+    }
+
     public static function getStartDate($subscriptionId){
         if(!empty($subscriptionId)){
             $subscriptionStartDate = DB::table('company_subscriptions')->where('company_id',Auth::id())->where('subscription_id', $subscriptionId)->orderBy('id','desc')->first();
@@ -83,11 +96,23 @@ class Helper {
 
     public static function getEndDate($subscriptionId){
         if(!empty($subscriptionId)){
-            $subscriptionEndDate = DB::table('company_subscription_payment')->where('company_id',Auth::id())->where('subscription_id', $subscriptionId)->orderBy('id','desc')->first();
+            $subscriptionEndDate = DB::table('company_subscriptions')->where('company_id',Auth::id())->where('subscription_id', $subscriptionId)->orderBy('id','desc')->first();
             // dd($subscriptionEndDate);
             if(!empty($subscriptionEndDate->end_date)){
                 // dd($subscriptionEndDate->id);
                 return $subscriptionEndDate->end_date;
+            } else {
+                return 'false';
+            }
+        }
+    }
+
+    public static function getPaymentEndDate($subscriptionId){
+        if(!empty($subscriptionId)){
+            $subscriptionPaymentEndDate = DB::table('company_subscription_payment')->where('company_id',Auth::id())->where('subscription_id', $subscriptionId)->orderBy('id','desc')->first();
+            // dd($subscriptionEndDate);
+            if(!empty($subscriptionPaymentEndDate->end_date)){
+                return $subscriptionPaymentEndDate->end_date;
             } else {
                 return 'false';
             }
