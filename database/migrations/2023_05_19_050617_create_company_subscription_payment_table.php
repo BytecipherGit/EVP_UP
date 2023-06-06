@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('razorpay_subscription_id')->nullable();
             $table->string('razorpay_payment_id')->nullable();
             $table->enum('razorpay_subscription_status',['Created','Active','Cancelled','Expired'])->comment('Created / Active / Cancelled / Expired')->default(null);
-            $table->enum('payment_status',['Active','Cancelled'])->comment('Active / Cancelled');
+            $table->enum('payment_status',['Created','Active','Cancelled'])->comment('Created / Active / Cancelled');
             $table->string('name')->nullable();
             $table->string('payment_object')->nullable();
             $table->string('razorpay_token_id')->nullable();

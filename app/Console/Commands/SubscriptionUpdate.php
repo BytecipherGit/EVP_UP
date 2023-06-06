@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Models\CompanySubscription;
 use App\Models\CompanySubscriptionPayment;
+use Illuminate\Support\Facades\Log;
 use Auth;
 use Carbon\Carbon;
 
@@ -26,10 +27,20 @@ class SubscriptionUpdate extends Command
      */
     protected $description = 'Command description';
 
+     /**
+     * Create a new command instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
     /**
      * Execute the console command.
      *
-     * @return int
+     * @return mixed
      */
     public function handle()
     {
@@ -38,7 +49,9 @@ class SubscriptionUpdate extends Command
         //     $startDate = Carbon::now();
         //     $tomorrow = Carbon::tomorrow();
         //     $unixTimestamp = $tomorrow->timestamp;
-          
+     
+    // log::info('Cron job executed at: ' . now());
+         
        $companySubData = CompanySubscription::get();
      foreach($companySubData as $companyData){
 
