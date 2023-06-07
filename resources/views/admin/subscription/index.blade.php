@@ -105,10 +105,11 @@
                                                         Subscription </span>
                                                 @endif
                                             @else
-                                                <span data-toggle="modal"
+                                                {{-- <span data-toggle="modal"
                                                     class="btn btn-primary pricingboxDss button_background_color"
                                                     data-target="#getSubscription{{ $planExits->id }}">Get Subscription
-                                                </span>
+                                                </span> --}}
+                                                <button type="submit" class="btn btn-primary button_background_color">Upgrade Plan</button>
                                             @endif
                                         @endif
                                     </form>
