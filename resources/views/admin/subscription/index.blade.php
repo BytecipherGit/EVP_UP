@@ -174,7 +174,7 @@
                                 @else
                                     <div class="remainder-body">
                                         <h1>Already you have a subscription.</h1>
-                                        <p>If you want to get subscription again, so you need to cancel current
+                                        <p>If you want to update subscription, then first you need to cancel your current
                                             subscription.</p>
                                         <p>Subscription Expired on: {{ $paySub->end_date }}</p>
                                         <button type="button"

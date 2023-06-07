@@ -119,7 +119,7 @@
                                     <h2>Proceed to Pay Now</h2>
                                     <h5>Subscription Total Price:
                                         {{ $subscriptionCheck ? $subscriptionCheck->price : '' }}</h5>
-                                    <h5>Note: Please continue from pay now button.</h5>
+                                    <h5>Note: Please continue from pay now button, and donn't press back button.</h5>
                                     @csrf
                                     <input type="hidden" name="id" value="{{ $subscriptionDataExist->id }}">
                                     <input type="hidden" name="razorpay_subscription_id"
@@ -146,12 +146,13 @@
                                     },
                                </script>  --}}
                                     <script src="https://checkout.razorpay.com/v1/checkout.js" data-key="rzp_test_fW0KwQLIwZZsry" data-buttontext="Pay Now"
-                                        data-subscription_id: {{ $subscriptionDataExist->razorpay_subscription_id }} data-name:
-                                        {{ $subscriptionDataExist->name }} data-description: {{ $subscriptionDataExist->description }} data-prefill.name:
+                                        data-subscription_id: {{ $subscriptionDataExist->razorpay_subscription_id }} 
+                                        data-amount: {{ $subscriptionCheck->price }}
+                                        data-name: {{ $subscriptionDataExist->name }} data-description: {{ $subscriptionDataExist->description }} data-prefill.name:
                                         {{ $subscriptionDataExist->name }} data-prefill.email="harshi@gmail.com" data-theme.color="#F37254">
                                         "handler": function(response) {
                                             window.location.href = SITEURL + '/' + 'razorpay_payment?razorpay_payment_id=' + response
-                                                .razorpay_payment_id + '&subscription_id=' + subscription_id + '&price=' + price + '&name=' + name;
+                                                .razorpay_payment_id + '&subscription_id=' + subscription_id + '&price=' + amount + '&name=' + name;
                                         },
                                     </script>
                                 </form>
