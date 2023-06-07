@@ -119,7 +119,7 @@
                         name="submit">
                     <button type="button" class="btn-secondary-custexport" data-dismiss="modal">Cancel</button>
                 </form>
-                <a href="/downloadcsv" class="sample btn btn-primary">Download sample file here </a>
+                <a href="/downloadcsv" class="sample btn btn-primary downLinkCus">Download sample file here <img src="assets/admin/images/import.png" class="pl-3"></a>
             </div>
         </div>
     </div>

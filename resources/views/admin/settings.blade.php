@@ -260,7 +260,7 @@
                 
                     <div class="tab-button-bx">
                     {{-- <button class="btn-secondary-cust">Cancel</button>  --}}
-                      <button type="submit" name="add_address" class="btn-primary-cust button_background_color"><span class="button_text_color">Save Changes</span></button>
+                      <button type="submit" name="add_address" class="btn-primary-cust button_background_color mt-5"><span class="button_text_color">Save Changes</span></button>
                     </div> 
                   </form>
                 </div>   
@@ -420,9 +420,9 @@
                     </div>  
                  </div>
 
-                  <div class="tab-button-bx"  style="padding-top: 30px;">
+                  <div class="tab-button-bx">
                     {{-- <button type="button" class="btn-secondary-cust" href="{{ route('settings') }}">Cancel</button>  --}}
-                    <button type="submit" class="btn-primary-cust button_background_color"><span class="button_text_color">Update Changes</span></button>
+                    <button type="submit" class="btn-primary-cust button_background_color mt-5"><span class="button_text_color">Update Changes</span></button>
                   </div>  
                 </form>
                 </div>
@@ -497,7 +497,7 @@
                           </div>
                         </div>
                     </div>   
-                      <div class="tab-button-bx" style="padding-top: 30px;">
+                      <div class="tab-button-bx mt-5">
                       {{-- <button class="btn-secondary-cust">Cancel</button>  --}}
                       <button type="submit" name="plan" class="btn-primary-cust button_background_color"><span class="button_text_color">Save Changes</span></button>
                       </div>   

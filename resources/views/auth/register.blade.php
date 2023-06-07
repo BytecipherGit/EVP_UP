@@ -2,6 +2,7 @@
 @section('content')
 @section('title', 'Registration')
 
+{{-- <link href="{{ captcha_layout_stylesheet_url() }}" type="text/css" rel="stylesheet"> --}}
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.0-alpha1/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
@@ -65,7 +66,7 @@
                         </div>
                         <div class="form-group">
                             <label>Email <strong style="color:red">*</strong> </label>
-                            <input type="text" id="email" name="email" class="form-control" value="{{ old('email') }}"
+                            <input type="email" id="email" name="email" class="form-control" value="{{ old('email') }}"
                                 placeholder="Enter Your Email" autofocus autocomplete="email">
                             @error('email')
                                 <p class="velidation">{{ $message }}</p>
@@ -233,8 +234,30 @@
                           </div>  
                         </div>
                          <div class="form-group">
-                            <input id="captcha" type="text" class="form-control" placeholder="Enter Captcha" name="captcha">
+                            <input id="captcha" type="text" class="form-control" placeholder="Enter Captcha" id="captcha" name="captcha">
+                            @error('captcha')
+                              <span class="velidation">{{ $message }}</span>
+                            @enderror 
+                            <strong class="error" id="captcha-error"></strong>
                          </div>
+
+{{-- 
+                         <div class="form-group{{ $errors->has('CaptchaCode') ? ' has-error' : '' }}">
+                            <label class="col-md-4 control-label">Captcha</label>
+
+
+                            <div class="col-md-6">
+                                {!! captcha_image_html('ContactCaptcha') !!}
+                                <input class="form-control" type="text" id="CaptchaCode" name="CaptchaCode" style="margin-top:5px;">
+
+
+                                @if ($errors->has('CaptchaCode'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('CaptchaCode') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div> --}}
                      
               
                         {{-- data-toggle="modal" --}}
@@ -384,6 +407,7 @@
             country: "required",
             city: "required",
             state: "required",
+            captcha: "required",
             pin: "required",
            },
 
@@ -398,6 +422,7 @@
             address: "Company address is required",
             country: "Country name is required",
             city: "City is required",
+            captcha: "Captcha is required",
             state: "State is required",
             pin: "Pin is required",
            

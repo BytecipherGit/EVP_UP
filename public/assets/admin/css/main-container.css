@@ -9,6 +9,21 @@ body{
 .link-href{
   color: #fff;
 }
+.payMainBgpy-4 {
+  background: url("../images/payBg.");
+}
+.downLinkCus {
+  width: min-content !important;
+  background: #5b8b0a !IMPORTANT;
+  COLOR: #fff !important;
+  padding: 10px 18px !important;
+  font-size: 15px !important;
+  border: none !important;
+  font-weight: 400 !important;
+}
+.downLinkCus img{
+  width: 30px;
+}
 .offerBtn {   
   color: #f7faf7 !important;
   background: green !important;
@@ -1279,6 +1294,9 @@ button.btn-secondary-custexport {
     /* padding: 29px 34px; */
     padding: 29px 12px;
 }
+.skilltable {
+  border: 0px solid #ddd !important;
+}
 .table-effect-box{
   width: 100%;
   position: relative;
@@ -1290,6 +1308,14 @@ button.btn-secondary-custexport {
   min-width: 250px;
   display: inline-block;
 }
+.addskill{
+  border: 0px solid #ddd !important; 
+}
+
+.skilleffect{
+  height: 43px !important
+}
+
 .table-search-box .form-control {
     padding: 10px 12px;
     border: 2px solid #EAEFF3;
@@ -1674,11 +1700,13 @@ button.btn-secondary-custexport {
     background-color:transparent;
     border-color: transparent;
     border-bottom: 2px solid #fff;
+    background: transparent;
 }
 .employee-tab-bar .nav-tabs .nav-link:focus, .employee-tab-bar .nav-tabs .nav-link:hover {
     border-color: transparent;
     border-bottom: 2px solid #fff;
     color:#fff;
+    background: transparent;
 }
 .employee-tab-bar .nav-tabs .nav-item {
     margin-right: 30px;
@@ -1738,6 +1766,78 @@ button.btn-secondary-custexport {
 .eml-per-main .verified-clr{
   color:#5BD94E;
 }
+
+/* payment design page css */
+.payMainBgpy-4 {
+    background: url("../images/payBg.jpg");
+    height: 100vh;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.payMainBgpy-4 input.razorpay-payment-button {
+    background: #4785FF;
+    border-radius: 8px;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    width: 100%;
+    font-size: 18px;
+    line-height: 27px;
+}
+
+.payMainBgpy-4 .card .card-header {
+    padding: 20px 15px;
+    text-align: center;
+    background-color: rgba(0, 0, 0, .03);
+    border-bottom: 1px solid rgba(0, 0, 0, .125);
+    font-size: 20px;
+    line-height: 26px;
+}
+
+.payMainBgpy-4 .card {
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    /* background-clip: border-box; */
+    border: 1px solid rgba(0, 0, 0, .125);
+    border-radius: 8px;
+    box-shadow: 3px 2px 17px rgba(0, 0, 0, 0.5);
+}
+
+.payMainBgpy-4 .card-body {
+    padding: 30px;
+}
+
+.payMainBgpy-4 .card-body h2 {
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 24px;
+    color: #3D3D42;
+    margin: 0 0 10px;
+}
+
+.payMainBgpy-4 .card-body h5 {
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 15px;
+    color: #A3A3AB;
+    margin: 0 0 50px;
+}
+/* payment css end */
+
 .eml-per-main .not-verified-clr{
   color:#ac2029;
 }

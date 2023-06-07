@@ -1,5 +1,5 @@
 
-@extends('company/layouts.app')
+@extends('company.layouts.app')
 @section('content')
 @section('title','EVP - Email Templates')
 

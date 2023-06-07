@@ -192,41 +192,40 @@ class CompanySubscriptionController extends Controller
                return Response::json(['success' => '0']);
             }
 
-           }
+        }
            else{
+              // $subscriptionCheck = Subscription::where('id',(decrypt($request->id)))->first();
+              $checkSubscriptionData = CompanySubscription::where('company_id',Auth::id())->orderBy('created_at','DESC')->first();
+             // dd($subscriptionCheck);
+               $unixTimestamp = $checkSubscriptionData->end_date;
+              //  dd($unixTimestamp);
+               $subscription= $this->razorpay->subscription->create(array('plan_id' => $subscriptionCheck->plan_id ,'customer_notify' => 1,'quantity'=> 1, 
+                'total_count' => $totalCount,'notes'=> array('key1'=> 'value3','key2'=> 'value2')));
 
-            // $subscriptionCheck = Subscription::where('id',(decrypt($request->id)))->first();
-            $checkSubscriptionData = CompanySubscription::where('company_id',Auth::id())->orderBy('created_at','DESC')->first();
-        // dd($subscriptionCheck);
-           $unixTimestamp = $checkSubscriptionData->end_date;
-          //  dd($unixTimestamp);
-            $subscription= $this->razorpay->subscription->create(array('plan_id' => $subscriptionCheck->plan_id ,'customer_notify' => 1,'quantity'=> 1, 
-            'total_count' => $totalCount,'notes'=> array('key1'=> 'value3','key2'=> 'value2')));
+              if($checkSubscriptionData){
+                  $insert = [
+                    'company_id' => Auth::id(),
+                    'company_subscription_id' => null,
+                    'razorpay_subscription_id' => !empty($subscription->id) ? $subscription->id : null,
+                    'subscription_id' => !empty($subscriptionCheck->id) ? $subscriptionCheck->id : null,
+                    'name' => !empty($subscriptionCheck->name) ? $subscriptionCheck->name : null,
+                    'razorpay_subscription_status' => 'Created',
+                    'payment_status' => 'Created'
+                ];
 
-            if($checkSubscriptionData){
-                $insert = [
-                  'company_id' => Auth::id(),
-                  'company_subscription_id' => null,
-                  'razorpay_subscription_id' => !empty($subscription->id) ? $subscription->id : null,
-                  'subscription_id' => !empty($subscriptionCheck->id) ? $subscriptionCheck->id : null,
-                  'name' => !empty($subscriptionCheck->name) ? $subscriptionCheck->name : null,
-                  'razorpay_subscription_status' => 'Created',
-                  'payment_status' => 'Created'
-              ];
+                $subscriptionDataExist = CompanySubscriptionPayment::create($insert);
 
-              $subscriptionDataExist = CompanySubscriptionPayment::create($insert);
-
-          }else{
-              return Response::json(['success' => '0']);
-          }
-
-              if (!empty($subscriptionDataExist)) {
-                  return view('admin.payment.razorpay_view',compact('subscriptionDataExist','subscriptionCheck'));
-              } else {
+              }else{
                   return Response::json(['success' => '0']);
               }
+
+                if (!empty($subscriptionDataExist)) {
+                    return view('admin.payment.razorpay_view',compact('subscriptionDataExist','subscriptionCheck'));
+                 } else {
+                    return Response::json(['success' => '0']);
+                }
               
-            }
+          }
             
           }
        

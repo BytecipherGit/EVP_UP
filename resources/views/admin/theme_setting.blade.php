@@ -50,21 +50,17 @@
     <!--- Main Heading ----->
 
     <div class="employee-view-page">
-        <div class="table-responsive-bg">
-            <div class="row" style="margin-top: 20px;">
-                <div class="col-xs-12">
-                    <table class="table table-bordered theme_setting_datatable">
-                        <thead class="primary_color">
-                            <tr>
-                                <th class="secondary_color">Color</th>
-                                <th class="secondary_color">Value</th>
-                                <th width="100px" class="secondary_color">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                </div>
-            </div>
+        <div class="table-responsive p-3">
+            <table class="table table-bordered theme_setting_datatable">
+                <thead class="primary_color">
+                    <tr>
+                        <th class="secondary_color">Color</th>
+                        <th class="secondary_color">Value</th>
+                        <th width="100px" class="secondary_color">Action</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
 
         </div>
     </div>

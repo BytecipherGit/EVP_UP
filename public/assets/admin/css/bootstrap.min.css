@@ -125,11 +125,11 @@ ul {
 }
 
 .velidation {
-    color: red;
-    font-size: 12px;
-    display: block;
-    margin: 5px 0;
-    display: flex;
+    color: red !important;
+    font-size: 12px !important;
+    display: block !important;
+    margin: 5px 0 !important;
+    display: flex !important;
 }
 
 ol ol,

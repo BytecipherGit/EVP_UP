@@ -140,9 +140,11 @@
                                 <input type="hidden" name="id" value="{{ encrypt($planExits->id) }}">
                                 <h1>Already you have a Free subscription.</h1>
                                 <p>Are you sure you want to get subscription ?</p>
-                                <button type="submit" class="btn-secondary-cust">Ok</button>
+                                <button type="submit"
+                                    class="btn-primary-custexport button_background_color text-white mr-2">Ok</button>
                                 {{-- <button class="btn-secondary-cust" type="button" id="addPaymentButton">Submit</button> --}}
-                                <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn-secondary-cust ml-2"
+                                    data-dismiss="modal">Cancel</button>
                             </form>
                         </div>
                     </div>
@@ -164,7 +166,8 @@
                                     <div class="remainder-body">
                                         <h1>Already you have a subscription.</h1>
                                         <p>Subscription will start on: {{ $paySub->start_date }}</p>
-                                        <button type="button" class="btn-secondary-cust"
+                                        <button type="button"
+                                            class="btn-primary-custexport button_background_color text-white"
                                             data-dismiss="modal">OK</button>
                                     </div>
                                 @else
@@ -173,7 +176,8 @@
                                         <p>If you want to get subscription again, so you need to cancel current
                                             subscription.</p>
                                         <p>Subscription Expired on: {{ $paySub->end_date }}</p>
-                                        <button type="button" class="btn-secondary-cust"
+                                        <button type="button"
+                                            class="btn-primary-custexport button_background_color text-white"
                                             data-dismiss="modal">Ok</button>
                                     </div>
                                 @endif
@@ -193,8 +197,9 @@
                                         <input type="hidden" name="id" value="{{ encrypt($planExits->id) }}">
                                         <h1>Already you have a subscription.</h1>
                                         <p>Are you sure you want to get subscription ?</p>
-                                        <button type="submit" class="btn-secondary-cust">Ok</button>
-                                        <button type="button" class="btn-secondary-cust"
+                                        <button type="submit"
+                                            class="btn-primary-custexport button_background_color text-white mr-2">Ok</button>
+                                        <button type="button" class="btn-secondary-cust ml-2"
                                             data-dismiss="modal">Cancel</button>
                                     </form>
                                 </div>
@@ -214,8 +219,9 @@
                                         <input type="hidden" name="id" value="{{ encrypt($planExits->id) }}">
                                         <h1>Already you have a Free subscription.</h1>
                                         <p>Are you sure you want to get subscription ?</p>
-                                        <button type="submit" class="btn-secondary-cust">Ok</button>
-                                        <button type="button" class="btn-secondary-cust"
+                                        <button type="submit"
+                                            class="btn-primary-custexport button_background_color text-white mr-2">Ok</button>
+                                        <button type="button" class="btn-secondary-cust ml-2"
                                             data-dismiss="modal">Cancel</button>
                                     </form>
                                 </div>

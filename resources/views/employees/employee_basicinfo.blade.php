@@ -1,5 +1,5 @@
 
-<style>
+{{-- <style>
    .velidation {
     color: red;
     font-size: 12px;
@@ -7,7 +7,7 @@
     margin: 5px 0;
     display: flex;
     }
-</style>
+</style> --}}
 <form id="employee_basic_form" action="{{ url('employee/submit') }}" method="post" autocomplete="off" enctype="multipart/form-data">
     @csrf
     <input type="hidden" id="is_add" value="{{ $employeeExists ? '' : 1 }}" />

@@ -25,6 +25,7 @@ use Razorpay\Api\Api;
 use App\Helpers\Helper as HelpersHelper;
 use Illuminate\Support\Facades\Mail as FacadesMail;
 use Illuminate\View\View;
+use Validator;
 use Carbon\Carbon;
 use Response;
 use Illuminate\Validation\Rules;
@@ -69,6 +70,11 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+
+ // custom error message for valid_captcha validation rule
+    $messages  = [
+        'captcha' => 'Wrong code. Try again please.'
+      ];
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:' . User::class, new EmailDomain],
@@ -83,9 +89,8 @@ class RegisteredUserController extends Controller
             'state' => ['required', 'string', 'max:255'],
             'pin' => ['required', 'string', 'max:255'],
             'captcha' => ['required', 'captcha'],
-            // 'g-recaptcha-response' => ['required','captcha']
 
-        ]);
+        ], $messages);
 
         $user = User::create([
             'name' => $request->name,
