@@ -16,7 +16,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <h1>Onboarding</h1>
-                    <p>Here’s your report overview by today</p>
+                    {{-- <p>Here’s your report overview by today</p> --}}
                 </div>
             </div>
         </div>
@@ -286,14 +286,14 @@
     var i = 0;
     $("#dynamic-ar").click(function() {
         ++i;
-        $("#dynamicAddRemove").append('<tr><td><input type="text" name="skill[' + i +
-            ']" placeholder="Enter subject" class="form-control" /></td><td><h6><span><input type="radio" id="customRadioInline1" name="skill_type[' +
+        $("#dynamicAddRemove").append('<tr><td class="addskill"><input type="text" name="skill[' + i +
+            ']" placeholder="Enter skill" class="form-control skilleffect" /></td><td class="addskill"><h5><span><input type="radio" id="customRadioInline1" name="skill_type[' +
             i +
-            ']" class=""  value="Beginner" checked="">  <label class="" for="customRadioInline1">Beginner</label></span> <span><input type="radio" id="customRadioInline2" name="skill_type[' +
+            ']" class="mr-2"  value="Beginner" checked="">  <label class="mr-2" for="customRadioInline1">Beginner</label></span> <span><input type="radio" id="customRadioInline2" name="skill_type[' +
             i +
-            ']" class="" value="Intermediate">  <label class="" for="customRadioInline2">Intermediate</label></span> <span><input type="radio" id="customRadioInline3" name="skill_type[' +
+            ']" class="mr-2" value="Intermediate">  <label class="mr-2" for="customRadioInline2">Intermediate</label></span> <span><input type="radio" id="customRadioInline3" name="skill_type[' +
             i +
-            ']" class="" value="Expert">  <label class="" for="customRadioInline3">Expert</label></span></h6></td><td><a href=""class="remove-input-field remove-field btn-remove-customer add-plus minus-icon"><span class="button_background_color"><img src="{{ asset('assets') }}/admin/images/minus-icon.png"></span></td></tr>'
+            ']" class="mr-2" value="Expert">  <label class="mr-2" for="customRadioInline3">Expert</label></span></h5></td><td class="addskill"><a href=""class="remove-input-field remove-field btn-remove-customer add-plus minus-icon"><span class="button_background_color"><img src="{{ asset('assets') }}/admin/images/minus-icon.png"></span></td></tr>'
         );
     });
     $(document).on('click', '.remove-input-field', function() {
@@ -305,14 +305,14 @@
     var j = 0;
     $("#dynamic-ar1").click(function() {
         ++j;
-        $("#dynamicAddRemove1").append('<tr><td><input type="text" name="lang[' + j +
-            ']" placeholder="Enter subject" class="form-control" /></td><td><h6><span><input type="radio" id="customRadioInline4" name="lang_type[' +
+        $("#dynamicAddRemove1").append('<tr><td class="addskill"><input type="text" name="lang[' + j +
+            ']" placeholder="Enter language" class="form-control skilleffect" /></td><td class="addskill"><h5><span><input type="radio" id="customRadioInline4" name="lang_type[' +
             j +
-            ']" class=""  value="Beginner" checked="">  <label class="" for="customRadioInline4">Beginner</label></span>  <span><input type="radio" id="customRadioInline5" name="lang_type[' +
+            ']" class="mr-2"  value="Beginner" checked="">  <label class="mr-2" for="customRadioInline4">Beginner</label></span>  <span><input type="radio" id="customRadioInline5" name="lang_type[' +
             j +
-            ']" class="" value="Intermediate">  <label class="" for="customRadioInline5">Intermediate</label></span> <span><input type="radio" id="customRadioInline6" name="lang_type[' +
+            ']" class="mr-2" value="Intermediate">  <label class="mr-2" for="customRadioInline5">Intermediate</label></span> <span><input type="radio" id="customRadioInline6" name="lang_type[' +
             j +
-            ']" class="" value="Expert">  <label class="" for="customRadioInline6">Expert</label></span></h6></td><td><a href=""class="remove-input-field remove-field btn-remove-customer add-plus minus-icon"><span class="button_background_color"><img src="{{ asset('assets') }}/admin/images/minus-icon.png"></span></td></tr>'
+            ']" class="mr-2" value="Expert">  <label class="mr-2" for="customRadioInline6">Expert</label></span></h5></td><td class="addskill"><a href=""class="remove-input-field remove-field btn-remove-customer add-plus minus-icon"><span class="button_background_color"><img src="{{ asset('assets') }}/admin/images/minus-icon.png"></span></td></tr>'
         );
     });
     $(document).on('click', '.remove-input-field1', function() {

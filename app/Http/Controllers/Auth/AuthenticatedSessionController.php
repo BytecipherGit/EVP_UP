@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Models\Documents;
+use App\Models\CompanySubscriptionPayment;
+use App\Models\CompanySubscription;
 use App\Models\ThemeSetting;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -75,7 +77,14 @@ class AuthenticatedSessionController extends Controller
                         Session::flush();
                         return redirect()->intended(RouteServiceProvider::PENDING);
                     } else {
-                        return redirect()->intended(RouteServiceProvider::ADMIN);
+                      $checkSubscription = CompanySubscriptionPayment::where('company_id',Auth::id())->where('payment_status','=','Active')->orderBy('created_at', 'desc')->first();
+                      $checkFreeSubscription = CompanySubscription::where('company_id',Auth::id())->where('subscription_status','=','Active')->orderBy('created_at', 'desc')->first();
+                        if($checkSubscription || $checkFreeSubscription){
+                            return redirect()->intended(RouteServiceProvider::ADMIN);
+                        }else{
+                            return redirect()->intended(RouteServiceProvider::SUBSCRIPTION);
+                        }
+                        // return redirect()->intended(RouteServiceProvider::ADMIN);
                     }
                 } else {
                     return redirect()->intended(RouteServiceProvider::DOCUMENT);

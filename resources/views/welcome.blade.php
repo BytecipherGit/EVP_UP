@@ -1,4 +1,4 @@
-@extends('company/layouts.appcom')
+@extends('company.layouts.appcom')
 @section('content')
 @section('title','EVP - Company Verification Document')
 

@@ -21,6 +21,7 @@ class RouteServiceProvider extends ServiceProvider
     // public const DOCUMENT = '/document';
     public const DOCUMENT = '/upload_document';
     public const ADMIN = '/dashboard';
+    public const SUBSCRIPTION = 'company_suscription';
     public const PENDING = '/status';
     /**
      * Define your route model bindings, pattern filters, and other route configuration.

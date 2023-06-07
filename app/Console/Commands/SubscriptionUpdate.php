@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Models\CompanySubscription;
 use App\Models\CompanySubscriptionPayment;
+use Illuminate\Support\Facades\Log;
 use Auth;
 use Carbon\Carbon;
 
@@ -26,47 +27,76 @@ class SubscriptionUpdate extends Command
      */
     protected $description = 'Command description';
 
+     /**
+     * Create a new command instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
     /**
      * Execute the console command.
      *
-     * @return int
+     * @return mixed
      */
     public function handle()
     {
-
         // return Command::SUCCESS;
-        \Log::info("Cron is working fine!");
+        // \Log::info("Cron is working fine!");
         //     $startDate = Carbon::now();
         //     $tomorrow = Carbon::tomorrow();
         //     $unixTimestamp = $tomorrow->timestamp;
-    
-        
-        //       $paymentSubData = CompanySubscriptionPayment::orderBy('created_at','DESC')->first();
-        //       $companySubData = CompanySubscription::where('name','!=','Free')->orderBy('created_at','DESC')->first();
+     
+    // log::info('Cron job executed at: ' . now());
+         
+       $companySubData = CompanySubscription::get();
+     foreach($companySubData as $companyData){
 
-        //   if(!empty($companySubData) && !empty($paymentSubData)){
-        //     \Log::info("Cron is working fine!");
-        //       if($companySubData->end_date < Carbon::now()){
-        //            $updateSubscriptionData = CompanySubscription::where('company_id',$paymentSubData->company_id)
-        //               ->update([
-      
-        //                   'company_id' => $paymentSubData->company_id,
-        //                   'razorpay_subscription_id' =>$paymentSubData->razorpay_subscription_id,
-        //                   'subscription_id' =>$paymentSubData->subscription_id,
-        //                   'subscription_type' => !empty($paymentSubData->subscription_type) ? $paymentSubData->subscription_type : null,
-        //                   'name' => !empty($paymentSubData->name) ? $paymentSubData->name : null,
-        //                   'price' => !empty($paymentSubData->payment_price) ? $paymentSubData->payment_price : null, 
-        //                   'description' => !empty($paymentSubData->description) ? $paymentSubData->description : null,
-        //                   'start_date' => !empty($paymentSubData->start_date) ? $paymentSubData->start_date : null,
-        //                   'end_date' => !empty($paymentSubData->end_date) ? $paymentSubData->end_date : null,
-        //                   'status' => '1'
-                
-        //             ]);
-        //         }else{
-        //             return false;
-        //         }
-        //     }else{
-        //         \Log::info("Cron is working fine!");
-        //     }
+            if($companyData->end_date == Carbon::now() || $companyData->end_date < Carbon::now()){
+                  $paymentSubData = CompanySubscriptionPayment::where('company_id',$companyData->company_id)->orderBy('created_at','DESC')->first();
+                 if($companyData->end_date < $paymentSubData->start_date || $companyData->end_date == $paymentSubData->start_date){
+
+                    $updateSubscriptionData = CompanySubscription::where('company_id',$paymentSubData->company_id)
+                        ->update([
+        
+                            //   'company_id' => $paymentSubData->company_id,
+                            'razorpay_subscription_id' =>$paymentSubData->razorpay_subscription_id,
+                            'subscription_id' =>$paymentSubData->subscription_id,
+                            'subscription_type' => !empty($paymentSubData->subscription_type) ? $paymentSubData->subscription_type : null,
+                            'name' => !empty($paymentSubData->name) ? $paymentSubData->name : null,
+                            'price' => !empty($paymentSubData->payment_price) ? $paymentSubData->payment_price : null, 
+                            'description' => !empty($paymentSubData->description) ? $paymentSubData->description : null,
+                            'start_date' => !empty($paymentSubData->start_date) ? $paymentSubData->start_date : null,
+                            'end_date' => !empty($paymentSubData->end_date) ? $paymentSubData->end_date : null,
+                            'status' => 'Active'
+                    
+                        ]);
+
+                        if($updateSubscriptionData){
+                            $updateCompanySubscriptionData = CompanySubscriptionPayment::where('id',$paymentSubData->id)
+                            ->update([
+
+                                'company_subscription_id' => !empty($updateSubscriptionData->id) ? $updateSubscriptionData->id : null,
+                        
+                        ]);
+                        }else{
+                            return false;
+                        }
+                    
+                }else{
+                    $updateSubscriptionData = CompanySubscription::where('company_id',$paymentSubData->company_id)
+                        ->update([
+        
+                            'status' => 'Expired',
+                    
+                        ]);
+                }
+            }else{
+                \Log::info("Subscription active!");
+            }
+        }
     }
 }

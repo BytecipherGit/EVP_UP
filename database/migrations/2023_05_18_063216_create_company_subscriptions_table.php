@@ -25,7 +25,7 @@ return new class extends Migration
             $table->integer('price')->nullable();
             $table->string('name')->nullable();
             $table->longText('description')->nullable()->default('text');
-            $table->boolean('status')->default(0)->comment('1 Active, 0 Inactive');
+            $table->enum('subscription_status',['Created','Active','Cancelled','Expired'])->comment('Created / Active / Cancelled / Expired');
             $table->string('start_date')->nullable();
             $table->string('end_date')->nullable();
             $table->timestamps();

@@ -25,6 +25,7 @@ use Razorpay\Api\Api;
 use App\Helpers\Helper as HelpersHelper;
 use Illuminate\Support\Facades\Mail as FacadesMail;
 use Illuminate\View\View;
+use Validator;
 use Carbon\Carbon;
 use Response;
 use Illuminate\Validation\Rules;
@@ -69,6 +70,11 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+
+ // custom error message for valid_captcha validation rule
+    $messages  = [
+        'captcha' => 'Wrong code. Try again please.'
+      ];
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:' . User::class, new EmailDomain],
@@ -83,9 +89,8 @@ class RegisteredUserController extends Controller
             'state' => ['required', 'string', 'max:255'],
             'pin' => ['required', 'string', 'max:255'],
             'captcha' => ['required', 'captcha'],
-            // 'g-recaptcha-response' => ['required','captcha']
 
-        ]);
+        ], $messages);
 
         $user = User::create([
             'name' => $request->name,
@@ -138,8 +143,10 @@ class RegisteredUserController extends Controller
 
     // Add subscription details 
      $getSubscriptionRecords = Subscription::where('type','Free')->get();
+
      if(count($getSubscriptionRecords) > 0){
         foreach ($getSubscriptionRecords as $getSubscriptionRecord) {
+            $duration = $getSubscriptionRecord->duration;
                 $insertSubscriptionRecord = array(
                     'company_id' => $user->id,
                     'subscription_id' => $getSubscriptionRecord->id,
@@ -147,9 +154,9 @@ class RegisteredUserController extends Controller
                     'description' => $getSubscriptionRecord->description,
                     'name' => $getSubscriptionRecord->name,
                     'price' => $getSubscriptionRecord->price,
-                    'start_date' => $user->created_at->format('Y-m-d'),
-                    'end_date' => $user->created_at->addDays(7)->format('Y-m-d'),
-                    'status' => '1'
+                    'start_date' => Carbon::now()->format('Y-m-d'),
+                    'end_date' => Carbon::now()->addDays($duration)->format('Y-m-d'),
+                    'subscription_status' => 'Active',
                 );
                 CompanySubscription::create($insertSubscriptionRecord);
             }

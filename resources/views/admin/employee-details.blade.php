@@ -1,4 +1,4 @@
-@extends('admin/layouts.emp_app')
+@extends('admin.layouts.emp_app')
 @section('content')
 @section('title','EVP - Employee view Details')
 
