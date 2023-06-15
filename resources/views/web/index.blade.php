@@ -39,9 +39,9 @@
               <li class="nav-item">
                 <a class="nav-link" href="login">Company Login</a>
               </li>
-              {{-- <li class="nav-item">
-                <a class="nav-link" href="individual-login">Individual Login</a>
-              </li> --}}
+              <li class="nav-item">
+                <a class="nav-link" href="employee_login">Individual Login</a>
+              </li>
             </ul>
           </div>            
         </nav>

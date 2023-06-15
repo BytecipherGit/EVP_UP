@@ -14,6 +14,7 @@ use App\Models\Verification;
 use App\Models\CompanyEmployee;
 use App\Models\Emplang;
 use Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
@@ -129,11 +130,12 @@ class NewEmployeeController extends Controller
                         'verification_type'=> $statusVerification,
                         'third_party_document'=>!empty($uploadThirdPartyDocument) ? $uploadThirdPartyDocument : null,
                         'third_party_verification'=> $statusThirdPartyVerification,
+                        'password'=> str_replace("-", "", Hash::make($request->dob))
                     ];
 
                     $employee = Employee::create($insert);
 
-
+// dd($employee);
                     if (!empty($employee)) {
                         
                         $employeeData = Employee::where('empCode',$empCode)->first();

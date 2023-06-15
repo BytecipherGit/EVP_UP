@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Session;
 use App\Mail\CompanyRegisterationMail;
 use App\Mail\CompanyResetVerifyMail;
 use App\Mail\CompanyVerificationMail;
+use App\Http\Requests\Auth\LoginRequest;
 use App\Models\User;
 use App\Models\Country;
 use App\Models\State;
@@ -22,51 +23,62 @@ use Illuminate\Http\RedirectResponse;
 use App\Models\CompanyTemplate;
 use App\Models\CompanyEmailTemplate;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Mail as FacadesMail;
 use App\Models\EmailConfiguration;
 use App\Models\ThemeSetting;
 use App\Helpers\Helper as HelpersHelper;
 use Illuminate\Validation\Rules;
 use Storage;
+use Auth;
 use Intervention\Image\Facades\Image;
-
-use Illuminate\Support\Facades\Auth;
 
 class SuperAdminController extends Controller
 {
 
+
     /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * Display the login view.
      */
-    public function index(request $request)
+    public function index()
     {
-        $getVerifiedCompany = User::where('status','=',1)->count();
-        $getCompanyData = User::count();
 
-        if (Auth::check()) {
-            $userRole = User::find(Auth::user()->id);
-
-            // dd($userRole->role);
-            if($userRole->role != 'superadmin'){
-                return redirect('admin');
-            }
-            return view('superadmin/index',compact('getVerifiedCompany','getCompanyData'));
-        } else {
-            return view('auth.superadminlogin');
-        }
-       
-    }
-
-    public function superAdminLogin()
-    {
         if (!Auth::check()) {
             return view('auth.superadminlogin');
         } else {
             return redirect('admin/dashboard');
         }
        
+    }
+
+    use AuthenticatesUsers;
+
+    public function store(LoginRequest $request): RedirectResponse
+    {
+        $request->authenticate();
+        $request->session()->regenerate();
+    
+        if (Auth::check()) {
+            
+            $userRole = User::find(Auth::user()->id);
+
+            if($userRole->role != 'superadmin'){
+                return redirect()->back();
+             }else{
+             return redirect()->route('superadmin.index');
+             }
+               
+        } else {
+            return redirect('admin');
+        }
+       
+    }
+    public function dashboard(request $request)
+    {
+        $getVerifiedCompany = User::where('status','=',1)->count();
+        $getCompanyData = User::count();
+
+        return view('superadmin.index',compact('getVerifiedCompany','getCompanyData'));        
     }
 
     public function getCompanyForm(request $request)
@@ -379,8 +391,9 @@ class SuperAdminController extends Controller
 
     }
 
-    public function destroy(Request $request): RedirectResponse
+    public function destroy(request $request)
       {
+    
           Auth::guard('web')->logout();
   
           $request->session()->invalidate();
