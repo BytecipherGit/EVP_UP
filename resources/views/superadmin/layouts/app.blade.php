@@ -100,7 +100,7 @@
                 Change Password
               </a>
               <hr>
-              <a class="dropdown-item dropdown-item-no" href="{{ route('logout') }}">               
+              <a class="dropdown-item dropdown-item-no" href="{{ route('admin.logout') }}">               
                 Sign out
                 <img src="{{ asset('assets') }}/superadmin/images/logout-icon.png" class="ml-auto">
               </a>
@@ -124,8 +124,8 @@
       </div>
       <aside>
 
-        <li @if (Request::segment(2) == '') class="active" @endif>
-          <a href="{{ route('superadmin')}}">
+        <li @if (Request::segment(2) == 'dashboard') class="active" @endif>
+          <a href="{{ route('superadmin.index')}}">
             <img src="{{ asset('assets') }}/superadmin/images/overview-icon.png">
             Overview
           </a>
@@ -158,7 +158,7 @@
           </div>
         </div> 
 
-        <li @if (Request::segment(2) == 'subscriptions') class="active" @endif>
+        <li @if (Request::segment(2) == 'subscription') class="active" @endif>
           <a href="subscription"><img src="{{ asset('assets') }}/admin/images/overview-icon.png"> 
               Add Subscription
           </a>

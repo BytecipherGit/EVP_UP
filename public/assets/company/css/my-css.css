@@ -585,3 +585,9 @@ header .navbar-brand img {
     background: #FF4A4A !important;
     margin-top: 18px;
 }
+
+.document_basic .minus-icon2 span {
+  background: #FF4A4A !important;
+  margin-top: 18px;
+  margin-left: 18px;
+}

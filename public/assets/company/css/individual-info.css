@@ -455,6 +455,10 @@ a{
 .add-plus.mt-custom-plus {
     margin-top: 20px;
 }
+.add-plus.mt-custom-plus2 {
+  margin-top: 20px;
+  margin-left: 20px;
+}
 .add-emply-details .upload-img-file {
     border: 1px solid #DFE6EC;
     box-sizing: border-box;

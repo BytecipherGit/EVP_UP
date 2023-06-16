@@ -96,7 +96,11 @@ class AuthenticatedSessionController extends Controller
              }
             }
               elseif(Auth::user()->role == 'superadmin') {
-                return redirect()->intended(RouteServiceProvider::SUPERADMIN);
+                Auth::logout();
+                Session::flush();
+                return redirect()->back()->with('message','Incurrect login details.');
+                // return redirect()->intended(RouteServiceProvider::SUPERADMIN);
+                // return redirect()->intended(RouteServiceProvider::ADMIN);
             }
         }
     }   

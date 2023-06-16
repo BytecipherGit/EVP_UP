@@ -20,34 +20,13 @@ class Admin
      */
     public function handle(Request $request, Closure $next)
     {
-        // if (!Auth::check()) {
-        //     return redirect()->route('login');
-        // }
-
-        // if (Auth::user()->role == 'superadmin') {
-          
-        //     return redirect()->route('superadmin');
-        // }
-
-        // if (Auth::user()->role == 'admin') {
-        //     return $next($request);
-        // }
-
-        if (!Auth::check()){
-
-            return redirect('/login');     
+        if (!Auth::check()) {
+            return redirect()->route('login');
         }
 
-        $userRole = User::find(Auth::user()->id);
-        $checkSubscription = CompanySubscription::where('company_subscriptions.company_id',Auth::user()->id)
-                            ->where('company_subscriptions.end_date','>',carbon::today())->get();
-        // dd($checkSubscription);
-        if($userRole->role == 'admin'){
+        if (Auth::user()->role == 'admin') {
             return $next($request);
-        }  
-        
-        if($userRole->role == 'superadmin'){
-            return redirect()->route('superadmin');
-        } 
+        }
+
     }
 }

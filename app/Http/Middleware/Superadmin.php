@@ -20,15 +20,13 @@ class SuperAdmin
     {
 
         if (!Auth::check()){
-            return redirect('/admin');     
+            return redirect()->route('admin');     
         }
 
-        $userRole = User::find(Auth::user()->id);   
-        if($userRole->role == 'superadmin'){
+        if (Auth::user()->role == 'superadmin') {
             return $next($request);
-        } else {
-            return abort(404);
-        }     
+        }
+       
     }
 }
 
