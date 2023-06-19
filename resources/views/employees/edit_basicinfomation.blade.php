@@ -116,51 +116,117 @@
                 <strong class="error" id="marital_status-error"></strong>
             </div>
         </div>
-        <div class="col-xl-3 col-lg-6 col-md-12">
+
+        <div class="col-md-12">
+            <h4>Pan Card <span style="color:red">*</span></h4>     
+        </div>
+
+        <div class="col-xl-5 col-lg-6 col-md-12">
             <div class="form-group">
-                <label>Document Type<span style="color:red">*</span></label>
-                <select name="document_type" class="form-control" id="document_type">
-                    <option value="{{$employeeExists ? $employeeExists->document_type : '' }}">{{ $employeeExists->document_type ? $employeeExists->document_type : 'Select document type' }}</option>
-                    <option value="Pan Card">Pan Card</option>
-                    <option value="Aadhar Card">Aadhar Card</option>
-                    <option value="Passport">Passport</option>
-                </select>
-                <strong class="error" id="document_type-error"></strong>
+                <label>Pan Card Number<span style="color:red">*</span></label>
+                <input type="text" name="pan_card_number" class="form-control" value="{{ $employeeExists ? $employeeExists->pan_card_number : '' }}" placeholder="Enter pan card number">
+                <strong class="error" id="pan_card_number-error"></strong>
             </div>
         </div>
 
-        <div class="col-xl-3 col-lg-6 col-md-12">
+        <div class="col-xl-5 col-lg-6 col-md-12">
             <div class="form-group">
-                <label>Document Number<span style="color:red">*</span></label>
-                <input type="text" name="document_number" class="form-control" value="{{ $employeeExists->document_number ? $employeeExists->document_number : '' }}" placeholder="Enter document number">
-                <strong class="error" id="document_number-error"></strong>
+                <label>Pan Card Id<span style="color:red">*</span></label>
+                <input type="file" id="pan_card_id" name="pan_card_id" value="{{ $employeeExists ? $employeeExists->pan_card_id : '' }}" class="form-control" accept="image/jpeg,image/doc,image/pdf" >
+                <strong class="error" id="pan_card_id-error"></strong>
+                {{-- @if(!empty($employeeExists->pan_card_id))
+                <a href="{{ $employeeExists->pan_card_id ? $employeeExists->pan_card_id : '' }}" target="_blank" class="btn btn-primary">Uploaded Document</a>
+             @endif --}}
             </div>
         </div>
 
-        <div class="col-xl-3 col-lg-6 col-md-12">
+        <div class="col-xl-2 col-lg-2 col-md-4 ">
             <div class="form-group">
-                <label>Document Id<span style="color:red">*</span></label>
-                <input type="file" id="document_id" name="document_id" value="{{ $employeeExists->document_id ? $employeeExists->document_id : '' }}" class="form-control" accept="image/jpeg,image/doc,image/pdf" >
-                <strong class="error" id="document_id-error"></strong>
-                @if(!empty($employeeExists->document_id))
-                 <a href="{{ $employeeExists->document_id ? $employeeExists->document_id : '#'}}" target="_black" class="btn btn-primary">Uploaded Document</a>
+                <label>&nbsp;</label>
+                @if (!empty($employeeExists->pan_card_id))
+                    <a href="{{ $employeeExists->pan_card_id ? $employeeExists->pan_card_id : '#' }}" target="_blank" class="btn btn-primary"><i class="toggle-password fa fa-fw fa-eye"></i>View Document</a>
                 @endif
             </div>
         </div>
-        <div class="col-xl-3 col-lg-6 col-md-12">
+
+        <div class="col-md-12">
+            <h4>Aadhar Card <span style="color:red">*</span></h4>     
+        </div>
+
+        <div class="col-xl-5 col-lg-6 col-md-12">
+            <div class="form-group">
+                <label>Aadhar Card Number<span style="color:red">*</span></label>
+                <input type="text" name="aadhar_card_number" class="form-control" value="{{ $employeeExists ? $employeeExists->pan_card_number : '' }}" placeholder="Enter aadhar card number">
+                <strong class="error" id="aadhar_card_number-error"></strong>
+            </div>
+        </div>
+
+        <div class="col-xl-5 col-lg-6 col-md-12">
+            <div class="form-group">
+                <label>Aadhar Card Id<span style="color:red">*</span></label>
+                <input type="file" id="aadhar_card_id" name="aadhar_card_id" value="{{ $employeeExists ? $employeeExists->aadhar_card_id : '' }}" class="form-control" accept="image/jpeg,image/doc,image/pdf" >
+                <strong class="error" id="aadhar_card_id-error"></strong>
+                {{-- @if(!empty($employeeExists->aadhar_card_id))
+                 <a href="{{ $employeeExists->aadhar_card_id ? $employeeExists->aadhar_card_id : '' }}" target="_blank" class="btn btn-primary Emp">Uploaded Document</a>
+             @endif --}}
+            </div>
+        </div>
+
+        <div class="col-xl-2 col-lg-2 col-md-4 ">
+            <div class="form-group">
+                <label>&nbsp;</label>
+                @if (!empty($employeeExists->aadhar_card_id))
+                    <a href="{{ $employeeExists->aadhar_card_id ? $employeeExists->aadhar_card_id : '#' }}" target="_blank" class="btn btn-primary"><i class="toggle-password fa fa-fw fa-eye"></i>View Document</a>
+                @endif
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <h4>Passport <span style="color:red">*</span></h4>     
+        </div>
+
+        <div class="col-xl-5 col-lg-6 col-md-12">
+            <div class="form-group">
+                <label>Passport Number<span style="color:red">*</span></label>
+                <input type="text" name="passport_number" class="form-control" value="{{ $employeeExists ? $employeeExists->passport_number : '' }}" placeholder="Enter passport number">
+                <strong class="error" id="passport_number-error"></strong>
+            </div>
+        </div>
+
+        <div class="col-xl-5 col-lg-6 col-md-12">
+            <div class="form-group">
+                <label>Passport Id<span style="color:red">*</span></label>
+                <input type="file" id="passport_id" name="passport_id" value="{{ $employeeExists ? $employeeExists->passport_id : '' }}" class="form-control" accept="image/jpeg,image/doc,image/pdf" >
+                <strong class="error" id="passport_id-error"></strong>
+                {{-- @if(!empty($employeeExists->passport_id))
+                <a href="{{ $employeeExists->passport_id ? $employeeExists->passport_id : '' }}" target="_blank" class="btn btn-primary">Uploaded Document</a>
+             @endif --}}
+            </div>
+        </div>
+
+        <div class="col-xl-2 col-lg-2 col-md-4 ">
+            <div class="form-group">
+                <label>&nbsp;</label>
+                @if (!empty($employeeExists->passport_id))
+                    <a href="{{ $employeeExists->passport_id ? $employeeExists->passport_id : '#' }}" target="_blank" class="btn btn-primary"><i class="toggle-password fa fa-fw fa-eye"></i>View Document</a>
+                @endif
+            </div>
+        </div>
+
+        <div class="col-xl-6 col-lg-6 col-md-12">
             <div class="form-group">
                 <label class="exitonboard doc"> <input type="checkbox" name="verification_type" class="checkboxexitform" <?php  if ($employeeExists->verification_type == '1') { ?> checked <?php } ?>/>Document Verification</label>
             </div>
         </div>
 
-        <div class="col-xl-6 col-lg-6 col-md-12">
+        <div class="col-xl-3 col-lg-6 col-md-12">
             <div class="form-group">
                 <label>3rd Party Verification Document</label>
                 <input type="file" id="third_party_document" name="third_party_document" class="form-control" accept="image/jpeg,image/doc,image/pdf" >
             </div>
         </div>
 
-        <div class="col-xl-6 col-lg-6 col-md-12">
+        <div class="col-xl-3 col-lg-6 col-md-12">
             <div class="form-group">
                 <label class="exitonboard doc"> 
                     <input type="checkbox" name="third_party_verification" class="checkboxexitform" <?php  if ($employeeExists->third_party_verification == '1') { ?> checked <?php } ?>> 3rd Party Verification </label>
@@ -262,9 +328,9 @@
                 emg_name: "required",
                 emg_address: "required",
                 emg_relationship: "required",
-                document_type: "required",
-                document_number: "required",
-                // document_id: "required",
+                pan_card_number: "required",
+                aadhar_card_number: "required",
+                passport_number: "required",
 
             },
 
@@ -283,10 +349,9 @@
                 emg_name: "Emergency name is required",
                 emg_relationship: "Emergency relationship is required",
                 emg_address: "Emergency address is required",
-                // document_id: "document id is required",
-                document_number: "document number is required",
-                document_type: "document type is required",
-
+                pan_card_number: "Pan card number is required",
+                aadhar_card_number: "Aadhar card number is required",
+                passport_number: "Passport number is required",
             }
         });
 

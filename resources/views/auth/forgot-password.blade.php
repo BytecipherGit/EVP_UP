@@ -1,5 +1,5 @@
 
-@extends('superadmin/layouts.login')
+@extends('superadmin.layouts.login')
 @section('content')
 @section('title','EVP - Forgot Password')
 

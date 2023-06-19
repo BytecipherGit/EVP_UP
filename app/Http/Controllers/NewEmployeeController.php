@@ -74,11 +74,25 @@ class NewEmployeeController extends Controller
             $uploadProfile = asset('storage/employee_document/' . $fileName);
             }
     
-           if ($request->hasFile('document_id')) {
-            $file = $request->file('document_id');
+           if ($request->hasFile('pan_card_id')) {
+            $file = $request->file('pan_card_id');
             $fileName = time() . '_' . $empCode .'_'. $file->getClientOriginalName();
             $file->storeAs('public/employee/employee_document', $fileName);
-            $uploadDocumentId = asset('storage/employee/employee_document/' . $fileName);
+            $uploadPanCardId = asset('storage/employee/employee_document/' . $fileName);
+            }
+
+            if ($request->hasFile('aadhar_card_id')) {
+                $file = $request->file('aadhar_card_id');
+                $fileName = time() . '_' . $empCode .'_'. $file->getClientOriginalName();
+                $file->storeAs('public/employee/employee_document', $fileName);
+                $uploadAadharCardId = asset('storage/employee/employee_document/' . $fileName);
+            }
+
+            if ($request->hasFile('passport_id')) {
+                    $file = $request->file('passport_id');
+                    $fileName = time() . '_' . $empCode .'_'. $file->getClientOriginalName();
+                    $file->storeAs('public/employee/employee_document', $fileName);
+                    $uploadPassportId = asset('storage/employee/employee_document/' . $fileName);
             }
     
             if ($request->hasFile('third_party_document')) {
@@ -124,9 +138,15 @@ class NewEmployeeController extends Controller
                         'emg_relationship'=>!empty($request->emg_relationship) ? $request->emg_relationship : null,
                         'emg_phone'=>!empty($request->emg_phone) ? $request->emg_phone : null,
                         'emg_address'=>!empty($request->emg_address) ? $request->emg_address : null,
-                        'document_type'=>!empty($request->document_type) ? $request->document_type : null,
-                        'document_id'=>!empty($uploadDocumentId) ? $uploadDocumentId : null,
-                        'document_number'=>!empty($request->document_number) ? $request->document_number : null,
+                        'pan_card'=>'Pan Card',
+                        'pan_card_id'=>!empty($uploadPanCardId) ? $uploadPanCardId : null,
+                        'pan_card_number'=>!empty($request->pan_card_number) ? $request->pan_card_number : null,
+                        'aadhar_card'=>'Aadhar Card',
+                        'aadhar_card_id'=>!empty($uploadAadharCardId) ? $uploadAadharCardId : null,
+                        'aadhar_card_number'=>!empty($request->aadhar_card_number) ? $request->aadhar_card_number : null,
+                        'passport'=>'Passport',
+                        'passport_id'=>!empty($uploadPassportId) ? $uploadPassportId : null,
+                        'passport_number'=>!empty($request->passport_number) ? $request->passport_number : null,
                         'verification_type'=> $statusVerification,
                         'third_party_document'=>!empty($uploadThirdPartyDocument) ? $uploadThirdPartyDocument : null,
                         'third_party_verification'=> $statusThirdPartyVerification,
@@ -186,7 +206,9 @@ class NewEmployeeController extends Controller
             ]);
 
             $uploadProfile = '';
-            $uploadDocumentId = '';
+            $uploadPanCardId = '';
+            $uploadAadharCardId = '';
+            $uploadPassportId = '';
             $uploadThirdPartyDocument = '';
             $empCode = substr(time(), -6) . sprintf('%04d', rand(0, 9999));
     
@@ -197,18 +219,32 @@ class NewEmployeeController extends Controller
             $uploadProfile = asset('storage/employee_document/' . $fileName);
             }
     
-           if ($request->hasFile('document_id')) {
-            $file = $request->file('document_id');
-            $fileName = time() . '_' . $empCode .'_'. $file->getClientOriginalName();
-            $file->storeAs('public/employee/employee_document', $fileName);
-            $uploadDocumentId = asset('storage/employee/employee_document/' . $fileName);
-            }
+            if ($request->hasFile('pan_card_id')) {
+                $file = $request->file('pan_card_id');
+                $fileName = time() . '_' . $empCode .'_'. $file->getClientOriginalName();
+                $file->storeAs('public/employee/employee_document', $fileName);
+                $uploadPanCardId = asset('storage/employee/employee_document/' . $fileName);
+                }
+    
+            if ($request->hasFile('aadhar_card_id')) {
+                    $file = $request->file('aadhar_card_id');
+                    $fileName = time() . '_' . $empCode .'_'. $file->getClientOriginalName();
+                    $file->storeAs('public/employee/employee_document', $fileName);
+                    $uploadAadharCardId = asset('storage/employee/employee_document/' . $fileName);
+                }
+    
+            if ($request->hasFile('passport_id')) {
+                  $file = $request->file('passport_id');
+                  $fileName = time() . '_' . $empCode .'_'. $file->getClientOriginalName();
+                  $file->storeAs('public/employee/employee_document', $fileName);
+                  $uploadPassportId = asset('storage/employee/employee_document/' . $fileName);
+                }
     
              if ($request->hasFile('third_party_document')) {
-              $file = $request->file('third_party_document');
-              $fileName = time() . '_' . $empCode .'_'. $file->getClientOriginalName();
-              $file->storeAs('public/employee/third_party_documents', $fileName);
-              $uploadThirdPartyDocument = asset('storage/employee/third_party_documents/' . $fileName);
+                $file = $request->file('third_party_document');
+                $fileName = time() . '_' . $empCode .'_'. $file->getClientOriginalName();
+                $file->storeAs('public/employee/third_party_documents', $fileName);
+                $uploadThirdPartyDocument = asset('storage/employee/third_party_documents/' . $fileName);
             }
           
 
@@ -230,8 +266,9 @@ class NewEmployeeController extends Controller
 
                 if($request->employee_id){
                     $employeeDetails = Employee::where('id', $request->employee_id)->first();
+
                     $emplotyeeUpdate = Employee::where('id', $request->employee_id)
-                    ->update([
+                       ->update([
 
                         'first_name' =>!empty($request->first_name) ? $request->first_name : null,
                         'profile' => !empty($uploadProfile) ? $uploadProfile : $employeeDetails->profile,
@@ -249,9 +286,15 @@ class NewEmployeeController extends Controller
                         'emg_relationship'=>!empty($request->emg_relationship) ? $request->emg_relationship : null,
                         'emg_phone'=>!empty($request->emg_phone) ? $request->emg_phone : null,
                         'emg_address'=>!empty($request->emg_address) ? $request->emg_address : null,
-                        'document_type'=>!empty($request->document_type) ? $request->document_type : null,
-                        'document_id'=>!empty($uploadDocumentId) ? $uploadDocumentId : $employeeDetails->document_id,
-                        'document_number'=>!empty($request->document_number) ? $request->document_number : null,
+                        'pan_card'=>'Pan Card',
+                        'pan_card_id'=>!empty($uploadPanCardId) ? $uploadPanCardId : $employeeDetails->pan_card_id,
+                        'pan_card_number'=>!empty($request->pan_card_number) ? $request->pan_card_number : null,
+                        'aadhar_card'=>'Aadhar Card',
+                        'aadhar_card_id'=>!empty($uploadAadharCardId) ? $uploadAadharCardId : $employeeDetails->aadhar_card_id,
+                        'aadhar_card_number'=>!empty($request->aadhar_card_number) ? $request->aadhar_card_number : null,
+                        'passport'=>'Passport',
+                        'passport_id'=>!empty($uploadPassportId) ? $uploadPassportId : $employeeDetails->passport_id,
+                        'passport_number'=>!empty($request->passport_number) ? $request->passport_number : null,
                         'verification_type'=> $statusVerifications,
                         'third_party_document'=>!empty($uploadThirdPartyDocument) ? $uploadThirdPartyDocument : null,
                         'third_party_verification'=> $statusThirdPartyVerifications,

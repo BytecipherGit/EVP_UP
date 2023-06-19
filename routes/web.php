@@ -73,9 +73,10 @@ Route::any('employee_login/logout', [App\Http\Controllers\Auth\EmployeeLoginCont
 Route::middleware([EmployeeAuthMiddleware::class])->group(function () {
    Route::get('employee_login/dashboard/{id?}/{segment?}', [App\Http\Controllers\IndividualEmployeeController::class, 'index'])->name('employee_login.dashboard');
    Route::post('employee_login/update',[App\Http\Controllers\IndividualEmployeeController::class, 'updateDetails']);
-   Route::post('employee_occupation/update',[App\Http\Controllers\IndividualEmployeeController::class, 'updateOccupation']);
-   Route::post('employee_experience/update',[App\Http\Controllers\IndividualEmployeeController::class, 'updateExperience']);
-   Route::post('employee_documents/update',[App\Http\Controllers\IndividualEmployeeController::class, 'updateDocuments']);
+   Route::post('employee_occupation/form',[App\Http\Controllers\IndividualEmployeeController::class, 'uploadOccupation']);
+   Route::post('employee_experience/form',[App\Http\Controllers\IndividualEmployeeController::class, 'experienceForm']);
+   Route::post('employee_documents/form',[App\Http\Controllers\IndividualEmployeeController::class, 'uploadDocuments']);
+   Route::post('employee_experience/form/update', [App\Http\Controllers\IndividualEmployeeController::class, 'updateEmployeeExperience']);
    Route::any('employee_login/change_password', [App\Http\Controllers\IndividualEmployeeController::class, 'changePassword']);
 
 });

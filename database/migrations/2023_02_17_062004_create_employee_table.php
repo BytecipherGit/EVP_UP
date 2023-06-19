@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('last_name')->nullable();
             $table->string('profile')->nullable();
             $table->string('email')->nullable()->unique();
+            $table->string('password')->nullable();
             $table->string('phone')->nullable();
             $table->string('dob')->nullable();
             $table->string('blood_group')->nullable();
@@ -32,10 +33,6 @@ return new class extends Migration
             $table->string('emg_relationship')->nullable();
             $table->string('emg_phone')->nullable();
             $table->text('emg_address')->nullable();
-            $table->string('document_type')->nullable();
-            $table->string('password')->nullable();
-            $table->string('document_number')->nullable()->unique();
-            $table->string('document_id')->nullable();
             $table->tinyInteger('verification_type')->default('0')->comment('1=Verified, 0=Not Verified')->nullable();
             $table->string('third_party_document')->nullable();
             $table->tinyInteger('third_party_verification')->default('0')->comment('1=Verified, 0=Not Verified')->nullable();

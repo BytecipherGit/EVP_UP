@@ -23,15 +23,14 @@ use Illuminate\Http\RedirectResponse;
 use App\Models\CompanyTemplate;
 use App\Models\CompanyEmailTemplate;
 use Illuminate\Auth\Events\Registered;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Mail as FacadesMail;
 use App\Models\EmailConfiguration;
 use App\Models\ThemeSetting;
-use App\Helpers\Helper as HelpersHelper;
 use Illuminate\Validation\Rules;
 use Storage;
 use Auth;
-use Intervention\Image\Facades\Image;
 
 class SuperAdminController extends Controller
 {
@@ -59,13 +58,13 @@ class SuperAdminController extends Controller
         $request->session()->regenerate();
     
         if (Auth::check()) {
-            
-            $userRole = User::find(Auth::user()->id);
-
-            if($userRole->role != 'superadmin'){
-                return redirect()->back();
-             }else{
-             return redirect()->route('superadmin.index');
+          if (Auth::user()->role == 'superadmin'){  
+                return redirect()->intended(RouteServiceProvider::SUPERADMIN);
+             } 
+               elseif(Auth::user()->role == 'admin') {
+                Auth::logout();
+                Session::flush();
+               return redirect()->back()->with('message','Incurrect login details.');
              }
                
         } else {
