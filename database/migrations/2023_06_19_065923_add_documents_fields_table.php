@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('passport')->nullable();
             $table->string('passport_number')->nullable()->unique();
             $table->string('passport_id')->nullable();
+            $table->rememberToken();
         });
     }
 

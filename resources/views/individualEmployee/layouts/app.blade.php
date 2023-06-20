@@ -108,8 +108,8 @@
     <script src="{{ asset('assets') }}/admin/js/jquery.validate.min.js"></script>
 
 
-
     @yield('pagescript')
+    
  </body>
 </html>
 

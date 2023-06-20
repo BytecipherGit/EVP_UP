@@ -62,11 +62,15 @@ Route::get('/basic-info', function () {
 // Route::get('/organization', function () {
 //     return view('superadmin/organization');
 // });
-
+Auth::routes();
 # Employee Login
 Route::get('employee_login',[App\Http\Controllers\Auth\EmployeeLoginController::class, 'index']);
-Route::post('employee_login/form',[App\Http\Controllers\Auth\EmployeeLoginController::class, 'store'])->name('employee.login');
+Route::any('employee_login/form',[App\Http\Controllers\Auth\EmployeeLoginController::class, 'store'])->name('employee.login');
 Route::any('employee_login/logout', [App\Http\Controllers\Auth\EmployeeLoginController::class, 'logout'])->name('employee.logout');
+Route::get('employee_login/forgot-password', [App\Http\Controllers\Auth\EmployeeLoginController::class, 'create'])->name('emppassword.request');
+Route::post('employee_login/forgot-password', [App\Http\Controllers\Auth\EmployeeLoginController::class, 'storePassword'])->name('emppassword.email');
+Route::get('employee_login/reset-password/{token}/{email?}', [App\Http\Controllers\Auth\EmployeeLoginController::class, 'showResetPasswordForm'])->name('reset.password.get');
+Route::post('employee_login/reset-password', [App\Http\Controllers\Auth\EmployeeLoginController::class, 'submitResetPasswordForm'])->name('reset.password.post');
 
 
 # Employee Panel After Login
@@ -96,10 +100,10 @@ Route::get('/email-config/{id?}', [App\Http\Controllers\InviteempController::cla
 Route::get('/basic_info/{id?}/{segment?}', [App\Http\Controllers\InviteempController::class, 'getInviteEmployeeDetails'])->name('basic-info');
 Route::post('/basic-info/{id?}', [App\Http\Controllers\InviteempController::class, 'getInviteDetails']);
 
-# SuperAdmin Login
-    Route::get('admin',[App\Http\Controllers\SuperAdminController::class, 'index'])->name('admin');
-    Route::post('admin/form',[App\Http\Controllers\SuperAdminController::class, 'store'])->name('admin.login');
-    Route::get('logout', [App\Http\Controllers\SuperAdminController::class, 'destroy'])->name('superadmin.logout');
+   # SuperAdmin Login
+    // Route::get('admin',[App\Http\Controllers\SuperAdminController::class, 'index'])->name('admin');
+    // Route::post('admin/form',[App\Http\Controllers\SuperAdminController::class, 'store'])->name('admin.login');
+    // Route::get('logout', [App\Http\Controllers\SuperAdminController::class, 'destroy'])->name('superadmin.logout');
 
         // Route::get('admin', [App\Http\Controllers\SuperAdminController::class, 'superAdminLogin']);
 
@@ -130,9 +134,11 @@ Route::middleware([SuperAdmin::class])->group(function () {
      
     });
 
-Auth::routes();
-Route::middleware([Admin::class])->group(function () {
 
+// Route::middleware([Admin::class])->group(function () {
+
+   Route::group(['middleware' => ['admin','subscription']], function()
+    {
     Route::get('/dashboard', [App\Http\Controllers\AdminController::class, 'index'])->name('dashboard')->middleware('documents');
     // Route::get('admin/logout', [App\Http\Controllers\AdminController::class, 'logout'])->name('admin.logout')->middleware('documents');
     Route::get('/add-employee/{id?}', [App\Http\Controllers\EmployeeController::class, 'index'])->middleware('documents');
@@ -277,17 +283,14 @@ Route::middleware([Admin::class])->group(function () {
     Route::any('edit_skills/update/{id?}', [App\Http\Controllers\NewEmployeeController::class, 'updateSkills'])->middleware('documents');
     Route::any('edit_language/update/{id?}', [App\Http\Controllers\NewEmployeeController::class, 'updateLanguage'])->middleware('documents');
 
-    // subscription
-
-
-    Route::any('company_suscription', [App\Http\Controllers\CompanySubscriptionController::class, 'index'])->name('company.suscription');
-    Route::any('subscription_get', [App\Http\Controllers\CompanySubscriptionController::class, 'createSubscription'])->name('subscription.get');
-    Route::post('subscription/destroy', [App\Http\Controllers\PaymentController::class, 'deleteSubscription']);
-    Route::post('razorpay_payment',[App\Http\Controllers\PaymentController::class,'getPaySuccess'])->name('razorpay.payment.store');
-    Route::post('razorpay_recurring_payment', [App\Http\Controllers\PaymentController::class, 'createRecurringSubscriptionPayment']);
-
 });
 
+  // subscription
+Route::any('company_suscription', [App\Http\Controllers\CompanySubscriptionController::class, 'index'])->name('company.suscription');
+Route::any('subscription_get', [App\Http\Controllers\CompanySubscriptionController::class, 'createSubscription'])->name('subscription.get');
+Route::post('subscription/destroy', [App\Http\Controllers\PaymentController::class, 'deleteSubscription']);
+Route::post('razorpay_payment',[App\Http\Controllers\PaymentController::class,'getPaySuccess'])->name('razorpay.payment.store');
+Route::post('razorpay_recurring_payment', [App\Http\Controllers\PaymentController::class, 'createRecurringSubscriptionPayment']);
 
 
 Route::get('reload-captcha', [App\Http\Controllers\Auth\RegisteredUserController::class, 'reloadCaptcha'])->name('reloadCaptcha');

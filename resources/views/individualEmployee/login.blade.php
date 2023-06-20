@@ -56,11 +56,12 @@
                         <div class="form-group">
                             <div class="forg-box">
                                 <label for="remember" class="inline-flex items-center">
-                                    <input id="remember" type="checkbox" name="remember"> </label>
+                                    <input id="remember" type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> </label>
                                 <label for="remember">Remember me</label>
-
+                              
+                        
                       @if (Route::has('password.request'))
-                            <a href="{{ route('password.request') }}">Forgot Password?</a>
+                            <a href="{{ route('emppassword.request') }}">Forgot Password?</a>
                        @endif
                             </div>
                         </div>

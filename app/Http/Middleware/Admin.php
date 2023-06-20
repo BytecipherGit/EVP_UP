@@ -20,13 +20,17 @@ class Admin
      */
     public function handle(Request $request, Closure $next)
     {
+        // dd('hii');
         if (!Auth::check()) {
             return redirect()->route('login');
         }
 
         if (Auth::user()->role == 'admin') {
             return $next($request);
+        } else{
+            return redirect()->route('superadmin.index');
         }
+       
 
     }
 }

@@ -33,18 +33,23 @@ class AdminController extends Controller
                     ->where('company_employee.status', 2)->where('company_employee.company_id',Auth::user()->id)->count();
 
         // dd($allemployee);
-        if (Auth::check()) {
-            $userRole = User::find(Auth::user()->id);
+        // if (Auth::check()) {
+        //     $userRole = User::find(Auth::user()->id);
+        //     if($userRole->role != 'admin'){
+        //         return redirect('login');
+        //      }
+        //     return view('company/index',compact('current','empinvite','allemployee'));
+        // } else {
+        //     return view('auth.login');
+        // }   
 
-            // dd($userRole->role);
-            if($userRole->role != 'admin'){
-                return redirect('login');
-             }
+        if (Auth::check() && Auth::user()->role == 'admin') {
+            // return redirect()->intended(RouteServiceProvider::ADMIN);
             return view('company/index',compact('current','empinvite','allemployee'));
+            
         } else {
             return view('auth.login');
         }
-       
     }
 
     public function getPasswordReset()

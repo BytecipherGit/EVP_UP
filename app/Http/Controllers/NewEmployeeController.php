@@ -150,12 +150,13 @@ class NewEmployeeController extends Controller
                         'verification_type'=> $statusVerification,
                         'third_party_document'=>!empty($uploadThirdPartyDocument) ? $uploadThirdPartyDocument : null,
                         'third_party_verification'=> $statusThirdPartyVerification,
-                        'password'=> str_replace("-", "", Hash::make($request->dob))
+                        'password'=> str_replace('-', '', Hash::make($request->dob))
                     ];
 
                     $employee = Employee::create($insert);
 
-// dd($employee);
+        //    dd($employee->password);
+
                     if (!empty($employee)) {
                         
                         $employeeData = Employee::where('empCode',$empCode)->first();

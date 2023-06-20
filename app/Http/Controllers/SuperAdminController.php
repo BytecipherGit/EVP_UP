@@ -41,13 +41,13 @@ class SuperAdminController extends Controller
      */
     public function index()
     {
-
-        if (!Auth::check()) {
-            return view('auth.superadminlogin');
+        if (Auth::check() && Auth::user()->role == 'superadmin') {
+            return redirect()->intended(RouteServiceProvider::SUPERADMIN);
+            
         } else {
-            return redirect('admin/dashboard');
+            return view('auth.superadminlogin');
         }
-       
+  
     }
 
     use AuthenticatesUsers;
@@ -395,9 +395,7 @@ class SuperAdminController extends Controller
     
           Auth::guard('web')->logout();
   
-          $request->session()->invalidate();
-  
-          $request->session()->regenerateToken();
+        //   $request->session()->invalidate();
   
           return redirect('admin');
       }

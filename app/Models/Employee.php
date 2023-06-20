@@ -48,5 +48,6 @@ class Employee extends Model implements Authenticatable
         'password',
         'remember_token',
     ];
+    
     public $guarded = ['id'];
 }

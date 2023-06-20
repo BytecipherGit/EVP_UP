@@ -33,6 +33,12 @@ Route::middleware('guest')->group(function () {
 
     Route::post('reset-password', [NewPasswordController::class, 'store'])
                 ->name('password.store');
+
+    # Superadmin login routes
+
+    Route::get('admin',[App\Http\Controllers\SuperAdminController::class, 'index'])->name('admin');
+    Route::post('admin/form',[App\Http\Controllers\SuperAdminController::class, 'store'])->name('admin.login');
+    Route::get('logout', [App\Http\Controllers\SuperAdminController::class, 'destroy'])->name('superadmin.logout');
 });
 
 Route::middleware('auth')->group(function () {

@@ -25,6 +25,8 @@ class SuperAdmin
 
         if (Auth::user()->role == 'superadmin') {
             return $next($request);
+        }else{
+            return redirect('login');
         }
        
     }
