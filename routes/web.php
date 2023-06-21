@@ -55,13 +55,7 @@ Route::get('/invite-confirm', function () {
     return view('org-invite/invite-confirm');
 });
 
-Route::get('/basic-info', function () {
-    return view('org-invite/basic-info');
-});
 
-// Route::get('/organization', function () {
-//     return view('superadmin/organization');
-// });
 Auth::routes();
 # Employee Login
 Route::get('employee_login',[App\Http\Controllers\Auth\EmployeeLoginController::class, 'index']);
@@ -137,8 +131,7 @@ Route::middleware([SuperAdmin::class])->group(function () {
 
 // Route::middleware([Admin::class])->group(function () {
 
-   Route::group(['middleware' => ['admin','subscription']], function()
-    {
+   Route::group(['middleware' => ['admin','subscription']], function(){
     Route::get('/dashboard', [App\Http\Controllers\AdminController::class, 'index'])->name('dashboard')->middleware('documents');
     // Route::get('admin/logout', [App\Http\Controllers\AdminController::class, 'logout'])->name('admin.logout')->middleware('documents');
     Route::get('/add-employee/{id?}', [App\Http\Controllers\EmployeeController::class, 'index'])->middleware('documents');
@@ -172,7 +165,7 @@ Route::middleware([SuperAdmin::class])->group(function () {
     Route::get('/download_expletter_doc/{id?}', [App\Http\Controllers\InviteempController::class, 'downloadExpDoc'])->middleware('documents');
     Route::get('/download_identity_doc/{id?}', [App\Http\Controllers\InviteempController::class, 'downloadIdDoc'])->middleware('documents');
 
-    Route::get('/schedule_interview', [InterviewEmployee::class, 'index'])->name('schedule.interview')->middleware('documents');
+    Route::get('/schedule_interview', [InterviewEmployee::class, 'index'])->name('schedule.interview');
     Route::any('interview-round-details/{id?}', [InterviewEmployee::class, 'interviewRoundDetails'])->name('interview.round.details')->middleware('documents');
     Route::any('/schedule-interview/form/{id?}', [InterviewEmployee::class, 'getScheduleInterviewForm'])->middleware('documents');
     Route::any('/schedule-searchemployee-interview/form/{id?}', [InterviewEmployee::class, 'getSearchEmpInterviewForm'])->middleware('documents');
@@ -182,18 +175,13 @@ Route::middleware([SuperAdmin::class])->group(function () {
     Route::post('schedule-interview/deleteInterview', [InterviewEmployee::class, 'deleteInterview'])->middleware('documents');
     Route::post('schedule-interview/sendReminderForInterview', [InterviewEmployee::class, 'sendReminderForInterview'])->middleware('documents');
     Route::get('schedule_phone_interview', [InterviewEmployee::class, 'schedulePhoneInterview'])->middleware('documents');
-    Route::post('interview/declined/{id?}', [InterviewEmployee::class, 'declineInterview'])->middleware('documents');
+  
     Route::post('interview/newtime/{id?}', [InterviewEmployee::class, 'suggestNewTime'])->middleware('documents');
-    Route::get('interview/confirmed/{id?}', [InterviewEmployee::class, 'interviewConfirmed'])->name('interview.confirmed')->middleware('documents');
+   
     Route::post('schedule-interview/changeInterviewerStatus', [InterviewEmployee::class, 'update_interviewer_status'])->middleware('documents');
-    
-    Route::get('offer/accepted/{id?}', [App\Http\Controllers\EmployeeStatusController::class, 'offerSendAcceptStatus'])->name('offer.accepted')->middleware('documents');
-    Route::get('offer/declined/{id?}', [App\Http\Controllers\EmployeeStatusController::class, 'offerSendDeclineStatus'])->name('offer.declined')->middleware('documents');
-    Route::post('offer_send/declined', [App\Http\Controllers\EmployeeStatusController::class, 'createOfferDeclinedFromMail'])->name('offer.declined_form')->middleware('documents');
-
     Route::get('interview/newtime/{id?}', [InterviewEmployee::class, 'interviewNewTime'])->name('interview.newtime')->middleware('documents');
-    Route::get('interview/declined/{id?}', [InterviewEmployee::class, 'interviewDeclined'])->name('interview.declined')->middleware('documents');
-    Route::post('interview/replied', [InterviewEmployee::class, 'interviewRepliedFromMail'])->name('interview.replied.mail')->middleware('documents');
+  
+   
     Route::get('interview_process', [InterviewProcess::class, 'index'])->name('interview.process.index')->middleware('documents');
     Route::any('interview_process/form/{id?}', [InterviewProcess::class, 'getInterviewProcessForm'])->middleware('documents');
     Route::post('interview_process/submit', [InterviewProcess::class, 'createInterviewProcess'])->middleware('documents');
@@ -261,29 +249,40 @@ Route::middleware([SuperAdmin::class])->group(function () {
     Route::any("exit-employee/submit/{id?}", [App\Http\Controllers\ExitEmployeeProcess::class, 'createExitEmployee'])->name('exit.employee.create')->middleware('documents');
     Route::post('exit-employee/update', [App\Http\Controllers\ExitEmployeeProcess::class, 'updateExtEmployee'])->middleware('documents');
 
-    //new employee form for testing
-    Route::get("employee_info/{id?}/{segment?}", [App\Http\Controllers\NewEmployeeController::class, 'index'])->name('basicinfo.index')->middleware('documents');
-    Route::any('employee/submit/{id?}', [App\Http\Controllers\NewEmployeeController::class, 'createEmployee'])->middleware('documents');
-    Route::post('employee_info/update', [App\Http\Controllers\NewEmployeeController::class, 'updateEmployee'])->middleware('documents');
-
-    Route::any('qualification/submit/{id?}', [App\Http\Controllers\NewEmployeeController::class, 'createEmployeeQualification'])->middleware('documents');
-    Route::post('qualification/form/update', [App\Http\Controllers\NewEmployeeController::class, 'updateEmployeeQualification'])->middleware('documents');
-    
-    Route::any('workhistory/submit/{id?}', [App\Http\Controllers\NewEmployeeController::class, 'createEmployeeWorkhistory'])->middleware('documents');
-    Route::post('workhistory/form/update', [App\Http\Controllers\NewEmployeeController::class, 'updateEmployeeWorkhistory'])->middleware('documents');
-
-    Route::any('employee_skills/submit/{id?}', [App\Http\Controllers\NewEmployeeController::class, 'createEmployeeSkills'])->middleware('documents');
-    Route::post('employee_skills/form/update', [App\Http\Controllers\NewEmployeeController::class, 'updateEmployeeSkills'])->middleware('documents');
-    Route::any('add_employee_skills/submit/{id?}', [App\Http\Controllers\NewEmployeeController::class, 'addMoreEmployeeSkills'])->middleware('documents');
-    Route::any('add_employee_lang_skills/submit/{id?}', [App\Http\Controllers\NewEmployeeController::class, 'addMorelangEmployeeSkills'])->middleware('documents');
-
-    Route::any('employee_official/submit/{id?}', [App\Http\Controllers\NewEmployeeController::class, 'createEmployeeOfficial'])->middleware('documents');
-    Route::post('employee_official/form/update', [App\Http\Controllers\NewEmployeeController::class, 'updateEmployeeOfficial'])->middleware('documents');
-
-    Route::any('edit_skills/update/{id?}', [App\Http\Controllers\NewEmployeeController::class, 'updateSkills'])->middleware('documents');
-    Route::any('edit_language/update/{id?}', [App\Http\Controllers\NewEmployeeController::class, 'updateLanguage'])->middleware('documents');
+   
 
 });
+
+    //new employee form for testing
+    Route::get("employee_info/{id?}/{segment?}", [App\Http\Controllers\NewEmployeeController::class, 'index'])->name('basicinfo.index');
+    Route::any('employee/submit/{id?}', [App\Http\Controllers\NewEmployeeController::class, 'createEmployee']);
+    Route::post('employee_info/update', [App\Http\Controllers\NewEmployeeController::class, 'updateEmployee']);
+
+    Route::any('qualification/submit/{id?}', [App\Http\Controllers\NewEmployeeController::class, 'createEmployeeQualification']);
+    Route::post('qualification/form/update', [App\Http\Controllers\NewEmployeeController::class, 'updateEmployeeQualification']);
+    
+    Route::any('workhistory/submit/{id?}', [App\Http\Controllers\NewEmployeeController::class, 'createEmployeeWorkhistory']);
+    Route::post('workhistory/form/update', [App\Http\Controllers\NewEmployeeController::class, 'updateEmployeeWorkhistory']);
+
+    Route::any('employee_skills/submit/{id?}', [App\Http\Controllers\NewEmployeeController::class, 'createEmployeeSkills']);
+    Route::post('employee_skills/form/update', [App\Http\Controllers\NewEmployeeController::class, 'updateEmployeeSkills']);
+    Route::any('add_employee_skills/submit/{id?}', [App\Http\Controllers\NewEmployeeController::class, 'addMoreEmployeeSkills']);
+    Route::any('add_employee_lang_skills/submit/{id?}', [App\Http\Controllers\NewEmployeeController::class, 'addMorelangEmployeeSkills']);
+
+    Route::any('employee_official/submit/{id?}', [App\Http\Controllers\NewEmployeeController::class, 'createEmployeeOfficial']);
+    Route::post('employee_official/form/update', [App\Http\Controllers\NewEmployeeController::class, 'updateEmployeeOfficial']);
+
+    Route::any('edit_skills/update/{id?}', [App\Http\Controllers\NewEmployeeController::class, 'updateSkills']);
+    Route::any('edit_language/update/{id?}', [App\Http\Controllers\NewEmployeeController::class, 'updateLanguage']);
+
+   # Email routes for send employee or company
+    Route::get('interview/confirmed/{id?}', [InterviewEmployee::class, 'interviewConfirmed'])->name('interview.confirmed');
+    Route::post('interview/replied', [InterviewEmployee::class, 'interviewRepliedFromMail'])->name('interview.replied.mail');
+    Route::post('interview/declined/{id?}', [InterviewEmployee::class, 'declineInterview']);
+    Route::get('interview/declined/{id?}', [InterviewEmployee::class, 'interviewDeclined'])->name('interview.declined');
+    Route::get('offer/accepted/{id?}', [App\Http\Controllers\EmployeeStatusController::class, 'offerSendAcceptStatus'])->name('offer.accepted');
+    Route::get('offer/declined/{id?}', [App\Http\Controllers\EmployeeStatusController::class, 'offerSendDeclineStatus'])->name('offer.declined');
+    Route::post('offer_send/declined', [App\Http\Controllers\EmployeeStatusController::class, 'createOfferDeclinedFromMail'])->name('offer.declined_form');
 
   // subscription
 Route::any('company_suscription', [App\Http\Controllers\CompanySubscriptionController::class, 'index'])->name('company.suscription');

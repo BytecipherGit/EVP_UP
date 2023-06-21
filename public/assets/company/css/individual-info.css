@@ -1043,3 +1043,40 @@ header .navbar-light .navbar-nav .indHoverRemove:focus, .navbar-light .navbar-na
   font-size: 14px;
   line-height: 24px;
 }
+
+.btn-primaryDoc{
+  color: #007bff  !important;
+  background-color: transparent !important;
+  border-color: #007bff !important;
+  width: 29% !important;
+  margin: 5px !important;
+  outline: none !important;
+  padding: 13px 9px !important;
+  font-size: 12px !important;
+  line-height: 23px !important;
+}
+
+.add-emply-details h2 {
+  padding:0 0 12px;
+  border-bottom: 1px solid #E4E6E4;
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 28px;
+  color: #31393F;
+  display: flex;
+  margin:0 0 25px;
+  cursor: pointer;  
+}
+.on-head-right{
+  cursor: pointer;
+}
+.on-head-right small{
+  font-size: 16px;
+  color: #5533FF;
+  margin-left:4px;
+}
+.on-head-right img {
+  border: 1px solid #5533FF;
+  padding: 5px;
+  border-radius: 50%;
+}

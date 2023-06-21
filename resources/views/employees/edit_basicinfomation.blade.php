@@ -92,13 +92,10 @@
         <div class="col-xl-3 col-lg-6 col-md-12">
             <div class="form-group">
                 <label>Select Gender<span style="color:red">*</span></label>
-
-                {{-- <div class="selectBox__value">Select Gender</div> --}}
-
                 <select class="form-control" name="gender" id="gender">
-                    <option value="{{ $employeeExists ? $employeeExists->gender : '' }}">{{ $employeeExists ? $employeeExists->gender : ' Select Gender' }}</option>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
+                    {{-- <option value="{{ $employeeExists ? $employeeExists->gender : '' }}">{{ $employeeExists ? $employeeExists->gender : ' Select Gender' }}</option> --}}
+                    <option value="Male" {{ $employeeExists->gender == 'Male' ? 'selected' : '' }}>Male</option>
+                    <option value="Female" {{ $employeeExists->gender == 'Female' ? 'selected' : '' }}>Female</option>
                 </select>
                 <strong class="error" id="gender-error"></strong>
             </div>
@@ -116,9 +113,9 @@
                 <strong class="error" id="marital_status-error"></strong>
             </div>
         </div>
-
+      @if($companyEmployeeExist->status != '2')
         <div class="col-md-12">
-            <h4>Pan Card <span style="color:red">*</span></h4>     
+            <h4>Pan Card </h4>     
         </div>
 
         <div class="col-xl-5 col-lg-6 col-md-12">
@@ -131,7 +128,7 @@
 
         <div class="col-xl-5 col-lg-6 col-md-12">
             <div class="form-group">
-                <label>Pan Card Id<span style="color:red">*</span></label>
+                <label>Pan Card Id</label>
                 <input type="file" id="pan_card_id" name="pan_card_id" value="{{ $employeeExists ? $employeeExists->pan_card_id : '' }}" class="form-control" accept="image/jpeg,image/doc,image/pdf" >
                 <strong class="error" id="pan_card_id-error"></strong>
                 {{-- @if(!empty($employeeExists->pan_card_id))
@@ -150,7 +147,7 @@
         </div>
 
         <div class="col-md-12">
-            <h4>Aadhar Card <span style="color:red">*</span></h4>     
+            <h4>Aadhar Card </h4>     
         </div>
 
         <div class="col-xl-5 col-lg-6 col-md-12">
@@ -163,7 +160,7 @@
 
         <div class="col-xl-5 col-lg-6 col-md-12">
             <div class="form-group">
-                <label>Aadhar Card Id<span style="color:red">*</span></label>
+                <label>Aadhar Card Id</label>
                 <input type="file" id="aadhar_card_id" name="aadhar_card_id" value="{{ $employeeExists ? $employeeExists->aadhar_card_id : '' }}" class="form-control" accept="image/jpeg,image/doc,image/pdf" >
                 <strong class="error" id="aadhar_card_id-error"></strong>
                 {{-- @if(!empty($employeeExists->aadhar_card_id))
@@ -182,7 +179,7 @@
         </div>
 
         <div class="col-md-12">
-            <h4>Passport <span style="color:red">*</span></h4>     
+            <h4>Passport </h4>     
         </div>
 
         <div class="col-xl-5 col-lg-6 col-md-12">
@@ -195,7 +192,7 @@
 
         <div class="col-xl-5 col-lg-6 col-md-12">
             <div class="form-group">
-                <label>Passport Id<span style="color:red">*</span></label>
+                <label>Passport Id</label>
                 <input type="file" id="passport_id" name="passport_id" value="{{ $employeeExists ? $employeeExists->passport_id : '' }}" class="form-control" accept="image/jpeg,image/doc,image/pdf" >
                 <strong class="error" id="passport_id-error"></strong>
                 {{-- @if(!empty($employeeExists->passport_id))
@@ -213,7 +210,7 @@
             </div>
         </div>
 
-        <div class="col-xl-6 col-lg-6 col-md-12">
+        <div class="col-xl-5 col-lg-6 col-md-12">
             <div class="form-group">
                 <label class="exitonboard doc"> <input type="checkbox" name="verification_type" class="checkboxexitform" <?php  if ($employeeExists->verification_type == '1') { ?> checked <?php } ?>/>Document Verification</label>
             </div>
@@ -232,7 +229,7 @@
                     <input type="checkbox" name="third_party_verification" class="checkboxexitform" <?php  if ($employeeExists->third_party_verification == '1') { ?> checked <?php } ?>> 3rd Party Verification </label>
             </div>
         </div>
-
+   @endif
         <div class="col-xl-6 col-lg-6 col-md-12">
             <div class="form-group">
                 <label for="current_address">Current Address<span style="color:red">*</span></label>

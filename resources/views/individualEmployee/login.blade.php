@@ -31,8 +31,8 @@
                         <div class="d-flex close-butn">
                             <a href="/"><img src="{{ asset('assets') }}/company/images/back-icon.png"></a>
                         </div>
-                        <h1>Welcome Guest</h1>
-                        <h6>Log in to your account</h6>
+                        <h1>Welcome to EVP</h1>
+                        <h6>Employee log in to your account</h6>
 
                         <div class="form-group">
                             <label>Email Address</label>

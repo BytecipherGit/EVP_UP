@@ -124,7 +124,7 @@
         </div>
     
         <div class="col-md-12">
-            <h4> Pan Card <span style="color:red">*</span></h4>     
+            <h4> Pan Card </h4>     
         </div>
 
 
@@ -145,7 +145,7 @@
         </div>
 
         <div class="col-md-12">
-            <h4>Aadhar Card <span style="color:red">*</span></h4>     
+            <h4>Aadhar Card </h4>     
         </div>
 
         <div class="col-xl-6 col-lg-6 col-md-12">
@@ -165,7 +165,7 @@
         </div>
 
         <div class="col-md-12">
-            <h4>Passport <span style="color:red">*</span></h4>     
+            <h4>Passport </h4>     
         </div>
 
         <div class="col-xl-6 col-lg-6 col-md-12">

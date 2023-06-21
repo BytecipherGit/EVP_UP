@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('emp_type')->nullable();
             $table->string('work_location')->nullable();
             $table->boolean('emp_status')->default(0)->comment('1 Active, 0 Inactive');
+            // $table->enum('emp_status',['Active','Inactive'])->comment('Active / Inactive')->default('Inactive');
             $table->string('lpa')->nullable();
             $table->string('designation')->nullable();
             $table->timestamps();

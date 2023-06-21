@@ -49,7 +49,7 @@
                 aria-expanded="false">
                 <img src="{{ asset('assets') }}/admin/images/marvin-kinney-profile.png">
                 <span class="secondary_color">
-                   {{ Auth::guard('employee')->user()->emg_name }}
+                   {{ Auth::guard('employee')->user()->first_name }}
                 </span>
                 {{-- <img src="{{ asset('assets') }}/admin/images/white-down.png" class="right-doun"> --}}
                 <?xml version="1.0" encoding="UTF-8"?>

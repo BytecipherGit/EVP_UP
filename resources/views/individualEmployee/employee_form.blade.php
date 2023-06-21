@@ -188,8 +188,8 @@
           <div class="tab-pane @if (Request::segment(3) == 'experience') active @endif" id="experience" role="tabpanel">
             <div class="eml-persnal ">
               <div class="add-emply-details">    
-                <h2>Work History <span class="ml-auto on-head-right" data-toggle="modal" data-target="#create_workhistory" href="#" id="workhistory_add"><img src="{{ asset('assets') }}/admin/images/button-plus-clr.png"><small> Add More</small></span></h2>            
-              
+                <h2>Work History <span class="ml-auto on-head-right" data-toggle="modal" data-target="#create_workhistory" href="#" id="workhistory_add"><img src="{{ asset('assets') }}/admin/images/button-plus-clr.png"><small> Add</small></span></h2>            
+                {{-- <span class="ml-auto on-head-right" data-toggle="modal" data-target="#create_qualification" href="#" id="qualification_add"><img src="{{ asset('assets') }}/admin/images/button-plus-clr.png"> <small>Add</small></span> --}}
                 @if ($workExperiences->isEmpty())
                  <p class="no-data-clg">No Data Available</p>
                    @else

@@ -234,7 +234,7 @@ class IndividualEmployeeController extends Controller
 
      if (!empty($employeeID)) {
 
-        if (Auth::check()) {
+       if ($employeeID) {
             $validator = Validator::make($request->all(), [
                 // 'title' => 'required|string|max:255',
                 // 'descriptions' => 'required|string|max:255',
@@ -286,7 +286,6 @@ class IndividualEmployeeController extends Controller
                     ];
 
                     $workhistoryData = Empworkhistory::where('id',$request->id)->update($update);
-
                     if (!empty($workhistoryData)) {
       
                         return redirect('employee_login/dashboard/experience')->with('message','Information added successfully');
@@ -295,11 +294,12 @@ class IndividualEmployeeController extends Controller
                         return Response::json(['success' => '0']);
                     }
                 } else {
-                    return Response::json(['success' => '0']);
+                    return Response::json(['errors' => $validator->errors()]);
+                    
                 }
                 
             } else {
-                return Response::json(['errors' => $validator->errors()]);
+                return Response::json(['success' => '0']);
             }
 
         } else{
