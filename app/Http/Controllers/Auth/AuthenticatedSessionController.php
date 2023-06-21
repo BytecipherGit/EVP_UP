@@ -23,7 +23,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function create(): View
     {
-        // return view('auth.login');
+
         if (!Auth::check()) {
             return view('auth.login');
         } else {
@@ -37,6 +37,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
+        // dd($request->all());
         $request->authenticate();
         $request->session()->regenerate();
         if (Auth::check()) {
@@ -95,7 +96,11 @@ class AuthenticatedSessionController extends Controller
              }
             }
               elseif(Auth::user()->role == 'superadmin') {
-                return redirect()->intended(RouteServiceProvider::SUPERADMIN);
+                Auth::logout();
+                Session::flush();
+                return redirect()->back()->with('message','Incurrect login details.');
+                // return redirect()->intended(RouteServiceProvider::SUPERADMIN);
+                // return redirect()->intended(RouteServiceProvider::ADMIN);
             }
         }
     }   
@@ -107,9 +112,9 @@ class AuthenticatedSessionController extends Controller
     {
         Auth::guard('web')->logout();
 
-        $request->session()->invalidate();
+        // $request->session()->invalidate();
 
-        $request->session()->regenerateToken();
+        // $request->session()->regenerateToken();
 
         return redirect('/');
     }

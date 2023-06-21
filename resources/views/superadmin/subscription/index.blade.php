@@ -19,62 +19,65 @@
         color: #dc3545 !important;
         font-size: 14px;
     }
-    .subscription{
+
+    .subscription {
         border-radius: 12px !important;
     }
-
 </style>
 
 <div class="wapper">
-<!--- Main Container Start ----->
-<div class="main-container">
-    <div class="main-heading">
-        <div class="row">
-            <div class="col-md-8">
-                <h1>Subscriptions</h1>
-            </div>
-            <div class="col-md-4">
-                <div class="main-right-button-box">
-                    <a style="text-decoration:none" href="#" id="createSubscription" class="mr-2 button_background_color"><img src="{{ asset('assets') }}/admin/images/button-plus.png"><span class="button_text_color">Subscription</span></a>
-                    {{-- <a href="#" data-toggle="modal" data-target="#rejectbtninfo">Reject</a> --}}
+    <!--- Main Container Start ----->
+    <div class="main-container">
+        <div class="main-heading">
+            <div class="row">
+                <div class="col-md-8">
+                    <h1>Subscriptions</h1>
+                </div>
+                <div class="col-md-4">
+                    <div class="main-right-button-box">
+                        <a style="text-decoration:none" href="#" id="createSubscription"
+                            class="mr-2 button_background_color"><img
+                                src="{{ asset('assets') }}/admin/images/button-plus.png"><span
+                                class="button_text_color">Subscription</span></a>
+                        {{-- <a href="#" data-toggle="modal" data-target="#rejectbtninfo">Reject</a> --}}
+                    </div>
+                </div>
+                <div id="showHideAlert" class="col-md-8 alert alert-success" role="alert" style="display:none;">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <strong><span id="success_msg"></span> </strong>
                 </div>
             </div>
-            <div id="showHideAlert" class="col-md-8 alert alert-success" role="alert" style="display:none;">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-                <strong><span id="success_msg"></span> </strong>
-            </div>
         </div>
-    </div>
-    <!--- Main Heading ----->
+        <!--- Main Heading ----->
 
-    <div class="employee-view-page">
-        <div class="table-responsive-bg">
-            <div class="row" style="margin-top: 20px;">
-                <div class="col-xs-12">
-                    <table class="table table-bordered subscription_datatable">
-                        <thead class="primary_color">
-                            <tr>
-                                <th class="secondary_color">Subscription Type</th>
-                                <th class="secondary_color">Duration</th>
-                                <th class="secondary_color">Price</th>
-                                <th class="secondary_color">Descriptions</th>
-                                <th class="secondary_color">Status</th>
-                                <th class="secondary_color">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
+        <div class="employee-view-page">
+            <div class="table-responsive-bg">
+                <div class="row" style="margin-top: 20px;">
+                    <div class="col-xs-12">
+                        <table class="table table-bordered subscription_datatable">
+                            <thead class="primary_color">
+                                <tr>
+                                    <th class="secondary_color">Subscription Type</th>
+                                    <th class="secondary_color">Duration</th>
+                                    <th class="secondary_color">Price</th>
+                                    <th class="secondary_color">Descriptions</th>
+                                    <th class="secondary_color">Status</th>
+                                    <th class="secondary_color">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
                 </div>
+
             </div>
-
         </div>
-    </div>
-    <!--- Employeer View Page ----->
+        <!--- Employeer View Page ----->
 
-</div>
-<!--- Main Container Close ----->
+    </div>
+    <!--- Main Container Close ----->
 </div>
 
 <!-- The Modal Interview  -->
@@ -99,7 +102,8 @@
                     <div style="font-size: 16px; display:none;" class="text-success" id="success">Subscription
                         successfully created.</div>
                     <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
-                    <button type="submit" id="" class="btn-primary-cust button_background_color"><span class="button_text_color">Submit</span></button>
+                    <button type="submit" id="" class="btn-primary-cust button_background_color"><span
+                            class="button_text_color">Submit</span></button>
                 </div>
             </div>
         </form>
@@ -153,48 +157,48 @@
 
 
 <script>
-       function update_status(id, status) {
-            var statusMsg = (status) ? "deactivate" : "activate";
-            if (confirm('Are you sure you want to ' + statusMsg + '?')) {
+    function update_status(id, status) {
+        var statusMsg = (status) ? "deactivate" : "activate";
+        if (confirm('Are you sure you want to ' + statusMsg + '?')) {
 
-                $.ajax({
-                    type: 'post',
-                    url: "{{route('update_status')}}",
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    data: 'id=' + id + '&status=' + status,
-                    success: function(data) {
+            $.ajax({
+                type: 'post',
+                url: "{{ route('update_status') }}",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: 'id=' + id + '&status=' + status,
+                success: function(data) {
 
-                        var status = data.status;
-                        var msg = data.msg;
-                        $('#success_msg').html(msg);
-                        if (status == 'success') {
-                            $("#showHideAlert").removeClass('alert-warning');
-                            $("#showHideAlert").addClass('alert-success');
+                    var status = data.status;
+                    var msg = data.msg;
+                    $('#success_msg').html(msg);
+                    if (status == 'success') {
+                        $("#showHideAlert").removeClass('alert-warning');
+                        $("#showHideAlert").addClass('alert-success');
 
-                            var page = window.location.hash.substr(1);
-                            if (page) {
-                                getData(page);
-                            } else {
-                                location.reload();
-                            }   
-                        } 
-                        if (status == 'error') {
-                            $("#showHideAlert").removeClass('alert-success');
-                            $("#showHideAlert").addClass('alert-warning');
+                        var page = window.location.hash.substr(1);
+                        if (page) {
+                            getData(page);
+                        } else {
+                            location.reload();
                         }
-                        $("#showHideAlert").show();
-                        
-                    },
-                    'error': function(data) {
-                        console.log(data);
                     }
-                });
-            }
+                    if (status == 'error') {
+                        $("#showHideAlert").removeClass('alert-success');
+                        $("#showHideAlert").addClass('alert-warning');
+                    }
+                    $("#showHideAlert").show();
 
-
+                },
+                'error': function(data) {
+                    console.log(data);
+                }
+            });
         }
+
+
+    }
 </script>
 
 <script>

@@ -103,19 +103,19 @@ class CompanySubscriptionController extends Controller
 
         $subscription= $this->razorpay->subscription->create(array('plan_id' => $subscriptionCheck->plan_id ,'customer_notify' => 1,'quantity'=> 1, 
         'total_count' => $totalCount,'notes'=> array('key1'=> 'value3','key2'=> 'value2')));
-// dd($subscription);
+      // dd($subscription);
            $updateSubscriptionData = CompanySubscription::where('company_id',Auth::id())
               ->update([
 
                   'company_id' => Auth::id(),
                   'razorpay_subscription_id' =>$subscription->id,
                   'subscription_id' =>  !empty(decrypt($request->id)) ? (decrypt($request->id)) : null,
-                  'subscription_type' => !empty($subscriptionCheck->type) ? $subscriptionCheck->type : null,
-                  'name' => !empty($subscriptionCheck->name) ? $subscriptionCheck->name : null,
-                  'price' => !empty($subscriptionCheck->price) ? $subscriptionCheck->price : null, 
-                  'description' => !empty($subscriptionCheck->description) ? $subscriptionCheck->description : null,
-                  'start_date' => Carbon::now()->format('Y-m-d'),
-                  'end_date' => Carbon::now()->addDays($duration)->format('Y-m-d'),
+                  // 'subscription_type' => !empty($subscriptionCheck->type) ? $subscriptionCheck->type : null,
+                  // 'name' => !empty($subscriptionCheck->name) ? $subscriptionCheck->name : null,
+                  // 'price' => !empty($subscriptionCheck->price) ? $subscriptionCheck->price : null, 
+                  // 'description' => !empty($subscriptionCheck->description) ? $subscriptionCheck->description : null,
+                  // 'start_date' => Carbon::now()->format('Y-m-d'),
+                  // 'end_date' => Carbon::now()->addDays($duration)->format('Y-m-d'),
                   'subscription_status' => 'Created',
         
             ]);

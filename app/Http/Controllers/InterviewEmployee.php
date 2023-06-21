@@ -1294,34 +1294,26 @@ class InterviewEmployee extends Controller
           
             $interview->interviewer_status = $request->interview_status;
 
-            if ($interview->save()) {
-                return Response::json(['success' => '1']);
-            } else {
-                return Response::json(['success' => '0']);
-            }
-            dd($interview);
-        }
-        else {
-            return Response::json(['success' => '0']);
-        }
+        if ($interview->save()) {
 
-        $config = array(
-            'driver'     => $emailDetails->driver,
-            'host'       => $emailDetails->host,
-            'port'       => $emailDetails->port,
-            'from'       => array('address' => $emailDetails->from_address, 'name' => $emailDetails->from_name),
-            'encryption' => $emailDetails->encryption,
-            'username'   => $emailDetails->username,
-            'password'   => $emailDetails->password,
-            'sendmail'   => '/usr/sbin/sendmail -bs',
-            'pretend'    => false,
-        );
-        Config::set('mail', $config);
+            $emailDetails = HelpersHelper::getSmtpConfig(Auth::id());
+            $config = array(
+                'driver'     => $emailDetails->driver,
+                'host'       => $emailDetails->host,
+                'port'       => $emailDetails->port,
+                'from'       => array('address' => $emailDetails->from_address, 'name' => $emailDetails->from_name),
+                'encryption' => $emailDetails->encryption,
+                'username'   => $emailDetails->username,
+                'password'   => $emailDetails->password,
+                'sendmail'   => '/usr/sbin/sendmail -bs',
+                'pretend'    => false,
+            );
+            Config::set('mail', $config);
 
         // if (!empty($request->interview_id) && !empty($request->status)) {
             $candidate = Employee::join('interview_employees','interview_employees.employee_id','=','employee.id')
                          ->join('interview_employee_rounds','interview_employees.id','=','interview_employee_rounds.interview_employees_id')
-                         ->where('interview_employee_rounds.company_id',Auth::id())->where('interview_employee_rounds.interview_employees_id',$request->interview_id)->first();
+                         ->where('interview_employee_rounds.company_id',Auth::id())->where('interview_employee_rounds.id',$request->interview_id)->first();
             $templateData = CompanyEmailTemplate::where('company_id',Auth::id())->first();     
   
 // dd($candidate);
@@ -1350,7 +1342,17 @@ class InterviewEmployee extends Controller
             // ];
 
             FacadesMail::to($candidate->email)->send(new NotQualifiedEmailTemplate($mailDataTemplate));
+          }else{
+                return Response::json(['success' => '0']);
+            }
+
+        } else {
+            return Response::json(['success' => '0']);
         }
+    }
+    else {
+        return Response::json(['success' => '0']);
+    }
 
     }
 
@@ -1414,11 +1416,12 @@ class InterviewEmployee extends Controller
         Config::set('mail', $config);
 
         if (!empty($request->interviewId)) {
-            $interview = EmployeeInterview::find($request->interviewId);
+            $interview = EmployeeInterview::join('employee', 'employee.id', '=', 'interview_employees.employee_id')->select('employee.*')
+                            ->where('interview_employees.id', $request->interviewId)->first();
             $interviewer = EmployeeInterview::join('interview_employee_rounds', 'interview_employee_rounds.interview_employees_id', '=', 'interview_employees.id')
-                ->join('employee', 'employee.id', '=', 'interview_employee_rounds.interviewer_id')->select('employee.*')
-                ->where('interview_employees.id', $request->interviewId)->first();
-
+                            ->join('employee', 'employee.id', '=', 'interview_employee_rounds.interviewer_id')->select('employee.*')
+                            ->where('interview_employees.id', $request->interviewId)->first();
+// dd($interviewer);
             if (!empty($interview->email) && !empty($interviewer->email)) {
                 $mailData = [
                     'name' => !empty($interview->first_name) ? $interview->first_name . ' ' . $interview->last_name : '',

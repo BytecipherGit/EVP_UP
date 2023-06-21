@@ -371,7 +371,7 @@
                     @if (session('logo'))
                         <img src="{{ session('logo') }}">
                 </a>
-            @else
+                  @else
                 <img src="{{ asset('assets') }}/admin/images/logo.png"></a>
                 @endif
 

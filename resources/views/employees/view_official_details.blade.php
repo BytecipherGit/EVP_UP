@@ -44,9 +44,9 @@
                      <div class="form-group">
                          <label>Employee Status<span style="color:red">*</span></label>
                          <select class="form-control" name="emp_status" id="emp_status">
-                             <option value="{{ $employeeOfficials ? $employeeOfficials->emp_status : ''}}">{{ $employeeOfficials ? $employeeOfficials->emp_status : 'Select status'}}</option>
-                             <option value="1">Active</option>
-                             <option value="0">Inactive</option>
+                             {{-- <option value="{{ $employeeOfficials ? $employeeOfficials->emp_status : ''}}">{{ $employeeOfficials ? $employeeOfficials->emp_status : 'Select status'}}</option> --}}
+                             <option value="1" {{ $employeeOfficials->emp_status == '1' ? 'selected' : '' }}>Active</option>
+                             <option value="0" {{ $employeeOfficials->emp_status == '0' ? 'selected' : '' }}>Inactive</option>
                          </select>
                          <strong class="error" id="emp_status-error"></strong>
                      </div>

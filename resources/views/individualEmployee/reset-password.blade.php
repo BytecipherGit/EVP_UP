@@ -14,17 +14,19 @@
 <!-- Main Container -->
 <div class="col-md-6 align-self-center pad-0 form-section">
           <div class="cover-box-txt"> 
-            <form method="POST" action="{{ route('password.store') }}">
+            <form method="POST" action="{{ route('reset.password.post') }}">
                 @csrf
 
-                <input type="hidden" name="token" value="{{ $request->token }}">
+                {{-- <input type="hidden" name="email" value="{{ $request->token }}"> --}}
+                <input type="hidden" name="token" value="{{ $token }}">
+
               <img src="{{ asset('assets') }}/company/images/logo.png" class="login-logo">
               <h1>Reset Your Password</h1>  
               
               <div class="form-group">     
                 <div class="effect-box">
                     {{-- <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label> --}}
-                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" placeholder="Enter Your Email" name="email" value="{{ $request->email ?? old('email') }}" required autocomplete="email" autofocus>
+                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" placeholder="Enter Your Email" name="email" value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus>
                   <span><i class="fa fa-lock"></i></span>
                   @error('email')
                   <span class="invalid-feedback" role="alert">

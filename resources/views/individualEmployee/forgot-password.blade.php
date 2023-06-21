@@ -11,7 +11,7 @@
             {{ session('status') }}
         </div>
         @endif
-      <form method="POST" action="{{ route('password.email') }}">
+      <form method="POST" action="{{ route('emppassword.email') }}">
         @csrf
 
         <input type="hidden" name="token" value="">
@@ -32,10 +32,11 @@
           <button type="submit"> Send Me Email</button>
         </div>
         <div class="form-group">
-          <h6>© 2022 ByteCipher Pvt. Ltd.</h6>
+          <h6>© 2023 ByteCipher Pvt. Ltd.</h6>
         </div>
 
       </form>
     </div>
   </div>   
+
   @endsection

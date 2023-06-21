@@ -122,48 +122,82 @@
                 <strong class="error" id="marital_status-error"></strong>
             </div>
         </div>
-        <div class="col-xl-3 col-lg-6 col-md-12">
+    
+        <div class="col-md-12">
+            <h4> Pan Card </h4>     
+        </div>
+
+
+        <div class="col-xl-6 col-lg-6 col-md-12">
             <div class="form-group">
-                <label>Document Type<span style="color:red">*</span></label>
-                <select name="document_type" class="form-control" id="document_type">
-                    <option value="{{ old('document_type') }}">{{ old('document_type') ? old('document_type'): 'Select Document Type'}}</option>
-                    <option value="Pan Card">Pan Card</option>
-                    <option value="Aadhar Card">Aadhar Card</option>
-                    <option value="Passport">Passport</option>
-                </select>
-                <strong class="error" id="document_type-error"></strong>
+                <label>Pan Card Number<span style="color:red">*</span></label>
+                <input type="text" name="pan_card_number" class="form-control" value="{{ old('pan_card_number') }}" placeholder="Enter pan card number">
+                <strong class="error" id="pan_card_number-error"></strong>
             </div>
         </div>
 
-        <div class="col-xl-3 col-lg-6 col-md-12">
+        <div class="col-xl-6 col-lg-6 col-md-12">
             <div class="form-group">
-                <label>Document Number<span style="color:red">*</span></label>
-                <input type="text" name="document_number" class="form-control" value="{{ old('document_number') }}" placeholder="Enter document number">
-                <strong class="error" id="document_number-error"></strong>
+                <label>Pan Card Id<span style="color:red">*</span></label>
+                <input type="file" id="pan_card_id" name="pan_card_id" value="{{ old('pan_card_id') }}" class="form-control" accept="image/jpeg,image/doc,image/pdf" >
+                <strong class="error" id="pan_card_id-error"></strong>
             </div>
         </div>
 
-        <div class="col-xl-3 col-lg-6 col-md-12">
+        <div class="col-md-12">
+            <h4>Aadhar Card </h4>     
+        </div>
+
+        <div class="col-xl-6 col-lg-6 col-md-12">
             <div class="form-group">
-                <label>Document Id<span style="color:red">*</span></label>
-                <input type="file" id="document_id" name="document_id" value="{{ old('document_id') }}" class="form-control" accept="image/jpeg,image/doc,image/pdf" >
-                <strong class="error" id="document_id-error"></strong>
+                <label>Aadhar Card Number<span style="color:red">*</span></label>
+                <input type="text" name="aadhar_card_number" class="form-control" value="{{ old('aadhar_card_number') }}" placeholder="Enter aadhar card number">
+                <strong class="error" id="aadhar_card_number-error"></strong>
             </div>
         </div>
-        <div class="col-xl-3 col-lg-6 col-md-12">
+
+        <div class="col-xl-6 col-lg-6 col-md-12">
+            <div class="form-group">
+                <label>Aadhar Card Id<span style="color:red">*</span></label>
+                <input type="file" id="aadhar_card_id" name="aadhar_card_id" value="{{ old('aadhar_card_id') }}" class="form-control" accept="image/jpeg,image/doc,image/pdf" >
+                <strong class="error" id="aadhar_card_id-error"></strong>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <h4>Passport </h4>     
+        </div>
+
+        <div class="col-xl-6 col-lg-6 col-md-12">
+            <div class="form-group">
+                <label>Passport Number<span style="color:red">*</span></label>
+                <input type="text" name="passport_number" class="form-control" value="{{ old('passport_number') }}" placeholder="Enter passport number">
+                <strong class="error" id="passport_number-error"></strong>
+            </div>
+        </div>
+
+        <div class="col-xl-6 col-lg-6 col-md-12">
+            <div class="form-group">
+                <label>Passport Id<span style="color:red">*</span></label>
+                <input type="file" id="passport_id" name="passport_id" value="{{ old('passport_id') }}" class="form-control" accept="image/jpeg,image/doc,image/pdf" >
+                <strong class="error" id="passport_id-error"></strong>
+            </div>
+        </div>
+
+        <div class="col-xl-6 col-lg-6 col-md-12">
             <div class="form-group">
                 <label class="exitonboard doc"> <input type="checkbox" name="verification_type" class="checkboxexitform">Document Verification</label>
             </div>
         </div>
 
-        <div class="col-xl-6 col-lg-6 col-md-12">
+        <div class="col-xl-3 col-lg-6 col-md-12">
             <div class="form-group">
                 <label>3rd Party Verification Document</label>
                 <input type="file" id="third_party_document" name="third_party_document" class="form-control" accept="image/jpeg,image/doc,image/pdf" >
             </div>
         </div>
 
-        <div class="col-xl-6 col-lg-6 col-md-12">
+        <div class="col-xl-3 col-lg-6 col-md-12">
             <div class="form-group">
                 <label class="exitonboard doc"> <input type="checkbox" name="third_party_verification" class="checkboxexitform"> 3rd Party Verification </label>
             </div>
@@ -257,9 +291,12 @@
                 emg_name: "required",
                 emg_address: "required",
                 emg_relationship: "required",
-                document_type: "required",
-                document_number: "required",
-                // document_id: "required",
+                pan_card_number: "required",
+                pan_card_id: "required",
+                aadhar_card_id: "required",
+                aadhar_card_number: "required",
+                passport_id: "required",
+                passport_number: "required",
 
             },
 
@@ -278,9 +315,12 @@
                 emg_name: "Emergency name is required",
                 emg_relationship: "Emergency relationship is required",
                 emg_address: "Emergency address is required",
-                // document_id: "document id is required",
-                document_number: "document number is required",
-                document_type: "document type is required",
+                pan_card_number: "Pan card number is required",
+                pan_card_id: "Pan card id is required",
+                aadhar_card_id: "Aadhar card id is required",
+                aadhar_card_number: "Aadhar card number is required",
+                passport_id: "Passport id is required",
+                passport_number: "Passport number is required",
 
             }
         });

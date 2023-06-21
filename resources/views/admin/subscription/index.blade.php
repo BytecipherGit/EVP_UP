@@ -67,8 +67,7 @@
                                         @csrf
                                         <input type="hidden" name="id" value="{{ encrypt($planExits->id) }}">
                                         @if ($planExits->name == 'Free')
-                                            <button disabled type="button"
-                                                class="btn btn-primary button_background_color">Free
+                                            <button disabled type="button" class="btn btn-primary button_background_color">Free
                                                 Subscription</button>
                                         @elseif($subscription_status == 'Active')
                                             @if ($companySub->subscription_id == $planExits->id)
@@ -85,14 +84,14 @@
                                         @elseif($subscription_status == 'Cancelled')
                                             @if ($sub_end_date == Carbon\Carbon::now() || $sub_end_date < Carbon\Carbon::now())
                                                 <button type="submit"
-                                                    class="btn btn-primary button_background_color">Get
-                                                    Subscription</button>
+                                                    class="btn btn-primary button_background_color">Upgrade Plan</button>
                                             @else
                                                 <button disabled type="submit" class="btn btn-danger">
                                                     {{ $sub_end_date }} Cancelled</button>
                                             @endif
                                         @else
                                             @if (!empty($paySub))
+                                              @if($paySub->payment_status != 'Created')    
                                                 @if ($subscriptions == $subscriptionCount)
                                                     <span data-toggle="modal"
                                                         class="btn btn-primary pricingboxDss button_background_color"
@@ -101,9 +100,11 @@
                                                 @else
                                                     <span data-toggle="modal"
                                                         class="btn btn-primary pricingboxDss button_background_color"
-                                                        data-target="#remaiderbtninfo{{ $planExits->id }}">Get
-                                                        Subscription </span>
+                                                        data-target="#remaiderbtninfo{{ $planExits->id }}">Upgrade Plan</span>
                                                 @endif
+                                               @else
+                                                 <button type="submit" class="btn btn-primary button_background_color">Upgrade Plan</button>
+                                               @endif
                                             @else
                                                 {{-- <span data-toggle="modal"
                                                     class="btn btn-primary pricingboxDss button_background_color"

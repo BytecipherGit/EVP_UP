@@ -206,6 +206,7 @@ class InviteempController extends Controller
             fputcsv($file, $columns);
             // print_r($columns);die();
             foreach ($employee as $task) {
+                
                 $row['First Name'] = $task->first_name;
                 $row['Middle Name'] = $task->middle_name;
                 $row['Last Name'] = $task->last_name;
@@ -403,6 +404,7 @@ class InviteempController extends Controller
        if($request->id){
 
             $employeeExists = (!empty(decrypt($request->id))) ? Employee::find(decrypt($request->id)) : false;
+            $companyEmployeeExist = CompanyEmployee::where('employee_id',decrypt($request->id))->first();
             $qualificationExist = Empqualification::where('employee_id',decrypt($request->id))->first();
             $qualificationViewExist = Empqualification::where('employee_id',decrypt($request->id))->get();
             $workhistoryExists = Empworkhistory::where('employee_id',decrypt($request->id))->first();
@@ -416,13 +418,19 @@ class InviteempController extends Controller
             $experienceStatus = Verification:: where('employee_id',decrypt($request->id))->where('verification_document_type','=','experience_document')->first();
        }
 
-        return view('org-invite/basic-info',compact('employeeExists','qualificationExist','qualificationViewExist','workhistoryExists','workhistoryViewExist','employeeSkillsExists','employeeSkillsViewExists','employeeLanguageViewExists','employeeOfficials','verificationData','qualificationStatus','experienceStatus'));
+        return view('org-invite/basic-info',compact('employeeExists','companyEmployeeExist','qualificationExist','qualificationViewExist','workhistoryExists','workhistoryViewExist','employeeSkillsExists','employeeSkillsViewExists','employeeLanguageViewExists','employeeOfficials','verificationData','qualificationStatus','experienceStatus'));
     }
 
     public function inviteEmployeeForm(request $request)
     {
-// dd($request->all());
+
         if(!empty($request->employee_id)){
+
+          $updateInfo = DB::table('company_employee')->where('employee_id', decrypt($request->employee_id))
+            ->update([
+                  'status' => '1',
+              ]);
+
            return redirect('/success');
         }
     }

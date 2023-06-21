@@ -78,6 +78,10 @@ class PaymentController extends Controller
                 if(($checkpayment->company_subscription_id)){
                         $updateSubscriptionData = CompanySubscription::where('company_id',Auth::id())
                             ->update([
+                                'subscription_type' => !empty($subscription->type) ? $subscription->type : null,
+                                'name' => !empty($subscription->name) ? $subscription->name : null,
+                                'price' => !empty($subscription->price) ? $subscription->price : null, 
+                                'description' => !empty($subscription->description) ? $subscription->description : null,
                                 'end_date' => Carbon::now()->addDays($duration)->format('Y-m-d'),
                                 'start_date' => Carbon::now()->format('Y-m-d'),
                                 'subscription_status' => 'Active',

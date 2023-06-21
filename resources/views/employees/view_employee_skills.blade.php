@@ -198,8 +198,8 @@
 @endforeach
 
  <!-- The Modal Skills Edit -->
- @foreach ($employeeSkillsViewExists as $employeeSkills)
- <div class="modal fade custu-modal-popup" id="edit_skills{{ $employeeSkills->id  }}" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+ @foreach ($employeeSkillsViewExists as $employeeSkill)
+ <div class="modal fade custu-modal-popup" id="edit_skills{{ $employeeSkill->id  }}" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -209,23 +209,23 @@
             </div>
             <form id="employee_skills_update" action="{{ url('edit_skills/update') }}" method="post" autocomplete="off" enctype="multipart/form-data">
                 @csrf
-                <input type="hidden" id="id" name="id" value="{{ $employeeSkills ? $employeeSkills->id : '' }}" />
-                <input type="hidden" id="employee_id" name="employee_id" value="{{ $employeeSkills ? $employeeSkills->employee_id : '' }}" />
+                <input type="hidden" id="id" name="id" value="{{ $employeeSkill ? $employeeSkill->id : '' }}" />
+                <input type="hidden" id="employee_id" name="employee_id" value="{{ $employeeSkill ? $employeeSkill->employee_id : '' }}" />
                <div class="modal-body">
                    <div class="comman-body">
                         <div class="form-group inputtag-custom">
                             <label>Add Skill</label>
                             <div class="row customer_records1">
                                 <div class="col-md-8">
-                                    <input type="text" name="skill" class="form-control input-search-box typeahead"  value="{{ $employeeSkills ? $employeeSkills->skill : ''}}"  data-provide="typeahead" placeholder="Language">
+                                    <input type="text" name="skill" class="form-control input-search-box typeahead"  value="{{ $employeeSkill ? $employeeSkill->skill : ''}}"  data-provide="typeahead" placeholder="Language">
                                 </div>
                                 <div class="col-md-8">
                                     <h6>
-                                        <span><input type="radio" name="skill_type" id="customRadioInline4" class="" value="Beginner" <?php if ($employeeSkills->skill_type == 'Beginner') { ?> checked <?php } ?>>
+                                        <span><input type="radio" name="skill_type" id="customRadioInline4" class="" value="Beginner" <?php if ($employeeSkill->skill_type == 'Beginner') { ?> checked <?php } ?>>
                                             <label class="" for="customRadioInline4">Beginner</label></span>
-                                        <span><input type="radio" name="skill_type" id="customRadioInline5" value="Intermediate" class="" <?php  if ($employeeSkills->skill_type == 'Intermediate') { ?> checked <?php } ?>>
+                                        <span><input type="radio" name="skill_type" id="customRadioInline5" value="Intermediate" class="" <?php  if ($employeeSkill->skill_type == 'Intermediate') { ?> checked <?php } ?>>
                                             <label class=""for="customRadioInline5">Intermediate</label></span>
-                                        <span><input type="radio" name="skill_type" id="customRadioInline6" value="Expert" class="" <?php  if ($employeeSkills->skill_type == 'Expert') { ?> checked <?php } ?>>
+                                        <span><input type="radio" name="skill_type" id="customRadioInline6" value="Expert" class="" <?php  if ($employeeSkill->skill_type == 'Expert') { ?> checked <?php } ?>>
                                             <label class="" for="customRadioInline6">Expert</label></span>
                                     </h6>
                                 </div>

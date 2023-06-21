@@ -390,9 +390,12 @@
                 emg_name: "required",
                 emg_address: "required",
                 emg_relationship: "required",
-                document_type: "required",
-                document_number: "required",
-                document_id: "required",
+                pan_card_number: "required",
+                pan_card_id: "required",
+                aadhar_card_id: "required",
+                aadhar_card_number: "required",
+                passport_id: "required",
+                passport_number: "required",
 
             },
 
@@ -411,9 +414,12 @@
                 emg_name: "Emergency name is required",
                 emg_relationship: "Emergency relationship is required",
                 emg_address: "Emergency address is required",
-                document_id: "document id is required",
-                document_number: "document number is required",
-                document_type: "document type is required",
+                pan_card_number: "Pan card number is required",
+                pan_card_id: "Pan card id is required",
+                aadhar_card_id: "Aadhar card id is required",
+                aadhar_card_number: "Aadhar card number is required",
+                passport_id: "Passport id is required",
+                passport_number: "Passport number is required",
 
             }
         });
