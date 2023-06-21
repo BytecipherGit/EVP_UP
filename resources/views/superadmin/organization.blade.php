@@ -5,6 +5,13 @@
 <div class="wapper">
     <!--- Main Container Start ----->
     <div class="main-container">
+        <div id="successMessage">
+            @if (session()->has('message'))
+                <div class="alert alert-success">
+                    {{ session()->get('message') }}
+                </div>
+            @endif
+        </div>
         <div class="main-heading">
             <div class="row">
                 <div class="col-md-8">
@@ -12,9 +19,7 @@
                 </div>
                 <div class="col-md-4">
                     <div class="main-right-button-box">
-                        <a href="add_company" class="emp"><img
-                                src="{{ asset('assets') }}/admin/images/button-plus.png"><span
-                                class="button_text_color">Add New</span></a>
+                        <a href="add_company" class="emp"><img src="{{ asset('assets') }}/admin/images/button-plus.png"><span class="button_text_color">Add New</span></a>
                     </div>
                 </div>
                 <div id="showHideAlert" class="col-md-8 alert alert-success" role="alert" style="display:none;">
