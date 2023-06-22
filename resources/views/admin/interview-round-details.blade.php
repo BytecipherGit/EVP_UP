@@ -136,10 +136,8 @@
                     <div class="loadingImg"></div>
                     <div style="font-size: 16px; display:none;" class="text-success" id="success">Status update
                         successfully</div>
-                    <button type="button" class="btn-secondary-cust" onclick="refreshPage();"
-                        data-dismiss="modal">Cancel</button>
-                    <button type="submit" id="Submit" class="btn-primary-cust button_background_color"><span
-                            class="button_text_color">Submit</span></button>
+                    <button type="button" class="btn-secondary-cust" onclick="refreshPage();"data-dismiss="modal">Cancel</button>
+                    <button type="submit" id="Submit" class="btn-primary-cust button_background_color"><span class="button_text_color">Submit</span></button>
                 </div>
             </div>
         </form>
@@ -333,9 +331,9 @@
     $('#send_email_to_employee').on('submit', function(event) {
         event.preventDefault();
         var isAdd = $('#is_add').val();
-        var url = '{{ url('send_email_template') }}';
-        // $('.loadingImg').show();
+        var url = '{{ url('send_email_template') }}'
         var formData = new FormData(this);
+        $('.loadingImg').show();
         $.ajax({
             url: url,
             type: 'POST',
@@ -343,24 +341,24 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             data: formData,
-            contentType: false,
-            processData: false,
-            success: function(data) {
-                if (data.success) {
-                    $('#loadingImg').hide();
-                    $('#success').css('display', 'block');
-                    setInterval(function() {
-                        location.reload();
-                    }, 2000);
+                    contentType: false,
+                    processData: false,
+                    success: function(data) {
+                        if (data.success) {
+                            $('.loadingImg').hide();
+                            $('#success').css('display', 'block');
+                            setInterval(function() {
+                                location.reload();
+                            }, 3000);
 
-                }
+                        }
 
-            },
-            error: function(xhr, textStatus, errorThrown) {
-                console.log(xhr.responseText);
-            }
+                    },
+                    error: function(xhr, textStatus, errorThrown) {
+                        console.log(xhr.responseText);
+                    }
 
-        });
+                });
 
     });
 </script>

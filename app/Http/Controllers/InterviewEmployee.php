@@ -1286,38 +1286,47 @@ class InterviewEmployee extends Controller
 
     public function sendEmailTemplate(request $request)
     {
-        // dd($request->all());
+        $emailDetails = HelpersHelper::getSmtpConfig(Auth::id());
 
+        $config = array(
+            'driver'     => $emailDetails->driver,
+            'host'       => $emailDetails->host,
+            'port'       => $emailDetails->port,
+            'from'       => array('address' => $emailDetails->from_address, 'name' => $emailDetails->from_name),
+            'encryption' => $emailDetails->encryption,
+            'username'   => $emailDetails->username,
+            'password'   => $emailDetails->password,
+            'sendmail'   => '/usr/sbin/sendmail -bs',
+            'pretend'    => false,
+        );
+        Config::set('mail', $config);
+     
+        if(!$request->status){
 
-        if(!empty($request->interview_id) && !empty($request->interview_status)){
             $interview = InterviewEmployeeRounds::find($request->interview_id);
           
             $interview->interviewer_status = $request->interview_status;
 
-        if ($interview->save()) {
+           if ($interview->save()) {
+              return Response::json(['success' => '1']);
+            }else {
+                return Response::json(['success' => '0']);
+            }
 
-            $emailDetails = HelpersHelper::getSmtpConfig(Auth::id());
-            $config = array(
-                'driver'     => $emailDetails->driver,
-                'host'       => $emailDetails->host,
-                'port'       => $emailDetails->port,
-                'from'       => array('address' => $emailDetails->from_address, 'name' => $emailDetails->from_name),
-                'encryption' => $emailDetails->encryption,
-                'username'   => $emailDetails->username,
-                'password'   => $emailDetails->password,
-                'sendmail'   => '/usr/sbin/sendmail -bs',
-                'pretend'    => false,
-            );
-            Config::set('mail', $config);
-
+        }else{
         // if (!empty($request->interview_id) && !empty($request->status)) {
+            $interview = InterviewEmployeeRounds::find($request->interview_id);
+          
+            $interview->interviewer_status = $request->interview_status;
+            $interview->save();
+        
             $candidate = Employee::join('interview_employees','interview_employees.employee_id','=','employee.id')
                          ->join('interview_employee_rounds','interview_employees.id','=','interview_employee_rounds.interview_employees_id')
                          ->where('interview_employee_rounds.company_id',Auth::id())->where('interview_employee_rounds.id',$request->interview_id)->first();
             $templateData = CompanyEmailTemplate::where('company_id',Auth::id())->first();     
   
-// dd($candidate);
-         if (!empty($request->interview_id) && !empty($request->status) && ($request->interview_status == 'Qualified') ) {
+           // dd($candidate);
+         if (($request->interview_status == 'Qualified') ) {
             $templateData = CompanyEmailTemplate::where('email_type','Qualified')->where('company_id',Auth::id())->first();
 
             $mailDataTemplate = [
@@ -1326,9 +1335,8 @@ class InterviewEmployee extends Controller
             ];
 
             FacadesMail::to($candidate->email)->send(new QualifiedEmailTemplate($mailDataTemplate));
-
-        }
-        elseif(!empty($request->interview_id) && !empty($request->status) && ($request->interview_status == 'Not Qualified')){
+            
+         } else{
             $templateData = CompanyEmailTemplate::where('email_type','NotQualified')->where('company_id',Auth::id())->first();   
 
             $emailContent = $templateData->content;
@@ -1340,21 +1348,14 @@ class InterviewEmployee extends Controller
             //     'content' => !empty($templateData->content) ? str_replace('#candidate',$candidate->first_name . ' ' . $candidate->last_name,$templateData->content) : '',
                    
             // ];
-
             FacadesMail::to($candidate->email)->send(new NotQualifiedEmailTemplate($mailDataTemplate));
-          }else{
-                return Response::json(['success' => '0']);
-            }
+          }
+          return Response::json(['success' => '1']);
+          
+        } 
 
-        } else {
-            return Response::json(['success' => '0']);
-        }
-    }
-    else {
-        return Response::json(['success' => '0']);
-    }
-
-    }
+    
+}
 
     public function sendNotAppearedStatus(request $request)
     {
