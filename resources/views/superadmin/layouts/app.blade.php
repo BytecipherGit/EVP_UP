@@ -159,7 +159,7 @@
         </div> 
 
         <li @if (Request::segment(2) == 'subscription') class="active" @endif>
-          <a href="subscription"><img src="{{ asset('assets') }}/admin/images/overview-icon.png"> 
+          <a href="{{ route('subscription.index') }}"><img src="{{ asset('assets') }}/admin/images/overview-icon.png"> 
               Add Subscription
           </a>
       </li>

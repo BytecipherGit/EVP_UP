@@ -1024,18 +1024,16 @@ class EmployeeController extends Controller
 
       public function postEmpDetails(request $request){
       
-          $employee=Employee:: where('id',$request->id)->first();
-          $identity=Employeeidentity:: where('employee_id',$request->id)->get();
-          $qualification=Empqualification:: where('employee_id',$request->id)->get();
-          $workhistory=Empworkhistory:: where('employee_id',$request->id)->first();
+          $qualifications=Empqualification:: where('employee_id',$request->id)->get();
           $workdetails=Empworkhistory:: where('employee_id',$request->id)->get();
-          $skills=Empskills:: where('employee_id',$request->id)->first();
-          $skill_item=Empskills:: where('employee_id',$request->id)->get();
-          $lang_item=Emplang:: where('employee_id',$request->id)->get();
-          $official= Empofficial::where('employee_id',$request->id)->first();
-          $exitemp= Exitemp::where('employee_id',$request->id)->first();
 
-          return view('admin/post-employee-details',compact('employee','identity','qualification','workhistory','skills','official','exitemp','skill_item','lang_item','workdetails'));
+          $employeeDetails = Employee::leftJoin('company_employee','company_employee.employee_id','=','employee.id')
+                          ->leftJoin('exit_employee', 'exit_employee.employee_id', '=', 'company_employee.employee_id')
+                          ->leftJoin('employee_officials', 'employee_officials.employee_id', '=', 'employee.id')
+                          ->where('employee.id',$request->id)->where('company_employee.company_id',Auth::id())
+                          ->first();
+
+          return view('admin/post-employee-details',compact('employeeDetails','workdetails','qualifications'));
       }
 
       public function currentEmp(){
