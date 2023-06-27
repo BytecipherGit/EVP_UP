@@ -149,7 +149,7 @@
                       <div class="row">
                         <div class="col-xl-6">
                           <label>Registered Company Name</label>
-                          <input id="com_name" type="text" class="form-control" placeholder="Company Name" name="org_name" @if ($profile) value="{{ old('org_name',$profile->org_name)}}" @endif required autocomplete="org_name" autofocus>
+                          <input disabled id="com_name" type="text" class="form-control" placeholder="Company Name" name="org_name" @if ($profile) value="{{ old('org_name',$profile->org_name)}}" @endif autocomplete="org_name" autofocus>
                           {{-- <input type="text" name="com_name" placeholder="Company Name" value="{{ old('com_name') }}" class="form-control"> --}}
                         </div>
                         <div class="col-xl-6 input-mt-from">
@@ -162,10 +162,10 @@
                       <div class="row">
                         <div class="col-xl-6">
                           <label>Website</label>
-                          <div class="input_field">
-                            <span>http://</span>
+                          {{-- <div class="input_field"> --}}
+                            {{-- <span>http://</span> --}}
                             <input type="text" name="org_web" placeholder="Website"  @if ($profile) value="{{old('org_web',$profile->org_web)}}" @endif class="form-control">
-                          </div>
+                          {{-- </div> --}}
                         </div> 
                         <div class="col-xl-6 input-mt-from">
                           <label>Domain Name</label>
@@ -218,7 +218,7 @@
                     <div class="form-group">                      
                       <label>Company Description</label>
                       <h6 class="clg-font">This will be used on some job boards and on welcome pages for things like video interviews and assessments.</h6>
-                      <textarea class="form-control" placeholder="Enter Description" name="description" rows="5" required>@if ($profile) {{old('description',$profile->description)}} @endif</textarea>
+                      <textarea class="form-control" placeholder="Enter Description" name="description" rows="5">@if ($profile) {{old('description',$profile->description)}} @endif</textarea>
                  
                       @error('description')
                       <p class="velidation">{{ $description }}</p>
@@ -236,14 +236,14 @@
               <div class="tab-pane fade" id="applicants-Tab2" role="tabpanel" aria-labelledby="applicants-Tab2-tab">
                 <div class="tab-content-details">
                   <h2>Address</h2>
-                  <form method="POST" action="{{ route('update_company_profile') }}" enctype="multipart/form-data">
+                  <form method="POST" action="{{ route('update_company_profile') }}" enctype="multipart/form-data" id="address_store">
                     @csrf
                  
                     <div class="form-group">
                       <div class="row">
                         <div class="col-xl-12">
                           <label>Registered Office<span style="color:red">*</span></label>
-                          <textarea class="form-control" name="address" @if ($profile->address) value="{{old('address',$profile->address)}}" @endif rows="2" placeholder="Add Registered Office Address" required>@if ($profile->address) {{old('address',$profile->address)}}@endif</textarea>
+                          <textarea class="form-control" name="address" @if ($profile->address) value="{{old('address',$profile->address)}}" @endif rows="2" placeholder="Add Registered Office Address">@if ($profile->address) {{old('address',$profile->address)}}@endif</textarea>
                        
                         </div>  
                       </div>
@@ -470,13 +470,13 @@
                          <div class="col-xl-6 input-mt-from">
                           <label>Authority</label>
                           {{-- <div class="selectBox active"> --}}
-                            <select name="authority" @if ($plans) value="{{ old('authority', $plans->authority) }}" @endif class="form-control" required>
-                              <option @if ($plans) value="{{ old('authority', $plans->authority) }}" @else value="" @endif>@if ($plans) {{ old('authority', $plans->authority) }} @else Select Authority @endif</option>
-                              <option value="01">01</option>
-                              <option value="02">02</option>
-                              <option value="03">03</option>
-                              <option value="04">04</option>
-                              <option value="05">05</option>
+                            <select name="authority" class="form-control" >
+
+                              <option value="1" {{ $plans->authority == '1' ? 'selected' : '' }} >01</option>
+                              <option value="2" {{ $plans->authority == '2' ? 'selected' : '' }}>02</option>
+                              <option value="3" {{ $plans->authority == '3' ? 'selected' : '' }}>03</option>
+                              <option value="4" {{ $plans->authority == '4' ? 'selected' : '' }}>04</option>
+                              <option value="5" {{ $plans->authority == '5' ? 'selected' : '' }}>05</option>
 
                             </select>
                         {{-- </div>  --}}
@@ -486,11 +486,10 @@
                           <div class="row">
                             <div class="col-xl-12">
                               <label>Change My Plan</label>
-                              <select name="plan_type" @if ($plans) value="{{ old('plan_type' , $plans->plan_type) }}" @endif class="form-control" required>
-                                <option @if ($plans) value="{{ old('plan_type' , $plans->plan_type) }}" @else value="" @endif>@if ($plans) {{ old('plan_type', $plans->plan_type) }} @else Select Type @endif</option>
-                                  <option value="Gold">Gold 01</option>
-                                  <option value="Silver">Silver 02</option>
-                                  <option value="Bronze">Bronze 03</option>
+                              <select name="plan_type" @if ($plans) value="{{ old('plan_type' , $plans->plan_type) }}" @endif class="form-control" >
+                                  <option value="gold" {{ $plans->plan_type == 'gold' ? 'selected' : '' }}>Gold 01</option>
+                                  <option value="silver" {{ $plans->plan_type == 'silver' ? 'selected' : '' }}>Silver 02</option>
+                                  <option value="bronze" {{ $plans->plan_type == 'bronze' ? 'selected' : '' }}>Bronze 03</option>
                             
                               </select>
                             </div> 
@@ -522,7 +521,7 @@
         </div>
         <div class="modal-body">
           <div class="comman-body">
-            <form method="POST" action="{{ route('update_company_profile') }}" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('update_company_profile') }}" enctype="multipart/form-data" id="department_store">
               @csrf
               
               <div class="form-group">
@@ -561,7 +560,7 @@
         </div>
         <div class="modal-body">
           <div class="comman-body">
-            <form method="POST" action="{{ route('update_company_profile') }}" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('update_company_profile') }}" enctype="multipart/form-data" id="department_edit">
               @csrf
               <input type="hidden" name="id" value="{{ $dept['id'] }}">
               <div class="form-group">
@@ -600,7 +599,7 @@
         </div>
         <div class="modal-body">
           <div class="comman-body">
-            <form method="POST" action="{{ route('update_company_profile') }}" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('update_company_profile') }}" enctype="multipart/form-data" id="designation_store">
               @csrf
               <div class="form-group">
                 <div class="row">
@@ -633,14 +632,14 @@
         </div>
         <div class="modal-body">
           <div class="comman-body">
-            <form method="POST" action="{{ route('update_company_profile') }}" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('update_company_profile') }}" enctype="multipart/form-data" id="designation_edit">
               @csrf
               <input type="hidden" name="id" value="{{ $desig['id'] }}">
               <div class="form-group">
                 <div class="row">
                   <div class="col-md-6">
                     <label>Designation</label>
-                    <input type="text" name="designation_name" class="form-control" value="{{ old('designation_name', $desig->designation_name) }}" required>
+                    <input type="text" name="designation_name" class="form-control" value="{{ old('designation_name', $desig->designation_name) }}" >
                   </div>
                   {{-- <div class="col-md-6">@if ($profile) value="{{old('phone',$profile->phone)}}" @endif class="form-control" required
                     <label>Employee</label>
@@ -715,6 +714,70 @@
 
           }
          });
+
+         $("#address_store").validate({
+          rules: {
+            address: "required", 
+          },
+
+          messages: {
+
+            address: "Address is required",
+
+          }
+         });
+
+         $("#department_store").validate({
+          rules: {
+            department: "required", 
+            sub_department: "required", 
+          },
+
+          messages: {
+
+            department: "Department is required",
+            sub_department: "Sub department is required", 
+
+          }
+         });
+
+         $("#department_edit").validate({
+
+            rules: {
+              department: "required", 
+              sub_department: "required", 
+            },
+
+            messages: {
+            department: "Department is required",
+            sub_department: "Sub department is required", 
+
+          }
+         });
+
+         $("#designation_store").validate({
+
+              rules: {
+                designation_name: "required", 
+              },
+
+              messages: {
+                designation_name: "Department is required",
+          
+              }
+           });
+
+           $("#designation_edit").validate({
+
+              rules: {
+                designation_name: "required", 
+              },
+
+              messages: {
+                designation_name: "Department is required",
+
+              }
+              });
 
     });
 

@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" href="{{ asset('assets') }}/email/images/logo-icon.png">
-  <input type="hidden" name="id" value={{$companyId}}>
+  <input type="hidden" name="company_id" value={{$companyId}}>
   
 </head>
 
@@ -32,7 +32,7 @@
                  
 
                  <button style="background: #5533FF; border:none; border-radius: 6px; padding:15px 40px; margin:25px 0">
-                    @foreach($mailId as $id) <a href="{{route('invite.email.config')}}/{{ $id }}" style="color: #fff; text-decoration:none; font-weight: 500; font-size: 20px; line-height: 26px; font-family: 'DM Sans', sans-serif;">
+                    @foreach($mailId as $id) <a href="{{route('invite.email.config')}}/{{ $id }}/{{$companyId}}" style="color: #fff; text-decoration:none; font-weight: 500; font-size: 20px; line-height: 26px; font-family: 'DM Sans', sans-serif;">
                     Accept Invitation
                     </a>@endforeach
                 </button>
@@ -41,7 +41,7 @@
                 <p style="text-align: center; margin-bottom: 30px; padding: 0 20px 0px; font-family: 'DM Sans', sans-serif;">
                     <span style="margin-bottom: 10px; display: block;">OR</span>
                     <br>
-                    <span>Follow the link:  @foreach($mailId as $id) <a href="{{route('invite.email.config')}}/{{ $id }}" style="text-decoration: underline; cursor: pointer; color: #18a749; ">{{route('invite.email.config')}}/{{ $id }}</a> @endforeach</span>
+                    <span>Follow the link:  @foreach($mailId as $id) <a href="{{route('invite.email.config')}}/{{ $id }}/{{$companyId}}" style="text-decoration: underline; cursor: pointer; color: #18a749; ">{{route('invite.email.config')}}/{{ $id }}</a> @endforeach</span>
                 </p>
 
                 <p style="margin-top:15px;margin-bottom:15px;font-size:16px;line-height: 24px; color: #373E57;  text-align: left; padding: 0 20px 0px; font-family: 'DM Sans', sans-serif;">

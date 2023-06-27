@@ -1,3 +1,12 @@
+<style>
+    .velidation {
+      color: red;
+      font-size: 12px;
+      display: block;
+      margin: 5px 0;
+      display: flex;
+  }
+</style>
 <form id="employee_skills_form" action="{{ url('employee_skills/submit') }}" method="post" autocomplete="off" enctype="multipart/form-data">
     @csrf
     <input type="hidden" id="is_add" value="{{ $qualificationExist ? '' : 1 }}" />
@@ -9,7 +18,10 @@
         </tr>
         <tr>
             <td class="addskill"><input type="text" name="skill[]" id="skill" placeholder="Enter skill" class="form-control skilleffect" />
-                <strong class="error" id="skill-error"></strong>
+                @error('skill')
+                 <span class="velidation">{{ $message }}</span>
+                @enderror
+                
             </td>
             <td class="addskill">
                 <h5>
@@ -31,7 +43,9 @@
         </tr>
         <tr>
             <td class="addskill"><input type="text" name="lang[]" id="lang" placeholder="Enter language" class="form-control skilleffect" />
-                <strong class="error" id="lang-error"></strong>
+                @error('lang')
+                <span class="velidation">{{ $message }}</span>
+               @enderror
             </td>
             <td class="addskill">
                 <h5>

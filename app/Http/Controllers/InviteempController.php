@@ -335,7 +335,7 @@ class InviteempController extends Controller
                 Config::set('mail', $config);
 
                 
-                Mail::send('org-invite/invite-email', ['mailName' => $company_name, 'mailId' => $send_id, 'companyId' => Auth::id()], function ($message) use ($email, $name) {
+                Mail::send('org-invite/invite-email', ['mailName' => $company_name, 'mailId' => $send_id, 'companyId' => encrypt(Auth::id())], function ($message) use ($email, $name) {
                     $message->to($email, $name)->subject('ByteCipher Pvt Ltd Interview Invitation Email');
                    $message->from(Config::get('mail.from.address'),Config::get('mail.from.name'));
                 });
@@ -395,12 +395,22 @@ class InviteempController extends Controller
 
     public function getConfig(request $request)
     {
-        $employee = Employee::where('id', decrypt($request->id))->first();
-        return view('org-invite/index', compact('employee'));
+
+        $employee = Employee::join('company_employee','company_employee.employee_id','=','employee.id')
+                    ->where('company_employee.employee_id', decrypt($request->id))
+                    ->where('company_employee.company_id', decrypt($request->companyId))->first();
+        // $chcekEmployeeExist = CompanyEmployee::where('employee_id',decrypt($request->id))->first();
+    //    dd($employee);
+        if($employee->status == '2'){
+            return view('org-invite/index', compact('employee'));
+        }else{
+            return redirect('/response_submited');
+        }
     }
 
     public function getInviteEmployeeDetails(request $request, $id)
     {
+        // dd($request->id);
        if($request->id){
 
             $employeeExists = (!empty(decrypt($request->id))) ? Employee::find(decrypt($request->id)) : false;
@@ -453,22 +463,22 @@ class InviteempController extends Controller
             }
             $basic_info = DB::table('employee')->where('id', $request->id)
                 ->update([
-                    'first_name' => $request->input('first_name'),
-                    'last_name' => $request->input('last_name'),
-                    'middle_name' => $request->input('middle_name'),
-                    'email' => $request->input('email'),
+                    'first_name' => !empty($request->first_name) ? $request->first_name : null,
+                    'last_name' => !empty($request->last_name) ? $request->last_name : null,
+                    'middle_name' =>!empty($request->middle_name) ? $request->middle_name : null,
+                    'email' =>!empty($request->email) ? $request->email : null,
                     'profile' => $filename,
-                    'phone' => $request->input('phone'),
-                    'dob' => $request->input('dob'),
-                    'blood_group' => $request->input('blood_group'),
-                    'gender' => $request->input('gender'),
-                    'marital_status' => $request->input('marital_status'),
-                    'current_address' => $request->input('current_address'),
-                    'permanent_address' => $request->input('permanent_address'),
-                    'emg_name' => $request->input('emg_name'),
-                    'emg_relationship' => $request->input('emg_relationship'),
-                    'emg_phone' => $request->input('emg_phone'),
-                    'emg_address' => $request->input('emg_address'),
+                    'phone' =>!empty($request->phone) ? $request->phone : null,
+                    'dob' => !empty($request->dob) ? $request->dob : null,
+                    'blood_group' => !empty($request->blood_group) ? $request->blood_group : null,
+                    'gender' => !empty($request->gender) ? $request->gender : null,
+                    'marital_status' =>!empty($request->marital_status) ? $request->marital_status : null,
+                    'current_address' => !empty($request->current_address) ? $request->current_address : null,
+                    'permanent_address' => !empty($request->permanent_address) ? $request->permanent_address : null,
+                    'emg_name' =>!empty($request->emg_name) ? $request->emg_name : null,
+                    'emg_relationship' => !empty($request->emg_relationship) ? $request->emg_relationship : null,
+                    'emg_phone' => !empty($request->emg_phone) ? $request->emg_phone : null,
+                    'emg_address' => !empty($request->emg_address) ? $request->emg_address : null,
                     'status' => '1',
                 ]);
 
@@ -485,13 +495,13 @@ class InviteempController extends Controller
                 // 'document' => ['required','file','mimes:jpeg,png,pdf,docs,doc','max:2048']
             ]);
 
-            $basic_id = Employee::where('id', $request->id)->first();
-            // print_r($basic_id);die();
+            $basicInfo = Employee::where('id', $request->id)->first();
+            // print_r($basicInfo);die();
             $employee_ident = new Employeeidentity();
-            $employee_ident->employee_id = $basic_id->id;
-            $employee_ident->id_type = $request->input('id_type');
-            $employee_ident->id_number = $request->input('id_number');
-            $employee_ident->document = $request->input('document');
+            $employee_ident->employee_id = $basicInfo->id;
+            $employee_ident->id_type =  !empty($request->id_type) ? $request->id_type : null;
+            $employee_ident->id_number = !empty($request->id_number) ? $request->id_number : null;
+            $employee_ident->document = !empty($request->document) ? $request->document : null;
             $employee_ident->verification_type = 'Not Verified';
 
             if ($request->has('document')) {
@@ -503,7 +513,7 @@ class InviteempController extends Controller
             $employee_ident->save();
 
             $official = new Empofficial();
-            $official->employee_id=$basic_id->id;
+            $official->employee_id=$basicInfo->id;
             $official->save();
 
             $identityinfo = Empqualification::where('employee_id', $request->id)->first();

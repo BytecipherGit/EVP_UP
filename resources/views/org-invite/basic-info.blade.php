@@ -76,8 +76,8 @@
               <div  class="tab-pane @if (Request::segment(3) == null) active @endif" id="basicInformation" role="tabpanel">
                   <div class="eml-persnal ">
                       <div class="add-emply-details">
-                          @if (empty($employeeExists))
-                              @include('employees.employee_basicinfo')
+                          @if (empty($employeeExists->dob))
+                             @include('org-invite.employee_form')
                           @else
                               @include('employees.edit_basicinfomation')
                           @endif
@@ -217,49 +217,55 @@
     }, 2000);
 
 
-        $("#employee_basic_form_edit").validate({
+     $("#employee_form").validate({
 
-            rules: {
-                first_name: "required",
-                last_name: "required",
-                email: "required",
-                blood_group: "required",
-                gender: "required",
-                dob: "required",
-                phone: "required",
-                emg_phone: "required",
-                permanent_address: "required",
-                current_address: "required",
-                marital_status: "required",
-                emg_name: "required",
-                emg_address: "required",
-                emg_relationship: "required",
-                document_type: "required",
-                document_number: "required",
-                // document_id: "required",
+        rules: {
+            first_name: "required",
+            last_name: "required",
+            email: "required",
+            blood_group: "required",
+            gender: "required",
+            dob: "required",
+            phone: "required",
+            emg_phone: "required",
+            permanent_address: "required",
+            current_address: "required",
+            marital_status: "required",
+            emg_name: "required",
+            emg_address: "required",
+            emg_relationship: "required",
+            pan_card_number: "required",
+            pan_card_id: "required",
+            aadhar_card_id: "required",
+            passport_id: "required",
+            aadhar_card_number: "required",
+            passport_number: "required",
 
-            },
+        },
 
-            messages: {
-                firstName: "first name is required",
-                last_name: "Last name is required",
-                email: "Email is required",
-                blood_group: "Blood group is required",
-                gender: "Gender  is required",
-                dob: "Date of birth is required",
-                phone: "Phone number is required",
-                emg_phone: "Emergency phone number is required",
-                permanent_address: "Permanent address is required",
-                current_address: "Current address is required",
-                marital_status: "Marital status is required",
-                emg_name: "Emergency name is required",
-                emg_relationship: "Emergency relationship is required",
-                emg_address: "Emergency address is required",
-                // document_id: "document id is required",
-                document_number: "document number is required",
-                document_type: "document type is required",
+        messages: {
+            firstName: "first name is required",
+            last_name: "Last name is required",
+            email: "Email is required",
+            blood_group: "Blood group is required",
+            gender: "Gender  is required",
+            dob: "Date of birth is required",
+            phone: "Phone number is required",
+            emg_phone: "Emergency phone number is required",
+            permanent_address: "Permanent address is required",
+            current_address: "Current address is required",
+            marital_status: "Marital status is required",
+            emg_name: "Emergency name is required",
+            emg_relationship: "Emergency relationship is required",
+            emg_address: "Emergency address is required",
+            pan_card_number: "Pan card number is required",
+            aadhar_card_number: "Aadhar card number is required",
+            passport_number: "Passport number is required",
+            aadhar_card_id: "Aadhar card id is required",
+            passport_id: "Passport id is required",
+            pan_card_id: "Pan card id is required",
 
-            }
+          }
         });
 
         $("#employee_qualification_form").validate({

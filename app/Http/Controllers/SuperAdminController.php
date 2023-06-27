@@ -365,6 +365,7 @@ class SuperAdminController extends Controller
             $this->validate($request, [
                 'old' => 'required',
                 'password' => 'required|min:6|confirmed',
+                'password' => 'required|confirmed', Rules\Password::defaults(),
             ]);
 
             $user = User::find(Auth::id());

@@ -1,4 +1,5 @@
-<form id="employee_basic_form_edit" action="{{ url('employee_info/update') }}" method="post" autocomplete="off"
+
+<form id="employee_form" action="{{ url('employee_form/submit') }}" method="post" autocomplete="off"
     enctype="multipart/form-data">
     @csrf
     <input type="hidden" id="is_add" value="{{ $employeeExists ? '' : 1 }}" />
@@ -24,27 +25,27 @@
                 <div class="col-xl-4 col-lg-6 col-md-12">
                     <div class="form-group">
                         <label for="first_name">First Name<span style="color:red">*</span></label>
-                        <input type="text" name="first_name" class="form-control" value="{{ $employeeExists ? $employeeExists->first_name : '' }}" placeholder="Enter Your First Name">
+                        <input type="text" name="first_name" class="form-control" value="{{ $employeeExists ? $employeeExists->first_name : '' }}" placeholder="Enter Your First Name" readonly>
                          <strong class="error" id="first_name-error"></strong>
                     </div>
                 </div>
                 <div class="col-xl-4 col-lg-6 col-md-12">
                     <div class="form-group">
                         <label for="middle_name">Middle Name</label>
-                        <input type="text" name="middle_name" class="form-control" value="{{ $employeeExists ? $employeeExists->middle_name : '' }}" placeholder="Enter Your Middle Name">
+                        <input type="text" name="middle_name" class="form-control" value="{{ $employeeExists ? $employeeExists->middle_name : '' }}" placeholder="Enter Your Middle Name" readonly>
                     </div>
                 </div>
                 <div class="col-xl-4 col-lg-6 col-md-12">
                     <div class="form-group">
                         <label for="last_name">Last Name<span style="color:red">*</span></label>
-                        <input type="text" name="last_name" class="form-control" value="{{ $employeeExists ? $employeeExists->last_name : '' }}" placeholder="Enter Your Last Name">
+                        <input type="text" name="last_name" class="form-control" value="{{ $employeeExists ? $employeeExists->last_name : '' }}" placeholder="Enter Your Last Name" readonly>
                         <strong class="error" id="last_name-error"></strong>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-12">
                     <div class="form-group">
                         <label for="email">Official Email Id<span style="color:red">*</span></label>
-                        <input type="text" name="email" class="form-control" value="{{ $employeeExists ? $employeeExists->email : '' }}" placeholder="Enter Your Email">
+                        <input type="text" name="email" class="form-control" value="{{ $employeeExists ? $employeeExists->email : '' }}" placeholder="Enter Your Email" readonly>
                         @error('email')
                         <p class="velidation">{{ $message }}</p>
                        @enderror
@@ -54,7 +55,7 @@
                 <div class="col-lg-6 col-md-12">
                     <div class="form-group">
                         <label for="phone">Phone Number<span style="color:red">*</span></label>
-                        <input type="text" name="phone" class="form-control" value="{{ $employeeExists ? $employeeExists->phone : '' }}" placeholder="Enter Your Number">
+                        <input type="text" name="phone" class="form-control" value="{{ $employeeExists ? $employeeExists->phone : '' }}" placeholder="Enter Your Number" readonly>
                         <strong class="error" id="phone-error"></strong>
                     </div>
                 </div>
@@ -76,15 +77,15 @@
             <div class="form-group">
                 <label>Select Blood Group<span style="color:red">*</span></label>
                 <select class="form-control" name="blood_group" id="blood_group">
-                    <option value="{{ $employeeExists ? $employeeExists->blood_group : '' }}"> {{ $employeeExists->blood_group ? $employeeExists->blood_group : 'Select Group' }}</option>
-                    <option value="A+">A+</option>
-                    <option value="A-">A-</option>
-                    <option value="B+">B+</option>
-                    <option value="B-">B-</option>
-                    <option value="O+">O+</option>
-                    <option value="O-">O-</option>
-                    <option value="AB+">AB+</option>
-                    <option value="AB-">AB-</option>
+                    <option value="">Select Blood Group</option>
+                    <option value="A+" {{ $employeeExists->blood_group == 'A+' ? 'selected' : '' }}>A+</option>
+                    <option value="A-" {{ $employeeExists->blood_group == 'A-' ? 'selected' : '' }} >A-</option>
+                    <option value="B+" {{ $employeeExists->blood_group == 'B+' ? 'selected' : '' }}>B+</option>
+                    <option value="B-" {{ $employeeExists->blood_group == 'B-' ? 'selected' : '' }}>B-</option>
+                    <option value="O+" {{ $employeeExists->blood_group == 'O+' ? 'selected' : '' }}>O+</option>
+                    <option value="O-" {{ $employeeExists->blood_group == 'O-' ? 'selected' : '' }}>O-</option>
+                    <option value="AB+" {{ $employeeExists->blood_group == 'AB+' ? 'selected' : '' }}>AB+</option>
+                    <option value="AB-" {{ $employeeExists->blood_group == 'AB-' ? 'selected' : '' }}>AB-</option>
                 </select>
                 <strong class="error" id="blood_group-error"></strong>
             </div>
@@ -106,18 +107,19 @@
                 <label>Marital Status<span style="color:red">*</span></label>
 
                 <select class="form-control" name="marital_status" id="marital_status">
-                    <option value="{{ $employeeExists ? $employeeExists->marital_status : '' }}">{{ $employeeExists->marital_status ? $employeeExists->marital_status : 'Select Status' }}</option>
-                    <option value="Married">Married</option>
-                    <option value="Single">Single</option>
+                    <option value="">Select Status</option>
+                    <option value="Married" {{ $employeeExists->marital_status == 'Married' ? 'selected' : '' }}>Married</option>
+                    <option value="Single" {{ $employeeExists->marital_status == 'Single' ? 'selected' : '' }}>Single</option>
                 </select>
                 <strong class="error" id="marital_status-error"></strong>
             </div>
         </div>
+
         <div class="col-md-12">
             <h4>Pan Card </h4>     
         </div>
 
-        <div class="col-xl-5 col-lg-6 col-md-12">
+        <div class="col-xl-6 col-lg-6 col-md-12">
             <div class="form-group">
                 <label>Pan Card Number<span style="color:red">*</span></label>
                 <input type="text" name="pan_card_number" class="form-control" value="{{ $employeeExists ? $employeeExists->pan_card_number : '' }}" placeholder="Enter pan card number">
@@ -125,7 +127,7 @@
             </div>
         </div>
 
-        <div class="col-xl-5 col-lg-6 col-md-12">
+        <div class="col-xl-6 col-lg-6 col-md-12">
             <div class="form-group">
                 <label>Pan Card Id</label>
                 <input type="file" id="pan_card_id" name="pan_card_id" value="{{ $employeeExists ? $employeeExists->pan_card_id : '' }}" class="form-control" accept="image/jpeg,image/doc,image/pdf" >
@@ -136,22 +138,20 @@
             </div>
         </div>
 
-        <div class="col-xl-2 col-lg-2 col-md-4 ">
+        {{-- <div class="col-xl-2 col-lg-2 col-md-4 ">
             <div class="form-group">
                 <label>&nbsp;</label>
                 @if (!empty($employeeExists->pan_card_id))
                     <a href="{{ $employeeExists->pan_card_id ? $employeeExists->pan_card_id : '#' }}" target="_blank" class="btn btn-primary"><i class="toggle-password fa fa-fw fa-eye"></i>View Document</a>
-                @else
-                   <span title="Document not uploaded" class="btn btn-primary"><i class="toggle-password fa fa-fw fa-eye"></i>View Document</span>              
                 @endif
             </div>
-        </div>
+        </div> --}}
 
         <div class="col-md-12">
             <h4>Aadhar Card </h4>     
         </div>
 
-        <div class="col-xl-5 col-lg-6 col-md-12">
+        <div class="col-xl-6 col-lg-6 col-md-12">
             <div class="form-group">
                 <label>Aadhar Card Number<span style="color:red">*</span></label>
                 <input type="text" name="aadhar_card_number" class="form-control" value="{{ $employeeExists ? $employeeExists->pan_card_number : '' }}" placeholder="Enter aadhar card number">
@@ -159,7 +159,7 @@
             </div>
         </div>
 
-        <div class="col-xl-5 col-lg-6 col-md-12">
+        <div class="col-xl-6 col-lg-6 col-md-12">
             <div class="form-group">
                 <label>Aadhar Card Id</label>
                 <input type="file" id="aadhar_card_id" name="aadhar_card_id" value="{{ $employeeExists ? $employeeExists->aadhar_card_id : '' }}" class="form-control" accept="image/jpeg,image/doc,image/pdf" >
@@ -170,22 +170,20 @@
             </div>
         </div>
 
-        <div class="col-xl-2 col-lg-2 col-md-4 ">
+        {{-- <div class="col-xl-2 col-lg-2 col-md-4 ">
             <div class="form-group">
                 <label>&nbsp;</label>
                 @if (!empty($employeeExists->aadhar_card_id))
                     <a href="{{ $employeeExists->aadhar_card_id ? $employeeExists->aadhar_card_id : '#' }}" target="_blank" class="btn btn-primary"><i class="toggle-password fa fa-fw fa-eye"></i>View Document</a>
-                    @else
-                    <span title="Document not uploaded" class="btn btn-primary"><i class="toggle-password fa fa-fw fa-eye"></i>View Document</span>
-                 @endif
+                @endif
             </div>
-        </div>
+        </div> --}}
 
         <div class="col-md-12">
             <h4>Passport </h4>     
         </div>
 
-        <div class="col-xl-5 col-lg-6 col-md-12">
+        <div class="col-xl-6 col-lg-6 col-md-12">
             <div class="form-group">
                 <label>Passport Number<span style="color:red">*</span></label>
                 <input type="text" name="passport_number" class="form-control" value="{{ $employeeExists ? $employeeExists->passport_number : '' }}" placeholder="Enter passport number">
@@ -193,7 +191,7 @@
             </div>
         </div>
 
-        <div class="col-xl-5 col-lg-6 col-md-12">
+        <div class="col-xl-6 col-lg-6 col-md-12">
             <div class="form-group">
                 <label>Passport Id</label>
                 <input type="file" id="passport_id" name="passport_id" value="{{ $employeeExists ? $employeeExists->passport_id : '' }}" class="form-control" accept="image/jpeg,image/doc,image/pdf" >
@@ -203,19 +201,17 @@
              @endif --}}
             </div>
         </div>
-
+{{-- 
         <div class="col-xl-2 col-lg-2 col-md-4 ">
             <div class="form-group">
                 <label>&nbsp;</label>
                 @if (!empty($employeeExists->passport_id))
                     <a href="{{ $employeeExists->passport_id ? $employeeExists->passport_id : '#' }}" target="_blank" class="btn btn-primary"><i class="toggle-password fa fa-fw fa-eye"></i>View Document</a>
-                    @else
-                    <span title="Document not uploaded" class="btn btn-primary"><i class="toggle-password fa fa-fw fa-eye"></i>View Document</span>
-                 @endif
+                @endif
             </div>
-        </div>
+        </div> --}}
 
-        <div class="col-xl-5 col-lg-6 col-md-12">
+        <div class="col-xl-6 col-lg-6 col-md-12">
             <div class="form-group">
                 <label class="exitonboard doc"> <input type="checkbox" name="verification_type" class="checkboxexitform" <?php  if ($employeeExists->verification_type == '1') { ?> checked <?php } ?>/>Document Verification</label>
             </div>
@@ -485,12 +481,10 @@
         $("#employee_skills_form").validate({
             rules: {
                 skill: "required",
-                lang: "required",
             },
 
             messages: {
                 skill: "Skill is required",
-                lang: "Known language is required",
 
             }
         });
@@ -507,28 +501,6 @@
         });
 
         $("#employee_lang_form_edit").validate({
-            rules: {
-                lang: "required",
-            },
-
-            messages: {
-                lang: "Language is required",
-
-            }
-        });
-
-        $("#employee_skills_update").validate({
-            rules: {
-                skill: "required",
-            },
-
-            messages: {
-                skill: "Skill is required",
-
-            }
-        });
-
-        $("#employee_lang_submit").validate({
             rules: {
                 lang: "required",
             },

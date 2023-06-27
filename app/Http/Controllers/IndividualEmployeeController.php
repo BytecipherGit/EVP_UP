@@ -390,7 +390,7 @@ class IndividualEmployeeController extends Controller
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $this->validate($request, [
                 'old' => 'required',
-                'password' => 'required|min:6|confirmed',
+                'password' => 'required|min:8|confirmed',
             ]);
             $employeeID = Auth::guard('employee')->user()->id;
 

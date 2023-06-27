@@ -1,7 +1,7 @@
 
 @extends('superadmin.layouts.login')
 @section('content')
-@section('title','EVP - Forgot Password')
+@section('title','EVP - Employee Forgot Password')
 
 <!-- Main Container -->
 <div class="col-md-6 align-self-center pad-0 form-section">

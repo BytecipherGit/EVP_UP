@@ -52,10 +52,10 @@ class NewEmployeeController extends Controller
        
         if (Auth::check()) {
 
-            $request->validate([
-                'email' => 'required | unique:users,email',
-                // 'last_name' => 'required|string|max:255',
-            ]);
+            // $request->validate([
+            //     'email' => 'required | unique:employee,email',
+            //     // 'last_name' => 'required|string|max:255',
+            // ]);
 
             $uploadProfile = '';
             $uploadDocumentId = '';
@@ -157,8 +157,6 @@ class NewEmployeeController extends Controller
                         
                         $employeeData = Employee::where('empCode',$empCode)->first();
 
-
-
                         if (!empty($employeeData)) {
 
                             $insertVerification = [
@@ -184,23 +182,152 @@ class NewEmployeeController extends Controller
                         return Response::json(['success' => '0']);
                     }
 
-             
-                
-            // } else {
-            //     return Response::json(['errors' => $validator->errors()]);
-            // }
         }
 
     }
 
+    public function createInviteEmployee(request $request)
+    {
+        // dd($request->all());
+
+        //   $request->validate([
+        //         'email' => 'required | unique:employee,email',
+        //         // 'last_name' => 'required|string|max:255',
+        //     ]);
+     if (!empty($request->employee_id)) {
+
+            $uploadProfile = '';
+            $uploadDocumentId = '';
+            $uploadThirdPartyDocument = '';
+            $empCode = substr(time(), -6) . sprintf('%04d', rand(0, 9999));
+    
+           if ($request->hasFile('profile')) {
+                $file = $request->file('profile');
+                $fileName = time() . '_' . $file->getClientOriginalName();
+                $file->storeAs('public/employee_document', $fileName);
+                $uploadProfile = asset('storage/employee_document/' . $fileName);
+            }
+    
+           if ($request->hasFile('pan_card_id')) {
+                $file = $request->file('pan_card_id');
+                $fileName = time() . '_' . $empCode .'_'. $file->getClientOriginalName();
+                $file->storeAs('public/employee/employee_document', $fileName);
+                $uploadPanCardId = asset('storage/employee/employee_document/' . $fileName);
+            }
+
+            if ($request->hasFile('aadhar_card_id')) {
+                $file = $request->file('aadhar_card_id');
+                $fileName = time() . '_' . $empCode .'_'. $file->getClientOriginalName();
+                $file->storeAs('public/employee/employee_document', $fileName);
+                $uploadAadharCardId = asset('storage/employee/employee_document/' . $fileName);
+            }
+
+            if ($request->hasFile('passport_id')) {
+                 $file = $request->file('passport_id');
+                 $fileName = time() . '_' . $empCode .'_'. $file->getClientOriginalName();
+                 $file->storeAs('public/employee/employee_document', $fileName);
+                 $uploadPassportId = asset('storage/employee/employee_document/' . $fileName);
+            }
+    
+            if ($request->hasFile('third_party_document')) {
+                $file = $request->file('third_party_document');
+                $fileName = time() . '_' . $empCode .'_'. $file->getClientOriginalName();
+                $file->storeAs('public/employee/third_party_documents', $fileName);
+                $uploadThirdPartyDocument = asset('storage/employee/third_party_documents/' . $fileName);
+             }
+    
+           
+
+             $empCode = substr(time(), -6) . sprintf('%04d', rand(0, 9999));
+            // if ($validator->passes()) {
+
+                $statusVerification = '';
+                if (!empty($request->verification_type) && $request->verification_type == true) {    
+                    $statusVerification = 1;
+                } else {
+                    $statusVerification = 0;
+                }
+        
+                $statusThirdPartyVerification = '';
+                if (!empty($request->third_party_verification) && $request->third_party_verification == true) {
+                    $statusThirdPartyVerification = 1;
+                } else {
+                    $statusThirdPartyVerification = 0;
+                }
+                
+                    $employeeDetails = Employee::where('id', $request->employee_id)->first();
+                    $password = str_replace('-', '', $request->dob);
+                    $emplotyeeUpdate = Employee::where('id', $request->employee_id)
+                       ->update([
+
+                        'first_name' =>!empty($request->first_name) ? $request->first_name : null,
+                        'profile' => !empty($uploadProfile) ? $uploadProfile : $employeeDetails->profile,
+                        'last_name'=>!empty($request->last_name) ? $request->last_name : null,
+                        'middle_name'=>!empty($request->middle_name) ? $request->middle_name : null,
+                        'email'=>!empty($request->email) ? $request->email : null,
+                        'phone'=>!empty($request->phone) ? $request->phone : null,
+                        'dob'=>!empty($request->dob) ? $request->dob : null,
+                        'blood_group'=>!empty($request->blood_group) ? $request->blood_group : null,
+                        'gender'=>!empty($request->gender) ? $request->gender : null,
+                        'marital_status'=>!empty($request->marital_status) ? $request->marital_status : null,
+                        'current_address'=>!empty($request->current_address) ? $request->current_address : null,
+                        'permanent_address'=>!empty($request->permanent_address) ? $request->permanent_address : null,
+                        'emg_name'=>!empty($request->emg_name) ? $request->emg_name : null,
+                        'emg_relationship'=>!empty($request->emg_relationship) ? $request->emg_relationship : null,
+                        'emg_phone'=>!empty($request->emg_phone) ? $request->emg_phone : null,
+                        'emg_address'=>!empty($request->emg_address) ? $request->emg_address : null,
+                        'pan_card'=>'Pan Card',
+                        'pan_card_id'=>!empty($uploadPanCardId) ? $uploadPanCardId : $employeeDetails->pan_card_id,
+                        'pan_card_number'=>!empty($request->pan_card_number) ? $request->pan_card_number : null,
+                        'aadhar_card'=>'Aadhar Card',
+                        'aadhar_card_id'=>!empty($uploadAadharCardId) ? $uploadAadharCardId : $employeeDetails->aadhar_card_id,
+                        'aadhar_card_number'=>!empty($request->aadhar_card_number) ? $request->aadhar_card_number : null,
+                        'passport'=>'Passport',
+                        'passport_id'=>!empty($uploadPassportId) ? $uploadPassportId : $employeeDetails->passport_id,
+                        'passport_number'=>!empty($request->passport_number) ? $request->passport_number : null,
+                        'verification_type'=> $statusVerification,
+                        'third_party_document'=>!empty($uploadThirdPartyDocument) ? $uploadThirdPartyDocument : null,
+                        'third_party_verification'=> $statusThirdPartyVerification,
+                        'password'=> Hash::make($password)
+
+                    ]);
+
+                    
+                    if (!empty($emplotyeeUpdate)) {
+
+                        $employeeDetails = Employee::join('company_employee','company_employee.employee_id','=','employee.id')
+                                       ->where('employee.id',$request->employee_id)->first();
+                        
+// dd($employeeDetails);
+                        if (!empty($employeeDetails)) {
+
+                            $updateVerification = [
+
+                                'status' => $employeeDetails->third_party_verification,
+                                'document' => !empty($employeeDetails->third_party_document) ? $employeeDetails->third_party_document : null,
+                              ];
+    
+                              $VerificationData = Verification::where('id',$request->verification_id)
+                                                  ->where('company_id',Auth::id())->where('verification_document_type','=','identity_document')->update($updateVerification);
+                        }
+
+                        return redirect('basic_info/'.encrypt($request->employee_id))->with('message','Information added successfully');
+                
+                    } else {
+                        return Response::json(['errors' => $validator->errors()]);
+                    }
+        
+        } else {
+            return Response::json(['errors' => $validator->errors()]);
+        }
+
+    }
+
+
     public function updateEmployee(request $request)
     {
 
-            $request->validate([
-                'email' => 'required | unique:users,email',
-                // 'last_name' => 'required|string|max:255',
-            ]);
-
+      if(!empty($request->employee_id)){
             $uploadProfile = '';
             $uploadPanCardId = '';
             $uploadAadharCardId = '';
@@ -242,25 +369,22 @@ class NewEmployeeController extends Controller
                 $file->storeAs('public/employee/third_party_documents', $fileName);
                 $uploadThirdPartyDocument = asset('storage/employee/third_party_documents/' . $fileName);
             }
-          
+
 
                 $statusVerifications = '';
-                if (!empty($request->verification_type) && $request->verification_type == true) {
-                    
+                if (!empty($request->verification_type) && $request->verification_type == true) {    
                     $statusVerifications = 1;
-                } else {      
+                } else {
                     $statusVerifications = 0;
                 }
         
                 $statusThirdPartyVerifications = '';
                 if (!empty($request->third_party_verification) && $request->third_party_verification == true) {
                     $statusThirdPartyVerifications = 1;
-            
                 } else {
                     $statusThirdPartyVerifications = 0;
                 }
-
-                if($request->employee_id){
+            
                     $employeeDetails = Employee::where('id', $request->employee_id)->first();
                     $password = str_replace('-', '', $request->dob);
                     $emplotyeeUpdate = Employee::where('id', $request->employee_id)
@@ -320,16 +444,17 @@ class NewEmployeeController extends Controller
                     } else {
                         return Response::json(['success' => '0']);
                     }
-                  
-            
-        }
+             } else {
+                 return Response::json(['success' => '0']);
+          }
        
         
-    return Response::json(['success' => '1']);
+           return Response::json(['success' => '1']);
     }
 
     public function createEmployeeQualification(request $request)
       {
+       
 
             $validator = Validator::make($request->all(), [
                 // 'inst_name' => 'required|string|max:255',
@@ -394,12 +519,12 @@ class NewEmployeeController extends Controller
 
                         $qualificationDetails = Empqualification::join('company_employee','company_employee.employee_id','=','employee_qualifications.employee_id')
                                                 ->where('employee_qualifications.employee_id',$qualificationData->employee_id)->first();
-
+// dd($qualificationData);
                         if (!empty($qualificationData)) {
 
                             $insertVerification = [
                                 'employee_id' => $qualificationData->employee_id,
-                                'company_id' => Auth::id(),
+                                'company_id' => $qualificationDetails->company_id,
                                 'status' => $qualificationData->third_party_qualification_verification,
                                 'document' => !empty($qualificationData->third_party_qualification_document) ? $qualificationData->third_party_qualification_document : null,
                                 'verification_document_type' => 'qualification_document',
@@ -744,8 +869,8 @@ class NewEmployeeController extends Controller
     {
 
             $validator = Validator::make($request->all(), [
-                // 'title' => 'required|string|max:255',
-                // 'descriptions' => 'required|string|max:255',
+                'skill' => 'required|max:255',
+                'lang' => 'required|max:255',
                 
             ]);
             $employeeDetails = Employee::where('id',$request->employee_id)->first();
@@ -753,10 +878,9 @@ class NewEmployeeController extends Controller
 
             // $skillsLangExist = Emplang::join('company_employee','company_employee.employee_id','=','employee_language.employee_id')
             //                  ->where('employee_language.employee_id',$request->employee_id)->first();
-
-            if(!empty($employeeDetails)){
-                if ($validator->passes()) {
-
+            if ($validator->passes()) {
+                if(!empty($employeeDetails)){
+            
                     for ($i=0; $i < count($request->skill); $i++) 
                     {   
                       $insertDataSkill = array(  
@@ -792,8 +916,11 @@ class NewEmployeeController extends Controller
                     return redirect('employee_info/'.$employeeDetails->id.'/skills')->with('message','Information added successfully');
                  }
 
-
-            } 
+             }    else {
+                return Response::json(['success' => '0']);
+            }
+         } else {
+            return Response::json(['errors' => $validator->errors()]);
         }
     }
 

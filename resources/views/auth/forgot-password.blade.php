@@ -4,7 +4,7 @@
 @section('title','EVP - Forgot Password')
 
 <!-- Main Container -->
-<div class="col-md-6 align-self-center pad-0 form-section">
+ <div class="col-md-6 align-self-center pad-0 form-section">
     <div class="cover-box-txt">  
         @if (session('status'))
         <div class="alert alert-success" role="alert">
@@ -32,7 +32,7 @@
           <button type="submit"> Send Me Email</button>
         </div>
         <div class="form-group">
-          <h6>© 2022 ByteCipher Pvt. Ltd.</h6>
+          <h6>© 2023 ByteCipher Pvt. Ltd.</h6>
         </div>
 
       </form>

@@ -119,7 +119,6 @@ class Helper {
         }
     }
 
-    
 
     public static function getSmtpConfig($id=0)
     {

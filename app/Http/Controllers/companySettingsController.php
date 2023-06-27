@@ -7,6 +7,7 @@ use App\Models\Department;
 use App\Models\User;
 use App\Models\EmailConfiguration;
 use Auth;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use App\Models\Plan;
 use Session;
@@ -29,7 +30,7 @@ class companySettingsController extends Controller
     
     }
 
-    public function updateCompanyProfile(request $request)
+      public function updateCompanyProfile(request $request)
       {
 
        if(isset($_POST['profile'])){
@@ -49,28 +50,27 @@ class companySettingsController extends Controller
 
         $profile=DB::table('users')->where('id',Auth::id())
                  ->update([
-
-                  'org_name'=> $request->input('org_name'),
-                  'brand_name'=> $request->input('brand_name'),
-                  'org_web'=> $request->input('org_web'),
-                  'domain_name'=> $request->input('domain_name'),
-                  'industry'=> $request->input('industry'),
-                  'phone_number'=> $request->input('phone_number'),
+                               
+                  'org_name'=>!empty($request->org_name) ? $request->org_name : null,
+                  'brand_name'=>!empty($request->brand_name) ? $request->brand_name : null,
+                  'org_web'=>!empty($request->org_web) ? $request->org_web : null,
+                  'domain_name'=> !empty($request->domain_name) ? $request->domain_name : null,
+                  'industry'=> !empty($request->industry) ? $request->industry : null,
+                  'phone_number'=> !empty($request->phone_number) ? $request->phone_number : null,
                   'company_logo'=>$filename,
-                  'description'=> $request->input('description'),
+                  'description'=>!empty($request->description) ? $request->description : null,
 
        ]);
       
-        return redirect()->back()->with('message',"Profile data successfully added");
-
-       }
+        return redirect()->back()->with('message',"Profile data successfully added"); 
+      }
 
        if(isset($_POST['add_address'])){
 
         $address=DB::table('users')->where('id',Auth::id())
         ->update([
-            'address'=> $request->input('address'),
-            'cor_office_address'=> $request->input('cor_office_address'),
+            'address'=>!empty($request->address) ? $request->address : null,
+            'cor_office_address'=> !empty($request->cor_office_address) ? $request->cor_office_address : null,
          ]);
        
         return redirect()->back()->with('success',"Address successfully added");
@@ -79,8 +79,8 @@ class companySettingsController extends Controller
        if(isset($_POST['dept'])){
 
         $department=new Department();
-        $department->department=$request->input('department');
-        $department->sub_department=$request->input('sub_department');
+        $department->department=!empty($request->department) ? $request->department : null;
+        $department->sub_department=!empty($request->sub_department) ? $request->sub_department : null;
         $department->save();
 
         return redirect()->back()->with('succ',"Data successfully added");
@@ -90,7 +90,7 @@ class companySettingsController extends Controller
        if(isset($_POST['designation'])){
 
         $desi=new Designation();
-        $desi->designation_name=$request->input('designation_name');
+        $desi->designation_name=!empty($request->designation_name) ? $request->designation_name : null;
         $desi->save();
 
         return redirect()->back()->with('msg',"Data successfully added");
@@ -99,10 +99,10 @@ class companySettingsController extends Controller
       
        if(isset($_POST['plan'])){
 
-        $planss=new Plan();
-        $planss->plan_name=$request->input('plan_name');
-        $planss->authority=$request->input('authority');
-        $planss->plan_type=$request->input('plan_type');
+        $planss= new Plan();
+        $planss->plan_name=!empty($request->plan_name) ? $request->plan_name : null;
+        $planss->authority=!empty($request->authority) ? $request->authority : null;
+        $planss->plan_type=!empty($request->plan_type) ? $request->plan_type : null;
 
         $planss->save();
 
@@ -113,8 +113,8 @@ class companySettingsController extends Controller
 
           $depart= DB::table('departments')->where('id',$request->id)
           ->update([
-            'department'=>$request->input('department'),
-            'sub_department'=>$request->input('sub_department')
+            'department'=>!empty($request->department) ? $request->department : null,
+            'sub_department'=>!empty($request->sub_department) ? $request->sub_department : null,
             ]);
 
         return redirect()->back()->with('succ',"Data successfully added");
@@ -126,7 +126,7 @@ class companySettingsController extends Controller
         $desi=DB::table('designations')->where('id',$request->id)
         ->update([
 
-            'designation_name'=>$request->input('designation_name')
+            'designation_name'=>!empty($request->designation_name) ? $request->designation_name : null,
           ]);
 
           return redirect()->back()->with('succ',"Data successfully added");
@@ -136,7 +136,7 @@ class companySettingsController extends Controller
       public function createSmtpForm(request $request)
         {
           if (Auth::check()) {
-
+          
             $smtpData=DB::table('email_configurations')->where('company_id',Auth::id())
                ->update([
 
@@ -151,9 +151,9 @@ class companySettingsController extends Controller
                   'password'=> !empty($request->password) ? $request->password : null,
             
                ]);
-
-           }
-            return redirect()->back()->with('succ',"Data successfully added");
-        }
+               return redirect()->back()->with('succ',"Data successfully added");
+   
+         }
+      }
         
 }

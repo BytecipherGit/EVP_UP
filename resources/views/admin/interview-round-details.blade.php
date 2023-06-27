@@ -163,7 +163,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <div class="loadingImg"></div>
+                    {{-- <div class="loadingImg"></div> --}}
                     <div style="font-size: 16px; display:none;" class="text-success" id="successs">Status update
                         successfully</div>
                     <button type="button" class="btn-secondary-cust" onclick="refreshPage();"
@@ -332,8 +332,8 @@
         event.preventDefault();
         var isAdd = $('#is_add').val();
         var url = '{{ url('send_email_template') }}'
-        var formData = new FormData(this);
         $('.loadingImg').show();
+        var formData = new FormData(this);
         $.ajax({
             url: url,
             type: 'POST',

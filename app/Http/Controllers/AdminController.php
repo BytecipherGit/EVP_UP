@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Empinvite;
 use App\Models\Employee;
 use App\Models\CompanyEmployee;
+use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
@@ -57,42 +58,13 @@ class AdminController extends Controller
         return view('company.change-password');
     }
 
-      
-    // public function logout(Request $request) {	  	  	
-    //     Auth::logout();
-    //     Session::flush();	  
-    //     return redirect('/');
-    //   }
-
-    // public function change_Password(request $request)
-    // {
-    //     if (Auth::check()) {
-    //         $request->validate([
-    //             // 'password' => ['required', 'confirmed'],
-    //             'old_password' => 'required',
-    //             'new_password' => 'required|confirmed',
-    //         ]);
-
-    //         if(!Hash::check($request->old_password, auth()->user()->password)){
-    //             return back()->with("error", "Old Password Doesn't match!");
-    //            }
-
-    //             #Update the new Password
-    //             User::whereId(auth()->user()->id)->update([
-    //                 'password' => Hash::make($request->new_password)
-    //             ]);
-
-    //         return back()->with("status", "Password changed successfully!");
-
-    //       }
-    //  }
-
      public function changePassword(Request $request)
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $this->validate($request, [
                 'old' => 'required',
-                'password' => 'required|min:6|confirmed',
+                // 'password' => 'required|min:8|confirmed',
+                'password' => 'required|confirmed', Rules\Password::defaults(),
             ]);
 
             $user = User::find(Auth::id());
