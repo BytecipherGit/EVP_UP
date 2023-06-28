@@ -80,8 +80,8 @@
                             <div class="form-group">
                                 <label>Select Gender<span style="color:red">*</span></label>
                                 <select class="form-control" name="gender" id="gender">
-                                    <option value="Male" {{ $employee->gender == 'Male' ? 'selected' : '' }}>Male</option>
-                                    <option value="Female" {{ $employee->gender == 'Female' ? 'selected' : '' }}>Female</option>
+                                    <option value="male" {{ $employee->gender == 'male' ? 'selected' : '' }}>Male</option>
+                                    <option value="female" {{ $employee->gender == 'female' ? 'selected' : '' }}>Female</option>
                                     <strong class="error" id="gender-error"></strong>
                                 </select>
                             </div>
@@ -104,7 +104,7 @@
                               <label for="email">Email Id<span style="color:red">*</span></label>
                               <input disabled type="text" name="email" class="form-control disabled" value="{{ $employee ? $employee->email : '' }}" >
                               @error('email')
-                               <p class="velidation">{{ $message }}</p>
+                               <p class="validation">{{ $message }}</p>
                               @enderror
                               <strong class="error" id="email-error"></strong>
                           </div>

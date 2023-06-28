@@ -286,26 +286,26 @@ Route::middleware([SuperAdmin::class])->group(function () {
     Route::post('offer_send/declined', [App\Http\Controllers\EmployeeStatusController::class, 'createOfferDeclinedFromMail'])->name('offer.declined_form');
 
   // subscription
-Route::any('company_suscription', [App\Http\Controllers\CompanySubscriptionController::class, 'index'])->name('company.suscription');
-Route::any('subscription_get', [App\Http\Controllers\CompanySubscriptionController::class, 'createSubscription'])->name('subscription.get');
-Route::post('subscription/destroy', [App\Http\Controllers\PaymentController::class, 'deleteSubscription']);
-Route::post('razorpay_payment',[App\Http\Controllers\PaymentController::class,'getPaySuccess'])->name('razorpay.payment.store');
-Route::post('razorpay_recurring_payment', [App\Http\Controllers\PaymentController::class, 'createRecurringSubscriptionPayment']);
+    Route::any('company_suscription', [App\Http\Controllers\CompanySubscriptionController::class, 'index'])->name('company.suscription');
+    Route::any('subscription_get', [App\Http\Controllers\CompanySubscriptionController::class, 'createSubscription'])->name('subscription.get');
+    Route::post('subscription/destroy', [App\Http\Controllers\PaymentController::class, 'deleteSubscription']);
+    Route::post('razorpay_payment',[App\Http\Controllers\PaymentController::class,'getPaySuccess'])->name('razorpay.payment.store');
+    Route::post('razorpay_recurring_payment', [App\Http\Controllers\PaymentController::class, 'createRecurringSubscriptionPayment']);
 
 
-Route::get('reload-captcha', [App\Http\Controllers\Auth\RegisteredUserController::class, 'reloadCaptcha'])->name('reloadCaptcha');
-Route::get('verification-success/{id?}', [InterviewEmployee::class, 'verificationEmail'])->name('verification.success');
-Route::any('resetverification-mail/{id?}', [App\Http\Controllers\Auth\RegisteredUserController::class, 'resetMailSend'])->name('resetverification.mail');
+    Route::get('reload-captcha', [App\Http\Controllers\Auth\RegisteredUserController::class, 'reloadCaptcha'])->name('reloadCaptcha');
+    Route::get('verification-success/{id?}', [InterviewEmployee::class, 'verificationEmail'])->name('verification.success');
+    Route::any('resetverification-mail/{id?}', [App\Http\Controllers\Auth\RegisteredUserController::class, 'resetMailSend'])->name('resetverification.mail');
 
-Route::get('account_verify', [InterviewEmployee::class, 'getCheckStatus']);
-Route::get('resetaccount_verify', [InterviewEmployee::class, 'getResetStatus']);
-// Route::get('/dashboards', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboards');
+    Route::get('account_verify', [InterviewEmployee::class, 'getCheckStatus']);
+    Route::get('resetaccount_verify', [InterviewEmployee::class, 'getResetStatus']);
+    // Route::get('/dashboards', function () {
+    //     return view('dashboard');
+    // })->middleware(['auth', 'verified'])->name('dashboards');
 
-Route::get('country-state-city', [App\Http\Controllers\Auth\RegisteredUserController::class, 'index']);
-Route::post('get-states-by-country', [App\Http\Controllers\Auth\RegisteredUserController::class, 'getState']);
-Route::post('get-cities-by-state', [App\Http\Controllers\Auth\RegisteredUserController::class, 'getCity']);
+    Route::get('country-state-city', [App\Http\Controllers\Auth\RegisteredUserController::class, 'index']);
+    Route::post('get-states-by-country', [App\Http\Controllers\Auth\RegisteredUserController::class, 'getState']);
+    Route::post('get-cities-by-state', [App\Http\Controllers\Auth\RegisteredUserController::class, 'getCity']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -314,25 +314,25 @@ Route::middleware('auth')->group(function () {
 });
 
 // Route::get("email", [App\Http\Controllers\Auth\InviteempController::class, "sendEmail"])->name("email");
-Route::any("compose-email", [App\Http\Controllers\InviteempController::class, "sendExEmail"]);
+    Route::any("compose-email", [App\Http\Controllers\InviteempController::class, "sendExEmail"]);
 
 
-Route::get('interview/feedback/{id?}', [InterviewProcess::class, 'interviewFeedback'])->name('interview.feedback');
-Route::post('interview/feedback', [InterviewProcess::class, 'interviewFeedbackForEmployee'])->name('interview.feedback.mail');
+    Route::get('interview/feedback/{id?}', [InterviewProcess::class, 'interviewFeedback'])->name('interview.feedback');
+    Route::post('interview/feedback', [InterviewProcess::class, 'interviewFeedbackForEmployee'])->name('interview.feedback.mail');
 
-Route::get('csv', [App\Http\Controllers\CsvController::class, 'showForm']);
-Route::post('csv', [App\Http\Controllers\CsvController::class, 'store']);
-// Route::get('/export/{type}', [App\Http\Controllers\EmployeeController::class,'export']);
-Route::get('/export-csv', [App\Http\Controllers\EmployeeController::class, 'exportsCSV']);
-Route::get('/export-csv-invite', [App\Http\Controllers\InviteempController::class, 'exportsCSVInvite']);
+    Route::get('csv', [App\Http\Controllers\CsvController::class, 'showForm']);
+    Route::post('csv', [App\Http\Controllers\CsvController::class, 'store']);
+    // Route::get('/export/{type}', [App\Http\Controllers\EmployeeController::class,'export']);
+    Route::get('/export-csv', [App\Http\Controllers\EmployeeController::class, 'exportsCSV']);
+    Route::get('/export-csv-invite', [App\Http\Controllers\InviteempController::class, 'exportsCSVInvite']);
 
-require __DIR__ . '/auth.php';
+    require __DIR__ . '/auth.php';
 
 
-Route::get('color_picker', [App\Http\Controllers\CsvController::class, 'colorPicker']);
+    Route::get('color_picker', [App\Http\Controllers\CsvController::class, 'colorPicker']);
 
-Route::post('/subscribe', [SubscriptionController::class, 'subscribe'])->name('subscribe');
-Route::post('/cancel-subscription', [SubscriptionController::class, 'cancelSubscription'])->name('cancel-subscription');
+    Route::post('/subscribe', [SubscriptionController::class, 'subscribe'])->name('subscribe');
+    Route::post('/cancel-subscription', [SubscriptionController::class, 'cancelSubscription'])->name('cancel-subscription');
 
 
 

@@ -588,7 +588,7 @@ a{
 }
 .selectBox .dropdown-item.active, .selectBox .dropdown-item:active {
     color: #5533FF;
-    background: #F7F5FF;
+    /* background: #F7F5FF; */
 }
 .selectBox.show {
   background-color: #fff;
@@ -1079,4 +1079,11 @@ header .navbar-light .navbar-nav .indHoverRemove:focus, .navbar-light .navbar-na
   border: 1px solid #5533FF;
   padding: 5px;
   border-radius: 50%;
+}
+.indiUserProfile{
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  margin-right: 6px;
+  position: relative;
 }

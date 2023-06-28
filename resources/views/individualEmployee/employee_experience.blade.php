@@ -68,7 +68,7 @@
 
                     
           <div class="modal-footer">
-              <button type="cancel" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
+              <button type="reset" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
               <button type="submit" class="btn-primary-cust button_background_color"><span class="button_text_color">Save</span></button>
           </div>
 </form>

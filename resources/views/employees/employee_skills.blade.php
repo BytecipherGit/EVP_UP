@@ -1,5 +1,5 @@
 <style>
-    .velidation {
+    .validation {
       color: red;
       font-size: 12px;
       display: block;
@@ -18,8 +18,9 @@
         </tr>
         <tr>
             <td class="addskill"><input type="text" name="skill[]" id="skill" placeholder="Enter skill" class="form-control skilleffect" />
+                <strong class="error" id="skill-error"></strong>
                 @error('skill')
-                 <span class="velidation">{{ $message }}</span>
+                 <span class="validation">{{ $message }}</span>
                 @enderror
                 
             </td>
@@ -43,8 +44,9 @@
         </tr>
         <tr>
             <td class="addskill"><input type="text" name="lang[]" id="lang" placeholder="Enter language" class="form-control skilleffect" />
+                <strong class="error" id="lang-error"></strong>
                 @error('lang')
-                <span class="velidation">{{ $message }}</span>
+                <span class="validation">{{ $message }}</span>
                @enderror
             </td>
             <td class="addskill">

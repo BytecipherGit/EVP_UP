@@ -1,4 +1,4 @@
-@extends('company/layouts.app')
+@extends('company.layouts.app')
 @section('content')
 @section('title','EVP - Onboarding-Employee')
 
@@ -48,7 +48,7 @@
                             <label for="first_name">First Name<span style="color:red">*</span></label>
                             <input type="text" name="first_name" class="form-control"  value="{{old('first_name')}}" placeholder="Enter Your First Name">
                             @error('first_name')
-                            <span class="velidation">{{ $message }}</span>
+                            <span class="validation">{{ $message }}</span>
                             @enderror 
                           </div>
                         </div>  
@@ -57,7 +57,7 @@
                             <label for="middle_name">Middle Name<span style="color:red">*</span></label>
                             <input type="text" name="middle_name" class="form-control" value="{{old('middle_name')}}" placeholder="Enter Your Middle Name" >
                             @error('middle_name')
-                            <span class="velidation">{{ $message }}</span>
+                            <span class="validation">{{ $message }}</span>
                             @enderror 
                           </div>
                         </div>  
@@ -66,7 +66,7 @@
                             <label for="last_name">Last Name<span style="color:red">*</span></label>
                             <input type="text" name="last_name" class="form-control" value="{{old('last_name')}}" placeholder="Enter Your Last Name">
                             @error('last_name')
-                            <span class="velidation">{{ $message }}</span>
+                            <span class="validation">{{ $message }}</span>
                             @enderror 
                           </div>                          
                         </div>
@@ -75,7 +75,7 @@
                             <label for="email">Official Email Id<span style="color:red">*</span></label>
                             <input type="text" name="email" class="form-control" value="{{old('email')}}" placeholder="Enter Your Email">
                             @error('email')
-                            <span class="velidation">{{ $message }}</span>
+                            <span class="validation">{{ $message }}</span>
                             @enderror 
                           </div>
                         </div>
@@ -84,7 +84,7 @@
                             <label for="phone">Phone Number<span style="color:red">*</span></label>
                             <input type="text" name="phone" class="form-control" value="{{old('phone')}}" placeholder="Enter Your Number">
                             @error('phone')
-                            <span class="velidation">{{ $message }}</span>
+                            <span class="validation">{{ $message }}</span>
                             @enderror 
                           </div>
                         </div>

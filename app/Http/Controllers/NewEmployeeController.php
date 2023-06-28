@@ -869,10 +869,11 @@ class NewEmployeeController extends Controller
     {
 
             $validator = Validator::make($request->all(), [
-                'skill' => 'required|max:255',
-                'lang' => 'required|max:255',
+                'skill.*' => 'required',
+                'lang.*' => 'required',
                 
             ]);
+
             $employeeDetails = Employee::where('id',$request->employee_id)->first();
 
 

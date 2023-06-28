@@ -50,7 +50,7 @@
                             <input type="text" id="org_name" name="org_name" class="form-control" value="{{ old('org_name') }}"
                                 placeholder="Enter Organization Name" autofocus autocomplete="org_name" >
                             {{-- @error('org_name')
-                                <p class="velidation">{{ $message }}</p>
+                                <p class="validation">{{ $message }}</p>
                             @enderror --}}
                             <strong class="error" id="org_name-error"></strong>
                         </div>
@@ -60,7 +60,7 @@
                             <input type="text" id="org_web" name="org_web" class="form-control" value="{{ old('org_web') }}"
                                 placeholder="Enter Company Website" autofocus autocomplete="org_web">
                             {{-- @error('org_web')
-                                <p class="velidation">{{ $message }}</p>
+                                <p class="validation">{{ $message }}</p>
                             @enderror --}}
                             <strong class="error" id="org_web-error"></strong>
                         </div>
@@ -69,7 +69,7 @@
                             <input type="email" id="email" name="email" class="form-control" value="{{ old('email') }}"
                                 placeholder="Enter Your Email" autofocus autocomplete="email">
                             @error('email')
-                                <p class="velidation">{{ $message }}</p>
+                                <p class="validation">{{ $message }}</p>
                             @enderror
                             <strong class="error" id="email-error"></strong>
                         </div>
@@ -108,7 +108,7 @@
                                             @endforeach
                                         </select>
                                         {{-- @error('country')
-                                            <p class="velidation">{{ $message }}</p>
+                                            <p class="validation">{{ $message }}</p>
                                         @enderror --}}
                                         <strong class="error" id="country-error"></strong>
                                     </div>
@@ -125,7 +125,7 @@
                                             <option value="">Select State</option>      
                                             </select>
                                             {{-- @error('state')
-                                                <p class="velidation">{{ $message }}</p>
+                                                <p class="validation">{{ $message }}</p>
                                             @enderror --}}
                                             <strong class="error" id="state-error"></strong>
                                         </div>
@@ -145,7 +145,7 @@
                                                 <option value="">Select City</option>
                                             </select>
                                             {{-- @error('city')
-                                                <p class="velidation">{{ $message }}</p>
+                                                <p class="validation">{{ $message }}</p>
                                             @enderror --}}
                                             <strong class="error" id="city-error"></strong>
                                         </div>
@@ -158,7 +158,7 @@
                                     <input type="text" id="pin" name="pin" class="form-control"
                                         value="{{ old('pin') }}" placeholder="Enter Your pin" autofocus autocomplete="pin">
                                     {{-- @error('pin')
-                                        <p class="velidation">{{ $message }}</p>
+                                        <p class="validation">{{ $message }}</p>
                                     @enderror --}}
                                     <strong class="error" id="pin-error"></strong>
                                 </div>
@@ -170,7 +170,7 @@
                             <textarea class="form-control" id="address" name="address" value="{{ old('address') }}" placeholder="Enter Your Address"
                                 rows="2" autofocus autocomplete="address" >{{ old('address') }}</textarea>
                             {{-- @error('address')
-                                <p class="velidation">{{ $message }}</p>
+                                <p class="validation">{{ $message }}</p>
                             @enderror --}}
                             <strong class="error" id="address-error"></strong>
                         </div>
@@ -185,7 +185,7 @@
                             <input type="text" id="name" name="name" class="form-control" value="{{ old('name') }}"
                                 placeholder="Enter Your name" autofocus autocomplete="name" >
                             {{-- @error('name')
-                                <p class="velidation">{{ $message }}</p>
+                                <p class="validation">{{ $message }}</p>
                             @enderror --}}
                             <strong class="error" id="name-error"></strong>
                         </div>
@@ -236,7 +236,7 @@
                          <div class="form-group">
                             <input id="captcha" type="text" class="form-control" placeholder="Enter Captcha" id="captcha" name="captcha">
                             @error('captcha')
-                              <span class="velidation">{{ $message }}</span>
+                              <span class="validation">{{ $message }}</span>
                             @enderror 
                             <strong class="error" id="captcha-error"></strong>
                          </div>

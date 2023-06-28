@@ -35,7 +35,7 @@
                             <input type="text" name="reg_id" id="reg_id" class="form-control"
                                 value="{{ old('reg_id') }}" placeholder="Enter Registration Number">
                             @error('reg_id')
-                                <p class="velidation">{{ $message }}</p>
+                                <p class="validation">{{ $message }}</p>
                             @enderror
                         </div> --}}
 
@@ -51,7 +51,7 @@
                                                 <input type="file" name="id_proof" id="id_proof"
                                                     class="form-control">
                                                 @error('id_proof')
-                                                    <p class="velidation">{{ $message }}</p>
+                                                    <p class="validation">{{ $message }}</p>
                                                 @enderror
                                             </div>
                                         </div>
@@ -67,7 +67,7 @@
                                                 <input type="file" name="address_proof" id="address_proof"
                                                     class="form-control">
                                                 @error('address_proof')
-                                                    <p class="velidation">{{ $message }}</p>
+                                                    <p class="validation">{{ $message }}</p>
                                                 @enderror
                                             </div>
                                         </div>
@@ -83,7 +83,7 @@
                                                 <input type="file" name="document_proof" id="document_proof"
                                                     class="form-control">
                                                 @error('document_proof')
-                                                    <p class="velidation">{{ $message }}</p>
+                                                    <p class="validation">{{ $message }}</p>
                                                 @enderror
                                             </div>
                                         </div>

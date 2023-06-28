@@ -8,7 +8,7 @@
         z-index: 9999 !important;
     }
 
-    .velidation {
+    .validation {
         color: red;
         font-size: 12px;
         display: block;
@@ -58,7 +58,7 @@
     <label>Email<span style="color:red">*</span></label>
     <input type="email" name="email" id="email" class="form-control" placeholder="Email">
     @error('email')
-        <p class="velidation">{{ $message }}</p>
+        <p class="validation">{{ $message }}</p>
     @enderror
     <strong class="error" id="email-error"></strong>
 </div>
@@ -67,7 +67,7 @@
     <input type="text" name="phone" id="phone" class="form-control" placeholder="Enter phone number">
 </div>
 @error('phone')
-    <span class="velidation">{{ $message }}</span>
+    <span class="validation">{{ $message }}</span>
 @enderror
 <div class="form-group">
     <label>Document Type</label>
@@ -84,7 +84,7 @@
 
 </div>
 @error('document_number')
-    <span class="velidation">{{ $message }}</span>
+    <span class="validation">{{ $message }}</span>
 @enderror
 <div class="form-group">
     <label>Upload ID Proof Document
@@ -94,7 +94,7 @@
         <input type="file" id="document_id" name="document_id" class="form-control">
     </div>
     @error('document_id')
-        <span class="velidation">{{ $message }}</span>
+        <span class="validation">{{ $message }}</span>
     @enderror
 </div>
 <div class="form-group" id="uploadedDocument">

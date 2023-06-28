@@ -47,7 +47,7 @@
                         <label for="email">Official Email Id<span style="color:red">*</span></label>
                         <input type="text" name="email" class="form-control" value="{{ $employeeExists ? $employeeExists->email : '' }}" placeholder="Enter Your Email" readonly>
                         @error('email')
-                        <p class="velidation">{{ $message }}</p>
+                        <p class="validation">{{ $message }}</p>
                        @enderror
                         <strong class="error" id="email-error"></strong>
                     </div>
@@ -95,8 +95,8 @@
                 <label>Select Gender<span style="color:red">*</span></label>
                 <select class="form-control" name="gender" id="gender">
                     {{-- <option value="{{ $employeeExists ? $employeeExists->gender : '' }}">{{ $employeeExists ? $employeeExists->gender : ' Select Gender' }}</option> --}}
-                    <option value="Male" {{ $employeeExists->gender == 'Male' ? 'selected' : '' }}>Male</option>
-                    <option value="Female" {{ $employeeExists->gender == 'Female' ? 'selected' : '' }}>Female</option>
+                    <option value="male" {{ $employeeExists->gender == 'male' ? 'selected' : '' }}>Male</option>
+                    <option value="female" {{ $employeeExists->gender == 'female' ? 'selected' : '' }}>Female</option>
                 </select>
                 <strong class="error" id="gender-error"></strong>
             </div>

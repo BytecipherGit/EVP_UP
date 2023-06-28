@@ -221,7 +221,7 @@
                       <textarea class="form-control" placeholder="Enter Description" name="description" rows="5">@if ($profile) {{old('description',$profile->description)}} @endif</textarea>
                  
                       @error('description')
-                      <p class="velidation">{{ $description }}</p>
+                      <p class="validation">{{ $description }}</p>
                   @enderror
                     </div>
                  

@@ -11,7 +11,7 @@
  <!--- Main Container Start ----->
  <div class="main-container">
 
-     <div class="change-password-page">
+     <div class="change-password-page indiviPassChange">
          <h2>Change Password</h2>
          <form action="{{ URL::to('admin/change_password') }}" method="post" role="form" enctype="multipart/form-data">
 
@@ -39,7 +39,7 @@
                          <div class="effect-box">
                              <input id="password" type="password" class="form-control" placeholder="Old password"
                                  name="old">
-                             {{-- <i class="toggle-password fa fa-fw fa-eye-slash"></i> --}}
+                             <i class="toggle-password fa fa-fw fa-eye-slash"></i>
                              @if ($errors->has('old'))
                                  <span class="help-block">
                                      <strong>{{ $errors->first('old') }}</strong>
@@ -54,7 +54,7 @@
                          <div class="effect-box">
                              <input id="password" type="password" class="form-control" placeholder="New password"
                                  name="password">
-                             {{-- <i class="toggle-password fa fa-fw fa-eye-slash"></i> --}}
+                             <i class="toggle-password fa fa-fw fa-eye-slash"></i>
                              @if ($errors->has('password'))
                                  <span class="help-block">
                                      <strong>{{ $errors->first('password') }}</strong>
@@ -69,7 +69,7 @@
                          <div class="effect-box">
                              <input id="password-confirm" type="password" class="form-control"
                                  placeholder="Confirm password" name="password_confirmation">
-                             {{-- <i class="toggle-password fa fa-fw fa-eye-slash"></i> --}}
+                             <i class="toggle-password fa fa-fw fa-eye-slash"></i>
                              @if ($errors->has('password_confirmation'))
                                  <span class="help-block">
                                      <strong>{{ $errors->first('password_confirmation') }}</strong>

@@ -60,22 +60,16 @@
                                             <td style="color:#5BD94E"><b>Verified</b></td>
                                             {{-- <td><button class="pushme active-btn-bg">Verified</button></td> --}}
                                             <td class="d-flex">
-                                                <a href="organization_details/{{ $company->id }}"
-                                                    class="edit-btn fa fa-eye" title="View"></a>
-                                                <a href="update_organization/{{ $company->id }}"
-                                                    class="edit-btn fa fa-edit" title="Edit"></a>
-                                                <a href="#" class="edit-btn deleteCompany fa fa-trash"
-                                                    data-id="{{ $company->id }}" title="Delete"></a>
+                                                <a href="organization_details/{{ $company->id }}" class="edit-btn fa fa-eye" title="View"></a>
+                                                <a href="update_organization/{{ $company->id }}" class="edit-btn fa fa-edit" title="Edit"></a>
+                                                <a href="#" class="edit-btn deleteCompany fa fa-trash" data-id="{{ $company->id }}" title="Delete"></a>
                                             </td>
                                         @else
                                             <td style="color:#ac2029"><b>Pending</b></td>
                                             <td class="d-flex">
-                                                <a href="organization_details/{{ $company->id }}"
-                                                    class="edit-btn fa fa-eye" title="View"></a>
-                                                <a href="update_organization/{{ $company->id }}"
-                                                    class="edit-btn fa fa-edit" title="Edit"></a>
-                                                <a href="#" class="edit-btn deleteCompany fa fa-trash"
-                                                    data-id="{{ $company->id }}" title="Delete"></a>
+                                                <a href="organization_details/{{ $company->id }}" class="edit-btn fa fa-eye" title="View"></a>
+                                                <a href="update_organization/{{ $company->id }}" class="edit-btn fa fa-edit" title="Edit"></a>
+                                                <a href="#" class="edit-btn deleteCompany fa fa-trash" data-id="{{ $company->id }}" title="Delete"></a>
                                             </td>
                                         @endif
                                     </tr>

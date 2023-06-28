@@ -96,7 +96,7 @@
                                                         value="{{ old('first_name') }}"
                                                         placeholder="Enter Your First Name">
                                                     @error('first_name')
-                                                        <span class="velidation">{{ $message }}</span>
+                                                        <span class="validation">{{ $message }}</span>
                                                     @enderror
                                                     <strong class="error" id="first_name-error"></strong>
                                                 </div>
@@ -118,7 +118,7 @@
                                                         value="{{ old('last_name') }}"
                                                         placeholder="Enter Your Last Name">
                                                     @error('last_name')
-                                                        <span class="velidation">{{ $message }}</span>
+                                                        <span class="validation">{{ $message }}</span>
                                                     @enderror
                                                     <strong class="error" id="last_name-error"></strong>
                                                 </div>
@@ -130,7 +130,7 @@
                                                     <input type="text" name="email" class="form-control"
                                                         value="{{ old('email') }}" placeholder="Enter Your Email">
                                                     @error('email')
-                                                        <span class="velidation">{{ $message }}</span>
+                                                        <span class="validation">{{ $message }}</span>
                                                     @enderror
                                                     <strong class="error" id="email-error"></strong>
                                                 </div>
@@ -142,7 +142,7 @@
                                                     <input type="text" name="phone" class="form-control"
                                                         value="{{ old('phone') }}" placeholder="Enter Your Number">
                                                     @error('phone')
-                                                        <span class="velidation">{{ $message }}</span>
+                                                        <span class="validation">{{ $message }}</span>
                                                     @enderror
                                                     <strong class="error" id="phone-error"></strong>
                                                 </div>
@@ -163,7 +163,7 @@
                                             <input type="date" name="dob" class="form-control"
                                                 value="{{ old('dob') }}" placeholder="DOB">
                                             @error('dob')
-                                                <span class="velidation">{{ $message }}</span>
+                                                <span class="validation">{{ $message }}</span>
                                             @enderror
                                             <strong class="error" id="dob-error"></strong>
                                         </div>
@@ -185,7 +185,7 @@
                                                 <option value="AB-">AB-</option>
                                             </select>
                                             @error('blood_group')
-                                                <span class="velidation">{{ $message }}</span>
+                                                <span class="validation">{{ $message }}</span>
                                             @enderror
                                             <strong class="error" id="blood_group-error"></strong>
                                         </div>
@@ -203,7 +203,7 @@
                                                 <option value="Female">Female</option>
                                             </select>
                                             @error('gender')
-                                                <span class="velidation">{{ $message }}</span>
+                                                <span class="validation">{{ $message }}</span>
                                             @enderror
                                             <strong class="error" id="gender-error"></strong>
                                         </div>
@@ -220,7 +220,7 @@
                                                 <option value="Single">Single</option>
                                             </select>
                                             @error('marital_status')
-                                                <span class="velidation">{{ $message }}</span>
+                                                <span class="validation">{{ $message }}</span>
                                             @enderror
                                             <strong class="error" id="marital_status-error"></strong>
                                         </div>
@@ -283,7 +283,7 @@
                                                     style="color:red">*</span></label>
                                             <textarea rows="3" name="current_address" placeholder="Address" class="form-control">{{ old('current_address') }}</textarea>
                                             @error('current_address')
-                                                <span class="velidation">{{ $message }}</span>
+                                                <span class="validation">{{ $message }}</span>
                                             @enderror
                                             <strong class="error" id="current_address-error"></strong>
                                         </div>
@@ -294,7 +294,7 @@
                                                     style="color:red">*</span></label>
                                             <textarea rows="3" name="permanent_address" placeholder="Address" class="form-control">{{ old('permanent_address') }}</textarea>
                                             @error('current_address')
-                                                <span class="velidation">{{ $message }}</span>
+                                                <span class="validation">{{ $message }}</span>
                                             @enderror
                                             <strong class="error" id="permanent_address-error"></strong>
                                         </div>
@@ -308,7 +308,7 @@
                                             <input type="text" name="emg_name" class="form-control"
                                                 value="{{ old('emg_name') }}" placeholder="Enter Name">
                                             @error('emg_name')
-                                                <span class="velidation">{{ $message }}</span>
+                                                <span class="validation">{{ $message }}</span>
                                             @enderror
                                             <strong class="error" id="emg_name-error"></strong>
                                         </div>
@@ -320,7 +320,7 @@
                                             <input type="text" name="emg_relationship" class="form-control"
                                                 value="{{ old('emg_relationship') }}" placeholder="Enter Relation">
                                             @error('emg_relationship')
-                                                <span class="velidation">{{ $message }}</span>
+                                                <span class="validation">{{ $message }}</span>
                                             @enderror
                                             <strong class="error" id="emg_relationship-error"></strong>
                                         </div>
@@ -332,7 +332,7 @@
                                             <input type="text" name="emg_phone" class="form-control"
                                                 value="{{ old('emg_phone') }}" placeholder="Number">
                                             @error('emg_phone')
-                                                <span class="velidation">{{ $message }}</span>
+                                                <span class="validation">{{ $message }}</span>
                                             @enderror
                                             <strong class="error" id="emg_phone-error"></strong>
                                         </div>
@@ -345,7 +345,7 @@
                                             <textarea rows="3" name="emg_address" class="form-control" value="{{ old('emg_address') }}"
                                                 placeholder="Enter Address"></textarea>
                                             @error('emg_address')
-                                                <span class="velidation">{{ $message }}</span>
+                                                <span class="validation">{{ $message }}</span>
                                             @enderror
                                             <strong class="error" id="emg_address-error"></strong>
                                         </div>
@@ -403,7 +403,7 @@
                                                         @if ($basic) value="{{ old('first_name', $basic->first_name) }}" @endif
                                                         class="form-control" placeholder="Enter Your First Name">
                                                     @error('first_name')
-                                                        <span class="velidation">{{ $message }}</span>
+                                                        <span class="validation">{{ $message }}</span>
                                                     @enderror
                                                     <strong class="error" id="first_name-error"></strong>
                                                 </div>
@@ -1131,7 +1131,7 @@
                                                 <input type="date" name="date_of_joining" class="form-control"
                                                     placeholder="Date">
                                                 @error('date_of_joining')
-                                                    <span class="velidation">{{ $message }}</span>
+                                                    <span class="validation">{{ $message }}</span>
                                                 @enderror
                                                 <strong class="error" id="date_of_joining-error"></strong>
                                             </div>
@@ -1147,7 +1147,7 @@
                                                     <option value="Freelancer">Freelancer</option>
                                                 </select>
                                                 @error('emp_type')
-                                                    <span class="velidation">{{ $message }}</span>
+                                                    <span class="validation">{{ $message }}</span>
                                                 @enderror
                                                 <strong class="error" id="emp_type-error"></strong>
                                             </div>
@@ -1163,7 +1163,7 @@
 
                                                 </select>
                                                 @error('work_location')
-                                                    <span class="velidation">{{ $message }}</span>
+                                                    <span class="validation">{{ $message }}</span>
                                                 @enderror
                                                 <strong class="error" id="work_location-error"></strong>
                                             </div>
@@ -1177,7 +1177,7 @@
                                                     <option value="0">Inactive</option>
                                                 </select>
                                                 @error('emp_status')
-                                                    <span class="velidation">{{ $message }}</span>
+                                                    <span class="validation">{{ $message }}</span>
                                                 @enderror
                                                 <strong class="error" id="emp_status-error"></strong>
                                             </div>
@@ -1200,7 +1200,7 @@
                                                 <input type="text" name="lpa" class="form-control"
                                                     placeholder="Enter LPA">
                                                 @error('lpa')
-                                                    <span class="velidation">{{ $message }}</span>
+                                                    <span class="validation">{{ $message }}</span>
                                                 @enderror
                                                 <strong class="error" id="lpa-error"></strong>
                                             </div>
@@ -1255,7 +1255,7 @@
                                         <option value="Voter Id">Voter Id</option>
                                     </select>
                                     @error('id_type')
-                                        <span class="velidation">{{ $message }}</span>
+                                        <span class="validation">{{ $message }}</span>
                                     @enderror
                                     <strong class="error" id="id_type-error"></strong>
                                 </div>
@@ -1264,7 +1264,7 @@
                                     <input type="text" name="id_number" class="form-control"
                                         placeholder="Number">
                                     @error('id_number')
-                                        <span class="velidation">{{ $message }}</span>
+                                        <span class="validation">{{ $message }}</span>
                                     @enderror
                                     <strong class="error" id="id_number-error"></strong>
                                 </div>
@@ -1330,7 +1330,7 @@
                                     <input type="text" name="inst_name" value="{{ old('inst_name') }}"
                                         class="form-control" placeholder="Enter Name">
                                     {{-- @error('inst_name')
-                    <span class="velidation">{{ $message }}</span>
+                    <span class="validation">{{ $message }}</span>
                     @enderror  --}}
                                     <strong class="error" id="inst_name-error"></strong>
                                 </div>
@@ -1343,7 +1343,7 @@
                                     <input type="text" name="degree" class="form-control"
                                         value="{{ old('degree') }}" placeholder="Ex. Bachelor's">
                                     {{-- @error('degree')
-                    <span class="velidation">{{ $message }}</span>
+                    <span class="validation">{{ $message }}</span>
                     @enderror  --}}
                                     <strong class="error" id="degree-error"></strong>
                                 </div>
@@ -1352,7 +1352,7 @@
                                     <input type="text" name="subject" class="form-control"
                                         value="{{ old('subject') }}" placeholder="Ex. CS">
                                     {{-- @error('subject')
-                    <span class="velidation">{{ $message }}</span>
+                    <span class="validation">{{ $message }}</span>
                     @enderror  --}}
                                     <strong class="error" id="subject-error"></strong>
                                 </div>
@@ -1365,7 +1365,7 @@
                                     <input type="date" name="duration_from" class="form-control"
                                         value="{{ old('duration_from') }}" placeholder="From">
                                     {{-- @error('duration_from')
-                    <span class="velidation">{{ $message }}</span>
+                    <span class="validation">{{ $message }}</span>
                     @enderror  --}}
                                     <strong class="error" id="duration_from-error"></strong>
                                 </div>
@@ -1374,7 +1374,7 @@
                                     <input type="date" name="duration_to" class="form-control"
                                         value="{{ old('duration_to') }}" placeholder="To">
                                     {{-- @error('duration_to')
-                    <span class="velidation">{{ $message }}</span>
+                    <span class="validation">{{ $message }}</span>
                     @enderror  --}}
                                     <strong class="error" id="duration_to-error"></strong>
                                 </div>
@@ -1387,7 +1387,7 @@
                                 <input type="file" id="document" name="document" class="form-control"
                                     accept="image/jpg,image/doc,image/pdf" />
                                 {{-- @error('document')
-                    <span class="velidation">{{ $message }}</span>
+                    <span class="validation">{{ $message }}</span>
                     @enderror  --}}
                                 <strong class="error" id="document-error"></strong>
 
@@ -1540,7 +1540,7 @@
                                     <input type="text" name="com_name" class="form-control"
                                         placeholder="ByteCipher">
                                     {{-- @error('com_name')
-                       <span class="velidation">{{ $message }}</span>
+                       <span class="validation">{{ $message }}</span>
                      @enderror  --}}
                                     <strong class="error" id="com_name-error"></strong>
                                 </div>
@@ -1553,7 +1553,7 @@
                                     <input type="date" name="work_duration_from" class="form-control"
                                         placeholder="From">
                                     {{-- @error('work_duration_from')
-                     <span class="velidation">{{ $message }}</span>
+                     <span class="validation">{{ $message }}</span>
                     @enderror  --}}
                                     <strong class="error" id="work_duration_from-error"></strong>
                                 </div>
@@ -1563,7 +1563,7 @@
                                     <input type="date" name="work_duration_to" class="form-control"
                                         placeholder="To">
                                     {{-- @error('work_duration_to')
-                     <span class="velidation">{{ $message }}</span>
+                     <span class="validation">{{ $message }}</span>
                      @enderror  --}}
                                     <strong class="error" id="work_duration_to-error"></strong>
                                 </div>
@@ -1576,7 +1576,7 @@
                                     <input type="text" name="designation" class="form-control"
                                         placeholder="React Native Developer">
                                     {{-- @error('designation')
-                      <span class="velidation">{{ $message }}</span>
+                      <span class="validation">{{ $message }}</span>
                     @enderror  --}}
                                     <strong class="error" id="designation-error"></strong>
                                 </div>

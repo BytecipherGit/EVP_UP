@@ -1,9 +1,3 @@
-<style>
-    .error {
-        color: red;
-        font-weight: 400;
-    }
-</style>
 
 <h2 class="modal-title" id=""></h2>
 <input type="hidden" id="is_add" value="{{ $exitemployee ? '' : 1 }}" />

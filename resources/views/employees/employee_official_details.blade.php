@@ -12,7 +12,7 @@
                                     <input type="date" name="date_of_joining" class="form-control"
                                         placeholder="Date">
                                     @error('date_of_joining')
-                                        <span class="velidation">{{ $message }}</span>
+                                        <span class="validation">{{ $message }}</span>
                                     @enderror
                                     <strong class="error" id="date_of_joining-error"></strong>
                                 </div>
@@ -28,7 +28,7 @@
                                         <option value="Freelancer">Freelancer</option>
                                     </select>
                                     @error('emp_type')
-                                        <span class="velidation">{{ $message }}</span>
+                                        <span class="validation">{{ $message }}</span>
                                     @enderror
                                     <strong class="error" id="emp_type-error"></strong>
                                 </div>
@@ -44,7 +44,7 @@
 
                                     </select>
                                     @error('work_location')
-                                        <span class="velidation">{{ $message }}</span>
+                                        <span class="validation">{{ $message }}</span>
                                     @enderror
                                     <strong class="error" id="work_location-error"></strong>
                                 </div>
@@ -58,7 +58,7 @@
                                         <option value="0">Inactive</option>
                                     </select>
                                     @error('emp_status')
-                                        <span class="velidation">{{ $message }}</span>
+                                        <span class="validation">{{ $message }}</span>
                                     @enderror
                                     <strong class="error" id="emp_status-error"></strong>
                                 </div>
@@ -80,7 +80,7 @@
                                     <label>LPA<span style="color:red">*</span></label>
                                     <input type="text" name="lpa" class="form-control" placeholder="Enter LPA">
                                     @error('lpa')
-                                        <span class="velidation">{{ $message }}</span>
+                                        <span class="validation">{{ $message }}</span>
                                     @enderror
                                     <strong class="error" id="lpa-error"></strong>
                                 </div>

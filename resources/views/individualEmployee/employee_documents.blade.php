@@ -142,7 +142,7 @@
                 <div class="col-md-12">
                     <div class="form-group">
                         <div class="add-btn-part">
-                            <button type="button" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
+                            <button type="reset" class="btn-secondary-cust" data-dismiss="modal">Cancel</button>
                             <button type="submit" class="btn-primary-cust">Save</button>
                         </div>
                     </div>

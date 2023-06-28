@@ -236,8 +236,7 @@
                     <div class="document-body">
                         <img src="{{ $companyDocument->document }}">
                     </div>
-                    <a href="{{ route('download.document', ['id' => $companyDocument->id]) }}"
-                        target="_black">Download</a>
+                    <a href="{{ route('download.document', ['id' => $companyDocument->id]) }}" target="_black">Download</a>
                 </div>
                 <div class="modal-footer">
                 </div>

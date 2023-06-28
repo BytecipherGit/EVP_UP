@@ -1,6 +1,6 @@
 
 {{-- <style>
-   .velidation {
+   .validation {
     color: red;
     font-size: 12px;
     display: block;
@@ -55,7 +55,7 @@
                         <label for="email">Official Email Id<span style="color:red">*</span></label>
                         <input type="text" name="email" class="form-control" value="{{ old('email') }}" placeholder="Enter Your Email">
                         @error('email')
-                         <p class="velidation">{{ $message }}</p>
+                         <p class="validation">{{ $message }}</p>
                         @enderror
                         <strong class="error" id="email-error"></strong>
                     </div>
@@ -103,8 +103,8 @@
                 <label>Select Gender<span style="color:red">*</span></label>
                 <select class="form-control" name="gender" id="gender">
                     <option value="{{ old('gender') }}">{{ old('gender') ? old('gender'): 'Select Gender'}}</option>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
                     <strong class="error" id="gender-error"></strong>
                 </select>
             </div>

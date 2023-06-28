@@ -82,11 +82,10 @@
 
                             @if ($emp->status == 1 )
                                 <td style="color:#5BD94E"><b>Active</b></td>
-                                <td class="d-flex"><a href="employee_info/{{ $emp->employee_id }}"
-                                        class="edit-btn fa fa-edit" title="Edit"></a>
+                                <td class="d-flex"><a href="employee_info/{{ $emp->employee_id }}" class="edit-btn fa fa-edit" title="Edit"></a>
                                     {{-- <a href="employee-exit/{{ $emp->employee_id }}" title="Exit Employee" class="edit-btn fa fa-user-times" title="Exit"></a></td> --}}
                             @elseif($emp->status == 2)
-                               <td style="color:#ac2029"><b>Invite Employee</b></td>
+                                <td style="color:#5BD94E"><b>Invite Employee</b></td>
                                 <td class="d-flex"></td>
                             @else    
                                 <td style="color:#ac2029"><b>Exit</b></td>
@@ -124,10 +123,11 @@
         </div>
     </div>
 </div>
+@endsection
 
+@section('pagescript')
 
-
-<script>
+<script type="text/javascript">
     $(".selectBox").on("click", function(e) {
         $(this).toggleClass("show");
         var dropdownItem = e.target;
@@ -140,8 +140,8 @@
     });
 </script>
 
-<script>
-    $(function() {
+<script type="text/javascript">
+    $(document).ready(function () {   
         //toggle classes on li element
         $('li.skils-id-1-1').on('click', function() {
             $('li.skils-id-1-1').toggleClass('clicked');
@@ -180,7 +180,7 @@
 <script src="{{ asset('assets') }}/datatable/js/dataTables.fixedHeader.min.js"></script>
 <script src="{{ asset('assets') }}/datatable/js/dataTables.responsive.min.js"></script>
 <script src="{{ asset('assets') }}/datatable/js/responsive.bootstrap.min.js"></script>
-<script>
+<script type="text/javascript">
     $(document).ready(function() {
 
         setTimeout(function(){
@@ -195,10 +195,10 @@
         new $.fn.dataTable.FixedHeader(table);
     });
 </script>
-<script>
+<script type="text/javascript">
     function exportTasks(_this) {
         let _url = $(_this).data('href');
         window.location.href = _url;
     }
 </script>
-@endsection
+@stop

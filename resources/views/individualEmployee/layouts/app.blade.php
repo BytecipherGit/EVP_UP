@@ -44,10 +44,10 @@
   <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item dropdown">
-            <a class="nav-link profile-droup dropdown-toggle indHoverRemove" href="#"
-                id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
-                aria-expanded="false">
-                <img src="{{ asset('assets') }}/admin/images/marvin-kinney-profile.png">
+            <a class="nav-link profile-droup dropdown-toggle indHoverRemove" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            @if(Auth::guard('employee')->user()->profile) <img src="{{ Auth::guard('employee')->user()->profile }}" class="indiUserProfile">
+              @else <img src="{{ asset('assets') }}/admin/images/marvin-kinney-profile.png">
+               @endif
                 <span class="secondary_color">
                    {{ Auth::guard('employee')->user()->first_name }}
                 </span>
@@ -74,14 +74,12 @@
                 {{-- <a class="dropdown-item dropdown-item-no" href="{{ route('logout') }}">     --}}
 
 
-                <a class="dropdown-item d-flex" href="{{ route('employee.logout') }}"
-                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                <a class="dropdown-item d-flex" href="{{ route('employee.logout') }}"  onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                     Sign out
                     <img src="{{ asset('assets') }}/admin/images/logout-icon.png" class="ml-auto">
                 </a>
-                <form id='logout-form' action="{{ route('employee.logout') }}" method="POST"
-                    class="d-none">
-                    @csrf
+                <form id='logout-form' action="{{ route('employee.logout') }}" method="POST" class="d-none">
+                   @csrf
                 </form>
 
             </div>
