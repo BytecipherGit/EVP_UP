@@ -52,10 +52,10 @@ class NewEmployeeController extends Controller
        
         if (Auth::check()) {
 
-            // $request->validate([
-            //     'email' => 'required | unique:employee,email',
-            //     // 'last_name' => 'required|string|max:255',
-            // ]);
+            $request->validate([
+                'email' => 'required | unique:employee,email',
+                // 'last_name' => 'required|string|max:255',
+            ]);
 
             $uploadProfile = '';
             $uploadDocumentId = '';
@@ -190,10 +190,10 @@ class NewEmployeeController extends Controller
     {
         // dd($request->all());
 
-        //   $request->validate([
-        //         'email' => 'required | unique:employee,email',
-        //         // 'last_name' => 'required|string|max:255',
-        //     ]);
+          $request->validate([
+                'email' => 'required | unique:employee,email',
+                // 'last_name' => 'required|string|max:255',
+            ]);
      if (!empty($request->employee_id)) {
 
             $uploadProfile = '';
@@ -327,6 +327,11 @@ class NewEmployeeController extends Controller
     public function updateEmployee(request $request)
     {
 
+        $request->validate([
+            'email' => 'required | unique:employee,email',
+            // 'last_name' => 'required|string|max:255',
+        ]);
+
       if(!empty($request->employee_id)){
             $uploadProfile = '';
             $uploadPanCardId = '';
@@ -455,7 +460,6 @@ class NewEmployeeController extends Controller
     public function createEmployeeQualification(request $request)
       {
        
-
             $validator = Validator::make($request->all(), [
                 // 'inst_name' => 'required|string|max:255',
                 // 'descriptions' => 'required|string|max:255',
@@ -639,7 +643,9 @@ class NewEmployeeController extends Controller
                     return Response::json(['success' => '0']);
                 }
                 
-        }
+             }else {
+                return Response::json(['errors' => $validator->errors()]);
+            }
 
     }
 
@@ -1006,7 +1012,8 @@ class NewEmployeeController extends Controller
                         'date_of_joining'=>!empty($request->date_of_joining) ? $request->date_of_joining : null,
                         'emp_type'=>!empty($request->emp_type) ? $request->emp_type : null,
                         'work_location'=>!empty($request->work_location) ? $request->work_location : null,
-                        'emp_status'=> $request->emp_status,
+                        // 'emp_status'=> $request->emp_status,
+                        'emp_status'=> '1',
                         'lpa'=>!empty($request->lpa) ? $request->lpa : null,
                         'designation'=>!empty($request->designation) ? $request->designation : null,
 
@@ -1070,7 +1077,8 @@ class NewEmployeeController extends Controller
                     'date_of_joining'=>!empty($request->date_of_joining) ? $request->date_of_joining : null,
                     'emp_type'=>!empty($request->emp_type) ? $request->emp_type : null,
                     'work_location'=>!empty($request->work_location) ? $request->work_location : null,
-                    'emp_status'=> $request->emp_status,
+                    // 'emp_status'=> $request->emp_status,
+                    'emp_status'=> '1',
                     'designation'=>!empty($request->designation) ? $request->designation : null,
                     'lpa'=>!empty($request->lpa) ? $request->lpa : null,
                   

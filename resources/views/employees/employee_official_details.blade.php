@@ -49,7 +49,7 @@
                                     <strong class="error" id="work_location-error"></strong>
                                 </div>
                             </div>
-                            <div class="col-xl-3 col-lg-6 col-md-12">
+                            {{-- <div class="col-xl-3 col-lg-6 col-md-12">
                                 <div class="form-group">
                                     <label>Employee Status<span style="color:red">*</span></label>
                                     <select class="form-control" name="emp_status" id="emp_status">
@@ -62,7 +62,7 @@
                                     @enderror
                                     <strong class="error" id="emp_status-error"></strong>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="col-xl-3 col-lg-5 col-md-10">
                                 <div class="form-group">
                                     <label>Designation<span style="color:red">*</span></label>

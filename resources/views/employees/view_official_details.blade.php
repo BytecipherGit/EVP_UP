@@ -40,17 +40,17 @@
                      </div>
                  </div>
 
-                 <div class="col-xl-3 col-lg-6 col-md-12">
+                 {{-- <div class="col-xl-3 col-lg-6 col-md-12">
                      <div class="form-group">
                          <label>Employee Status<span style="color:red">*</span></label>
-                         <select class="form-control" name="emp_status" id="emp_status">
+                         <select class="form-control" name="emp_status" id="emp_status"> --}}
                              {{-- <option value="{{ $employeeOfficials ? $employeeOfficials->emp_status : ''}}">{{ $employeeOfficials ? $employeeOfficials->emp_status : 'Select status'}}</option> --}}
-                             <option value="1" {{ $employeeOfficials->emp_status == '1' ? 'selected' : '' }}>Active</option>
+                             {{-- <option value="1" {{ $employeeOfficials->emp_status == '1' ? 'selected' : '' }}>Active</option>
                              <option value="0" {{ $employeeOfficials->emp_status == '0' ? 'selected' : '' }}>Inactive</option>
                          </select>
                          <strong class="error" id="emp_status-error"></strong>
                      </div>
-                 </div>
+                 </div> --}}
                  <div class="col-xl-3 col-lg-5 col-md-10">
                      <div class="form-group">
                          <label>Designation<span style="color:red">*</span></label>

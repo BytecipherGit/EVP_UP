@@ -13,9 +13,7 @@
             </div>
             <div class="col-lg-4">
                 <div class="main-right-button-box">
-                    <a href="/post-employee" class="button_background_color"><img
-                            src="{{ asset('assets') }}/admin/images/back-icon.png"><span class="button_text_color">
-                            Back</span></a>
+                    <a href="/post-employee" class="button_background_color"><img src="{{ asset('assets') }}/admin/images/back-icon.png"><span class="button_text_color"> Back</span></a>
                 </div>
             </div>
         </div>
@@ -27,7 +25,7 @@
             <div class="pro-img">
                 <div class="circle">
                     <img class="profile-pic"
-                        @if ($employeeDetails->profile !== null) value="{{ old('profile', $employeeDetails->profile) }}" src="{{ $employeeDetails->profile }}" @else src="{{ asset('assets') }}/admin/images/user-img.png" @endif>
+                        @if ($employeeDetails->profile != null) value=" {{ $employeeDetails->profile }}" src="{{ $employeeDetails->profile }}" @else src="{{ asset('assets') }}/admin/images/user-img.png" @endif>
 
                 </div>
             </div>
@@ -194,6 +192,7 @@
                         <div class="col-xl-12">
                             <div class="eml-per-main">
                                 <h2>Qualification</h2>
+                             @if ($qualifications->isNotEmpty())
                                 <div class="table-responsive">
                                     <table class="table">
                                         <thead>
@@ -207,8 +206,8 @@
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
-                                        @if ($qualifications)
-                                            @foreach ($qualifications as $qualification)
+                                      
+                                            @forelse ($qualifications as $qualification)
                                                 <tbody>
                                                     <tr>
                                                         <td>{{ $qualification['degree'] }}</td>
@@ -218,31 +217,23 @@
                                                         <td>{{ $qualification['duration_to'] }}</td>
 
                                                         @if ($qualification['verification_type'] == 'Verified')
-                                                            <td><span class="verified-clr"><i class="fa fa-check"></i>
-                                                                    Verified</span></td>
+                                                            <td><span class="verified-clr"><i class="fa fa-check"></i> Verified</span></td>
                                                         @else
-                                                            <td><span class="not-verified-clr"><i
-                                                                        class="fa fa-times"></i> Not Verified</span>
+                                                            <td><span class="not-verified-clr"><i class="fa fa-times"></i> Not Verified</span>
                                                             </td>
                                                         @endif
-
                                                         <td>
-                                                            <a href="#" target="_black" class="docu-down"
-                                                                data-toggle="modal"
-                                                                data-target="#qualificationdocument{{ $qualification['id'] }}"><img
-                                                                    src="{{ asset('assets') }}/admin/images/document.png"></a>
-                                                            <a href="{{ $qualification['document'] }}" target="_black"
-                                                                class="docu-download"><img
-                                                                    src="{{ asset('assets') }}/admin/images/download-icon.png"></a>
+                                                            <a href="#" target="_black" class="docu-down" data-toggle="modal" data-target="#qualificationdocument{{ $qualification['id'] }}"><img src="{{ asset('assets') }}/admin/images/document.png"></a>
+                                                            <a href="{{ $qualification['document'] }}" target="_black" class="docu-download"><img src="{{ asset('assets') }}/admin/images/download-icon.png"></a>
                                                         </td>
                                                     </tr>
                                                 </tbody>
                                             @endforeach
-                                        @endif
-                                        <tbody>
-                                        </tbody>
                                     </table>
                                 </div>
+                               @else
+                                  <p>No qualifications available</p>
+                               @endif
                             </div>
                         </div>
                     </div>
@@ -280,10 +271,7 @@
                                         <h4>Employee Status</h4>
                                         <p>{{ $employeeDetails->emp_status == '0' ? 'Inactive' : 'Active' }}</p>
                                     </div>
-                                    {{-- <div class="col-lg-4 col-md-6">
-                        <h4>Work Experience</h4>
-                        <p>3 Year</p>
-                      </div>  --}}
+                                    {{-- <div class="col-lg-4 col-md-6"> <h4>Work Experience</h4> <p>3 Year</p> </div>  --}}
                                     <div class="col-lg-4 col-md-6">
                                         <h4>Date of Exit</h4>
                                         <p>{{ $employeeDetails->end_date }}</p>
@@ -291,6 +279,7 @@
                                 </div>
                             </div>
                         </div>
+                    @if($workdetails->isNotEmpty())
                         <div class="col-xl-12">
                             <div class="eml-per-main">
                                 <h2>WORK HISTORY </h2>
@@ -305,10 +294,11 @@
                                                 <th>Offer Letter </th>
                                                 <th>Experience</th>
                                                 <th>Salary Slips</th>
-                                                <th>VERIFICATION</th>
+                                                <th>Verification</th>
                                             </tr>
                                         </thead>
                                         @foreach ($workdetails as $work)
+                                        <tbody>
                                             <tr>
                                                 <td>{{ $work['com_name'] }}</td>
                                                 <td>{{ $work['work_duration_from'] }}</td>
@@ -337,13 +327,13 @@
                                                 @endif
 
                                             </tr>
-                                        @endforeach
-                                        <tbody>
                                         </tbody>
+                                        @endforeach
                                     </table>
                                 </div>
                             </div>
                         </div>
+                    @endif   
                     </div>
                 </div>
             </div>

@@ -1077,18 +1077,20 @@ class EmployeeController extends Controller
         // $columns = array('First Name','Last Name','Middle Name','Email','Phone','Date of Birth','Blood Group','Gender','Marital Status','Current Address','Permanent Address','Emg Name','Emg Relationship','Emg Phone','Emg Address','Id Type','Id Number','Date of Joining','Promotion Period','Employee Type','Work Location','Employee Status','Salary','Lakhs Per Year','Appraisal From','Appraisal To','Last Appraisal Designation','Current Appraisal Designation','Appraisal Date','Promotion From','Promotion To','Last Promotion Designation','Current Promotion Designation','Promotion Date','Manager Name','Manager Type','Manager Department','Manager Designation','Skill','Skill Type','Language Known','Language Type','Company Name','Designation','Work Duration From','Work Duration To','Institute Name','Degree','Subject','Duration From','Duration To');
         $columns = array('First Name','Last Name','Middle Name','Email','Phone','Date of Birth','Blood Group','Gender','Marital Status','Current Address',
         'Permanent Address','Emg Name','Emg Relationship','Emg Phone','Emg Address','Id Type','Id Number','Date of Joining','Employee Type','Work Location',
-        'Employee Status','Lakhs Per Year','Designation','Skill','Skill Type','Language Known','Language Type','Company Name','Designation','Work Duration From','Work Duration To','Institute Name','Degree','Subject','Duration From','Duration To');
+        'Employee Status','Lakhs Per Year','Skill','Skill Type','Language Known','Language Type','Company Name','Designation','Work Duration From','Work Duration To','Institute Name','Degree','Subject','Duration From','Duration To');
       
         $callback = function() use($employee, $columns) {
             $file = fopen('php://output', 'w');
             // 
             fputcsv($file, $columns);
-            // print_r($columns);die();
+          
             foreach ($employee as $task) {
+           
+              
                 $row['First Name']  = $task->first_name;
                 $row['Last Name']    = $task->last_name;
                 $row['Middle Name']    = $task->middle_name;
-                $row['Email']  = $task->email;
+                $row['Email']  = $task->email; 
                 $row['Phone']  = $task->phone;
                 $row['Date of Birth']  = $task->dob;
                 $row['Blood Group']  = $task->blood_group;
@@ -1122,7 +1124,6 @@ class EmployeeController extends Controller
                 // $row['Manager Name']  = $task->mang_name;
                 // $row['Manager Type']  = $task->mang_type;
                 // $row['Manager Department']  = $task->mang_dept;
-                $row['Designation']  = $task->designation;
                 $row['Skill']  = $task->skill;
                 $row['Skill Type']  = $task->skill_type;
                 $row['Language Known']  = $task->lang;
@@ -1131,29 +1132,28 @@ class EmployeeController extends Controller
                 $row['Designation']  = $task->designation;
                 $row['Work Duration From']  = $task->work_duration_from;
                 $row['Work Duration To']  = $task->work_duration_to;
+
                 $row['Institute Name']  = $task->inst_name;
                 $row['Degree']  = $task->degree;
                 $row['Subject']  = $task->subject;
                 $row['Duration From']  = $task->duration_from;
                 $row['Duration To']  = $task->duration_to;
             
-           
+                
                 fputcsv($file, array($row['First Name'], $row['Last Name'], $row['Middle Name'], $row['Email'], $row['Phone'],$row['Date of Birth'], $row['Blood Group'], $row['Gender'],$row['Marital Status'], $row['Current Address'], $row['Permanent Address'],$row['Emg Name'],$row['Emg Relationship'], $row['Emg Phone'], $row['Emg Address'],$row['Id Type'], $row['Id Number'],$row['Date of Joining'],$row['Employee Type'],$row['Work Location'], $row['Employee Status'],$row['Lakhs Per Year'],
                 // $row['Last Appraisal Designation'],$row['Current Appraisal Designation'], $row['Appraisal Date'], $row['Promotion From'],
                 // $row['Promotion To'], $row['Last Promotion Designation'], $row['Current Promotion Designation'], $row['Promotion Date'], $row['Manager Name'],$row['Manager Type'],$row['Manager Department'], $row['Manager Designation'],
                 $row['Skill'], $row['Skill Type'], $row['Language Known'],$row['Language Type'],$row['Company Name'], $row['Designation'], $row['Work Duration From'],$row['Work Duration To'],
                 $row['Institute Name'],$row['Degree'], $row['Subject'], $row['Duration From'],$row['Duration To']));
-            //  print_r($file);
-              }
-
+      
+            }
+          
+            
             fclose($file);
         };
 
         return response()->stream($callback, 200, $headers);
     }
-
-   
-
 
 }
     

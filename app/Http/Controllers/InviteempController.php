@@ -56,7 +56,7 @@ class InviteempController extends Controller
         $request->validate([
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required'],
-            'email' => ['required', 'string', 'email', 'max:255'],
+            'email' => ['required','unique:employee','email'],
             'middle_name' => ['required', 'string', 'max:255'],
             'phone' => ['required', 'max:12'],
 
@@ -82,11 +82,12 @@ class InviteempController extends Controller
         $request->validate([
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required'],
-            'email' => ['required', 'string', 'email', 'max:255'],
+            'email' => ['required','unique:employee','email'],
             'middle_name' => ['required', 'string', 'max:255'],
             'phone' => ['required', 'max:12'],
 
         ]);
+
         $empCode = substr(time(), -6) . sprintf('%04d', rand(0, 9999));
         
         $employee = new Employee();

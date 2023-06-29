@@ -319,6 +319,7 @@
                 first_name: "required",
                 last_name: "required",
                 email: "required",
+
                 blood_group: "required",
                 gender: "required",
                 dob: "required",
