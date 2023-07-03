@@ -55,6 +55,9 @@
                     <div class="form-group">
                         <label for="phone">Phone Number<span style="color:red">*</span></label>
                         <input type="text" name="phone" class="form-control" value="{{ $employeeExists ? $employeeExists->phone : '' }}" placeholder="Enter Your Number">
+                        @error('phone')
+                        <p class="validation">{{ $message }}</p>
+                       @enderror
                         <strong class="error" id="phone-error"></strong>
                     </div>
                 </div>
@@ -273,6 +276,9 @@
                 <label for="emg_phone">Phone Number<span style="color:red">*</span></label>
                 <input type="text" name="emg_phone" class="form-control" value="{{ $employeeExists ? $employeeExists->emg_phone : '' }}"
                     placeholder="Number">
+                    @error('emg_phone')
+                    <p class="validation">{{ $message }}</p>
+                   @enderror
                 <strong class="error" id="emg_phone-error"></strong>
             </div>
         </div>
@@ -319,7 +325,6 @@
                 first_name: "required",
                 last_name: "required",
                 email: "required",
-
                 blood_group: "required",
                 gender: "required",
                 dob: "required",
@@ -381,7 +386,7 @@
                 verification_type: "Verification type is required",
                 document: {
                     required: "Document is required",
-                    extension: "extension shuold not wrong",
+                    extension: "Extension shuold not wrong",
                 },
             }
         }); 
@@ -409,7 +414,7 @@
                 verification_type: "Verification type is required",
                 // document: {
                 //     required: "Document is required",
-                //     extension: "extension shuold not wrong",
+                //     extension: "Extension shuold not wrong",
                 // },
             }
         }); 
@@ -489,11 +494,10 @@
                 'skill[]': 'required',
                 'lang[]': 'required'
                 },
-                // Add more validation rules for other fields if needed
+           
             messages: {
                 'skill[]': 'Please enter a skill',
                 'lang[]': 'Please enter a lang'
-                // Add more custom error messages if needed
             },
         });
 

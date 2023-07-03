@@ -64,6 +64,9 @@
                     <div class="form-group">
                         <label for="phone">Phone Number<span style="color:red">*</span></label>
                         <input type="text" name="phone" class="form-control" value="{{ old('phone') }}" placeholder="Enter Your Number">
+                        @error('phone')
+                        <p class="validation">{{ $message }}</p>
+                       @enderror
                         <strong class="error" id="phone-error"></strong>
                     </div>
                 </div>
@@ -239,6 +242,9 @@
             <div class="form-group">
                 <label for="emg_phone">Phone Number<span style="color:red">*</span></label>
                 <input type="text" name="emg_phone" class="form-control" value="{{ old('emg_phone') }}" placeholder="Number">
+                @error('emg_phone')
+                    <p class="validation">{{ $message }}</p>
+                 @enderror
                 <strong class="error" id="emg_phone-error"></strong>
             </div>
         </div>

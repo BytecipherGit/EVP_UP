@@ -66,7 +66,7 @@
                 </button>
               </div>
               <div class="form-group">
-                <h6>© 2022 ByteCipher Pvt. Ltd.</h6>
+                <h6>© {{date('Y')}} EVP</h6>
               </div>
 
             </form>

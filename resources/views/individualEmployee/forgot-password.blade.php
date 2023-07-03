@@ -4,7 +4,7 @@
 @section('title','EVP - Employee Forgot Password')
 
 <!-- Main Container -->
-<div class="col-md-6 align-self-center pad-0 form-section">
+  <div class="col-md-6 align-self-center pad-0 form-section">
     <div class="cover-box-txt">  
         @if (session('status'))
         <div class="alert alert-success" role="alert">
@@ -25,14 +25,14 @@
             <span><i class="fa fa-envelope-o"></i></span>
           </div>
           @error('email')
-          <span class="text-danger pass">{{ $message }}</span>
+          <span class="validation">{{ $message }}</span>
           @enderror 
         </div>              
         <div class="form-group">
           <button type="submit"> Send Me Email</button>
         </div>
         <div class="form-group">
-          <h6>© 2023 ByteCipher Pvt. Ltd.</h6>
+          <h6>© {{date('Y')}} EVP</h6>
         </div>
 
       </form>

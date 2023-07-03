@@ -188,6 +188,7 @@ class RegisteredUserController extends Controller
 
             $verifyMailData = [
                 'name' => !empty($request->name) ? $request->name : '',
+                'companyname' => !empty($request->org_name) ? $request->org_name : '',
                 'id' => encrypt($user->id),
                 'status' => $user->status,
             ];

@@ -61,7 +61,7 @@
                  <button type="submit">Log In</a></button>
              </div>
              <div class="foot-bottom">
-                 <p>© 2023 ByteCipher Pvt. Ltd.</p>
+                 <p>© {{date('Y')}} ByteCipher Pvt. Ltd.</p>
              </div>
 
          </form>

@@ -13,13 +13,13 @@ use App\Models\User;
 use App\Models\Verification;
 use App\Models\CompanyEmployee;
 use App\Models\Emplang;
-use Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Redirect;
+use Auth;
 
 
 class NewEmployeeController extends Controller
@@ -54,7 +54,8 @@ class NewEmployeeController extends Controller
 
             $request->validate([
                 'email' => 'required | unique:employee,email',
-                // 'last_name' => 'required|string|max:255',
+                'phone' => 'required|max:12|min:10',
+                'emg_phone' => 'required|max:12|min:10',
             ]);
 
             $uploadProfile = '';
@@ -191,8 +192,9 @@ class NewEmployeeController extends Controller
         // dd($request->all());
 
           $request->validate([
-                'email' => 'required | unique:employee,email',
-                // 'last_name' => 'required|string|max:255',
+                'email' => 'required|unique:employee,email',
+                'phone' => 'required|max:12|min:10',
+                'emg_phone' => 'required|max:12|min:10',
             ]);
      if (!empty($request->employee_id)) {
 
@@ -298,7 +300,7 @@ class NewEmployeeController extends Controller
                         $employeeDetails = Employee::join('company_employee','company_employee.employee_id','=','employee.id')
                                        ->where('employee.id',$request->employee_id)->first();
                         
-// dd($employeeDetails);
+          // dd($employeeDetails);
                         if (!empty($employeeDetails)) {
 
                             $updateVerification = [
@@ -328,8 +330,9 @@ class NewEmployeeController extends Controller
     {
 
         $request->validate([
-            'email' => 'required | unique:employee,email',
-            // 'last_name' => 'required|string|max:255',
+            'email' => 'required|email|unique:employee,email,' . $request->employee_id,
+            'phone' => 'required|max:12|min:10',
+            'emg_phone' => 'required|max:12|min:10',
         ]);
 
       if(!empty($request->employee_id)){

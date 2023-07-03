@@ -54,13 +54,14 @@ class InviteempController extends Controller
     public function geteditInvite(request $request)
     {
         $request->validate([
-            'first_name' => ['required', 'string', 'max:255'],
-            'last_name' => ['required'],
-            'email' => ['required','unique:employee','email'],
-            'middle_name' => ['required', 'string', 'max:255'],
-            'phone' => ['required', 'max:12'],
-
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
+            'middle_name' => 'required|string',
+            'email' => 'required|email|unique:employee,email,' . $request->id,
+            'phone' => 'required|max:12|min:10',
         ]);
+
+
         $data = DB::table('employee')->where('id', $request->id)
             ->update([
                 'first_name' => $request->input('first_name'),
@@ -81,10 +82,10 @@ class InviteempController extends Controller
 
         $request->validate([
             'first_name' => ['required', 'string', 'max:255'],
-            'last_name' => ['required'],
+            'last_name' => ['required','string'],
             'email' => ['required','unique:employee','email'],
             'middle_name' => ['required', 'string', 'max:255'],
-            'phone' => ['required', 'max:12'],
+            'phone' => ['required','max:12','min:10'],
 
         ]);
 

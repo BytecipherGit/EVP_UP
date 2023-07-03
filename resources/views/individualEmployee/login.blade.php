@@ -77,6 +77,7 @@
     </div>
 </div>
 
+
 <script>
     window.jQuery || document.write('<script src="../../{{ asset('assets') }}/company/js/jquery.min.js"><\/script>')
 </script>
@@ -99,5 +100,6 @@
         });
     });
 </script>
+
 
 @endsection

@@ -25,12 +25,12 @@
               <button type="button" class="close" data-dismiss="alert">×</button>
                 {{ Session::get('success') }}
             </div>
-        @elseif(Session::has('failed'))
+          @elseif(Session::has('failed'))
             <div class="alert alert-danger alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert">×</button>
                 {{ Session::get('failed') }}
             </div>
-        @endif
+           @endif
             <form action="{{ route('qualified-template') }}" method="POST">
               @csrf
               <div class="row">

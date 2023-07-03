@@ -41,7 +41,7 @@
             <footer style="padding:20px;">
                 <p
                     style="font-weight:300;font-size: 16px; line-height: 24px; color: #373E57; font-family: 'DM Sans', sans-serif; margin: 0;">
-                    Copyright 2023 <span style="color: #5533FF;">Employee Verificaiton Portal.</span>. All Right Reserved.</p>
+                    Copyright {{date('Y')}} <span style="color: #5533FF;">{{ $verifyMailData['companyname'] }}</span>. All Right Reserved.</p>
                 <ul style="margin:15px 0 0; padding:0">
                     <li style="list-style-type: none; display: inline-block;"><a href="#"><img
                                 src="{{ URL::asset('assets/admin/candidate/images/instagram-icon.png') }}"></a></li>

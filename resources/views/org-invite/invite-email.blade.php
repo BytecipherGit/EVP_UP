@@ -53,7 +53,7 @@
             </div> 
 
             <footer style="padding:20px;">
-                <p style="font-weight:300;font-size: 16px; line-height: 24px; color: #373E57; font-family: 'DM Sans', sans-serif; margin: 0;">Copyright 2023 <span style="color: #5533FF;">ByteCipher</span>. All Right Reserved.</p>
+                <p style="font-weight:300;font-size: 16px; line-height: 24px; color: #373E57; font-family: 'DM Sans', sans-serif; margin: 0;">Copyright {{date('Y')}} <span style="color: #5533FF;">ByteCipher</span>. All Right Reserved.</p>
                 <ul style="margin:15px 0 0; padding:0">
                     <li style="list-style-type: none; display: inline-block;"><a href="#"><img src="{{ asset('assets') }}/email/images/instagram-icon.png"></a></li>
                     <li style="list-style-type: none; display: inline-block; padding-left: 30px;"><a href="#"><img src="{{ asset('assets') }}/email/images/twitter-icon.png"></a></li>

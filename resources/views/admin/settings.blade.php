@@ -470,14 +470,12 @@
                          <div class="col-xl-6 input-mt-from">
                           <label>Authority</label>
                           {{-- <div class="selectBox active"> --}}
-                            <select name="authority" class="form-control" >
-
-                              <option value="1" {{ $plans->authority == '1' ? 'selected' : '' }} >01</option>
-                              <option value="2" {{ $plans->authority == '2' ? 'selected' : '' }}>02</option>
-                              <option value="3" {{ $plans->authority == '3' ? 'selected' : '' }}>03</option>
-                              <option value="4" {{ $plans->authority == '4' ? 'selected' : '' }}>04</option>
-                              <option value="5" {{ $plans->authority == '5' ? 'selected' : '' }}>05</option>
-
+                            <select name="authority" class="form-control">
+                              <option value="1"  @if ($plans) {{ $plans->authority == '1' ? 'selected' : '' }} @endif>01</option>
+                              <option value="2"  @if ($plans) {{ $plans->authority == '2' ? 'selected' : '' }} @endif>02</option>
+                              <option value="3"  @if ($plans) {{ $plans->authority == '3' ? 'selected' : '' }} @endif>03</option>
+                              <option value="4"  @if ($plans) {{ $plans->authority == '4' ? 'selected' : '' }} @endif>04</option>
+                              <option value="5"  @if ($plans) {{ $plans->authority == '5' ? 'selected' : '' }} @endif>05</option>
                             </select>
                         {{-- </div>  --}}
                          </div>
@@ -486,10 +484,10 @@
                           <div class="row">
                             <div class="col-xl-12">
                               <label>Change My Plan</label>
-                              <select name="plan_type" @if ($plans) value="{{ old('plan_type' , $plans->plan_type) }}" @endif class="form-control" >
-                                  <option value="gold" {{ $plans->plan_type == 'gold' ? 'selected' : '' }}>Gold 01</option>
-                                  <option value="silver" {{ $plans->plan_type == 'silver' ? 'selected' : '' }}>Silver 02</option>
-                                  <option value="bronze" {{ $plans->plan_type == 'bronze' ? 'selected' : '' }}>Bronze 03</option>
+                              <select name="plan_type" @if ($plans) value="{{ old('plan_type' , $plans->plan_type) }}" @endif class="form-control">
+                                  <option value="gold" @if ($plans) {{ $plans->plan_type == 'gold' ? 'selected' : '' }} @endif >Gold 01</option>
+                                  <option value="silver" @if ($plans) {{ $plans->plan_type == 'silver' ? 'selected' : '' }} @endif >Silver 02</option>
+                                  <option value="bronze" @if ($plans) {{ $plans->plan_type == 'bronze' ? 'selected' : '' }}@endif >Bronze 03</option>
                             
                               </select>
                             </div> 
