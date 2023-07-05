@@ -192,7 +192,7 @@ class NewEmployeeController extends Controller
         // dd($request->all());
 
           $request->validate([
-                'email' => 'required|unique:employee,email',
+                // 'email' => 'required|unique:employee,email',
                 'phone' => 'required|max:12|min:10',
                 'emg_phone' => 'required|max:12|min:10',
             ]);
@@ -552,6 +552,8 @@ class NewEmployeeController extends Controller
                     return Response::json(['errors' => $validator->errors()]);
                 }
 
+        }else{
+            return Response::json(['success' => '0']);
         }
 
     }
@@ -759,6 +761,8 @@ class NewEmployeeController extends Controller
                    return Response::json(['errors' => $validator->errors()]);
                }
 
+           }else{
+            return Response::json(['success' => '0']);
         }
     }
 
@@ -772,10 +776,9 @@ class NewEmployeeController extends Controller
             ]);
             $employeeDetails = Employee::where('id',$request->employee_id)->first();
             $workhistoryDetails = Empworkhistory::where('id',$request->id)->first();
-
-            if ($validator->passes()) {
-                if($request->employee_id){
-
+            if($request->employee_id){
+                 if ($validator->passes()) {
+                
                     $uploadOfferDocument = '';
                     $uploadExperienceDocument = '';
                     $uploadThirdPartyDocument = '';
@@ -864,13 +867,13 @@ class NewEmployeeController extends Controller
                     } else {
                         return Response::json(['success' => '0']);
                     }
-                } else {
-                    return Response::json(['success' => '0']);
-                }
-                
+                   
             } else {
                 return Response::json(['errors' => $validator->errors()]);
             }
+        } else {
+            return Response::json(['success' => '0']);
+        }   
 
     }
 
@@ -888,9 +891,9 @@ class NewEmployeeController extends Controller
 
             // $skillsLangExist = Emplang::join('company_employee','company_employee.employee_id','=','employee_language.employee_id')
             //                  ->where('employee_language.employee_id',$request->employee_id)->first();
+           
+         if(!empty($employeeDetails)){
             if ($validator->passes()) {
-                if(!empty($employeeDetails)){
-            
                     for ($i=0; $i < count($request->skill); $i++) 
                     {   
                       $insertDataSkill = array(  
@@ -926,12 +929,14 @@ class NewEmployeeController extends Controller
                     return redirect('employee_info/'.$employeeDetails->id.'/skills')->with('message','Information added successfully');
                  }
 
-             }    else {
+                } else {
+                    return Response::json(['errors' => $validator->errors()]);
+                }   
+
+             }else {
                 return Response::json(['success' => '0']);
             }
-         } else {
-            return Response::json(['errors' => $validator->errors()]);
-        }
+       
     }
 
     public function addMoreEmployeeSkills(request $request)
@@ -1057,10 +1062,6 @@ class NewEmployeeController extends Controller
       }
   }
 
-
-
-
-
   public function updateEmployeeOfficial(request $request)
   {
     // dd($request->all());
@@ -1071,9 +1072,8 @@ class NewEmployeeController extends Controller
           ]);
           $employeeDetails = Employee::where('id',$request->employee_id)->first();
 
+      if($request->employee_id){
           if ($validator->passes()) {
-              if($request->employee_id){
-
                   $update = [
 
                     'employee_id'=>$employeeDetails->id,
@@ -1104,14 +1104,14 @@ class NewEmployeeController extends Controller
                       return Response::json(['success' => '0']);
                   }
 
-              } else {
-                  return Response::json(['success' => '0']);
-              }
-              
-          } else {
-              return Response::json(['errors' => $validator->errors()]);
-          }
+                } else {
+                    return Response::json(['errors' => $validator->errors()]);
+                }  
 
+            } else {
+            return Response::json(['success' => '0']);
+            }
+                  
       } else{
           return Response::json(['success' => '0']);
       }
@@ -1127,9 +1127,9 @@ class NewEmployeeController extends Controller
           ]);
           $employeeDetails = Employee::where('id',$request->employee_id)->first();
 
+      if($request->employee_id){
           if ($validator->passes()) {
-              if($request->employee_id){
-
+            
                   $update = [
 
                     'lang'=>!empty($request->lang) ? $request->lang : null,
@@ -1154,14 +1154,15 @@ class NewEmployeeController extends Controller
                   } else {
                       return Response::json(['success' => '0']);
                   }
-              } else {
-                  return Response::json(['success' => '0']);
-              }
-              
-          } else {
-              return Response::json(['errors' => $validator->errors()]);
-          }
 
+                } else {
+                    return Response::json(['errors' => $validator->errors()]);
+                }
+
+          } else {
+              return Response::json(['success' => '0']);
+          }
+        
   }
 
 
@@ -1175,9 +1176,9 @@ class NewEmployeeController extends Controller
           $employeeDetails = Employee::where('id',$request->employee_id)->first();
         //   $skillsDetails = Empskills::where('id',$request->id)->first();
 
+        if($request->employee_id){
           if ($validator->passes()) {
-              if($request->employee_id){
-
+            
                   $update = [
 
                     'skill'=>!empty($request->skill) ? $request->skill : null,
@@ -1202,14 +1203,14 @@ class NewEmployeeController extends Controller
                   } else {
                       return Response::json(['success' => '0']);
                   }
-               } else {
-                  return Response::json(['success' => '0']);
-               }
-              
-          } else {
-              return Response::json(['errors' => $validator->errors()]);
-          }
+ 
+             } else {
+                  return Response::json(['errors' => $validator->errors()]);
+              }
+         } else {
+             return Response::json(['success' => '0']);
+          }     
 
-  }
+     }
 
 }

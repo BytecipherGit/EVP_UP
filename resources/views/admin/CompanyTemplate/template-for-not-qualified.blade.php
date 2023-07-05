@@ -57,11 +57,13 @@
               </div>
           </form>
         </div>
-</body>
+
    <script type="text/javascript">
         $(document).ready(function () {
             $('.ckeditor').ckeditor();
         });
     </script>
+
+ </body>
 </html>
 @endsection

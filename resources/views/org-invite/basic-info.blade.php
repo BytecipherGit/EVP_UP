@@ -393,17 +393,16 @@
             }
         });
 
-        $("#employee_skills_form").validate({
+        $('#employee_skills_form').validate({
             rules: {
-                skill: "required",
-                lang: "required",
-            },
-
+                'skill[]': 'required',
+                'lang[]': 'required'
+                },
+           
             messages: {
-                skill: "Skill is required",
-                lang: "Known language is required",
-
-            }
+                'skill[]': 'Please enter a skill',
+                'lang[]': 'Please enter a lang'
+            },
         });
 
         $("#employee_skills_form_edit").validate({
@@ -418,6 +417,28 @@
         });
 
         $("#employee_lang_form_edit").validate({
+            rules: {
+                lang: "required",
+            },
+
+            messages: {
+                lang: "Language is required",
+
+            }
+        });
+
+        $("#employee_skills_update").validate({
+            rules: {
+                skill: "required",
+            },
+
+            messages: {
+                skill: "Skill is required",
+
+            }
+        });
+
+        $("#employee_lang_submit").validate({
             rules: {
                 lang: "required",
             },

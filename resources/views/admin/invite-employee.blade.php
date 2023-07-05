@@ -2,12 +2,6 @@
 @section('content')
 @section('title', 'EVP - Invite Employee')
 
-
-<link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/bootstrap.min.css">
-<link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/datatables.bootstrap.min.css">
-<link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/fixedheader.bootstrap.min.css">
-<link rel="stylesheet" href="{{ asset('assets') }}/datatable/css/responsive.bootstrap.min.css">
-
 <!--- Main Container Start ----->
 <div class="main-container">
     @if (session()->has('message'))
@@ -79,8 +73,7 @@
                                 {{-- <span class="notifi-td" data-toggle="modal" data-target="#remaiderbtninfo"><img src="assets/admin/images/bell-icon.png"></span>  --}}
                                 <a href="edit-invite-employee/{{ $invite->id }}" class="edit-btn fa fa-edit"
                                     title="Edit"></a>
-                                <a href="" class="edit-btn fa fa-trash" data-toggle="modal"
-                                    data-target="#deletebtninfo{{ $invite->id }}" title="Delete"></a>
+                                <a class="edit-btn deleteEmployee fa fa-trash" data-id="{{ $invite->id }}" title="Delete"></a>
                             </td>
 
                         </tr>
@@ -137,25 +130,9 @@
     </div>
 </div>
 
-<!-- The Modal Delete INFO -->
-@foreach ($empinvite as $invite)
-    <div class="modal fade custu-no-select" id="deletebtninfo{{ $invite->id }}" role="dialog"
-        aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <img src="{{ asset('assets') }}/admin/images/deactivate-popup-icon.png" class="img-size-wth">
-                    <h1 class="h1-delete">Are you sure?</h1>
-                    <p>You want to delete this account.</p>
-                    <a href="delete-invite/{{ $invite->id }}" class="button_background_color">Delete</a>
-                </div>
-            </div>
-        </div>
-    </div>
-@endforeach
+@endsection
 
-
-
+@section('pagescript')
 <script>
     $(".selectBox").on("click", function(e) {
         $(this).toggleClass("show");
@@ -202,13 +179,57 @@
 
     });
 </script>
-<script src="{{ asset('assets') }}/datatable/js/jquery-3.5.1.js"></script>
-<script src="{{ asset('assets') }}/datatable/js/jquery.dataTables.min.js"></script>
-<script src="{{ asset('assets') }}/datatable/js/dataTables.bootstrap.min.js"></script>
 
-<script src="{{ asset('assets') }}/datatable/js/dataTables.fixedHeader.min.js"></script>
-<script src="{{ asset('assets') }}/datatable/js/dataTables.responsive.min.js"></script>
-<script src="{{ asset('assets') }}/datatable/js/responsive.bootstrap.min.js"></script>
+<script>
+           $(document).on('click', '.deleteEmployee', function() {
+            swal({
+                    title: "Are you sure?",
+                    text: "You want to delete this employee!",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                .then((result) => {
+                    if (result) {
+                        // Handle the change event
+                        var inviteId = $(this).data('id');
+                        if (inviteId != '') {
+                            var url = '{{ url('delete_invite') }}';
+                            var my_data = {
+                                inviteId: inviteId
+                            };
+                            $.ajax({
+                                url: url,
+                                type: 'POST',
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                        'content')
+                                },
+                                data: my_data,
+                                success: function(data) {
+                                    if (data.success) {
+                                        swal("Employee successfully deleted.", {
+                                            icon: "success",
+                                        });
+                                        setInterval(function() {
+                                            location.reload();
+                                        }, 2000);
+                                    }
+                                },
+                                error: function(xhr, textStatus, errorThrown) {
+                                    console.log(xhr.responseText);
+                                }
+                            });
+                        }
+                    } else {
+                        swal("Employee is safe!");
+                        setInterval(function() {
+                            location.reload();
+                        }, 2000);
+                    }
+                });
+        });
+</script>
 
 <script>
     $(document).ready(function() {
@@ -374,4 +395,4 @@
     });
 </script>
 
-@endsection
+@stop

@@ -81,7 +81,7 @@ aria-labelledby="exampleModalLabel" aria-hidden="true">
                   <img src="{{ $workhistory->offer_letter }}">
               </div>
               <div class="main-right-button-box backhover">
-                  <a href="/download_offerletter_doc/{{ $workhistory->id }}" class="emp button_background_color" target="_black"><span class="button_text_color">Download</span></a>
+                  <a href="/download_offerletter/{{ $workhistory->id }}" class="emp button_background_color" target="_black"><span class="button_text_color">Download</span></a>
               </div> 
           </div>
       @endif
@@ -113,7 +113,7 @@ aria-labelledby="exampleModalLabel" aria-hidden="true">
                   <img src="{{ $workhistory->exp_letter }}">
               </div>
               <div class="main-right-button-box backhover">
-                  <a href="/download_expletter_doc/{{ $workhistory->id }}" class="emp button_background_color" target="_black"><span class="button_text_color">Download</span></a>
+                  <a href="/download_expletter/{{ $workhistory->id }}" class="emp button_background_color" target="_black"><span class="button_text_color">Download</span></a>
               </div> 
           </div>
       @endif

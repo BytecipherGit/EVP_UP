@@ -45,10 +45,18 @@ class InviteempController extends Controller
         return view('admin/edit-invite-emp', compact('invite'));
     }
 
-    public function deleteInvite(request $request, $id)
+    public function deleteInvite(request $request)
     {
-        Employee::where('id', $request->id)->delete();
-        return redirect('invite_employee')->with('message', 'Employee delete successfully.');
+        if (!empty($request->inviteId)) {
+            $invite = Employee::find($request->inviteId);
+            if ($invite->delete()) {
+                return Response::json(['success' => '1']);
+            } else {
+                return Response::json(['success' => '0']);
+            }
+        } else {
+            return Response::json(['success' => '0']);
+        }
     }
 
     public function geteditInvite(request $request)

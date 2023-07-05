@@ -57,6 +57,9 @@
                         <label for="phone">Phone Number<span style="color:red">*</span></label>
                         <input type="text" name="phone" class="form-control" value="{{ $employeeExists ? $employeeExists->phone : '' }}" placeholder="Enter Your Number" readonly>
                         <strong class="error" id="phone-error"></strong>
+                        @error('phone')
+                        <p class="validation">{{ $message }}</p>
+                       @enderror
                     </div>
                 </div>
             </div>
@@ -270,6 +273,9 @@
                 <input type="text" name="emg_phone" class="form-control" value="{{ $employeeExists ? $employeeExists->emg_phone : '' }}"
                     placeholder="Number">
                 <strong class="error" id="emg_phone-error"></strong>
+                @error('emg_phone')
+                <p class="validation">{{ $message }}</p>
+               @enderror
             </div>
         </div>
 
@@ -307,221 +313,6 @@
     setTimeout(function(){
         $('#successMessage').fadeOut('fast');
     }, 2000);
-
-
-        $("#employee_basic_form_edit").validate({
-
-            rules: {
-                first_name: "required",
-                last_name: "required",
-                email: "required",
-                blood_group: "required",
-                gender: "required",
-                dob: "required",
-                phone: "required",
-                emg_phone: "required",
-                permanent_address: "required",
-                current_address: "required",
-                marital_status: "required",
-                emg_name: "required",
-                emg_address: "required",
-                emg_relationship: "required",
-                pan_card_number: "required",
-                aadhar_card_number: "required",
-                passport_number: "required",
-
-            },
-
-            messages: {
-                firstName: "first name is required",
-                last_name: "Last name is required",
-                email: "Email is required",
-                blood_group: "Blood group is required",
-                gender: "Gender  is required",
-                dob: "Date of birth is required",
-                phone: "Phone number is required",
-                emg_phone: "Emergency phone number is required",
-                permanent_address: "Permanent address is required",
-                current_address: "Current address is required",
-                marital_status: "Marital status is required",
-                emg_name: "Emergency name is required",
-                emg_relationship: "Emergency relationship is required",
-                emg_address: "Emergency address is required",
-                pan_card_number: "Pan card number is required",
-                aadhar_card_number: "Aadhar card number is required",
-                passport_number: "Passport number is required",
-            }
-        });
-
-        $("#employee_qualification_form").validate({
-            rules: {
-                inst_name: "required",
-                degree: "required",
-                subject: "required",
-                duration_from: "required",
-                duration_to: "required",
-                verification_type: "required",
-                document: {
-                    required: true,
-                    extension: "pdf|doc|docx",
-                }
-            },
-
-            messages: {
-                inst_name: "Institute name is required",
-                degree: "Degree is required",
-                subject: "Subject is required",
-                duration_from: "Duration date is required",
-                duration_to: "Duration to is required",
-                verification_type: "Verification type is required",
-                document: {
-                    required: "Document is required",
-                    extension: "extension shuold not wrong",
-                },
-            }
-        }); 
-
-        $("#employee_qualification_form_edit").validate({
-            rules: {
-                inst_name: "required",
-                degree: "required",
-                subject: "required",
-                duration_from: "required",
-                duration_to: "required",
-                verification_type: "required",
-                // document: {
-                //     required: true,
-                //     extension: "pdf|doc|docx",
-                // }
-            },
-
-            messages: {
-                inst_name: "Institute name is required",
-                degree: "Degree is required",
-                subject: "Subject is required",
-                duration_from: "Duration date is required",
-                duration_to: "Duration to is required",
-                verification_type: "Verification type is required",
-                // document: {
-                //     required: "Document is required",
-                //     extension: "extension shuold not wrong",
-                // },
-            }
-        }); 
-        
-        $("#employee_official_form").validate({
-            rules: {
-                date_of_joining: "required",
-                emp_type: "required",
-                work_location: "required",
-                emp_status: "required",
-                lpa: "required",
-                designation: "required",
-            },
-
-            messages: {
-                date_of_joining: "Date of joining is required",
-                emp_type: "Employee type is required",
-                work_location: "Work location is required",
-                emp_status: "Employee status to is required",
-                lpa: "LPA is required",
-                designation: "Manager designation is required",
-
-            }
-        });
-
-        $("#employee_workhistory_form").validate({
-            rules: {
-                com_name: "required",
-                designation: "required",
-                work_duration_to: "required",
-                work_duration_from: "required",
-                offer_letter: "required",
-                verification_type: "required",
-                exp_letter: "required",
-                salary_slip: "required",
-            },
-
-            messages: {
-                com_name: "Company name is required",
-                designation: "Designation is required",
-                work_duration_to: "Work duration is required",
-                work_duration_from: "Work duration From is required",
-                offer_letter: "Offer letter to is required",
-                verification_type: "Verification type is required",
-                exp_letter: "Experience letter is required",
-                salary_slip: "Salary slip is required",
-            }
-        });
-
-        $("#employee_workhistory_form_edit").validate({
-            rules: {
-                com_name: "required",
-                designation: "required",
-                work_duration_to: "required",
-                work_duration_from: "required",
-                // offer_letter: "required",
-                verification_type: "required",
-                // exp_letter: "required",
-                // salary_slip: "required",
-            },
-
-            messages: {
-                com_name: "Company name is required",
-                designation: "Designation is required",
-                work_duration_to: "Work duration is required",
-                work_duration_from: "Work duration From is required",
-                // offer_letter: "Offer letter to is required",
-                verification_type: "Verification type is required",
-                // exp_letter: "Experience letter is required",
-                // salary_slip: "Salary slip is required",
-            }
-        });
-
-        $("#employee_skills_form").validate({
-            rules: {
-                skill: "required",
-            },
-
-            messages: {
-                skill: "Skill is required",
-
-            }
-        });
-
-        $("#employee_skills_form_edit").validate({
-            rules: {
-                skill: "required",    
-            },
-
-            messages: {
-                skill: "Skill is required",
-
-            }
-        });
-
-        $("#employee_lang_form_edit").validate({
-            rules: {
-                lang: "required",
-            },
-
-            messages: {
-                lang: "Language is required",
-
-            }
-        });
-
-        $("#employee_lang_form").validate({
-            rules: {
-                lang: "required",
-            },
-
-            messages: {
-                lang: "Language is required",
-
-            }
-        });
-
     });
 </script>
 

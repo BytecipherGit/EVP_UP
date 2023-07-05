@@ -29,7 +29,7 @@
           {{-- <a href="#" class="btn-secondary-cust">Cancel</a> --}}
           <a href="{{route('basic-info')}}/{{ encrypt($employee->id) }}" class="btn-primary-cust">Confirm</a>
           <div class="foot-bottom">
-            <p>© {{ Carbon\Carbon::now()->date('F')}} ByteCipher Pvt. Ltd.</p>
+            <p>© {{date('Y')}} EVP</p>
           </div> 
         </div>
       </div> 

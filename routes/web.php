@@ -76,7 +76,8 @@ Route::middleware([EmployeeAuthMiddleware::class])->group(function () {
    Route::post('employee_documents/form',[App\Http\Controllers\IndividualEmployeeController::class, 'uploadDocuments']);
    Route::post('employee_experience/form/update', [App\Http\Controllers\IndividualEmployeeController::class, 'updateEmployeeExperience']);
    Route::any('employee_login/change_password', [App\Http\Controllers\IndividualEmployeeController::class, 'changePassword']);
-
+   Route::get('download_offerletter/{id?}', [App\Http\Controllers\IndividualEmployeeController::class, 'downloadOfferDocument']);
+   Route::get('download_expletter/{id?}', [App\Http\Controllers\IndividualEmployeeController::class, 'downloadExpDocument']);
 });
 
 
@@ -158,7 +159,7 @@ Route::middleware([SuperAdmin::class])->group(function () {
     Route::post('/invite_employee', [App\Http\Controllers\InviteempController::class, 'getCsvInvite'])->middleware('documents');
     Route::get('/edit-invite-employee/{id?}', [App\Http\Controllers\InviteempController::class, 'editInviteEmp'])->middleware('documents');
     Route::post('/edit-invite-employee/{id?}', [App\Http\Controllers\InviteempController::class, 'geteditInvite'])->middleware('documents');
-    Route::get('/delete-invite/{id?}', [App\Http\Controllers\InviteempController::class, 'deleteInvite'])->middleware('documents');
+    Route::post('/delete_invite', [App\Http\Controllers\InviteempController::class, 'deleteInvite'])->middleware('documents');
     Route::any('/changePassword', [App\Http\Controllers\AdminController::class, 'changePassword'])->name('changepassword')->middleware('documents');
     Route::get('/download_qualification_doc/{id?}', [App\Http\Controllers\InviteempController::class, 'downloadQualificationDoc'])->middleware('documents');
     Route::get('/download_offerletter_doc/{id?}', [App\Http\Controllers\InviteempController::class, 'downloadOfferDocument'])->middleware('documents');

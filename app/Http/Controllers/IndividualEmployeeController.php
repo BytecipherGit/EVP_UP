@@ -47,6 +47,7 @@ class IndividualEmployeeController extends Controller
 
             $validator = Validator::make($request->all(), [
                 'emg_name' => 'required|string|max:255',
+                'phone' => 'required|max:12|min:10',
                 'emg_relationship' => 'required|string|max:255',
             ]);
             if ($validator->passes()) {
@@ -147,6 +148,33 @@ class IndividualEmployeeController extends Controller
                 return Response::json(['errors' => $validator->errors()]);
             }
         }
+    }
+
+    public function downloadExpDocument(request $request)
+    {
+
+        $data = Empworkhistory::where('id', $request->id)->first();
+        $filename = $data->exp_letter;
+        $filename = str_replace(url('/') . '/storage/', "", $filename);
+        $filePath = storage_path('app/public/' . $filename);
+        if (file_exists($filePath)) {
+            return response()->download($filePath);
+        }
+        abort(404);
+
+    }
+
+    public function downloadOfferDocument(request $request)
+    {
+        $data = Empworkhistory::where('id', $request->id)->first();
+        // dd($data);
+        $filename = $data->offer_letter;
+        $filename = str_replace(url('/') . '/storage/', "", $filename);
+        $filePath = storage_path('app/public/' . $filename);
+        if (file_exists($filePath)) {
+            return response()->download($filePath);
+        }
+        abort(404);
     }
 
 
